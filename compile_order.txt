@@ -1,0 +1,2 @@
+ibas.initialfantasy
+ibas.initialfantasy.service

@@ -1,0 +1,23 @@
+{
+  "bo_applicationmodule": "应用程序模块",
+  "bo_applicationmodule_moduleid": "模块标识",
+  "bo_applicationmodule_platformid": "平台标识",
+  "bo_applicationmodule_modulename": "模块名称",
+  "bo_applicationmodule_moduletype": "模块类型",
+  "bo_applicationmodule_modulecategory": "模块类别",
+  "bo_applicationmodule_activated": "是否可用",
+  "bo_applicationmodule_activatedpackageid": "程序包标识",
+  "bo_applicationmodule_objectkey": "对象键值",
+  "bo_applicationmodule_objectcode": "对象类型",
+  "bo_applicationmodule_datasource": "数据源",
+  "bo_applicationmodule_createdate": "创建日期",
+  "bo_applicationmodule_createtime": "创建时间",
+  "bo_applicationmodule_updatedate": "修改日期",
+  "bo_applicationmodule_updatetime": "修改时间",
+  "bo_applicationmodule_createactionid": "创建动作标识",
+  "bo_applicationmodule_updateactionid": "更新动作标识",
+  "bo_applicationmodule_loginst": "实例号（版本）",
+  "bo_applicationmodule_createusersign": "创建用户",
+  "bo_applicationmodule_updateusersign": "修改用户",
+  "bo_applicationmodule_closing_delimiter": "---------"
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Domain>
+<Domain Name="InitialFantasy" ShortName="IF">
+  <Model Name="ApprovalRequest" Description="审批请求" ModelType="Simple" Mapped="${Company}_AP_OARQ">
+    <Property Name="ObjectKey" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="DataOwner" Description="数据所有者" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DataOwner"/>
+    <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Ref1"/>
+    <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="Ref2"/>
+    <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
+    <Property Name="Name" Description="审批请求名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name"/>
+    <Property Name="ApprovalObjectCode" Description="审批的对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ApvlObjectCode"/>
+    <Property Name="Activated" Description="激活的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
+    <Property Name="ApprovalTemplate" Description="审批模板" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ApvlTplat"/>
+    <Property Name="BOKeys" Description="业务对象标识" DataType="Alphanumeric" DataSubType="Default" EditSize="300" Mapped="BOKeys"/>
+    <Property Name="ApprovalStatus" Description="审批状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emApprovalStatus" Mapped="ApvlStatus"/>
+    <Property Name="ApprovalOwner" Description="审批所有者" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ApvlOwner"/>
+    <Property Name="StartedTime" Description="开始时间" DataType="Date" DataSubType="Default" EditSize="8" Mapped="StartTime"/>
+    <Property Name="FinishedTime" Description="结束时间" DataType="Date" DataSubType="Default" EditSize="8" Mapped="FinishTime"/>
+    <Property Name="ClassName" Description="语言类型" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="ClassName"/>
+  </Model>
+  <Model Name="ApprovalRequestStep" Description="审批请求步骤" ModelType="SimpleLine" Mapped="${Company}_AP_ARQ1">
+    <Property Name="ObjectKey" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
+    <Property Name="LineId" Description="行号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LineId" PrimaryKey="Yes"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Ref1"/>
+    <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="Ref2"/>
+    <Property Name="StepName" Description="步骤名称" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="StepName"/>
+    <Property Name="StepOwner" Description="步骤所有者" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="StepOwner"/>
+    <Property Name="StepOrder" Description="步骤执行顺序" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="StepOrder"/>
+    <Property Name="StepStatus" Description="步骤状态" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emApprovalStepStatus" Mapped="StepStatus"/>
+    <Property Name="StepConditions" Description="步骤条件" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="StepConditions"/>
+    <Property Name="StartedTime" Description="开始时间" DataType="Date" DataSubType="Default" EditSize="8" Mapped="StartTime"/>
+    <Property Name="FinishedTime" Description="结束时间" DataType="Date" DataSubType="Default" EditSize="8" Mapped="FinishTime"/>
+    <Property Name="Judgment" Description="审批意见" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="Judgment"/>
+    <Property Name="StepCanModify" Description="步骤所有者可修改" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="StepModify"/>
+  </Model>
+  <BusinessObject MappedModel="ApprovalRequest" ShortName="${Company}_AP_APPROVALREQU">
+    <RelatedBO Relation="OneToMany" MappedModel="ApprovalRequestStep"/>
+  </BusinessObject>
+</Domain>
