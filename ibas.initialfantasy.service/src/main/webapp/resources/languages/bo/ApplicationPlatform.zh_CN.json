@@ -1,0 +1,20 @@
+{
+  "bo_applicationplatform": "应用程序平台",
+  "bo_applicationplatform_platformid": "平台标识",
+  "bo_applicationplatform_platformcode": "平台编码",
+  "bo_applicationplatform_platformdescription": "平台描述",
+  "bo_applicationplatform_activated": "是否可用",
+  "bo_applicationplatform_objectkey": "对象键值",
+  "bo_applicationplatform_objectcode": "对象类型",
+  "bo_applicationplatform_datasource": "数据源",
+  "bo_applicationplatform_createdate": "创建日期",
+  "bo_applicationplatform_createtime": "创建时间",
+  "bo_applicationplatform_updatedate": "修改日期",
+  "bo_applicationplatform_updatetime": "修改时间",
+  "bo_applicationplatform_createactionid": "创建动作标识",
+  "bo_applicationplatform_updateactionid": "更新动作标识",
+  "bo_applicationplatform_loginst": "实例号（版本）",
+  "bo_applicationplatform_createusersign": "创建用户",
+  "bo_applicationplatform_updateusersign": "修改用户",
+  "bo_applicationplatform_closing_delimiter": "---------"
+}

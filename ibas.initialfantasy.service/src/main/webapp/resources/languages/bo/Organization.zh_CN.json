@@ -1,0 +1,20 @@
+{
+  "bo_organization": "组织",
+  "bo_organization_code": "编码",
+  "bo_organization_name": "名称",
+  "bo_organization_activated": "是否启用",
+  "bo_organization_docentry": "对象编号",
+  "bo_organization_objectcode": "对象类型",
+  "bo_organization_createdate": "创建日期",
+  "bo_organization_createtime": "创建时间",
+  "bo_organization_updatedate": "修改日期",
+  "bo_organization_updatetime": "修改时间",
+  "bo_organization_datasource": "数据源",
+  "bo_organization_loginst": "实例号（版本）",
+  "bo_organization_series": "服务系列",
+  "bo_organization_createusersign": "创建用户",
+  "bo_organization_updateusersign": "修改用户",
+  "bo_organization_createactionid": "创建动作标识",
+  "bo_organization_updateactionid": "更新动作标识",
+  "bo_organization_closing_delimiter": "---------"
+}

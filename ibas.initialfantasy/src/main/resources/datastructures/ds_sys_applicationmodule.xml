@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Domain>
+<Domain Name="InitialFantasy" ShortName="IF">
+  <Model Name="ApplicationModule" Description="应用程序模块" ModelType="Simple" Mapped="${Company}_SYS_MODULE">
+    <Property Name="ModuleId" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleId" UniqueKey="Yes"/>
+    <Property Name="PlatformId" Description="平台标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="PlatformId" UniqueKey="Yes"/>
+    <Property Name="ModuleName" Description="模块名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ModuleName"/>
+    <Property Name="ModuleType" Description="模块类型" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="ModuleType"/>
+    <Property Name="ModuleCategory" Description="模块类别" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="ModuleCategory"/>
+    <Property Name="Activated" Description="是否可用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
+    <Property Name="ActivatedPackageId" Description="程序包标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ActivatedPackageId"/>
+    <Property Name="ObjectKey" Description="对象键值" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+  </Model>
+  <BusinessObject MappedModel="ApplicationModule" ShortName="${Company}_SYS_MODULE"/>
+</Domain>

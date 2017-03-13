@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Domain>
+<Domain Name="InitialFantasy" ShortName="IF">
+  <Model Name="Ownership" Description="数据权限" ModelType="Simple" Mapped="${Company}_SYS_OWNERSHIP">
+    <Property Name="UserCode" Description="用户编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="UserCode" UniqueKey="Yes"/>
+    <Property Name="BOCode" Description="对象编码" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="BOCode" UniqueKey="Yes"/>
+    <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
+    <Property Name="Self" Description="自身权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Self"/>
+    <Property Name="LowerLevel" Description="部门-下级权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="LowerLevel"/>
+    <Property Name="EqualLevel" Description="部门-同级权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="EqualLevel"/>
+    <Property Name="HigherLevel" Description="部门-上级权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="HigherLevel"/>
+    <Property Name="Teams" Description="团队权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Teams"/>
+    <Property Name="Others" Description="其他情况权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Others"/>
+    <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+  </Model>
+  <BusinessObject MappedModel="Ownership" ShortName="${Company}_SYS_OWNERSHIP"/>
+</Domain>
