@@ -669,6 +669,8 @@ public class OrganizationalStructure extends BusinessObject<OrganizationalStruct
 		super.initialize();// 基类初始化，不可去除
 		this.setOrganizationalRoles(new OrganizationalRoles(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setValidDate(DateTime.getToday());
+		this.setInvalidDate(DateTime.getMaxValue());
 
 	}
 

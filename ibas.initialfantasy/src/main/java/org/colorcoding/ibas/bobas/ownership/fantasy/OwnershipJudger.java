@@ -55,7 +55,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 		this.setRoleDataFirstAvailable(
 				MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ROLE_DATA_FIRST_AVAILABLE, true));
 		// 设置组织结构刷新时间，默认180秒
-		this.setFreshTime(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_REFRESH_TIME, 180));
+		this.setFreshTime(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_REFRESH_TIME, 300));
 		// 注册组织刷新任务
 		try {
 			Daemon.register(new IDaemonTask() {

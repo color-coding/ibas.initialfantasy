@@ -8,6 +8,7 @@ import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
@@ -107,7 +108,7 @@ public class testPrivileges extends TestCase {
 
 		// 定义所有权设置，张三，自，all；同事，no；下属，no；上级，view
 		IOwnership ownership = new Ownership();
-		ownership.setBOCode(BOCriteria.BUSINESS_OBJECT_CODE);
+		ownership.setBOCode(MyConfiguration.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE));
 		ownership.setUserCode(User03.getCode());
 		ownership.setSelf(emAuthoriseType.ALL);
 		ownership.setEqualLevel(emAuthoriseType.NONE);
@@ -152,7 +153,7 @@ public class testPrivileges extends TestCase {
 		assertNotNull("经理老王成功修改了张三的数据。", operationResult.getError());
 		// 启用过滤数据，更新过的数据
 		IBOFiltering boFiltering = new BOFiltering();
-		boFiltering.setBOCode(BOCriteria.BUSINESS_OBJECT_CODE);
+		boFiltering.setBOCode(MyConfiguration.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE));
 		boFiltering.setRoleCode(Role01.getCode());
 		IBOFilteringCondition condition = boFiltering.getBOFilteringConditions().create();
 		condition.setPropertyName(BOFiltering.PROPERTY_LOGINST.getName());// 更新次数
