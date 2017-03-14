@@ -2,6 +2,7 @@ package org.colorcoding.ibas.initialfantasy.test.bo;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
@@ -28,7 +29,12 @@ public class testUser extends TestCase {
 	public void testBasicItems() throws Exception {
 		User bo = new User();
 		// 测试属性赋值
-
+		bo.setCode("admin");
+		bo.setName("administrator");
+		bo.setPassword("1q2w3e");
+		bo.setActivated(emYesNo.YES);
+		bo.setSupper(emYesNo.YES);
+		System.out.println(bo.toString("xml"));
 		// 测试对象的保存和查询
 		IOperationResult<?> operationResult = null;
 		ICriteria criteria = null;
