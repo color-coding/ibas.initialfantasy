@@ -21,7 +21,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
+    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
                 select count(0) from sys.sysobjects where name = '${Company}_SP_TRANSACTION_NOTIFICATION' AND type = 'P'
@@ -46,6 +46,61 @@
                     --------------------------------------------------------------------------------------------------------------------------------
                     --return
                     select @error "Code", @error_message "Message"
+                END
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+        <Step Name="check stored procedures exists">
+            <Script>
+                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P'
+            </Script>
+        </Step>
+        <Step Name="create stored procedures" RunOnValue="0">
+            <Script>
+                CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES
+                    @platform nvarchar(36),           /*平台全码*/
+                    @userCode nvarchar(8)             /*用户编码*/
+                AS
+                BEGIN
+
+                IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "UserCode" = @userCode AND "SupperUser" = 'Y')
+                    --超级用户全部权限
+                    SELECT A.*,'A' AuthValue 
+                    FROM "${Company}_SYS_MODULE" A
+                    WHERE A."PlatformID" = @platform AND A."Activated" = 'Y' 
+                ELSE
+                    --非超级用户，角色权限
+                    SELECT A.*,C.AuthValue 
+                    FROM "${Company}_SYS_MODULE" A INNER JOIN (
+                        SELECT DISTINCT B."ModuleID",B."AuthValue" 
+                        FROM "${Company}_SYS_PRIVILEGE" B 
+                        WHERE B."PlatformID" = @platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                            SELECT B."Role" 
+                            FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
+                                INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
+                            WHERE A."ValidDate" &lt;= GETDATE() AND A."InvalidDate" &gt;= GETDATE() AND C."Member" = @userCode
+                            )
+                    ) C ON A."ModuleId" = C."ModuleID"
+                    WHERE A."PlatformID" = @platform AND A."Activated" = 'Y'
+                END
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
+        <Step Name="check stored procedures exists">
+            <Script>
+                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P'
+            </Script>
+        </Step>
+        <Step Name="create stored procedures" RunOnValue="0">
+            <Script>
+                CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES
+                    @platform nvarchar(36),           /*平台全码*/
+                    @userCode nvarchar(8)             /*用户编码*/
+                AS
+                BEGIN
+                    select null
                 END
             </Script>
         </Step>

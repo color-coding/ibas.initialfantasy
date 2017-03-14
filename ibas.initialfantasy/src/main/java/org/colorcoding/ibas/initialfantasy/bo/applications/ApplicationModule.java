@@ -148,38 +148,6 @@ public class ApplicationModule extends BusinessObject<ApplicationModule> impleme
 	}
 
 	/**
-	 * 属性名称-模块类型
-	 */
-	private static final String PROPERTY_MODULETYPE_NAME = "ModuleType";
-
-	/**
-	 * 模块类型 属性
-	 */
-	@DbField(name = "ModuleType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_MODULETYPE = registerProperty(PROPERTY_MODULETYPE_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-模块类型
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_MODULETYPE_NAME)
-	public final String getModuleType() {
-		return this.getProperty(PROPERTY_MODULETYPE);
-	}
-
-	/**
-	 * 设置-模块类型
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setModuleType(String value) {
-		this.setProperty(PROPERTY_MODULETYPE, value);
-	}
-
-	/**
 	 * 属性名称-模块类别
 	 */
 	private static final String PROPERTY_MODULECATEGORY_NAME = "ModuleCategory";
@@ -241,38 +209,6 @@ public class ApplicationModule extends BusinessObject<ApplicationModule> impleme
 	 */
 	public final void setActivated(emYesNo value) {
 		this.setProperty(PROPERTY_ACTIVATED, value);
-	}
-
-	/**
-	 * 属性名称-程序包标识
-	 */
-	private static final String PROPERTY_ACTIVATEDPACKAGEID_NAME = "ActivatedPackageId";
-
-	/**
-	 * 程序包标识 属性
-	 */
-	@DbField(name = "ActivatedPackageId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_ACTIVATEDPACKAGEID = registerProperty(
-			PROPERTY_ACTIVATEDPACKAGEID_NAME, String.class, MY_CLASS);
-
-	/**
-	 * 获取-程序包标识
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_ACTIVATEDPACKAGEID_NAME)
-	public final String getActivatedPackageId() {
-		return this.getProperty(PROPERTY_ACTIVATEDPACKAGEID);
-	}
-
-	/**
-	 * 设置-程序包标识
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setActivatedPackageId(String value) {
-		this.setProperty(PROPERTY_ACTIVATEDPACKAGEID, value);
 	}
 
 	/**

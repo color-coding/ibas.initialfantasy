@@ -24,13 +24,13 @@ import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.bo.ownership.Ownership;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
+import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasyShell;
 
 /**
  * InitialFantasy 数据服务JSON
  */
 @Path("datas")
-public class ServiceData extends BORepositoryInitialFantasy {
+public class ServiceData extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**

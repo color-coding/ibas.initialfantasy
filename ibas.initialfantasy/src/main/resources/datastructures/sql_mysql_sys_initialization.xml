@@ -16,7 +16,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures">
+    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
         <Step Name="check and drop exists stored procedures">
             <Script>
                 DROP PROCEDURE IF EXISTS `${DbName}`.`${Company}_SP_TRANSACTION_NOTIFICATION`;
@@ -42,6 +42,154 @@
                     -- return
                     select _error, _error_message;
                 END
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+        <Step Name="check stored procedures exists">
+            <Script>
+                DROP PROCEDURE IF EXISTS `${Company}_SYS_SP_GET_USER_MODULES`;
+            </Script>
+        </Step>
+        <Step Name="create stored procedures">
+            <Script>
+                CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES
+                (
+                    in Platform nvarchar(36),           /*平台全码*/
+                    in userCode nvarchar(8)             /*用户编码*/
+                )
+                begin
+
+                IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `SupperUser` = 'Y')  THEN
+                    /* 超级用户全部权限 */
+                    SELECT A.*,'A' AuthValue
+                    FROM `${Company}_SYS_MODULE` A
+                    WHERE A.`PlatformID` = Platform AND A.`Activated` = 'Y';
+                ELSE
+                    /* 非超级用户，角色权限 */
+                    SELECT A.*,C.AuthValue
+                    FROM `${Company}_SYS_MODULE` A INNER JOIN (
+                        SELECT DISTINCT B.ModuleID,B.AuthValue
+                        FROM `${Company}_SYS_PRIVILEGE` B
+                        WHERE B.`PlatformID` = @platform AND B.`AuthValue` &lt;&gt; 'N' AND B.RoleCode IN (
+                            SELECT B.`Role` 
+                            FROM `${Company}_SYS_ORGSTRC` A INNER JOIN `${Company}_SYS_ORGROLE` B ON A.`ObjectKey` = B.`ObjectKey`
+                                  INNER JOIN `${Company}_SYS_ROLEMEM` C ON B.`ObjectKey` = C.`ObjectKey` AND B.`LineId` = C.`RoleId`
+                            WHERE A.`ValidDate` &lt;= GETDATE() AND A.`InvalidDate` &gt;= GETDATE() AND C.`Member` = @userCode)
+                    ) C ON A.`ModuleId` = C.`ModuleID`
+                    WHERE A.`PlatformID` = @platform AND A.Activated = 'Y';
+                END IF;
+                end;
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
+        <Step Name="check stored procedures exists">
+            <Script>
+              DROP PROCEDURE IF EXISTS `${Company}_SYS_SP_GET_USER_PRIVILEGES`;
+            </Script>
+        </Step>
+        <Step Name="create stored procedures">
+            <Script>
+              CREATE PROCEDURE `${Company}_SYS_SP_GET_USER_PRIVILEGES`
+              (
+              in _UserCode nvarchar(20)/*用户组编码*/
+              )
+              BEGIN
+                    /*非超级用户，角色应用权限*/
+				SELECT 
+				    *
+				FROM
+				    (SELECT 
+				        *
+				    FROM
+				        (SELECT 
+				        A.*
+				    FROM
+				        `${Company}_SYS_PRIVILEGE` AS A
+				    INNER JOIN (SELECT 
+				        A.Role
+				    FROM
+				        `${Company}_SYS_ORGROLE` A
+				    INNER JOIN (SELECT 
+				        *
+				    FROM
+				        `${Company}_SYS_ROLEMEM`
+				    WHERE
+				        Member = _UserCode) B ON A.LineId = B.RoleId
+				        AND B.ObjectKey = A.ObjectKey) B ON A.RoleCode = B.Role) C
+				    WHERE
+				        C.AuthValue = (SELECT 
+				                AuthValue
+				            FROM
+				                (SELECT 
+				                A.*
+				            FROM
+				                `${Company}_SYS_PRIVILEGE` AS A
+				            INNER JOIN (SELECT 
+				                A.Role
+				            FROM
+				                `${Company}_SYS_ORGROLE` A
+				            INNER JOIN (SELECT 
+				                *
+				            FROM
+				                `${Company}_SYS_ROLEMEM`
+				            WHERE
+				                Member = _UserCode) B ON A.LineId = B.RoleId
+				                AND B.ObjectKey = A.ObjectKey) B ON A.RoleCode = B.Role) AS D
+				            WHERE
+				                C.FunctionID = D.FunctionID
+				            ORDER BY FunctionID DESC
+				            LIMIT 0 , 1)) A
+				WHERE
+				    A.ObjectKey = (SELECT 
+				            ObjectKey
+				        FROM
+				            (SELECT 
+				                *
+				            FROM
+				                (SELECT 
+				                A.*
+				            FROM
+				                `${Company}_SYS_PRIVILEGE` AS A
+				            INNER JOIN (SELECT 
+				                A.Role
+				            FROM
+				                `${Company}_SYS_ORGROLE` A
+				            INNER JOIN (SELECT 
+				                *
+				            FROM
+				                `${Company}_SYS_ROLEMEM`
+				            WHERE
+				                Member = _UserCode) B ON A.LineId = B.RoleId
+				                AND B.ObjectKey = A.ObjectKey) B ON A.RoleCode = B.Role) C
+				            WHERE
+				                C.AuthValue = (SELECT 
+				                        AuthValue
+				                    FROM
+				                        (SELECT 
+				                        A.*
+				                    FROM
+				                        `${Company}_SYS_PRIVILEGE` AS A
+				                    INNER JOIN (SELECT 
+				                        A.Role
+				                    FROM
+				                        `${Company}_SYS_ORGROLE` A
+				                    INNER JOIN (SELECT 
+				                        *
+				                    FROM
+				                        `${Company}_SYS_ROLEMEM`
+				                    WHERE
+				                        Member = _UserCode) B ON A.LineId = B.RoleId
+				                        AND B.ObjectKey = A.ObjectKey) B ON A.RoleCode = B.Role) AS D
+				                    WHERE
+				                        C.FunctionID = D.FunctionID
+				                    ORDER BY FunctionID DESC
+				                    LIMIT 0 , 1)) AS B
+				        WHERE
+				            A.FunctionID = B.FunctionID
+				        LIMIT 0 , 1);
+              END;
             </Script>
         </Step>
     </Action>
