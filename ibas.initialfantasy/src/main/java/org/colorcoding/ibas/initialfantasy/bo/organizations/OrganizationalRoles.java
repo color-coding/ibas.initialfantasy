@@ -1,4 +1,4 @@
-package org.colorcoding.ibas.initialfantasy.bo.organizationalstructure;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import javax.xml.bind.annotation.*;
 import org.colorcoding.ibas.bobas.bo.*;

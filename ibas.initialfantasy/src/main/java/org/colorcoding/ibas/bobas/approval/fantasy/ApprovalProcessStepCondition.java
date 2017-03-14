@@ -1,7 +1,7 @@
 package org.colorcoding.ibas.bobas.approval.fantasy;
 
 import java.io.StringWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,7 +12,9 @@ import org.colorcoding.ibas.bobas.approval.IApprovalProcessStepCondition;
 import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.serialization.ISerializer;
+import org.colorcoding.ibas.bobas.serialization.ISerializerManager;
 import org.colorcoding.ibas.bobas.serialization.SerializerFactory;
+import org.colorcoding.ibas.bobas.util.ArrayList;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.IApprovalTemplateStepCondition;
 
 /**
@@ -28,18 +30,18 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 
 	public static IApprovalProcessStepCondition[] create(String condition) {
 		if (condition != null) {
-			ISerializer serializer = SerializerFactory.create().createManager().create();
+			ISerializer serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
 			@SuppressWarnings("unchecked")
-			ArrayList<IApprovalProcessStepCondition> arrayList = serializer.deserialize(condition, ArrayList.class,
-					ApprovalProcessStepCondition.class);
-			return arrayList.toArray(new IApprovalProcessStepCondition[] {});
+			java.util.ArrayList<ApprovalProcessStepCondition> stepConditions = serializer.deserialize(condition,
+					ArrayList.class, ApprovalProcessStepCondition.class);
+			return stepConditions.toArray(new IApprovalProcessStepCondition[] {});
 		}
 		return null;
 	}
 
-	public static String toString(Iterable<IApprovalTemplateStepCondition> conditions) {
+	public static String serialize(List<IApprovalTemplateStepCondition> conditions) {
 		if (conditions != null) {
-			ArrayList<ApprovalProcessStepCondition> stepConditions = new ArrayList<>();
+			ArrayList<ApprovalProcessStepCondition> stepConditions = new ArrayList<ApprovalProcessStepCondition>();
 			for (IApprovalTemplateStepCondition item : conditions) {
 				ApprovalProcessStepCondition stepCondition = new ApprovalProcessStepCondition();
 				stepCondition.setRelation(item.getRelationship());
@@ -48,7 +50,7 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 				stepCondition.setConditionValue(item.getConditionValue());
 				stepConditions.add(stepCondition);
 			}
-			ISerializer serializer = SerializerFactory.create().createManager().create();
+			ISerializer serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
 			StringWriter writer = new StringWriter();
 			serializer.serialize(stepConditions, writer, ApprovalProcessStepCondition.class);
 			return writer.toString();

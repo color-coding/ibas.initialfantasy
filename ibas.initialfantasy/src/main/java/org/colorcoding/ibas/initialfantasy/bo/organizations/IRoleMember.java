@@ -1,87 +1,87 @@
-package org.colorcoding.ibas.initialfantasy.bo.organization;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import org.colorcoding.ibas.bobas.bo.*;
 import org.colorcoding.ibas.bobas.data.*;
 
 /**
-* 角色 接口
+* 组织-角色-成员 接口
 * 
 */
-public interface IRole extends IBOMasterData {
+public interface IRoleMember extends IBOSimpleLine {
 
     /**
-    * 获取-编码
+    * 获取-编号
     * 
     * @return 值
     */
-    String getCode();
+    Integer getObjectKey();
 
     /**
-    * 设置-编码
+    * 设置-编号
     * 
     * @param value 值
     */
-    void setCode(String value);
+    void setObjectKey(Integer value);
 
 
     /**
-    * 获取-名称
-    * 
-    * @return 值
-    */
-    String getName();
-
-    /**
-    * 设置-名称
-    * 
-    * @param value 值
-    */
-    void setName(String value);
-
-
-    /**
-    * 获取-激活
-    * 
-    * @return 值
-    */
-    emYesNo getActivated();
-
-    /**
-    * 设置-激活
-    * 
-    * @param value 值
-    */
-    void setActivated(emYesNo value);
-
-
-    /**
-    * 获取-对象编号
-    * 
-    * @return 值
-    */
-    Integer getDocEntry();
-
-    /**
-    * 设置-对象编号
-    * 
-    * @param value 值
-    */
-    void setDocEntry(Integer value);
-
-
-    /**
-    * 获取-对象类型
+    * 获取-类型
     * 
     * @return 值
     */
     String getObjectCode();
 
     /**
-    * 设置-对象类型
+    * 设置-类型
     * 
     * @param value 值
     */
     void setObjectCode(String value);
+
+
+    /**
+    * 获取-行号
+    * 
+    * @return 值
+    */
+    Integer getLineId();
+
+    /**
+    * 设置-行号
+    * 
+    * @param value 值
+    */
+    void setLineId(Integer value);
+
+
+    /**
+    * 获取-实例号（版本）
+    * 
+    * @return 值
+    */
+    Integer getLogInst();
+
+    /**
+    * 设置-实例号（版本）
+    * 
+    * @param value 值
+    */
+    void setLogInst(Integer value);
+
+
+    /**
+    * 获取-数据源
+    * 
+    * @return 值
+    */
+    String getDataSource();
+
+    /**
+    * 设置-数据源
+    * 
+    * @param value 值
+    */
+    void setDataSource(String value);
 
 
     /**
@@ -145,51 +145,6 @@ public interface IRole extends IBOMasterData {
 
 
     /**
-    * 获取-实例号（版本）
-    * 
-    * @return 值
-    */
-    Integer getLogInst();
-
-    /**
-    * 设置-实例号（版本）
-    * 
-    * @param value 值
-    */
-    void setLogInst(Integer value);
-
-
-    /**
-    * 获取-服务系列
-    * 
-    * @return 值
-    */
-    Integer getSeries();
-
-    /**
-    * 设置-服务系列
-    * 
-    * @param value 值
-    */
-    void setSeries(Integer value);
-
-
-    /**
-    * 获取-数据源
-    * 
-    * @return 值
-    */
-    String getDataSource();
-
-    /**
-    * 设置-数据源
-    * 
-    * @param value 值
-    */
-    void setDataSource(String value);
-
-
-    /**
     * 获取-创建用户
     * 
     * @return 值
@@ -247,6 +202,66 @@ public interface IRole extends IBOMasterData {
     * @param value 值
     */
     void setUpdateActionId(String value);
+
+
+    /**
+    * 获取-参考1
+    * 
+    * @return 值
+    */
+    String getReference1();
+
+    /**
+    * 设置-参考1
+    * 
+    * @param value 值
+    */
+    void setReference1(String value);
+
+
+    /**
+    * 获取-参考2
+    * 
+    * @return 值
+    */
+    String getReference2();
+
+    /**
+    * 设置-参考2
+    * 
+    * @param value 值
+    */
+    void setReference2(String value);
+
+
+    /**
+    * 获取-角色-行号
+    * 
+    * @return 值
+    */
+    Integer getRoleLineId();
+
+    /**
+    * 设置-角色-行号
+    * 
+    * @param value 值
+    */
+    void setRoleLineId(Integer value);
+
+
+    /**
+    * 获取-成员
+    * 
+    * @return 值
+    */
+    String getMember();
+
+    /**
+    * 设置-成员
+    * 
+    * @param value 值
+    */
+    void setMember(String value);
 
 
 

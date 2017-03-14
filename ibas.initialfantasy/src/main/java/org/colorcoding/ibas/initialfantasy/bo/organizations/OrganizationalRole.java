@@ -1,8 +1,9 @@
-package org.colorcoding.ibas.initialfantasy.bo.organizationalstructure;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
@@ -14,27 +15,27 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
- * 获取-组织-角色-成员
+ * 获取-组织-角色
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = RoleMember.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-public class RoleMember extends BusinessObject<RoleMember> implements IRoleMember {
+@XmlType(name = OrganizationalRole.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+public class OrganizationalRole extends BusinessObject<OrganizationalRole> implements IOrganizationalRole {
 
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = -8200787833608853899L;
+	private static final long serialVersionUID = -7634451941327878962L;
 
 	/**
 	 * 当前类型
 	 */
-	private static final Class<?> MY_CLASS = RoleMember.class;
+	private static final Class<?> MY_CLASS = OrganizationalRole.class;
 
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "${Company}_SYS_ROLEMEM";
+	public static final String DB_TABLE_NAME = "${Company}_SYS_ORGROLE";
 
 	/**
 	 * 业务对象编码
@@ -44,7 +45,7 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	/**
 	 * 业务对象名称
 	 */
-	public static final String BUSINESS_OBJECT_NAME = "RoleMember";
+	public static final String BUSINESS_OBJECT_NAME = "OrganizationalRole";
 
 	/**
 	 * 属性名称-编号
@@ -527,67 +528,68 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	}
 
 	/**
-	 * 属性名称-角色-行号
+	 * 属性名称-角色
 	 */
-	private static final String PROPERTY_ROLELINEID_NAME = "RoleLineId";
+	private static final String PROPERTY_ROLE_NAME = "Role";
 
 	/**
-	 * 角色-行号 属性
+	 * 角色 属性
 	 */
-	@DbField(name = "RoleId", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<Integer> PROPERTY_ROLELINEID = registerProperty(PROPERTY_ROLELINEID_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-角色-行号
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_ROLELINEID_NAME)
-	public final Integer getRoleLineId() {
-		return this.getProperty(PROPERTY_ROLELINEID);
-	}
-
-	/**
-	 * 设置-角色-行号
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setRoleLineId(Integer value) {
-		this.setProperty(PROPERTY_ROLELINEID, value);
-	}
-
-	/**
-	 * 属性名称-成员
-	 */
-	private static final String PROPERTY_MEMBER_NAME = "Member";
-
-	/**
-	 * 成员 属性
-	 */
-	@DbField(name = "Member", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_MEMBER = registerProperty(PROPERTY_MEMBER_NAME, String.class,
+	@DbField(name = "Role", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_ROLE = registerProperty(PROPERTY_ROLE_NAME, String.class,
 			MY_CLASS);
 
 	/**
-	 * 获取-成员
+	 * 获取-角色
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_MEMBER_NAME)
-	public final String getMember() {
-		return this.getProperty(PROPERTY_MEMBER);
+	@XmlElement(name = PROPERTY_ROLE_NAME)
+	public final String getRole() {
+		return this.getProperty(PROPERTY_ROLE);
 	}
 
 	/**
-	 * 设置-成员
+	 * 设置-角色
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setMember(String value) {
-		this.setProperty(PROPERTY_MEMBER, value);
+	public final void setRole(String value) {
+		this.setProperty(PROPERTY_ROLE, value);
+	}
+
+	/**
+	 * 属性名称-组织-角色-成员
+	 */
+	private static final String PROPERTY_ROLEMEMBERS_NAME = "RoleMembers";
+
+	/**
+	 * 组织-角色-成员的集合属性
+	 * 
+	 */
+	public static final IPropertyInfo<IRoleMembers> PROPERTY_ROLEMEMBERS = registerProperty(PROPERTY_ROLEMEMBERS_NAME,
+			IRoleMembers.class, MY_CLASS);
+
+	/**
+	 * 获取-组织-角色-成员集合
+	 * 
+	 * @return 值
+	 */
+	@XmlElementWrapper(name = PROPERTY_ROLEMEMBERS_NAME)
+	@XmlElement(name = RoleMember.BUSINESS_OBJECT_NAME, type = RoleMember.class)
+	public final IRoleMembers getRoleMembers() {
+		return this.getProperty(PROPERTY_ROLEMEMBERS);
+	}
+
+	/**
+	 * 设置-组织-角色-成员集合
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setRoleMembers(IRoleMembers value) {
+		this.setProperty(PROPERTY_ROLEMEMBERS, value);
 	}
 
 	/**
@@ -597,6 +599,7 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setRoleMembers(new RoleMembers(this));
 
 	}
 

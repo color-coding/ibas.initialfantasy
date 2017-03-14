@@ -1,15 +1,15 @@
-package org.colorcoding.ibas.initialfantasy.bo.organizationalstructure;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -17,211 +17,146 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
- * 获取-组织-结构
+ * 获取-角色
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = OrganizationalStructure.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@XmlRootElement(name = OrganizationalStructure.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@BOCode(OrganizationalStructure.BUSINESS_OBJECT_CODE)
-public class OrganizationalStructure extends BusinessObject<OrganizationalStructure>
-		implements IOrganizationalStructure {
+@XmlType(name = Role.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlRootElement(name = Role.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@BOCode(Role.BUSINESS_OBJECT_CODE)
+public class Role extends BusinessObject<Role> implements IRole {
 
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = -589657286694404685L;
+	private static final long serialVersionUID = 2303178462653128192L;
 
 	/**
 	 * 当前类型
 	 */
-	private static final Class<?> MY_CLASS = OrganizationalStructure.class;
+	private static final Class<?> MY_CLASS = Role.class;
 
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "${Company}_SYS_ORGSTRC";
+	public static final String DB_TABLE_NAME = "${Company}_SYS_ROLE";
 
 	/**
 	 * 业务对象编码
 	 */
-	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_ORG_STRUCTURE";
+	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_ROLE";
 
 	/**
 	 * 业务对象名称
 	 */
-	public static final String BUSINESS_OBJECT_NAME = "OrganizationalStructure";
+	public static final String BUSINESS_OBJECT_NAME = "Role";
 
 	/**
-	 * 属性名称-组织
+	 * 属性名称-编码
 	 */
-	private static final String PROPERTY_ORGANIZATION_NAME = "Organization";
+	private static final String PROPERTY_CODE_NAME = "Code";
 
 	/**
-	 * 组织 属性
+	 * 编码 属性
 	 */
-	@DbField(name = "OrgCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_ORGANIZATION = registerProperty(PROPERTY_ORGANIZATION_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-组织
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_ORGANIZATION_NAME)
-	public final String getOrganization() {
-		return this.getProperty(PROPERTY_ORGANIZATION);
-	}
-
-	/**
-	 * 设置-组织
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setOrganization(String value) {
-		this.setProperty(PROPERTY_ORGANIZATION, value);
-	}
-
-	/**
-	 * 属性名称-归属结构
-	 */
-	private static final String PROPERTY_BELONGING_NAME = "Belonging";
-
-	/**
-	 * 归属结构 属性
-	 */
-	@DbField(name = "Belonging", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<Integer> PROPERTY_BELONGING = registerProperty(PROPERTY_BELONGING_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-归属结构
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_BELONGING_NAME)
-	public final Integer getBelonging() {
-		return this.getProperty(PROPERTY_BELONGING);
-	}
-
-	/**
-	 * 设置-归属结构
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setBelonging(Integer value) {
-		this.setProperty(PROPERTY_BELONGING, value);
-	}
-
-	/**
-	 * 属性名称-经理
-	 */
-	private static final String PROPERTY_MANAGER_NAME = "Manager";
-
-	/**
-	 * 经理 属性
-	 */
-	@DbField(name = "Manager", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_MANAGER = registerProperty(PROPERTY_MANAGER_NAME, String.class,
+	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
 	/**
-	 * 获取-经理
+	 * 获取-编码
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_MANAGER_NAME)
-	public final String getManager() {
-		return this.getProperty(PROPERTY_MANAGER);
+	@XmlElement(name = PROPERTY_CODE_NAME)
+	public final String getCode() {
+		return this.getProperty(PROPERTY_CODE);
 	}
 
 	/**
-	 * 设置-经理
+	 * 设置-编码
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setManager(String value) {
-		this.setProperty(PROPERTY_MANAGER, value);
+	public final void setCode(String value) {
+		this.setProperty(PROPERTY_CODE, value);
 	}
 
 	/**
-	 * 属性名称-生效日期
+	 * 属性名称-名称
 	 */
-	private static final String PROPERTY_VALIDDATE_NAME = "ValidDate";
+	private static final String PROPERTY_NAME_NAME = "Name";
 
 	/**
-	 * 生效日期 属性
+	 * 名称 属性
 	 */
-	@DbField(name = "ValidDate", type = DbFieldType.DATE, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<DateTime> PROPERTY_VALIDDATE = registerProperty(PROPERTY_VALIDDATE_NAME,
-			DateTime.class, MY_CLASS);
+	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
+			MY_CLASS);
 
 	/**
-	 * 获取-生效日期
+	 * 获取-名称
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_VALIDDATE_NAME)
-	public final DateTime getValidDate() {
-		return this.getProperty(PROPERTY_VALIDDATE);
+	@XmlElement(name = PROPERTY_NAME_NAME)
+	public final String getName() {
+		return this.getProperty(PROPERTY_NAME);
 	}
 
 	/**
-	 * 设置-生效日期
+	 * 设置-名称
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setValidDate(DateTime value) {
-		this.setProperty(PROPERTY_VALIDDATE, value);
+	public final void setName(String value) {
+		this.setProperty(PROPERTY_NAME, value);
 	}
 
 	/**
-	 * 属性名称-失效日期
+	 * 属性名称-激活
 	 */
-	private static final String PROPERTY_INVALIDDATE_NAME = "InvalidDate";
+	private static final String PROPERTY_ACTIVATED_NAME = "Activated";
 
 	/**
-	 * 失效日期 属性
+	 * 激活 属性
 	 */
-	@DbField(name = "InvalidDate", type = DbFieldType.DATE, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<DateTime> PROPERTY_INVALIDDATE = registerProperty(PROPERTY_INVALIDDATE_NAME,
-			DateTime.class, MY_CLASS);
+	@DbField(name = "Activated", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_ACTIVATED = registerProperty(PROPERTY_ACTIVATED_NAME,
+			emYesNo.class, MY_CLASS);
 
 	/**
-	 * 获取-失效日期
+	 * 获取-激活
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_INVALIDDATE_NAME)
-	public final DateTime getInvalidDate() {
-		return this.getProperty(PROPERTY_INVALIDDATE);
+	@XmlElement(name = PROPERTY_ACTIVATED_NAME)
+	public final emYesNo getActivated() {
+		return this.getProperty(PROPERTY_ACTIVATED);
 	}
 
 	/**
-	 * 设置-失效日期
+	 * 设置-激活
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setInvalidDate(DateTime value) {
-		this.setProperty(PROPERTY_INVALIDDATE, value);
+	public final void setActivated(emYesNo value) {
+		this.setProperty(PROPERTY_ACTIVATED, value);
 	}
 
 	/**
 	 * 属性名称-对象编号
 	 */
-	private static final String PROPERTY_OBJECTKEY_NAME = "ObjectKey";
+	private static final String PROPERTY_DOCENTRY_NAME = "DocEntry";
 
 	/**
 	 * 对象编号 属性
 	 */
-	@DbField(name = "ObjectKey", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
-	public static final IPropertyInfo<Integer> PROPERTY_OBJECTKEY = registerProperty(PROPERTY_OBJECTKEY_NAME,
+	@DbField(name = "DocEntry", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	public static final IPropertyInfo<Integer> PROPERTY_DOCENTRY = registerProperty(PROPERTY_DOCENTRY_NAME,
 			Integer.class, MY_CLASS);
 
 	/**
@@ -229,9 +164,9 @@ public class OrganizationalStructure extends BusinessObject<OrganizationalStruct
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_OBJECTKEY_NAME)
-	public final Integer getObjectKey() {
-		return this.getProperty(PROPERTY_OBJECTKEY);
+	@XmlElement(name = PROPERTY_DOCENTRY_NAME)
+	public final Integer getDocEntry() {
+		return this.getProperty(PROPERTY_DOCENTRY);
 	}
 
 	/**
@@ -240,8 +175,8 @@ public class OrganizationalStructure extends BusinessObject<OrganizationalStruct
 	 * @param value
 	 *            值
 	 */
-	public final void setObjectKey(Integer value) {
-		this.setProperty(PROPERTY_OBJECTKEY, value);
+	public final void setDocEntry(Integer value) {
+		this.setProperty(PROPERTY_DOCENTRY, value);
 	}
 
 	/**
@@ -405,38 +340,6 @@ public class OrganizationalStructure extends BusinessObject<OrganizationalStruct
 	}
 
 	/**
-	 * 属性名称-数据源
-	 */
-	private static final String PROPERTY_DATASOURCE_NAME = "DataSource";
-
-	/**
-	 * 数据源 属性
-	 */
-	@DbField(name = "DataSource", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_DATASOURCE = registerProperty(PROPERTY_DATASOURCE_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-数据源
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_DATASOURCE_NAME)
-	public final String getDataSource() {
-		return this.getProperty(PROPERTY_DATASOURCE);
-	}
-
-	/**
-	 * 设置-数据源
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setDataSource(String value) {
-		this.setProperty(PROPERTY_DATASOURCE, value);
-	}
-
-	/**
 	 * 属性名称-实例号（版本）
 	 */
 	private static final String PROPERTY_LOGINST_NAME = "LogInst";
@@ -498,6 +401,38 @@ public class OrganizationalStructure extends BusinessObject<OrganizationalStruct
 	 */
 	public final void setSeries(Integer value) {
 		this.setProperty(PROPERTY_SERIES, value);
+	}
+
+	/**
+	 * 属性名称-数据源
+	 */
+	private static final String PROPERTY_DATASOURCE_NAME = "DataSource";
+
+	/**
+	 * 数据源 属性
+	 */
+	@DbField(name = "DataSource", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_DATASOURCE = registerProperty(PROPERTY_DATASOURCE_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-数据源
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_DATASOURCE_NAME)
+	public final String getDataSource() {
+		return this.getProperty(PROPERTY_DATASOURCE);
+	}
+
+	/**
+	 * 设置-数据源
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setDataSource(String value) {
+		this.setProperty(PROPERTY_DATASOURCE, value);
 	}
 
 	/**
@@ -629,46 +564,13 @@ public class OrganizationalStructure extends BusinessObject<OrganizationalStruct
 	}
 
 	/**
-	 * 属性名称-组织-角色
-	 */
-	private static final String PROPERTY_ORGANIZATIONALROLES_NAME = "OrganizationalRoles";
-
-	/**
-	 * 组织-角色的集合属性
-	 * 
-	 */
-	public static final IPropertyInfo<IOrganizationalRoles> PROPERTY_ORGANIZATIONALROLES = registerProperty(
-			PROPERTY_ORGANIZATIONALROLES_NAME, IOrganizationalRoles.class, MY_CLASS);
-
-	/**
-	 * 获取-组织-角色集合
-	 * 
-	 * @return 值
-	 */
-	@XmlElementWrapper(name = PROPERTY_ORGANIZATIONALROLES_NAME)
-	@XmlElement(name = OrganizationalRole.BUSINESS_OBJECT_NAME, type = OrganizationalRole.class)
-	public final IOrganizationalRoles getOrganizationalRoles() {
-		return this.getProperty(PROPERTY_ORGANIZATIONALROLES);
-	}
-
-	/**
-	 * 设置-组织-角色集合
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setOrganizationalRoles(IOrganizationalRoles value) {
-		this.setProperty(PROPERTY_ORGANIZATIONALROLES, value);
-	}
-
-	/**
 	 * 初始化数据
 	 */
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-		this.setOrganizationalRoles(new OrganizationalRoles(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setActivated(emYesNo.YES);
 
 	}
 

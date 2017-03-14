@@ -1,13 +1,13 @@
-package org.colorcoding.ibas.initialfantasy.bo.organization;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import org.colorcoding.ibas.bobas.bo.*;
 import org.colorcoding.ibas.bobas.data.*;
 
 /**
-* 组织 接口
+* 用户 接口
 * 
 */
-public interface IOrganization extends IBOMasterData {
+public interface IUser extends IBOMasterData {
 
     /**
     * 获取-编码
@@ -40,18 +40,63 @@ public interface IOrganization extends IBOMasterData {
 
 
     /**
-    * 获取-是否启用
+    * 获取-用户密码
+    * 
+    * @return 值
+    */
+    String getPassword();
+
+    /**
+    * 设置-用户密码
+    * 
+    * @param value 值
+    */
+    void setPassword(String value);
+
+
+    /**
+    * 获取-激活
     * 
     * @return 值
     */
     emYesNo getActivated();
 
     /**
-    * 设置-是否启用
+    * 设置-激活
     * 
     * @param value 值
     */
     void setActivated(emYesNo value);
+
+
+    /**
+    * 获取-超级用户
+    * 
+    * @return 值
+    */
+    emYesNo getSupper();
+
+    /**
+    * 设置-超级用户
+    * 
+    * @param value 值
+    */
+    void setSupper(emYesNo value);
+
+
+    /**
+    * 获取-电子邮件地址
+    * 
+    * @return 值
+    */
+    String getMail();
+
+    /**
+    * 设置-电子邮件地址
+    * 
+    * @param value 值
+    */
+    void setMail(String value);
 
 
     /**
@@ -247,6 +292,51 @@ public interface IOrganization extends IBOMasterData {
     * @param value 值
     */
     void setUpdateActionId(String value);
+
+
+    /**
+    * 获取-审批状态
+    * 
+    * @return 值
+    */
+    emApprovalStatus getApprovalStatus();
+
+    /**
+    * 设置-审批状态
+    * 
+    * @param value 值
+    */
+    void setApprovalStatus(emApprovalStatus value);
+
+
+    /**
+    * 获取-数据所有者
+    * 
+    * @return 值
+    */
+    Integer getDataOwner();
+
+    /**
+    * 设置-数据所有者
+    * 
+    * @param value 值
+    */
+    void setDataOwner(Integer value);
+
+
+    /**
+    * 获取-数据所属组织
+    * 
+    * @return 值
+    */
+    String getOrganization();
+
+    /**
+    * 设置-数据所属组织
+    * 
+    * @param value 值
+    */
+    void setOrganization(String value);
 
 
 

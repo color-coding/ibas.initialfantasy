@@ -19,7 +19,7 @@ public class User implements IUser {
 	public static final User SYSTEM_USER = new User(OrganizationManager.SYSTEM_USER_SIGN, "!system",
 			UUID.randomUUID().toString());
 
-	public static User create(org.colorcoding.ibas.initialfantasy.bo.organization.IUser user) {
+	public static User create(org.colorcoding.ibas.initialfantasy.bo.organizations.IUser user) {
 		User nUser = new User();
 		nUser.setCode(user.getCode());
 		nUser.setId(user.getDocEntry());
