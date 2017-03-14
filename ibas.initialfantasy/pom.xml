@@ -36,6 +36,7 @@
 				<configuration>
 					<archive>
 						<manifest>
+							<addClasspath>true</addClasspath>
 							<mainClass>org.colorcoding.ibas.initialfantasy.Console</mainClass>
 						</manifest>
 					</archive>
