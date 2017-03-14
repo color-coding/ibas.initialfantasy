@@ -32,10 +32,10 @@ import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.IOrganizationalRole;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.IOrganizationalStructure;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.IRoleMember;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.OrganizationalStructure;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganizationalRole;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganizationalStructure;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IRoleMember;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
 
@@ -48,7 +48,7 @@ public class OrganizationManager implements IOrganizationManager {
 	 */
 	public static final int SYSTEM_USER_SIGN = -9;
 
-	public static String createToken(org.colorcoding.ibas.initialfantasy.bo.organization.IUser user) {
+	public static String createToken(org.colorcoding.ibas.initialfantasy.bo.organizations.IUser user) {
 		return createToken(user.getPassword(), user.getDocEntry());
 	}
 
@@ -174,15 +174,15 @@ public class OrganizationManager implements IOrganizationManager {
 
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
-		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_SUPPER.getName());
+		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_SUPPER.getName());
 		condition.setCondVal(emYesNo.YES);
 		condition = criteria.getConditions().create();
-		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
+		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
 		condition.setCondVal(emYesNo.YES);
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
-		IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.IUser> operationResult = boRepository
+		IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organizations.IUser> operationResult = boRepository
 				.fetchUser(criteria);
-		for (org.colorcoding.ibas.initialfantasy.bo.organization.IUser tmpUser : operationResult.getResultObjects()) {
+		for (org.colorcoding.ibas.initialfantasy.bo.organizations.IUser tmpUser : operationResult.getResultObjects()) {
 			User user = User.create(tmpUser);
 			user.setToken(createToken(tmpUser));
 			supperUsers.add(user);
@@ -461,16 +461,16 @@ public class OrganizationManager implements IOrganizationManager {
 		if (key != null && !key.isEmpty()) {
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
-			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_CODE.getName());
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_CODE.getName());
 			condition.setCondVal(key);
 			condition = criteria.getConditions().create();
-			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
 			condition.setCondVal(emYesNo.YES);
 			IBORepositoryInitialFantasyApp boRepository = this.createRepository();
-			IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.IUser> operationResult = boRepository
+			IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organizations.IUser> operationResult = boRepository
 					.fetchUser(criteria);
 			if (operationResult.getError() == null && operationResult.getResultCode() == 0) {
-				org.colorcoding.ibas.initialfantasy.bo.organization.IUser tmpUser = operationResult.getResultObjects()
+				org.colorcoding.ibas.initialfantasy.bo.organizations.IUser tmpUser = operationResult.getResultObjects()
 						.firstOrDefault();
 				if (tmpUser != null) {
 					User user = User.create(tmpUser);
@@ -489,16 +489,16 @@ public class OrganizationManager implements IOrganizationManager {
 		}
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
-		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
+		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_DOCENTRY.getName());
 		condition.setCondVal(id);
 		condition = criteria.getConditions().create();
-		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
+		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
 		condition.setCondVal(emYesNo.YES);
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
-		IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.IUser> operationResult = boRepository
+		IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organizations.IUser> operationResult = boRepository
 				.fetchUser(criteria);
 		if (operationResult.getError() == null && operationResult.getResultCode() == 0) {
-			org.colorcoding.ibas.initialfantasy.bo.organization.IUser tmpUser = operationResult.getResultObjects()
+			org.colorcoding.ibas.initialfantasy.bo.organizations.IUser tmpUser = operationResult.getResultObjects()
 					.firstOrDefault();
 			if (tmpUser != null) {
 				User user = User.create(tmpUser);

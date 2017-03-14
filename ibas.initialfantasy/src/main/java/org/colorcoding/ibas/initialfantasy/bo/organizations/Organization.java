@@ -1,4 +1,4 @@
-package org.colorcoding.ibas.initialfantasy.bo.organization;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

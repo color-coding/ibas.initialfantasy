@@ -1,4 +1,4 @@
-package org.colorcoding.ibas.initialfantasy.bo.approvaltemplate;
+package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import java.beans.PropertyChangeEvent;
 
@@ -15,28 +15,26 @@ import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
- * 审批模板步骤条件 集合
+ * 组织-角色-成员 集合
  */
-@XmlType(name = ApprovalTemplateStepConditions.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@XmlSeeAlso({ ApprovalTemplateStepCondition.class })
-public class ApprovalTemplateStepConditions
-		extends BusinessObjects<IApprovalTemplateStepCondition, IApprovalTemplateStep>
-		implements IApprovalTemplateStepConditions {
+@XmlType(name = RoleMembers.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlSeeAlso({ RoleMember.class })
+public class RoleMembers extends BusinessObjects<IRoleMember, IOrganizationalRole> implements IRoleMembers {
 
 	/**
 	 * 业务对象名称
 	 */
-	public static final String BUSINESS_OBJECT_NAME = "ApprovalTemplateStepConditions";
+	public static final String BUSINESS_OBJECT_NAME = "RoleMembers";
 
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = 4755531819577845333L;
+	private static final long serialVersionUID = 6621920741824890441L;
 
 	/**
 	 * 构造方法
 	 */
-	public ApprovalTemplateStepConditions() {
+	public RoleMembers() {
 		super();
 	}
 
@@ -46,7 +44,7 @@ public class ApprovalTemplateStepConditions
 	 * @param parent
 	 *            父项对象
 	 */
-	public ApprovalTemplateStepConditions(IApprovalTemplateStep parent) {
+	public RoleMembers(IOrganizationalRole parent) {
 		super(parent);
 	}
 
@@ -54,16 +52,16 @@ public class ApprovalTemplateStepConditions
 	 * 元素类型
 	 */
 	public Class<?> getElementType() {
-		return ApprovalTemplateStepCondition.class;
+		return RoleMember.class;
 	}
 
 	/**
-	 * 创建审批模板步骤条件
+	 * 创建组织-角色-成员
 	 * 
-	 * @return 审批模板步骤条件
+	 * @return 组织-角色-成员
 	 */
-	public IApprovalTemplateStepCondition create() {
-		IApprovalTemplateStepCondition item = new ApprovalTemplateStepCondition();
+	public IRoleMember create() {
+		IRoleMember item = new RoleMember();
 		if (this.add(item)) {
 			return item;
 		}
@@ -71,25 +69,26 @@ public class ApprovalTemplateStepConditions
 	}
 
 	@Override
-	protected void afterAddItem(IApprovalTemplateStepCondition item) {
+	protected void afterAddItem(IRoleMember item) {
 		super.afterAddItem(item);
-		item.setStepLineId(this.getParent().getLineId());
+		item.setRoleLineId(this.getParent().getLineId());
+		item.setObjectKey(this.getParent().getObjectKey());
 	}
 
 	@Override
 	public ICriteria getElementCriteria() {
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
-		condition.setAlias(ApprovalTemplateStepCondition.PROPERTY_STEPLINEID.getName());
+		condition.setAlias(RoleMember.PROPERTY_ROLELINEID.getName());
 		condition.setCondVal(this.getParent().getLineId());
 		condition = criteria.getConditions().create();
-		condition.setAlias(ApprovalTemplateStepCondition.PROPERTY_OBJECTKEY.getName());
+		condition.setAlias(RoleMember.PROPERTY_OBJECTKEY.getName());
 		condition.setCondVal(this.getParent().getObjectKey());
 		ISort sort = criteria.getSorts().create();
-		sort.setAlias(ApprovalTemplateStepCondition.PROPERTY_OBJECTKEY.getName());
+		sort.setAlias(RoleMember.PROPERTY_OBJECTKEY.getName());
 		sort.setSortType(SortType.ASCENDING);
 		sort = criteria.getSorts().create();
-		sort.setAlias(ApprovalTemplateStepCondition.PROPERTY_LINEID.getName());
+		sort.setAlias(RoleMember.PROPERTY_LINEID.getName());
 		sort.setSortType(SortType.ASCENDING);
 		return criteria;
 	}
@@ -98,10 +97,9 @@ public class ApprovalTemplateStepConditions
 	public void onParentPropertyChanged(PropertyChangeEvent arg0) {
 		super.onParentPropertyChanged(arg0);
 		if (arg0.getPropertyName().equals(IBOLine.SECONDARY_PRIMARY_KEY_NAME)) {
-			for (IApprovalTemplateStepCondition item : this) {
-				item.setStepLineId(this.getParent().getLineId());
+			for (IRoleMember item : this) {
+				item.setRoleLineId(this.getParent().getLineId());
 			}
 		}
-
 	}
 }

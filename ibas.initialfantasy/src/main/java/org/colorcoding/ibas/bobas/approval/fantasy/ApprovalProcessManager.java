@@ -60,7 +60,7 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 	 */
 	@Override
 	protected Iterator<IApprovalProcess> createApprovalProcess(String boCode) {
-		if (boCode == null || boCode.equals(""))
+		if (boCode == null || boCode.isEmpty())
 			return null;
 		// 根据 boCode 查询审批流程模板 AT
 		ICriteria criteria = new Criteria();
@@ -110,7 +110,7 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 	 */
 	@Override
 	protected IApprovalProcess loadApprovalProcess(String boKey) {
-		if (boKey == null || boKey.equals("")) {
+		if (boKey == null || boKey.isEmpty()) {
 			return null;
 		}
 		// 根据boKey查询审批请求

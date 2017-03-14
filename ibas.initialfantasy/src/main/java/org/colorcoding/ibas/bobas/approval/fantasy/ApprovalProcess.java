@@ -39,7 +39,7 @@ public class ApprovalProcess extends org.colorcoding.ibas.bobas.approval.Approva
 			aqStep.setStepCanModify(item.getStepCanModify());
 			aqStep.setStepName(item.getStepName());
 			aqStep.setStepOwner(item.getStepOwner());
-			aqStep.setStepConditions(ApprovalProcessStepCondition.toString(item.getApprovalTemplateStepConditions()));
+			aqStep.setStepConditions(ApprovalProcessStepCondition.serialize(item.getApprovalTemplateStepConditions()));
 
 			aq.getApprovalRequestSteps().add(aqStep);
 		}

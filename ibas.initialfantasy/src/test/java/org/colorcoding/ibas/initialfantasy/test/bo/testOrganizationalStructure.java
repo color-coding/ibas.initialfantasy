@@ -7,10 +7,10 @@ import javax.xml.bind.Marshaller;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.IOrganizationalRole;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.IOrganizationalStructure;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.IRoleMember;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.OrganizationalStructure;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganizationalRole;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganizationalStructure;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IRoleMember;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
 

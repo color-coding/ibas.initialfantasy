@@ -20,8 +20,8 @@ import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.ApprovalTemplate;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.IApprovalTemplate;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.IApprovalTemplateStep;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.IApprovalTemplateStepCondition;
-import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
-import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.data.emApprovalStepOwnerType;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
@@ -51,7 +51,7 @@ public class testApprovalProcess extends TestCase {
 		assertEquals(opRsltUser.getMessage(), opRsltUser.getResultCode(), 0);
 		// 创建审批模板，激活的超级管理员需要进行审批
 		ApprovalTemplate at = new ApprovalTemplate();
-		at.setApprovalObjectCode("AVA_SYS_USER");
+		at.setApprovalObjectCode(MyConfiguration.applyVariables(User.BUSINESS_OBJECT_CODE));
 		at.setName("超级用户的审批");
 		IApprovalTemplateStep atStep01 = at.getApprovalTemplateSteps().create();
 		atStep01.setStepOrder(1);
@@ -59,14 +59,14 @@ public class testApprovalProcess extends TestCase {
 		atStep01.setStepOwner(apManager.getDocEntry());
 		IApprovalTemplateStepCondition atStepCondition = atStep01.getApprovalTemplateStepConditions().create();
 		atStepCondition.setRelationship(emConditionRelationship.NONE);
-		atStepCondition.setPropertyName("SupperUser");// 注意此处应为数据库字段
+		atStepCondition.setPropertyName(User.PROPERTY_SUPPER);// 注意此处应为数据库字段
 		atStepCondition.setOperation(emConditionOperation.EQUAL);
-		atStepCondition.setConditionValue("Y");
+		atStepCondition.setConditionValue(emYesNo.YES);
 		atStepCondition = atStep01.getApprovalTemplateStepConditions().create();
 		atStepCondition.setRelationship(emConditionRelationship.AND);
-		atStepCondition.setPropertyName("Activated");// 注意此处应为数据库字段
+		atStepCondition.setPropertyName(User.PROPERTY_ACTIVATED);// 注意此处应为数据库字段
 		atStepCondition.setOperation(emConditionOperation.EQUAL);
-		atStepCondition.setConditionValue("Y");
+		atStepCondition.setConditionValue(emYesNo.YES);
 		IApprovalTemplateStep atStep02 = at.getApprovalTemplateSteps().create();
 		atStep02.setStepOrder(2);
 		atStep02.setStepName("boss审批");
@@ -75,14 +75,14 @@ public class testApprovalProcess extends TestCase {
 		// 步骤2的审批条件与步骤1相同
 		atStepCondition = atStep02.getApprovalTemplateStepConditions().create();
 		atStepCondition.setRelationship(emConditionRelationship.NONE);
-		atStepCondition.setPropertyName("SupperUser");// 注意此处应为数据库字段
+		atStepCondition.setPropertyName(User.PROPERTY_SUPPER);// 注意此处应为数据库字段
 		atStepCondition.setOperation(emConditionOperation.EQUAL);
-		atStepCondition.setConditionValue("Y");
+		atStepCondition.setConditionValue(emYesNo.YES);
 		atStepCondition = atStep02.getApprovalTemplateStepConditions().create();
 		atStepCondition.setRelationship(emConditionRelationship.AND);
-		atStepCondition.setPropertyName("Activated");// 注意此处应为数据库字段
+		atStepCondition.setPropertyName(User.PROPERTY_ACTIVATED);// 注意此处应为数据库字段
 		atStepCondition.setOperation(emConditionOperation.EQUAL);
-		atStepCondition.setConditionValue("Y");
+		atStepCondition.setConditionValue(emYesNo.YES);
 		IBORepositoryInitialFantasyApp apRepository = new BORepositoryInitialFantasy();
 		apRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		IOperationResult<IApprovalTemplate> operationResult = apRepository.saveApprovalTemplate(at);

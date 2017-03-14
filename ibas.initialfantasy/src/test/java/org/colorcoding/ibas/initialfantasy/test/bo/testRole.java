@@ -2,7 +2,7 @@ package org.colorcoding.ibas.initialfantasy.test.bo;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.initialfantasy.bo.organization.Role;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
 

@@ -16,10 +16,10 @@ import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.ApprovalRequest;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.ApprovalTemplate;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
-import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
-import org.colorcoding.ibas.initialfantasy.bo.organization.Role;
-import org.colorcoding.ibas.initialfantasy.bo.organization.User;
-import org.colorcoding.ibas.initialfantasy.bo.organizationalstructure.OrganizationalStructure;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.Organization;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
+import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.bo.ownership.Ownership;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 

@@ -7,9 +7,11 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.core.PropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
+import org.colorcoding.ibas.bobas.db.DataConvert;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -697,6 +699,33 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 
+	}
+
+	@Override
+	public void setPropertyName(IPropertyInfo<?> property) {
+		if (property instanceof PropertyInfo<?>) {
+			PropertyInfo<?> pInfo = (PropertyInfo<?>) property;
+			Object dbAnnotation = pInfo.getAnnotation(DbField.class);
+			if (dbAnnotation != null) {
+				// 数据库字段
+				DbField dbField = (DbField) dbAnnotation;
+				this.setPropertyName(dbField.name());
+				return;
+			}
+		}
+		this.setPropertyName(property.getName());
+	}
+
+	@Override
+	public void setConditionValue(Object value) {
+		this.setConditionValue(this.toValue(value));
+	}
+
+	protected String toValue(Object value) {
+		if (value == null) {
+			return "";
+		}
+		return DataConvert.toDbValue(value);
 	}
 
 }
