@@ -19,12 +19,12 @@
     <Action Name="create stored procedures">
         <Step Name="check and drop exists stored procedures">
             <Script>
-                DROP PROCEDURE IF EXISTS `${DbName}`.`CIF_SP_TRANSACTION_NOTIFICATION`;
+                DROP PROCEDURE IF EXISTS `${DbName}`.`${Company}_SP_TRANSACTION_NOTIFICATION`;
             </Script>
         </Step>
         <Step Name="create stored procedures">
             <Script>
-                CREATE PROCEDURE `${DbName}`.`CIF_SP_TRANSACTION_NOTIFICATION` (
+                CREATE PROCEDURE `${DbName}`.`${Company}_SP_TRANSACTION_NOTIFICATION` (
                     _object_type varchar(20),                  --对象类型（BOCode）
                     _transaction_type char(1),                 --业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）
                     _num_of_cols_in_key int,                   --主键个数

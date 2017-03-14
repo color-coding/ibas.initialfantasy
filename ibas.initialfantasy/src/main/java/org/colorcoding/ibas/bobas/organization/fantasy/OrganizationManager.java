@@ -62,7 +62,7 @@ public class OrganizationManager implements IOrganizationManager {
 
 	public OrganizationManager() {
 		// 设置组织结构刷新时间，默认180秒
-		this.setFreshTime(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_REFRESH_TIME, 180));
+		this.setFreshTime(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_REFRESH_TIME, 300));
 	}
 
 	/**

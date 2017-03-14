@@ -24,12 +24,12 @@
     <Action Name="create stored procedures">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = 'CIF_SP_TRANSACTION_NOTIFICATION'
+                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SP_TRANSACTION_NOTIFICATION'
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
             <Script>
-                CREATE PROCEDURE "${DbName}"."CIF_SP_TRANSACTION_NOTIFICATION" (
+                CREATE PROCEDURE "${DbName}"."${Company}_SP_TRANSACTION_NOTIFICATION" (
                     IN _object_type nvarchar(30),                       --对象类型（BOCode）
                     IN _transaction_type nvarchar(1),                   --业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）
                     IN _num_of_cols_in_key integer,                     --主键个数
