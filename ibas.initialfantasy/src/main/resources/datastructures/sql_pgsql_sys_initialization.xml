@@ -21,7 +21,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures">
+    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
         <Step Name="check and drop exists stored procedures">
             <Script>
                 DROP FUNCTION IF EXISTS "${Company}_SP_TRANSACTION_NOTIFICATION"(character varying, character, integer, character varying, character varying);
@@ -61,6 +61,47 @@
                     for _result in select _error "error",_error_message "message" loop 
                     return next _result; 
                     end loop;
+                END;
+                $_$ LANGUAGE plpgsql;
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_FAST_REGISTRATION_MODULES">
+        <Step Name="create uuid function">
+            <Script>                
+                CREATE OR REPLACE FUNCTION uuid_generate_v1()
+                RETURNS uuid
+                AS '$libdir/uuid-ossp', 'uuid_generate_v1'
+                VOLATILE STRICT LANGUAGE C;
+            </Script>
+        </Step>
+        <Step Name="check stored procedures exists">
+            <Script>
+                DROP FUNCTION IF EXISTS "${Company}_SYS_SP_FAST_REGISTRATION_MODULES"(character varying,character varying,character varying,character varying,character varying,character varying,character varying);
+            </Script>
+        </Step>
+        <Step Name="create stored procedures">
+            <Script>
+                CREATE OR REPLACE FUNCTION "${Company}_SYS_SP_FAST_REGISTRATION_MODULES" (
+                   _Platform varchar(20),        /*平台简码*/
+                   _ModuleID varchar(50),        /*模块名称*/
+                   _ModuleName varchar(50),      /*模块名称*/
+                ) RETURNS void AS $_$ 
+                DECLARE
+                   _PlatformID varchar(50);       /*平台ID*/
+                   _ObjectKey int;                /*对象编号*/
+                   _ObjectCode varchar(30);       /*对象*/
+                BEGIN
+				   /*模块平台*/
+				   select "PlatformId" into _PlatformID From "${Company}_SYS_PLATFORM" where "PlatformCode" = _Platform limit 1;
+				   
+				   _ObjectCode = '${Company}_SYS_MODULE';
+				   select COALESCE(A."AutoKey",1) into _ObjectKey from "${Company}_SYS_ONNM" A where A."ObjectCode" = _ObjectCode limit 1;
+				   delete from "${Company}_SYS_MODULE" where "ModuleId" = _ModuleID AND "PlatformId" = _PlatformID;
+				   insert into "${Company}_SYS_MODULE" ("ModuleId" , "ModuleName" ,"PlatformId","Activated","ObjectKey","ObjectCode")
+				      values(_ModuleID,_ModuleName,_PlatformID,'Y',_ObjectKey,_ObjectCode);
+				   update "${Company}_SYS_ONNM" set "AutoKey" = "AutoKey" + 1 where "ObjectCode" = _ObjectCode;
+
                 END;
                 $_$ LANGUAGE plpgsql;
             </Script>

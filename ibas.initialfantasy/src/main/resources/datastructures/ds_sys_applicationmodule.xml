@@ -5,10 +5,8 @@
     <Property Name="ModuleId" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleId" UniqueKey="Yes"/>
     <Property Name="PlatformId" Description="平台标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="PlatformId" UniqueKey="Yes"/>
     <Property Name="ModuleName" Description="模块名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ModuleName"/>
-    <Property Name="ModuleType" Description="模块类型" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="ModuleType"/>
     <Property Name="ModuleCategory" Description="模块类别" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="ModuleCategory"/>
     <Property Name="Activated" Description="是否可用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
-    <Property Name="ActivatedPackageId" Description="程序包标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ActivatedPackageId"/>
     <Property Name="ObjectKey" Description="对象键值" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>

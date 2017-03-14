@@ -21,7 +21,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures">
+    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
         <Step Name="check stored procedures exists">
             <Script>
                 select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SP_TRANSACTION_NOTIFICATION'
@@ -51,6 +51,47 @@
                     --返回结果
                     SELECT TO_INTEGER(_error) "code", _error_message "message" FROM dummy;
                 END
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+        <Step Name="check stored procedures exists">
+            <Script>
+                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SYS_SP_GET_USER_MODULES'
+            </Script>
+        </Step>
+        <Step Name="create stored procedures" RunOnValue="0">
+            <Script>
+                CREATE PROCEDURE "${Company}_SYS_SP_GET_USER_MODULES"
+                (
+                    in platform nvarchar(36),           --平台全码
+                    in userCode nvarchar(8)             --用户编码
+                )
+                LANGUAGE SQLSCRIPT AS
+                BEGIN
+                DECLARE v_count integer;
+                SELECT count(0) into v_count FROM "${Company}_SYS_USER" WHERE "UserCode" = :userCode AND "SupperUser" = 'Y';
+                IF :v_count = 1 THEN
+                    --超级用户全部权限
+                    SELECT A.*,'A' AuthValue 
+                    FROM "${Company}_SYS_MODULE" A
+                    WHERE A."PlatformId" = :platform AND A."Activated" = 'Y';
+                ELSE
+                    --非超级用户，角色权限
+                    SELECT A.*,C."AuthValue"
+                    FROM "${Company}_SYS_MODULE" A INNER JOIN (
+                        SELECT DISTINCT B."ModuleID",B."AuthValue"
+                        FROM "${Company}_SYS_PRIVILEGE" B 
+                        WHERE B."PlatformID" = :platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                            SELECT B."Role" 
+                            FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
+                                INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
+                            WHERE A."ValidDate" &lt;= CURRENT_DATE AND A."InvalidDate" &gt;= CURRENT_DATE AND C."Member" = :userCode
+                            )
+                    ) C ON A."ModuleId" = C."ModuleID"
+                    WHERE A."PlatformId" = :platform AND A."Activated" = 'Y';
+                END IF;
+                END;
             </Script>
         </Step>
     </Action>
