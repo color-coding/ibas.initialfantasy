@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns:User xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
+	<Activated>YES</Activated>
+	<Code>admin</Code>
+	<Name>administrator</Name>
+	<Password>1q2w3e</Password>
+	<Supper>YES</Supper>
+</ns:User>
