@@ -43,10 +43,6 @@ import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantas
 @XmlType(name = "organizations")
 @XmlRootElement(name = "organizations")
 public class OrganizationManager implements IOrganizationManager {
-	/**
-	 * 系统用户ID
-	 */
-	public static final int SYSTEM_USER_SIGN = -9;
 
 	public static String createToken(org.colorcoding.ibas.initialfantasy.bo.organizations.IUser user) {
 		return createToken(user.getPassword(), user.getDocEntry());

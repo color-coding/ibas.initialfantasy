@@ -3,6 +3,8 @@ package org.colorcoding.ibas.initialfantasy.test.bo;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.serialization.ISerializer;
+import org.colorcoding.ibas.bobas.serialization.SerializerFactory;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
@@ -34,7 +36,10 @@ public class testUser extends TestCase {
 		bo.setPassword("1q2w3e");
 		bo.setActivated(emYesNo.YES);
 		bo.setSupper(emYesNo.YES);
-		System.out.println(bo.toString("xml"));
+		String xml = bo.toString("xml");
+		System.out.println(xml);
+		ISerializer serializer = SerializerFactory.create().createManager().create();
+		serializer.validate(User.class, xml);
 		// 测试对象的保存和查询
 		IOperationResult<?> operationResult = null;
 		ICriteria criteria = null;
