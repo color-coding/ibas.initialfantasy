@@ -38,7 +38,7 @@ public class testUser extends TestCase {
 		bo.setSupper(emYesNo.YES);
 		String xml = bo.toString("xml");
 		System.out.println(xml);
-		ISerializer serializer = SerializerFactory.create().createManager().create();
+		ISerializer<?> serializer = SerializerFactory.create().createManager().create();
 		serializer.validate(User.class, xml);
 		// 测试对象的保存和查询
 		IOperationResult<?> operationResult = null;
