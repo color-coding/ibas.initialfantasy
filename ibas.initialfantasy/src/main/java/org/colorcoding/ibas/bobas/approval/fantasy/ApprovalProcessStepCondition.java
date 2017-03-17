@@ -1,6 +1,6 @@
 package org.colorcoding.ibas.bobas.approval.fantasy;
 
-import java.io.StringWriter;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -30,7 +30,7 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 
 	public static IApprovalProcessStepCondition[] create(String condition) {
 		if (condition != null) {
-			ISerializer serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
+			ISerializer<?> serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
 			@SuppressWarnings("unchecked")
 			java.util.ArrayList<ApprovalProcessStepCondition> stepConditions = serializer.deserialize(condition,
 					ArrayList.class, ApprovalProcessStepCondition.class);
@@ -50,8 +50,8 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 				stepCondition.setConditionValue(item.getConditionValue());
 				stepConditions.add(stepCondition);
 			}
-			ISerializer serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
-			StringWriter writer = new StringWriter();
+			ISerializer<?> serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
+			ByteArrayOutputStream writer = new ByteArrayOutputStream();
 			serializer.serialize(stepConditions, writer, ApprovalProcessStepCondition.class);
 			return writer.toString();
 		}
