@@ -153,12 +153,12 @@ public class ServiceRouting {
 	 */
 	public boolean routing(UserModule module) {
 		boolean done = false;
-		if (module == null || module.getModuleId() == null) {
+		if (module == null || module.getId() == null) {
 			return done;
 		}
 		for (int i = 0; i < services.size(); i++) {
 			ServiceInformation service = services.get(i);
-			if (!module.getModuleId().equals(service.getId())) {
+			if (!module.getId().equals(service.getId())) {
 				// 相同的模块ID
 				continue;
 			}
@@ -170,23 +170,23 @@ public class ServiceRouting {
 				}
 				// 判断服务类型并设置
 				if (provider.getType() == ServiceType.ALL) {
-					module.setDataService(provider.getAddress());
-					module.setViewService(provider.getAddress());
-				} else if ((module.getDataService() == null || module.getDataService().isEmpty())
+					module.setRepository(provider.getAddress());
+					module.setAddress(provider.getAddress());
+				} else if ((module.getRepository() == null || module.getRepository().isEmpty())
 						&& provider.getType() == ServiceType.DATA) {
-					module.setDataService(provider.getAddress());
-				} else if ((module.getViewService() == null || module.getViewService().isEmpty())
+					module.setRepository(provider.getAddress());
+				} else if ((module.getAddress() == null || module.getAddress().isEmpty())
 						&& provider.getType() == ServiceType.VIEW) {
-					module.setViewService(provider.getAddress());
+					module.setAddress(provider.getAddress());
 				}
 			}
 		}
 		// 判断模块是否可用
-		if ((module.getDataService() != null && module.getDataService() != "")
-				&& (module.getViewService() != null && module.getViewService() != "")) {
+		if ((module.getRepository() != null && module.getRepository() != "")
+				&& (module.getAddress() != null && module.getAddress() != "")) {
 			done = true;
-			RuntimeLog.log(MSG_SERVICE_ROUTING_ADDRESS, module.getModuleId(), module.getModuleName(),
-					module.getDataService(), module.getViewService());
+			RuntimeLog.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
+					module.getAddress());
 		}
 		return done;
 	}

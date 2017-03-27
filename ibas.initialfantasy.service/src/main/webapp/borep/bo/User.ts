@@ -81,16 +81,16 @@ export class User extends BusinessObject<User> implements IUser {
     }
 
     /** 映射的属性名称-超级用户 */
-    private static PROPERTY_NAME_SUPPER: string = "_supper";
+    private static PROPERTY_NAME_SUPER: string = "_super";
 
     /** 获取-超级用户 */
-    get supper(): emYesNo {
-        return this.getProperty<emYesNo>(User.PROPERTY_NAME_SUPPER);
+    get Super(): emYesNo {
+        return this.getProperty<emYesNo>(User.PROPERTY_NAME_SUPER);
     }
 
     /** 设置-超级用户 */
-    set supper(value: emYesNo) {
-        this.setProperty(User.PROPERTY_NAME_SUPPER, value);
+    set Super(value: emYesNo) {
+        this.setProperty(User.PROPERTY_NAME_SUPER, value);
     }
 
     /** 映射的属性名称-电子邮件地址 */

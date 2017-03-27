@@ -186,13 +186,13 @@ public class User extends BusinessObject<User> implements IUser, IApprovalData, 
 	/**
 	 * 属性名称-超级用户
 	 */
-	private static final String PROPERTY_SUPPER_NAME = "Supper";
+	private static final String PROPERTY_SUPER_NAME = "Super";
 
 	/**
 	 * 超级用户 属性
 	 */
-	@DbField(name = "Supper", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emYesNo> PROPERTY_SUPPER = registerProperty(PROPERTY_SUPPER_NAME, emYesNo.class,
+	@DbField(name = "Super", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_SUPER = registerProperty(PROPERTY_SUPER_NAME, emYesNo.class,
 			MY_CLASS);
 
 	/**
@@ -200,9 +200,9 @@ public class User extends BusinessObject<User> implements IUser, IApprovalData, 
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_SUPPER_NAME)
-	public final emYesNo getSupper() {
-		return this.getProperty(PROPERTY_SUPPER);
+	@XmlElement(name = PROPERTY_SUPER_NAME)
+	public final emYesNo getSuper() {
+		return this.getProperty(PROPERTY_SUPER);
 	}
 
 	/**
@@ -211,8 +211,8 @@ public class User extends BusinessObject<User> implements IUser, IApprovalData, 
 	 * @param value
 	 *            值
 	 */
-	public final void setSupper(emYesNo value) {
-		this.setProperty(PROPERTY_SUPPER, value);
+	public final void setSuper(emYesNo value) {
+		this.setProperty(PROPERTY_SUPER, value);
 	}
 
 	/**

@@ -35,7 +35,7 @@ public class testUser extends TestCase {
 		bo.setName("administrator");
 		bo.setPassword("1q2w3e");
 		bo.setActivated(emYesNo.YES);
-		bo.setSupper(emYesNo.YES);
+		bo.setSuper(emYesNo.YES);
 		String xml = bo.toString("xml");
 		System.out.println(xml);
 		ISerializer<?> serializer = SerializerFactory.create().createManager().create();

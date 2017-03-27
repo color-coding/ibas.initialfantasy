@@ -37,7 +37,7 @@ public class testApprovalProcess extends TestCase {
 		apBoss.setCode("UB" + DateTime.getNow().toString("HHmmss"));
 		apBoss.setName(apBoss.getCode());
 		apBoss.setActivated(emYesNo.YES);
-		apBoss.setSupper(emYesNo.YES);
+		apBoss.setSuper(emYesNo.YES);
 		IBORepositoryInitialFantasyApp boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		IOperationResult<IUser> opRsltUser = boRepository.saveUser(apBoss);
@@ -46,7 +46,7 @@ public class testApprovalProcess extends TestCase {
 		apManager.setCode("UM" + DateTime.getNow().toString("HHmmss"));
 		apManager.setName(apManager.getCode());
 		apManager.setActivated(emYesNo.YES);
-		apManager.setSupper(emYesNo.YES);
+		apManager.setSuper(emYesNo.YES);
 		opRsltUser = boRepository.saveUser(apManager);
 		assertEquals(opRsltUser.getMessage(), opRsltUser.getResultCode(), 0);
 		// 创建审批模板，激活的超级管理员需要进行审批
@@ -59,7 +59,7 @@ public class testApprovalProcess extends TestCase {
 		atStep01.setStepOwner(apManager.getDocEntry());
 		IApprovalTemplateStepCondition atStepCondition = atStep01.getApprovalTemplateStepConditions().create();
 		atStepCondition.setRelationship(emConditionRelationship.NONE);
-		atStepCondition.setPropertyName(User.PROPERTY_SUPPER);// 注意此处应为数据库字段
+		atStepCondition.setPropertyName(User.PROPERTY_SUPER);// 注意此处应为数据库字段
 		atStepCondition.setOperation(emConditionOperation.EQUAL);
 		atStepCondition.setConditionValue(emYesNo.YES);
 		atStepCondition = atStep01.getApprovalTemplateStepConditions().create();
@@ -75,7 +75,7 @@ public class testApprovalProcess extends TestCase {
 		// 步骤2的审批条件与步骤1相同
 		atStepCondition = atStep02.getApprovalTemplateStepConditions().create();
 		atStepCondition.setRelationship(emConditionRelationship.NONE);
-		atStepCondition.setPropertyName(User.PROPERTY_SUPPER);// 注意此处应为数据库字段
+		atStepCondition.setPropertyName(User.PROPERTY_SUPER);// 注意此处应为数据库字段
 		atStepCondition.setOperation(emConditionOperation.EQUAL);
 		atStepCondition.setConditionValue(emYesNo.YES);
 		atStepCondition = atStep02.getApprovalTemplateStepConditions().create();
@@ -92,7 +92,7 @@ public class testApprovalProcess extends TestCase {
 		user01.setCode("U" + DateTime.getNow().toString("HHmmss") + 1);
 		user01.setName(user01.getCode());
 		user01.setActivated(emYesNo.YES);
-		user01.setSupper(emYesNo.YES);
+		user01.setSuper(emYesNo.YES);
 		boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		opRsltUser = boRepository.saveUser(user01);
@@ -115,7 +115,7 @@ public class testApprovalProcess extends TestCase {
 		user02.setCode("U" + DateTime.getNow().toString("HHmmss") + 2);
 		user02.setName(user02.getCode());
 		user02.setActivated(emYesNo.YES);
-		user02.setSupper(emYesNo.NO);
+		user02.setSuper(emYesNo.NO);
 		boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		opRsltUser = boRepository.saveUser(user02);
@@ -144,7 +144,7 @@ public class testApprovalProcess extends TestCase {
 		// 测试修改的数据进入审批
 		opRsltUser = boRepository.fetchUser(user02.getCriteria());
 		user02 = (User) opRsltUser.getResultObjects().firstOrDefault();
-		user02.setSupper(emYesNo.YES);
+		user02.setSuper(emYesNo.YES);
 		opRsltUser = boRepository.saveUser(user02);
 		assertEquals(opRsltUser.getMessage(), opRsltUser.getResultCode(), 0);
 		opRsltAQ = apRepository.fetchApprovalRequest(criteria);
@@ -215,7 +215,7 @@ public class testApprovalProcess extends TestCase {
 		user03.setCode("U" + DateTime.getNow().toString("HHmmss") + 3);
 		user03.setName(user03.getCode());
 		user03.setActivated(emYesNo.YES);
-		user03.setSupper(emYesNo.YES);
+		user03.setSuper(emYesNo.YES);
 		boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		opRsltUser = boRepository.saveUser(user03);
