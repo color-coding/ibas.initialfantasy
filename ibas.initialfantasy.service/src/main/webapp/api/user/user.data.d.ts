@@ -31,7 +31,7 @@ export interface IUser extends IBusinessObject<IUser> {
     activated: emYesNo;
     
     /** 超级用户 */
-    supper: emYesNo;
+    Super: emYesNo;
     
     /** 电子邮件地址 */
     mail: string;

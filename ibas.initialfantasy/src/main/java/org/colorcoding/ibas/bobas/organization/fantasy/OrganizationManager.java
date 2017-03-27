@@ -86,7 +86,7 @@ public class OrganizationManager implements IOrganizationManager {
 			}
 		}
 		// 超级用户
-		for (User user : this.getSupperUsers()) {
+		for (User user : this.getSuperUsers()) {
 			if (user.getToken().equals(token)) {
 				return user;
 			}
@@ -165,12 +165,12 @@ public class OrganizationManager implements IOrganizationManager {
 		return this.undistributedUser;
 	}
 
-	private ArrayList<User> getSupperUsers() {
-		ArrayList<User> supperUsers = new ArrayList<>();
+	private ArrayList<User> getSuperUsers() {
+		ArrayList<User> SuperUsers = new ArrayList<>();
 
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
-		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_SUPPER.getName());
+		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_SUPER.getName());
 		condition.setCondVal(emYesNo.YES);
 		condition = criteria.getConditions().create();
 		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
@@ -181,10 +181,10 @@ public class OrganizationManager implements IOrganizationManager {
 		for (org.colorcoding.ibas.initialfantasy.bo.organizations.IUser tmpUser : operationResult.getResultObjects()) {
 			User user = User.create(tmpUser);
 			user.setToken(createToken(tmpUser));
-			supperUsers.add(user);
+			SuperUsers.add(user);
 		}
 
-		return supperUsers;
+		return SuperUsers;
 	}
 
 	@XmlElement(name = "organization", type = Organization.class)

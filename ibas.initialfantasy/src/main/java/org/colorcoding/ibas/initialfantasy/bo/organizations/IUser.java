@@ -74,14 +74,14 @@ public interface IUser extends IBOMasterData {
     * 
     * @return 值
     */
-    emYesNo getSupper();
+    emYesNo getSuper();
 
     /**
     * 设置-超级用户
     * 
     * @param value 值
     */
-    void setSupper(emYesNo value);
+    void setSuper(emYesNo value);
 
 
     /**

@@ -19,7 +19,7 @@ public class User {
 		sUser.setId(user.getDocEntry());
 		sUser.setCode(user.getCode());
 		sUser.setName(user.getName());
-		sUser.setSupper(user.getSupper() == emYesNo.YES ? true : false);
+		sUser.setSuper(user.getSuper() == emYesNo.YES ? true : false);
 		return sUser;
 	}
 
@@ -56,15 +56,15 @@ public class User {
 		this.name = name;
 	}
 
-	private boolean supper;
+	private boolean _super;
 
-	@XmlElement(name = "Supper")
-	public boolean isSupper() {
-		return supper;
+	@XmlElement(name = "Super")
+	public boolean isSuper() {
+		return _super;
 	}
 
-	public void setSupper(boolean supper) {
-		this.supper = supper;
+	public void setSuper(boolean value) {
+		this._super = value;
 	}
 
 	/**

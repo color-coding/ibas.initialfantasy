@@ -70,7 +70,7 @@
                 LANGUAGE SQLSCRIPT AS
                 BEGIN
                 DECLARE v_count integer;
-                SELECT count(0) into v_count FROM "${Company}_SYS_USER" WHERE "UserCode" = :userCode AND "SupperUser" = 'Y';
+                SELECT count(0) into v_count FROM "${Company}_SYS_USER" WHERE "UserCode" = :userCode AND "Super" = 'Y';
                 IF :v_count = 1 THEN
                     --超级用户全部权限
                     SELECT A.*,'A' AuthValue 

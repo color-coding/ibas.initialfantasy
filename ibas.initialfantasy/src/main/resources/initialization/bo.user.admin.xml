@@ -5,5 +5,5 @@
 	<Code>admin</Code>
 	<Name>administrator</Name>
 	<Password>1q2w3e</Password>
-	<Supper>YES</Supper>
+	<Super>YES</Super>
 </ns:User>

@@ -60,7 +60,7 @@
                 )
                 begin
 
-                IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `SupperUser` = 'Y')  THEN
+                IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `Super` = 'Y')  THEN
                     /* 超级用户全部权限 */
                     SELECT A.*,'A' AuthValue
                     FROM `${Company}_SYS_MODULE` A

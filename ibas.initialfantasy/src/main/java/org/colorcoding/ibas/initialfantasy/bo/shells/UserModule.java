@@ -2,7 +2,6 @@ package org.colorcoding.ibas.initialfantasy.bo.shells;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -20,68 +19,67 @@ import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
 public class UserModule {
 	public static UserModule create(IApplicationModule applicationModule) {
 		UserModule userApplicationModule = new UserModule();
-		userApplicationModule.setModuleId(applicationModule.getModuleId());
-		userApplicationModule.setPlatformId(applicationModule.getPlatformId());
-		userApplicationModule.setModuleName(applicationModule.getModuleName());
+		userApplicationModule.setId(applicationModule.getModuleId());
+		userApplicationModule.setName(applicationModule.getModuleName());
 
-		userApplicationModule.setDataService("");
-		userApplicationModule.setViewService("");
+		userApplicationModule.setRepository("");
+		userApplicationModule.setAddress("");
 		return userApplicationModule;
 	}
 
-	private String moduleId;
+	/** 唯一标识 */
+	private String id;
 
-	@XmlElement(name = "ModuleId")
-	public String getModuleId() {
-		return this.moduleId;
+	public String getId() {
+		return id;
 	}
 
-	public void setModuleId(String value) {
-		this.moduleId = value;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	private String platformId;
+	/** 名称 */
+	private String name;
 
-	@XmlElement(name = "PlatformId")
-	public String getPlatformId() {
-		return this.platformId;
+	public String getName() {
+		return name;
 	}
 
-	public void setPlatformId(String value) {
-		this.platformId = value;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	private String moduleName;
+	/** 类别 */
+	private String category;
 
-	@XmlElement(name = "ModuleName")
-	public String getModuleName() {
-		return this.moduleName;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setModuleName(String value) {
-		this.moduleName = value;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	private String dataService;
+	/** 地址 */
+	private String address;
 
-	@XmlElement(name = "DataService")
-	public String getDataService() {
-		return this.dataService;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setDataService(String value) {
-		this.dataService = value;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	private String viewService;
+	/** 仓库地址 */
+	private String repository;
 
-	@XmlElement(name = "ViewService")
-	public String getViewService() {
-		return this.viewService;
+	public String getRepository() {
+		return repository;
 	}
 
-	public void setViewService(String value) {
-		this.viewService = value;
+	public void setRepository(String repository) {
+		this.repository = repository;
 	}
 
 }
