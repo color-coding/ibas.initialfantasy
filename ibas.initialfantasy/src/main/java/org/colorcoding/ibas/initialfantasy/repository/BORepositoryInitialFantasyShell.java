@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
-import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
@@ -10,24 +9,19 @@ import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.i18n;
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
-import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
 import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
 import org.colorcoding.ibas.bobas.repository.IBORepository4DbReadonly;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.IRole;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IUser;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.shells.User;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserRole;
 import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
 /**
@@ -103,37 +97,6 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					UserModule userModule = UserModule.create((IApplicationModule) item);
 					serviceRouting.routing(userModule);// 设置有效服务
 					opRslt.addResultObjects(userModule);
-				}
-			}
-		} catch (Exception e) {
-			opRslt.setError(e);
-		}
-		return opRslt;
-	}
-
-	@Override
-	public OperationResult<UserRole> fetchUserRoles(String user, String token) {
-		OperationResult<UserRole> opRslt = new OperationResult<>();
-		try {
-			this.setUserToken(token);
-			ICriteria criteria = null;
-			OrganizationManager orgManger = (OrganizationManager) OrganizationFactory.create().createManager();
-			for (String item : orgManger.getUserRoles(this.getCurrentUser())) {
-				if (criteria == null) {
-					criteria = new Criteria();
-				}
-				ICondition condition = criteria.getConditions().create();
-				condition.setAlias(Role.PROPERTY_CODE.getName());
-				condition.setCondVal(item);
-				condition.setRelationship(ConditionRelationship.OR);
-			}
-			if (criteria != null) {
-				IOperationResult<IRole> opRsltRoles = this.fetchRole(criteria);
-				if (opRsltRoles.getError() != null) {
-					RuntimeLog.log(opRsltRoles.getError());
-				}
-				for (IRole item : opRsltRoles.getResultObjects()) {
-					opRslt.getResultObjects().add(UserRole.create(item));
 				}
 			}
 		} catch (Exception e) {
