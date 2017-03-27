@@ -4,7 +4,6 @@ import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.initialfantasy.bo.shells.User;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserRole;
 
 /**
  * 壳应用
@@ -47,16 +46,5 @@ public interface IBORepositoryShell {
 	 * @return 操作结果
 	 */
 	OperationResult<UserPrivilege> fetchUserPrivileges(String user, String platform, String token);
-
-	/**
-	 * 查询用户角色
-	 * 
-	 * @param user
-	 *            用户
-	 * @param token
-	 *            用户口令
-	 * @return 操作结果
-	 */
-	OperationResult<UserRole> fetchUserRoles(String user, String token);
 
 }
