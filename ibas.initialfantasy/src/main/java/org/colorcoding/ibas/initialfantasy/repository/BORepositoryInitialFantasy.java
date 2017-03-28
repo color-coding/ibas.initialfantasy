@@ -708,8 +708,9 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 				myAP.loadClasses();
 			}
 			this.getRepository().setCurrentUser(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER);
+			ap.setRepository(this.getRepository());
 			ap.approval(apStepId, apResult, token, judgment);
-			ap.save(this.getRepository());
+			ap.save();
 		} catch (Exception e) {
 			RuntimeLog.log(e);
 			operationMessages.setError(e);
