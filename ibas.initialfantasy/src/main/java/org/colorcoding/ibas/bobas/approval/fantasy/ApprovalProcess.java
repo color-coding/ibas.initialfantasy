@@ -7,7 +7,6 @@ import org.colorcoding.ibas.bobas.approval.IApprovalProcessStep;
 import org.colorcoding.ibas.bobas.approval.UnauthorizedException;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.core.BOFactory;
-import org.colorcoding.ibas.bobas.core.IBORepository;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
@@ -156,11 +155,11 @@ public class ApprovalProcess extends org.colorcoding.ibas.bobas.approval.Approva
 	}
 
 	@Override
-	public void saveProcess(IBORepository boRepository) throws ApprovalProcessException {
+	public void saveProcess() throws ApprovalProcessException {
 		try {
 			BORepositoryInitialFantasy apRepository = new BORepositoryInitialFantasy();
 			apRepository.setRefetchAfterSave(false);// 保存成功后，不重新获取副本
-			apRepository.setRepository(boRepository);
+			apRepository.setRepository(this.getRepository());
 			apRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 			IOperationResult<IApprovalRequest> operationResult = apRepository
 					.saveApprovalRequest(this.getApprovalRequest());
