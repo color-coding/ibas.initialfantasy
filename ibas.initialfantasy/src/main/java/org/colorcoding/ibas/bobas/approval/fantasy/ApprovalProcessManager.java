@@ -66,11 +66,11 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(ApprovalTemplate.PROPERTY_APPROVALOBJECTCODE.getName());
-		condition.setCondVal(boCode);
+		condition.setValue(boCode);
 		condition = criteria.getConditions().create();
 		condition.setRelationship(ConditionRelationship.AND);
 		condition.setAlias(ApprovalTemplate.PROPERTY_ACTIVATED.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 		ISort sort = criteria.getSorts().create();
 		sort.setAlias(ApprovalTemplate.PROPERTY_OBJECTKEY.getName());
 		sort.setSortType(SortType.DESCENDING);
@@ -117,11 +117,11 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(ApprovalRequest.PROPERTY_BOKEYS.getName());
-		condition.setCondVal(boKey);
+		condition.setValue(boKey);
 		condition = criteria.getConditions().create();
 		condition.setRelationship(ConditionRelationship.AND);
 		condition.setAlias(ApprovalTemplate.PROPERTY_ACTIVATED.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<IApprovalRequest> operationResult = boRepository.fetchApprovalRequest(criteria);
@@ -142,11 +142,11 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(ApprovalRequest.PROPERTY_OBJECTKEY.getName());
-		condition.setCondVal(key);
+		condition.setValue(key);
 		condition = criteria.getConditions().create();
 		condition.setRelationship(ConditionRelationship.AND);
 		condition.setAlias(ApprovalTemplate.PROPERTY_ACTIVATED.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<IApprovalRequest> operationResult = boRepository.fetchApprovalRequest(criteria);

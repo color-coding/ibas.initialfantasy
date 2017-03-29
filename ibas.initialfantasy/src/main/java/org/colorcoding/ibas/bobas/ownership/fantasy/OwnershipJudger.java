@@ -151,13 +151,13 @@ public class OwnershipJudger implements IOwnershipJudger {
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(Ownership.PROPERTY_BOCODE.getName());
-		condition.setCondVal(boCode);
+		condition.setValue(boCode);
 		condition = criteria.getConditions().create();
 		condition.setAlias(Ownership.PROPERTY_ACTIVATED.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 		condition = criteria.getConditions().create();
 		condition.setAlias(Ownership.PROPERTY_USERCODE.getName());
-		condition.setCondVal(user);
+		condition.setValue(user);
 
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<?> operationResult = boRepository.fetchOwnership(criteria);
@@ -197,15 +197,15 @@ public class OwnershipJudger implements IOwnershipJudger {
 			ICondition condition = criteria.getConditions().create();
 			condition.setBracketOpen(1);
 			condition.setAlias(BOFiltering.PROPERTY_BOCODE.getName());
-			condition.setCondVal(boCode);
+			condition.setValue(boCode);
 			condition = criteria.getConditions().create();
 			condition.setAlias(BOFiltering.PROPERTY_ACTIVATED.getName());
-			condition.setCondVal(emYesNo.YES);
+			condition.setValue(emYesNo.YES);
 			condition.setBracketClose(1);
 			for (int i = 0; i < doRoles.size(); i++) {
 				condition = criteria.getConditions().create();
 				condition.setAlias(BOFiltering.PROPERTY_ROLECODE.getName());
-				condition.setCondVal(doRoles.get(i));
+				condition.setValue(doRoles.get(i));
 				condition.setRelationship(ConditionRelationship.OR);
 				if (i == 0) {
 					// first.

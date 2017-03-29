@@ -171,10 +171,10 @@ public class OrganizationManager implements IOrganizationManager {
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_SUPER.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 		condition = criteria.getConditions().create();
 		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organizations.IUser> operationResult = boRepository
 				.fetchUser(criteria);
@@ -414,15 +414,15 @@ public class OrganizationManager implements IOrganizationManager {
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(OrganizationalStructure.PROPERTY_BELONGING.getName());
-			condition.setCondVal(node);
+			condition.setValue(node);
 			condition = criteria.getConditions().create();
 			condition.setAlias(OrganizationalStructure.PROPERTY_VALIDDATE.getName());
 			condition.setOperation(ConditionOperation.LESS_EQUAL);
-			condition.setCondVal(DateTime.getToday());
+			condition.setValue(DateTime.getToday());
 			condition = criteria.getConditions().create();
 			condition.setAlias(OrganizationalStructure.PROPERTY_INVALIDDATE.getName());
 			condition.setOperation(ConditionOperation.GRATER_EQUAL);
-			condition.setCondVal(DateTime.getToday());
+			condition.setValue(DateTime.getToday());
 			IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 			IOperationResult<IOrganizationalStructure> operationResult = boRepository
 					.fetchOrganizationalStructure(criteria);
@@ -458,10 +458,10 @@ public class OrganizationManager implements IOrganizationManager {
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_CODE.getName());
-			condition.setCondVal(key);
+			condition.setValue(key);
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
-			condition.setCondVal(emYesNo.YES);
+			condition.setValue(emYesNo.YES);
 			IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 			IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organizations.IUser> operationResult = boRepository
 					.fetchUser(criteria);
@@ -486,10 +486,10 @@ public class OrganizationManager implements IOrganizationManager {
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_DOCENTRY.getName());
-		condition.setCondVal(id);
+		condition.setValue(id);
 		condition = criteria.getConditions().create();
 		condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
-		condition.setCondVal(emYesNo.YES);
+		condition.setValue(emYesNo.YES);
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organizations.IUser> operationResult = boRepository
 				.fetchUser(criteria);

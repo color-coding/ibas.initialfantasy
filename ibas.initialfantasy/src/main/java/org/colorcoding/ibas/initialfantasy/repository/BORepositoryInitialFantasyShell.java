@@ -39,10 +39,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
-			condition.setCondVal(emYesNo.YES);
+			condition.setValue(emYesNo.YES);
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_CODE.getName());
-			condition.setCondVal(user);
+			condition.setValue(user);
 			// 设置用户口令，系统用户
 			this.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 			IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
