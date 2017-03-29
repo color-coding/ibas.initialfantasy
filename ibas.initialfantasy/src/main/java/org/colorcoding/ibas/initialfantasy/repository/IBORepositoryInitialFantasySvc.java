@@ -12,6 +12,7 @@ import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.ApprovalRequest;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.ApprovalTemplate;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
@@ -23,6 +24,18 @@ import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
  * InitialFantasy仓库服务
  */
 public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartService {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象信息
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOInformation> fetchBOInformation(ICriteria criteria, String token);
 
 	// --------------------------------------------------------------------------------------------//
 	/**

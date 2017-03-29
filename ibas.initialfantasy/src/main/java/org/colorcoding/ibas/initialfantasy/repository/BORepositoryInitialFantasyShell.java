@@ -1,27 +1,37 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
+import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISqlStoredProcedure;
+import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
+import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.i18n;
+import org.colorcoding.ibas.bobas.messages.RuntimeLog;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
+import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
 import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
 import org.colorcoding.ibas.bobas.repository.IBORepository4DbReadonly;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
+import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
+import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
+import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shells.User;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
 import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
 /**
@@ -129,6 +139,142 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 		} catch (Exception e) {
 			opRslt.setError(e);
+		}
+		return opRslt;
+	}
+
+	@Override
+	public OperationResult<BOInfo> fetchBOInfos(String boName, String token) {
+		OperationResult<BOInfo> opRslt = new OperationResult<>();
+		try {
+			this.setUserToken(token);
+			ICriteria criteria = new Criteria();
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(BOInformation.PROPERTY_NAME.getName());
+			condition.setValue(boName);
+			IOperationResult<BOInformation> opRsltFetch = this.fetchBOInformation(criteria, token);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			if (opRsltFetch.getResultCode() != 0) {
+				throw new Exception(opRsltFetch.getMessage());
+			}
+			for (BOInformation boItem : opRsltFetch.getResultObjects()) {
+				opRslt.addResultObjects(BOInfo.create(boItem));
+			}
+		} catch (Exception e) {
+			opRslt.setError(e);
+		}
+		return opRslt;
+	}
+
+	@Override
+	public OperationResult<UserQuery> fetchUserQueries(String user, String queryId, String token) {
+		OperationResult<UserQuery> opRslt = new OperationResult<>();
+		try {
+			this.setUserToken(token);
+			ICriteria criteria = new Criteria();
+			ICondition condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(BOCriteria.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			condition = criteria.getConditions().create();
+			condition.setAlias(BOCriteria.PROPERTY_APPLICATIONID.getName());
+			condition.setValue(queryId);
+			condition.setBracketClose(1);
+			// 自己的查询
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(BOCriteria.PROPERTY_DATAOWNER.getName());
+			condition.setValue(this.getCurrentUser().getId());
+			// 所属角色的查询
+			IOrganizationManager manager = OrganizationFactory.create().createManager();
+			if (manager instanceof OrganizationManager) {
+				OrganizationManager ifManager = (OrganizationManager) manager;
+				for (String role : ifManager.getUserRoles(this.getCurrentUser())) {
+					condition = criteria.getConditions().create();
+					condition.setRelationship(ConditionRelationship.OR);
+					condition.setAlias(BOCriteria.PROPERTY_BELONGROLE.getName());
+					condition.setValue(role);
+				}
+			}
+			condition.setBracketClose(1);
+			IOperationResult<BOCriteria> opRsltFetch = this.fetchBOCriteria(criteria, token);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			if (opRsltFetch.getResultCode() != 0) {
+				throw new Exception(opRsltFetch.getMessage());
+			}
+			for (BOCriteria boItem : opRsltFetch.getResultObjects()) {
+				opRslt.addResultObjects(UserQuery.create(boItem));
+			}
+		} catch (Exception e) {
+			opRslt.setError(e);
+		}
+		return opRslt;
+	}
+
+	@Override
+	public OperationMessages saveUserQueries(UserQuery query, String token) {
+		OperationMessages opRslt = new OperationMessages();
+		boolean myTrans = false;
+		try {
+			this.setUserToken(token);
+			ICriteria criteria = new Criteria();
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(BOCriteria.PROPERTY_APPLICATIONID.getName());
+			condition.setValue(query.getId());
+			condition = criteria.getConditions().create();
+			condition.setAlias(BOCriteria.PROPERTY_NAME.getName());
+			condition.setValue(query.getName());
+			condition = criteria.getConditions().create();
+			condition.setAlias(BOCriteria.PROPERTY_DATAOWNER.getName());
+			condition.setValue(this.getCurrentUser().getId());
+
+			myTrans = this.beginTransaction();
+			// 查询已经存在的并删除
+			IOperationResult<IBOCriteria> opRsltFetch = this.fetchBOCriteria(criteria);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			if (opRsltFetch.getResultCode() != 0) {
+				throw new Exception(opRsltFetch.getMessage());
+			}
+			for (IBOCriteria boItem : opRsltFetch.getResultObjects()) {
+				boItem.delete();
+				IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boItem);
+				if (opRsltSave.getError() != null) {
+					throw opRsltSave.getError();
+				}
+				if (opRsltSave.getResultCode() != 0) {
+					throw new Exception(opRsltSave.getMessage());
+				}
+			}
+			// 保存新的
+			BOCriteria boCriteria = new BOCriteria();
+			boCriteria.setApplicationId(query.getId());
+			boCriteria.setDataOwner(this.getCurrentUser().getId());
+			boCriteria.setName(query.getName());
+			boCriteria.setOrder(query.getOrder());
+			boCriteria.setCriteriaData(query.getCriteria());
+			IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boCriteria);
+			if (opRsltSave.getError() != null) {
+				throw opRsltSave.getError();
+			}
+			if (opRsltSave.getResultCode() != 0) {
+				throw new Exception(opRsltSave.getMessage());
+			}
+			if (myTrans)
+				this.commitTransaction();
+		} catch (Exception e) {
+			opRslt.setError(e);
+			if (myTrans)
+				try {
+					this.rollbackTransaction();
+				} catch (RepositoryException e1) {
+					RuntimeLog.log(e1);
+				}
 		}
 		return opRslt;
 	}
