@@ -26,6 +26,8 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganizationalStructure;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IRole;
@@ -45,6 +47,30 @@ import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 @PermissionGroup("InitialFantasy")
 public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		implements IBORepositoryInitialFantasySvc, IBORepositoryInitialFantasyApp {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象信息
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOInformation> fetchBOInformation(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BOInformation.class);
+	}
+
+	/**
+	 * 查询-业务对象信息（提前设置用户口令）
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOInformation> fetchBOInformation(ICriteria criteria) {
+		return new OperationResult<IBOInformation>(this.fetchBOInformation(criteria, this.getUserToken()));
+	}
 
 	// --------------------------------------------------------------------------------------------//
 	/**

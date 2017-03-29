@@ -2,6 +2,7 @@ package org.colorcoding.ibas.initialfantasy.bo.bocriteria;
 
 import org.colorcoding.ibas.bobas.bo.*;
 import org.colorcoding.ibas.bobas.data.*;
+import org.colorcoding.ibas.initialfantasy.data.*;
 
 /**
 * 业务对象检索条件 接口
@@ -25,6 +26,21 @@ public interface IBOCriteria extends IBOSimple {
 
 
     /**
+    * 获取-数据所有者
+    * 
+    * @return 值
+    */
+    Integer getDataOwner();
+
+    /**
+    * 设置-数据所有者
+    * 
+    * @param value 值
+    */
+    void setDataOwner(Integer value);
+
+
+    /**
     * 获取-检索名称
     * 
     * @return 值
@@ -37,21 +53,6 @@ public interface IBOCriteria extends IBOSimple {
     * @param value 值
     */
     void setName(String value);
-
-
-    /**
-    * 获取-系统的
-    * 
-    * @return 值
-    */
-    emYesNo getSystemed();
-
-    /**
-    * 设置-系统的
-    * 
-    * @param value 值
-    */
-    void setSystemed(emYesNo value);
 
 
     /**
@@ -100,33 +101,18 @@ public interface IBOCriteria extends IBOSimple {
 
 
     /**
-    * 获取-基础查询
+    * 获取-查询数据
     * 
     * @return 值
     */
-    String getBasisCriteria();
+    String getCriteriaData();
 
     /**
-    * 设置-基础查询
+    * 设置-查询数据
     * 
     * @param value 值
     */
-    void setBasisCriteria(String value);
-
-
-    /**
-    * 获取-检索查询
-    * 
-    * @return 值
-    */
-    String getSearchCriteria();
-
-    /**
-    * 设置-检索查询
-    * 
-    * @param value 值
-    */
-    void setSearchCriteria(String value);
+    void setCriteriaData(String value);
 
 
     /**
@@ -322,21 +308,6 @@ public interface IBOCriteria extends IBOSimple {
     * @param value 值
     */
     void setUpdateActionId(String value);
-
-
-    /**
-    * 获取-数据所有者
-    * 
-    * @return 值
-    */
-    Integer getDataOwner();
-
-    /**
-    * 设置-数据所有者
-    * 
-    * @param value 值
-    */
-    void setDataOwner(Integer value);
 
 
     /**

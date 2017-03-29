@@ -13,8 +13,6 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
-import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
-import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
@@ -25,12 +23,12 @@ import org.colorcoding.ibas.initialfantasy.MyConsts;
 @XmlType(name = BOCriteria.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
 @XmlRootElement(name = BOCriteria.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
 @BOCode(BOCriteria.BUSINESS_OBJECT_CODE)
-public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteria, IDataOwnership {
+public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteria {
 
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = -1170963526481436913L;
+	private static final long serialVersionUID = 8955997678489555735L;
 
 	/**
 	 * 当前类型
@@ -40,12 +38,12 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "${Company}_SYS_BOCRITERIA";
+	public static final String DB_TABLE_NAME = "CC_SYS_BOCRITERIA";
 
 	/**
 	 * 业务对象编码
 	 */
-	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_BOCRITERIA";
+	public static final String BUSINESS_OBJECT_CODE = "CC_SYS_BOCRITERIA";
 
 	/**
 	 * 业务对象名称
@@ -85,6 +83,38 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	}
 
 	/**
+	 * 属性名称-数据所有者
+	 */
+	private static final String PROPERTY_DATAOWNER_NAME = "DataOwner";
+
+	/**
+	 * 数据所有者 属性
+	 */
+	@DbField(name = "DataOwner", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<Integer> PROPERTY_DATAOWNER = registerProperty(PROPERTY_DATAOWNER_NAME,
+			Integer.class, MY_CLASS);
+
+	/**
+	 * 获取-数据所有者
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_DATAOWNER_NAME)
+	public final Integer getDataOwner() {
+		return this.getProperty(PROPERTY_DATAOWNER);
+	}
+
+	/**
+	 * 设置-数据所有者
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setDataOwner(Integer value) {
+		this.setProperty(PROPERTY_DATAOWNER, value);
+	}
+
+	/**
 	 * 属性名称-检索名称
 	 */
 	private static final String PROPERTY_NAME_NAME = "Name";
@@ -114,38 +144,6 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	 */
 	public final void setName(String value) {
 		this.setProperty(PROPERTY_NAME, value);
-	}
-
-	/**
-	 * 属性名称-系统的
-	 */
-	private static final String PROPERTY_SYSTEMED_NAME = "Systemed";
-
-	/**
-	 * 系统的 属性
-	 */
-	@DbField(name = "Systemed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emYesNo> PROPERTY_SYSTEMED = registerProperty(PROPERTY_SYSTEMED_NAME,
-			emYesNo.class, MY_CLASS);
-
-	/**
-	 * 获取-系统的
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_SYSTEMED_NAME)
-	public final emYesNo getSystemed() {
-		return this.getProperty(PROPERTY_SYSTEMED);
-	}
-
-	/**
-	 * 设置-系统的
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setSystemed(emYesNo value) {
-		this.setProperty(PROPERTY_SYSTEMED, value);
 	}
 
 	/**
@@ -245,67 +243,35 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	}
 
 	/**
-	 * 属性名称-基础查询
+	 * 属性名称-查询数据
 	 */
-	private static final String PROPERTY_BASISCRITERIA_NAME = "BasisCriteria";
+	private static final String PROPERTY_CRITERIADATA_NAME = "CriteriaData";
 
 	/**
-	 * 基础查询 属性
+	 * 查询数据 属性
 	 */
-	@DbField(name = "Basis", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_BASISCRITERIA = registerProperty(PROPERTY_BASISCRITERIA_NAME,
+	@DbField(name = "Criteria", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_CRITERIADATA = registerProperty(PROPERTY_CRITERIADATA_NAME,
 			String.class, MY_CLASS);
 
 	/**
-	 * 获取-基础查询
+	 * 获取-查询数据
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_BASISCRITERIA_NAME)
-	public final String getBasisCriteria() {
-		return this.getProperty(PROPERTY_BASISCRITERIA);
+	@XmlElement(name = PROPERTY_CRITERIADATA_NAME)
+	public final String getCriteriaData() {
+		return this.getProperty(PROPERTY_CRITERIADATA);
 	}
 
 	/**
-	 * 设置-基础查询
+	 * 设置-查询数据
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setBasisCriteria(String value) {
-		this.setProperty(PROPERTY_BASISCRITERIA, value);
-	}
-
-	/**
-	 * 属性名称-检索查询
-	 */
-	private static final String PROPERTY_SEARCHCRITERIA_NAME = "SearchCriteria";
-
-	/**
-	 * 检索查询 属性
-	 */
-	@DbField(name = "Search", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_SEARCHCRITERIA = registerProperty(PROPERTY_SEARCHCRITERIA_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-检索查询
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_SEARCHCRITERIA_NAME)
-	public final String getSearchCriteria() {
-		return this.getProperty(PROPERTY_SEARCHCRITERIA);
-	}
-
-	/**
-	 * 设置-检索查询
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setSearchCriteria(String value) {
-		this.setProperty(PROPERTY_SEARCHCRITERIA, value);
+	public final void setCriteriaData(String value) {
+		this.setProperty(PROPERTY_CRITERIADATA, value);
 	}
 
 	/**
@@ -725,38 +691,6 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	}
 
 	/**
-	 * 属性名称-数据所有者
-	 */
-	private static final String PROPERTY_DATAOWNER_NAME = "DataOwner";
-
-	/**
-	 * 数据所有者 属性
-	 */
-	@DbField(name = "DataOwner", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<Integer> PROPERTY_DATAOWNER = registerProperty(PROPERTY_DATAOWNER_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-数据所有者
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_DATAOWNER_NAME)
-	public final Integer getDataOwner() {
-		return this.getProperty(PROPERTY_DATAOWNER);
-	}
-
-	/**
-	 * 设置-数据所有者
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setDataOwner(Integer value) {
-		this.setProperty(PROPERTY_DATAOWNER, value);
-	}
-
-	/**
 	 * 属性名称-数据所属组织
 	 */
 	private static final String PROPERTY_ORGANIZATION_NAME = "Organization";
@@ -794,9 +728,8 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setObjectCode(BUSINESS_OBJECT_CODE);
 		this.setActivated(emYesNo.YES);
-
 	}
 
 }
