@@ -80,10 +80,10 @@ public class RoleMembers extends BusinessObjects<IRoleMember, IOrganizationalRol
 		ICriteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(RoleMember.PROPERTY_ROLELINEID.getName());
-		condition.setCondVal(this.getParent().getLineId());
+		condition.setValue(this.getParent().getLineId());
 		condition = criteria.getConditions().create();
 		condition.setAlias(RoleMember.PROPERTY_OBJECTKEY.getName());
-		condition.setCondVal(this.getParent().getObjectKey());
+		condition.setValue(this.getParent().getObjectKey());
 		ISort sort = criteria.getSorts().create();
 		sort.setAlias(RoleMember.PROPERTY_OBJECTKEY.getName());
 		sort.setSortType(SortType.ASCENDING);

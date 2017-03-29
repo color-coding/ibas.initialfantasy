@@ -101,7 +101,7 @@ public class testApprovalProcess extends TestCase {
 		Criteria criteria = new Criteria();
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(ApprovalRequest.PROPERTY_BOKEYS.getName());
-		condition.setCondVal(user01.toString());
+		condition.setValue(user01.toString());
 		apRepository = new BORepositoryInitialFantasy();
 		apRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		IOperationResult<IApprovalRequest> opRsltAQ = apRepository.fetchApprovalRequest(criteria);
@@ -124,7 +124,7 @@ public class testApprovalProcess extends TestCase {
 		criteria = new Criteria();
 		condition = criteria.getConditions().create();
 		condition.setAlias(ApprovalRequest.PROPERTY_BOKEYS.getName());
-		condition.setCondVal(user02.toString());
+		condition.setValue(user02.toString());
 		apRepository = new BORepositoryInitialFantasy();
 		apRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		opRsltAQ = apRepository.fetchApprovalRequest(criteria);
@@ -224,7 +224,7 @@ public class testApprovalProcess extends TestCase {
 		criteria = new Criteria();
 		condition = criteria.getConditions().create();
 		condition.setAlias(ApprovalRequest.PROPERTY_BOKEYS.getName());
-		condition.setCondVal(user03.toString());
+		condition.setValue(user03.toString());
 		apRepository = new BORepositoryInitialFantasy();
 		apRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		opRsltAQ = apRepository.fetchApprovalRequest(criteria);
