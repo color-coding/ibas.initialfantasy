@@ -2,6 +2,7 @@ package org.colorcoding.ibas.initialfantasy.bo.shells;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -29,6 +30,7 @@ public class BOPropertyInfo {
 	/** 属性 */
 	private String property;
 
+	@XmlElement(name = "Property")
 	public String getProperty() {
 		return property;
 	}
@@ -37,9 +39,21 @@ public class BOPropertyInfo {
 		this.property = property;
 	}
 
+	private String description;
+
+	@XmlElement(name = "Description")
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	/** 查询 */
 	private boolean searched;
 
+	@XmlElement(name = "Searched")
 	public boolean isSearched() {
 		return searched;
 	}
