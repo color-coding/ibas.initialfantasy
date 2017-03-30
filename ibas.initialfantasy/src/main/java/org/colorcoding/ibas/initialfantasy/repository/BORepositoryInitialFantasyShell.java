@@ -5,9 +5,11 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
+import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.ISqlStoredProcedure;
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.emYesNo;
@@ -199,6 +201,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				}
 			}
 			condition.setBracketClose(1);
+			// 按使用频率排序
+			ISort sort = criteria.getSorts().create();
+			sort.setAlias(BOCriteria.PROPERTY_ORDER.getName());
+			sort.setSortType(SortType.ASCENDING);
 			IOperationResult<BOCriteria> opRsltFetch = this.fetchBOCriteria(criteria, token);
 			if (opRsltFetch.getError() != null) {
 				throw opRsltFetch.getError();
@@ -252,18 +258,21 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				}
 			}
 			// 保存新的
-			BOCriteria boCriteria = new BOCriteria();
-			boCriteria.setApplicationId(query.getId());
-			boCriteria.setDataOwner(this.getCurrentUser().getId());
-			boCriteria.setName(query.getName());
-			boCriteria.setOrder(query.getOrder());
-			boCriteria.setCriteriaData(query.getCriteria());
-			IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boCriteria);
-			if (opRsltSave.getError() != null) {
-				throw opRsltSave.getError();
-			}
-			if (opRsltSave.getResultCode() != 0) {
-				throw new Exception(opRsltSave.getMessage());
+			if (query.getCriteria() != null && !query.getCriteria().isEmpty()) {
+				// 被保存的查询要求有数据，可用此机制删除数据
+				BOCriteria boCriteria = new BOCriteria();
+				boCriteria.setApplicationId(query.getId());
+				boCriteria.setDataOwner(this.getCurrentUser().getId());
+				boCriteria.setName(query.getName());
+				boCriteria.setOrder(query.getOrder());
+				boCriteria.setCriteriaData(query.getCriteria());
+				IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boCriteria);
+				if (opRsltSave.getError() != null) {
+					throw opRsltSave.getError();
+				}
+				if (opRsltSave.getResultCode() != 0) {
+					throw new Exception(opRsltSave.getMessage());
+				}
 			}
 			if (myTrans)
 				this.commitTransaction();
