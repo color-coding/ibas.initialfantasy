@@ -525,5 +525,23 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	}
 
 	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 用户登录
+	 * 
+	 * @param user
+	 *            用户
+	 * @param passwrod
+	 *            密码
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("userConnect")
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> userConnect(
+			@QueryParam("user") String user, @QueryParam("password") String password) {
+		return super.userConnect(user, password);
+	}
+	// --------------------------------------------------------------------------------------------//
 
 }
