@@ -84,4 +84,9 @@ public class BOInfo {
 	public void setProperties(BOPropertyInfo[] properties) {
 		this.properties = properties;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("{boinfo: %s %s}", this.getName(), this.getType());
+	}
 }

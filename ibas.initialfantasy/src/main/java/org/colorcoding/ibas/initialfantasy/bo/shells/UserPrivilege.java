@@ -56,4 +56,8 @@ public class UserPrivilege {
 		this.value = value;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("{privilege: %s %s %s}", this.getSource(), this.getTarget(), this.getValue());
+	}
 }

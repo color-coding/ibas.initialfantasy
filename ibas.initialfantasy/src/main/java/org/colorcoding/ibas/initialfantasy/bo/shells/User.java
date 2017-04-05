@@ -76,4 +76,9 @@ public class User {
 	public boolean checkPassword(String password) {
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("{user: %s|%s}", this.getId(), this.getCode());
+	}
 }

@@ -50,7 +50,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
                 select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P'
@@ -64,7 +64,7 @@
                 AS
                 BEGIN
 
-                IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "UserCode" = @userCode AND "Super" = 'Y')
+                IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
                     --超级用户全部权限
                     SELECT A.*,'A' AuthValue 
                     FROM "${Company}_SYS_MODULE" A
@@ -87,7 +87,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
                 select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P'
