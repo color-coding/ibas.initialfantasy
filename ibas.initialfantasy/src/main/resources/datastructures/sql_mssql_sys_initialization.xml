@@ -12,19 +12,19 @@
     <Action Name="create db" Isolated="true">
         <Step Name="check db exists">
             <Script>
-                select count(0) from sys.databases where name = '${DbName}'
+                select count(0) from sys.databases where name = '${DbName}';
             </Script>
         </Step>
         <Step Name="create db" RunOnValue="0">
             <Script>
-                 create database "${DbName}" 
+                 create database "${DbName}";
             </Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from sys.sysobjects where name = '${Company}_SP_TRANSACTION_NOTIFICATION' AND type = 'P'
+                select count(0) from sys.sysobjects where name = '${Company}_SP_TRANSACTION_NOTIFICATION' AND type = 'P';
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
@@ -46,62 +46,89 @@
                     --------------------------------------------------------------------------------------------------------------------------------
                     --return
                     select @error "Code", @error_message "Message"
-                END
+                END;
             </Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P'
+                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P';
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
             <Script>
                 CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES
-                    @platform nvarchar(36),           /*平台全码*/
+                    @platform nvarchar(36),           /*平台代码*/
                     @userCode nvarchar(8)             /*用户编码*/
                 AS
                 BEGIN
-
-                IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
-                    --超级用户全部权限
-                    SELECT A.*,'A' AuthValue 
-                    FROM "${Company}_SYS_MODULE" A
-                    WHERE A."PlatformID" = @platform AND A."Activated" = 'Y' 
-                ELSE
-                    --非超级用户，角色权限
-                    SELECT A.*,C.AuthValue 
-                    FROM "${Company}_SYS_MODULE" A INNER JOIN (
-                        SELECT DISTINCT B."ModuleID",B."AuthValue" 
-                        FROM "${Company}_SYS_PRIVILEGE" B 
-                        WHERE B."PlatformID" = @platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
-                            SELECT B."Role" 
-                            FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
-                                INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
-                            WHERE A."ValidDate" &lt;= GETDATE() AND A."InvalidDate" &gt;= GETDATE() AND C."Member" = @userCode
-                            )
-                    ) C ON A."ModuleId" = C."ModuleID"
-                    WHERE A."PlatformID" = @platform AND A."Activated" = 'Y'
-                END
+                    IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
+                        --超级用户全部权限
+                        SELECT A.*,'A' AuthValue 
+                        FROM "${Company}_SYS_MODULE" A
+                        WHERE A."PlatformId" = @platform AND A."Activated" = 'Y' 
+                    ELSE
+                        --非超级用户，角色权限
+                        SELECT A.*,C.AuthValue 
+                        FROM "${Company}_SYS_MODULE" A INNER JOIN (
+                            SELECT DISTINCT B."ModuleId",B."AuthValue" 
+                            FROM "${Company}_SYS_PRIVILEGE" B 
+                            WHERE B."PlatformId" = @platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                                SELECT B."Role" 
+                                FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
+                                    INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
+                                WHERE A."ValidDate" &lt;= GETDATE() AND A."InvalidDate" &gt;= GETDATE() AND C."Member" = @userCode
+                                )
+                        ) C ON A."ModuleId" = C."ModuleId"
+                        WHERE A."PlatformId" = @platform AND A."Activated" = 'Y'
+                END;
             </Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P'
+                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P';
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
             <Script>
                 CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES
-                    @platform nvarchar(36),           /*平台全码*/
+                    @platform nvarchar(36),           /*平台代码*/
                     @userCode nvarchar(8)             /*用户编码*/
                 AS
                 BEGIN
-                    select null
-                END
+                    IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
+                        -- 超级用户全部权限                    
+                        SELECT TOP 0 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
+                        FROM "${Company}_SYS_PRIVILEGE"
+                    ELSE
+                        -- 非超级用户，角色权限
+                        -- 业务对象的权限设置
+                        SELECT 'B' "Source", "BOCode" "Target", "Self" "Value"
+                        FROM "${Company}_SYS_OWNERSHIP"
+                        WHERE "UserCode" = @userCode
+                        UNION ALL
+                        SELECT "Source", "Target",  "Value"
+                        FROM (
+                            -- 模块的权限设置
+                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE "PlatformId" = @platform AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
+                            UNION ALL
+                            -- 应用的权限设置
+                            SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE "PlatformId" = @platform AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
+                        ) T0 
+                        WHERE T0."RoleCode" IN (
+                            SELECT T1."Role"
+                            FROM "${Company}_SYS_ORGSTRC" T0 INNER JOIN "${Company}_SYS_ORGROLE" T1 ON T0."ObjectKey" = T1."ObjectKey"
+                                  INNER JOIN "${Company}_SYS_ROLEMEM" T2 ON T1."ObjectKey" = T2."ObjectKey" AND T1."LineId" = T2."RoleId"
+                            WHERE T2."Member" = @userCode
+                        )
+                END;
             </Script>
         </Step>
     </Action>

@@ -3,9 +3,9 @@
 <Domain Name="InitialFantasy" ShortName="IF">
   <Model Name="Privilege" Description="系统权限" ModelType="Simple" Mapped="${Company}_SYS_PRIVILEGE">
     <Property Name="RoleCode" Description="角色标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="RoleCode"/>
-    <Property Name="PlatformID" Description="平台标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="PlatformID"/>
-    <Property Name="ModuleID" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleID"/>
-    <Property Name="FunctionID" Description="功能标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="FunctionID"/>
+    <Property Name="PlatformId" Description="平台标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="PlatformId"/>
+    <Property Name="ModuleId" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleId"/>
+    <Property Name="Target" Description="目标标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Target"/>
     <Property Name="Activated" Description="是否可用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="AuthoriseValue" Description="权限类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="AuthValue"/>
     <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>

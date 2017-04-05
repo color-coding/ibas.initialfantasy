@@ -26,6 +26,7 @@ public class testRepositoryShell extends TestCase {
 
 	private static String USER = "admin";
 	private static String PASSWORD = "admin";
+	private static String PLANTFORM = "html5";
 
 	public void testUserConnect() {
 		IBORepositoryShell boRepository = new BORepositoryInitialFantasyShell();
@@ -44,15 +45,17 @@ public class testRepositoryShell extends TestCase {
 
 	public void testFetchUserModules() throws Exception {
 		IBORepositoryShell boRepository = new BORepositoryInitialFantasyShell();
-		IOperationResult<UserModule> opRslt = boRepository.fetchUserModules(USER, "html5", this.getToken());
+		IOperationResult<UserModule> opRslt = boRepository.fetchUserModules(USER, PLANTFORM, this.getToken());
 		assertEquals(opRslt.getMessage(), 0, opRslt.getResultCode());
 	}
 
 	public void testFetchUserPrivileges() throws Exception {
 		IBORepositoryShell boRepository = new BORepositoryInitialFantasyShell();
-		IOperationResult<UserPrivilege> opRslt = boRepository.fetchUserPrivileges(USER, "html5", this.getToken());
+		IOperationResult<UserPrivilege> opRslt = boRepository.fetchUserPrivileges(USER, PLANTFORM, this.getToken());
 		assertEquals(opRslt.getMessage(), 0, opRslt.getResultCode());
-
+		for (UserPrivilege item : opRslt.getResultObjects()) {
+			System.out.println(item.toString());
+		}
 	}
 
 	public void testFetchBOInfos() throws Exception {
