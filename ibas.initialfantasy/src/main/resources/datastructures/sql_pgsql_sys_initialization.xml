@@ -91,29 +91,29 @@
                 DECLARE
                     result record;
                 BEGIN
-                    IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `Super` = 'Y')  THEN
+                    IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "UserCode" = userCode AND "Super" = 'Y')  THEN
                         /* 超级用户全部权限 */                            
                         FOR RESULT IN
                             SELECT A.*,'A' AuthValue
-                            FROM `${Company}_SYS_MODULE` A
-                            WHERE A.`PlatformId` = platform AND A.`Activated` = 'Y'
+                            FROM "${Company}_SYS_MODULE" A
+                            WHERE A."PlatformId" = platform AND A."Activated" = 'Y'
                         LOOP 
                           RETURN NEXT RESULT; 
                         END LOOP;
                     ELSE
                         /* 非超级用户，角色权限 */
                         FOR RESULT IN
-                            SELECT A.*,C.`AuthValue`
-                            FROM `${Company}_SYS_MODULE` A INNER JOIN (
-                                SELECT DISTINCT B.`ModuleId`,B.`AuthValue`
-                                FROM `${Company}_SYS_PRIVILEGE` B
-                                WHERE B.`PlatformId` = platform AND B.`AuthValue` &lt;&gt; 'N' AND B.`RoleCode` IN (
-                                    SELECT B.`Role` 
-                                    FROM `${Company}_SYS_ORGSTRC` A INNER JOIN `${Company}_SYS_ORGROLE` B ON A.`ObjectKey` = B.`ObjectKey`
-                                          INNER JOIN `${Company}_SYS_ROLEMEM` C ON B.`ObjectKey` = C.`ObjectKey` AND B.`LineId` = C.`RoleId`
-                                    WHERE A.`ValidDate` &lt;= GETDATE() AND A.`InvalidDate` &gt;= GETDATE() AND C.`Member` = userCode)
-                            ) C ON A.`ModuleId` = C.`ModuleID`
-                            WHERE A.`PlatformId` = platform AND A.`Activated` = 'Y';
+                            SELECT A.*,C."AuthValue"
+                            FROM "${Company}_SYS_MODULE" A INNER JOIN (
+                                SELECT DISTINCT B."ModuleId",B."AuthValue"
+                                FROM "${Company}_SYS_PRIVILEGE" B
+                                WHERE B."PlatformId" = platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                                    SELECT B."Role" 
+                                    FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
+                                          INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
+                                    WHERE A."ValidDate" &lt;= GETDATE() AND A."InvalidDate" &gt;= GETDATE() AND C."Member" = userCode)
+                            ) C ON A."ModuleId" = C."ModuleID"
+                            WHERE A."PlatformId" = platform AND A."Activated" = 'Y'
                         LOOP 
                           RETURN NEXT RESULT; 
                         END LOOP;
@@ -148,11 +148,12 @@
                 DECLARE
                     result record;
                 BEGIN
-                    IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `Super` = 'Y')  THEN
+                    IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "UserCode" = userCode AND "Super" = 'Y')  THEN
                         /* 超级用户全部权限 */                            
                         FOR RESULT IN
-                            SELECT TOP 0 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
-                            FROM "${Company}_SYS_PRIVILEGE";
+                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            LIMIT 0
                         LOOP 
                           RETURN NEXT RESULT; 
                         END LOOP;
@@ -162,26 +163,26 @@
                         FOR RESULT IN
                             SELECT 'B' "Source", "BOCode" "Target", "Self" "Value"
                             FROM "${Company}_SYS_OWNERSHIP"
-                            WHERE "UserCode" = :userCode
+                            WHERE "UserCode" = userCode
                             UNION ALL
                             SELECT "Source", "Target",  "Value"
                             FROM (
                                 -- 模块的权限设置
                                 SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
                                 FROM "${Company}_SYS_PRIVILEGE"
-                                WHERE "PlatformId" = :platform AND "Activated" = 'Y' AND IFNULL("Target",'') = ''
+                                WHERE "PlatformId" = platform AND "Activated" = 'Y' AND IFNULL("Target",'') = ''
                                 UNION ALL
                                 -- 应用的权限设置
                                 SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
                                 FROM "${Company}_SYS_PRIVILEGE"
-                                WHERE "PlatformId" = :platform AND "Activated" = 'Y' AND IFNULL("Target",'') &lt;&gt; ''
+                                WHERE "PlatformId" = platform AND "Activated" = 'Y' AND IFNULL("Target",'') &lt;&gt; ''
                             ) T0 
                             WHERE T0."RoleCode" IN (
                                 SELECT T1."Role"
                                 FROM "${Company}_SYS_ORGSTRC" T0 INNER JOIN "${Company}_SYS_ORGROLE" T1 ON T0."ObjectKey" = T1."ObjectKey"
                                       INNER JOIN "${Company}_SYS_ROLEMEM" T2 ON T1."ObjectKey" = T2."ObjectKey" AND T1."LineId" = T2."RoleId"
-                                WHERE T2."Member" = :userCode
-                            );
+                                WHERE T2."Member" = userCode
+                            )
                         LOOP 
                           RETURN NEXT RESULT; 
                         END LOOP;
