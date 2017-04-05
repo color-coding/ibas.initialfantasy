@@ -12,12 +12,12 @@
     <Action Name="create db" Isolated="true" DbUrl="jdbc:postgresql://${DbServer}:${DbPort}/postgres">
         <Step Name="check db exists">
             <Script>
-                select count(0) from pg_database where datname = '${DbName}'
+                select count(0) from pg_database where datname = '${DbName}';
             </Script>
         </Step>
         <Step Name="create db" RunOnValue="0">
             <Script>
-                 create database "${DbName}"
+                 create database "${DbName}";
             </Script>
         </Step>
     </Action>
@@ -40,68 +40,152 @@
         <Step Name="create stored procedures">
             <Script>
                 CREATE OR REPLACE FUNCTION "${Company}_SP_TRANSACTION_NOTIFICATION" (
-                    _object_type character varying,                             /*对象类型（BOCode）*/
-                    _transaction_type character,                                /*业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）*/
-                    _num_of_cols_in_key integer,                                /*主键个数*/
-                    _list_of_key_cols_tab_del character varying,                /*主键名称*/
-                    _list_of_cols_val_tab_del character varying                 /*主键值*/
+                    object_type character varying,                             /*对象类型（BOCode）*/
+                    transaction_type character,                                /*业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）*/
+                    num_of_cols_in_key integer,                                /*主键个数*/
+                    list_of_key_cols_tab_del character varying,                /*主键名称*/
+                    list_of_cols_val_tab_del character varying                 /*主键值*/
                 ) RETURNS SETOF "RESULT_TYPE_${Company}_SP_TRANSACTION_NOTIFICATION" AS $_$
                 DECLARE
-                    _error  integer;                                            /*返回值(0 无错误)*/
-                    _error_message varchar (200);                               /*返回的消息*/
-                    _result record;
+                    error  integer;                                            /*返回值(0 无错误)*/
+                    error_message varchar (200);                               /*返回的消息*/
+                    result record;
                 BEGIN
                     /* 返回值 */
-                    _error = 0;
-                    _error_message = N'OK';
+                    error = 0;
+                    error_message = N'OK';
                     /*--------------------------------------------------------------------------------------------------------------------------------*/
                     /*ADD YOUR CODE HERE*/
                     /*--------------------------------------------------------------------------------------------------------------------------------*/
                     /*return*/
-                    for _result in select _error "error",_error_message "message" loop 
-                    return next _result; 
+                    for result in select error "error",error_message "message" loop 
+                      return next result; 
                     end loop;
                 END;
                 $_$ LANGUAGE plpgsql;
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_FAST_REGISTRATION_MODULES">
-        <Step Name="create uuid function">
-            <Script>                
-                CREATE OR REPLACE FUNCTION uuid_generate_v1()
-                RETURNS uuid
-                AS '$libdir/uuid-ossp', 'uuid_generate_v1'
-                VOLATILE STRICT LANGUAGE C;
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+        <Step Name="check and drop exists stored procedures">
+            <Script>
+                DROP FUNCTION IF EXISTS "${Company}_SYS_SP_GET_USER_MODULES"(character varying, character varying, character varying);
             </Script>
         </Step>
-        <Step Name="check stored procedures exists">
+        <Step Name="check and drop exists return type">
             <Script>
-                DROP FUNCTION IF EXISTS "${Company}_SYS_SP_FAST_REGISTRATION_MODULES"(character varying,character varying,character varying,character varying,character varying,character varying,character varying);
+                DROP TYPE IF EXISTS "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES";
+            </Script>
+        </Step>
+        <Step Name="create return type">
+            <Script>
+                CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES" AS("Id" varchar(36),"Name" varchar(200),"Category" varchar(30));
             </Script>
         </Step>
         <Step Name="create stored procedures">
             <Script>
-                CREATE OR REPLACE FUNCTION "${Company}_SYS_SP_FAST_REGISTRATION_MODULES" (
-                   _Platform varchar(20),        /*平台简码*/
-                   _ModuleID varchar(50),        /*模块名称*/
-                   _ModuleName varchar(50),      /*模块名称*/
-                ) RETURNS void AS $_$ 
+                CREATE OR REPLACE FUNCTION "${Company}_SYS_SP_GET_USER_MODULES" (
+                    platform character varying,        /*平台代码*/
+                    userCode character varying         /*用户编码*/
+                ) RETURNS SETOF "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES" AS $_$
                 DECLARE
-                   _PlatformID varchar(50);       /*平台ID*/
-                   _ObjectKey int;                /*对象编号*/
-                   _ObjectCode varchar(30);       /*对象*/
+                    result record;
                 BEGIN
-				   /*模块平台*/
-				   select "PlatformId" into _PlatformID From "${Company}_SYS_PLATFORM" where "PlatformCode" = _Platform limit 1;
-				   
-				   _ObjectCode = '${Company}_SYS_MODULE';
-				   select COALESCE(A."AutoKey",1) into _ObjectKey from "${Company}_SYS_ONNM" A where A."ObjectCode" = _ObjectCode limit 1;
-				   delete from "${Company}_SYS_MODULE" where "ModuleId" = _ModuleID AND "PlatformId" = _PlatformID;
-				   insert into "${Company}_SYS_MODULE" ("ModuleId" , "ModuleName" ,"PlatformId","Activated","ObjectKey","ObjectCode")
-				      values(_ModuleID,_ModuleName,_PlatformID,'Y',_ObjectKey,_ObjectCode);
-				   update "${Company}_SYS_ONNM" set "AutoKey" = "AutoKey" + 1 where "ObjectCode" = _ObjectCode;
-
+                    IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `Super` = 'Y')  THEN
+                        /* 超级用户全部权限 */                            
+                        FOR RESULT IN
+                            SELECT A.*,'A' AuthValue
+                            FROM `${Company}_SYS_MODULE` A
+                            WHERE A.`PlatformId` = platform AND A.`Activated` = 'Y'
+                        LOOP 
+                          RETURN NEXT RESULT; 
+                        END LOOP;
+                    ELSE
+                        /* 非超级用户，角色权限 */
+                        FOR RESULT IN
+                            SELECT A.*,C.`AuthValue`
+                            FROM `${Company}_SYS_MODULE` A INNER JOIN (
+                                SELECT DISTINCT B.`ModuleId`,B.`AuthValue`
+                                FROM `${Company}_SYS_PRIVILEGE` B
+                                WHERE B.`PlatformId` = platform AND B.`AuthValue` &lt;&gt; 'N' AND B.`RoleCode` IN (
+                                    SELECT B.`Role` 
+                                    FROM `${Company}_SYS_ORGSTRC` A INNER JOIN `${Company}_SYS_ORGROLE` B ON A.`ObjectKey` = B.`ObjectKey`
+                                          INNER JOIN `${Company}_SYS_ROLEMEM` C ON B.`ObjectKey` = C.`ObjectKey` AND B.`LineId` = C.`RoleId`
+                                    WHERE A.`ValidDate` &lt;= GETDATE() AND A.`InvalidDate` &gt;= GETDATE() AND C.`Member` = userCode)
+                            ) C ON A.`ModuleId` = C.`ModuleID`
+                            WHERE A.`PlatformId` = platform AND A.`Activated` = 'Y';
+                        LOOP 
+                          RETURN NEXT RESULT; 
+                        END LOOP;
+                    END IF;
+                END;
+                $_$ LANGUAGE plpgsql;
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
+        <Step Name="check and drop exists stored procedures">
+            <Script>
+                DROP FUNCTION IF EXISTS "${Company}_SYS_SP_GET_USER_PRIVILEGES"(character varying, character varying, character varying);
+            </Script>
+        </Step>
+        <Step Name="check and drop exists return type">
+            <Script>
+                DROP TYPE IF EXISTS "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES";
+            </Script>
+        </Step>
+        <Step Name="create return type">
+            <Script>
+                CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES" AS("Source" varchar(1), "Target" varchar(36), "Value" varchar(1));
+            </Script>
+        </Step>
+        <Step Name="create stored procedures">
+            <Script>
+                CREATE OR REPLACE FUNCTION "${Company}_SYS_SP_GET_USER_PRIVILEGES" (
+                    platform character varying,        /*平台代码*/
+                    userCode character varying         /*用户编码*/
+                ) RETURNS SETOF "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES" AS $_$
+                DECLARE
+                    result record;
+                BEGIN
+                    IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `Super` = 'Y')  THEN
+                        /* 超级用户全部权限 */                            
+                        FOR RESULT IN
+                            SELECT TOP 0 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
+                            FROM "${Company}_SYS_PRIVILEGE";
+                        LOOP 
+                          RETURN NEXT RESULT; 
+                        END LOOP;
+                    ELSE
+                        -- 非超级用户，角色权限
+                        -- 业务对象的权限设置
+                        FOR RESULT IN
+                            SELECT 'B' "Source", "BOCode" "Target", "Self" "Value"
+                            FROM "${Company}_SYS_OWNERSHIP"
+                            WHERE "UserCode" = :userCode
+                            UNION ALL
+                            SELECT "Source", "Target",  "Value"
+                            FROM (
+                                -- 模块的权限设置
+                                SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
+                                FROM "${Company}_SYS_PRIVILEGE"
+                                WHERE "PlatformId" = :platform AND "Activated" = 'Y' AND IFNULL("Target",'') = ''
+                                UNION ALL
+                                -- 应用的权限设置
+                                SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
+                                FROM "${Company}_SYS_PRIVILEGE"
+                                WHERE "PlatformId" = :platform AND "Activated" = 'Y' AND IFNULL("Target",'') &lt;&gt; ''
+                            ) T0 
+                            WHERE T0."RoleCode" IN (
+                                SELECT T1."Role"
+                                FROM "${Company}_SYS_ORGSTRC" T0 INNER JOIN "${Company}_SYS_ORGROLE" T1 ON T0."ObjectKey" = T1."ObjectKey"
+                                      INNER JOIN "${Company}_SYS_ROLEMEM" T2 ON T1."ObjectKey" = T2."ObjectKey" AND T1."LineId" = T2."RoleId"
+                                WHERE T2."Member" = :userCode
+                            );
+                        LOOP 
+                          RETURN NEXT RESULT; 
+                        END LOOP;
+                    END IF;
                 END;
                 $_$ LANGUAGE plpgsql;
             </Script>

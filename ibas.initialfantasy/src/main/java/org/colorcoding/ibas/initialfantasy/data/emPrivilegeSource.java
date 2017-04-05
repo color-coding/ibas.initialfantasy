@@ -9,6 +9,9 @@ import org.colorcoding.ibas.bobas.mapping.Value;
  *
  */
 public enum emPrivilegeSource {
+	/** 模块设置 */
+	@Value(value = "M")
+	MODULE,
 	/** 应用设置 */
 	@Value(value = "A")
 	APPLICATION,

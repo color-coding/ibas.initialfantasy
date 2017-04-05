@@ -87,12 +87,12 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 属性名称-平台标识
 	 */
-	private static final String PROPERTY_PLATFORMID_NAME = "PlatformID";
+	private static final String PROPERTY_PLATFORMID_NAME = "PlatformId";
 
 	/**
 	 * 平台标识 属性
 	 */
-	@DbField(name = "PlatformID", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "PlatformId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
 	public static final IPropertyInfo<String> PROPERTY_PLATFORMID = registerProperty(PROPERTY_PLATFORMID_NAME,
 			String.class, MY_CLASS);
 
@@ -102,7 +102,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_PLATFORMID_NAME)
-	public final String getPlatformID() {
+	public final String getPlatformId() {
 		return this.getProperty(PROPERTY_PLATFORMID);
 	}
 
@@ -112,19 +112,19 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	 * @param value
 	 *            值
 	 */
-	public final void setPlatformID(String value) {
+	public final void setPlatformId(String value) {
 		this.setProperty(PROPERTY_PLATFORMID, value);
 	}
 
 	/**
 	 * 属性名称-模块标识
 	 */
-	private static final String PROPERTY_MODULEID_NAME = "ModuleID";
+	private static final String PROPERTY_MODULEID_NAME = "ModuleId";
 
 	/**
 	 * 模块标识 属性
 	 */
-	@DbField(name = "ModuleID", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
 	public static final IPropertyInfo<String> PROPERTY_MODULEID = registerProperty(PROPERTY_MODULEID_NAME, String.class,
 			MY_CLASS);
 
@@ -134,7 +134,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_MODULEID_NAME)
-	public final String getModuleID() {
+	public final String getModuleId() {
 		return this.getProperty(PROPERTY_MODULEID);
 	}
 
@@ -144,29 +144,29 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	 * @param value
 	 *            值
 	 */
-	public final void setModuleID(String value) {
+	public final void setModuleId(String value) {
 		this.setProperty(PROPERTY_MODULEID, value);
 	}
 
 	/**
-	 * 属性名称-功能标识
+	 * 属性名称-目标标识
 	 */
-	private static final String PROPERTY_FUNCTIONID_NAME = "FunctionID";
+	private static final String PROPERTY_FUNCTIONID_NAME = "Target";
 
 	/**
-	 * 功能标识 属性
+	 * 目标标识 属性
 	 */
-	@DbField(name = "FunctionID", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Target", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
 	public static final IPropertyInfo<String> PROPERTY_FUNCTIONID = registerProperty(PROPERTY_FUNCTIONID_NAME,
 			String.class, MY_CLASS);
 
 	/**
-	 * 获取-功能标识
+	 * 获取-目标标识
 	 * 
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_FUNCTIONID_NAME)
-	public final String getFunctionID() {
+	public final String getTarget() {
 		return this.getProperty(PROPERTY_FUNCTIONID);
 	}
 
@@ -176,7 +176,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	 * @param value
 	 *            值
 	 */
-	public final void setFunctionID(String value) {
+	public final void setTarget(String value) {
 		this.setProperty(PROPERTY_FUNCTIONID, value);
 	}
 

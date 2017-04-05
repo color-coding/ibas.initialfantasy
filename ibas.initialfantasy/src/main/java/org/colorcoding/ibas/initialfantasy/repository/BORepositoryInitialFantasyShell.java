@@ -27,8 +27,6 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IUser;
-import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shells.User;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
@@ -127,18 +125,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_PRIVILEGES"));
 			sp.addParameters("Platform", platform);
 			sp.addParameters("UserCode", user);
-			IOperationResult<?> opRsltPrivileges = boRepository.fetch(sp, Privilege.class);
+			IOperationResult<?> opRsltPrivileges = boRepository.fetch(sp, UserPrivilege.class);
 			if (opRsltPrivileges.getError() != null) {
 				throw opRsltPrivileges.getError();
 			}
 			if (opRsltPrivileges.getResultCode() != 0) {
 				throw new Exception(opRsltPrivileges.getMessage());
 			}
-			for (Object item : opRsltPrivileges.getResultObjects()) {
-				if (item instanceof IPrivilege) {
-					opRslt.getResultObjects().add(UserPrivilege.create((IPrivilege) item));
-				}
-			}
+			opRslt.addResultObjects(opRsltPrivileges.getResultObjects());
 		} catch (Exception e) {
 			opRslt.setError(e);
 		}

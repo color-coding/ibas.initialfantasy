@@ -12,85 +12,134 @@
     <Action Name="create db" Isolated="true">
         <Step Name="check db exists">
             <Script>
-                select count(0) from "SCHEMAS" where "SCHEMA_NAME" = '${DbName}'
+                select count(0) from "SCHEMAS" where "SCHEMA_NAME" = '${DbName}';
             </Script>
         </Step>
         <Step Name="create db" RunOnValue="0">
             <Script>
-                 create schema "${DbName}"
+                 create schema "${DbName}";
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
+    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SP_TRANSACTION_NOTIFICATION'
+                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SP_TRANSACTION_NOTIFICATION';
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
             <Script>
                 CREATE PROCEDURE "${DbName}"."${Company}_SP_TRANSACTION_NOTIFICATION" (
-                    IN _object_type nvarchar(30),                       --对象类型（BOCode）
-                    IN _transaction_type nvarchar(1),                   --业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）
-                    IN _num_of_cols_in_key integer,                     --主键个数
-                    IN _list_of_key_cols_tab_del nvarchar(255),         --主键名称
-                    IN _list_of_cols_val_tab_del nvarchar(255)          --主键值
+                    IN object_type nvarchar(30),                       --对象类型（BOCode）
+                    IN transaction_type nvarchar(1),                   --业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）
+                    IN num_of_cols_in_key integer,                     --主键个数
+                    IN list_of_key_cols_tab_del nvarchar(255),         --主键名称
+                    IN list_of_cols_val_tab_del nvarchar(255)          --主键值
                 )
                 LANGUAGE SQLSCRIPT AS
                 BEGIN
                     --返回值
-                    DECLARE _error integer;
+                    DECLARE error integer;
                     --返回值(0 无错误)
-                    DECLARE _error_message nvarchar(200);
+                    DECLARE error_message nvarchar(200);
                     --返回的消息
-                    SELECT 0 INTO _error FROM  dummy;
-                    SELECT 'OK' INTO _error_message FROM dummy;
+                    SELECT 0 INTO error FROM  dummy;
+                    SELECT 'OK' INTO error_message FROM dummy;
                     --------------------------------------------------------------------------------------------------------------------------------
                     --ADD YOUR CODE HERE
                     --------------------------------------------------------------------------------------------------------------------------------
                     --返回结果
-                    SELECT TO_INTEGER(_error) "code", _error_message "message" FROM dummy;
-                END
+                    SELECT TO_INTEGER(error) "code", error_message "message" FROM dummy;
+                END;
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SYS_SP_GET_USER_MODULES'
+                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SYS_SP_GET_USER_MODULES';
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
             <Script>
-                CREATE PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_MODULES"
-                (
-                    in platform nvarchar(36),           --平台全码
-                    in userCode nvarchar(8)             --用户编码
+                CREATE PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_MODULES" (
+                    IN platform nvarchar(36),           --平台代码
+                    IN userCode nvarchar(8)             --用户编码
                 )
                 LANGUAGE SQLSCRIPT AS
                 BEGIN
-                DECLARE v_count integer;
-                SELECT count(0) into v_count FROM "${Company}_SYS_USER" WHERE "UserCode" = :userCode AND "Super" = 'Y';
-                IF :v_count = 1 THEN
-                    --超级用户全部权限
-                    SELECT A.*,'A' AuthValue 
-                    FROM "${Company}_SYS_MODULE" A
-                    WHERE A."PlatformId" = :platform AND A."Activated" = 'Y';
-                ELSE
-                    --非超级用户，角色权限
-                    SELECT A.*,C."AuthValue"
-                    FROM "${Company}_SYS_MODULE" A INNER JOIN (
-                        SELECT DISTINCT B."ModuleID",B."AuthValue"
-                        FROM "${Company}_SYS_PRIVILEGE" B 
-                        WHERE B."PlatformID" = :platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
-                            SELECT B."Role" 
-                            FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
-                                INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
-                            WHERE A."ValidDate" &lt;= CURRENT_DATE AND A."InvalidDate" &gt;= CURRENT_DATE AND C."Member" = :userCode
-                            )
-                    ) C ON A."ModuleId" = C."ModuleID"
-                    WHERE A."PlatformId" = :platform AND A."Activated" = 'Y';
-                END IF;
+                    DECLARE v_count integer;
+                    SELECT count(0) into v_count FROM "${Company}_SYS_USER" WHERE "Code" = :userCode AND "Super" = 'Y';
+                    IF :v_count = 1 THEN
+                        --超级用户全部权限
+                        SELECT A.*,'A' "AuthValue" 
+                        FROM "${Company}_SYS_MODULE" A
+                        WHERE A."PlatformId" = :platform AND A."Activated" = 'Y';
+                    ELSE
+                        --非超级用户，角色权限
+                        SELECT A.*,C."AuthValue"
+                        FROM "${Company}_SYS_MODULE" A INNER JOIN (
+                            SELECT DISTINCT B."ModuleId",B."AuthValue"
+                            FROM "${Company}_SYS_PRIVILEGE" B 
+                            WHERE B."PlatformId" = :platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                                SELECT B."Role" 
+                                FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
+                                    INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
+                                WHERE A."ValidDate" &lt;= CURRENT_DATE AND A."InvalidDate" &gt;= CURRENT_DATE AND C."Member" = :userCode
+                                )
+                        ) C ON A."ModuleId" = C."ModuleId"
+                        WHERE A."PlatformId" = :platform AND A."Activated" = 'Y';
+                    END IF;
+                END;
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
+        <Step Name="check stored procedures exists">
+            <Script>
+                select count(0) from "PROCEDURES" where "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SYS_SP_GET_USER_PRIVILEGES';
+            </Script>
+        </Step>
+        <Step Name="create stored procedures" RunOnValue="0">
+            <Script>
+                CREATE PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_PRIVILEGES" (
+                    IN platform nvarchar(36),           --平台代码
+                    IN userCode nvarchar(8)             --用户编码
+                )
+                LANGUAGE SQLSCRIPT AS
+                BEGIN
+                    DECLARE v_count integer;
+                    SELECT count(0) into v_count FROM "${Company}_SYS_USER" WHERE "Code" = :userCode AND "Super" = 'Y';
+                    IF :v_count = 1 THEN
+                        -- 超级用户全部权限
+                        SELECT TOP 0 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
+                        FROM "${Company}_SYS_PRIVILEGE";
+                    ELSE
+                        -- 非超级用户，角色权限
+                        -- 业务对象的权限设置
+                        SELECT 'B' "Source", "BOCode" "Target", "Self" "Value"
+                        FROM "${Company}_SYS_OWNERSHIP"
+                        WHERE "UserCode" = :userCode
+                        UNION ALL
+                        SELECT "Source", "Target",  "Value"
+                        FROM (
+                            -- 模块的权限设置
+                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE "PlatformId" = :platform AND "Activated" = 'Y' AND IFNULL("Target",'') = ''
+                            UNION ALL
+                            -- 应用的权限设置
+                            SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE "PlatformId" = :platform AND "Activated" = 'Y' AND IFNULL("Target",'') &lt;&gt; ''
+                        ) T0 
+                        WHERE T0."RoleCode" IN (
+                            SELECT T1."Role"
+                            FROM "${Company}_SYS_ORGSTRC" T0 INNER JOIN "${Company}_SYS_ORGROLE" T1 ON T0."ObjectKey" = T1."ObjectKey"
+                                  INNER JOIN "${Company}_SYS_ROLEMEM" T2 ON T1."ObjectKey" = T2."ObjectKey" AND T1."LineId" = T2."RoleId"
+                            WHERE T2."Member" = :userCode
+                        );
+                    END IF;
                 END;
             </Script>
         </Step>
