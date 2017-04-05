@@ -66,11 +66,11 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(i18n.prop("msg_sys_user_name_and_password_not_match"));
+				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
 			}
 			User sUser = User.create(boUser);
-			if (sUser.checkPassword(password)) {
-				throw new Exception(i18n.prop("msg_sys_user_name_and_password_not_match"));
+			if (!sUser.checkPassword(password)) {
+				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
 			}
 			// 生成token
 			IOrganizationManager orgManager = OrganizationFactory.create().createManager();
@@ -227,6 +227,8 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		boolean myTrans = false;
 		try {
 			this.setUserToken(token);
+			// 查询此用户已存在的数据
+			// 通过对用户的要求，用来处理系统预置查询，不能被使用者修改，使用者修改时只是为自己复制一份。
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(BOCriteria.PROPERTY_APPLICATIONID.getName());

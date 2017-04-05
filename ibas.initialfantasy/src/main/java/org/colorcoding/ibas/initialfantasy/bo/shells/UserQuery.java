@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 
 /**
@@ -64,6 +65,13 @@ public class UserQuery {
 		this.criteria = criteria;
 	}
 
+	public void setCriteria(ICriteria criteria) {
+		if (criteria == null) {
+			return;
+		}
+		this.setCriteria(criteria.toString("json"));
+	}
+
 	/** 顺序 */
 	private int order;
 
@@ -76,4 +84,8 @@ public class UserQuery {
 		this.order = order;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("{query: %s|%s}", this.getId(), this.getName());
+	}
 }

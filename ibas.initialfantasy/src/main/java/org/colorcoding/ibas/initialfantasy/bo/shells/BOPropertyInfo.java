@@ -61,4 +61,9 @@ public class BOPropertyInfo {
 	public void setSearched(boolean searched) {
 		this.searched = searched;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("{propertyinfo: %s}", this.getProperty());
+	}
 }

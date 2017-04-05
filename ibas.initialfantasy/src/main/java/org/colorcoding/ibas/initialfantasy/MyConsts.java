@@ -8,7 +8,7 @@ public final class MyConsts {
 	/**
 	 * 模块标识
 	 */
-	public static final String MODULE_ID = "${ProjectId}";
+	public static final String MODULE_ID = "c2b31c06-20d8-44a2-bb34-17f47ed01859";
 
 	/**
 	 * 命名空间

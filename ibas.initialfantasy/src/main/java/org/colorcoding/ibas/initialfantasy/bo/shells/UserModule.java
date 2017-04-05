@@ -82,4 +82,8 @@ public class UserModule {
 		this.repository = repository;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("{module: %s|%s}", this.getId(), this.getName());
+	}
 }

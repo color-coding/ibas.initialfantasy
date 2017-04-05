@@ -62,7 +62,7 @@
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
             <Script>
-                CREATE PROCEDURE "${Company}_SYS_SP_GET_USER_MODULES"
+                CREATE PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_MODULES"
                 (
                     in platform nvarchar(36),           --平台全码
                     in userCode nvarchar(8)             --用户编码
