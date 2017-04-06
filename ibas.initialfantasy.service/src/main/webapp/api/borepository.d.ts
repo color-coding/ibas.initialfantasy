@@ -7,171 +7,156 @@
  */
 
 import {
-    IBORemoteRepository,
-    ICriteria,
-    IOperationResult,
     FetchCaller,
     SaveCaller
-} from '../3rdparty/ibas/index';
-import { IApplicationFunction } from './applicationfunction/applicationfunction.data.d';
-import { IApplicationModule } from './applicationmodule/applicationmodule.data.d';
-import { IApplicationPlatform } from './applicationplatform/applicationplatform.data.d';
-import { IApprovalTemplate } from './ApprovalTemplate/ApprovalTemplate.data.d';
-import { IApprovalRequest } from './approvalrequest/approvalrequest.data.d';
-import { IBOCriteria } from './bocriteria/bocriteria.data.d';
-import { IBOFiltering } from './bofiltering/bofiltering.data.d';
-import { IOrganization } from './organization/organization.data.d';
-import { IOrganizationalStructure } from './organizationalstructure/organizationalstructure.data.d';
-import { IOwnership } from './ownership/ownership.data.d';
-import { IPrivilege } from './privilege/privilege.data.d';
-import { IRole } from './role/role.data.d';
-import { IUser } from './user/user.data.d';
+} from "ibas/index";
+import * as bo from "./bo/index"
 
 /** InitialFantasy 业务仓库 */
-export interface IBORepositoryInitialFantasy extends IBORemoteRepository {
+export interface IBORepositoryInitialFantasy {
 
     /**
      * 查询 应用程序功能
      * @param fetcher 查询者
      */
-    fetchApplicationFunction(fetcher: FetchCaller<IApplicationFunction>);
-
+    fetchApplicationFunction(fetcher: FetchCaller<bo.IApplicationFunction>);
     /**
      * 保存 应用程序功能
      * @param saver 保存者
      */
-    saveApplicationFunction(saver: SaveCaller<IApplicationFunction>);
+    saveApplicationFunction(saver: SaveCaller<bo.IApplicationFunction>);
+
     /**
      * 查询 应用程序模块
      * @param fetcher 查询者
      */
-    fetchApplicationModule(fetcher: FetchCaller<IApplicationModule>);
-
+    fetchApplicationModule(fetcher: FetchCaller<bo.IApplicationModule>);
     /**
      * 保存 应用程序模块
      * @param saver 保存者
      */
-    saveApplicationModule(saver: SaveCaller<IApplicationModule>);
+    saveApplicationModule(saver: SaveCaller<bo.IApplicationModule>);
+
     /**
      * 查询 应用程序平台
      * @param fetcher 查询者
      */
-    fetchApplicationPlatform(fetcher: FetchCaller<IApplicationPlatform>);
-
+    fetchApplicationPlatform(fetcher: FetchCaller<bo.IApplicationPlatform>);
     /**
      * 保存 应用程序平台
      * @param saver 保存者
      */
-    saveApplicationPlatform(saver: SaveCaller<IApplicationPlatform>);
+    saveApplicationPlatform(saver: SaveCaller<bo.IApplicationPlatform>);
+
+    /**
+     * 查询 审批请求
+     * @param fetcher 查询者
+     */
+    fetchApprovalRequest(fetcher: FetchCaller<bo.IApprovalRequest>);
+    /**
+     * 保存 审批请求
+     * @param saver 保存者
+     */
+    saveApprovalRequest(saver: SaveCaller<bo.IApprovalRequest>);
+
     /**
      * 查询 审批模板
      * @param fetcher 查询者
      */
-    fetchApprovalTemplate(fetcher: FetchCaller<IApprovalTemplate>);
-
+    fetchApprovalTemplate(fetcher: FetchCaller<bo.IApprovalTemplate>);
     /**
      * 保存 审批模板
      * @param saver 保存者
      */
-    saveApprovalTemplate(saver: SaveCaller<IApprovalTemplate>);
-    /**
-     * 查询 审批记录
-     * @param fetcher 查询者
-     */
-    fetchApprovalRequest(fetcher: FetchCaller<IApprovalRequest>);
+    saveApprovalTemplate(saver: SaveCaller<bo.IApprovalTemplate>);
 
-    /**
-     * 保存 审批记录
-     * @param saver 保存者
-     */
-    saveApprovalRequest(saver: SaveCaller<IApprovalRequest>);
     /**
      * 查询 业务对象检索条件
      * @param fetcher 查询者
      */
-    fetchBOCriteria(fetcher: FetchCaller<IBOCriteria>);
-
+    fetchBOCriteria(fetcher: FetchCaller<bo.IBOCriteria>);
     /**
      * 保存 业务对象检索条件
      * @param saver 保存者
      */
-    saveBOCriteria(saver: SaveCaller<IBOCriteria>);
+    saveBOCriteria(saver: SaveCaller<bo.IBOCriteria>);
+
     /**
      * 查询 业务对象筛选
      * @param fetcher 查询者
      */
-    fetchBOFiltering(fetcher: FetchCaller<IBOFiltering>);
-
+    fetchBOFiltering(fetcher: FetchCaller<bo.IBOFiltering>);
     /**
      * 保存 业务对象筛选
      * @param saver 保存者
      */
-    saveBOFiltering(saver: SaveCaller<IBOFiltering>);
+    saveBOFiltering(saver: SaveCaller<bo.IBOFiltering>);
+
     /**
      * 查询 组织
      * @param fetcher 查询者
      */
-    fetchOrganization(fetcher: FetchCaller<IOrganization>);
-
+    fetchOrganization(fetcher: FetchCaller<bo.IOrganization>);
     /**
      * 保存 组织
      * @param saver 保存者
      */
-    saveOrganization(saver: SaveCaller<IOrganization>);
+    saveOrganization(saver: SaveCaller<bo.IOrganization>);
+
     /**
      * 查询 组织-结构
      * @param fetcher 查询者
      */
-    fetchOrganizationalStructure(fetcher: FetchCaller<IOrganizationalStructure>);
-
+    fetchOrganizationalStructure(fetcher: FetchCaller<bo.IOrganizationalStructure>);
     /**
      * 保存 组织-结构
      * @param saver 保存者
      */
-    saveOrganizationalStructure(saver: SaveCaller<IOrganizationalStructure>);
+    saveOrganizationalStructure(saver: SaveCaller<bo.IOrganizationalStructure>);
+
     /**
      * 查询 数据权限
      * @param fetcher 查询者
      */
-    fetchOwnership(fetcher: FetchCaller<IOwnership>);
-
+    fetchOwnership(fetcher: FetchCaller<bo.IOwnership>);
     /**
      * 保存 数据权限
      * @param saver 保存者
      */
-    saveOwnership(saver: SaveCaller<IOwnership>);
+    saveOwnership(saver: SaveCaller<bo.IOwnership>);
+
     /**
      * 查询 系统权限
      * @param fetcher 查询者
      */
-    fetchPrivilege(fetcher: FetchCaller<IPrivilege>);
-
+    fetchPrivilege(fetcher: FetchCaller<bo.IPrivilege>);
     /**
      * 保存 系统权限
      * @param saver 保存者
      */
-    savePrivilege(saver: SaveCaller<IPrivilege>);
+    savePrivilege(saver: SaveCaller<bo.IPrivilege>);
+
     /**
      * 查询 角色
      * @param fetcher 查询者
      */
-    fetchRole(fetcher: FetchCaller<IRole>);
-
+    fetchRole(fetcher: FetchCaller<bo.IRole>);
     /**
      * 保存 角色
      * @param saver 保存者
      */
-    saveRole(saver: SaveCaller<IRole>);
+    saveRole(saver: SaveCaller<bo.IRole>);
+
     /**
      * 查询 用户
      * @param fetcher 查询者
      */
-    fetchUser(fetcher: FetchCaller<IUser>);
-
+    fetchUser(fetcher: FetchCaller<bo.IUser>);
     /**
      * 保存 用户
      * @param saver 保存者
      */
-    saveUser(saver: SaveCaller<IUser>);
+    saveUser(saver: SaveCaller<bo.IUser>);
+
 
 }

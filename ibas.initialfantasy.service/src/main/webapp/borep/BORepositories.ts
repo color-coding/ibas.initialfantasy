@@ -6,240 +6,218 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import {
-    object,
-    IBORemoteRepository,
-    ICriteria,
-    IOperationResult,
-    IDataConverter,
-    BORepositoryApplication,
-    FetchCaller,
-    SaveCaller
-} from '../3rdparty/ibas/index';
-import { IBORepositoryInitialFantasy } from '../api/BORepository.d';
-import { DataConverter4InitialFantasy } from './DataConverters';
-import { ApplicationFunction } from './bo/ApplicationFunction';
-import { ApplicationModule } from './bo/ApplicationModule';
-import { ApplicationPlatform } from './bo/ApplicationPlatform';
-import { ApprovalTemplate } from './bo/ApprovalTemplate';
-import { ApprovalRequest } from './bo/ApprovalRequest';
-import { BOCriteria } from './bo/BOCriteria';
-import { BOFiltering } from './bo/BOFiltering';
-import { Organization } from './bo/Organization';
-import { OrganizationalStructure } from './bo/OrganizationalStructure';
-import { Ownership } from './bo/Ownership';
-import { Privilege } from './bo/Privilege';
-import { Role } from './bo/Role';
-import { User } from './bo/User';
+import * as ibas from "ibas/index";
+import * as bo from "./bo/index";
+import { IBORepositoryInitialFantasy } from "../api/index";
+import { DataConverterOnline, DataConverterOffline } from "./DataConverters";
 
 /** <%Domain.Name%> 业务仓库 */
-export class BORepositoryInitialFantasy extends BORepositoryApplication implements IBORepositoryInitialFantasy {
+export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication implements IBORepositoryInitialFantasy {
 
-    private converter: DataConverter4InitialFantasy;
     /** 创建此模块的后端与前端数据的转换者 */
-    protected createDataConverter(): IDataConverter {
-        if (object.isNull(this.converter)) {
-            this.converter = new DataConverter4InitialFantasy();
+    protected createConverter(): ibas.IDataConverter {
+        if (this.offline) {
+            // 离线状态
+            return new DataConverterOffline();
+        } else {
+            return new DataConverterOnline();
+
         }
-        return this.converter;
     }
 
     /**
      * 查询 应用程序功能
      * @param fetcher 查询者
      */
-    fetchApplicationFunction(fetcher: FetchCaller<ApplicationFunction>) {
-        super.fetch("ApplicationFunction", fetcher);
+    fetchApplicationFunction(fetcher: ibas.FetchCaller<bo.ApplicationFunction>):void {
+        super.fetch(bo.ApplicationFunction.name, fetcher);
     }
-
     /**
      * 保存 应用程序功能
      * @param saver 保存者
      */
-    saveApplicationFunction(saver: SaveCaller<ApplicationFunction>) {
-        super.save("ApplicationFunction", saver);
+    saveApplicationFunction(saver: ibas.SaveCaller<bo.ApplicationFunction>):void {
+        super.save(bo.ApplicationFunction.name, saver);
     }
+
     /**
      * 查询 应用程序模块
      * @param fetcher 查询者
      */
-    fetchApplicationModule(fetcher: FetchCaller<ApplicationModule>) {
-        super.fetch("ApplicationModule", fetcher);
+    fetchApplicationModule(fetcher: ibas.FetchCaller<bo.ApplicationModule>):void {
+        super.fetch(bo.ApplicationModule.name, fetcher);
     }
-
     /**
      * 保存 应用程序模块
      * @param saver 保存者
      */
-    saveApplicationModule(saver: SaveCaller<ApplicationModule>) {
-        super.save("ApplicationModule", saver);
+    saveApplicationModule(saver: ibas.SaveCaller<bo.ApplicationModule>):void {
+        super.save(bo.ApplicationModule.name, saver);
     }
+
     /**
      * 查询 应用程序平台
      * @param fetcher 查询者
      */
-    fetchApplicationPlatform(fetcher: FetchCaller<ApplicationPlatform>) {
-        super.fetch("ApplicationPlatform", fetcher);
+    fetchApplicationPlatform(fetcher: ibas.FetchCaller<bo.ApplicationPlatform>):void {
+        super.fetch(bo.ApplicationPlatform.name, fetcher);
     }
-
     /**
      * 保存 应用程序平台
      * @param saver 保存者
      */
-    saveApplicationPlatform(saver: SaveCaller<ApplicationPlatform>) {
-        super.save("ApplicationPlatform", saver);
+    saveApplicationPlatform(saver: ibas.SaveCaller<bo.ApplicationPlatform>):void {
+        super.save(bo.ApplicationPlatform.name, saver);
     }
+
+    /**
+     * 查询 审批请求
+     * @param fetcher 查询者
+     */
+    fetchApprovalRequest(fetcher: ibas.FetchCaller<bo.ApprovalRequest>):void {
+        super.fetch(bo.ApprovalRequest.name, fetcher);
+    }
+    /**
+     * 保存 审批请求
+     * @param saver 保存者
+     */
+    saveApprovalRequest(saver: ibas.SaveCaller<bo.ApprovalRequest>):void {
+        super.save(bo.ApprovalRequest.name, saver);
+    }
+
     /**
      * 查询 审批模板
      * @param fetcher 查询者
      */
-    fetchApprovalTemplate(fetcher: FetchCaller<ApprovalTemplate>) {
-        super.fetch("ApprovalTemplate", fetcher);
+    fetchApprovalTemplate(fetcher: ibas.FetchCaller<bo.ApprovalTemplate>):void {
+        super.fetch(bo.ApprovalTemplate.name, fetcher);
     }
-
     /**
      * 保存 审批模板
      * @param saver 保存者
      */
-    saveApprovalTemplate(saver: SaveCaller<ApprovalTemplate>) {
-        super.save("ApprovalTemplate", saver);
-    }
-    /**
-     * 查询 审批记录
-     * @param fetcher 查询者
-     */
-    fetchApprovalRequest(fetcher: FetchCaller<ApprovalRequest>) {
-        super.fetch("ApprovalRequest", fetcher);
+    saveApprovalTemplate(saver: ibas.SaveCaller<bo.ApprovalTemplate>):void {
+        super.save(bo.ApprovalTemplate.name, saver);
     }
 
-    /**
-     * 保存 审批记录
-     * @param saver 保存者
-     */
-    saveApprovalRequest(saver: SaveCaller<ApprovalRequest>) {
-        super.save("ApprovalRequest", saver);
-    }
     /**
      * 查询 业务对象检索条件
      * @param fetcher 查询者
      */
-    fetchBOCriteria(fetcher: FetchCaller<BOCriteria>) {
-        super.fetch("BOCriteria", fetcher);
+    fetchBOCriteria(fetcher: ibas.FetchCaller<bo.BOCriteria>):void {
+        super.fetch(bo.BOCriteria.name, fetcher);
     }
-
     /**
      * 保存 业务对象检索条件
      * @param saver 保存者
      */
-    saveBOCriteria(saver: SaveCaller<BOCriteria>) {
-        super.save("BOCriteria", saver);
+    saveBOCriteria(saver: ibas.SaveCaller<bo.BOCriteria>):void {
+        super.save(bo.BOCriteria.name, saver);
     }
+
     /**
      * 查询 业务对象筛选
      * @param fetcher 查询者
      */
-    fetchBOFiltering(fetcher: FetchCaller<BOFiltering>) {
-        super.fetch("BOFiltering", fetcher);
+    fetchBOFiltering(fetcher: ibas.FetchCaller<bo.BOFiltering>):void {
+        super.fetch(bo.BOFiltering.name, fetcher);
     }
-
     /**
      * 保存 业务对象筛选
      * @param saver 保存者
      */
-    saveBOFiltering(saver: SaveCaller<BOFiltering>) {
-        super.save("BOFiltering", saver);
+    saveBOFiltering(saver: ibas.SaveCaller<bo.BOFiltering>):void {
+        super.save(bo.BOFiltering.name, saver);
     }
+
     /**
      * 查询 组织
      * @param fetcher 查询者
      */
-    fetchOrganization(fetcher: FetchCaller<Organization>) {
-        super.fetch("Organization", fetcher);
+    fetchOrganization(fetcher: ibas.FetchCaller<bo.Organization>):void {
+        super.fetch(bo.Organization.name, fetcher);
     }
-
     /**
      * 保存 组织
      * @param saver 保存者
      */
-    saveOrganization(saver: SaveCaller<Organization>) {
-        super.save("Organization", saver);
+    saveOrganization(saver: ibas.SaveCaller<bo.Organization>):void {
+        super.save(bo.Organization.name, saver);
     }
+
     /**
      * 查询 组织-结构
      * @param fetcher 查询者
      */
-    fetchOrganizationalStructure(fetcher: FetchCaller<OrganizationalStructure>) {
-        super.fetch("OrganizationalStructure", fetcher);
+    fetchOrganizationalStructure(fetcher: ibas.FetchCaller<bo.OrganizationalStructure>):void {
+        super.fetch(bo.OrganizationalStructure.name, fetcher);
     }
-
     /**
      * 保存 组织-结构
      * @param saver 保存者
      */
-    saveOrganizationalStructure(saver: SaveCaller<OrganizationalStructure>) {
-        super.save("OrganizationalStructure", saver);
+    saveOrganizationalStructure(saver: ibas.SaveCaller<bo.OrganizationalStructure>):void {
+        super.save(bo.OrganizationalStructure.name, saver);
     }
+
     /**
      * 查询 数据权限
      * @param fetcher 查询者
      */
-    fetchOwnership(fetcher: FetchCaller<Ownership>) {
-        super.fetch("Ownership", fetcher);
+    fetchOwnership(fetcher: ibas.FetchCaller<bo.Ownership>):void {
+        super.fetch(bo.Ownership.name, fetcher);
     }
-
     /**
      * 保存 数据权限
      * @param saver 保存者
      */
-    saveOwnership(saver: SaveCaller<Ownership>) {
-        super.save("Ownership", saver);
+    saveOwnership(saver: ibas.SaveCaller<bo.Ownership>):void {
+        super.save(bo.Ownership.name, saver);
     }
+
     /**
      * 查询 系统权限
      * @param fetcher 查询者
      */
-    fetchPrivilege(fetcher: FetchCaller<Privilege>) {
-        super.fetch("Privilege", fetcher);
+    fetchPrivilege(fetcher: ibas.FetchCaller<bo.Privilege>):void {
+        super.fetch(bo.Privilege.name, fetcher);
     }
-
     /**
      * 保存 系统权限
      * @param saver 保存者
      */
-    savePrivilege(saver: SaveCaller<Privilege>) {
-        super.save("Privilege", saver);
+    savePrivilege(saver: ibas.SaveCaller<bo.Privilege>):void {
+        super.save(bo.Privilege.name, saver);
     }
+
     /**
      * 查询 角色
      * @param fetcher 查询者
      */
-    fetchRole(fetcher: FetchCaller<Role>) {
-        super.fetch("Role", fetcher);
+    fetchRole(fetcher: ibas.FetchCaller<bo.Role>):void {
+        super.fetch(bo.Role.name, fetcher);
     }
-
     /**
      * 保存 角色
      * @param saver 保存者
      */
-    saveRole(saver: SaveCaller<Role>) {
-        super.save("Role", saver);
+    saveRole(saver: ibas.SaveCaller<bo.Role>):void {
+        super.save(bo.Role.name, saver);
     }
+
     /**
      * 查询 用户
      * @param fetcher 查询者
      */
-    fetchUser(fetcher: FetchCaller<User>) {
-        super.fetch("User", fetcher);
+    fetchUser(fetcher: ibas.FetchCaller<bo.User>):void {
+        super.fetch(bo.User.name, fetcher);
     }
-
     /**
      * 保存 用户
      * @param saver 保存者
      */
-    saveUser(saver: SaveCaller<User>) {
-        super.save("User", saver);
+    saveUser(saver: ibas.SaveCaller<bo.User>):void {
+        super.save(bo.User.name, saver);
     }
-
-
 
 }

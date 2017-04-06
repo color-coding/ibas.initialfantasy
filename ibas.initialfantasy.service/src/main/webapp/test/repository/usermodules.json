@@ -1,0 +1,9 @@
+[
+  {
+    "id": "${ProjectId}",
+    "name": "InitialFantasy",
+    "category": "",
+    "address": ".../",
+    "repository": ".../test/repository"
+  }
+]

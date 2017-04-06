@@ -6,10 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../3rdparty/openui5/typings/index.d.ts" />
-import * as ibas from "../../../3rdparty/ibas/index";
+import * as ibas from "ibas/index";
+import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { utils } from "../../../3rdparty/openui5/typings/ibas.utils";
 import { IOwnershipEditView } from "../../../bsapp/Ownership/index";
 
 /**
@@ -17,6 +16,8 @@ import { IOwnershipEditView } from "../../../bsapp/Ownership/index";
  */
 export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEditView {
 
+    /** 删除数据事件 */
+    deleteDataEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
@@ -25,34 +26,6 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
             content: [
             ]
         });
-        this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_Ownershipitem") }));
-        this.table = new sap.ui.table.Table("", {
-            extension: new sap.m.Toolbar("", {
-                content: [
-                    new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_ui_data_add"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://add",
-                        press: function (): void {
-                            that.fireViewEvents(that.addOwnershipItemEvent);
-                        }
-                    }),
-                    new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_ui_data_remove"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://less",
-                        press: function (): void {
-                            that.fireViewEvents(that.removeOwnershipItemEvent);
-                        }
-                    })
-                ]
-            }),
-            visibleRowCount: 6,
-            rows: "{/}",
-            columns: [
-            ]
-        });
-        this.form.addContent(this.table);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -64,7 +37,16 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
                         press: function (): void {
                             that.fireViewEvents(that.saveDataEvent);
                         }
-                    })
+                    }),
+                    new sap.m.ToolbarSeparator(""),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_ui_data_delete"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://delete",
+                        press: function (): void {
+                            that.fireViewEvents(that.deleteDataEvent);
+                        }
+                    }),
                 ]
             }),
             content: [this.form]
@@ -74,10 +56,11 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
 
     /** 显示数据 */
     showOwnership(data: bo.Ownership): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.form, data);
     }
 }

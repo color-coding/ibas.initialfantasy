@@ -6,31 +6,26 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
+import * as ibas from "ibas/index";
 import { PrivilegeListApp } from "./PrivilegeListApp";
 
 export class PrivilegeFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "41159b97-d819-4322-a26d-4fd8fc2a1f58";
+    static FUNCTION_ID = "19dbdd4a-1203-48fd-b79a-c80356d6e82c";
     /** 功能名称 */
-    static FUNCTION_NAME = "module_a_func_Privilege";
+    static FUNCTION_NAME = "initialfantasy_func_privilege";
     /** 根文件名称 */
     static ROOT_FILE_NAME: string = "initialfantasy/index";
-
+    /** 构造函数 */
     constructor() {
         super();
         this.id = PrivilegeFunc.FUNCTION_ID;
         this.name = PrivilegeFunc.FUNCTION_NAME;
         this.description = ibas.i18n.prop(this.name);
     }
-
     /** 默认功能 */
     default(): ibas.IApplication<ibas.IView> {
-        // 获取根地址
-        let rootUrl: string = ibas.url.rootUrl(PrivilegeFunc.ROOT_FILE_NAME);
-        // 加载语言-框架默认
-        ibas.i18n.load(ibas.string.format("{0}/resources/languages/bo/Privilege.{1}.json", rootUrl, ibas.i18n.language));
         let app: PrivilegeListApp = new PrivilegeListApp();
         app.navigation = this.navigation;
         return app;

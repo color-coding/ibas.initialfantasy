@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './RoleListView';
-export * from './RoleChooseView';
-export * from './RoleViewView';
-export * from './RoleEditView';
+export * from "./RoleListView";
+export * from "./RoleChooseView";
+export * from "./RoleViewView";
+export * from "./RoleEditView";

@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './OwnershipListView';
-export * from './OwnershipChooseView';
-export * from './OwnershipViewView';
-export * from './OwnershipEditView';
+export * from "./OwnershipListView";
+export * from "./OwnershipChooseView";
+export * from "./OwnershipViewView";
+export * from "./OwnershipEditView";

@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './BOFilteringFunc';
-export * from './BOFilteringListApp';
-export * from './BOFilteringChooseApp';
-export * from './BOFilteringViewApp';
-export * from './BOFilteringEditApp';
+export * from "./BOFilteringFunc";
+export * from "./BOFilteringListApp";
+export * from "./BOFilteringChooseApp";
+export * from "./BOFilteringViewApp";
+export * from "./BOFilteringEditApp";

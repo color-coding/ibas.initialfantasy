@@ -7,16 +7,45 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './ApplicationFunction';
-export * from './ApplicationModule';
-export * from './ApplicationPlatform';
-export * from './ApprovalTemplate';
-export * from './ApprovalRequest';
-export * from './BOCriteria';
-export * from './BOFiltering';
-export * from './Organization';
-export * from './OrganizationalStructure';
-export * from './Ownership';
-export * from './Privilege';
-export * from './Role';
-export * from './User';
+export * from "./ApplicationFunction";
+export * from "./ApplicationModule";
+export * from "./ApplicationPlatform";
+export * from "./ApprovalRequest";
+export * from "./ApprovalTemplate";
+export * from "./BOCriteria";
+export * from "./BOFiltering";
+export * from "./Organization";
+export * from "./OrganizationalStructure";
+export * from "./Ownership";
+export * from "./Privilege";
+export * from "./Role";
+export * from "./User";
+
+// 注册业务对象到工厂
+import * as ibas from "ibas/index";
+import { ApplicationFunction } from "./ApplicationFunction";
+ibas.boFactory.register(ApplicationFunction);
+import { ApplicationModule } from "./ApplicationModule";
+ibas.boFactory.register(ApplicationModule);
+import { ApplicationPlatform } from "./ApplicationPlatform";
+ibas.boFactory.register(ApplicationPlatform);
+import { ApprovalRequest } from "./ApprovalRequest";
+ibas.boFactory.register(ApprovalRequest);
+import { ApprovalTemplate } from "./ApprovalTemplate";
+ibas.boFactory.register(ApprovalTemplate);
+import { BOCriteria } from "./BOCriteria";
+ibas.boFactory.register(BOCriteria);
+import { BOFiltering } from "./BOFiltering";
+ibas.boFactory.register(BOFiltering);
+import { Organization } from "./Organization";
+ibas.boFactory.register(Organization);
+import { OrganizationalStructure } from "./OrganizationalStructure";
+ibas.boFactory.register(OrganizationalStructure);
+import { Ownership } from "./Ownership";
+ibas.boFactory.register(Ownership);
+import { Privilege } from "./Privilege";
+ibas.boFactory.register(Privilege);
+import { Role } from "./Role";
+ibas.boFactory.register(Role);
+import { User } from "./User";
+ibas.boFactory.register(User);
