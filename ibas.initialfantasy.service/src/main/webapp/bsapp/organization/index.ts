@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './OrganizationFunc';
-export * from './OrganizationListApp';
-export * from './OrganizationChooseApp';
-export * from './OrganizationViewApp';
-export * from './OrganizationEditApp';
+export * from "./OrganizationFunc";
+export * from "./OrganizationListApp";
+export * from "./OrganizationChooseApp";
+export * from "./OrganizationViewApp";
+export * from "./OrganizationEditApp";

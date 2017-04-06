@@ -12,267 +12,212 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
-} from '../../3rdparty/ibas/index';
-import { 
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
+} from "ibas/index";
+import {
     IApplicationModule,
-} from '../../api/applicationmodule/applicationmodule.data.d';
+} from "../../api/index";
 
 /** 应用程序模块 */
-export class ApplicationModule extends BusinessObject<ApplicationModule> implements IApplicationModule {
+export class ApplicationModule extends BOSimple<ApplicationModule> implements IApplicationModule {
 
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = "CC_SYS_MODULE";
+    /** 构造函数 */
     constructor() {
         super();
     }
-
-    /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_MODULE";
-
     /** 映射的属性名称-模块标识 */
-    private static PROPERTY_NAME_MODULEID: string = "_moduleId";
-
+    static PROPERTY_MODULEID_NAME: string = "ModuleId";
     /** 获取-模块标识 */
     get moduleId(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_MODULEID);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_MODULEID_NAME);
     }
-
     /** 设置-模块标识 */
     set moduleId(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_MODULEID, value);
+        this.setProperty(ApplicationModule.PROPERTY_MODULEID_NAME, value);
     }
 
     /** 映射的属性名称-平台标识 */
-    private static PROPERTY_NAME_PLATFORMID: string = "_platformId";
-
+    static PROPERTY_PLATFORMID_NAME: string = "PlatformId";
     /** 获取-平台标识 */
     get platformId(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_PLATFORMID);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_PLATFORMID_NAME);
     }
-
     /** 设置-平台标识 */
     set platformId(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_PLATFORMID, value);
+        this.setProperty(ApplicationModule.PROPERTY_PLATFORMID_NAME, value);
     }
 
     /** 映射的属性名称-模块名称 */
-    private static PROPERTY_NAME_MODULENAME: string = "_moduleName";
-
+    static PROPERTY_MODULENAME_NAME: string = "ModuleName";
     /** 获取-模块名称 */
     get moduleName(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_MODULENAME);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_MODULENAME_NAME);
     }
-
     /** 设置-模块名称 */
     set moduleName(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_MODULENAME, value);
-    }
-
-    /** 映射的属性名称-模块类型 */
-    private static PROPERTY_NAME_MODULETYPE: string = "_moduleType";
-
-    /** 获取-模块类型 */
-    get moduleType(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_MODULETYPE);
-    }
-
-    /** 设置-模块类型 */
-    set moduleType(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_MODULETYPE, value);
+        this.setProperty(ApplicationModule.PROPERTY_MODULENAME_NAME, value);
     }
 
     /** 映射的属性名称-模块类别 */
-    private static PROPERTY_NAME_MODULECATEGORY: string = "_moduleCategory";
-
+    static PROPERTY_MODULECATEGORY_NAME: string = "ModuleCategory";
     /** 获取-模块类别 */
     get moduleCategory(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_MODULECATEGORY);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_MODULECATEGORY_NAME);
     }
-
     /** 设置-模块类别 */
     set moduleCategory(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_MODULECATEGORY, value);
+        this.setProperty(ApplicationModule.PROPERTY_MODULECATEGORY_NAME, value);
     }
 
     /** 映射的属性名称-是否可用 */
-    private static PROPERTY_NAME_ACTIVATED: string = "_activated";
-
+    static PROPERTY_ACTIVATED_NAME: string = "Activated";
     /** 获取-是否可用 */
     get activated(): emYesNo {
-        return this.getProperty<emYesNo>(ApplicationModule.PROPERTY_NAME_ACTIVATED);
+        return this.getProperty<emYesNo>(ApplicationModule.PROPERTY_ACTIVATED_NAME);
     }
-
     /** 设置-是否可用 */
     set activated(value: emYesNo) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_ACTIVATED, value);
-    }
-
-    /** 映射的属性名称-程序包标识 */
-    private static PROPERTY_NAME_ACTIVATEDPACKAGEID: string = "_activatedPackageId";
-
-    /** 获取-程序包标识 */
-    get activatedPackageId(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_ACTIVATEDPACKAGEID);
-    }
-
-    /** 设置-程序包标识 */
-    set activatedPackageId(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_ACTIVATEDPACKAGEID, value);
+        this.setProperty(ApplicationModule.PROPERTY_ACTIVATED_NAME, value);
     }
 
     /** 映射的属性名称-对象键值 */
-    private static PROPERTY_NAME_OBJECTKEY: string = "_objectKey";
-
+    static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
     /** 获取-对象键值 */
     get objectKey(): number {
-        return this.getProperty<number>(ApplicationModule.PROPERTY_NAME_OBJECTKEY);
+        return this.getProperty<number>(ApplicationModule.PROPERTY_OBJECTKEY_NAME);
     }
-
     /** 设置-对象键值 */
     set objectKey(value: number) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_OBJECTKEY, value);
+        this.setProperty(ApplicationModule.PROPERTY_OBJECTKEY_NAME, value);
     }
 
     /** 映射的属性名称-对象类型 */
-    private static PROPERTY_NAME_OBJECTCODE: string = "_objectCode";
-
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
     /** 获取-对象类型 */
     get objectCode(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_OBJECTCODE);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_OBJECTCODE_NAME);
     }
-
     /** 设置-对象类型 */
     set objectCode(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_OBJECTCODE, value);
+        this.setProperty(ApplicationModule.PROPERTY_OBJECTCODE_NAME, value);
     }
 
     /** 映射的属性名称-数据源 */
-    private static PROPERTY_NAME_DATASOURCE: string = "_dataSource";
-
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
     /** 获取-数据源 */
     get dataSource(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_DATASOURCE);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_DATASOURCE_NAME);
     }
-
     /** 设置-数据源 */
     set dataSource(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_DATASOURCE, value);
+        this.setProperty(ApplicationModule.PROPERTY_DATASOURCE_NAME, value);
     }
 
     /** 映射的属性名称-创建日期 */
-    private static PROPERTY_NAME_CREATEDATE: string = "_createDate";
-
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
     /** 获取-创建日期 */
     get createDate(): Date {
-        return this.getProperty<Date>(ApplicationModule.PROPERTY_NAME_CREATEDATE);
+        return this.getProperty<Date>(ApplicationModule.PROPERTY_CREATEDATE_NAME);
     }
-
     /** 设置-创建日期 */
     set createDate(value: Date) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_CREATEDATE, value);
+        this.setProperty(ApplicationModule.PROPERTY_CREATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-创建时间 */
-    private static PROPERTY_NAME_CREATETIME: string = "_createTime";
-
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
     /** 获取-创建时间 */
     get createTime(): number {
-        return this.getProperty<number>(ApplicationModule.PROPERTY_NAME_CREATETIME);
+        return this.getProperty<number>(ApplicationModule.PROPERTY_CREATETIME_NAME);
     }
-
     /** 设置-创建时间 */
     set createTime(value: number) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_CREATETIME, value);
+        this.setProperty(ApplicationModule.PROPERTY_CREATETIME_NAME, value);
     }
 
     /** 映射的属性名称-修改日期 */
-    private static PROPERTY_NAME_UPDATEDATE: string = "_updateDate";
-
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
     /** 获取-修改日期 */
     get updateDate(): Date {
-        return this.getProperty<Date>(ApplicationModule.PROPERTY_NAME_UPDATEDATE);
+        return this.getProperty<Date>(ApplicationModule.PROPERTY_UPDATEDATE_NAME);
     }
-
     /** 设置-修改日期 */
     set updateDate(value: Date) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_UPDATEDATE, value);
+        this.setProperty(ApplicationModule.PROPERTY_UPDATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-修改时间 */
-    private static PROPERTY_NAME_UPDATETIME: string = "_updateTime";
-
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
     /** 获取-修改时间 */
     get updateTime(): number {
-        return this.getProperty<number>(ApplicationModule.PROPERTY_NAME_UPDATETIME);
+        return this.getProperty<number>(ApplicationModule.PROPERTY_UPDATETIME_NAME);
     }
-
     /** 设置-修改时间 */
     set updateTime(value: number) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_UPDATETIME, value);
+        this.setProperty(ApplicationModule.PROPERTY_UPDATETIME_NAME, value);
     }
 
     /** 映射的属性名称-创建动作标识 */
-    private static PROPERTY_NAME_CREATEACTIONID: string = "_createActionId";
-
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
     /** 获取-创建动作标识 */
     get createActionId(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_CREATEACTIONID);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_CREATEACTIONID_NAME);
     }
-
     /** 设置-创建动作标识 */
     set createActionId(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_CREATEACTIONID, value);
+        this.setProperty(ApplicationModule.PROPERTY_CREATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-更新动作标识 */
-    private static PROPERTY_NAME_UPDATEACTIONID: string = "_updateActionId";
-
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
     /** 获取-更新动作标识 */
     get updateActionId(): string {
-        return this.getProperty<string>(ApplicationModule.PROPERTY_NAME_UPDATEACTIONID);
+        return this.getProperty<string>(ApplicationModule.PROPERTY_UPDATEACTIONID_NAME);
     }
-
     /** 设置-更新动作标识 */
     set updateActionId(value: string) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_UPDATEACTIONID, value);
+        this.setProperty(ApplicationModule.PROPERTY_UPDATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-实例号（版本） */
-    private static PROPERTY_NAME_LOGINST: string = "_logInst";
-
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
     /** 获取-实例号（版本） */
     get logInst(): number {
-        return this.getProperty<number>(ApplicationModule.PROPERTY_NAME_LOGINST);
+        return this.getProperty<number>(ApplicationModule.PROPERTY_LOGINST_NAME);
     }
-
     /** 设置-实例号（版本） */
     set logInst(value: number) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_LOGINST, value);
+        this.setProperty(ApplicationModule.PROPERTY_LOGINST_NAME, value);
     }
 
     /** 映射的属性名称-创建用户 */
-    private static PROPERTY_NAME_CREATEUSERSIGN: string = "_createUserSign";
-
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
     /** 获取-创建用户 */
     get createUserSign(): number {
-        return this.getProperty<number>(ApplicationModule.PROPERTY_NAME_CREATEUSERSIGN);
+        return this.getProperty<number>(ApplicationModule.PROPERTY_CREATEUSERSIGN_NAME);
     }
-
     /** 设置-创建用户 */
     set createUserSign(value: number) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_CREATEUSERSIGN, value);
+        this.setProperty(ApplicationModule.PROPERTY_CREATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-修改用户 */
-    private static PROPERTY_NAME_UPDATEUSERSIGN: string = "_updateUserSign";
-
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
     /** 获取-修改用户 */
     get updateUserSign(): number {
-        return this.getProperty<number>(ApplicationModule.PROPERTY_NAME_UPDATEUSERSIGN);
+        return this.getProperty<number>(ApplicationModule.PROPERTY_UPDATEUSERSIGN_NAME);
     }
-
     /** 设置-修改用户 */
     set updateUserSign(value: number) {
-        this.setProperty(ApplicationModule.PROPERTY_NAME_UPDATEUSERSIGN, value);
+        this.setProperty(ApplicationModule.PROPERTY_UPDATEUSERSIGN_NAME, value);
     }
 
 
@@ -282,6 +227,4 @@ export class ApplicationModule extends BusinessObject<ApplicationModule> impleme
         this.objectCode = ApplicationModule.BUSINESS_OBJECT_CODE;
     }
 }
-
-
 

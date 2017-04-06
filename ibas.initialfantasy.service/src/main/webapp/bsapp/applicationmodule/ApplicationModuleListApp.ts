@@ -6,9 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
-import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
+import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { ApplicationModuleViewApp } from "./ApplicationModuleViewApp";
 import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 
@@ -16,14 +16,17 @@ import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicationModuleListView, bo.ApplicationModule> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "e1fb0e37-42cf-4c14-840a-1deddb0179ff";
+    static APPLICATION_ID: string = "51fc6569-fcde-4d92-b0e9-f06b27276072";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "mu_initialfantasy_app_applicationmodule_list";
-
+    static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_list";
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = bo.ApplicationModule.BUSINESS_OBJECT_CODE;
+    /** 构造函数 */
     constructor() {
         super();
         this.id = ApplicationModuleListApp.APPLICATION_ID;
         this.name = ApplicationModuleListApp.APPLICATION_NAME;
+        this.boCode = ApplicationModuleListApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
@@ -31,6 +34,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
         super.registerView();
         // 其他事件
         this.view.editDataEvent = this.editData;
+        this.view.deleteDataEvent = this.deleteData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -38,30 +42,28 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
     }
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
-        this.busy(true);
-        let that = this;
-        let boRepository = new BORepositoryInitialFantasy();
-        let fetcher: ibas.FetchCaller<bo.ApplicationModule> = {
-            /** 查询条件 */
-            criteria: criteria,
-            /**
-             * 调用完成
-             * @param opRslt 结果
-             */
-            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
-                try {
-                    if (opRslt.resultCode !== 0) {
-                        throw new Error(opRslt.message);
+        try {
+            this.busy(true);
+            let that = this;
+            let boRepository = new BORepositoryInitialFantasy();
+            boRepository.fetchApplicationModule({
+                criteria: criteria,
+                onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        that.view.showData(opRslt.resultObjects);
+                        that.busy(false);
+                    } catch (error) {
+                        that.messages(error);
                     }
-                    that.view.showData(opRslt.resultObjects);
-                    that.busy(false);
-                } catch (error) {
-                    that.messages(error);
                 }
-            }
+            });
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+        } catch (error) {
+            this.messages(error);
         }
-        boRepository.fetchApplicationModule(fetcher);
-        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
@@ -72,6 +74,13 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
     }
     /** 查看数据，参数：目标数据 */
     protected viewData(data: bo.ApplicationModule): void {
+        // 检查目标数据
+        if (ibas.objects.isNull(data)) {
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_please_chooose_data",
+                ibas.i18n.prop("sys_shell_ui_data_view")
+            ));
+            return;
+        }
         let app = new ApplicationModuleViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
@@ -80,13 +89,98 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.ApplicationModule): void {
-        this.messages(ibas.emMessageType.ERROR, ibas.i18n.prop("module_a_ui_no_edit"));
+        // 检查目标数据
+        if (ibas.objects.isNull(data)) {
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_please_chooose_data",
+                ibas.i18n.prop("sys_shell_ui_data_edit")
+            ));
+            return;
+        }
+        let app = new ApplicationModuleEditApp();
+        app.navigation = this.navigation;
+        app.viewShower = this.viewShower;
+        app.run(data);
+    }
+    /** 删除数据，参数：目标数据集合 */
+    protected deleteData(data: bo.ApplicationModule): void {
+        // 检查目标数据
+        if (ibas.objects.isNull(data)) {
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_please_chooose_data",
+                ibas.i18n.prop("sys_shell_ui_data_delete")
+            ));
+            return;
+        }
+        let beDeleteds:ibas.ArrayList<bo.ApplicationModule> = new ibas.ArrayList<bo.ApplicationModule>();
+        if (data instanceof Array ) {
+            for (let item of data) {
+                if (ibas.objects.instanceOf(item, bo.ApplicationModule)) {
+                    item.delete();
+                    beDeleteds.add(item);
+                }
+            }
+        }
+        // 没有选择删除的对象
+        if (beDeleteds.length === 0) {
+            return;
+        }
+        let that = this;
+        this.messages({
+            type: ibas.emMessageType.QUESTION,
+            title: ibas.i18n.prop(this.name),
+            message: ibas.i18n.prop("sys_shell_ui_whether_to_delete", beDeleteds.length),
+            actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
+            onCompleted(action: ibas.emMessageAction): void {
+                if (action === ibas.emMessageAction.YES) {
+                    try {
+                        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+                        let saveMethod: Function = function(beSaved: bo.ApplicationModule):void {
+                            boRepository.saveApplicationModule({
+                                beSaved: beSaved,
+                                onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
+                                    try {
+                                        if (opRslt.resultCode !== 0) {
+                                            throw new Error(opRslt.message);
+                                        }
+                                        // 保存下一个数据
+                                        let index: number = beDeleteds.indexOf(beSaved) + 1;
+                                        if (index > 0 && index < beDeleteds.length) {
+                                            saveMethod(beDeleteds[index]);
+                                        } else {
+                                            // 处理完成
+                                            that.busy(false);
+                                            that.messages(ibas.emMessageType.SUCCESS,
+                                            ibas.i18n.prop("sys_shell_ui_data_delete") + ibas.i18n.prop("sys_shell_ui_sucessful"));
+                                        }
+                                    } catch (error) {
+                                        that.messages(ibas.emMessageType.ERROR,
+                                            ibas.i18n.prop("sys_shell_ui_data_delete_error", beSaved, error.message));
+                                    }
+                                }
+                            });
+                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                        };
+                        that.busy(true);
+                        // 开始保存
+                        saveMethod(beDeleteds.firstOrDefault());
+                    } catch (error) {
+                        that.busy(false);
+                        that.messages(error);
+                    }
+                }
+            }
+        });
+    }
+    /** 获取服务的契约 */
+    protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
+        return [];
     }
 }
 /** 视图-应用程序模块 */
 export interface IApplicationModuleListView extends ibas.IBOListView {
     /** 编辑数据事件，参数：编辑对象 */
     editDataEvent: Function;
+    /** 删除数据事件，参数：删除对象集合 */
+    deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.ApplicationModule[]): void;
 }

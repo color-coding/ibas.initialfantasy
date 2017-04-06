@@ -6,21 +6,20 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../3rdparty/ibas/3rdparty/index.d.ts" />
-import * as ibas from "../3rdparty/ibas/index";
-import { ApplicationFunctionFunc } from './applicationfunction/index';
-import { ApplicationModuleFunc } from './applicationmodule/index';
-import { ApplicationPlatformFunc } from './applicationplatform/index';
-import { ApprovalTemplateFunc } from './ApprovalTemplate/index';
-import { ApprovalRequestFunc } from './approvalrequest/index';
-import { BOCriteriaFunc } from './bocriteria/index';
-import { BOFilteringFunc } from './bofiltering/index';
-import { OrganizationFunc } from './organization/index';
-import { OrganizationalStructureFunc } from './organizationalstructure/index';
-import { OwnershipFunc } from './ownership/index';
-import { PrivilegeFunc } from './privilege/index';
-import { RoleFunc } from './role/index';
-import { UserFunc } from './user/index';
+import * as ibas from "ibas/index";
+import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping, ApplicationFunctionLinkServiceMapping } from "./applicationfunction/index";
+import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, ApplicationModuleLinkServiceMapping } from "./applicationmodule/index";
+import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping, ApplicationPlatformLinkServiceMapping } from "./applicationplatform/index";
+import { ApprovalRequestFunc, ApprovalRequestChooseServiceMapping, ApprovalRequestLinkServiceMapping } from "./approvalrequest/index";
+import { ApprovalTemplateFunc, ApprovalTemplateChooseServiceMapping, ApprovalTemplateLinkServiceMapping } from "./approvaltemplate/index";
+import { BOCriteriaFunc, BOCriteriaChooseServiceMapping, BOCriteriaLinkServiceMapping } from "./bocriteria/index";
+import { BOFilteringFunc, BOFilteringChooseServiceMapping, BOFilteringLinkServiceMapping } from "./bofiltering/index";
+import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
+import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping, OrganizationalStructureLinkServiceMapping } from "./organizationalstructure/index";
+import { OwnershipFunc, OwnershipChooseServiceMapping, OwnershipLinkServiceMapping } from "./ownership/index";
+import { PrivilegeFunc, PrivilegeChooseServiceMapping, PrivilegeLinkServiceMapping } from "./privilege/index";
+import { RoleFunc, RoleChooseServiceMapping, RoleLinkServiceMapping } from "./role/index";
+import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping } from "./user/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -30,14 +29,13 @@ export class Console extends ibas.ModuleConsole {
     static CONSOLE_NAME: string = "InitialFantasy";
     /** 根文件名称 */
     static ROOT_FILE_NAME: string = "initialfantasy/index";
-
+    /** 构造函数 */
     constructor() {
         super();
         this.id = Console.CONSOLE_ID;
         this.name = Console.CONSOLE_NAME;
     }
-
-    private _navigation: any;
+    private _navigation: ibas.IViewNavigation;
     /** 创建视图导航 */
     navigation(): ibas.IViewNavigation {
         return this._navigation;
@@ -48,8 +46,8 @@ export class Console extends ibas.ModuleConsole {
         this.register(new ApplicationFunctionFunc());
         this.register(new ApplicationModuleFunc());
         this.register(new ApplicationPlatformFunc());
-        this.register(new ApprovalTemplateFunc());
         this.register(new ApprovalRequestFunc());
+        this.register(new ApprovalTemplateFunc());
         this.register(new BOCriteriaFunc());
         this.register(new BOFilteringFunc());
         this.register(new OrganizationFunc());
@@ -58,6 +56,33 @@ export class Console extends ibas.ModuleConsole {
         this.register(new PrivilegeFunc());
         this.register(new RoleFunc());
         this.register(new UserFunc());
+        // 注册服务应用
+        this.register(new ApplicationFunctionChooseServiceMapping());
+        this.register(new ApplicationFunctionLinkServiceMapping());
+        this.register(new ApplicationModuleChooseServiceMapping());
+        this.register(new ApplicationModuleLinkServiceMapping());
+        this.register(new ApplicationPlatformChooseServiceMapping());
+        this.register(new ApplicationPlatformLinkServiceMapping());
+        this.register(new ApprovalRequestChooseServiceMapping());
+        this.register(new ApprovalRequestLinkServiceMapping());
+        this.register(new ApprovalTemplateChooseServiceMapping());
+        this.register(new ApprovalTemplateLinkServiceMapping());
+        this.register(new BOCriteriaChooseServiceMapping());
+        this.register(new BOCriteriaLinkServiceMapping());
+        this.register(new BOFilteringChooseServiceMapping());
+        this.register(new BOFilteringLinkServiceMapping());
+        this.register(new OrganizationChooseServiceMapping());
+        this.register(new OrganizationLinkServiceMapping());
+        this.register(new OrganizationalStructureChooseServiceMapping());
+        this.register(new OrganizationalStructureLinkServiceMapping());
+        this.register(new OwnershipChooseServiceMapping());
+        this.register(new OwnershipLinkServiceMapping());
+        this.register(new PrivilegeChooseServiceMapping());
+        this.register(new PrivilegeLinkServiceMapping());
+        this.register(new RoleChooseServiceMapping());
+        this.register(new RoleLinkServiceMapping());
+        this.register(new UserChooseServiceMapping());
+        this.register(new UserLinkServiceMapping());
         // 注册常驻应用
 
     }
@@ -66,13 +91,26 @@ export class Console extends ibas.ModuleConsole {
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.string.format("{0}/resources/languages/initialfantasy.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/initialfantasy.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationfunction.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationmodule.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationplatform.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/approvalrequest.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/approvaltemplate.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/bocriteria.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/bofiltering.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/organization.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/organizationalstructure.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/ownership.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/privilege.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/role.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/user.{1}.json", rootUrl, ibas.i18n.language));
         // 设置资源属性
-        this.description = ibas.i18n.prop(this.name);
-        // this.icon = "";
+        this.description = ibas.i18n.prop(this.name.toLowerCase());
+        this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
         // 先加载ui导航
         let uiModules: string[] = [];
-        if (!ibas.config.get(ibas.config.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
+        if (!ibas.config.get(ibas.ModuleConsole.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)
             && this.plantform === ibas.emPlantform.PHONE) {
             // 使用m类型视图
             uiModules.push("../bsui/m/Navigation");
@@ -83,7 +121,7 @@ export class Console extends ibas.ModuleConsole {
         let that: Console = this;
         require(uiModules, function (ui: any): void {
             // 设置导航
-            that._navigation = new ui.Navigation();
+            that._navigation = new ui.default();
             // 调用初始化
             that.initialize();
         });
@@ -91,5 +129,3 @@ export class Console extends ibas.ModuleConsole {
         super.run();
     }
 }
-
- 

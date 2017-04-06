@@ -6,23 +6,26 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
-import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
+import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { OwnershipEditApp } from "./OwnershipEditApp";
 
 /** 应用-数据权限 */
-export class OwnershipChooseApp extends ibas.BOChooseApplication<IOwnershipChooseView, bo.Ownership> {
+export class OwnershipChooseApp extends ibas.BOChooseService<IOwnershipChooseView, bo.Ownership> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "11ae3211-95c3-4829-b7df-707cc6db7d9b";
+    static APPLICATION_ID: string = "5f0a5d7a-6a77-426e-91b5-460c6b1fe4b1";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "mu_initialfantasy_app_ownership_choose";
-
+    static APPLICATION_NAME: string = "initialfantasy_app_ownership_choose";
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = bo.Ownership.BUSINESS_OBJECT_CODE;
+    /** 构造函数 */
     constructor() {
         super();
         this.id = OwnershipChooseApp.APPLICATION_ID;
         this.name = OwnershipChooseApp.APPLICATION_NAME;
+        this.boCode = OwnershipChooseApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
@@ -36,30 +39,38 @@ export class OwnershipChooseApp extends ibas.BOChooseApplication<IOwnershipChoos
     }
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
-        this.busy(true);
-        let that = this;
-        let boRepository = new BORepositoryInitialFantasy();
-        let fetcher: ibas.FetchCaller<bo.Ownership> = {
-            /** 查询条件 */
-            criteria: criteria,
-            /**
-             * 调用完成
-             * @param opRslt 结果
-             */
-            onCompleted(opRslt: ibas.IOperationResult<bo.Ownership>): void {
-                try {
-                    if (opRslt.resultCode !== 0) {
-                        throw new Error(opRslt.message);
+        try {
+            this.busy(true);
+            let that = this;
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+            boRepository.fetchOwnership({
+                criteria: criteria,
+                onCompleted(opRslt: ibas.IOperationResult<bo.Ownership>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        if (opRslt.resultObjects.length === 1
+                            && ibas.config.get(ibas.BOChooseService.CONFIG_ITEM_AUTO_CHOOSE_DATA, true)) {
+                            // 仅一条数据，直接选择
+                            that.chooseData(opRslt.resultObjects);
+                        } else {
+                            if (!that.isViewShowed()) {
+                                // 没显示视图，先显示
+                                that.show();
+                            }
+                            that.view.showData(opRslt.resultObjects);
+                            that.busy(false);
+                        }
+                    } catch (error) {
+                        that.messages(error);
                     }
-                    that.view.showData(opRslt.resultObjects);
-                    that.busy(false);
-                } catch (error) {
-                    that.messages(error);
                 }
-            }
+            });
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+        } catch (error) {
+            this.messages(error);
         }
-        boRepository.fetchOwnership(fetcher);
-        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
@@ -71,13 +82,24 @@ export class OwnershipChooseApp extends ibas.BOChooseApplication<IOwnershipChoos
         app.viewShower = this.viewShower;
         app.run();
     }
-    /** 选择数据 */
-    protected chooseData(data: bo.Ownership): void {
-
-    }
 }
 /** 视图-数据权限 */
 export interface IOwnershipChooseView extends ibas.IBOChooseView {
     /** 显示数据 */
     showData(datas: bo.Ownership[]): void;
+}
+/** 数据权限选择服务映射 */
+export class OwnershipChooseServiceMapping extends ibas.BOChooseServiceMapping {
+    /** 构造函数 */
+    constructor() {
+        super();
+        this.id = OwnershipChooseApp.APPLICATION_ID;
+        this.name = OwnershipChooseApp.APPLICATION_NAME;
+        this.boCode = OwnershipChooseApp.BUSINESS_OBJECT_CODE;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 创建服务并运行 */
+    create(): ibas.IService<ibas.IServiceContract> {
+        return new OwnershipChooseApp();
+    }
 }

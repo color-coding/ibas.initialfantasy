@@ -12,228 +12,201 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
-} from '../../3rdparty/ibas/index';
-import { 
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
+} from "ibas/index";
+import {
     IOrganization,
-} from '../../api/organization/organization.data.d';
+} from "../../api/index";
 
 /** 组织 */
-export class Organization extends BusinessObject<Organization> implements IOrganization {
+export class Organization extends BOMasterData<Organization> implements IOrganization {
 
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = "CC_SYS_ORGANIZATION";
+    /** 构造函数 */
     constructor() {
         super();
     }
-
-    /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_ORGANIZATION";
-
     /** 映射的属性名称-编码 */
-    private static PROPERTY_NAME_CODE: string = "_code";
-
+    static PROPERTY_CODE_NAME: string = "Code";
     /** 获取-编码 */
     get code(): string {
-        return this.getProperty<string>(Organization.PROPERTY_NAME_CODE);
+        return this.getProperty<string>(Organization.PROPERTY_CODE_NAME);
     }
-
     /** 设置-编码 */
     set code(value: string) {
-        this.setProperty(Organization.PROPERTY_NAME_CODE, value);
+        this.setProperty(Organization.PROPERTY_CODE_NAME, value);
     }
 
     /** 映射的属性名称-名称 */
-    private static PROPERTY_NAME_NAME: string = "_name";
-
+    static PROPERTY_NAME_NAME: string = "Name";
     /** 获取-名称 */
     get name(): string {
         return this.getProperty<string>(Organization.PROPERTY_NAME_NAME);
     }
-
     /** 设置-名称 */
     set name(value: string) {
         this.setProperty(Organization.PROPERTY_NAME_NAME, value);
     }
 
     /** 映射的属性名称-是否启用 */
-    private static PROPERTY_NAME_ACTIVATED: string = "_activated";
-
+    static PROPERTY_ACTIVATED_NAME: string = "Activated";
     /** 获取-是否启用 */
     get activated(): emYesNo {
-        return this.getProperty<emYesNo>(Organization.PROPERTY_NAME_ACTIVATED);
+        return this.getProperty<emYesNo>(Organization.PROPERTY_ACTIVATED_NAME);
     }
-
     /** 设置-是否启用 */
     set activated(value: emYesNo) {
-        this.setProperty(Organization.PROPERTY_NAME_ACTIVATED, value);
+        this.setProperty(Organization.PROPERTY_ACTIVATED_NAME, value);
     }
 
     /** 映射的属性名称-对象编号 */
-    private static PROPERTY_NAME_DOCENTRY: string = "_docEntry";
-
+    static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
     /** 获取-对象编号 */
     get docEntry(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_DOCENTRY);
+        return this.getProperty<number>(Organization.PROPERTY_DOCENTRY_NAME);
     }
-
     /** 设置-对象编号 */
     set docEntry(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_DOCENTRY, value);
+        this.setProperty(Organization.PROPERTY_DOCENTRY_NAME, value);
     }
 
     /** 映射的属性名称-对象类型 */
-    private static PROPERTY_NAME_OBJECTCODE: string = "_objectCode";
-
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
     /** 获取-对象类型 */
     get objectCode(): string {
-        return this.getProperty<string>(Organization.PROPERTY_NAME_OBJECTCODE);
+        return this.getProperty<string>(Organization.PROPERTY_OBJECTCODE_NAME);
     }
-
     /** 设置-对象类型 */
     set objectCode(value: string) {
-        this.setProperty(Organization.PROPERTY_NAME_OBJECTCODE, value);
+        this.setProperty(Organization.PROPERTY_OBJECTCODE_NAME, value);
     }
 
     /** 映射的属性名称-创建日期 */
-    private static PROPERTY_NAME_CREATEDATE: string = "_createDate";
-
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
     /** 获取-创建日期 */
     get createDate(): Date {
-        return this.getProperty<Date>(Organization.PROPERTY_NAME_CREATEDATE);
+        return this.getProperty<Date>(Organization.PROPERTY_CREATEDATE_NAME);
     }
-
     /** 设置-创建日期 */
     set createDate(value: Date) {
-        this.setProperty(Organization.PROPERTY_NAME_CREATEDATE, value);
+        this.setProperty(Organization.PROPERTY_CREATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-创建时间 */
-    private static PROPERTY_NAME_CREATETIME: string = "_createTime";
-
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
     /** 获取-创建时间 */
     get createTime(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_CREATETIME);
+        return this.getProperty<number>(Organization.PROPERTY_CREATETIME_NAME);
     }
-
     /** 设置-创建时间 */
     set createTime(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_CREATETIME, value);
+        this.setProperty(Organization.PROPERTY_CREATETIME_NAME, value);
     }
 
     /** 映射的属性名称-修改日期 */
-    private static PROPERTY_NAME_UPDATEDATE: string = "_updateDate";
-
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
     /** 获取-修改日期 */
     get updateDate(): Date {
-        return this.getProperty<Date>(Organization.PROPERTY_NAME_UPDATEDATE);
+        return this.getProperty<Date>(Organization.PROPERTY_UPDATEDATE_NAME);
     }
-
     /** 设置-修改日期 */
     set updateDate(value: Date) {
-        this.setProperty(Organization.PROPERTY_NAME_UPDATEDATE, value);
+        this.setProperty(Organization.PROPERTY_UPDATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-修改时间 */
-    private static PROPERTY_NAME_UPDATETIME: string = "_updateTime";
-
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
     /** 获取-修改时间 */
     get updateTime(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_UPDATETIME);
+        return this.getProperty<number>(Organization.PROPERTY_UPDATETIME_NAME);
     }
-
     /** 设置-修改时间 */
     set updateTime(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_UPDATETIME, value);
+        this.setProperty(Organization.PROPERTY_UPDATETIME_NAME, value);
     }
 
     /** 映射的属性名称-数据源 */
-    private static PROPERTY_NAME_DATASOURCE: string = "_dataSource";
-
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
     /** 获取-数据源 */
     get dataSource(): string {
-        return this.getProperty<string>(Organization.PROPERTY_NAME_DATASOURCE);
+        return this.getProperty<string>(Organization.PROPERTY_DATASOURCE_NAME);
     }
-
     /** 设置-数据源 */
     set dataSource(value: string) {
-        this.setProperty(Organization.PROPERTY_NAME_DATASOURCE, value);
+        this.setProperty(Organization.PROPERTY_DATASOURCE_NAME, value);
     }
 
     /** 映射的属性名称-实例号（版本） */
-    private static PROPERTY_NAME_LOGINST: string = "_logInst";
-
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
     /** 获取-实例号（版本） */
     get logInst(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_LOGINST);
+        return this.getProperty<number>(Organization.PROPERTY_LOGINST_NAME);
     }
-
     /** 设置-实例号（版本） */
     set logInst(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_LOGINST, value);
+        this.setProperty(Organization.PROPERTY_LOGINST_NAME, value);
     }
 
     /** 映射的属性名称-服务系列 */
-    private static PROPERTY_NAME_SERIES: string = "_series";
-
+    static PROPERTY_SERIES_NAME: string = "Series";
     /** 获取-服务系列 */
     get series(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_SERIES);
+        return this.getProperty<number>(Organization.PROPERTY_SERIES_NAME);
     }
-
     /** 设置-服务系列 */
     set series(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_SERIES, value);
+        this.setProperty(Organization.PROPERTY_SERIES_NAME, value);
     }
 
     /** 映射的属性名称-创建用户 */
-    private static PROPERTY_NAME_CREATEUSERSIGN: string = "_createUserSign";
-
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
     /** 获取-创建用户 */
     get createUserSign(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_CREATEUSERSIGN);
+        return this.getProperty<number>(Organization.PROPERTY_CREATEUSERSIGN_NAME);
     }
-
     /** 设置-创建用户 */
     set createUserSign(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_CREATEUSERSIGN, value);
+        this.setProperty(Organization.PROPERTY_CREATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-修改用户 */
-    private static PROPERTY_NAME_UPDATEUSERSIGN: string = "_updateUserSign";
-
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
     /** 获取-修改用户 */
     get updateUserSign(): number {
-        return this.getProperty<number>(Organization.PROPERTY_NAME_UPDATEUSERSIGN);
+        return this.getProperty<number>(Organization.PROPERTY_UPDATEUSERSIGN_NAME);
     }
-
     /** 设置-修改用户 */
     set updateUserSign(value: number) {
-        this.setProperty(Organization.PROPERTY_NAME_UPDATEUSERSIGN, value);
+        this.setProperty(Organization.PROPERTY_UPDATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-创建动作标识 */
-    private static PROPERTY_NAME_CREATEACTIONID: string = "_createActionId";
-
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
     /** 获取-创建动作标识 */
     get createActionId(): string {
-        return this.getProperty<string>(Organization.PROPERTY_NAME_CREATEACTIONID);
+        return this.getProperty<string>(Organization.PROPERTY_CREATEACTIONID_NAME);
     }
-
     /** 设置-创建动作标识 */
     set createActionId(value: string) {
-        this.setProperty(Organization.PROPERTY_NAME_CREATEACTIONID, value);
+        this.setProperty(Organization.PROPERTY_CREATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-更新动作标识 */
-    private static PROPERTY_NAME_UPDATEACTIONID: string = "_updateActionId";
-
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
     /** 获取-更新动作标识 */
     get updateActionId(): string {
-        return this.getProperty<string>(Organization.PROPERTY_NAME_UPDATEACTIONID);
+        return this.getProperty<string>(Organization.PROPERTY_UPDATEACTIONID_NAME);
     }
-
     /** 设置-更新动作标识 */
     set updateActionId(value: string) {
-        this.setProperty(Organization.PROPERTY_NAME_UPDATEACTIONID, value);
+        this.setProperty(Organization.PROPERTY_UPDATEACTIONID_NAME, value);
     }
 
 
@@ -243,6 +216,4 @@ export class Organization extends BusinessObject<Organization> implements IOrgan
         this.objectCode = Organization.BUSINESS_OBJECT_CODE;
     }
 }
-
-
 

@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './ApprovalRequestFunc';
-export * from './ApprovalRequestListApp';
-export * from './ApprovalRequestChooseApp';
-export * from './ApprovalRequestViewApp';
-export * from './ApprovalRequestEditApp';
+export * from "./ApprovalRequestFunc";
+export * from "./ApprovalRequestListApp";
+export * from "./ApprovalRequestChooseApp";
+export * from "./ApprovalRequestViewApp";
+export * from "./ApprovalRequestEditApp";
