@@ -1,15 +1,13 @@
-package org.colorcoding.ibas.initialfantasy.service.rest;
+package org.colorcoding.ibas.initialfantasy.service.soap;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.bobas.cxf.WebServicePath;
 import org.colorcoding.ibas.bobas.data.emApprovalResult;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationFunction;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
@@ -24,13 +22,114 @@ import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.bo.ownership.Ownership;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
+import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
+import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasyShell;
 
 /**
  * InitialFantasy 数据服务JSON
  */
-@Path("datas")
-public class ServiceData extends BORepositoryInitialFantasyShell {
+@WebService
+@WebServicePath("data")
+public class DataService extends BORepositoryInitialFantasyShell {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 用户登录
+	 * 
+	 * @param user
+	 *            用户
+	 * @param passwrod
+	 *            密码
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> userConnect(
+			@WebParam(name = "user") String user, @WebParam(name = "password") String password) {
+		return super.userConnect(user, password);
+	}
+
+	/**
+	 * 查询用户模块
+	 * 
+	 * @param user
+	 *            用户
+	 * @param platform
+	 *            平台
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<UserModule> fetchUserModules(@WebParam(name = "user") String user,
+			@WebParam(name = "platform") String platform, @WebParam(name = "token") String token) {
+		return super.fetchUserModules(user, platform, token);
+	}
+
+	/**
+	 * 查询用户权限
+	 * 
+	 * @param user
+	 *            用户
+	 * @param platform
+	 *            平台
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<UserPrivilege> fetchUserPrivileges(@WebParam(name = "user") String user,
+			@WebParam(name = "platform") String platform, @WebParam(name = "token") String token) {
+		return super.fetchUserPrivileges(user, platform, token);
+	}
+
+	/**
+	 * 查询用户查询
+	 * 
+	 * @param user
+	 *            用户
+	 * @param queryId
+	 *            查询标识
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<UserQuery> fetchUserQueries(@WebParam(name = "user") String user,
+			@WebParam(name = "queryId") String queryId, @WebParam(name = "token") String token) {
+		return super.fetchUserQueries(user, queryId, token);
+	}
+
+	/**
+	 * 查询用户查询
+	 * 
+	 * @param query
+	 *            查询
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationMessages saveUserQueries(@WebParam(name = "query") UserQuery query,
+			@WebParam(name = "token") String token) {
+		return super.saveUserQueries(query, token);
+	}
+
+	/**
+	 * 查询业务对象信息
+	 * 
+	 * @param boName
+	 *            对象名称
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<BOInfo> fetchBOInfos(@WebParam(name = "boName") String boName,
+			@WebParam(name = "token") String token) {
+		return super.fetchBOInfos(boName, token);
+	}
 
 	// --------------------------------------------------------------------------------------------//
 	/**
@@ -42,12 +141,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchApplicationFunction")
-	public OperationResult<ApplicationFunction> fetchApplicationFunction(Criteria criteria,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApplicationFunction> fetchApplicationFunction(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchApplicationFunction(criteria, token);
 	}
 
@@ -60,12 +156,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveApplicationFunction")
-	public OperationResult<ApplicationFunction> saveApplicationFunction(ApplicationFunction bo,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApplicationFunction> saveApplicationFunction(@WebParam(name = "bo") ApplicationFunction bo,
+			@WebParam(name = "token") String token) {
 		return super.saveApplicationFunction(bo, token);
 	}
 
@@ -79,12 +172,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchApplicationModule")
-	public OperationResult<ApplicationModule> fetchApplicationModule(Criteria criteria,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApplicationModule> fetchApplicationModule(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchApplicationModule(criteria, token);
 	}
 
@@ -97,12 +187,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveApplicationModule")
-	public OperationResult<ApplicationModule> saveApplicationModule(ApplicationModule bo,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApplicationModule> saveApplicationModule(@WebParam(name = "bo") ApplicationModule bo,
+			@WebParam(name = "token") String token) {
 		return super.saveApplicationModule(bo, token);
 	}
 
@@ -116,12 +203,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchApplicationPlatform")
-	public OperationResult<ApplicationPlatform> fetchApplicationPlatform(Criteria criteria,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApplicationPlatform> fetchApplicationPlatform(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchApplicationPlatform(criteria, token);
 	}
 
@@ -134,12 +218,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveApplicationPlatform")
-	public OperationResult<ApplicationPlatform> saveApplicationPlatform(ApplicationPlatform bo,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApplicationPlatform> saveApplicationPlatform(@WebParam(name = "bo") ApplicationPlatform bo,
+			@WebParam(name = "token") String token) {
 		return super.saveApplicationPlatform(bo, token);
 	}
 
@@ -153,12 +234,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchApprovalTemplate")
-	public OperationResult<ApprovalTemplate> fetchApprovalTemplate(Criteria criteria,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApprovalTemplate> fetchApprovalTemplate(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchApprovalTemplate(criteria, token);
 	}
 
@@ -171,12 +249,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveApprovalTemplate")
-	public OperationResult<ApprovalTemplate> saveApprovalTemplate(ApprovalTemplate bo,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApprovalTemplate> saveApprovalTemplate(@WebParam(name = "bo") ApprovalTemplate bo,
+			@WebParam(name = "token") String token) {
 		return super.saveApprovalTemplate(bo, token);
 	}
 
@@ -190,11 +265,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchApprovalRequest")
-	public OperationResult<ApprovalRequest> fetchApprovalRequest(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApprovalRequest> fetchApprovalRequest(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchApprovalRequest(criteria, token);
 	}
 
@@ -207,11 +280,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveApprovalRequest")
-	public OperationResult<ApprovalRequest> saveApprovalRequest(ApprovalRequest bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<ApprovalRequest> saveApprovalRequest(@WebParam(name = "bo") ApprovalRequest bo,
+			@WebParam(name = "token") String token) {
 		return super.saveApprovalRequest(bo, token);
 	}
 
@@ -225,11 +296,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchBOCriteria")
-	public OperationResult<BOCriteria> fetchBOCriteria(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<BOCriteria> fetchBOCriteria(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchBOCriteria(criteria, token);
 	}
 
@@ -242,11 +311,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveBOCriteria")
-	public OperationResult<BOCriteria> saveBOCriteria(BOCriteria bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<BOCriteria> saveBOCriteria(@WebParam(name = "bo") BOCriteria bo,
+			@WebParam(name = "token") String token) {
 		return super.saveBOCriteria(bo, token);
 	}
 
@@ -260,11 +327,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchBOFiltering")
-	public OperationResult<BOFiltering> fetchBOFiltering(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<BOFiltering> fetchBOFiltering(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchBOFiltering(criteria, token);
 	}
 
@@ -277,11 +342,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveBOFiltering")
-	public OperationResult<BOFiltering> saveBOFiltering(BOFiltering bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<BOFiltering> saveBOFiltering(@WebParam(name = "bo") BOFiltering bo,
+			@WebParam(name = "token") String token) {
 		return super.saveBOFiltering(bo, token);
 	}
 
@@ -295,11 +358,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchOrganization")
-	public OperationResult<Organization> fetchOrganization(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Organization> fetchOrganization(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchOrganization(criteria, token);
 	}
 
@@ -312,11 +373,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveOrganization")
-	public OperationResult<Organization> saveOrganization(Organization bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Organization> saveOrganization(@WebParam(name = "bo") Organization bo,
+			@WebParam(name = "token") String token) {
 		return super.saveOrganization(bo, token);
 	}
 
@@ -330,12 +389,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchOrganizationalStructure")
-	public OperationResult<OrganizationalStructure> fetchOrganizationalStructure(Criteria criteria,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<OrganizationalStructure> fetchOrganizationalStructure(
+			@WebParam(name = "criteria") Criteria criteria, @WebParam(name = "token") String token) {
 		return super.fetchOrganizationalStructure(criteria, token);
 	}
 
@@ -348,12 +404,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveOrganizationalStructure")
-	public OperationResult<OrganizationalStructure> saveOrganizationalStructure(OrganizationalStructure bo,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<OrganizationalStructure> saveOrganizationalStructure(
+			@WebParam(name = "bo") OrganizationalStructure bo, @WebParam(name = "token") String token) {
 		return super.saveOrganizationalStructure(bo, token);
 	}
 
@@ -367,11 +420,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchOwnership")
-	public OperationResult<Ownership> fetchOwnership(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Ownership> fetchOwnership(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchOwnership(criteria, token);
 	}
 
@@ -384,11 +435,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveOwnership")
-	public OperationResult<Ownership> saveOwnership(Ownership bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Ownership> saveOwnership(@WebParam(name = "bo") Ownership bo,
+			@WebParam(name = "token") String token) {
 		return super.saveOwnership(bo, token);
 	}
 
@@ -402,11 +451,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchPrivilege")
-	public OperationResult<Privilege> fetchPrivilege(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Privilege> fetchPrivilege(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchPrivilege(criteria, token);
 	}
 
@@ -419,11 +466,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("savePrivilege")
-	public OperationResult<Privilege> savePrivilege(Privilege bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Privilege> savePrivilege(@WebParam(name = "bo") Privilege bo,
+			@WebParam(name = "token") String token) {
 		return super.savePrivilege(bo, token);
 	}
 
@@ -437,11 +482,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchRole")
-	public OperationResult<Role> fetchRole(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Role> fetchRole(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchRole(criteria, token);
 	}
 
@@ -454,11 +497,8 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveRole")
-	public OperationResult<Role> saveRole(Role bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<Role> saveRole(@WebParam(name = "bo") Role bo, @WebParam(name = "token") String token) {
 		return super.saveRole(bo, token);
 	}
 
@@ -472,11 +512,9 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchUser")
-	public OperationResult<User> fetchUser(Criteria criteria, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<User> fetchUser(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
 		return super.fetchUser(criteria, token);
 	}
 
@@ -489,11 +527,8 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return 操作结果
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveUser")
-	public OperationResult<User> saveUser(User bo, @QueryParam("token") String token) {
+	@WebMethod
+	public OperationResult<User> saveUser(@WebParam(name = "bo") User bo, @WebParam(name = "token") String token) {
 		return super.saveUser(bo, token);
 	}
 
@@ -513,35 +548,12 @@ public class ServiceData extends BORepositoryInitialFantasyShell {
 	 *            口令
 	 * @return
 	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("approval")
-	public OperationMessages approval(@QueryParam("apRequestId") int apRequestId, @QueryParam("apStepId") int apStepId,
-			@QueryParam("apResult") String apResult, @QueryParam("judgment") String judgment,
-			@QueryParam("token") String token) {
+	@WebMethod
+	public OperationMessages approval(int apRequestId, int apStepId, String apResult, String judgment, String token) {
 		emApprovalResult emApReslut = emApprovalResult.valueOf(apResult);
 		return super.approval(apRequestId, apStepId, emApReslut, judgment, token);
 	}
 
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 用户登录
-	 * 
-	 * @param user
-	 *            用户
-	 * @param passwrod
-	 *            密码
-	 * @return 操作结果
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("userConnect")
-	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> userConnect(
-			@QueryParam("user") String user, @QueryParam("password") String password) {
-		return super.userConnect(user, password);
-	}
 	// --------------------------------------------------------------------------------------------//
 
 }
