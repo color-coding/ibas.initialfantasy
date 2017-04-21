@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IOrganizationalStructureListView } from "../../../bsapp/OrganizationalStructure/index";
+import { IOrganizationalStructureListView } from "../../../bsapp/organizationalstructure/index";
 
 /**
  * 视图-OrganizationalStructure

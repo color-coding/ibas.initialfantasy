@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IUserListView } from "../../../bsapp/User/index";
+import { IUserListView } from "../../../bsapp/user/index";
 
 /**
  * 视图-User

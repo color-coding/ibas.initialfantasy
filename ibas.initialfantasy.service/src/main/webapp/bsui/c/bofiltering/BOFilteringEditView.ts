@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IBOFilteringEditView } from "../../../bsapp/BOFiltering/index";
+import { IBOFilteringEditView } from "../../../bsapp/bofiltering/index";
 
 /**
  * 视图-BOFiltering
