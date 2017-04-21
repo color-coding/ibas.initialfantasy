@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IApplicationModuleChooseView } from "../../../bsapp/ApplicationModule/index";
+import { IApplicationModuleChooseView } from "../../../bsapp/applicationmodule/index";
 
 /**
  * 视图-ApplicationModule

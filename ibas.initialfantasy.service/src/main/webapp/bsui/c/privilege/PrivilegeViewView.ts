@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IPrivilegeViewView } from "../../../bsapp/Privilege/index";
+import { IPrivilegeViewView } from "../../../bsapp/privilege/index";
 
 /**
  * 视图-Privilege
