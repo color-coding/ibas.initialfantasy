@@ -24,7 +24,7 @@ import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping } from "./us
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
     /** 模块-标识 */
-    static CONSOLE_ID: string = "${ProjectId}";
+    static CONSOLE_ID: string = "c2b31c06-20d8-44a2-bb34-17f47ed01859";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "InitialFantasy";
     /** 根文件名称 */

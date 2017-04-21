@@ -1,6 +1,6 @@
 {
-  "initialfantasy": "${Domain.getDescription()}",
-  "initialfantasy_icon": "",
+  "initialfantasy": "系统中心",
+  "initialfantasy_icon": "sap-icon://addresses",
   "initialfantasy_func_applicationfunction": "应用程序功能",
   "initialfantasy_app_applicationfunction_list": "应用程序功能列表",
   "initialfantasy_app_applicationfunction_choose": "应用程序功能选择",
