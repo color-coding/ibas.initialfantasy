@@ -6,30 +6,33 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
-import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
+import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 
 /** 查看应用-应用程序模块 */
-export class ApplicationModuleViewApp extends ibas.BOViewApplication<IApplicationModuleViewView> {
+export class ApplicationModuleViewApp extends ibas.BOViewService<IApplicationModuleViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "edd87d28-140e-4dcd-9e61-ae39cdedb114";
+    static APPLICATION_ID: string = "ceddfe00-8b01-4123-bf58-161d2f9f511b";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "mu_initialfantasy_app_applicationmodule_view";
-
+    static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_view";
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = bo.ApplicationModule.BUSINESS_OBJECT_CODE;
+    /** 构造函数 */
     constructor() {
         super();
         this.id = ApplicationModuleViewApp.APPLICATION_ID;
         this.name = ApplicationModuleViewApp.APPLICATION_NAME;
+        this.boCode = ApplicationModuleViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
         // 其他事件
-
+        this.view.editDataEvent = this.editData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -42,18 +45,67 @@ export class ApplicationModuleViewApp extends ibas.BOViewApplication<IApplicatio
         app.viewShower = this.viewShower;
         app.run(this.viewData);
     }
-    protected viewData: bo.ApplicationModule;
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let data: bo.ApplicationModule = arguments[0];
-        if (ibas.object.isNull(data)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "view data"));
+        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.ApplicationModule) {
+            this.viewData = args[0];
+            this.show();
+        } else {
+            super.run(args);
         }
-        this.viewData = data;
-        super.run();
+    }
+    private viewData: bo.ApplicationModule;
+    /** 查询数据 */
+    protected fetchData(criteria: ibas.ICriteria | string): void {
+        this.busy(true);
+        let that = this;
+        if (typeof criteria === "string") {
+            criteria = new ibas.Criteria();
+            // 添加查询条件
+
+        }
+        try {
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+            boRepository.fetchApplicationModule({
+                criteria: criteria,
+                onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        that.viewData = opRslt.resultObjects.firstOrDefault();
+                        that.viewShowed();
+                    } catch (error) {
+                        that.messages(error);
+                    }
+                }
+            });
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+        } catch (error) {
+            that.messages(error);
+        }
+    }
+    /** 获取服务的契约 */
+    protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
+        return [];
     }
 }
 /** 视图-应用程序模块 */
 export interface IApplicationModuleViewView extends ibas.IBOViewView {
 
+}
+/** 应用程序模块连接服务映射 */
+export class ApplicationModuleLinkServiceMapping extends ibas.BOLinkServiceMapping {
+    /** 构造函数 */
+    constructor() {
+        super();
+        this.id = ApplicationModuleViewApp.APPLICATION_ID;
+        this.name = ApplicationModuleViewApp.APPLICATION_NAME;
+        this.boCode = ApplicationModuleViewApp.BUSINESS_OBJECT_CODE;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 创建服务并运行 */
+    create(): ibas.IService<ibas.IServiceContract> {
+        return new ApplicationModuleViewApp();
+    }
 }

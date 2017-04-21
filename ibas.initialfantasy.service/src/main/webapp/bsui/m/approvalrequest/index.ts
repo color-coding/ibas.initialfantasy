@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './ApprovalRequestListView';
-export * from './ApprovalRequestChooseView';
-export * from './ApprovalRequestViewView';
-export * from './ApprovalRequestEditView';
+export * from "./ApprovalRequestListView";
+export * from "./ApprovalRequestChooseView";
+export * from "./ApprovalRequestViewView";
+export * from "./ApprovalRequestEditView";

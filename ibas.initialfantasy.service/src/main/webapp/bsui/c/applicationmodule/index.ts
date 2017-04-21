@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './ApplicationModuleListView';
-export * from './ApplicationModuleChooseView';
-export * from './ApplicationModuleViewView';
-export * from './ApplicationModuleEditView';
+export * from "./ApplicationModuleListView";
+export * from "./ApplicationModuleChooseView";
+export * from "./ApplicationModuleViewView";
+export * from "./ApplicationModuleEditView";

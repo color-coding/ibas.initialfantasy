@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './OrganizationalStructureListView';
-export * from './OrganizationalStructureChooseView';
-export * from './OrganizationalStructureViewView';
-export * from './OrganizationalStructureEditView';
+export * from "./OrganizationalStructureListView";
+export * from "./OrganizationalStructureChooseView";
+export * from "./OrganizationalStructureViewView";
+export * from "./OrganizationalStructureEditView";

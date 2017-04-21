@@ -6,12 +6,12 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
+import * as ibas from "ibas/index";
 import * as applicationfunctionApps from "../../bsapp/applicationfunction/index";
 import * as applicationmoduleApps from "../../bsapp/applicationmodule/index";
 import * as applicationplatformApps from "../../bsapp/applicationplatform/index";
-import * as ApprovalTemplateApps from "../../bsapp/ApprovalTemplate/index";
 import * as approvalrequestApps from "../../bsapp/approvalrequest/index";
+import * as approvaltemplateApps from "../../bsapp/approvaltemplate/index";
 import * as bocriteriaApps from "../../bsapp/bocriteria/index";
 import * as bofilteringApps from "../../bsapp/bofiltering/index";
 import * as organizationApps from "../../bsapp/organization/index";
@@ -23,8 +23,8 @@ import * as userApps from "../../bsapp/user/index";
 import * as applicationfunctionViews from "./applicationfunction/index";
 import * as applicationmoduleViews from "./applicationmodule/index";
 import * as applicationplatformViews from "./applicationplatform/index";
-import * as ApprovalTemplateViews from "./ApprovalTemplate/index";
 import * as approvalrequestViews from "./approvalrequest/index";
+import * as approvaltemplateViews from "./approvaltemplate/index";
 import * as bocriteriaViews from "./bocriteria/index";
 import * as bofilteringViews from "./bofiltering/index";
 import * as organizationViews from "./organization/index";
@@ -37,7 +37,7 @@ import * as userViews from "./user/index";
 /**
  * 视图导航
  */
-export class Navigation extends ibas.ViewNavigation {
+export default class Navigation extends ibas.ViewNavigation {
 
     /** 
      * 创建实例
@@ -82,18 +82,6 @@ export class Navigation extends ibas.ViewNavigation {
             case applicationplatformApps.ApplicationPlatformEditApp.APPLICATION_ID:
                 view = new applicationplatformViews.ApplicationPlatformEditView();
                 break;
-            case ApprovalTemplateApps.ApprovalTemplateListApp.APPLICATION_ID:
-                view = new ApprovalTemplateViews.ApprovalTemplateListView();
-                break;
-            case ApprovalTemplateApps.ApprovalTemplateChooseApp.APPLICATION_ID:
-                view = new ApprovalTemplateViews.ApprovalTemplateChooseView();
-                break;
-            case ApprovalTemplateApps.ApprovalTemplateViewApp.APPLICATION_ID:
-                view = new ApprovalTemplateViews.ApprovalTemplateViewView();
-                break;
-            case ApprovalTemplateApps.ApprovalTemplateEditApp.APPLICATION_ID:
-                view = new ApprovalTemplateViews.ApprovalTemplateEditView();
-                break;
             case approvalrequestApps.ApprovalRequestListApp.APPLICATION_ID:
                 view = new approvalrequestViews.ApprovalRequestListView();
                 break;
@@ -105,6 +93,18 @@ export class Navigation extends ibas.ViewNavigation {
                 break;
             case approvalrequestApps.ApprovalRequestEditApp.APPLICATION_ID:
                 view = new approvalrequestViews.ApprovalRequestEditView();
+                break;
+            case approvaltemplateApps.ApprovalTemplateListApp.APPLICATION_ID:
+                view = new approvaltemplateViews.ApprovalTemplateListView();
+                break;
+            case approvaltemplateApps.ApprovalTemplateChooseApp.APPLICATION_ID:
+                view = new approvaltemplateViews.ApprovalTemplateChooseView();
+                break;
+            case approvaltemplateApps.ApprovalTemplateViewApp.APPLICATION_ID:
+                view = new approvaltemplateViews.ApprovalTemplateViewView();
+                break;
+            case approvaltemplateApps.ApprovalTemplateEditApp.APPLICATION_ID:
+                view = new approvaltemplateViews.ApprovalTemplateEditView();
                 break;
             case bocriteriaApps.BOCriteriaListApp.APPLICATION_ID:
                 view = new bocriteriaViews.BOCriteriaListView();

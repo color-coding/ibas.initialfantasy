@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './PrivilegeListView';
-export * from './PrivilegeChooseView';
-export * from './PrivilegeViewView';
-export * from './PrivilegeEditView';
+export * from "./PrivilegeListView";
+export * from "./PrivilegeChooseView";
+export * from "./PrivilegeViewView";
+export * from "./PrivilegeEditView";

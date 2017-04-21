@@ -6,10 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../3rdparty/openui5/typings/index.d.ts" />
-import * as ibas from "../../../3rdparty/ibas/index";
+import * as ibas from "ibas/index";
+import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { utils } from "../../../3rdparty/openui5/typings/ibas.utils";
 import { IOrganizationalStructureEditView } from "../../../bsapp/OrganizationalStructure/index";
 
 /**
@@ -17,14 +16,12 @@ import { IOrganizationalStructureEditView } from "../../../bsapp/OrganizationalS
  */
 export class OrganizationalStructureEditView extends ibas.BOEditView implements IOrganizationalStructureEditView {
 
+    /** 删除数据事件 */
+    deleteDataEvent: Function;
     /** 添加组织-角色事件 */
     addOrganizationalRoleEvent: Function;
     /** 删除组织-角色事件 */
     removeOrganizationalRoleEvent: Function;
-    /** 添加组织-角色-成员事件 */
-    addRoleMemberEvent: Function;
-    /** 删除组织-角色-成员事件 */
-    removeRoleMemberEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
@@ -33,8 +30,8 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
             content: [
             ]
         });
-        this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_OrganizationalStructureitem") }));
-        this.table = new sap.ui.table.Table("", {
+        this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_organizationalrole") }));
+        this.tableOrganizationalRole = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
@@ -42,7 +39,7 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://add",
                         press: function (): void {
-                            that.fireViewEvents(that.addOrganizationalStructureItemEvent);
+                            that.fireViewEvents(that.addOrganizationalRoleEvent);
                         }
                     }),
                     new sap.m.Button("", {
@@ -50,17 +47,18 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
-                            that.fireViewEvents(that.removeOrganizationalStructureItemEvent);
+                            that.fireViewEvents(that.removeOrganizationalRoleEvent);
                         }
                     })
                 ]
             }),
+            enableSelectAll: false,
             visibleRowCount: 6,
             rows: "{/}",
             columns: [
             ]
         });
-        this.form.addContent(this.table);
+        this.form.addContent(this.tableOrganizationalRole);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -72,7 +70,16 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
                         press: function (): void {
                             that.fireViewEvents(that.saveDataEvent);
                         }
-                    })
+                    }),
+                    new sap.m.ToolbarSeparator(""),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_ui_data_delete"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://delete",
+                        press: function (): void {
+                            that.fireViewEvents(that.deleteDataEvent);
+                        }
+                    }),
                 ]
             }),
             content: [this.form]
@@ -82,18 +89,18 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
+    private tableOrganizationalRole: sap.ui.table.Table;
 
     /** 显示数据 */
     showOrganizationalStructure(data: bo.OrganizationalStructure): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.form, data);
     }
     /** 显示数据 */
     showOrganizationalRoles(datas: bo.OrganizationalRole[]): void {
-        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
-    }
-    /** 显示数据 */
-    showRoleMembers(datas: bo.RoleMember[]): void {
-        this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+        this.tableOrganizationalRole.setModel(new sap.ui.model.json.JSONModel(datas));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.tableOrganizationalRole, datas);
     }
 }

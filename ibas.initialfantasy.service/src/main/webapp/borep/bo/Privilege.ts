@@ -11,268 +11,236 @@ import {
     emDocumentStatus,
     emBOStatus,
     emApprovalStatus,
+    emAuthoriseType,
     BusinessObject,
-    BusinessObjects
-} from '../../3rdparty/ibas/index';
-import { 
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
+} from "ibas/index";
+import {
     IPrivilege,
-} from '../../api/privilege/privilege.data.d';
+} from "../../api/index";
 
 /** 系统权限 */
-export class Privilege extends BusinessObject<Privilege> implements IPrivilege {
+export class Privilege extends BOSimple<Privilege> implements IPrivilege {
 
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = "CC_SYS_PRIVILEGE";
+    /** 构造函数 */
     constructor() {
         super();
     }
-
-    /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_PRIVILEGE";
-
     /** 映射的属性名称-角色标识 */
-    private static PROPERTY_NAME_ROLECODE: string = "_roleCode";
-
+    static PROPERTY_ROLECODE_NAME: string = "RoleCode";
     /** 获取-角色标识 */
     get roleCode(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_ROLECODE);
+        return this.getProperty<string>(Privilege.PROPERTY_ROLECODE_NAME);
     }
-
     /** 设置-角色标识 */
     set roleCode(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_ROLECODE, value);
+        this.setProperty(Privilege.PROPERTY_ROLECODE_NAME, value);
     }
 
     /** 映射的属性名称-平台标识 */
-    private static PROPERTY_NAME_PLATFORMID: string = "_platformID";
-
+    static PROPERTY_PLATFORMID_NAME: string = "PlatformId";
     /** 获取-平台标识 */
-    get platformID(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_PLATFORMID);
+    get platformId(): string {
+        return this.getProperty<string>(Privilege.PROPERTY_PLATFORMID_NAME);
     }
-
     /** 设置-平台标识 */
-    set platformID(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_PLATFORMID, value);
+    set platformId(value: string) {
+        this.setProperty(Privilege.PROPERTY_PLATFORMID_NAME, value);
     }
 
     /** 映射的属性名称-模块标识 */
-    private static PROPERTY_NAME_MODULEID: string = "_moduleID";
-
+    static PROPERTY_MODULEID_NAME: string = "ModuleId";
     /** 获取-模块标识 */
-    get moduleID(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_MODULEID);
+    get moduleId(): string {
+        return this.getProperty<string>(Privilege.PROPERTY_MODULEID_NAME);
     }
-
     /** 设置-模块标识 */
-    set moduleID(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_MODULEID, value);
+    set moduleId(value: string) {
+        this.setProperty(Privilege.PROPERTY_MODULEID_NAME, value);
     }
 
-    /** 映射的属性名称-功能标识 */
-    private static PROPERTY_NAME_FUNCTIONID: string = "_functionID";
-
-    /** 获取-功能标识 */
-    get functionID(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_FUNCTIONID);
+    /** 映射的属性名称-目标标识 */
+    static PROPERTY_TARGET_NAME: string = "Target";
+    /** 获取-目标标识 */
+    get target(): string {
+        return this.getProperty<string>(Privilege.PROPERTY_TARGET_NAME);
     }
-
-    /** 设置-功能标识 */
-    set functionID(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_FUNCTIONID, value);
+    /** 设置-目标标识 */
+    set target(value: string) {
+        this.setProperty(Privilege.PROPERTY_TARGET_NAME, value);
     }
 
     /** 映射的属性名称-是否可用 */
-    private static PROPERTY_NAME_ACTIVATED: string = "_activated";
-
+    static PROPERTY_ACTIVATED_NAME: string = "Activated";
     /** 获取-是否可用 */
     get activated(): emYesNo {
-        return this.getProperty<emYesNo>(Privilege.PROPERTY_NAME_ACTIVATED);
+        return this.getProperty<emYesNo>(Privilege.PROPERTY_ACTIVATED_NAME);
     }
-
     /** 设置-是否可用 */
     set activated(value: emYesNo) {
-        this.setProperty(Privilege.PROPERTY_NAME_ACTIVATED, value);
+        this.setProperty(Privilege.PROPERTY_ACTIVATED_NAME, value);
     }
 
     /** 映射的属性名称-权限类型 */
-    private static PROPERTY_NAME_AUTHORISEVALUE: string = "_authoriseValue";
-
+    static PROPERTY_AUTHORISEVALUE_NAME: string = "AuthoriseValue";
     /** 获取-权限类型 */
     get authoriseValue(): emAuthoriseType {
-        return this.getProperty<emAuthoriseType>(Privilege.PROPERTY_NAME_AUTHORISEVALUE);
+        return this.getProperty<emAuthoriseType>(Privilege.PROPERTY_AUTHORISEVALUE_NAME);
     }
-
     /** 设置-权限类型 */
     set authoriseValue(value: emAuthoriseType) {
-        this.setProperty(Privilege.PROPERTY_NAME_AUTHORISEVALUE, value);
+        this.setProperty(Privilege.PROPERTY_AUTHORISEVALUE_NAME, value);
     }
 
     /** 映射的属性名称-对象编号 */
-    private static PROPERTY_NAME_OBJECTKEY: string = "_objectKey";
-
+    static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
     /** 获取-对象编号 */
     get objectKey(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_OBJECTKEY);
+        return this.getProperty<number>(Privilege.PROPERTY_OBJECTKEY_NAME);
     }
-
     /** 设置-对象编号 */
     set objectKey(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_OBJECTKEY, value);
+        this.setProperty(Privilege.PROPERTY_OBJECTKEY_NAME, value);
     }
 
     /** 映射的属性名称-对象类型 */
-    private static PROPERTY_NAME_OBJECTCODE: string = "_objectCode";
-
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
     /** 获取-对象类型 */
     get objectCode(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_OBJECTCODE);
+        return this.getProperty<string>(Privilege.PROPERTY_OBJECTCODE_NAME);
     }
-
     /** 设置-对象类型 */
     set objectCode(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_OBJECTCODE, value);
+        this.setProperty(Privilege.PROPERTY_OBJECTCODE_NAME, value);
     }
 
     /** 映射的属性名称-创建日期 */
-    private static PROPERTY_NAME_CREATEDATE: string = "_createDate";
-
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
     /** 获取-创建日期 */
     get createDate(): Date {
-        return this.getProperty<Date>(Privilege.PROPERTY_NAME_CREATEDATE);
+        return this.getProperty<Date>(Privilege.PROPERTY_CREATEDATE_NAME);
     }
-
     /** 设置-创建日期 */
     set createDate(value: Date) {
-        this.setProperty(Privilege.PROPERTY_NAME_CREATEDATE, value);
+        this.setProperty(Privilege.PROPERTY_CREATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-创建时间 */
-    private static PROPERTY_NAME_CREATETIME: string = "_createTime";
-
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
     /** 获取-创建时间 */
     get createTime(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_CREATETIME);
+        return this.getProperty<number>(Privilege.PROPERTY_CREATETIME_NAME);
     }
-
     /** 设置-创建时间 */
     set createTime(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_CREATETIME, value);
+        this.setProperty(Privilege.PROPERTY_CREATETIME_NAME, value);
     }
 
     /** 映射的属性名称-修改日期 */
-    private static PROPERTY_NAME_UPDATEDATE: string = "_updateDate";
-
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
     /** 获取-修改日期 */
     get updateDate(): Date {
-        return this.getProperty<Date>(Privilege.PROPERTY_NAME_UPDATEDATE);
+        return this.getProperty<Date>(Privilege.PROPERTY_UPDATEDATE_NAME);
     }
-
     /** 设置-修改日期 */
     set updateDate(value: Date) {
-        this.setProperty(Privilege.PROPERTY_NAME_UPDATEDATE, value);
+        this.setProperty(Privilege.PROPERTY_UPDATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-修改时间 */
-    private static PROPERTY_NAME_UPDATETIME: string = "_updateTime";
-
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
     /** 获取-修改时间 */
     get updateTime(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_UPDATETIME);
+        return this.getProperty<number>(Privilege.PROPERTY_UPDATETIME_NAME);
     }
-
     /** 设置-修改时间 */
     set updateTime(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_UPDATETIME, value);
+        this.setProperty(Privilege.PROPERTY_UPDATETIME_NAME, value);
     }
 
     /** 映射的属性名称-实例号（版本） */
-    private static PROPERTY_NAME_LOGINST: string = "_logInst";
-
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
     /** 获取-实例号（版本） */
     get logInst(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_LOGINST);
+        return this.getProperty<number>(Privilege.PROPERTY_LOGINST_NAME);
     }
-
     /** 设置-实例号（版本） */
     set logInst(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_LOGINST, value);
+        this.setProperty(Privilege.PROPERTY_LOGINST_NAME, value);
     }
 
     /** 映射的属性名称-服务系列 */
-    private static PROPERTY_NAME_SERIES: string = "_series";
-
+    static PROPERTY_SERIES_NAME: string = "Series";
     /** 获取-服务系列 */
     get series(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_SERIES);
+        return this.getProperty<number>(Privilege.PROPERTY_SERIES_NAME);
     }
-
     /** 设置-服务系列 */
     set series(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_SERIES, value);
+        this.setProperty(Privilege.PROPERTY_SERIES_NAME, value);
     }
 
     /** 映射的属性名称-数据源 */
-    private static PROPERTY_NAME_DATASOURCE: string = "_dataSource";
-
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
     /** 获取-数据源 */
     get dataSource(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_DATASOURCE);
+        return this.getProperty<string>(Privilege.PROPERTY_DATASOURCE_NAME);
     }
-
     /** 设置-数据源 */
     set dataSource(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_DATASOURCE, value);
+        this.setProperty(Privilege.PROPERTY_DATASOURCE_NAME, value);
     }
 
     /** 映射的属性名称-创建用户 */
-    private static PROPERTY_NAME_CREATEUSERSIGN: string = "_createUserSign";
-
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
     /** 获取-创建用户 */
     get createUserSign(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_CREATEUSERSIGN);
+        return this.getProperty<number>(Privilege.PROPERTY_CREATEUSERSIGN_NAME);
     }
-
     /** 设置-创建用户 */
     set createUserSign(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_CREATEUSERSIGN, value);
+        this.setProperty(Privilege.PROPERTY_CREATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-修改用户 */
-    private static PROPERTY_NAME_UPDATEUSERSIGN: string = "_updateUserSign";
-
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
     /** 获取-修改用户 */
     get updateUserSign(): number {
-        return this.getProperty<number>(Privilege.PROPERTY_NAME_UPDATEUSERSIGN);
+        return this.getProperty<number>(Privilege.PROPERTY_UPDATEUSERSIGN_NAME);
     }
-
     /** 设置-修改用户 */
     set updateUserSign(value: number) {
-        this.setProperty(Privilege.PROPERTY_NAME_UPDATEUSERSIGN, value);
+        this.setProperty(Privilege.PROPERTY_UPDATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-创建动作标识 */
-    private static PROPERTY_NAME_CREATEACTIONID: string = "_createActionId";
-
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
     /** 获取-创建动作标识 */
     get createActionId(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_CREATEACTIONID);
+        return this.getProperty<string>(Privilege.PROPERTY_CREATEACTIONID_NAME);
     }
-
     /** 设置-创建动作标识 */
     set createActionId(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_CREATEACTIONID, value);
+        this.setProperty(Privilege.PROPERTY_CREATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-更新动作标识 */
-    private static PROPERTY_NAME_UPDATEACTIONID: string = "_updateActionId";
-
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
     /** 获取-更新动作标识 */
     get updateActionId(): string {
-        return this.getProperty<string>(Privilege.PROPERTY_NAME_UPDATEACTIONID);
+        return this.getProperty<string>(Privilege.PROPERTY_UPDATEACTIONID_NAME);
     }
-
     /** 设置-更新动作标识 */
     set updateActionId(value: string) {
-        this.setProperty(Privilege.PROPERTY_NAME_UPDATEACTIONID, value);
+        this.setProperty(Privilege.PROPERTY_UPDATEACTIONID_NAME, value);
     }
 
 
@@ -282,6 +250,4 @@ export class Privilege extends BusinessObject<Privilege> implements IPrivilege {
         this.objectCode = Privilege.BUSINESS_OBJECT_CODE;
     }
 }
-
-
 

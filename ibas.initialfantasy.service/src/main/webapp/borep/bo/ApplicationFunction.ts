@@ -12,215 +12,190 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
-} from '../../3rdparty/ibas/index';
-import { 
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
+} from "ibas/index";
+import {
     IApplicationFunction,
-} from '../../api/applicationfunction/applicationfunction.data.d';
+} from "../../api/index";
 
 /** 应用程序功能 */
-export class ApplicationFunction extends BusinessObject<ApplicationFunction> implements IApplicationFunction {
+export class ApplicationFunction extends BOSimple<ApplicationFunction> implements IApplicationFunction {
 
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = "CC_SYS_FUNCTION";
+    /** 构造函数 */
     constructor() {
         super();
     }
-
-    /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_FUNCTION";
-
     /** 映射的属性名称-模块标识 */
-    private static PROPERTY_NAME_MODULEID: string = "_moduleId";
-
+    static PROPERTY_MODULEID_NAME: string = "ModuleId";
     /** 获取-模块标识 */
     get moduleId(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_MODULEID);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_MODULEID_NAME);
     }
-
     /** 设置-模块标识 */
     set moduleId(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_MODULEID, value);
+        this.setProperty(ApplicationFunction.PROPERTY_MODULEID_NAME, value);
     }
 
     /** 映射的属性名称-功能标识 */
-    private static PROPERTY_NAME_FUNCTIONID: string = "_functionId";
-
+    static PROPERTY_FUNCTIONID_NAME: string = "FunctionId";
     /** 获取-功能标识 */
     get functionId(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_FUNCTIONID);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_FUNCTIONID_NAME);
     }
-
     /** 设置-功能标识 */
     set functionId(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_FUNCTIONID, value);
+        this.setProperty(ApplicationFunction.PROPERTY_FUNCTIONID_NAME, value);
     }
 
     /** 映射的属性名称-功能名称 */
-    private static PROPERTY_NAME_FUNCTIONNAME: string = "_functionName";
-
+    static PROPERTY_FUNCTIONNAME_NAME: string = "FunctionName";
     /** 获取-功能名称 */
     get functionName(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_FUNCTIONNAME);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_FUNCTIONNAME_NAME);
     }
-
     /** 设置-功能名称 */
     set functionName(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_FUNCTIONNAME, value);
+        this.setProperty(ApplicationFunction.PROPERTY_FUNCTIONNAME_NAME, value);
     }
 
     /** 映射的属性名称-对象键值 */
-    private static PROPERTY_NAME_OBJECTKEY: string = "_objectKey";
-
+    static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
     /** 获取-对象键值 */
     get objectKey(): number {
-        return this.getProperty<number>(ApplicationFunction.PROPERTY_NAME_OBJECTKEY);
+        return this.getProperty<number>(ApplicationFunction.PROPERTY_OBJECTKEY_NAME);
     }
-
     /** 设置-对象键值 */
     set objectKey(value: number) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_OBJECTKEY, value);
+        this.setProperty(ApplicationFunction.PROPERTY_OBJECTKEY_NAME, value);
     }
 
     /** 映射的属性名称-对象类型 */
-    private static PROPERTY_NAME_OBJECTCODE: string = "_objectCode";
-
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
     /** 获取-对象类型 */
     get objectCode(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_OBJECTCODE);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_OBJECTCODE_NAME);
     }
-
     /** 设置-对象类型 */
     set objectCode(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_OBJECTCODE, value);
+        this.setProperty(ApplicationFunction.PROPERTY_OBJECTCODE_NAME, value);
     }
 
     /** 映射的属性名称-数据源 */
-    private static PROPERTY_NAME_DATASOURCE: string = "_dataSource";
-
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
     /** 获取-数据源 */
     get dataSource(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_DATASOURCE);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_DATASOURCE_NAME);
     }
-
     /** 设置-数据源 */
     set dataSource(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_DATASOURCE, value);
+        this.setProperty(ApplicationFunction.PROPERTY_DATASOURCE_NAME, value);
     }
 
     /** 映射的属性名称-创建日期 */
-    private static PROPERTY_NAME_CREATEDATE: string = "_createDate";
-
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
     /** 获取-创建日期 */
     get createDate(): Date {
-        return this.getProperty<Date>(ApplicationFunction.PROPERTY_NAME_CREATEDATE);
+        return this.getProperty<Date>(ApplicationFunction.PROPERTY_CREATEDATE_NAME);
     }
-
     /** 设置-创建日期 */
     set createDate(value: Date) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_CREATEDATE, value);
+        this.setProperty(ApplicationFunction.PROPERTY_CREATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-创建时间 */
-    private static PROPERTY_NAME_CREATETIME: string = "_createTime";
-
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
     /** 获取-创建时间 */
     get createTime(): number {
-        return this.getProperty<number>(ApplicationFunction.PROPERTY_NAME_CREATETIME);
+        return this.getProperty<number>(ApplicationFunction.PROPERTY_CREATETIME_NAME);
     }
-
     /** 设置-创建时间 */
     set createTime(value: number) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_CREATETIME, value);
+        this.setProperty(ApplicationFunction.PROPERTY_CREATETIME_NAME, value);
     }
 
     /** 映射的属性名称-修改日期 */
-    private static PROPERTY_NAME_UPDATEDATE: string = "_updateDate";
-
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
     /** 获取-修改日期 */
     get updateDate(): Date {
-        return this.getProperty<Date>(ApplicationFunction.PROPERTY_NAME_UPDATEDATE);
+        return this.getProperty<Date>(ApplicationFunction.PROPERTY_UPDATEDATE_NAME);
     }
-
     /** 设置-修改日期 */
     set updateDate(value: Date) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_UPDATEDATE, value);
+        this.setProperty(ApplicationFunction.PROPERTY_UPDATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-修改时间 */
-    private static PROPERTY_NAME_UPDATETIME: string = "_updateTime";
-
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
     /** 获取-修改时间 */
     get updateTime(): number {
-        return this.getProperty<number>(ApplicationFunction.PROPERTY_NAME_UPDATETIME);
+        return this.getProperty<number>(ApplicationFunction.PROPERTY_UPDATETIME_NAME);
     }
-
     /** 设置-修改时间 */
     set updateTime(value: number) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_UPDATETIME, value);
+        this.setProperty(ApplicationFunction.PROPERTY_UPDATETIME_NAME, value);
     }
 
     /** 映射的属性名称-创建动作标识 */
-    private static PROPERTY_NAME_CREATEACTIONID: string = "_createActionId";
-
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
     /** 获取-创建动作标识 */
     get createActionId(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_CREATEACTIONID);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_CREATEACTIONID_NAME);
     }
-
     /** 设置-创建动作标识 */
     set createActionId(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_CREATEACTIONID, value);
+        this.setProperty(ApplicationFunction.PROPERTY_CREATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-更新动作标识 */
-    private static PROPERTY_NAME_UPDATEACTIONID: string = "_updateActionId";
-
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
     /** 获取-更新动作标识 */
     get updateActionId(): string {
-        return this.getProperty<string>(ApplicationFunction.PROPERTY_NAME_UPDATEACTIONID);
+        return this.getProperty<string>(ApplicationFunction.PROPERTY_UPDATEACTIONID_NAME);
     }
-
     /** 设置-更新动作标识 */
     set updateActionId(value: string) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_UPDATEACTIONID, value);
+        this.setProperty(ApplicationFunction.PROPERTY_UPDATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-实例号（版本） */
-    private static PROPERTY_NAME_LOGINST: string = "_logInst";
-
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
     /** 获取-实例号（版本） */
     get logInst(): number {
-        return this.getProperty<number>(ApplicationFunction.PROPERTY_NAME_LOGINST);
+        return this.getProperty<number>(ApplicationFunction.PROPERTY_LOGINST_NAME);
     }
-
     /** 设置-实例号（版本） */
     set logInst(value: number) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_LOGINST, value);
+        this.setProperty(ApplicationFunction.PROPERTY_LOGINST_NAME, value);
     }
 
     /** 映射的属性名称-创建用户 */
-    private static PROPERTY_NAME_CREATEUSERSIGN: string = "_createUserSign";
-
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
     /** 获取-创建用户 */
     get createUserSign(): number {
-        return this.getProperty<number>(ApplicationFunction.PROPERTY_NAME_CREATEUSERSIGN);
+        return this.getProperty<number>(ApplicationFunction.PROPERTY_CREATEUSERSIGN_NAME);
     }
-
     /** 设置-创建用户 */
     set createUserSign(value: number) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_CREATEUSERSIGN, value);
+        this.setProperty(ApplicationFunction.PROPERTY_CREATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-修改用户 */
-    private static PROPERTY_NAME_UPDATEUSERSIGN: string = "_updateUserSign";
-
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
     /** 获取-修改用户 */
     get updateUserSign(): number {
-        return this.getProperty<number>(ApplicationFunction.PROPERTY_NAME_UPDATEUSERSIGN);
+        return this.getProperty<number>(ApplicationFunction.PROPERTY_UPDATEUSERSIGN_NAME);
     }
-
     /** 设置-修改用户 */
     set updateUserSign(value: number) {
-        this.setProperty(ApplicationFunction.PROPERTY_NAME_UPDATEUSERSIGN, value);
+        this.setProperty(ApplicationFunction.PROPERTY_UPDATEUSERSIGN_NAME, value);
     }
 
 
@@ -230,6 +205,4 @@ export class ApplicationFunction extends BusinessObject<ApplicationFunction> imp
         this.objectCode = ApplicationFunction.BUSINESS_OBJECT_CODE;
     }
 }
-
-
 

@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './OwnershipFunc';
-export * from './OwnershipListApp';
-export * from './OwnershipChooseApp';
-export * from './OwnershipViewApp';
-export * from './OwnershipEditApp';
+export * from "./OwnershipFunc";
+export * from "./OwnershipListApp";
+export * from "./OwnershipChooseApp";
+export * from "./OwnershipViewApp";
+export * from "./OwnershipEditApp";
