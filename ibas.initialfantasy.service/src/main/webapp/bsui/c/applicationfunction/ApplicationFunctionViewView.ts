@@ -6,10 +6,9 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-/// <reference path="../../../3rdparty/openui5/typings/index.d.ts" />
-import * as ibas from "../../../3rdparty/ibas/index";
+import * as ibas from "ibas/index";
+import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { utils } from "../../../3rdparty/openui5/typings/ibas.utils";
 import { IApplicationFunctionViewView } from "../../../bsapp/ApplicationFunction/index";
 
 /**
@@ -24,24 +23,44 @@ export class ApplicationFunctionViewView extends ibas.BOViewView implements IApp
             content: [
             ]
         });
-        this.form.addContent(new sap.ui.core.Title("", { text: "Items" }));
-        this.table = new sap.ui.table.Table("", {
-            visibleRowCount: 6,
-            rows: "{/}",
-            columns: [
-            ]
-        });
-        this.form.addContent(this.table);
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: new sap.m.Toolbar("", {
-                content: [
+            subHeader: new sap.m.Bar("", {
+                contentLeft: [
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_ui_data_edit"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://edit",
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent);
+                        }
+                    })
+                ],
+                contentRight: [
+                    new sap.m.Button("", {
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://action",
+                        press: function (event: any): void {
+                            that.fireViewEvents(that.callServicesEvent, {
+                                displayServices(services: ibas.IServiceAgent[]): void {
+                                    let popover: sap.m.Popover = new sap.m.Popover("", {
+                                        showHeader: false,
+                                        placement: sap.m.PlacementType.Bottom,
+                                    });
+                                    for (let service of services) {
+                                        popover.addContent(new sap.m.Button({
+                                            text: ibas.i18n.prop(service.name),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: service.icon,
+                                            press: function (): void {
+                                                service.run();
+                                                popover.close();
+                                            }
+                                        }));
+                                    }
+                                    popover.openBy(event.getSource(), true);
+                                }
+                            });
                         }
                     })
                 ]
@@ -53,7 +72,6 @@ export class ApplicationFunctionViewView extends ibas.BOViewView implements IApp
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
-    private table: sap.ui.table.Table;
 
     /** 显示数据 */
     showApplicationFunction(data: bo.ApplicationFunction): void {

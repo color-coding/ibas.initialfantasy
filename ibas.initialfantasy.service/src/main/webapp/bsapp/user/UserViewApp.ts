@@ -6,30 +6,33 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
-import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
+import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { UserEditApp } from "./UserEditApp";
 
 /** 查看应用-用户 */
-export class UserViewApp extends ibas.BOViewApplication<IUserViewView> {
+export class UserViewApp extends ibas.BOViewService<IUserViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "48cd975b-268c-494a-baed-f072db0ba4f3";
+    static APPLICATION_ID: string = "42733490-fcc6-43fe-a3d0-7487f3affcfd";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "mu_initialfantasy_app_user_view";
-
+    static APPLICATION_NAME: string = "initialfantasy_app_user_view";
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = bo.User.BUSINESS_OBJECT_CODE;
+    /** 构造函数 */
     constructor() {
         super();
         this.id = UserViewApp.APPLICATION_ID;
         this.name = UserViewApp.APPLICATION_NAME;
+        this.boCode = UserViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
     protected registerView(): void {
         super.registerView();
         // 其他事件
-
+        this.view.editDataEvent = this.editData;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -42,18 +45,67 @@ export class UserViewApp extends ibas.BOViewApplication<IUserViewView> {
         app.viewShower = this.viewShower;
         app.run(this.viewData);
     }
-    protected viewData: bo.User;
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let data: bo.User = arguments[0];
-        if (ibas.object.isNull(data)) {
-            throw new Error(ibas.i18n.prop("msg_invalid_parameter", "view data"));
+        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.User) {
+            this.viewData = args[0];
+            this.show();
+        } else {
+            super.run(args);
         }
-        this.viewData = data;
-        super.run();
+    }
+    private viewData: bo.User;
+    /** 查询数据 */
+    protected fetchData(criteria: ibas.ICriteria | string): void {
+        this.busy(true);
+        let that = this;
+        if (typeof criteria === "string") {
+            criteria = new ibas.Criteria();
+            // 添加查询条件
+
+        }
+        try {
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+            boRepository.fetchUser({
+                criteria: criteria,
+                onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        that.viewData = opRslt.resultObjects.firstOrDefault();
+                        that.viewShowed();
+                    } catch (error) {
+                        that.messages(error);
+                    }
+                }
+            });
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+        } catch (error) {
+            that.messages(error);
+        }
+    }
+    /** 获取服务的契约 */
+    protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
+        return [];
     }
 }
 /** 视图-用户 */
 export interface IUserViewView extends ibas.IBOViewView {
 
+}
+/** 用户连接服务映射 */
+export class UserLinkServiceMapping extends ibas.BOLinkServiceMapping {
+    /** 构造函数 */
+    constructor() {
+        super();
+        this.id = UserViewApp.APPLICATION_ID;
+        this.name = UserViewApp.APPLICATION_NAME;
+        this.boCode = UserViewApp.BUSINESS_OBJECT_CODE;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 创建服务并运行 */
+    create(): ibas.IService<ibas.IServiceContract> {
+        return new UserViewApp();
+    }
 }

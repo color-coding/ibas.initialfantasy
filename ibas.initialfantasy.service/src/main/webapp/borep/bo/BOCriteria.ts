@@ -12,319 +12,256 @@ import {
     emBOStatus,
     emApprovalStatus,
     BusinessObject,
-    BusinessObjects
-} from '../../3rdparty/ibas/index';
-import { 
+    BusinessObjects,
+    BOMasterData,
+    BOMasterDataLine,
+    BODocument,
+    BODocumentLine,
+    BOSimple,
+    BOSimpleLine,
+} from "ibas/index";
+import {
     IBOCriteria,
-} from '../../api/bocriteria/bocriteria.data.d';
+} from "../../api/index";
 
 /** 业务对象检索条件 */
-export class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteria {
+export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
 
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = "CC_SYS_BOCRITERIA";
+    /** 构造函数 */
     constructor() {
         super();
     }
-
-    /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_BOCRITERIA";
-
     /** 映射的属性名称-应用标识 */
-    private static PROPERTY_NAME_APPLICATIONID: string = "_applicationId";
-
+    static PROPERTY_APPLICATIONID_NAME: string = "ApplicationId";
     /** 获取-应用标识 */
     get applicationId(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_APPLICATIONID);
+        return this.getProperty<string>(BOCriteria.PROPERTY_APPLICATIONID_NAME);
     }
-
     /** 设置-应用标识 */
     set applicationId(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_APPLICATIONID, value);
+        this.setProperty(BOCriteria.PROPERTY_APPLICATIONID_NAME, value);
+    }
+
+    /** 映射的属性名称-数据所有者 */
+    static PROPERTY_DATAOWNER_NAME: string = "DataOwner";
+    /** 获取-数据所有者 */
+    get dataOwner(): number {
+        return this.getProperty<number>(BOCriteria.PROPERTY_DATAOWNER_NAME);
+    }
+    /** 设置-数据所有者 */
+    set dataOwner(value: number) {
+        this.setProperty(BOCriteria.PROPERTY_DATAOWNER_NAME, value);
     }
 
     /** 映射的属性名称-检索名称 */
-    private static PROPERTY_NAME_NAME: string = "_name";
-
+    static PROPERTY_NAME_NAME: string = "Name";
     /** 获取-检索名称 */
     get name(): string {
         return this.getProperty<string>(BOCriteria.PROPERTY_NAME_NAME);
     }
-
     /** 设置-检索名称 */
     set name(value: string) {
         this.setProperty(BOCriteria.PROPERTY_NAME_NAME, value);
     }
 
-    /** 映射的属性名称-系统的 */
-    private static PROPERTY_NAME_SYSTEMED: string = "_systemed";
-
-    /** 获取-系统的 */
-    get systemed(): emYesNo {
-        return this.getProperty<emYesNo>(BOCriteria.PROPERTY_NAME_SYSTEMED);
-    }
-
-    /** 设置-系统的 */
-    set systemed(value: emYesNo) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_SYSTEMED, value);
-    }
-
     /** 映射的属性名称-激活的 */
-    private static PROPERTY_NAME_ACTIVATED: string = "_activated";
-
+    static PROPERTY_ACTIVATED_NAME: string = "Activated";
     /** 获取-激活的 */
     get activated(): emYesNo {
-        return this.getProperty<emYesNo>(BOCriteria.PROPERTY_NAME_ACTIVATED);
+        return this.getProperty<emYesNo>(BOCriteria.PROPERTY_ACTIVATED_NAME);
     }
-
     /** 设置-激活的 */
     set activated(value: emYesNo) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_ACTIVATED, value);
+        this.setProperty(BOCriteria.PROPERTY_ACTIVATED_NAME, value);
     }
 
     /** 映射的属性名称-顺序 */
-    private static PROPERTY_NAME_ORDER: string = "_order";
-
+    static PROPERTY_ORDER_NAME: string = "Order";
     /** 获取-顺序 */
     get order(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_ORDER);
+        return this.getProperty<number>(BOCriteria.PROPERTY_ORDER_NAME);
     }
-
     /** 设置-顺序 */
     set order(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_ORDER, value);
+        this.setProperty(BOCriteria.PROPERTY_ORDER_NAME, value);
     }
 
     /** 映射的属性名称-归属角色 */
-    private static PROPERTY_NAME_BELONGROLE: string = "_belongRole";
-
+    static PROPERTY_BELONGROLE_NAME: string = "BelongRole";
     /** 获取-归属角色 */
     get belongRole(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_BELONGROLE);
+        return this.getProperty<string>(BOCriteria.PROPERTY_BELONGROLE_NAME);
     }
-
     /** 设置-归属角色 */
     set belongRole(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_BELONGROLE, value);
+        this.setProperty(BOCriteria.PROPERTY_BELONGROLE_NAME, value);
     }
 
-    /** 映射的属性名称-基础查询 */
-    private static PROPERTY_NAME_BASISCRITERIA: string = "_basisCriteria";
-
-    /** 获取-基础查询 */
-    get basisCriteria(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_BASISCRITERIA);
+    /** 映射的属性名称-查询数据 */
+    static PROPERTY_CRITERIADATA_NAME: string = "CriteriaData";
+    /** 获取-查询数据 */
+    get criteriaData(): string {
+        return this.getProperty<string>(BOCriteria.PROPERTY_CRITERIADATA_NAME);
     }
-
-    /** 设置-基础查询 */
-    set basisCriteria(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_BASISCRITERIA, value);
-    }
-
-    /** 映射的属性名称-检索查询 */
-    private static PROPERTY_NAME_SEARCHCRITERIA: string = "_searchCriteria";
-
-    /** 获取-检索查询 */
-    get searchCriteria(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_SEARCHCRITERIA);
-    }
-
-    /** 设置-检索查询 */
-    set searchCriteria(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_SEARCHCRITERIA, value);
+    /** 设置-查询数据 */
+    set criteriaData(value: string) {
+        this.setProperty(BOCriteria.PROPERTY_CRITERIADATA_NAME, value);
     }
 
     /** 映射的属性名称-编号 */
-    private static PROPERTY_NAME_OBJECTKEY: string = "_objectKey";
-
+    static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
     /** 获取-编号 */
     get objectKey(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_OBJECTKEY);
+        return this.getProperty<number>(BOCriteria.PROPERTY_OBJECTKEY_NAME);
     }
-
     /** 设置-编号 */
     set objectKey(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_OBJECTKEY, value);
+        this.setProperty(BOCriteria.PROPERTY_OBJECTKEY_NAME, value);
     }
 
     /** 映射的属性名称-类型 */
-    private static PROPERTY_NAME_OBJECTCODE: string = "_objectCode";
-
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
     /** 获取-类型 */
     get objectCode(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_OBJECTCODE);
+        return this.getProperty<string>(BOCriteria.PROPERTY_OBJECTCODE_NAME);
     }
-
     /** 设置-类型 */
     set objectCode(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_OBJECTCODE, value);
+        this.setProperty(BOCriteria.PROPERTY_OBJECTCODE_NAME, value);
     }
 
     /** 映射的属性名称-实例号（版本） */
-    private static PROPERTY_NAME_LOGINST: string = "_logInst";
-
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
     /** 获取-实例号（版本） */
     get logInst(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_LOGINST);
+        return this.getProperty<number>(BOCriteria.PROPERTY_LOGINST_NAME);
     }
-
     /** 设置-实例号（版本） */
     set logInst(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_LOGINST, value);
+        this.setProperty(BOCriteria.PROPERTY_LOGINST_NAME, value);
     }
 
     /** 映射的属性名称-编号系列 */
-    private static PROPERTY_NAME_SERIES: string = "_series";
-
+    static PROPERTY_SERIES_NAME: string = "Series";
     /** 获取-编号系列 */
     get series(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_SERIES);
+        return this.getProperty<number>(BOCriteria.PROPERTY_SERIES_NAME);
     }
-
     /** 设置-编号系列 */
     set series(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_SERIES, value);
+        this.setProperty(BOCriteria.PROPERTY_SERIES_NAME, value);
     }
 
     /** 映射的属性名称-数据源 */
-    private static PROPERTY_NAME_DATASOURCE: string = "_dataSource";
-
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
     /** 获取-数据源 */
     get dataSource(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_DATASOURCE);
+        return this.getProperty<string>(BOCriteria.PROPERTY_DATASOURCE_NAME);
     }
-
     /** 设置-数据源 */
     set dataSource(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_DATASOURCE, value);
+        this.setProperty(BOCriteria.PROPERTY_DATASOURCE_NAME, value);
     }
 
     /** 映射的属性名称-创建日期 */
-    private static PROPERTY_NAME_CREATEDATE: string = "_createDate";
-
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
     /** 获取-创建日期 */
     get createDate(): Date {
-        return this.getProperty<Date>(BOCriteria.PROPERTY_NAME_CREATEDATE);
+        return this.getProperty<Date>(BOCriteria.PROPERTY_CREATEDATE_NAME);
     }
-
     /** 设置-创建日期 */
     set createDate(value: Date) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_CREATEDATE, value);
+        this.setProperty(BOCriteria.PROPERTY_CREATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-创建时间 */
-    private static PROPERTY_NAME_CREATETIME: string = "_createTime";
-
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
     /** 获取-创建时间 */
     get createTime(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_CREATETIME);
+        return this.getProperty<number>(BOCriteria.PROPERTY_CREATETIME_NAME);
     }
-
     /** 设置-创建时间 */
     set createTime(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_CREATETIME, value);
+        this.setProperty(BOCriteria.PROPERTY_CREATETIME_NAME, value);
     }
 
     /** 映射的属性名称-修改日期 */
-    private static PROPERTY_NAME_UPDATEDATE: string = "_updateDate";
-
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
     /** 获取-修改日期 */
     get updateDate(): Date {
-        return this.getProperty<Date>(BOCriteria.PROPERTY_NAME_UPDATEDATE);
+        return this.getProperty<Date>(BOCriteria.PROPERTY_UPDATEDATE_NAME);
     }
-
     /** 设置-修改日期 */
     set updateDate(value: Date) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_UPDATEDATE, value);
+        this.setProperty(BOCriteria.PROPERTY_UPDATEDATE_NAME, value);
     }
 
     /** 映射的属性名称-修改时间 */
-    private static PROPERTY_NAME_UPDATETIME: string = "_updateTime";
-
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
     /** 获取-修改时间 */
     get updateTime(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_UPDATETIME);
+        return this.getProperty<number>(BOCriteria.PROPERTY_UPDATETIME_NAME);
     }
-
     /** 设置-修改时间 */
     set updateTime(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_UPDATETIME, value);
+        this.setProperty(BOCriteria.PROPERTY_UPDATETIME_NAME, value);
     }
 
     /** 映射的属性名称-创建用户 */
-    private static PROPERTY_NAME_CREATEUSERSIGN: string = "_createUserSign";
-
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
     /** 获取-创建用户 */
     get createUserSign(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_CREATEUSERSIGN);
+        return this.getProperty<number>(BOCriteria.PROPERTY_CREATEUSERSIGN_NAME);
     }
-
     /** 设置-创建用户 */
     set createUserSign(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_CREATEUSERSIGN, value);
+        this.setProperty(BOCriteria.PROPERTY_CREATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-修改用户 */
-    private static PROPERTY_NAME_UPDATEUSERSIGN: string = "_updateUserSign";
-
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
     /** 获取-修改用户 */
     get updateUserSign(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_UPDATEUSERSIGN);
+        return this.getProperty<number>(BOCriteria.PROPERTY_UPDATEUSERSIGN_NAME);
     }
-
     /** 设置-修改用户 */
     set updateUserSign(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_UPDATEUSERSIGN, value);
+        this.setProperty(BOCriteria.PROPERTY_UPDATEUSERSIGN_NAME, value);
     }
 
     /** 映射的属性名称-创建动作标识 */
-    private static PROPERTY_NAME_CREATEACTIONID: string = "_createActionId";
-
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
     /** 获取-创建动作标识 */
     get createActionId(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_CREATEACTIONID);
+        return this.getProperty<string>(BOCriteria.PROPERTY_CREATEACTIONID_NAME);
     }
-
     /** 设置-创建动作标识 */
     set createActionId(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_CREATEACTIONID, value);
+        this.setProperty(BOCriteria.PROPERTY_CREATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-更新动作标识 */
-    private static PROPERTY_NAME_UPDATEACTIONID: string = "_updateActionId";
-
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
     /** 获取-更新动作标识 */
     get updateActionId(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_UPDATEACTIONID);
+        return this.getProperty<string>(BOCriteria.PROPERTY_UPDATEACTIONID_NAME);
     }
-
     /** 设置-更新动作标识 */
     set updateActionId(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_UPDATEACTIONID, value);
-    }
-
-    /** 映射的属性名称-数据所有者 */
-    private static PROPERTY_NAME_DATAOWNER: string = "_dataOwner";
-
-    /** 获取-数据所有者 */
-    get dataOwner(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_NAME_DATAOWNER);
-    }
-
-    /** 设置-数据所有者 */
-    set dataOwner(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_DATAOWNER, value);
+        this.setProperty(BOCriteria.PROPERTY_UPDATEACTIONID_NAME, value);
     }
 
     /** 映射的属性名称-数据所属组织 */
-    private static PROPERTY_NAME_ORGANIZATION: string = "_organization";
-
+    static PROPERTY_ORGANIZATION_NAME: string = "Organization";
     /** 获取-数据所属组织 */
     get organization(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_NAME_ORGANIZATION);
+        return this.getProperty<string>(BOCriteria.PROPERTY_ORGANIZATION_NAME);
     }
-
     /** 设置-数据所属组织 */
     set organization(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_NAME_ORGANIZATION, value);
+        this.setProperty(BOCriteria.PROPERTY_ORGANIZATION_NAME, value);
     }
 
 
@@ -334,6 +271,4 @@ export class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
         this.objectCode = BOCriteria.BUSINESS_OBJECT_CODE;
     }
 }
-
-
 

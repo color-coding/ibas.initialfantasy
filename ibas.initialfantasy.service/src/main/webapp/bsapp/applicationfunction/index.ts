@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './ApplicationFunctionFunc';
-export * from './ApplicationFunctionListApp';
-export * from './ApplicationFunctionChooseApp';
-export * from './ApplicationFunctionViewApp';
-export * from './ApplicationFunctionEditApp';
+export * from "./ApplicationFunctionFunc";
+export * from "./ApplicationFunctionListApp";
+export * from "./ApplicationFunctionChooseApp";
+export * from "./ApplicationFunctionViewApp";
+export * from "./ApplicationFunctionEditApp";

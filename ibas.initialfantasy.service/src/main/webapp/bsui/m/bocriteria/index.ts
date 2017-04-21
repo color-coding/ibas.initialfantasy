@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './BOCriteriaListView';
-export * from './BOCriteriaChooseView';
-export * from './BOCriteriaViewView';
-export * from './BOCriteriaEditView';
+export * from "./BOCriteriaListView";
+export * from "./BOCriteriaChooseView";
+export * from "./BOCriteriaViewView";
+export * from "./BOCriteriaEditView";

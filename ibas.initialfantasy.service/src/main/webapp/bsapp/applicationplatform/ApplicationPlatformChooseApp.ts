@@ -6,23 +6,26 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import * as ibas from "../../3rdparty/ibas/index";
-import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
+import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { ApplicationPlatformEditApp } from "./ApplicationPlatformEditApp";
 
 /** 应用-应用程序平台 */
-export class ApplicationPlatformChooseApp extends ibas.BOChooseApplication<IApplicationPlatformChooseView, bo.ApplicationPlatform> {
+export class ApplicationPlatformChooseApp extends ibas.BOChooseService<IApplicationPlatformChooseView, bo.ApplicationPlatform> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "ef6f74e4-8caf-4c3f-b26a-417ee9aa5b51";
+    static APPLICATION_ID: string = "f59a60f0-b58a-4131-9bea-6136a81344df";
     /** 应用名称 */
-    static APPLICATION_NAME: string = "mu_initialfantasy_app_applicationplatform_choose";
-
+    static APPLICATION_NAME: string = "initialfantasy_app_applicationplatform_choose";
+    /** 业务对象编码 */
+    static BUSINESS_OBJECT_CODE: string = bo.ApplicationPlatform.BUSINESS_OBJECT_CODE;
+    /** 构造函数 */
     constructor() {
         super();
         this.id = ApplicationPlatformChooseApp.APPLICATION_ID;
         this.name = ApplicationPlatformChooseApp.APPLICATION_NAME;
+        this.boCode = ApplicationPlatformChooseApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
     /** 注册视图 */
@@ -36,30 +39,38 @@ export class ApplicationPlatformChooseApp extends ibas.BOChooseApplication<IAppl
     }
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
-        this.busy(true);
-        let that = this;
-        let boRepository = new BORepositoryInitialFantasy();
-        let fetcher: ibas.FetchCaller<bo.ApplicationPlatform> = {
-            /** 查询条件 */
-            criteria: criteria,
-            /**
-             * 调用完成
-             * @param opRslt 结果
-             */
-            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationPlatform>): void {
-                try {
-                    if (opRslt.resultCode !== 0) {
-                        throw new Error(opRslt.message);
+        try {
+            this.busy(true);
+            let that = this;
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+            boRepository.fetchApplicationPlatform({
+                criteria: criteria,
+                onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationPlatform>): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        if (opRslt.resultObjects.length === 1
+                            && ibas.config.get(ibas.BOChooseService.CONFIG_ITEM_AUTO_CHOOSE_DATA, true)) {
+                            // 仅一条数据，直接选择
+                            that.chooseData(opRslt.resultObjects);
+                        } else {
+                            if (!that.isViewShowed()) {
+                                // 没显示视图，先显示
+                                that.show();
+                            }
+                            that.view.showData(opRslt.resultObjects);
+                            that.busy(false);
+                        }
+                    } catch (error) {
+                        that.messages(error);
                     }
-                    that.view.showData(opRslt.resultObjects);
-                    that.busy(false);
-                } catch (error) {
-                    that.messages(error);
                 }
-            }
+            });
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+        } catch (error) {
+            this.messages(error);
         }
-        boRepository.fetchApplicationPlatform(fetcher);
-        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
@@ -71,13 +82,24 @@ export class ApplicationPlatformChooseApp extends ibas.BOChooseApplication<IAppl
         app.viewShower = this.viewShower;
         app.run();
     }
-    /** 选择数据 */
-    protected chooseData(data: bo.ApplicationPlatform): void {
-
-    }
 }
 /** 视图-应用程序平台 */
 export interface IApplicationPlatformChooseView extends ibas.IBOChooseView {
     /** 显示数据 */
     showData(datas: bo.ApplicationPlatform[]): void;
+}
+/** 应用程序平台选择服务映射 */
+export class ApplicationPlatformChooseServiceMapping extends ibas.BOChooseServiceMapping {
+    /** 构造函数 */
+    constructor() {
+        super();
+        this.id = ApplicationPlatformChooseApp.APPLICATION_ID;
+        this.name = ApplicationPlatformChooseApp.APPLICATION_NAME;
+        this.boCode = ApplicationPlatformChooseApp.BUSINESS_OBJECT_CODE;
+        this.description = ibas.i18n.prop(this.name);
+    }
+    /** 创建服务并运行 */
+    create(): ibas.IService<ibas.IServiceContract> {
+        return new ApplicationPlatformChooseApp();
+    }
 }

@@ -7,7 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './UserListView';
-export * from './UserChooseView';
-export * from './UserViewView';
-export * from './UserEditView';
+export * from "./UserListView";
+export * from "./UserChooseView";
+export * from "./UserViewView";
+export * from "./UserEditView";

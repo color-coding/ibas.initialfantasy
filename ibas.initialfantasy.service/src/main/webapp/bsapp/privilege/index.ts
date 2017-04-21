@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './PrivilegeFunc';
-export * from './PrivilegeListApp';
-export * from './PrivilegeChooseApp';
-export * from './PrivilegeViewApp';
-export * from './PrivilegeEditApp';
+export * from "./PrivilegeFunc";
+export * from "./PrivilegeListApp";
+export * from "./PrivilegeChooseApp";
+export * from "./PrivilegeViewApp";
+export * from "./PrivilegeEditApp";

@@ -7,8 +7,8 @@
  */
 
 // 模块索引文件，此文件集中导出类
-export * from './BOCriteriaFunc';
-export * from './BOCriteriaListApp';
-export * from './BOCriteriaChooseApp';
-export * from './BOCriteriaViewApp';
-export * from './BOCriteriaEditApp';
+export * from "./BOCriteriaFunc";
+export * from "./BOCriteriaListApp";
+export * from "./BOCriteriaChooseApp";
+export * from "./BOCriteriaViewApp";
+export * from "./BOCriteriaEditApp";
