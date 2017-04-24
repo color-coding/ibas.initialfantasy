@@ -105,6 +105,7 @@ export class BOCriteriaListView extends ibas.BOListView implements IBOCriteriaLi
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

@@ -58,6 +58,7 @@ export class OwnershipViewView extends ibas.BOViewView implements IOwnershipView
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

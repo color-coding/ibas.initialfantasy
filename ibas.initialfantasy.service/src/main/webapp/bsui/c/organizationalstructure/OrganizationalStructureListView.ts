@@ -105,6 +105,7 @@ export class OrganizationalStructureListView extends ibas.BOListView implements 
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

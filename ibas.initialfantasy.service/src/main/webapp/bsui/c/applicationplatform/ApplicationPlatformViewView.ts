@@ -58,6 +58,7 @@ export class ApplicationPlatformViewView extends ibas.BOViewView implements IApp
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

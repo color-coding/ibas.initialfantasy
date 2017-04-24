@@ -105,6 +105,7 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

@@ -58,6 +58,7 @@ export class OrganizationViewView extends ibas.BOViewView implements IOrganizati
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

@@ -58,6 +58,7 @@ export class RoleViewView extends ibas.BOViewView implements IRoleViewView {
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

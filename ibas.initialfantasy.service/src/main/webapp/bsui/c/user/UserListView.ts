@@ -105,6 +105,7 @@ export class UserListView extends ibas.BOListView implements IUserListView {
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

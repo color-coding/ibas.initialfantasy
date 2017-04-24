@@ -58,6 +58,7 @@ export class PrivilegeViewView extends ibas.BOViewView implements IPrivilegeView
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

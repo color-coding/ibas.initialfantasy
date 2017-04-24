@@ -58,6 +58,7 @@ export class UserViewView extends ibas.BOViewView implements IUserViewView {
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

@@ -67,6 +67,7 @@ export class ApprovalTemplateViewView extends ibas.BOViewView implements IApprov
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });
