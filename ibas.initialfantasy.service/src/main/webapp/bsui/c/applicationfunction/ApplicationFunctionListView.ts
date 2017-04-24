@@ -105,6 +105,7 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

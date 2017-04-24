@@ -105,6 +105,7 @@ export class RoleListView extends ibas.BOListView implements IRoleListView {
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

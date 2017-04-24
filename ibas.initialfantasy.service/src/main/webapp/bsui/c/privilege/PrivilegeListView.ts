@@ -105,6 +105,7 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });

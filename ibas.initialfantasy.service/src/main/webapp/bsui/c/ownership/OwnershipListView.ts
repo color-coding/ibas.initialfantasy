@@ -105,6 +105,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                                             }
                                         }));
                                     }
+                                    (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                     popover.openBy(event.getSource(), true);
                                 }
                             });
