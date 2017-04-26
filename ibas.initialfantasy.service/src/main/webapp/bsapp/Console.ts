@@ -91,20 +91,20 @@ export class Console extends ibas.ModuleConsole {
         // 获取根地址
         let rootUrl: string = ibas.url.rootUrl(Console.ROOT_FILE_NAME);
         // 加载语言-框架默认
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/initialfantasy.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationfunction.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationmodule.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationplatform.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/approvalrequest.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/approvaltemplate.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/bocriteria.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/bofiltering.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/organization.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/organizationalstructure.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/ownership.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/privilege.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/role.{1}.json", rootUrl, ibas.i18n.language));
-        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/user.{1}.json", rootUrl, ibas.i18n.language));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/initialfantasy.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationfunction.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationmodule.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/applicationplatform.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/approvalrequest.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/approvaltemplate.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/bocriteria.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/bofiltering.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/organization.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/organizationalstructure.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/ownership.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/privilege.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/role.json", rootUrl));
+        ibas.i18n.load(ibas.strings.format("{0}/resources/languages/bo/user.json", rootUrl));
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
