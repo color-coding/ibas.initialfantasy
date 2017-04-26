@@ -12,7 +12,7 @@ import { OwnershipListApp } from "./OwnershipListApp";
 export class OwnershipFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "4887a315-17f9-4175-8c4b-d7b7db461c6f";
+    static FUNCTION_ID = "28e373e2-a241-47b2-a7cb-53dd6bbe9ab4";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_ownership";
     /** 根文件名称 */

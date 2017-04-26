@@ -16,7 +16,7 @@ import { ApprovalTemplateEditApp } from "./ApprovalTemplateEditApp";
 export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTemplateListView, bo.ApprovalTemplate> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "40a15b0e-be48-42f3-b125-ffbc78838027";
+    static APPLICATION_ID: string = "f86e972d-f149-47a7-86da-e0b9b7f0d5d6";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_approvaltemplate_list";
     /** 业务对象编码 */
@@ -157,7 +157,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

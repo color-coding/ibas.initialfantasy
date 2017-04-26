@@ -15,7 +15,7 @@ import { ApplicationFunctionEditApp } from "./ApplicationFunctionEditApp";
 export class ApplicationFunctionViewApp extends ibas.BOViewService<IApplicationFunctionViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "54f0d533-16e3-4b3b-be22-b8359f593cc4";
+    static APPLICATION_ID: string = "97668854-da9b-4a3c-a191-24981b5a5583";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationfunction_view";
     /** 业务对象编码 */

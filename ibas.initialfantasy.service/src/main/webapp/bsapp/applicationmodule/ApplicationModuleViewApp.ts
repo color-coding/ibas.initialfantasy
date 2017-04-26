@@ -15,7 +15,7 @@ import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 export class ApplicationModuleViewApp extends ibas.BOViewService<IApplicationModuleViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "ceddfe00-8b01-4123-bf58-161d2f9f511b";
+    static APPLICATION_ID: string = "e5f91ae6-fd3a-4ab4-bb5d-caf8271f91c5";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_view";
     /** 业务对象编码 */

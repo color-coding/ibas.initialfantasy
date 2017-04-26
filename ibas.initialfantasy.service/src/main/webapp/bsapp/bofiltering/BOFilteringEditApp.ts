@@ -14,7 +14,7 @@ import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditView, bo.BOFiltering> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "0361eba8-03b7-48a4-bb2a-2a3410a9e996";
+    static APPLICATION_ID: string = "6a18970c-a6ff-43e8-b7ef-2b130af0c7a8";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bofiltering_edit";
     /** 业务对象编码 */
@@ -71,20 +71,18 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
                             throw new Error(opRslt.message);
                         }
                         if (opRslt.resultObjects.length === 0) {
-                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                ibas.i18n.prop("sys_shell_ui_data_delete"),
-                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                            that.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("sys_shell_ui_data_delete") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                             // 创建新的对象
-                            this.editData = new bo.BOFiltering();
+                            that.editData = new bo.BOFiltering();
                         } else {
                             // 替换编辑对象
-                            this.editData = opRslt.resultObjects.firstOrDefault();
-                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                ibas.i18n.prop("sys_shell_ui_data_save"),
-                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                            that.editData = opRslt.resultObjects.firstOrDefault();
+                            that.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("sys_shell_ui_data_save") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                         }
                         // 刷新当前视图
-                        this.viewShowed();
+                        that.viewShowed();
                     } catch (error) {
                         that.messages(error);
                     }

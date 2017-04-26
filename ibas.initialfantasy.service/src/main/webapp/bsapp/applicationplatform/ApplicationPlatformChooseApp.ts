@@ -15,7 +15,7 @@ import { ApplicationPlatformEditApp } from "./ApplicationPlatformEditApp";
 export class ApplicationPlatformChooseApp extends ibas.BOChooseService<IApplicationPlatformChooseView, bo.ApplicationPlatform> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "f59a60f0-b58a-4131-9bea-6136a81344df";
+    static APPLICATION_ID: string = "137af0da-8db2-4e72-8229-8f3e007fafdf";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationplatform_choose";
     /** 业务对象编码 */

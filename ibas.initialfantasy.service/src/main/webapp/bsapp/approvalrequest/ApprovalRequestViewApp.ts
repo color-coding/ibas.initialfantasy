@@ -15,7 +15,7 @@ import { ApprovalRequestEditApp } from "./ApprovalRequestEditApp";
 export class ApprovalRequestViewApp extends ibas.BOViewService<IApprovalRequestViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "6778c1f8-3be0-4f55-bd89-a598cac70b22";
+    static APPLICATION_ID: string = "2c436043-ad41-497f-92ab-871ca5005eb5";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_approvalrequest_view";
     /** 业务对象编码 */

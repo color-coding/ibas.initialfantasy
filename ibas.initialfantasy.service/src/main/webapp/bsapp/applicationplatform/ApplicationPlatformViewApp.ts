@@ -15,7 +15,7 @@ import { ApplicationPlatformEditApp } from "./ApplicationPlatformEditApp";
 export class ApplicationPlatformViewApp extends ibas.BOViewService<IApplicationPlatformViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "93fc73e7-83c2-47d8-b216-327392645a8a";
+    static APPLICATION_ID: string = "e95e3373-a49b-4f14-9fa4-370feba740eb";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationplatform_view";
     /** 业务对象编码 */

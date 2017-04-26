@@ -12,7 +12,7 @@ import { OrganizationListApp } from "./OrganizationListApp";
 export class OrganizationFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "af395294-f0e0-4958-b620-fda383586e76";
+    static FUNCTION_ID = "856b6b07-936f-446f-93d3-9611790eaee4";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_organization";
     /** 根文件名称 */

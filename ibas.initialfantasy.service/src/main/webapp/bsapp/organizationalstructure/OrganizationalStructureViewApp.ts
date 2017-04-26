@@ -15,7 +15,7 @@ import { OrganizationalStructureEditApp } from "./OrganizationalStructureEditApp
 export class OrganizationalStructureViewApp extends ibas.BOViewService<IOrganizationalStructureViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "717d75ed-c8c0-4cb5-b21b-8a888c86655b";
+    static APPLICATION_ID: string = "3b80fb11-086b-436c-a0da-c11610c8b173";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organizationalstructure_view";
     /** 业务对象编码 */

@@ -15,7 +15,7 @@ import { UserEditApp } from "./UserEditApp";
 export class UserViewApp extends ibas.BOViewService<IUserViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "42733490-fcc6-43fe-a3d0-7487f3affcfd";
+    static APPLICATION_ID: string = "77bf534c-d976-4640-9083-848b85e7a176";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_user_view";
     /** 业务对象编码 */

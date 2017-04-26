@@ -12,7 +12,7 @@ import { BOCriteriaListApp } from "./BOCriteriaListApp";
 export class BOCriteriaFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "61799edf-c52d-43bf-80ee-6d550223c7a9";
+    static FUNCTION_ID = "1210c91d-74dd-4263-9765-9928f64ea427";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_bocriteria";
     /** 根文件名称 */

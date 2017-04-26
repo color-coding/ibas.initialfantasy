@@ -15,7 +15,7 @@ import { PrivilegeEditApp } from "./PrivilegeEditApp";
 export class PrivilegeChooseApp extends ibas.BOChooseService<IPrivilegeChooseView, bo.Privilege> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "0569b973-3f5d-4918-b823-73f03c912416";
+    static APPLICATION_ID: string = "e3e00b2d-3cff-423c-af8c-01298fee0f76";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_privilege_choose";
     /** 业务对象编码 */

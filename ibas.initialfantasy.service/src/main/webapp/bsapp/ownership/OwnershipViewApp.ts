@@ -15,7 +15,7 @@ import { OwnershipEditApp } from "./OwnershipEditApp";
 export class OwnershipViewApp extends ibas.BOViewService<IOwnershipViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "08589e98-0332-4688-9267-bfb1e19b7e09";
+    static APPLICATION_ID: string = "f22d6424-eaa7-407c-ab7c-90537e0b63b1";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_ownership_view";
     /** 业务对象编码 */

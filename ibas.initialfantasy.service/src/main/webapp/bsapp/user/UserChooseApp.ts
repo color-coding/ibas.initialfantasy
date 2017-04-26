@@ -15,7 +15,7 @@ import { UserEditApp } from "./UserEditApp";
 export class UserChooseApp extends ibas.BOChooseService<IUserChooseView, bo.User> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "e8b13ec1-1190-422f-a226-2e2e066c4aab";
+    static APPLICATION_ID: string = "1e30d4ed-dd83-419f-8c16-5785813e51d9";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_user_choose";
     /** 业务对象编码 */

@@ -14,7 +14,7 @@ import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 export class UserEditApp extends ibas.BOEditApplication<IUserEditView, bo.User> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "e5671570-3bbe-4561-8882-34e8c7501e35";
+    static APPLICATION_ID: string = "94979a2e-2763-48e7-b6d6-c9a797668772";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_user_edit";
     /** 业务对象编码 */
@@ -68,20 +68,18 @@ export class UserEditApp extends ibas.BOEditApplication<IUserEditView, bo.User> 
                             throw new Error(opRslt.message);
                         }
                         if (opRslt.resultObjects.length === 0) {
-                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                ibas.i18n.prop("sys_shell_ui_data_delete"),
-                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                            that.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("sys_shell_ui_data_delete") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                             // 创建新的对象
-                            this.editData = new bo.User();
+                            that.editData = new bo.User();
                         } else {
                             // 替换编辑对象
-                            this.editData = opRslt.resultObjects.firstOrDefault();
-                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                ibas.i18n.prop("sys_shell_ui_data_save"),
-                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                            that.editData = opRslt.resultObjects.firstOrDefault();
+                            that.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("sys_shell_ui_data_save") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                         }
                         // 刷新当前视图
-                        this.viewShowed();
+                        that.viewShowed();
                     } catch (error) {
                         that.messages(error);
                     }

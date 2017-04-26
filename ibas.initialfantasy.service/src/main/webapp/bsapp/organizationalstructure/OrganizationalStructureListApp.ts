@@ -16,7 +16,7 @@ import { OrganizationalStructureEditApp } from "./OrganizationalStructureEditApp
 export class OrganizationalStructureListApp extends ibas.BOListApplication<IOrganizationalStructureListView, bo.OrganizationalStructure> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "5b8faa6a-2a49-47c5-982b-31d550083e79";
+    static APPLICATION_ID: string = "2ab15ba4-fd4b-478c-85e3-4d7363e06844";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organizationalstructure_list";
     /** 业务对象编码 */
@@ -157,7 +157,7 @@ export class OrganizationalStructureListApp extends ibas.BOListApplication<IOrga
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

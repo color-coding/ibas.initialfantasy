@@ -16,7 +16,7 @@ import { RoleEditApp } from "./RoleEditApp";
 export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "6bac7ff4-3249-420a-bb93-205a76e2bfa3";
+    static APPLICATION_ID: string = "721f2472-6c25-4a73-86a0-8540f8f83c27";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_role_list";
     /** 业务对象编码 */
@@ -157,7 +157,7 @@ export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> 
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存
