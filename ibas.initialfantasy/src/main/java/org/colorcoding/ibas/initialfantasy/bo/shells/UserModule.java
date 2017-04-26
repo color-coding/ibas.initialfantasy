@@ -18,13 +18,13 @@ import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
 @XmlRootElement(name = "UserModule")
 public class UserModule {
 	public static UserModule create(IApplicationModule applicationModule) {
-		UserModule userApplicationModule = new UserModule();
-		userApplicationModule.setId(applicationModule.getModuleId());
-		userApplicationModule.setName(applicationModule.getModuleName());
+		UserModule userModule = new UserModule();
+		userModule.setId(applicationModule.getModuleId());
+		userModule.setName(applicationModule.getModuleName());
 
-		userApplicationModule.setRepository("");
-		userApplicationModule.setAddress("");
-		return userApplicationModule;
+		userModule.setRepository("");
+		userModule.setAddress("");
+		return userModule;
 	}
 
 	/** 唯一标识 */

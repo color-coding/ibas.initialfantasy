@@ -14,7 +14,6 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
-import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.data.emPrivilegeSource;
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -28,7 +27,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 当前类型
 	 */
-	private static final Class<?> MY_CLASS = Privilege.class;
+	private static final Class<?> MY_CLASS = UserPrivilege.class;
 
 	/**
 	 * 业务对象编码
