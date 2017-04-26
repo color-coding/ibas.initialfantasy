@@ -2,6 +2,7 @@ package org.colorcoding.ibas.initialfantasy.bo.shells;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -30,6 +31,7 @@ public class UserModule {
 	/** 唯一标识 */
 	private String id;
 
+	@XmlElement(name = "Id")
 	public String getId() {
 		return id;
 	}
@@ -41,6 +43,7 @@ public class UserModule {
 	/** 名称 */
 	private String name;
 
+	@XmlElement(name = "Name")
 	public String getName() {
 		return name;
 	}
@@ -52,6 +55,7 @@ public class UserModule {
 	/** 类别 */
 	private String category;
 
+	@XmlElement(name = "Category")
 	public String getCategory() {
 		return category;
 	}
@@ -63,6 +67,7 @@ public class UserModule {
 	/** 地址 */
 	private String address;
 
+	@XmlElement(name = "Address")
 	public String getAddress() {
 		return address;
 	}
@@ -74,6 +79,7 @@ public class UserModule {
 	/** 仓库地址 */
 	private String repository;
 
+	@XmlElement(name = "Repository")
 	public String getRepository() {
 		return repository;
 	}
