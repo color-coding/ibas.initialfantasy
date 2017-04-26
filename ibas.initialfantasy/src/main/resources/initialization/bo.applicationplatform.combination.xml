@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE ApplicationModule>
+<ns:ApplicationPlatform xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
+	<Activated>YES</Activated>
+	<PlatformId>0da6504c-ee09-477d-8ce5-b0189fbb9f8b</PlatformId>
+	<PlatformCode>COMBINATION</PlatformCode>
+	<PlatformDescription>平板和桌面</PlatformDescription>
+</ns:ApplicationPlatform>

@@ -1,5 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
+import java.util.UUID;
+
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -76,6 +78,9 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (tmpUser instanceof org.colorcoding.ibas.bobas.organization.fantasy.User) {
 				org.colorcoding.ibas.bobas.organization.fantasy.User orgUser = (org.colorcoding.ibas.bobas.organization.fantasy.User) tmpUser;// 用户可能未分配组织
 				opRslt.setUserSign(orgUser.getToken());
+			} else {
+				// 设置连接口令
+				opRslt.setUserSign(UUID.randomUUID().toString());
 			}
 			opRslt.addResultObjects(sUser);
 		} catch (Exception e) {
