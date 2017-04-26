@@ -14,7 +14,7 @@ import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 export class ApplicationFunctionEditApp extends ibas.BOEditApplication<IApplicationFunctionEditView, bo.ApplicationFunction> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "51fcab54-2e77-4e36-967a-f43325de822c";
+    static APPLICATION_ID: string = "a7ae6b8f-2e95-4a8d-a812-e7c0be289f0b";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationfunction_edit";
     /** 业务对象编码 */
@@ -68,20 +68,18 @@ export class ApplicationFunctionEditApp extends ibas.BOEditApplication<IApplicat
                             throw new Error(opRslt.message);
                         }
                         if (opRslt.resultObjects.length === 0) {
-                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                ibas.i18n.prop("sys_shell_ui_data_delete"),
-                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                            that.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("sys_shell_ui_data_delete") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                             // 创建新的对象
-                            this.editData = new bo.ApplicationFunction();
+                            that.editData = new bo.ApplicationFunction();
                         } else {
                             // 替换编辑对象
-                            this.editData = opRslt.resultObjects.firstOrDefault();
-                            this.messages(ibas.emMessageType.SUCCESS, "{0}{1}",
-                                ibas.i18n.prop("sys_shell_ui_data_save"),
-                                ibas.i18n.prop("sys_shell_ui_sucessful"));
+                            that.editData = opRslt.resultObjects.firstOrDefault();
+                            that.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("sys_shell_ui_data_save") + ibas.i18n.prop("sys_shell_ui_sucessful"));
                         }
                         // 刷新当前视图
-                        this.viewShowed();
+                        that.viewShowed();
                     } catch (error) {
                         that.messages(error);
                     }

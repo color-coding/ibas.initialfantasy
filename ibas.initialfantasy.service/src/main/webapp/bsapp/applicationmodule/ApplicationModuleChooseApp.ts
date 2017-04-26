@@ -15,7 +15,7 @@ import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 export class ApplicationModuleChooseApp extends ibas.BOChooseService<IApplicationModuleChooseView, bo.ApplicationModule> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "8372578d-06b9-4e55-b65d-8000e545be09";
+    static APPLICATION_ID: string = "7410af5c-ef97-45db-ae5a-910c98f6138e";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_choose";
     /** 业务对象编码 */

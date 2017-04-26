@@ -15,7 +15,7 @@ import { ApplicationFunctionEditApp } from "./ApplicationFunctionEditApp";
 export class ApplicationFunctionChooseApp extends ibas.BOChooseService<IApplicationFunctionChooseView, bo.ApplicationFunction> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "ec782f06-11b8-4af2-84af-91e977bbd6c5";
+    static APPLICATION_ID: string = "4954f5da-f4a9-47d8-8d42-2427b9ca2b5f";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationfunction_choose";
     /** 业务对象编码 */

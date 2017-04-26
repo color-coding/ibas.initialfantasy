@@ -16,7 +16,7 @@ import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicationModuleListView, bo.ApplicationModule> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "51fc6569-fcde-4d92-b0e9-f06b27276072";
+    static APPLICATION_ID: string = "b57b3302-eb1c-4bb7-a54e-830279468995";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_list";
     /** 业务对象编码 */
@@ -157,7 +157,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

@@ -15,7 +15,7 @@ import { OrganizationEditApp } from "./OrganizationEditApp";
 export class OrganizationViewApp extends ibas.BOViewService<IOrganizationViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "60058420-e03f-419e-92d8-e450844610d9";
+    static APPLICATION_ID: string = "d603dcdc-01f7-4d27-86e7-8eec3786275c";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organization_view";
     /** 业务对象编码 */

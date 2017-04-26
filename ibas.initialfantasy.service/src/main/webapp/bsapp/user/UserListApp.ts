@@ -16,7 +16,7 @@ import { UserEditApp } from "./UserEditApp";
 export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "01c556f2-323b-428c-8156-2c0f419f1503";
+    static APPLICATION_ID: string = "e95ca108-db8a-4ef8-9eb4-780caf3c983d";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_user_list";
     /** 业务对象编码 */
@@ -157,7 +157,7 @@ export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> 
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

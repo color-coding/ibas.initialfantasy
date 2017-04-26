@@ -16,7 +16,7 @@ import { BOCriteriaEditApp } from "./BOCriteriaEditApp";
 export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListView, bo.BOCriteria> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "77ea344d-888e-4e4d-9be7-7e588c834fd7";
+    static APPLICATION_ID: string = "89ce422d-ab49-4a14-882b-4fdba777b9ae";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bocriteria_list";
     /** 业务对象编码 */
@@ -157,7 +157,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
                                     }
                                 }
                             });
-                            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_ui_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

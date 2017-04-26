@@ -12,7 +12,7 @@ import { ApplicationModuleListApp } from "./ApplicationModuleListApp";
 export class ApplicationModuleFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "31fb509c-f31c-4dd7-a7a8-ce925b2896e6";
+    static FUNCTION_ID = "491fab8c-ff09-4822-99a3-a23dbb9f5c17";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_applicationmodule";
     /** 根文件名称 */

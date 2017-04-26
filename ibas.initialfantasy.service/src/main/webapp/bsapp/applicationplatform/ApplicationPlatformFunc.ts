@@ -12,7 +12,7 @@ import { ApplicationPlatformListApp } from "./ApplicationPlatformListApp";
 export class ApplicationPlatformFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "8766d481-0dda-42ec-b439-aa33e81a2d59";
+    static FUNCTION_ID = "9f310278-cceb-4de9-9af3-f04824548758";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_applicationplatform";
     /** 根文件名称 */

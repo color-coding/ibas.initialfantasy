@@ -15,7 +15,7 @@ import { PrivilegeEditApp } from "./PrivilegeEditApp";
 export class PrivilegeViewApp extends ibas.BOViewService<IPrivilegeViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "943ac726-6da7-4584-8846-c29d1f166c3d";
+    static APPLICATION_ID: string = "92c3501a-e145-4cea-b5c4-b40d623aef77";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_privilege_view";
     /** 业务对象编码 */
