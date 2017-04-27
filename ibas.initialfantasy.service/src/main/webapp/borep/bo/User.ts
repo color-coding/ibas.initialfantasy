@@ -280,6 +280,7 @@ export class User extends BOMasterData<User> implements IUser {
     /** 初始化数据 */
     protected init(): void {
         this.objectCode = User.BUSINESS_OBJECT_CODE;
+        this.super = emYesNo.NO;
     }
 }
 
