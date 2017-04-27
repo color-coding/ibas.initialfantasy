@@ -209,11 +209,10 @@ export class Role extends BOMasterData<Role> implements IRole {
         this.setProperty(Role.PROPERTY_UPDATEACTIONID_NAME, value);
     }
 
-
-
     /** 初始化数据 */
     protected init(): void {
         this.objectCode = Role.BUSINESS_OBJECT_CODE;
+        this.activated = emYesNo.YES;
     }
 }
 

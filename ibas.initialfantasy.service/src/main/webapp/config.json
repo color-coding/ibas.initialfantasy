@@ -4,11 +4,14 @@
     "language": "zh_CN",
     "offline": false,
     "offline|BORepositoryShell": false,
+    "offline|BORepositoryTrainingTesting": true,
     "disablePlatformView": false,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
-    "repositoryAddress|BORepositoryShellOffLine": "./test/repository",
-    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data"
+    "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
+    "repositoryAddress|BORepositoryShellOffline": "./test/repository",
+    "repositoryAddress|BORepositoryTrainingTestingOffline": "./test/repository",
+    "repositoryAddress|BORepositoryInitialFantasyOffline": "./test/repository"
   },
   "languages": [
     "zh_CN",

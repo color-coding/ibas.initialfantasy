@@ -21,7 +21,6 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
             return new DataConverterOffline();
         } else {
             return new DataConverterOnline();
-
         }
     }
 

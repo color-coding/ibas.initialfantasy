@@ -10,7 +10,23 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>http://localhost:7788/if/</Address>
+                <Address>./</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>e6424319-a311-440e-bc89-a825f82d5847</Id>
+        <Name>TrainingTesting|tt</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/trainingtesting/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>./3rdparty/trainingtesting/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>

@@ -5,5 +5,12 @@
     "category": "",
     "address": ".../",
     "repository": ".../test/repository"
+  },
+  {
+    "id": "e6424319-a311-440e-bc89-a825f82d5847",
+    "name": "TrainingTesting",
+    "category": "",
+    "address": ".../3rdparty/trainingtesting/",
+    "repository": "http://localhost:8080/trainingtesting/services/rest/data"
   }
 ]

@@ -12,7 +12,7 @@ import {
 } from "../api/index";
 
 /** InitialFantasy 模块的数据转换者 */
-export class DataConverterOnline extends ibas.DataConverter4ibas {
+export class DataConverterOnline extends ibas.DataConverter4j {
 
     /** 创建业务对象转换者 */
     protected createConverter(): ibas.BOConverter {
@@ -40,8 +40,12 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
      * @returns 转换的值
      */
     protected convertData(boName: string, property: string, value: any): any {
-        // 不做处理，原始返回
-        return value;
+        if (boName === bo.User.name) {
+            if (property === bo.User.PROPERTY_SUPER_NAME) {
+                return ibas.enums.toString(ibas.emYesNo, value);
+            }
+        }
+        return super.convertData(boName, property, value);
     }
 
     /**
@@ -52,6 +56,11 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
      * @returns 解析的值
      */
     protected parsingData(boName: string, property: string, value: any): any {
+        if (boName === bo.User.name) {
+            if (property === bo.User.PROPERTY_SUPER_NAME) {
+                return ibas.enums.valueOf(ibas.emYesNo, value);
+            }
+        }
         return super.parsingData(boName, property, value);
     }
 }
