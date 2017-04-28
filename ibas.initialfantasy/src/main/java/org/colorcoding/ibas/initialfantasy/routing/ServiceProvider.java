@@ -18,6 +18,11 @@ import org.colorcoding.ibas.initialfantasy.MyConsts;
 @XmlType(name = "ServiceProvider", namespace = MyConsts.NAMESPACE_SERVICE)
 @XmlRootElement(name = "ServiceProvider", namespace = MyConsts.NAMESPACE_SERVICE)
 public class ServiceProvider {
+
+	public ServiceProvider() {
+		this.setEnabled(true);
+	}
+
 	private String address;
 
 	/**
@@ -84,6 +89,9 @@ public class ServiceProvider {
 	 * @return
 	 */
 	public boolean check() {
+		if (!this.isEnabled()) {
+			return false;
+		}
 		return true;
 	}
 }

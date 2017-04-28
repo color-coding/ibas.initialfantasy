@@ -127,9 +127,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveUserQueries")
-	public OperationMessages saveUserQueries(UserQuery query, @QueryParam("token") String token) {
-		return super.saveUserQueries(query, token);
+	@Path("saveUserQuery")
+	public OperationMessages saveUserQuery(UserQuery query, @QueryParam("token") String token) {
+		return super.saveUserQuery(query, token);
 	}
 
 	/**

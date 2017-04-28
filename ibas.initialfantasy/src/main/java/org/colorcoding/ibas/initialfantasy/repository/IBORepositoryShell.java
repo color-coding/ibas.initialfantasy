@@ -74,7 +74,7 @@ public interface IBORepositoryShell {
 	 *            用户口令
 	 * @return 操作结果
 	 */
-	OperationMessages saveUserQueries(UserQuery query, String token);
+	OperationMessages saveUserQuery(UserQuery query, String token);
 
 	/**
 	 * 查询业务对象信息
