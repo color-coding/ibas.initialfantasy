@@ -27,6 +27,11 @@
             </Provider>
             <Provider>
                 <Address>./3rdparty/trainingtesting/</Address>
+                <Enabled>false</Enabled>
+                <Type>VIEW</Type>
+            </Provider> 
+            <Provider>
+                <Address>.../../../test/apps/trainingtesting/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>

@@ -89,7 +89,7 @@ public class testRepositoryShell extends TestCase {
 		condition.setOperation(ConditionOperation.IS_NULL);
 		condition.setRelationship(ConditionRelationship.OR);
 		userQuery.setCriteria(criteria);
-		OperationMessages opRsltSave = boRepository.saveUserQueries(userQuery, this.getToken());
+		OperationMessages opRsltSave = boRepository.saveUserQuery(userQuery, this.getToken());
 		assertEquals(opRsltSave.getMessage(), 0, opRsltSave.getResultCode());
 		IOperationResult<UserQuery> opRsltFetch = boRepository.fetchUserQueries(USER, userQuery.getId(),
 				this.getToken());
@@ -101,7 +101,7 @@ public class testRepositoryShell extends TestCase {
 		assertEquals(userQuery.getCriteria(), nUserQuery.getCriteria());
 		// 测试更新
 		userQuery.setOrder(100);
-		opRsltSave = boRepository.saveUserQueries(userQuery, this.getToken());
+		opRsltSave = boRepository.saveUserQuery(userQuery, this.getToken());
 		assertEquals(opRsltSave.getMessage(), 0, opRsltSave.getResultCode());
 		opRsltFetch = boRepository.fetchUserQueries(USER, userQuery.getId(), this.getToken());
 		nUserQuery = opRsltFetch.getResultObjects().firstOrDefault();
@@ -111,7 +111,7 @@ public class testRepositoryShell extends TestCase {
 		assertEquals(userQuery.getCriteria(), nUserQuery.getCriteria());
 		// 测试删除，条件置空即为删除
 		userQuery.setCriteria("");
-		opRsltSave = boRepository.saveUserQueries(userQuery, this.getToken());
+		opRsltSave = boRepository.saveUserQuery(userQuery, this.getToken());
 		assertEquals(opRsltSave.getMessage(), 0, opRsltSave.getResultCode());
 		opRsltFetch = boRepository.fetchUserQueries(USER, userQuery.getId(), this.getToken());
 		assertEquals(opRsltFetch.getMessage(), 0, opRsltFetch.getResultCode());

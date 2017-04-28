@@ -221,7 +221,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	}
 
 	@Override
-	public OperationMessages saveUserQueries(UserQuery query, String token) {
+	public OperationMessages saveUserQuery(UserQuery query, String token) {
 		OperationMessages opRslt = new OperationMessages();
 		boolean myTrans = false;
 		try {

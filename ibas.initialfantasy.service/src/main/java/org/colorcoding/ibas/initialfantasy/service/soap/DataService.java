@@ -111,9 +111,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationMessages saveUserQueries(@WebParam(name = "query") UserQuery query,
+	public OperationMessages saveUserQuery(@WebParam(name = "query") UserQuery query,
 			@WebParam(name = "token") String token) {
-		return super.saveUserQueries(query, token);
+		return super.saveUserQuery(query, token);
 	}
 
 	/**
