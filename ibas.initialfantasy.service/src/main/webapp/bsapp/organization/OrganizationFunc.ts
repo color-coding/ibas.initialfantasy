@@ -15,8 +15,6 @@ export class OrganizationFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "856b6b07-936f-446f-93d3-9611790eaee4";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_organization";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

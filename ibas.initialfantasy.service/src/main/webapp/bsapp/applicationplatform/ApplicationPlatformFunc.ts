@@ -15,8 +15,6 @@ export class ApplicationPlatformFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "9f310278-cceb-4de9-9af3-f04824548758";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_applicationplatform";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

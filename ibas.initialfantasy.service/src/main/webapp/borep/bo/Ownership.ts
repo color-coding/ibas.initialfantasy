@@ -20,6 +20,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IOwnership,
@@ -29,7 +30,7 @@ import {
 export class Ownership extends BOSimple<Ownership> implements IOwnership {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_OWNERSHIP";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_OWNERSHIP";
     /** 构造函数 */
     constructor() {
         super();
@@ -280,7 +281,7 @@ export class Ownership extends BOSimple<Ownership> implements IOwnership {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = Ownership.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(Ownership.BUSINESS_OBJECT_CODE);
     }
 }
 

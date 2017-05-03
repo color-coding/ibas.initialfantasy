@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IApplicationModule,
@@ -28,7 +29,7 @@ import {
 export class ApplicationModule extends BOSimple<ApplicationModule> implements IApplicationModule {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_MODULE";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_MODULE";
     /** 构造函数 */
     constructor() {
         super();
@@ -224,7 +225,7 @@ export class ApplicationModule extends BOSimple<ApplicationModule> implements IA
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = ApplicationModule.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(ApplicationModule.BUSINESS_OBJECT_CODE);
     }
 }
 

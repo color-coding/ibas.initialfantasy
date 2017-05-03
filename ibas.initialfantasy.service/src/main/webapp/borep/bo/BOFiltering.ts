@@ -21,6 +21,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IBOFiltering,
@@ -32,7 +33,7 @@ import {
 export class BOFiltering extends BOSimple<BOFiltering> implements IBOFiltering {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_BOFILTERING";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_BOFILTERING";
     /** 构造函数 */
     constructor() {
         super();
@@ -262,7 +263,7 @@ export class BOFiltering extends BOSimple<BOFiltering> implements IBOFiltering {
     /** 初始化数据 */
     protected init(): void {
         this.bOFilteringConditions = new BOFilteringConditions(this);
-        this.objectCode = BOFiltering.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(BOFiltering.BUSINESS_OBJECT_CODE);
     }
 }
 

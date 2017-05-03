@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IOrganizationalStructure,
@@ -30,7 +31,7 @@ import {
 export class OrganizationalStructure extends BOSimple<OrganizationalStructure> implements IOrganizationalStructure {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_ORG_STRUCTURE";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_ORG_STRUCTURE";
     /** 构造函数 */
     constructor() {
         super();
@@ -249,7 +250,7 @@ export class OrganizationalStructure extends BOSimple<OrganizationalStructure> i
     /** 初始化数据 */
     protected init(): void {
         this.organizationalRoles = new OrganizationalRoles(this);
-        this.objectCode = OrganizationalStructure.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(OrganizationalStructure.BUSINESS_OBJECT_CODE);
     }
 }
 

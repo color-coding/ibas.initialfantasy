@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     emApprovalStepOwnerType,
@@ -31,7 +32,7 @@ import {
 export class ApprovalTemplate extends BOSimple<ApprovalTemplate> implements IApprovalTemplate {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_AP_APPROVALTPLT";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_AP_APPROVALTPLT";
     /** 构造函数 */
     constructor() {
         super();
@@ -305,7 +306,7 @@ export class ApprovalTemplate extends BOSimple<ApprovalTemplate> implements IApp
     /** 初始化数据 */
     protected init(): void {
         this.approvalTemplateSteps = new ApprovalTemplateSteps(this);
-        this.objectCode = ApprovalTemplate.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(ApprovalTemplate.BUSINESS_OBJECT_CODE);
     }
 }
 
