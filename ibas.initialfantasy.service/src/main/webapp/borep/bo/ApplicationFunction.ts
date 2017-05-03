@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IApplicationFunction,
@@ -28,7 +29,7 @@ import {
 export class ApplicationFunction extends BOSimple<ApplicationFunction> implements IApplicationFunction {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_FUNCTION";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_FUNCTION";
     /** 构造函数 */
     constructor() {
         super();
@@ -202,7 +203,7 @@ export class ApplicationFunction extends BOSimple<ApplicationFunction> implement
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = ApplicationFunction.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(ApplicationFunction.BUSINESS_OBJECT_CODE);
     }
 }
 

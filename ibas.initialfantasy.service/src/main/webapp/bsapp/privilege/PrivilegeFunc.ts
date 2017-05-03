@@ -15,8 +15,6 @@ export class PrivilegeFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "af58b503-05fc-4c85-9a03-6a32ca81fb12";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_privilege";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

@@ -15,8 +15,6 @@ export class BOCriteriaFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "1210c91d-74dd-4263-9765-9928f64ea427";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_bocriteria";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

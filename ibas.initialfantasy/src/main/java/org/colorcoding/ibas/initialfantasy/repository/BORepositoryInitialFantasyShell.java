@@ -9,6 +9,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.ISqlStoredProcedure;
+import org.colorcoding.ibas.bobas.common.OperationInformation;
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SortType;
@@ -83,6 +84,9 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				opRslt.setUserSign(UUID.randomUUID().toString());
 			}
 			opRslt.addResultObjects(sUser);
+			// 返回公司代码
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, "CONFIG_ITEM",
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC")));
 		} catch (Exception e) {
 			opRslt.setError(e);
 		}

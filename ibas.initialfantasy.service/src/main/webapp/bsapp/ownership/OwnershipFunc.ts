@@ -15,8 +15,6 @@ export class OwnershipFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "28e373e2-a241-47b2-a7cb-53dd6bbe9ab4";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_ownership";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

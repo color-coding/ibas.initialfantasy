@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IBOCriteria,
@@ -28,7 +29,7 @@ import {
 export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_BOCRITERIA";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_BOCRITERIA";
     /** 构造函数 */
     constructor() {
         super();
@@ -268,7 +269,7 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = BOCriteria.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE);
     }
 }
 

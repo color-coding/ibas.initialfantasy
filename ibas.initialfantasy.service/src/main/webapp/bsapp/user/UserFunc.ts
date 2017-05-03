@@ -15,8 +15,6 @@ export class UserFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "8cce9f36-62af-43c4-89e9-a63be72fd1ae";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_user";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

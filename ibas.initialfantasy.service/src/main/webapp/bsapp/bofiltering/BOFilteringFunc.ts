@@ -15,8 +15,6 @@ export class BOFilteringFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "39642c83-5b01-4565-aff9-1ba23530fa76";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_bofiltering";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

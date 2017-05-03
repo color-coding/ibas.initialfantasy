@@ -20,6 +20,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IApprovalRequest,
@@ -31,7 +32,7 @@ import {
 export class ApprovalRequest extends BOSimple<ApprovalRequest> implements IApprovalRequest {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_AP_APPROVALREQU";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_AP_APPROVALREQU";
     /** 构造函数 */
     constructor() {
         super();
@@ -349,7 +350,7 @@ export class ApprovalRequest extends BOSimple<ApprovalRequest> implements IAppro
     /** 初始化数据 */
     protected init(): void {
         this.approvalRequestSteps = new ApprovalRequestSteps(this);
-        this.objectCode = ApprovalRequest.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(ApprovalRequest.BUSINESS_OBJECT_CODE);
     }
 }
 

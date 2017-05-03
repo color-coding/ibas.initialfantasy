@@ -20,6 +20,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IPrivilege,
@@ -29,7 +30,7 @@ import {
 export class Privilege extends BOSimple<Privilege> implements IPrivilege {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_PRIVILEGE";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_PRIVILEGE";
     /** 构造函数 */
     constructor() {
         super();
@@ -247,7 +248,7 @@ export class Privilege extends BOSimple<Privilege> implements IPrivilege {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = Privilege.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(Privilege.BUSINESS_OBJECT_CODE);
     }
 }
 

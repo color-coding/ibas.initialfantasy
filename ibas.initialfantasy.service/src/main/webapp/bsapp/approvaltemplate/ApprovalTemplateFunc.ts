@@ -15,8 +15,6 @@ export class ApprovalTemplateFunc extends ibas.ModuleFunction {
     static FUNCTION_ID = "ecbd2932-c886-40be-996a-aa633b5e429f";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_approvaltemplate";
-    /** 根文件名称 */
-    static ROOT_FILE_NAME: string = "initialfantasy/index";
     /** 构造函数 */
     constructor() {
         super();

@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IUser,
@@ -28,7 +29,7 @@ import {
 export class User extends BOMasterData<User> implements IUser {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "CC_SYS_USER";
+    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_USER";
     /** 构造函数 */
     constructor() {
         super();
@@ -279,7 +280,7 @@ export class User extends BOMasterData<User> implements IUser {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = User.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(User.BUSINESS_OBJECT_CODE);
         this.super = emYesNo.NO;
     }
 }
