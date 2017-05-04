@@ -50,7 +50,7 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
         // 创建编辑对象实例
         if (ibas.objects.isNull(this.editData)) {
             this.editData = new bo.ApprovalTemplate();
-            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_ui_data_created_new"));
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
 
         }
         super.run();
@@ -72,14 +72,14 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
                         }
                         if (opRslt.resultObjects.length === 0) {
                             that.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("sys_shell_ui_data_delete") + ibas.i18n.prop("sys_shell_ui_sucessful"));
+                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
                             // 创建新的对象
                             that.editData = new bo.ApprovalTemplate();
                         } else {
                             // 替换编辑对象
                             that.editData = opRslt.resultObjects.firstOrDefault();
                             that.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("sys_shell_ui_data_save") + ibas.i18n.prop("sys_shell_ui_sucessful"));
+                                ibas.i18n.prop("sys_shell_data_save") + ibas.i18n.prop("sys_shell_sucessful"));
                         }
                         // 刷新当前视图
                         that.viewShowed();
@@ -100,7 +100,7 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),
-            message: ibas.i18n.prop("msg_whether_to_delete"),
+            message: ibas.i18n.prop("sys_whether_to_delete"),
             actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
             onCompleted(action: ibas.emMessageAction): void {
                 if (action === ibas.emMessageAction.YES) {
