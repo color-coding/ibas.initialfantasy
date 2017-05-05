@@ -148,7 +148,7 @@ export class BOCriteriaListView extends ibas.BOListView implements IBOCriteriaLi
         if (!ibas.objects.isNull(model)) {
             // 已存在绑定数据，添加新的
             let hDatas: bo.BOCriteria[] = (<any>model).getData();
-            if (!ibas.objects.isNull(hDatas)) {
+            if (!ibas.objects.isNull(hDatas) && hDatas instanceof Array) {
                 for (let item of datas) {
                     hDatas.push(item);
                 }
