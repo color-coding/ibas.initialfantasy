@@ -148,7 +148,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
         if (!ibas.objects.isNull(model)) {
             // 已存在绑定数据，添加新的
             let hDatas: bo.ApplicationModule[] = (<any>model).getData();
-            if (!ibas.objects.isNull(hDatas)) {
+            if (!ibas.objects.isNull(hDatas) && hDatas instanceof Array) {
                 for (let item of datas) {
                     hDatas.push(item);
                 }
