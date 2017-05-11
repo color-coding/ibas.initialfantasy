@@ -3,6 +3,7 @@ package org.colorcoding.ibas.bobas.approval.fantasy;
 import org.colorcoding.ibas.bobas.approval.ApprovalDataProxy;
 import org.colorcoding.ibas.bobas.approval.ApprovalProcessException;
 import org.colorcoding.ibas.bobas.approval.IApprovalData;
+import org.colorcoding.ibas.bobas.approval.IApprovalDataSummary;
 import org.colorcoding.ibas.bobas.approval.IApprovalProcessStep;
 import org.colorcoding.ibas.bobas.approval.UnauthorizedException;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
@@ -161,6 +162,13 @@ public class ApprovalProcess extends org.colorcoding.ibas.bobas.approval.Approva
 			apRepository.setRefetchAfterSave(false);// 保存成功后，不重新获取副本
 			apRepository.setRepository(this.getRepository());
 			apRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
+			if (this.getApprovalRequest().isNew() && this.getApprovalData() instanceof IApprovalDataSummary) {
+				// 修改审批请求名称为数据摘要
+				String summary = ((IApprovalDataSummary) this.getApprovalData()).getSummary();
+				if (summary != null && !summary.isEmpty()) {
+					this.getApprovalRequest().setName(summary);
+				}
+			}
 			IOperationResult<IApprovalRequest> operationResult = apRepository
 					.saveApprovalRequest(this.getApprovalRequest());
 			if (operationResult.getError() != null) {
