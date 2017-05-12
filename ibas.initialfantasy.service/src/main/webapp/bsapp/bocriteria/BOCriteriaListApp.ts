@@ -16,7 +16,7 @@ import { BOCriteriaEditApp } from "./BOCriteriaEditApp";
 export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListView, bo.BOCriteria> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "89ce422d-ab49-4a14-882b-4fdba777b9ae";
+    static APPLICATION_ID: string = "b4552700-646d-4b1b-ab50-fac4c366fc46";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bocriteria_list";
     /** 业务对象编码 */

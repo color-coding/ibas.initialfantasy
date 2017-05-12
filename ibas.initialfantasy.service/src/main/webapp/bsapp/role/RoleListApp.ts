@@ -16,7 +16,7 @@ import { RoleEditApp } from "./RoleEditApp";
 export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "721f2472-6c25-4a73-86a0-8540f8f83c27";
+    static APPLICATION_ID: string = "7c06c7b6-0c2a-492b-89a8-66f3bd6ff448";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_role_list";
     /** 业务对象编码 */

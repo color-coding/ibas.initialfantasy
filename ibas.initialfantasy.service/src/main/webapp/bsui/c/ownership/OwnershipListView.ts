@@ -29,9 +29,9 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
         this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,
-            visibleRowCount: 15,
+            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
-            rows: "{/}",
+            rows: "{/rows}",
             columns: [
             ]
         });
@@ -90,6 +90,9 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                         press: function (event: any): void {
                             that.fireViewEvents(that.callServicesEvent, {
                                 displayServices(services: ibas.IServiceAgent[]): void {
+                                    if (ibas.objects.isNull(services) || services.length === 0) {
+                                        return;
+                                    }
                                     let popover: sap.m.Popover = new sap.m.Popover("", {
                                         showHeader: false,
                                         placement: sap.m.PlacementType.Bottom,
@@ -158,7 +161,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel(datas));
+            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
         }
         this.table.setBusy(false);
     }

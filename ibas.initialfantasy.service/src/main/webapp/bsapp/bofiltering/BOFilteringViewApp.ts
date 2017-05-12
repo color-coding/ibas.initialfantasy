@@ -15,7 +15,7 @@ import { BOFilteringEditApp } from "./BOFilteringEditApp";
 export class BOFilteringViewApp extends ibas.BOViewService<IBOFilteringViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "60054bad-658c-4cb0-a0bf-aeeafb540701";
+    static APPLICATION_ID: string = "75b112fd-f3ca-408e-8786-fce8b22ee638";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bofiltering_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class BOFilteringViewApp extends ibas.BOViewService<IBOFilteringViewView>
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.BOFiltering) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.BOFiltering) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.BOFiltering;

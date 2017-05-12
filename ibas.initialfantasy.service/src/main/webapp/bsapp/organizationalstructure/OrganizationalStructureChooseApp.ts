@@ -15,7 +15,7 @@ import { OrganizationalStructureEditApp } from "./OrganizationalStructureEditApp
 export class OrganizationalStructureChooseApp extends ibas.BOChooseService<IOrganizationalStructureChooseView, bo.OrganizationalStructure> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "25597950-dc16-40ce-986d-d8dbdc5df68a";
+    static APPLICATION_ID: string = "f1e8ebcf-311d-4a9e-b088-34d230e537c7";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organizationalstructure_choose";
     /** 业务对象编码 */

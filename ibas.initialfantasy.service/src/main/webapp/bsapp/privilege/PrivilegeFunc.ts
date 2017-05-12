@@ -12,7 +12,7 @@ import { PrivilegeListApp } from "./PrivilegeListApp";
 export class PrivilegeFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "af58b503-05fc-4c85-9a03-6a32ca81fb12";
+    static FUNCTION_ID = "44cd9600-bee0-4a95-8b01-361482914879";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_privilege";
     /** 构造函数 */

@@ -15,7 +15,7 @@ import { UserEditApp } from "./UserEditApp";
 export class UserViewApp extends ibas.BOViewService<IUserViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "77bf534c-d976-4640-9083-848b85e7a176";
+    static APPLICATION_ID: string = "cb64eeef-8983-4440-9509-8580e3dd5a61";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_user_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class UserViewApp extends ibas.BOViewService<IUserViewView> {
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.User) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.User) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.User;

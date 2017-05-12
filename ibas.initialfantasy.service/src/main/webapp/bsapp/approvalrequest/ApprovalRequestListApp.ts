@@ -16,7 +16,7 @@ import { ApprovalRequestEditApp } from "./ApprovalRequestEditApp";
 export class ApprovalRequestListApp extends ibas.BOListApplication<IApprovalRequestListView, bo.ApprovalRequest> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "9638ac8e-b83c-45f3-b7dd-dd0fe1bba7fd";
+    static APPLICATION_ID: string = "dc9357e5-f3a9-44b2-994f-c0dfbe626bd5";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_approvalrequest_list";
     /** 业务对象编码 */

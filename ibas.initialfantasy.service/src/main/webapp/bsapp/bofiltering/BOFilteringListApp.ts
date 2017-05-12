@@ -16,7 +16,7 @@ import { BOFilteringEditApp } from "./BOFilteringEditApp";
 export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListView, bo.BOFiltering> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "8e61c416-9265-4ac8-a283-bc0fb515a504";
+    static APPLICATION_ID: string = "06b4cdb7-82f3-4bbf-afc3-49383081ddcd";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bofiltering_list";
     /** 业务对象编码 */
