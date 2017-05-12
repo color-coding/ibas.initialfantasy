@@ -12,7 +12,7 @@ import { ApprovalRequestListApp } from "./ApprovalRequestListApp";
 export class ApprovalRequestFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "eeaec8f0-95c1-430e-a3fa-1e880e7f70d2";
+    static FUNCTION_ID = "f12a4d7f-21f4-48f7-9699-bafe50c29abd";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_approvalrequest";
     /** 构造函数 */

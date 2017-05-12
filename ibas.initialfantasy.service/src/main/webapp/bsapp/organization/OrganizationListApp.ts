@@ -16,7 +16,7 @@ import { OrganizationEditApp } from "./OrganizationEditApp";
 export class OrganizationListApp extends ibas.BOListApplication<IOrganizationListView, bo.Organization> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "bd0125f7-b7b2-4235-b555-5d9a4ae1dfef";
+    static APPLICATION_ID: string = "80b337ff-61cb-4690-b6af-bc7d1c169fe3";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organization_list";
     /** 业务对象编码 */

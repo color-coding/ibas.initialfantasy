@@ -16,7 +16,7 @@ import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicationModuleListView, bo.ApplicationModule> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "b57b3302-eb1c-4bb7-a54e-830279468995";
+    static APPLICATION_ID: string = "5782c9cd-29d7-4085-ba8b-9af3404bc37f";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_list";
     /** 业务对象编码 */

@@ -16,7 +16,7 @@ import { ApprovalTemplateEditApp } from "./ApprovalTemplateEditApp";
 export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTemplateListView, bo.ApprovalTemplate> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "f86e972d-f149-47a7-86da-e0b9b7f0d5d6";
+    static APPLICATION_ID: string = "bf0a2ff9-adf4-4675-8a0c-3418bdd9a5d2";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_approvaltemplate_list";
     /** 业务对象编码 */

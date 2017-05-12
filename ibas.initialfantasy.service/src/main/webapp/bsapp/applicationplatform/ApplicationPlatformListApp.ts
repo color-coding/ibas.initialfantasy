@@ -16,7 +16,7 @@ import { ApplicationPlatformEditApp } from "./ApplicationPlatformEditApp";
 export class ApplicationPlatformListApp extends ibas.BOListApplication<IApplicationPlatformListView, bo.ApplicationPlatform> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "b355a325-cf0a-49e7-a1ff-07a57b83a2ad";
+    static APPLICATION_ID: string = "950142b1-1512-4cb0-90d3-46092c16b726";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationplatform_list";
     /** 业务对象编码 */

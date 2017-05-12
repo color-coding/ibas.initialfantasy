@@ -10,7 +10,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>./</Address>
+                <Address>.../</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>

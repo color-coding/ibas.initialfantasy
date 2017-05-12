@@ -15,7 +15,7 @@ import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 export class ApplicationModuleViewApp extends ibas.BOViewService<IApplicationModuleViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "e5f91ae6-fd3a-4ab4-bb5d-caf8271f91c5";
+    static APPLICATION_ID: string = "56a34e52-4189-43e9-bd3b-51ff0b6addde";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationmodule_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class ApplicationModuleViewApp extends ibas.BOViewService<IApplicationMod
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.ApplicationModule) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.ApplicationModule) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.ApplicationModule;

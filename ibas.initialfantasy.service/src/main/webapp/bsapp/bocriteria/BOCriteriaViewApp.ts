@@ -15,7 +15,7 @@ import { BOCriteriaEditApp } from "./BOCriteriaEditApp";
 export class BOCriteriaViewApp extends ibas.BOViewService<IBOCriteriaViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "1695963d-39d0-467c-905b-2400fc1cc989";
+    static APPLICATION_ID: string = "d4796fc7-2bce-44b5-b950-62460cfd460f";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bocriteria_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class BOCriteriaViewApp extends ibas.BOViewService<IBOCriteriaViewView> {
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.BOCriteria) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.BOCriteria) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.BOCriteria;

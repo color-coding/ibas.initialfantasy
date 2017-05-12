@@ -16,7 +16,7 @@ import { ApplicationFunctionEditApp } from "./ApplicationFunctionEditApp";
 export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicationFunctionListView, bo.ApplicationFunction> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "22d298d5-8949-45ad-a3f2-70db3c7e2c68";
+    static APPLICATION_ID: string = "e70cc787-664d-479a-a1aa-2dbb7b559d58";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationfunction_list";
     /** 业务对象编码 */

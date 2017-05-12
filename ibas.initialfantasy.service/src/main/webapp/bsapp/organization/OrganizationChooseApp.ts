@@ -15,7 +15,7 @@ import { OrganizationEditApp } from "./OrganizationEditApp";
 export class OrganizationChooseApp extends ibas.BOChooseService<IOrganizationChooseView, bo.Organization> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "6ff3dd6a-50bc-45a8-bfdb-e59dc9583cfb";
+    static APPLICATION_ID: string = "2a18fe24-434b-4466-a9e2-196745a8e35b";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organization_choose";
     /** 业务对象编码 */

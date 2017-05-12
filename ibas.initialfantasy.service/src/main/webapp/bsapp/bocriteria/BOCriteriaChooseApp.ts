@@ -15,7 +15,7 @@ import { BOCriteriaEditApp } from "./BOCriteriaEditApp";
 export class BOCriteriaChooseApp extends ibas.BOChooseService<IBOCriteriaChooseView, bo.BOCriteria> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "13493a23-d4fa-4d1e-99f2-bd1403dc9420";
+    static APPLICATION_ID: string = "ac9a1df9-8047-4bd9-8b30-236798d9ec6d";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_bocriteria_choose";
     /** 业务对象编码 */

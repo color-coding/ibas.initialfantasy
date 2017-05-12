@@ -7,15 +7,15 @@
  */
 
 import * as ibas from "ibas/index";
-import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping, ApplicationFunctionLinkServiceMapping } from "./applicationfunction/index";
-import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, ApplicationModuleLinkServiceMapping } from "./applicationmodule/index";
-import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping, ApplicationPlatformLinkServiceMapping } from "./applicationplatform/index";
+import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping } from "./applicationfunction/index";
+import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from "./applicationmodule/index";
+import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
 import { ApprovalRequestFunc, ApprovalRequestChooseServiceMapping, ApprovalRequestLinkServiceMapping } from "./approvalrequest/index";
 import { ApprovalTemplateFunc, ApprovalTemplateChooseServiceMapping, ApprovalTemplateLinkServiceMapping } from "./approvaltemplate/index";
 import { BOCriteriaFunc, BOCriteriaChooseServiceMapping, BOCriteriaLinkServiceMapping } from "./bocriteria/index";
 import { BOFilteringFunc, BOFilteringChooseServiceMapping, BOFilteringLinkServiceMapping } from "./bofiltering/index";
 import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
-import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping, OrganizationalStructureLinkServiceMapping } from "./organizationalstructure/index";
+import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping } from "./organizationalstructure/index";
 import { OwnershipFunc, OwnershipChooseServiceMapping, OwnershipLinkServiceMapping } from "./ownership/index";
 import { PrivilegeFunc, PrivilegeChooseServiceMapping, PrivilegeLinkServiceMapping } from "./privilege/index";
 import { RoleFunc, RoleChooseServiceMapping, RoleLinkServiceMapping } from "./role/index";
@@ -41,42 +41,30 @@ export class Console extends ibas.ModuleConsole {
     /** 初始化 */
     protected registers(): void {
         // 注册功能
-        this.register(new ApplicationFunctionFunc());
-        this.register(new ApplicationModuleFunc());
-        this.register(new ApplicationPlatformFunc());
-        this.register(new ApprovalRequestFunc());
-        this.register(new ApprovalTemplateFunc());
-        this.register(new BOCriteriaFunc());
-        this.register(new BOFilteringFunc());
+        this.register(new UserFunc());
+        this.register(new RoleFunc());
         this.register(new OrganizationFunc());
         this.register(new OrganizationalStructureFunc());
+        this.register(new BOCriteriaFunc());
+        this.register(new BOFilteringFunc());
         this.register(new OwnershipFunc());
         this.register(new PrivilegeFunc());
-        this.register(new RoleFunc());
-        this.register(new UserFunc());
+        if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)) {
+            // 仅调试模式，启用以下功能
+            this.register(new ApplicationFunctionFunc());
+            this.register(new ApplicationModuleFunc());
+            this.register(new ApplicationPlatformFunc());
+            this.register(new ApprovalTemplateFunc());
+            this.register(new ApprovalRequestFunc());
+        }
         // 注册服务应用
         this.register(new ApplicationFunctionChooseServiceMapping());
-        this.register(new ApplicationFunctionLinkServiceMapping());
         this.register(new ApplicationModuleChooseServiceMapping());
-        this.register(new ApplicationModuleLinkServiceMapping());
         this.register(new ApplicationPlatformChooseServiceMapping());
-        this.register(new ApplicationPlatformLinkServiceMapping());
-        this.register(new ApprovalRequestChooseServiceMapping());
-        this.register(new ApprovalRequestLinkServiceMapping());
         this.register(new ApprovalTemplateChooseServiceMapping());
         this.register(new ApprovalTemplateLinkServiceMapping());
-        this.register(new BOCriteriaChooseServiceMapping());
-        this.register(new BOCriteriaLinkServiceMapping());
-        this.register(new BOFilteringChooseServiceMapping());
-        this.register(new BOFilteringLinkServiceMapping());
         this.register(new OrganizationChooseServiceMapping());
         this.register(new OrganizationLinkServiceMapping());
-        this.register(new OrganizationalStructureChooseServiceMapping());
-        this.register(new OrganizationalStructureLinkServiceMapping());
-        this.register(new OwnershipChooseServiceMapping());
-        this.register(new OwnershipLinkServiceMapping());
-        this.register(new PrivilegeChooseServiceMapping());
-        this.register(new PrivilegeLinkServiceMapping());
         this.register(new RoleChooseServiceMapping());
         this.register(new RoleLinkServiceMapping());
         this.register(new UserChooseServiceMapping());

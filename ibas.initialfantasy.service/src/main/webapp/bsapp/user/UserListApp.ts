@@ -16,7 +16,7 @@ import { UserEditApp } from "./UserEditApp";
 export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "e95ca108-db8a-4ef8-9eb4-780caf3c983d";
+    static APPLICATION_ID: string = "4019d501-fd71-4f5b-8171-c5410fd2823d";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_user_list";
     /** 业务对象编码 */

@@ -26,8 +26,8 @@ export class ApprovalTemplateViewView extends ibas.BOViewView implements IApprov
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_approvaltemplatestep") }));
         this.tableApprovalTemplateStep = new sap.ui.table.Table("", {
             enableSelectAll: false,
-            visibleRowCount: 6,
-            rows: "{/}",
+            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            rows: "{/rows}",
             columns: [
             ]
         });
@@ -52,6 +52,9 @@ export class ApprovalTemplateViewView extends ibas.BOViewView implements IApprov
                         press: function (event: any): void {
                             that.fireViewEvents(that.callServicesEvent, {
                                 displayServices(services: ibas.IServiceAgent[]): void {
+                                    if (ibas.objects.isNull(services) || services.length === 0) {
+                                        return;
+                                    }
                                     let popover: sap.m.Popover = new sap.m.Popover("", {
                                         showHeader: false,
                                         placement: sap.m.PlacementType.Bottom,
@@ -90,6 +93,6 @@ export class ApprovalTemplateViewView extends ibas.BOViewView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateSteps(datas: bo.ApprovalTemplateStep[]): void {
-        this.tableApprovalTemplateStep.setModel(new sap.ui.model.json.JSONModel(datas));
+        this.tableApprovalTemplateStep.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
     }
 }

@@ -15,7 +15,7 @@ import { ApplicationPlatformEditApp } from "./ApplicationPlatformEditApp";
 export class ApplicationPlatformViewApp extends ibas.BOViewService<IApplicationPlatformViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "e95e3373-a49b-4f14-9fa4-370feba740eb";
+    static APPLICATION_ID: string = "c3bacb22-7daa-4473-ac73-80cbe246fd86";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_applicationplatform_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class ApplicationPlatformViewApp extends ibas.BOViewService<IApplicationP
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.ApplicationPlatform) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.ApplicationPlatform) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.ApplicationPlatform;

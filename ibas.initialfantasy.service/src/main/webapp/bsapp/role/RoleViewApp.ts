@@ -15,7 +15,7 @@ import { RoleEditApp } from "./RoleEditApp";
 export class RoleViewApp extends ibas.BOViewService<IRoleViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "b036d70c-79e1-46c3-abb2-868556a0c912";
+    static APPLICATION_ID: string = "3b6dff76-8668-41d1-98c7-ed987aa08ac0";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_role_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class RoleViewApp extends ibas.BOViewService<IRoleViewView> {
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.Role) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.Role) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.Role;
