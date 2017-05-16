@@ -33,6 +33,50 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_code"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "code"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_name"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "name"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_activated"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "activated",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emYesNo, data);
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_docentry"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "docEntry"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_objectcode"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectCode"
+                    })
+                }),
+
             ]
         });
         this.form.addContent(this.table);
