@@ -1,4 +1,4 @@
-@echo off
+rem @echo off
 setlocal EnableDelayedExpansion
 echo ***************************************************************************
 echo      compile_and_package.bat
