@@ -25,7 +25,7 @@ export class RoleEditView extends ibas.BOEditView implements IRoleEditView {
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: "" }),
+                new sap.ui.core.Title("", { text: "Edit" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_role_code") }),
                 new sap.m.Input("", {
                     value: "{/code}",
@@ -43,15 +43,17 @@ export class RoleEditView extends ibas.BOEditView implements IRoleEditView {
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: "" }),
+                new sap.ui.core.Title("", { text: "Show" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_role_docentry") }),
                 new sap.m.Input("", {
                     value: "{/docEntry}",
+                    enabled: false,
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_role_objectcode") }),
                 new sap.m.Input("", {
                     value: "{/objectCode}",
+                    enabled: false,
                     type: sap.m.InputType.Text
                 }),
             ]
