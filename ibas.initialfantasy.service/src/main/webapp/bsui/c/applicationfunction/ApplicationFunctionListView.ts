@@ -33,6 +33,46 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationfunction_moduleid"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "moduleId"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationfunction_functionid"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "functionId"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationfunction_functionname"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "functionName"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationfunction_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationfunction_objectcode"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectCode"
+                    })
+                }),
             ]
         });
         this.form.addContent(this.table);
