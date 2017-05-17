@@ -25,7 +25,11 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+<<<<<<< HEAD
+                new sap.ui.core.Title("", { text: "Edit" }),
+=======
                 new sap.ui.core.Title("", { text: "" }),
+>>>>>>> upstream/master
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
                 new sap.m.Input("", {
                     value: "{/code}",
@@ -43,7 +47,10 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
+<<<<<<< HEAD
+=======
                 new sap.ui.core.Title("", { text: "" }),
+>>>>>>> upstream/master
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
@@ -51,14 +58,26 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     path: "/super",
                     type: "sap.ui.model.type.Integer"
                 }),
+<<<<<<< HEAD
+                new sap.ui.core.Title("", { text: "Show" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
                 new sap.m.Input("", {
                     value: "{/docEntry}",
+                    enabled: false,
+=======
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
+                new sap.m.Input("", {
+                    value: "{/docEntry}",
+>>>>>>> upstream/master
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_objectcode") }),
                 new sap.m.Input("", {
                     value: "{/objectCode}",
+<<<<<<< HEAD
+                    enabled: false,
+=======
+>>>>>>> upstream/master
                     type: sap.m.InputType.Text
                 }),
             ]

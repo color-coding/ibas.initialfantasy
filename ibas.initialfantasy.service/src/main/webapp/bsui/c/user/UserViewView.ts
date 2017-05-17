@@ -21,6 +21,42 @@ export class UserViewView extends ibas.BOViewView implements IUserViewView {
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+                new sap.ui.core.Title("", { text: "" }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
+                new sap.m.Input("", {
+                    value: "{/code}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_name") }),
+                new sap.m.Input("", {
+                    value: "{/name}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.ui.core.Title("", { text: "" }),
+                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/super",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
+                new sap.m.Input("", {
+                    value: "{/docEntry}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    type: sap.m.InputType.Text
+                }),
             ]
         });
         this.page = new sap.m.Page("", {

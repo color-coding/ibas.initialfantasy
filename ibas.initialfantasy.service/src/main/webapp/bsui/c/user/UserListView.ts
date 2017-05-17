@@ -49,6 +49,17 @@ export class UserListView extends ibas.BOListView implements IUserListView {
                         path: "name"
                     })
                 }),
+<<<<<<< HEAD
+                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_user_password"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "password"
+                    })
+                }),
+=======
+>>>>>>> upstream/master
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_user_activated"),
                     template: new sap.m.Text("", {

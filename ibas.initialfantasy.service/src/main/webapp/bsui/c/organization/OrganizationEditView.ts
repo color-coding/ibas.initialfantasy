@@ -25,7 +25,11 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+<<<<<<< HEAD
+                new sap.ui.core.Title("", { text: "Edit" }),
+=======
                 new sap.ui.core.Title("", { text: "" }),
+>>>>>>> upstream/master
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_code") }),
                 new sap.m.Input("", {
                     value: "{/code}",
@@ -43,15 +47,27 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
+<<<<<<< HEAD
+                new sap.ui.core.Title("", { text: "Show" }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_docentry") }),
+                new sap.m.Input("", {
+                    value: "{/docEntry}",
+                    enabled: false,
+=======
                 new sap.ui.core.Title("", { text: "" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_docentry") }),
                 new sap.m.Input("", {
                     value: "{/docEntry}",
+>>>>>>> upstream/master
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_objectcode") }),
                 new sap.m.Input("", {
                     value: "{/objectCode}",
+<<<<<<< HEAD
+                    enabled: false,
+=======
+>>>>>>> upstream/master
                     type: sap.m.InputType.Text
                 }),
             ]
