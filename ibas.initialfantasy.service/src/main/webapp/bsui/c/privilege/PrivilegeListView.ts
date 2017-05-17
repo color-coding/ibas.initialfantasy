@@ -33,6 +33,7 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/}",
             columns: [
+                
             ]
         });
         this.form.addContent(this.table);
