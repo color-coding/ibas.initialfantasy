@@ -24,6 +24,35 @@ export class ApplicationFunctionEditView extends ibas.BOEditView implements IApp
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+                new sap.ui.core.Title("", { text: "Edit" }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_moduleid") }),
+                new sap.m.Input("", {
+                    value: "{/moduleId}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionid") }),
+                new sap.m.Input("", {
+                    value: "{/functionId}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
+                new sap.m.Input("", {
+                    value: "{/functionName}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.ui.core.Title("", { text: "Show" }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectkey") }),
+                new sap.m.Input("", {
+                    value: "{/objectKey}",
+                    // enabled: false,
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }),
             ]
         });
         this.page = new sap.m.Page("", {

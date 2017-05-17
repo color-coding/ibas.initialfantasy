@@ -33,6 +33,57 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_platformid"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "platformId"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_platformcode"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "platformCode"
+                    })
+                }),
+                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_platformdescription"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "platformDescription"
+                    })
+                }),
+                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_activated"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "activated",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emYesNo, data);
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_objectcode"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectCode"
+                    })
+                }),
             ]
         });
         this.form.addContent(this.table);
