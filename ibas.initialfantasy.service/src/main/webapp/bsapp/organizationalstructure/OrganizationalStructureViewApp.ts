@@ -15,7 +15,7 @@ import { OrganizationalStructureEditApp } from "./OrganizationalStructureEditApp
 export class OrganizationalStructureViewApp extends ibas.BOViewService<IOrganizationalStructureViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "3b80fb11-086b-436c-a0da-c11610c8b173";
+    static APPLICATION_ID: string = "927d23f5-e5dc-4b05-955e-44fa97a56ee5";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_organizationalstructure_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class OrganizationalStructureViewApp extends ibas.BOViewService<IOrganiza
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.OrganizationalStructure) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.OrganizationalStructure) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.OrganizationalStructure;

@@ -15,9 +15,10 @@ import { IBOFilteringEditView } from "../../../bsapp/bofiltering/index";
  * 视图-BOFiltering
  */
 export class BOFilteringEditView extends ibas.BOEditView implements IBOFilteringEditView {
-
     /** 删除数据事件 */
     deleteDataEvent: Function;
+    /** 新建数据事件，参数1：是否克隆 */
+    createDataEvent: Function;
     /** 添加业务对象筛选-条件事件 */
     addBOFilteringConditionEvent: Function;
     /** 删除业务对象筛选-条件事件 */
@@ -47,14 +48,17 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
-                            that.fireViewEvents(that.removeBOFilteringConditionEvent);
+                            that.fireViewEvents(that.removeBOFilteringConditionEvent,
+                                // 获取表格选中的对象
+                                utils.getTableSelecteds<bo.BOFilteringCondition>(that.tableBOFilteringCondition)
+                            );
                         }
                     })
                 ]
             }),
             enableSelectAll: false,
-            visibleRowCount: 6,
-            rows: "{/}",
+            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            rows: "{/rows}",
             columns: [
             ]
         });
@@ -71,7 +75,6 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                             that.fireViewEvents(that.saveDataEvent);
                         }
                     }),
-                    new sap.m.ToolbarSeparator(""),
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_delete"),
                         type: sap.m.ButtonType.Transparent,
@@ -79,6 +82,41 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent);
                         }
+                    }),
+                    new sap.m.ToolbarSeparator(""),
+                    new sap.m.MenuButton("", {
+                        text: ibas.i18n.prop("sys_shell_data_new"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://create",
+                        buttonMode: sap.m.MenuButtonMode.Split,
+                        defaultAction: function (): void {
+                            // 触发新建对象
+                            that.fireViewEvents(that.createDataEvent, false);
+                        },
+                        menu: new sap.m.Menu("", {
+                            items: [
+                                new sap.m.MenuItem("", {
+                                    text: ibas.i18n.prop("sys_shell_data_new"),
+                                    icon: "sap-icon://create"
+                                }),
+                                new sap.m.MenuItem("", {
+                                    text: ibas.i18n.prop("sys_shell_data_clone"),
+                                    icon: "sap-icon://copy"
+                                }),
+                            ],
+                            itemSelected: function (event: any): void {
+                                let item: any = event.getParameter("item");
+                                if (item instanceof sap.m.MenuItem) {
+                                    if (item.getIcon() === "sap-icon://copy") {
+                                        // 触发克隆对象
+                                        that.fireViewEvents(that.createDataEvent, true);
+                                    } else {
+                                        // 触发新建对象
+                                        that.fireViewEvents(that.createDataEvent, false);
+                                    }
+                                }
+                            }
+                        })
                     }),
                 ]
             }),
@@ -89,6 +127,18 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
+    /** 改变视图状态 */
+    private changeViewStatus(data: bo.BOFiltering): void {
+        if (ibas.objects.isNull(data)) {
+            return;
+        }
+        // 新建时：禁用删除，
+        if (data.isNew) {
+            if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
+                utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
+            }
+        }
+    }
     private tableBOFilteringCondition: sap.ui.table.Table;
 
     /** 显示数据 */
@@ -96,10 +146,12 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.form, data);
+        // 改变视图状态
+        this.changeViewStatus(data);
     }
     /** 显示数据 */
     showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void {
-        this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel(datas));
+        this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableBOFilteringCondition, datas);
     }

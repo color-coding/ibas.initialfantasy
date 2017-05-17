@@ -12,7 +12,7 @@ import { UserListApp } from "./UserListApp";
 export class UserFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "8cce9f36-62af-43c4-89e9-a63be72fd1ae";
+    static FUNCTION_ID = "c09a02e1-013e-4b0d-9975-afddedf93f16";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_user";
     /** 构造函数 */

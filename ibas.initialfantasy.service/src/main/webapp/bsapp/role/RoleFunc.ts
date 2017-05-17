@@ -12,7 +12,7 @@ import { RoleListApp } from "./RoleListApp";
 export class RoleFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "6abfb914-b664-4c05-b31a-55cafb820dd4";
+    static FUNCTION_ID = "3d4fb37b-db32-4e34-b845-c91f2185f31c";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_role";
     /** 构造函数 */

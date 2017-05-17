@@ -15,7 +15,7 @@ import { ApprovalTemplateEditApp } from "./ApprovalTemplateEditApp";
 export class ApprovalTemplateViewApp extends ibas.BOViewService<IApprovalTemplateViewView> {
 
     /** 应用标识 */
-    static APPLICATION_ID: string = "fcf28f50-5361-4106-92b3-92a83cdbc32d";
+    static APPLICATION_ID: string = "9a4c387f-d5e9-49ed-a450-7481067e7e29";
     /** 应用名称 */
     static APPLICATION_NAME: string = "initialfantasy_app_approvaltemplate_view";
     /** 业务对象编码 */
@@ -47,11 +47,11 @@ export class ApprovalTemplateViewApp extends ibas.BOViewService<IApprovalTemplat
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        if (!ibas.objects.isNull(args) && args.length === 1 && args[0] instanceof bo.ApprovalTemplate) {
-            this.viewData = args[0];
+        if (arguments[0] instanceof bo.ApprovalTemplate) {
+            this.viewData = arguments[0];
             this.show();
         } else {
-            super.run(args);
+            super.run();
         }
     }
     private viewData: bo.ApprovalTemplate;

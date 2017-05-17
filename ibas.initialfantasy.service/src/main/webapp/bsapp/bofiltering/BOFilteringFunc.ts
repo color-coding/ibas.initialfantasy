@@ -12,7 +12,7 @@ import { BOFilteringListApp } from "./BOFilteringListApp";
 export class BOFilteringFunc extends ibas.ModuleFunction {
 
     /** 功能标识 */
-    static FUNCTION_ID = "39642c83-5b01-4565-aff9-1ba23530fa76";
+    static FUNCTION_ID = "499117aa-dc1b-48b2-8ac0-0e13a993f987";
     /** 功能名称 */
     static FUNCTION_NAME = "initialfantasy_func_bofiltering";
     /** 构造函数 */
