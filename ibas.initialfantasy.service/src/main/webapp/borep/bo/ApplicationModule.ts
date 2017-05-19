@@ -78,6 +78,17 @@ export class ApplicationModule extends BOSimple<ApplicationModule> implements IA
         this.setProperty(ApplicationModule.PROPERTY_MODULECATEGORY_NAME, value);
     }
 
+    /** 映射的属性名称-模块入口 */
+    static PROPERTY_MODULEENTRY_NAME: string = "ModuleEntry";
+    /** 获取-模块入口 */
+    get moduleEntry(): string {
+        return this.getProperty<string>(ApplicationModule.PROPERTY_MODULEENTRY_NAME);
+    }
+    /** 设置-模块入口 */
+    set moduleEntry(value: string) {
+        this.setProperty(ApplicationModule.PROPERTY_MODULEENTRY_NAME, value);
+    }
+
     /** 映射的属性名称-是否可用 */
     static PROPERTY_ACTIVATED_NAME: string = "Activated";
     /** 获取-是否可用 */

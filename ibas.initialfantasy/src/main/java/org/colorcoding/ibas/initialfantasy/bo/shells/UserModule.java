@@ -22,7 +22,7 @@ public class UserModule {
 		UserModule userModule = new UserModule();
 		userModule.setId(applicationModule.getModuleId());
 		userModule.setName(applicationModule.getModuleName());
-
+		userModule.setIndex(applicationModule.getModuleEntry());
 		userModule.setRepository("");
 		userModule.setAddress("");
 		return userModule;
@@ -86,6 +86,20 @@ public class UserModule {
 
 	public void setRepository(String repository) {
 		this.repository = repository;
+	}
+
+	/**
+	 * 索引
+	 */
+	private String index;
+
+	@XmlElement(name = "Index")
+	public String getIndex() {
+		return index;
+	}
+
+	public void setIndex(String index) {
+		this.index = index;
 	}
 
 	@Override

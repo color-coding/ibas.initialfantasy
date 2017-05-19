@@ -71,6 +71,21 @@ public interface IApplicationModule extends IBOSimple {
 	void setModuleCategory(String value);
 
 	/**
+	 * 获取-模块入口
+	 * 
+	 * @return 值
+	 */
+	String getModuleEntry();
+
+	/**
+	 * 设置-模块入口
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setModuleEntry(String value);
+
+	/**
 	 * 获取-是否可用
 	 * 
 	 * @return 值

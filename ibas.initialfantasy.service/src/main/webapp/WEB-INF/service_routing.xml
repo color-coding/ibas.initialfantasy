@@ -2,7 +2,7 @@
 <ns:ServiceRouting xmlns:ns="http://colorcoding.org/ibas/initialfantasy/service">
     <ServiceInformation>
         <Id>c2b31c06-20d8-44a2-bb34-17f47ed01859</Id>
-        <Name>InitialFantasy|if</Name>
+        <Name>InitialFantasy</Name>
         <Providers>
             <Provider>
                 <Address>http://localhost:8080/initialfantasy/services/rest/data</Address>
@@ -18,7 +18,7 @@
     </ServiceInformation>
     <ServiceInformation>
         <Id>e6424319-a311-440e-bc89-a825f82d5847</Id>
-        <Name>TrainingTesting|tt</Name>
+        <Name>TrainingTesting</Name>
         <Providers>
             <Provider>
                 <Address>http://localhost:8080/trainingtesting/services/rest/data</Address>
@@ -26,12 +26,71 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>./3rdparty/trainingtesting/</Address>
+                <Address>.../modules/trainingtesting/</Address>
                 <Enabled>false</Enabled>
                 <Type>VIEW</Type>
-            </Provider> 
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>cbd4ef0f-ee88-4ea7-96c7-13f974026b58</Id>
+        <Name>ImportExport</Name>
+        <Providers>
             <Provider>
-                <Address>.../../../test/apps/trainingtesting/</Address>
+                <Address>http://localhost:8080/importexport/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../modules/importexport/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>14f7a312-5d63-488e-bed4-ea093be6f183</Id>
+        <Name>Documents</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/documents/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../modules/documents/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>0dda2ecb-af63-4a3d-b087-aa3dda8179b4</Id>
+        <Name>ReportAnalysis</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/reportanalysis/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../modules/reportanalysis/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>0dda2ecb-af63-4a3d-b087-aa3dda8179b5</Id>
+        <Name>ReportAnalysisUsers</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/reportanalysis/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../modules/reportanalysis/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
