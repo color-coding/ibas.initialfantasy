@@ -39,6 +39,9 @@ export interface IApplicationModule extends IBOSimple {
     /** 模块类别 */
     moduleCategory: string;
 
+    /** 模块入口 */
+    moduleEntry: string;
+
     /** 是否可用 */
     activated: emYesNo;
 

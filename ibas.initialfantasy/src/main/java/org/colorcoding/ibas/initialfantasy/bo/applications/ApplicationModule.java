@@ -180,6 +180,38 @@ public class ApplicationModule extends BusinessObject<ApplicationModule> impleme
 	}
 
 	/**
+	 * 属性名称-模块入口
+	 */
+	private static final String PROPERTY_MODULEENTRY_NAME = "ModuleEntry";
+
+	/**
+	 * 模块入口 属性
+	 */
+	@DbField(name = "ModuleEntry", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_MODULEENTRY = registerProperty(PROPERTY_MODULEENTRY_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-模块入口
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_MODULEENTRY_NAME)
+	public final String getModuleEntry() {
+		return this.getProperty(PROPERTY_MODULEENTRY);
+	}
+
+	/**
+	 * 设置-模块入口
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setModuleEntry(String value) {
+		this.setProperty(PROPERTY_MODULEENTRY, value);
+	}
+
+	/**
 	 * 属性名称-是否可用
 	 */
 	private static final String PROPERTY_ACTIVATED_NAME = "Activated";
