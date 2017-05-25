@@ -34,6 +34,14 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationmodule_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationmodule_moduleid"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -56,15 +64,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                     }).bindProperty("text", {
                         path: "moduleName"
                     })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationmodule_modulecategory"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "moduleCategory"
-                    })
-                }),
+                }),                
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationmodule_activated"),
                     template: new sap.m.Text("", {
@@ -75,15 +75,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                             return ibas.enums.describe(ibas.emYesNo, data);
                         }
                     })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationmodule_objectkey"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectKey"
-                    })
-                }),
+                }),                
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationmodule_objectcode"),
                     template: new sap.m.Text("", {

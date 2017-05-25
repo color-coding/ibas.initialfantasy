@@ -34,6 +34,14 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationplatform_platformid"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -54,7 +62,10 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
-                        path: "platformDescription"
+                        path: "platformDescription",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emPlantform, data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -67,15 +78,7 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                             return ibas.enums.describe(ibas.emYesNo, data);
                         }
                     })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationplatform_objectkey"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectKey"
-                    })
-                }),
+                }),                
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationplatform_objectcode"),
                     template: new sap.m.Text("", {
