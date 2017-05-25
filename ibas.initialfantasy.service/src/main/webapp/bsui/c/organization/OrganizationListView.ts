@@ -34,6 +34,14 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_docentry"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "docEntry"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_organization_code"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -58,14 +66,6 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                         formatter(data: any): any {
                             return ibas.enums.describe(ibas.emYesNo, data);
                         }
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_organization_docentry"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "docEntry"
                     })
                 }),
                 new sap.ui.table.Column("", {

@@ -25,7 +25,7 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: "Edit" }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_base_type") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_usercode") }),
                 new sap.m.Input("", {
                     value: "{/userCode}",
@@ -45,40 +45,40 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_self") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
                     path: "/self",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_lowerlevel") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
                     path: "/lowerLevel",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_equallevel") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
                     path: "/equalLevel",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_higherlevel") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
                     path: "/higherLevel",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_others") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
                     path: "/others",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: "Show" }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_infor") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectkey") }),
                 new sap.m.Input("", {
                     value: "{/objectKey}",

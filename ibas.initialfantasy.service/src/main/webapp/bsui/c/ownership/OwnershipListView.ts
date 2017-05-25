@@ -34,6 +34,14 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_ownership_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_ownership_usercode"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -67,7 +75,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                     }).bindProperty("text", {
                         path: "self",
                         formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
+                            return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
                 }),
@@ -78,7 +86,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                     }).bindProperty("text", {
                         path: "lowerLevel",
                         formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
+                            return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
                 }),
@@ -89,7 +97,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                     }).bindProperty("text", {
                         path: "equalLevel",
                         formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
+                            return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
                 }),
@@ -100,7 +108,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                     }).bindProperty("text", {
                         path: "higherLevel",
                         formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
+                            return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
                 }),
@@ -111,7 +119,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                     }).bindProperty("text", {
                         path: "teams",
                         formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
+                            return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
                 }),
@@ -122,16 +130,8 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                     }).bindProperty("text", {
                         path: "others",
                         formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
+                            return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_ownership_objectkey"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectKey"
                     })
                 }),
                 new sap.ui.table.Column("", {
