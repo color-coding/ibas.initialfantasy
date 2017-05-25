@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
-import java.util.Comparator;
 import java.util.UUID;
 
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -24,7 +23,6 @@ import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
 import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
 import org.colorcoding.ibas.bobas.repository.IBORepository4DbReadonly;
-import org.colorcoding.ibas.bobas.util.ArrayList;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
@@ -112,29 +110,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (opRsltModules.getError() != null) {
 				throw opRsltModules.getError();
 			}
-			ArrayList<UserModule> userModules = new ArrayList<>();
 			ServiceRouting serviceRouting = ServiceRouting.create();
 			for (Object item : opRsltModules.getResultObjects()) {
 				if (item instanceof IApplicationModule) {
 					UserModule userModule = UserModule.create((IApplicationModule) item);
 					serviceRouting.routing(userModule);// 设置有效服务
-					userModules.add(userModule);
+					opRslt.addResultObjects(userModule);
 				}
 			}
-			// 模块排序
-			userModules.sort(new Comparator<UserModule>() {
-
-				@Override
-				public int compare(UserModule o1, UserModule o2) {
-					if (o1.getCategory() == null) {
-						return o1.getId().compareTo(o2.getId());
-					} else {
-						return o1.getCategory().compareTo(o2.getCategory());
-					}
-				}
-
-			});
-			opRslt.addResultObjects(userModules);
 		} catch (Exception e) {
 			opRslt.setError(e);
 		}
