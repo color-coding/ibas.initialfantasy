@@ -25,7 +25,7 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: "Edit" }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_base_type") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
                 new sap.m.Input("", {
                     value: "{/code}",
@@ -34,6 +34,11 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_name") }),
                 new sap.m.Input("", {
                     value: "{/name}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
+                new sap.m.Input("", {
+                    value: "{/password}",
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_activated") }),
@@ -50,7 +55,7 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     path: "/super",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: "Show" }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_infor") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
                 new sap.m.Input("", {
                     value: "{/docEntry}",
