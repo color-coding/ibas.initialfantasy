@@ -22,14 +22,14 @@ import {
     config,
 } from "ibas/index";
 import {
-    IApplicationModule,
+    IApplicationModule,BO_CODE_APPLICATIONMODULE
 } from "../../api/index";
 
 /** 应用程序模块 */
 export class ApplicationModule extends BOSimple<ApplicationModule> implements IApplicationModule {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_MODULE";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_APPLICATIONMODULE;
     /** 构造函数 */
     constructor() {
         super();

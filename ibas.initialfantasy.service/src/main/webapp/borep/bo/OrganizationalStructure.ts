@@ -24,14 +24,14 @@ import {
 import {
     IOrganizationalStructure,
     IOrganizationalRole,
-    IOrganizationalRoles,
+    IOrganizationalRoles,BO_CODE_ORGANIZATIONALSTRUCTURE
 } from "../../api/index";
 
 /** 组织-结构 */
 export class OrganizationalStructure extends BOSimple<OrganizationalStructure> implements IOrganizationalStructure {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_ORG_STRUCTURE";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_ORGANIZATIONALSTRUCTURE;
     /** 构造函数 */
     constructor() {
         super();

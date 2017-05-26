@@ -25,14 +25,14 @@ import {
     emApprovalStepOwnerType,
     IApprovalTemplate,
     IApprovalTemplateStep,
-    IApprovalTemplateSteps,
+    IApprovalTemplateSteps,BO_CODE_APPROVALTEMPLATE
 } from "../../api/index";
 
 /** 审批模板 */
 export class ApprovalTemplate extends BOSimple<ApprovalTemplate> implements IApprovalTemplate {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_AP_APPROVALTPLT";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_APPROVALTEMPLATE;
     /** 构造函数 */
     constructor() {
         super();

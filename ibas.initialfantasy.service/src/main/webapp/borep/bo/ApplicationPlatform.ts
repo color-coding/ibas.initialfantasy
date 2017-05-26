@@ -22,14 +22,14 @@ import {
     config,
 } from "ibas/index";
 import {
-    IApplicationPlatform,
+    IApplicationPlatform,BO_CODE_APPLICATIONPLATFORM
 } from "../../api/index";
 
 /** 应用程序平台 */
 export class ApplicationPlatform extends BOSimple<ApplicationPlatform> implements IApplicationPlatform {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_PLATFORM";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_APPLICATIONPLATFORM;
     /** 构造函数 */
     constructor() {
         super();
