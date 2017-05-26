@@ -23,7 +23,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
     IOwnership,BO_CODE_OWNERSHIP
+=======
+    IOwnership,
+    BO_CODE_OWNERSHIP
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 数据权限 */

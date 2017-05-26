@@ -41,7 +41,7 @@ export class PrivilegeChooseApp extends ibas.BOChooseService<IPrivilegeChooseVie
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchPrivilege({
                 criteria: criteria,

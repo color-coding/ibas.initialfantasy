@@ -25,7 +25,12 @@ import {
 import {
     IApprovalRequest,
     IApprovalRequestStep,
+<<<<<<< HEAD
     IApprovalRequestSteps,BO_CODE_APPROVALREQUEST
+=======
+    IApprovalRequestSteps,
+    BO_CODE_APPROVALREQUEST
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 审批请求 */

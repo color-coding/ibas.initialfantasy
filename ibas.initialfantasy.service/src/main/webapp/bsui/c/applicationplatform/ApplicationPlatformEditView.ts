@@ -22,7 +22,7 @@ export class ApplicationPlatformEditView extends ibas.BOEditView implements IApp
 
     /** 绘制视图 */
     darw(): any {
-        let that = this;
+        let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_base_type") }),

@@ -22,7 +22,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
     IApplicationModule,BO_CODE_APPLICATIONMODULE
+=======
+    IApplicationModule,
+    BO_CODE_APPLICATIONMODULE
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 应用程序模块 */

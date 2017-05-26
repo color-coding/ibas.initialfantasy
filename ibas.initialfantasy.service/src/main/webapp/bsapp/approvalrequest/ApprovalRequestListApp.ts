@@ -44,7 +44,7 @@ export class ApprovalRequestListApp extends ibas.BOListApplication<IApprovalRequ
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
+            let that: this = this;
             let boRepository = new BORepositoryInitialFantasy();
             boRepository.fetchApprovalRequest({
                 criteria: criteria,
@@ -123,7 +123,7 @@ export class ApprovalRequestListApp extends ibas.BOListApplication<IApprovalRequ
         if (beDeleteds.length === 0) {
             return;
         }
-        let that = this;
+        let that: this = this;
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),
