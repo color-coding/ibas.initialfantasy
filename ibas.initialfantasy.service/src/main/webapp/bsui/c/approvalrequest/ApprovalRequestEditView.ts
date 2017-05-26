@@ -29,6 +29,43 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
         let that = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_base_type") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_name") }),
+                new sap.m.Input("", {
+                    value: "{/name}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_approvalobjectcode") }),
+                new sap.m.Input("", {
+                    value: "{/approvalObjectCode}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_approvalstatus") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emApprovalStatus)
+                }).bindProperty("selectedKey", {
+                    path: "/approvalStatus",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_infor") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_objectkey") }),
+                new sap.m.Input("", {
+                    value: "{/objectKey}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    type: sap.m.InputType.Text
+                }),
             ]
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_approvalrequeststep") }));
@@ -60,6 +97,48 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvalrequeststep_objectkey"),
+                    template: new sap.m.Text("", {
+                        width: "100%",
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvalrequeststep_objectcode"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emDocumentStatus)
+                    }).bindProperty("selectedKey", {
+                        path: "objectCode",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvalrequeststep_lineid"),
+                    template: new sap.m.Text("", {
+                        width: "100%",
+                    }).bindProperty("text", {
+                        path: "lineId"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvalrequeststep_stepname"),
+                    template: new sap.m.Text("", {
+                        width: "100%",
+                    }).bindProperty("text", {
+                        path: "stepName"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvalrequeststep_stepowner"),
+                    template: new sap.m.Text("", {
+                        width: "100%",
+                    }).bindProperty("text", {
+                        path: "stepOwner"
+                    })
+                }),
             ]
         });
         this.form.addContent(this.tableApprovalRequestStep);
@@ -159,7 +238,7 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
     }
     /** 显示数据 */
     showApprovalRequestSteps(datas: bo.ApprovalRequestStep[]): void {
-        this.tableApprovalRequestStep.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+        this.tableApprovalRequestStep.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableApprovalRequestStep, datas);
     }
