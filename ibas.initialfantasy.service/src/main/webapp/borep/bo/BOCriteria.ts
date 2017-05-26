@@ -23,13 +23,14 @@ import {
 } from "ibas/index";
 import {
     IBOCriteria,
+    BO_CODE_BOCRITERIA
 } from "../../api/index";
 
 /** 业务对象检索条件 */
 export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_BOCRITERIA";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_BOCRITERIA;
     /** 构造函数 */
     constructor() {
         super();

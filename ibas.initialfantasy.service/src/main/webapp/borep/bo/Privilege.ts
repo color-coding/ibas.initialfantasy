@@ -24,13 +24,14 @@ import {
 } from "ibas/index";
 import {
     IPrivilege,
+    BO_CODE_PRIVILEGE
 } from "../../api/index";
 
 /** 系统权限 */
 export class Privilege extends BOSimple<Privilege> implements IPrivilege {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_PRIVILEGE";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_PRIVILEGE;
     /** 构造函数 */
     constructor() {
         super();

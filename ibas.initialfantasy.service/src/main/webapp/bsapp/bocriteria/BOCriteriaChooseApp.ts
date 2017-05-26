@@ -41,7 +41,7 @@ export class BOCriteriaChooseApp extends ibas.BOChooseService<IBOCriteriaChooseV
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchBOCriteria({
                 criteria: criteria,

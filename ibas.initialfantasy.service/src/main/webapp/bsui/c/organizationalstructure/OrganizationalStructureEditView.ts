@@ -26,7 +26,7 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
 
     /** 绘制视图 */
     darw(): any {
-        let that = this;
+        let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
             ]

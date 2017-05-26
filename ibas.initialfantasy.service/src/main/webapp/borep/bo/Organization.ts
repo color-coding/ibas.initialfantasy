@@ -23,13 +23,14 @@ import {
 } from "ibas/index";
 import {
     IOrganization,
+    BO_CODE_ORGANIZATION
 } from "../../api/index";
 
 /** 组织 */
 export class Organization extends BOMasterData<Organization> implements IOrganization {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_ORGANIZATION";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_ORGANIZATION;
     /** 构造函数 */
     constructor() {
         super();

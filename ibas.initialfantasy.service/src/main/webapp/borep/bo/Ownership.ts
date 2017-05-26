@@ -24,13 +24,14 @@ import {
 } from "ibas/index";
 import {
     IOwnership,
+    BO_CODE_OWNERSHIP
 } from "../../api/index";
 
 /** 数据权限 */
 export class Ownership extends BOSimple<Ownership> implements IOwnership {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_OWNERSHIP";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_OWNERSHIP;
     /** 构造函数 */
     constructor() {
         super();

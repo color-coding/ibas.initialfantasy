@@ -27,13 +27,14 @@ import {
     IBOFiltering,
     IBOFilteringCondition,
     IBOFilteringConditions,
+    BO_CODE_BOFILTERING
 } from "../../api/index";
 
 /** 业务对象筛选 */
 export class BOFiltering extends BOSimple<BOFiltering> implements IBOFiltering {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_BOFILTERING";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_BOFILTERING;
     /** 构造函数 */
     constructor() {
         super();
