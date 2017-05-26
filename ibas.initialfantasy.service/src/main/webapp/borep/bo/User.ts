@@ -23,13 +23,14 @@ import {
 } from "ibas/index";
 import {
     IUser,
+    BO_CODE_USER
 } from "../../api/index";
 
 /** 用户 */
 export class User extends BOMasterData<User> implements IUser {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_USER";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_USER;
     /** 构造函数 */
     constructor() {
         super();

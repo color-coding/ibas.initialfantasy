@@ -26,13 +26,14 @@ import {
     IApprovalRequest,
     IApprovalRequestStep,
     IApprovalRequestSteps,
+    BO_CODE_APPROVALREQUEST
 } from "../../api/index";
 
 /** 审批请求 */
 export class ApprovalRequest extends BOSimple<ApprovalRequest> implements IApprovalRequest {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_AP_APPROVALREQU";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_APPROVALREQUEST;
     /** 构造函数 */
     constructor() {
         super();

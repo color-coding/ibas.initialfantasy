@@ -23,13 +23,14 @@ import {
 } from "ibas/index";
 import {
     IRole,
+    BO_CODE_ROLE
 } from "../../api/index";
 
 /** 角色 */
 export class Role extends BOMasterData<Role> implements IRole {
 
     /** 业务对象编码 */
-    static BUSINESS_OBJECT_CODE: string = "${Company}_SYS_ROLE";
+    static BUSINESS_OBJECT_CODE: string = BO_CODE_ROLE;
     /** 构造函数 */
     constructor() {
         super();

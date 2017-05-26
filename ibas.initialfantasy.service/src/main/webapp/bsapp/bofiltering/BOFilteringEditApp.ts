@@ -49,7 +49,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let that = this;
+        let that: this = this;
         if (ibas.objects.instanceOf(arguments[0], bo.BOFiltering)) {
             // 尝试重新查询编辑对象
             let criteria: ibas.ICriteria = arguments[0].criteria();
@@ -90,7 +90,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
     /** 保存数据 */
     protected saveData(): void {
         try {
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.saveBOFiltering({
                 beSaved: this.editData,
@@ -126,7 +126,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
     }
     /** 删除数据 */
     protected deleteData(): void {
-        let that = this;
+        let that: this = this;
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),
@@ -142,7 +142,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
     }
     /** 新建数据，参数1：是否克隆 */
     protected createData(clone: boolean): void {
-        let that = this;
+        let that: this = this;
         let createData: Function = function (): void {
             if (clone) {
                 // 克隆对象

@@ -58,7 +58,7 @@ export class BOCriteriaViewApp extends ibas.BOViewService<IBOCriteriaViewView> {
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria | string): void {
         this.busy(true);
-        let that = this;
+        let that: this = this;
         if (typeof criteria === "string") {
             criteria = new ibas.Criteria();
             // 添加查询条件

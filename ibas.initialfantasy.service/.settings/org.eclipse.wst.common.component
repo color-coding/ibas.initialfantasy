@@ -9,6 +9,6 @@
         </dependent-module>
     <property name="java-output-path" value="/ibas.initialfantasy.service/target/classes"/>
         <property name="context-root" value="ibas.initialfantasy.service"/>
-        <property name="component.exclusion.patterns" value="**/*.ts,**/*.bat,**/*.sh,3rdparty/*.txt,3rdparty/ibas/**,3rdparty/openui5/**,modules/**,test/**"/>
+        <property name="component.exclusion.patterns" value="index.html,config.json,tsconfig.json,**/*.ts,**/*.bat,**/*.sh,3rdparty/*.txt,3rdparty/ibas/**,3rdparty/openui5/**,modules/**,test/**"/>
   </wb-module>
 </project-modules>

@@ -22,7 +22,7 @@ export class RoleEditView extends ibas.BOEditView implements IRoleEditView {
 
     /** 绘制视图 */
     darw(): any {
-        let that = this;
+        let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
                 new sap.ui.core.Title("", { text: "Edit" }),

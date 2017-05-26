@@ -41,7 +41,7 @@ export class UserChooseApp extends ibas.BOChooseService<IUserChooseView, bo.User
     protected fetchData(criteria: ibas.ICriteria): void {
         try {
             this.busy(true);
-            let that = this;
+            let that: this = this;
             let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchUser({
                 criteria: criteria,
