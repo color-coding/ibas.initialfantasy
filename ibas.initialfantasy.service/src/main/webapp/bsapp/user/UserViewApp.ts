@@ -40,7 +40,7 @@ export class UserViewApp extends ibas.BOViewService<IUserViewView> {
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new UserEditApp();
+        let app: UserEditApp = new UserEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

@@ -40,7 +40,7 @@ export class OrganizationViewApp extends ibas.BOViewService<IOrganizationViewVie
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new OrganizationEditApp();
+        let app: OrganizationEditApp = new OrganizationEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

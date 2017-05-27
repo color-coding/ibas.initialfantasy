@@ -44,13 +44,13 @@ export class Console extends ibas.ModuleConsole {
         this.register(new UserFunc());
         this.register(new RoleFunc());
         this.register(new OrganizationFunc());
-        this.register(new OrganizationalStructureFunc());
-        this.register(new BOCriteriaFunc());
-        this.register(new BOFilteringFunc());
-        this.register(new OwnershipFunc());
-        this.register(new PrivilegeFunc());
         if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)) {
             // 仅调试模式，启用以下功能
+            this.register(new OrganizationalStructureFunc());
+            this.register(new BOCriteriaFunc());
+            this.register(new BOFilteringFunc());
+            this.register(new OwnershipFunc());
+            this.register(new PrivilegeFunc());
             this.register(new ApplicationFunctionFunc());
             this.register(new ApplicationModuleFunc());
             this.register(new ApplicationPlatformFunc());

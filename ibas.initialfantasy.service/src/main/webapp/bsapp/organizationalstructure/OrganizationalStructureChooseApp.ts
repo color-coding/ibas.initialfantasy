@@ -77,7 +77,7 @@ export class OrganizationalStructureChooseApp extends ibas.BOChooseService<IOrga
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new OrganizationalStructureEditApp();
+        let app: OrganizationalStructureEditApp = new OrganizationalStructureEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

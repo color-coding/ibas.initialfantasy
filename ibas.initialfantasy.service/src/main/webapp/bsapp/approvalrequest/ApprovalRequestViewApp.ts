@@ -40,7 +40,7 @@ export class ApprovalRequestViewApp extends ibas.BOViewService<IApprovalRequestV
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new ApprovalRequestEditApp();
+        let app: ApprovalRequestEditApp = new ApprovalRequestEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

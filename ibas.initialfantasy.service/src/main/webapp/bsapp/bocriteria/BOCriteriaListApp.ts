@@ -45,7 +45,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchBOCriteria({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.BOCriteria>): void {
@@ -67,7 +67,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new BOCriteriaEditApp();
+        let app: BOCriteriaEditApp = new BOCriteriaEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
             ));
             return;
         }
-        let app = new BOCriteriaViewApp();
+        let app: BOCriteriaViewApp = new BOCriteriaViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
             ));
             return;
         }
-        let app = new BOCriteriaEditApp();
+        let app: BOCriteriaEditApp = new BOCriteriaEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -110,8 +110,8 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.BOCriteria> = new ibas.ArrayList<bo.BOCriteria>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.BOCriteria> = new ibas.ArrayList<bo.BOCriteria>();
+        if (data instanceof Array) {
             for (let item of data) {
                 if (ibas.objects.instanceOf(item, bo.BOCriteria)) {
                     item.delete();
@@ -133,7 +133,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                        let saveMethod: Function = function(beSaved: bo.BOCriteria):void {
+                        let saveMethod: Function = function (beSaved: bo.BOCriteria): void {
                             boRepository.saveBOCriteria({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.BOCriteria>): void {
@@ -149,7 +149,7 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,

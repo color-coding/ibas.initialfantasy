@@ -77,7 +77,7 @@ export class ApplicationModuleChooseApp extends ibas.BOChooseService<IApplicatio
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new ApplicationModuleEditApp();
+        let app: ApplicationModuleEditApp = new ApplicationModuleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

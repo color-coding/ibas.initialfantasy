@@ -45,7 +45,7 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchBOFiltering({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.BOFiltering>): void {
@@ -67,7 +67,7 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new BOFilteringEditApp();
+        let app: BOFilteringEditApp = new BOFilteringEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
             ));
             return;
         }
-        let app = new BOFilteringViewApp();
+        let app: BOFilteringViewApp = new BOFilteringViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
             ));
             return;
         }
-        let app = new BOFilteringEditApp();
+        let app: BOFilteringEditApp = new BOFilteringEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);

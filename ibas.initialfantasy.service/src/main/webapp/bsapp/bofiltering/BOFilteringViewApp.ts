@@ -40,7 +40,7 @@ export class BOFilteringViewApp extends ibas.BOViewService<IBOFilteringViewView>
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new BOFilteringEditApp();
+        let app: BOFilteringEditApp = new BOFilteringEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

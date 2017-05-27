@@ -45,7 +45,7 @@ export class OrganizationalStructureListApp extends ibas.BOListApplication<IOrga
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchOrganizationalStructure({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.OrganizationalStructure>): void {
@@ -67,7 +67,7 @@ export class OrganizationalStructureListApp extends ibas.BOListApplication<IOrga
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new OrganizationalStructureEditApp();
+        let app: OrganizationalStructureEditApp = new OrganizationalStructureEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class OrganizationalStructureListApp extends ibas.BOListApplication<IOrga
             ));
             return;
         }
-        let app = new OrganizationalStructureViewApp();
+        let app: OrganizationalStructureViewApp = new OrganizationalStructureViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class OrganizationalStructureListApp extends ibas.BOListApplication<IOrga
             ));
             return;
         }
-        let app = new OrganizationalStructureEditApp();
+        let app: OrganizationalStructureEditApp = new OrganizationalStructureEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);

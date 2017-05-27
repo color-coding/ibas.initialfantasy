@@ -34,6 +34,14 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organization_docentry"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "docEntry"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_organization_code"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -60,23 +68,6 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                         }
                     })
                 }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_organization_docentry"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "docEntry"
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_organization_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
-
             ]
         });
         this.form.addContent(this.table);
@@ -92,6 +83,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                             that.fireViewEvents(that.newDataEvent);
                         }
                     }),
+                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_view"),
                         type: sap.m.ButtonType.Transparent,
@@ -103,6 +95,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                             );
                         }
                     }),
+                    */
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_edit"),
                         type: sap.m.ButtonType.Transparent,
@@ -194,10 +187,10 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
         let model: sap.ui.model.Model = this.table.getModel(undefined);
         if (!ibas.objects.isNull(model)) {
             // 已存在绑定数据，添加新的
-            let hDatas: bo.Organization[] = (<any>model).getData();
-            if (!ibas.objects.isNull(hDatas) && hDatas instanceof Array) {
+            let hDatas: any = (<any>model).getData();
+            if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
                 for (let item of datas) {
-                    hDatas.push(item);
+                    hDatas.rows.push(item);
                 }
                 model.refresh(false);
                 done = true;
@@ -205,7 +198,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }
@@ -215,8 +208,10 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
         super.query(criteria);
         this.lastCriteria = criteria;
         // 清除历史数据
-        this.table.setBusy(true);
-        this.table.setFirstVisibleRow(0);
-        this.table.setModel(null);
+        if (this.isDisplayed) {
+            this.table.setBusy(true);
+            this.table.setFirstVisibleRow(0);
+            this.table.setModel(null);
+        }
     }
 }
