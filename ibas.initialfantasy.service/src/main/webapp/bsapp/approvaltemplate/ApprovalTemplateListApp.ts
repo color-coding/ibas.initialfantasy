@@ -45,7 +45,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchApprovalTemplate({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.ApprovalTemplate>): void {
@@ -67,7 +67,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new ApprovalTemplateEditApp();
+        let app: ApprovalTemplateEditApp = new ApprovalTemplateEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
             ));
             return;
         }
-        let app = new ApprovalTemplateViewApp();
+        let app: ApprovalTemplateViewApp = new ApprovalTemplateViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
             ));
             return;
         }
-        let app = new ApprovalTemplateEditApp();
+        let app: ApprovalTemplateEditApp = new ApprovalTemplateEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -110,8 +110,8 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.ApprovalTemplate> = new ibas.ArrayList<bo.ApprovalTemplate>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.ApprovalTemplate> = new ibas.ArrayList<bo.ApprovalTemplate>();
+        if (data instanceof Array) {
             for (let item of data) {
                 if (ibas.objects.instanceOf(item, bo.ApprovalTemplate)) {
                     item.delete();
@@ -133,7 +133,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                        let saveMethod: Function = function(beSaved: bo.ApprovalTemplate):void {
+                        let saveMethod: Function = function (beSaved: bo.ApprovalTemplate): void {
                             boRepository.saveApprovalTemplate({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.ApprovalTemplate>): void {
@@ -149,7 +149,7 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,

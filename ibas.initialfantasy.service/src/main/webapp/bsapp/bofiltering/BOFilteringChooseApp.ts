@@ -77,7 +77,7 @@ export class BOFilteringChooseApp extends ibas.BOChooseService<IBOFilteringChoos
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new BOFilteringEditApp();
+        let app: BOFilteringEditApp = new BOFilteringEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

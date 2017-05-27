@@ -77,7 +77,7 @@ export class OrganizationChooseApp extends ibas.BOChooseService<IOrganizationCho
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new OrganizationEditApp();
+        let app: OrganizationEditApp = new OrganizationEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

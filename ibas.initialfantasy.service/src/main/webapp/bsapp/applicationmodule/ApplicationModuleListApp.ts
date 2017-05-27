@@ -45,7 +45,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchApplicationModule({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
@@ -67,7 +67,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new ApplicationModuleEditApp();
+        let app: ApplicationModuleEditApp = new ApplicationModuleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
             ));
             return;
         }
-        let app = new ApplicationModuleViewApp();
+        let app: ApplicationModuleViewApp = new ApplicationModuleViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
             ));
             return;
         }
-        let app = new ApplicationModuleEditApp();
+        let app: ApplicationModuleEditApp = new ApplicationModuleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -110,8 +110,8 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.ApplicationModule> = new ibas.ArrayList<bo.ApplicationModule>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.ApplicationModule> = new ibas.ArrayList<bo.ApplicationModule>();
+        if (data instanceof Array) {
             for (let item of data) {
                 if (ibas.objects.instanceOf(item, bo.ApplicationModule)) {
                     item.delete();
@@ -133,7 +133,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                        let saveMethod: Function = function(beSaved: bo.ApplicationModule):void {
+                        let saveMethod: Function = function (beSaved: bo.ApplicationModule): void {
                             boRepository.saveApplicationModule({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
@@ -149,7 +149,7 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,

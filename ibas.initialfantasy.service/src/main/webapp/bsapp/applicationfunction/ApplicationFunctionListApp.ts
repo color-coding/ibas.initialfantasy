@@ -45,7 +45,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchApplicationFunction({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
@@ -67,7 +67,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new ApplicationFunctionEditApp();
+        let app: ApplicationFunctionEditApp = new ApplicationFunctionEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
             ));
             return;
         }
-        let app = new ApplicationFunctionViewApp();
+        let app: ApplicationFunctionViewApp = new ApplicationFunctionViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
             ));
             return;
         }
-        let app = new ApplicationFunctionEditApp();
+        let app: ApplicationFunctionEditApp = new ApplicationFunctionEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -110,8 +110,8 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.ApplicationFunction> = new ibas.ArrayList<bo.ApplicationFunction>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.ApplicationFunction> = new ibas.ArrayList<bo.ApplicationFunction>();
+        if (data instanceof Array) {
             for (let item of data) {
                 if (ibas.objects.instanceOf(item, bo.ApplicationFunction)) {
                     item.delete();
@@ -133,7 +133,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                        let saveMethod: Function = function(beSaved: bo.ApplicationFunction):void {
+                        let saveMethod: Function = function (beSaved: bo.ApplicationFunction): void {
                             boRepository.saveApplicationFunction({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
@@ -149,7 +149,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,

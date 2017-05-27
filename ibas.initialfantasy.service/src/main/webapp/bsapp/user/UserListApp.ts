@@ -45,7 +45,7 @@ export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> 
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchUser({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
@@ -67,7 +67,7 @@ export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> 
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new UserEditApp();
+        let app: UserEditApp = new UserEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> 
             ));
             return;
         }
-        let app = new UserViewApp();
+        let app: UserViewApp = new UserViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> 
             ));
             return;
         }
-        let app = new UserEditApp();
+        let app: UserEditApp = new UserEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);

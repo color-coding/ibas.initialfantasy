@@ -45,7 +45,7 @@ export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> 
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchRole({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.Role>): void {
@@ -67,7 +67,7 @@ export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> 
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new RoleEditApp();
+        let app: RoleEditApp = new RoleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> 
             ));
             return;
         }
-        let app = new RoleViewApp();
+        let app: RoleViewApp = new RoleViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> 
             ));
             return;
         }
-        let app = new RoleEditApp();
+        let app: RoleEditApp = new RoleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);

@@ -77,7 +77,7 @@ export class RoleChooseApp extends ibas.BOChooseService<IRoleChooseView, bo.Role
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new RoleEditApp();
+        let app: RoleEditApp = new RoleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

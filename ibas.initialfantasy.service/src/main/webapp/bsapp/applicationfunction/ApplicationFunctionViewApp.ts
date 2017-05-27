@@ -40,7 +40,7 @@ export class ApplicationFunctionViewApp extends ibas.BOViewService<IApplicationF
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new ApplicationFunctionEditApp();
+        let app: ApplicationFunctionEditApp = new ApplicationFunctionEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

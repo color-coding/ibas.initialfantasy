@@ -77,7 +77,7 @@ export class OwnershipChooseApp extends ibas.BOChooseService<IOwnershipChooseVie
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new OwnershipEditApp();
+        let app: OwnershipEditApp = new OwnershipEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

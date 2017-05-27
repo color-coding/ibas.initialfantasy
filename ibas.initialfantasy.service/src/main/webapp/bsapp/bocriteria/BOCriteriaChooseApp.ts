@@ -77,7 +77,7 @@ export class BOCriteriaChooseApp extends ibas.BOChooseService<IBOCriteriaChooseV
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new BOCriteriaEditApp();
+        let app: BOCriteriaEditApp = new BOCriteriaEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

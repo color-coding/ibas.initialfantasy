@@ -45,7 +45,7 @@ export class PrivilegeListApp extends ibas.BOListApplication<IPrivilegeListView,
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchPrivilege({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.Privilege>): void {
@@ -67,7 +67,7 @@ export class PrivilegeListApp extends ibas.BOListApplication<IPrivilegeListView,
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new PrivilegeEditApp();
+        let app: PrivilegeEditApp = new PrivilegeEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class PrivilegeListApp extends ibas.BOListApplication<IPrivilegeListView,
             ));
             return;
         }
-        let app = new PrivilegeViewApp();
+        let app: PrivilegeViewApp = new PrivilegeViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class PrivilegeListApp extends ibas.BOListApplication<IPrivilegeListView,
             ));
             return;
         }
-        let app = new PrivilegeEditApp();
+        let app: PrivilegeEditApp = new PrivilegeEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);

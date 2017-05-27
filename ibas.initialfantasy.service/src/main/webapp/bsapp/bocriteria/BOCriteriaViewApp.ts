@@ -40,7 +40,7 @@ export class BOCriteriaViewApp extends ibas.BOViewService<IBOCriteriaViewView> {
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new BOCriteriaEditApp();
+        let app: BOCriteriaEditApp = new BOCriteriaEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

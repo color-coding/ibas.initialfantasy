@@ -45,7 +45,7 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchOrganization({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.Organization>): void {
@@ -67,7 +67,7 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new OrganizationEditApp();
+        let app: OrganizationEditApp = new OrganizationEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
             ));
             return;
         }
-        let app = new OrganizationViewApp();
+        let app: OrganizationViewApp = new OrganizationViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
             ));
             return;
         }
-        let app = new OrganizationEditApp();
+        let app: OrganizationEditApp = new OrganizationEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);

@@ -40,7 +40,7 @@ export class ApplicationModuleViewApp extends ibas.BOViewService<IApplicationMod
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new ApplicationModuleEditApp();
+        let app: ApplicationModuleEditApp = new ApplicationModuleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

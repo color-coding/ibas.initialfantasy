@@ -77,7 +77,7 @@ export class ApplicationPlatformChooseApp extends ibas.BOChooseService<IApplicat
         // 关闭自身
         this.destroy();
         // 调用编辑应用
-        let app = new ApplicationPlatformEditApp();
+        let app: ApplicationPlatformEditApp = new ApplicationPlatformEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();

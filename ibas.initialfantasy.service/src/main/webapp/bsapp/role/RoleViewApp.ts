@@ -40,7 +40,7 @@ export class RoleViewApp extends ibas.BOViewService<IRoleViewView> {
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(): void {
-        let app = new RoleEditApp();
+        let app: RoleEditApp = new RoleEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(this.viewData);

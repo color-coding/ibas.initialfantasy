@@ -45,7 +45,7 @@ export class OwnershipListApp extends ibas.BOListApplication<IOwnershipListView,
         try {
             this.busy(true);
             let that: this = this;
-            let boRepository = new BORepositoryInitialFantasy();
+            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
             boRepository.fetchOwnership({
                 criteria: criteria,
                 onCompleted(opRslt: ibas.IOperationResult<bo.Ownership>): void {
@@ -67,7 +67,7 @@ export class OwnershipListApp extends ibas.BOListApplication<IOwnershipListView,
     }
     /** 新建数据 */
     protected newData(): void {
-        let app = new OwnershipEditApp();
+        let app: OwnershipEditApp = new OwnershipEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run();
@@ -81,7 +81,7 @@ export class OwnershipListApp extends ibas.BOListApplication<IOwnershipListView,
             ));
             return;
         }
-        let app = new OwnershipViewApp();
+        let app: OwnershipViewApp = new OwnershipViewApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
@@ -96,7 +96,7 @@ export class OwnershipListApp extends ibas.BOListApplication<IOwnershipListView,
             ));
             return;
         }
-        let app = new OwnershipEditApp();
+        let app: OwnershipEditApp = new OwnershipEditApp();
         app.navigation = this.navigation;
         app.viewShower = this.viewShower;
         app.run(data);
