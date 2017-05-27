@@ -64,14 +64,6 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                     }).bindProperty("text", {
                         path: "functionName"
                     })
-                }),               
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationfunction_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
                 }),
             ]
         });

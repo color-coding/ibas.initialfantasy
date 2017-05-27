@@ -25,7 +25,7 @@ export class ApplicationFunctionEditView extends ibas.BOEditView implements IApp
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_base_type") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_moduleid") }),
                 new sap.m.Input("", {
                     value: "{/moduleId}",
@@ -36,22 +36,16 @@ export class ApplicationFunctionEditView extends ibas.BOEditView implements IApp
                     value: "{/functionId}",
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
-                new sap.m.Input("", {
-                    value: "{/functionName}",
-                    type: sap.m.InputType.Text
-                }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_infor") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectkey") }),
                 new sap.m.Input("", {
                     value: "{/objectKey}",
                     // enabled: false,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectcode") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
-                    enabled: false,
+                    value: "{/functionName}",
                     type: sap.m.InputType.Text
                 }),
             ]

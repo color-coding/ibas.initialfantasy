@@ -71,14 +71,6 @@ export class ApprovalTemplateListView extends ibas.BOListView implements IApprov
                         }
                     })
                 }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_approvaltemplate_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
             ]
         });
         this.form.addContent(this.table);

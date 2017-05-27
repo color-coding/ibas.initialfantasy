@@ -68,14 +68,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                         }
                     })
                 }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_organization_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
+
 
             ]
         });

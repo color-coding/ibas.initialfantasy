@@ -113,15 +113,7 @@ export class UserChooseView extends ibas.BOChooseView implements IUserChooseView
                     }).bindProperty("text", {
                         path: "docEntry"
                     })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_user_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
+                }),             
             ]
         });
         this.id = this.table.getId();

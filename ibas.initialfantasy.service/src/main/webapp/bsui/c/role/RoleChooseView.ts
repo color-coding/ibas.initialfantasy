@@ -94,15 +94,7 @@ export class RoleChooseView extends ibas.BOChooseView implements IRoleChooseView
                     }).bindProperty("text", {
                         path: "docEntry"
                     })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_role_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
+                }),                
             ]
         });
         this.id = this.table.getId();

@@ -78,15 +78,7 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                             return ibas.enums.describe(ibas.emYesNo, data);
                         }
                     })
-                }),                
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationplatform_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
+                }), 
             ]
         });
         this.form.addContent(this.table);

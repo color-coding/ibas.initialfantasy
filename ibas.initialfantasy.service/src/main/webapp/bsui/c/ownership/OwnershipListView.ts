@@ -133,15 +133,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                             return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_ownership_objectcode"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "objectCode"
-                    })
-                }),
+                }),                
             ]
         });
         this.form.addContent(this.table);

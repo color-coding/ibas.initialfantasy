@@ -25,7 +25,7 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_base_type") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
                 new sap.m.Input("", {
                     value: "{/code}",
@@ -48,25 +48,19 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
-                new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
-                }).bindProperty("selectedKey", {
-                    path: "/super",
-                    type: "sap.ui.model.type.Integer"
-                }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_infor") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
                 new sap.m.Input("", {
                     value: "{/docEntry}",
                     enabled: false,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_objectcode") }),
-                new sap.m.Input("", {
-                    value: "{/objectCode}",
-                    enabled: false,
-                    type: sap.m.InputType.Text
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/super",
+                    type: "sap.ui.model.type.Integer"
                 }),
             ]
         });
