@@ -22,8 +22,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
+    IUser,BO_CODE_USER
+=======
     IUser,
     BO_CODE_USER
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 用户 */

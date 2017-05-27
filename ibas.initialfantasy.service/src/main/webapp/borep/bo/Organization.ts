@@ -22,8 +22,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
+    IOrganization,BO_CODE_ORGANIZATION
+=======
     IOrganization,
     BO_CODE_ORGANIZATION
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 组织 */

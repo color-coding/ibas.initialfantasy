@@ -25,8 +25,12 @@ import {
     emApprovalStepOwnerType,
     IApprovalTemplate,
     IApprovalTemplateStep,
+<<<<<<< HEAD
+    IApprovalTemplateSteps,BO_CODE_APPROVALTEMPLATE
+=======
     IApprovalTemplateSteps,
     BO_CODE_APPROVALTEMPLATE
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 审批模板 */

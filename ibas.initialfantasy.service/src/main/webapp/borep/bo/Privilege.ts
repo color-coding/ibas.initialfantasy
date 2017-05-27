@@ -23,8 +23,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
+    IPrivilege,BO_CODE_PRIVILEGE
+=======
     IPrivilege,
     BO_CODE_PRIVILEGE
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 系统权限 */

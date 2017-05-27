@@ -22,8 +22,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
+    IRole,BO_CODE_ROLE
+=======
     IRole,
     BO_CODE_ROLE
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 角色 */

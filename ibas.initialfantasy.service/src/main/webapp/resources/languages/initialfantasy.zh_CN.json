@@ -66,5 +66,7 @@
   "initialfantasy_app_user_choose": "用户选择",
   "initialfantasy_app_user_view": "用户查看",
   "initialfantasy_app_user_edit": "用户编辑",
+  "initialfantasy_basis_information": "基本信息",
+  "initialfantasy_other_information": "其他信息",
   "initialfantasy_closing_delimiter": "----结束----"
 }

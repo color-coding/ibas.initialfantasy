@@ -24,8 +24,12 @@ import {
 import {
     IOrganizationalStructure,
     IOrganizationalRole,
+<<<<<<< HEAD
+    IOrganizationalRoles,BO_CODE_ORGANIZATIONALSTRUCTURE
+=======
     IOrganizationalRoles,
     BO_CODE_ORGANIZATIONALSTRUCTURE
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 组织-结构 */

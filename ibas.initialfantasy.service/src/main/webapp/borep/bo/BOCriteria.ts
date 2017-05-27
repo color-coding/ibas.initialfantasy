@@ -22,8 +22,12 @@ import {
     config,
 } from "ibas/index";
 import {
+<<<<<<< HEAD
+    IBOCriteria,BO_CODE_BOCRITERIA
+=======
     IBOCriteria,
     BO_CODE_BOCRITERIA
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 业务对象检索条件 */

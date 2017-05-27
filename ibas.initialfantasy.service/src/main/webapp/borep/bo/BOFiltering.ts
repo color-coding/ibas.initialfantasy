@@ -26,8 +26,12 @@ import {
 import {
     IBOFiltering,
     IBOFilteringCondition,
+<<<<<<< HEAD
+    IBOFilteringConditions,BO_CODE_BOFILTERING
+=======
     IBOFilteringConditions,
     BO_CODE_BOFILTERING
+>>>>>>> upstream/master
 } from "../../api/index";
 
 /** 业务对象筛选 */
