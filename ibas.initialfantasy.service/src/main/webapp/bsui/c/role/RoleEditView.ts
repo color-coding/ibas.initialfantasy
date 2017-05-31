@@ -36,6 +36,13 @@ export class RoleEditView extends ibas.BOEditView implements IRoleEditView {
                     value: "{/name}",
                     type: sap.m.InputType.Text
                 }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_role_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_role_docentry") }),
                 new sap.m.Input("", {
@@ -43,12 +50,11 @@ export class RoleEditView extends ibas.BOEditView implements IRoleEditView {
                     enabled: true,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_role_activated") }),
-                new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
-                }).bindProperty("selectedKey", {
-                    path: "/activated",
-                    type: "sap.ui.model.type.Integer"
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_role_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
                 }),
             ]
         });

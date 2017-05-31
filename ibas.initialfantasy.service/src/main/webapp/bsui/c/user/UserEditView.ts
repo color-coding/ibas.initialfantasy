@@ -39,13 +39,20 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
                 new sap.m.Input("", {
                     value: "{/password}",
-                    type: sap.m.InputType.Text
+                    type: sap.m.InputType.Password
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
                     path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/super",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
@@ -55,12 +62,11 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     enabled: false,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
-                new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
-                }).bindProperty("selectedKey", {
-                    path: "/super",
-                    type: "sap.ui.model.type.Integer"
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
                 }),
             ]
         });

@@ -36,7 +36,13 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
                     value: "{/name}",
                     type: sap.m.InputType.Text
                 }),
-                
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_docentry") }),
                 new sap.m.Input("", {
@@ -44,12 +50,11 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
                     enabled: false,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_activated") }),
-                new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
-                }).bindProperty("selectedKey", {
-                    path: "/activated",
-                    type: "sap.ui.model.type.Integer"
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
                 }),
             ]
         });
