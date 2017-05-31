@@ -36,16 +36,22 @@ export class ApplicationFunctionEditView extends ibas.BOEditView implements IApp
                     value: "{/functionId}",
                     type: sap.m.InputType.Text
                 }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
+                new sap.m.Input("", {
+                    value: "{/functionName}",
+                    type: sap.m.InputType.Text
+                }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectkey") }),
                 new sap.m.Input("", {
                     value: "{/objectKey}",
-                    // enabled: false,
+                    enabled: false,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/functionName}",
+                    value: "{/objectCode}",
+                    enabled: false,
                     type: sap.m.InputType.Text
                 }),
             ]

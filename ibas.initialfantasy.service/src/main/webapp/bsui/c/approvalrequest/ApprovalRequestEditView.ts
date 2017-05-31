@@ -47,7 +47,13 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                     path: "/approvalStatus",
                     type: "sap.ui.model.type.Integer"
                 }),
-
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_objectkey") }),
                 new sap.m.Input("", {
@@ -55,12 +61,11 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                     enabled: false,
                     type: sap.m.InputType.Text
                 }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_activated") }),
-                new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
-                }).bindProperty("selectedKey", {
-                    path: "/activated",
-                    type: "sap.ui.model.type.Integer"
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_objectcode") }),
+                new sap.m.Input("", {
+                    value: "{/objectCode}",
+                    enabled: false,
+                    type: sap.m.InputType.Text
                 }),
             ]
         });
