@@ -40,5 +40,21 @@ export const BO_CODE_ROLE: string = "${Company}_SYS_ROLE";
 export const BO_CODE_USER: string = "${Company}_SYS_USER";
 
 export enum emApprovalStepOwnerType {
-
+    USER,
+    /*
+     DATAOWNER,
+     DIRECTSUPERIOR,
+     DATAORGANIZATIONMANAGER,
+     PROJECTMANAGER,
+     PROJECTORGANIZATIONMANAGER
+    */
+}
+/**
+ * 分配类型
+ */
+export enum emAssignedType {
+    /** 用户 */
+    USER,
+    /** 角色 */
+    ROLE,
 }

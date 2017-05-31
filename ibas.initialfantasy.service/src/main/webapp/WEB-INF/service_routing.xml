@@ -10,7 +10,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../</Address>
+                <Address>.../../../test/apps/initialfantasy/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -26,7 +26,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../modules/trainingtesting/</Address>
+                <Address>.../../../test/apps/trainingtesting/</Address>
                 <Enabled>false</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -42,7 +42,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../modules/importexport/</Address>
+                <Address>.../../../test/apps/importexport/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -58,7 +58,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../modules/documents/</Address>
+                <Address>.../../../test/apps/documents/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -74,7 +74,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../modules/reportanalysis/</Address>
+                <Address>.../../../test/apps/reportanalysis/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -90,7 +90,23 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../modules/reportanalysis/</Address>
+                <Address>.../../../test/apps/reportanalysis/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>c4d3da42-0a53-480b-98fe-bf551a9581c7</Id>
+        <Name>BusinessObjectsEnterprise</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/businessobjectsenterprise/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/businessobjectsenterprise/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>

@@ -21,7 +21,7 @@ import {
     IBOSimpleLine
 } from "ibas/index";
 import {
-
+    emAssignedType
 } from "../Datas";
 
 /** 业务对象检索条件 */
@@ -30,23 +30,23 @@ export interface IBOCriteria extends IBOSimple {
     /** 应用标识 */
     applicationId: string;
 
-    /** 数据所有者 */
-    dataOwner: number;
-
     /** 检索名称 */
     name: string;
+
+    /** 指派类型 */
+    assignedType: emAssignedType;
+
+    /** 指派目标 */
+    assigned: string;
 
     /** 激活的 */
     activated: emYesNo;
 
+    /** 查询数据 */
+    data: string;
+
     /** 顺序 */
     order: number;
-
-    /** 归属角色 */
-    belongRole: string;
-
-    /** 查询数据 */
-    criteriaData: string;
 
     /** 编号 */
     objectKey: number;
