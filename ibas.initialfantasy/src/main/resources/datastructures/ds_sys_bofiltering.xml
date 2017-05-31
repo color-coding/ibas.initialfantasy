@@ -4,8 +4,8 @@
   <Model Name="BOFiltering" Description="业务对象筛选" ModelType="Simple" Mapped="${Company}_SYS_OBFT">
     <Property Name="RoleCode" Description="角色标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="RoleCode" UniqueKey="Yes"/>
     <Property Name="BOCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="BOCode" UniqueKey="Yes"/>
-    <Property Name="Activated" Description="激活的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Name"/>
+    <Property Name="Activated" Description="激活的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="ObjectKey" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
     <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>

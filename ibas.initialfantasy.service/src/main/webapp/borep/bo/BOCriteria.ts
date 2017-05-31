@@ -19,11 +19,11 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
-    config,
 } from "ibas/index";
 import {
     IBOCriteria,
-    BO_CODE_BOCRITERIA
+    emAssignedType,
+    BO_CODE_BOCRITERIA,
 } from "../../api/index";
 
 /** 业务对象检索条件 */
@@ -46,17 +46,6 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
         this.setProperty(BOCriteria.PROPERTY_APPLICATIONID_NAME, value);
     }
 
-    /** 映射的属性名称-数据所有者 */
-    static PROPERTY_DATAOWNER_NAME: string = "DataOwner";
-    /** 获取-数据所有者 */
-    get dataOwner(): number {
-        return this.getProperty<number>(BOCriteria.PROPERTY_DATAOWNER_NAME);
-    }
-    /** 设置-数据所有者 */
-    set dataOwner(value: number) {
-        this.setProperty(BOCriteria.PROPERTY_DATAOWNER_NAME, value);
-    }
-
     /** 映射的属性名称-检索名称 */
     static PROPERTY_NAME_NAME: string = "Name";
     /** 获取-检索名称 */
@@ -66,6 +55,28 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
     /** 设置-检索名称 */
     set name(value: string) {
         this.setProperty(BOCriteria.PROPERTY_NAME_NAME, value);
+    }
+
+    /** 映射的属性名称-指派类型 */
+    static PROPERTY_ASSIGNEDTYPE_NAME: string = "AssignedType";
+    /** 获取-指派类型 */
+    get assignedType(): emAssignedType {
+        return this.getProperty<emAssignedType>(BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME);
+    }
+    /** 设置-指派类型 */
+    set assignedType(value: emAssignedType) {
+        this.setProperty(BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME, value);
+    }
+
+    /** 映射的属性名称-指派目标 */
+    static PROPERTY_ASSIGNED_NAME: string = "Assigned";
+    /** 获取-指派目标 */
+    get assigned(): string {
+        return this.getProperty<string>(BOCriteria.PROPERTY_ASSIGNED_NAME);
+    }
+    /** 设置-指派目标 */
+    set assigned(value: string) {
+        this.setProperty(BOCriteria.PROPERTY_ASSIGNED_NAME, value);
     }
 
     /** 映射的属性名称-激活的 */
@@ -79,6 +90,17 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
         this.setProperty(BOCriteria.PROPERTY_ACTIVATED_NAME, value);
     }
 
+    /** 映射的属性名称-查询数据 */
+    static PROPERTY_DATA_NAME: string = "Data";
+    /** 获取-查询数据 */
+    get data(): string {
+        return this.getProperty<string>(BOCriteria.PROPERTY_DATA_NAME);
+    }
+    /** 设置-查询数据 */
+    set data(value: string) {
+        this.setProperty(BOCriteria.PROPERTY_DATA_NAME, value);
+    }
+
     /** 映射的属性名称-顺序 */
     static PROPERTY_ORDER_NAME: string = "Order";
     /** 获取-顺序 */
@@ -88,28 +110,6 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
     /** 设置-顺序 */
     set order(value: number) {
         this.setProperty(BOCriteria.PROPERTY_ORDER_NAME, value);
-    }
-
-    /** 映射的属性名称-归属角色 */
-    static PROPERTY_BELONGROLE_NAME: string = "BelongRole";
-    /** 获取-归属角色 */
-    get belongRole(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_BELONGROLE_NAME);
-    }
-    /** 设置-归属角色 */
-    set belongRole(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_BELONGROLE_NAME, value);
-    }
-
-    /** 映射的属性名称-查询数据 */
-    static PROPERTY_CRITERIADATA_NAME: string = "CriteriaData";
-    /** 获取-查询数据 */
-    get criteriaData(): string {
-        return this.getProperty<string>(BOCriteria.PROPERTY_CRITERIADATA_NAME);
-    }
-    /** 设置-查询数据 */
-    set criteriaData(value: string) {
-        this.setProperty(BOCriteria.PROPERTY_CRITERIADATA_NAME, value);
     }
 
     /** 映射的属性名称-编号 */
@@ -270,7 +270,7 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = config.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE);
+        this.objectCode = BOCriteria.BUSINESS_OBJECT_CODE;
     }
 }
 

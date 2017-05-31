@@ -25,7 +25,7 @@ public class UserQuery {
 		query.setId(boItem.getApplicationId());
 		query.setName(boItem.getName());
 		query.setOrder(boItem.getOrder());
-		query.setCriteria(boItem.getCriteriaData());
+		query.setCriteria(boItem.getData());
 		return query;
 	}
 
@@ -82,6 +82,17 @@ public class UserQuery {
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+
+	private String user;
+
+	@XmlElement(name = "User")
+	public final String getUser() {
+		return user;
+	}
+
+	public final void setUser(String user) {
+		this.user = user;
 	}
 
 	@Override

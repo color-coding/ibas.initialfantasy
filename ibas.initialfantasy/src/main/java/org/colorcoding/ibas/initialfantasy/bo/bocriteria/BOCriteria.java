@@ -14,6 +14,7 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 
 /**
  * 获取-业务对象检索条件
@@ -28,7 +29,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = 8955997678489555735L;
+	private static final long serialVersionUID = -2958785600172870176L;
 
 	/**
 	 * 当前类型
@@ -83,38 +84,6 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	}
 
 	/**
-	 * 属性名称-数据所有者
-	 */
-	private static final String PROPERTY_DATAOWNER_NAME = "DataOwner";
-
-	/**
-	 * 数据所有者 属性
-	 */
-	@DbField(name = "DataOwner", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<Integer> PROPERTY_DATAOWNER = registerProperty(PROPERTY_DATAOWNER_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-数据所有者
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_DATAOWNER_NAME)
-	public final Integer getDataOwner() {
-		return this.getProperty(PROPERTY_DATAOWNER);
-	}
-
-	/**
-	 * 设置-数据所有者
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setDataOwner(Integer value) {
-		this.setProperty(PROPERTY_DATAOWNER, value);
-	}
-
-	/**
 	 * 属性名称-检索名称
 	 */
 	private static final String PROPERTY_NAME_NAME = "Name";
@@ -144,6 +113,70 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	 */
 	public final void setName(String value) {
 		this.setProperty(PROPERTY_NAME, value);
+	}
+
+	/**
+	 * 属性名称-指派类型
+	 */
+	private static final String PROPERTY_ASSIGNEDTYPE_NAME = "AssignedType";
+
+	/**
+	 * 指派类型 属性
+	 */
+	@DbField(name = "AssignedType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emAssignedType> PROPERTY_ASSIGNEDTYPE = registerProperty(
+			PROPERTY_ASSIGNEDTYPE_NAME, emAssignedType.class, MY_CLASS);
+
+	/**
+	 * 获取-指派类型
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_ASSIGNEDTYPE_NAME)
+	public final emAssignedType getAssignedType() {
+		return this.getProperty(PROPERTY_ASSIGNEDTYPE);
+	}
+
+	/**
+	 * 设置-指派类型
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setAssignedType(emAssignedType value) {
+		this.setProperty(PROPERTY_ASSIGNEDTYPE, value);
+	}
+
+	/**
+	 * 属性名称-指派目标
+	 */
+	private static final String PROPERTY_ASSIGNED_NAME = "Assigned";
+
+	/**
+	 * 指派目标 属性
+	 */
+	@DbField(name = "Assigned", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_ASSIGNED = registerProperty(PROPERTY_ASSIGNED_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-指派目标
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_ASSIGNED_NAME)
+	public final String getAssigned() {
+		return this.getProperty(PROPERTY_ASSIGNED);
+	}
+
+	/**
+	 * 设置-指派目标
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setAssigned(String value) {
+		this.setProperty(PROPERTY_ASSIGNED, value);
 	}
 
 	/**
@@ -179,6 +212,38 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	}
 
 	/**
+	 * 属性名称-查询数据
+	 */
+	private static final String PROPERTY_DATA_NAME = "Data";
+
+	/**
+	 * 查询数据 属性
+	 */
+	@DbField(name = "Data", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_DATA = registerProperty(PROPERTY_DATA_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-查询数据
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_DATA_NAME)
+	public final String getData() {
+		return this.getProperty(PROPERTY_DATA);
+	}
+
+	/**
+	 * 设置-查询数据
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setData(String value) {
+		this.setProperty(PROPERTY_DATA, value);
+	}
+
+	/**
 	 * 属性名称-顺序
 	 */
 	private static final String PROPERTY_ORDER_NAME = "Order";
@@ -208,70 +273,6 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	 */
 	public final void setOrder(Integer value) {
 		this.setProperty(PROPERTY_ORDER, value);
-	}
-
-	/**
-	 * 属性名称-归属角色
-	 */
-	private static final String PROPERTY_BELONGROLE_NAME = "BelongRole";
-
-	/**
-	 * 归属角色 属性
-	 */
-	@DbField(name = "Role", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_BELONGROLE = registerProperty(PROPERTY_BELONGROLE_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-归属角色
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_BELONGROLE_NAME)
-	public final String getBelongRole() {
-		return this.getProperty(PROPERTY_BELONGROLE);
-	}
-
-	/**
-	 * 设置-归属角色
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setBelongRole(String value) {
-		this.setProperty(PROPERTY_BELONGROLE, value);
-	}
-
-	/**
-	 * 属性名称-查询数据
-	 */
-	private static final String PROPERTY_CRITERIADATA_NAME = "CriteriaData";
-
-	/**
-	 * 查询数据 属性
-	 */
-	@DbField(name = "Criteria", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_CRITERIADATA = registerProperty(PROPERTY_CRITERIADATA_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-查询数据
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_CRITERIADATA_NAME)
-	public final String getCriteriaData() {
-		return this.getProperty(PROPERTY_CRITERIADATA);
-	}
-
-	/**
-	 * 设置-查询数据
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setCriteriaData(String value) {
-		this.setProperty(PROPERTY_CRITERIADATA, value);
 	}
 
 	/**
@@ -729,7 +730,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(BUSINESS_OBJECT_CODE);
-		this.setActivated(emYesNo.YES);
+
 	}
 
 }

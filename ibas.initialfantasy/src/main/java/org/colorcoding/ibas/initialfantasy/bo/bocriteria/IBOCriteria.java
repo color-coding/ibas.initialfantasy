@@ -26,21 +26,6 @@ public interface IBOCriteria extends IBOSimple {
 
 
     /**
-    * 获取-数据所有者
-    * 
-    * @return 值
-    */
-    Integer getDataOwner();
-
-    /**
-    * 设置-数据所有者
-    * 
-    * @param value 值
-    */
-    void setDataOwner(Integer value);
-
-
-    /**
     * 获取-检索名称
     * 
     * @return 值
@@ -53,6 +38,36 @@ public interface IBOCriteria extends IBOSimple {
     * @param value 值
     */
     void setName(String value);
+
+
+    /**
+    * 获取-指派类型
+    * 
+    * @return 值
+    */
+    emAssignedType getAssignedType();
+
+    /**
+    * 设置-指派类型
+    * 
+    * @param value 值
+    */
+    void setAssignedType(emAssignedType value);
+
+
+    /**
+    * 获取-指派目标
+    * 
+    * @return 值
+    */
+    String getAssigned();
+
+    /**
+    * 设置-指派目标
+    * 
+    * @param value 值
+    */
+    void setAssigned(String value);
 
 
     /**
@@ -71,6 +86,21 @@ public interface IBOCriteria extends IBOSimple {
 
 
     /**
+    * 获取-查询数据
+    * 
+    * @return 值
+    */
+    String getData();
+
+    /**
+    * 设置-查询数据
+    * 
+    * @param value 值
+    */
+    void setData(String value);
+
+
+    /**
     * 获取-顺序
     * 
     * @return 值
@@ -83,36 +113,6 @@ public interface IBOCriteria extends IBOSimple {
     * @param value 值
     */
     void setOrder(Integer value);
-
-
-    /**
-    * 获取-归属角色
-    * 
-    * @return 值
-    */
-    String getBelongRole();
-
-    /**
-    * 设置-归属角色
-    * 
-    * @param value 值
-    */
-    void setBelongRole(String value);
-
-
-    /**
-    * 获取-查询数据
-    * 
-    * @return 值
-    */
-    String getCriteriaData();
-
-    /**
-    * 设置-查询数据
-    * 
-    * @param value 值
-    */
-    void setCriteriaData(String value);
 
 
     /**

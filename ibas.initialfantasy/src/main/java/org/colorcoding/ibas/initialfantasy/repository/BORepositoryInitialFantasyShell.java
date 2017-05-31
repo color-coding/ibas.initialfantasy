@@ -35,6 +35,7 @@ import org.colorcoding.ibas.initialfantasy.bo.shells.User;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
+import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
 /**
@@ -189,9 +190,13 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setBracketClose(1);
 			// 自己的查询
 			condition = criteria.getConditions().create();
-			condition.setBracketOpen(1);
-			condition.setAlias(BOCriteria.PROPERTY_DATAOWNER.getName());
-			condition.setValue(this.getCurrentUser().getId());
+			condition.setBracketOpen(2);
+			condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
+			condition.setValue(emAssignedType.USER);
+			condition = criteria.getConditions().create();
+			condition.setAlias(BOCriteria.PROPERTY_ASSIGNED.getName());
+			condition.setValue(user);
+			condition.setBracketClose(1);
 			// 所属角色的查询
 			IOrganizationManager manager = OrganizationFactory.create().createManager();
 			if (manager instanceof OrganizationManager) {
@@ -199,11 +204,16 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				for (String role : ifManager.getUserRoles(this.getCurrentUser())) {
 					condition = criteria.getConditions().create();
 					condition.setRelationship(ConditionRelationship.OR);
-					condition.setAlias(BOCriteria.PROPERTY_BELONGROLE.getName());
+					condition.setBracketOpen(1);
+					condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
+					condition.setValue(emAssignedType.ROLE);
+					condition = criteria.getConditions().create();
+					condition.setAlias(BOCriteria.PROPERTY_ASSIGNED.getName());
 					condition.setValue(role);
+					condition.setBracketClose(1);
 				}
 			}
-			condition.setBracketClose(1);
+			condition.setBracketClose(2);
 			// 按使用频率排序
 			ISort sort = criteria.getSorts().create();
 			sort.setAlias(BOCriteria.PROPERTY_ORDER.getName());
@@ -240,8 +250,12 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(BOCriteria.PROPERTY_NAME.getName());
 			condition.setValue(query.getName());
 			condition = criteria.getConditions().create();
-			condition.setAlias(BOCriteria.PROPERTY_DATAOWNER.getName());
-			condition.setValue(this.getCurrentUser().getId());
+			condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
+			condition.setValue(emAssignedType.USER);
+			condition = criteria.getConditions().create();
+			condition.setAlias(BOCriteria.PROPERTY_ASSIGNED.getName());
+			condition.setValue(
+					query.getUser() != null ? query.getUser() : String.valueOf(this.getCurrentUser().getId()));
 
 			myTrans = this.beginTransaction();
 			// 查询已经存在的并删除
@@ -267,10 +281,13 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				// 被保存的查询要求有数据，可用此机制删除数据
 				BOCriteria boCriteria = new BOCriteria();
 				boCriteria.setApplicationId(query.getId());
-				boCriteria.setDataOwner(this.getCurrentUser().getId());
+				boCriteria.setActivated(emYesNo.YES);
+				boCriteria.setAssignedType(emAssignedType.USER);
+				boCriteria.setAssigned(
+						query.getUser() != null ? query.getUser() : String.valueOf(this.getCurrentUser().getId()));
 				boCriteria.setName(query.getName());
 				boCriteria.setOrder(query.getOrder());
-				boCriteria.setCriteriaData(query.getCriteria());
+				boCriteria.setData(query.getCriteria());
 				IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boCriteria);
 				if (opRsltSave.getError() != null) {
 					throw opRsltSave.getError();
