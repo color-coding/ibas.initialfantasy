@@ -19,12 +19,81 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
     deleteDataEvent: Function;
     /** 新建数据事件，参数1：是否克隆 */
     createDataEvent: Function;
+    /** 选择应用 */
+    chooseApplicationEvent: Function;
+    /** 选择业务对象编码 */
+    chooseBOCodeEvent: Function;
+    /** 选择用户或角色 */
+    chooseRoleUserEvent: Function;
+    /** 编辑查询 */
+    editCriteriaEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
+        this.txtBOCode = new sap.m.Input("", {
+            showValueHelp: true,
+            valueHelpRequest: function (): void {
+                that.fireViewEvents(that.chooseBOCodeEvent);
+            }
+        });
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_applicationid") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseApplicationEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/applicationId"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_name") }),
+                new sap.m.Input("", {
+                    value: "{/name}",
+                    type: sap.m.InputType.Text
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assignedtype") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(bo.emAssignedType)
+                }).bindProperty("selectedKey", {
+                    path: "/assignedType",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assigned") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseRoleUserEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/assigned",
+                }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_bocriteria_setting") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("initialfantasy_bocriteria_bocode") }),
+                this.txtBOCode,
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_data") }),
+                new sap.m.TextArea("", {
+                    rows: 6,
+
+                }).bindProperty("value", {
+                    path: "/data",
+                }),
+                new sap.m.Label("", {}),
+                new sap.m.Button("", {
+                    text: ibas.i18n.prop("sys_shell_data_edit"),
+                    press: function (): void {
+                        that.fireViewEvents(that.editCriteriaEvent);
+                    }
+                }),
             ]
         });
         this.page = new sap.m.Page("", {
@@ -91,6 +160,11 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
+    private txtBOCode: sap.m.Input;
+    get useBOCode(): string {
+        return this.txtBOCode.getValue();
+    }
+
     /** 改变视图状态 */
     private changeViewStatus(data: bo.BOCriteria): void {
         if (ibas.objects.isNull(data)) {

@@ -42,7 +42,6 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
     }
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
-        try {
             this.busy(true);
             let that: this = this;
             let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
@@ -61,9 +60,6 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
                 }
             });
             this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
-        } catch (error) {
-            this.messages(error);
-        }
     }
     /** 新建数据 */
     protected newData(): void {

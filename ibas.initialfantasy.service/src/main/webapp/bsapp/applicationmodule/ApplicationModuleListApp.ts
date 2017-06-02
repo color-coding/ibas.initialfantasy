@@ -42,28 +42,24 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
     }
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
-        try {
-            this.busy(true);
-            let that: this = this;
-            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-            boRepository.fetchApplicationModule({
-                criteria: criteria,
-                onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
-                    try {
-                        if (opRslt.resultCode !== 0) {
-                            throw new Error(opRslt.message);
-                        }
-                        that.view.showData(opRslt.resultObjects);
-                        that.busy(false);
-                    } catch (error) {
-                        that.messages(error);
+        this.busy(true);
+        let that: this = this;
+        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+        boRepository.fetchApplicationModule({
+            criteria: criteria,
+            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationModule>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
                     }
+                    that.view.showData(opRslt.resultObjects);
+                    that.busy(false);
+                } catch (error) {
+                    that.messages(error);
                 }
-            });
-            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
-        } catch (error) {
-            this.messages(error);
-        }
+            }
+        });
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
