@@ -20,3 +20,4 @@ export * from "./Ownership.d";
 export * from "./Privilege.d";
 export * from "./Role.d";
 export * from "./User.d";
+export * from "./BOInformation.d";

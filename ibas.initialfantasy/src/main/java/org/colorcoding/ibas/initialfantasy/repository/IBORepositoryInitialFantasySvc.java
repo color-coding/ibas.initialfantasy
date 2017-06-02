@@ -37,6 +37,17 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 */
 	OperationResult<BOInformation> fetchBOInformation(ICriteria criteria, String token);
 
+	/**
+	 * 保存-业务对象信息
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOInformation> saveBOInformation(BOInformation bo, String token);
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-应用程序功能

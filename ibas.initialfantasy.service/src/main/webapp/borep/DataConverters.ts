@@ -44,6 +44,10 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
             if (property === bo.User.PROPERTY_SUPER_NAME) {
                 return ibas.enums.toString(ibas.emYesNo, value);
             }
+        } else if (boName === bo.BOCriteria.name) {
+            if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
+                return ibas.enums.toString(bo.emAssignedType, value);
+            }
         }
         return super.convertData(boName, property, value);
     }
@@ -59,6 +63,10 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
         if (boName === bo.User.name) {
             if (property === bo.User.PROPERTY_SUPER_NAME) {
                 return ibas.enums.valueOf(ibas.emYesNo, value);
+            }
+        } else if (boName === bo.BOCriteria.name) {
+            if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
+                return ibas.enums.valueOf(bo.emAssignedType, value);
             }
         }
         return super.parsingData(boName, property, value);

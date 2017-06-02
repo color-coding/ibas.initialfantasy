@@ -1,0 +1,20 @@
+{
+  "bo_boinformation": "业务对象信息",
+  "bo_boinformation_name": "名称",
+  "bo_boinformation_code": "编码",
+  "bo_boinformation_description": "描述",
+  "bo_boinformation_mapped": "映射（表）",
+  "bo_boinformation_objecttype": "对象类型",
+  "bo_boinformation_bopropertyinformations": "业务对象属性信息",
+  "bo_bopropertyinformation": "业务对象属性信息",
+  "bo_bopropertyinformation_name": "名称",
+  "bo_bopropertyinformation_property": "属性名称",
+  "bo_bopropertyinformation_mapped": "映射（字段）",
+  "bo_bopropertyinformation_description": "描述",
+  "bo_bopropertyinformation_datatype": "数据类型",
+  "bo_bopropertyinformation_edittype": "编辑类型",
+  "bo_bopropertyinformation_editsize": "编辑大小",
+  "bo_bopropertyinformation_searched": "检索的",
+  "bo_bopropertyinformation_systemed": "系统的",
+  "bo_boinformation_closing_delimiter": "----结束----"
+}

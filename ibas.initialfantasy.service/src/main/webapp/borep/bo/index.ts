@@ -21,6 +21,7 @@ export * from "./Ownership";
 export * from "./Privilege";
 export * from "./Role";
 export * from "./User";
+export * from "./BOInformation";
 
 // 注册业务对象到工厂
 import * as ibas from "ibas/index";
@@ -50,3 +51,5 @@ import { Role } from "./Role";
 ibas.boFactory.register(Role.BUSINESS_OBJECT_CODE, Role);
 import { User } from "./User";
 ibas.boFactory.register(User.BUSINESS_OBJECT_CODE, User);
+import { BOInformation } from "./BOInformation";
+ibas.boFactory.register(BOInformation.BUSINESS_OBJECT_CODE, BOInformation);

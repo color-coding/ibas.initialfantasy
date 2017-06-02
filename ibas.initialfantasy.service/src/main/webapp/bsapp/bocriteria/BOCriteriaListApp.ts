@@ -9,7 +9,6 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { BOCriteriaViewApp } from "./BOCriteriaViewApp";
 import { BOCriteriaEditApp } from "./BOCriteriaEditApp";
 
 /** 列表应用-业务对象检索条件 */
@@ -71,17 +70,6 @@ export class BOCriteriaListApp extends ibas.BOListApplication<IBOCriteriaListVie
     /** 查看数据，参数：目标数据 */
     protected viewData(data: bo.BOCriteria): void {
         // 检查目标数据
-        if (ibas.objects.isNull(data)) {
-            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
-                ibas.i18n.prop("sys_shell_data_view")
-            ));
-            return;
-        }
-        let app: BOCriteriaViewApp = new BOCriteriaViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.BOCriteria): void {

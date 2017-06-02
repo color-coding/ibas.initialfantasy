@@ -9,12 +9,12 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IBOCriteriaViewView } from "../../../bsapp/bocriteria/index";
+import { IBOInformationViewView } from "../../../bsapp/boinformation/index";
 
 /**
- * 视图-BOCriteria
+ * 视图-BOInformation
  */
-export class BOCriteriaViewView extends ibas.BOViewView implements IBOCriteriaViewView {
+export class BOInformationViewView extends ibas.BOViewView implements IBOInformationViewView {
 
     /** 绘制视图 */
     darw(): any {
@@ -23,6 +23,15 @@ export class BOCriteriaViewView extends ibas.BOViewView implements IBOCriteriaVi
             content: [
             ]
         });
+        this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bopropertyinformation") }));
+        this.tableBOPropertyInformation = new sap.ui.table.Table("", {
+            enableSelectAll: false,
+            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            rows: "{/rows}",
+            columns: [
+            ]
+        });
+        this.form.addContent(this.tableBOPropertyInformation);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Bar("", {
@@ -76,9 +85,14 @@ export class BOCriteriaViewView extends ibas.BOViewView implements IBOCriteriaVi
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
+    private tableBOPropertyInformation: sap.ui.table.Table;
 
     /** 显示数据 */
-    showBOCriteria(data: bo.BOCriteria): void {
+    showBOInformation(data: bo.BOInformation): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
+    }
+    /** 显示数据 */
+    showBOPropertyInformations(datas: bo.BOPropertyInformation[]): void {
+        this.tableBOPropertyInformation.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
     }
 }

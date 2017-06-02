@@ -22,7 +22,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
     /** 选择应用 */
     chooseApplicationEvent: Function;
     /** 选择业务对象编码 */
-    chooseBOCodeEvent: Function;
+    chooseTargetEvent: Function;
     /** 选择用户或角色 */
     chooseRoleUserEvent: Function;
     /** 编辑查询 */
@@ -34,7 +34,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
         this.txtBOCode = new sap.m.Input("", {
             showValueHelp: true,
             valueHelpRequest: function (): void {
-                that.fireViewEvents(that.chooseBOCodeEvent);
+                that.fireViewEvents(that.chooseTargetEvent);
             }
         });
         this.form = new sap.ui.layout.form.SimpleForm("", {
@@ -161,8 +161,11 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
     private txtBOCode: sap.m.Input;
-    get useBOCode(): string {
+    get target(): string {
         return this.txtBOCode.getValue();
+    }
+    set target(value: string) {
+        this.txtBOCode.setValue(value);
     }
 
     /** 改变视图状态 */

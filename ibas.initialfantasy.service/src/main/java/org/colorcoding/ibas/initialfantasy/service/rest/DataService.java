@@ -18,6 +18,7 @@ import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.ApprovalRequest;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.ApprovalTemplate;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
@@ -640,6 +641,41 @@ public class DataService extends BORepositoryInitialFantasyShell {
 			@QueryParam("token") String token) {
 		emApprovalResult emApReslut = emApprovalResult.valueOf(apResult);
 		return super.approval(apRequestId, apStepId, emApReslut, judgment, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象信息
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBOInformation")
+	public OperationResult<BOInformation> fetchBOInformation(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchBOInformation(criteria, token);
+	}
+
+	/**
+	 * 保存-业务对象信息
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBOInformation")
+	public OperationResult<BOInformation> saveBOInformation(BOInformation bo, @QueryParam("token") String token) {
+		return super.saveBOInformation(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

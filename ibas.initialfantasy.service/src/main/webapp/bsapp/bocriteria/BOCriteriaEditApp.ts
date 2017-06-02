@@ -9,6 +9,8 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import { DataConverterOnline } from "../../borep/DataConverters";
+import { CriteriaEditorApp } from "./CriteriaEditorApp";
 
 /** 应用-业务对象检索条件 */
 export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditView, bo.BOCriteria> {
@@ -34,7 +36,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         this.view.deleteDataEvent = this.deleteData;
         this.view.createDataEvent = this.createData;
         this.view.chooseApplicationEvent = this.chooseApplication;
-        this.view.chooseBOCodeEvent = this.chooseBOCode;
+        this.view.chooseTargetEvent = this.chooseTarget;
         this.view.chooseRoleUserEvent = this.chooseRoleUser;
         this.view.editCriteriaEvent = this.editCriteria;
     }
@@ -175,8 +177,14 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
 
     }
     /** 选择业务对象编码 */
-    chooseBOCode(): void {
-        // 未提供选择方法
+    chooseTarget(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.BOInformation>({
+            boCode: bo.BO_CODE_BOINFORMATION,
+            onCompleted(selecteds: ibas.List<bo.BOInformation>): void {
+                that.view.target = selecteds.firstOrDefault().name;
+            }
+        });
     }
     /** 选择用户或角色 */
     chooseRoleUser(): void {
@@ -199,9 +207,35 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
     }
     /** 编辑查询 */
     editCriteria(): void {
-        if (ibas.objects.isNull(this.view.useBOCode) || this.view.useBOCode.length === 0) {
-            throw new Error(ibas.i18n.prop("initialfantasy_please_choose_bocode"));
+        let criteria: ibas.ICriteria;
+        if (!ibas.objects.isNull(this.editData.data) && this.editData.data.length > 0) {
+            let tmp: any = JSON.parse(this.editData.data);
+            let converter: DataConverterOnline = new DataConverterOnline();
+            criteria = converter.parsing(tmp, "");
+            if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
+                this.view.target = criteria.boCode;
+            }
         }
+        if (ibas.objects.isNull(this.view.target) || this.view.target.length === 0) {
+            throw new Error(ibas.i18n.prop("initialfantasy_please_choose_target"));
+        }
+        if (ibas.objects.isNull(criteria)) {
+            criteria = new ibas.Criteria();
+            criteria.boCode = this.view.target;
+        }
+        let that: this = this;
+        let editor: CriteriaEditorApp = new CriteriaEditorApp();
+        editor.viewShower = this.viewShower;
+        editor.navigation = this.navigation;
+        editor.edit({
+            criteria: criteria,
+            onCompleted(opRslt: ibas.IOperationResult<ibas.ICriteria>): void {
+                // 编辑完成
+                let converter: DataConverterOnline = new DataConverterOnline();
+                let tmp: any = converter.convert(this.criteria, "");
+                that.editData.data = JSON.stringify(tmp);
+            }
+        });
     }
 }
 /** 视图-业务对象检索条件 */
@@ -214,13 +248,13 @@ export interface IBOCriteriaEditView extends ibas.IBOEditView {
     createDataEvent: Function;
     /** 选择应用 */
     chooseApplicationEvent: Function;
-    /** 选择业务对象编码 */
-    chooseBOCodeEvent: Function;
+    /** 选择查询目标 */
+    chooseTargetEvent: Function;
     /** 选择用户或角色 */
     chooseRoleUserEvent: Function;
     /** 编辑查询 */
     editCriteriaEvent: Function;
-    /** 使用的业务对象编码 */
-    readonly useBOCode: string;
+    /** 编辑目标名称 */
+    target: string;
 
 }

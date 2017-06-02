@@ -38,6 +38,8 @@ export const BO_CODE_PRIVILEGE: string = "${Company}_SYS_PRIVILEGE";
 export const BO_CODE_ROLE: string = "${Company}_SYS_ROLE";
 /** 业务对象编码-用户 */
 export const BO_CODE_USER: string = "${Company}_SYS_USER";
+/** 业务对象编码-业务对象信息 */
+export const BO_CODE_BOINFORMATION: string = "${Company}_SYS_BOINFO";
 
 export enum emApprovalStepOwnerType {
     USER,

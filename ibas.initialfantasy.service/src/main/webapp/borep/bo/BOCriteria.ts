@@ -19,6 +19,7 @@ import {
     BODocumentLine,
     BOSimple,
     BOSimpleLine,
+    config,
 } from "ibas/index";
 import {
     IBOCriteria,
@@ -270,7 +271,9 @@ export class BOCriteria extends BOSimple<BOCriteria> implements IBOCriteria {
 
     /** 初始化数据 */
     protected init(): void {
-        this.objectCode = BOCriteria.BUSINESS_OBJECT_CODE;
+        this.objectCode = config.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE);
+        this.assignedType = emAssignedType.ROLE;
+        this.activated = emYesNo.YES;
     }
 }
 

@@ -12,12 +12,13 @@ import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from ".
 import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
 import { ApprovalRequestFunc, ApprovalRequestChooseServiceMapping, ApprovalRequestLinkServiceMapping } from "./approvalrequest/index";
 import { ApprovalTemplateFunc, ApprovalTemplateChooseServiceMapping, ApprovalTemplateLinkServiceMapping } from "./approvaltemplate/index";
-import { BOCriteriaFunc, BOCriteriaChooseServiceMapping, BOCriteriaLinkServiceMapping } from "./bocriteria/index";
+import { BOCriteriaFunc, BOCriteriaChooseServiceMapping } from "./bocriteria/index";
 import { BOFilteringFunc, BOFilteringChooseServiceMapping, BOFilteringLinkServiceMapping } from "./bofiltering/index";
 import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
 import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping } from "./organizationalstructure/index";
 import { OwnershipFunc, OwnershipChooseServiceMapping, OwnershipLinkServiceMapping } from "./ownership/index";
 import { PrivilegeFunc, PrivilegeChooseServiceMapping, PrivilegeLinkServiceMapping } from "./privilege/index";
+import { BOInformationFunc, BOInformationChooseServiceMapping, BOInformationLinkServiceMapping } from "./boinformation/index";
 import { RoleFunc, RoleChooseServiceMapping, RoleLinkServiceMapping } from "./role/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping } from "./user/index";
 
@@ -56,6 +57,7 @@ export class Console extends ibas.ModuleConsole {
             this.register(new ApplicationPlatformFunc());
             this.register(new ApprovalTemplateFunc());
             this.register(new ApprovalRequestFunc());
+            this.register(new BOInformationFunc());
         }
         // 注册服务应用
         this.register(new ApplicationFunctionChooseServiceMapping());
@@ -69,6 +71,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new RoleLinkServiceMapping());
         this.register(new UserChooseServiceMapping());
         this.register(new UserLinkServiceMapping());
+        this.register(new BOInformationChooseServiceMapping());
         // 注册常驻应用
 
     }
@@ -89,6 +92,7 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/privilege.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/role.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/user.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/boinformation.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
