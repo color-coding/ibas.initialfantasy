@@ -9,4 +9,4 @@
 import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
-import { IUserViewView } from "../../../bsapp/user/index";
+import { IUserEditView } from "../../../bsapp/user/index";

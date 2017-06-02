@@ -158,5 +158,15 @@ export interface IBORepositoryInitialFantasy {
      */
     saveUser(saver: SaveCaller<bo.IUser>);
 
+    /**
+     * 查询 业务对象信息
+     * @param fetcher 查询者
+     */
+    fetchBOInformation(fetcher: FetchCaller<bo.IBOInformation>);
+    /**
+     * 保存 业务对象信息
+     * @param saver 保存者
+     */
+    saveBOInformation(saver: SaveCaller<bo.IBOInformation>);
 
 }

@@ -218,6 +218,20 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
     saveUser(saver: ibas.SaveCaller<bo.User>): void {
         super.save(bo.User.name, saver);
     }
+    /**
+     * 查询 业务对象信息
+     * @param fetcher 查询者
+     */
+    fetchBOInformation(fetcher: ibas.FetchCaller<bo.BOInformation>): void {
+        super.fetch(bo.BOInformation.name, fetcher);
+    }
+    /**
+     * 保存 业务对象信息
+     * @param saver 保存者
+     */
+    saveBOInformation(saver: ibas.SaveCaller<bo.BOInformation>): void {
+        super.save(bo.BOInformation.name, saver);
+    }
 
 }
 // 注册业务对象仓库到工厂

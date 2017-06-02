@@ -72,6 +72,30 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		return new OperationResult<IBOInformation>(this.fetchBOInformation(criteria, this.getUserToken()));
 	}
 
+	/**
+	 * 保存-业务对象信息
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOInformation> saveBOInformation(BOInformation bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-业务对象信息（提前设置用户口令）
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOInformation> saveBOInformation(IBOInformation bo) {
+		return new OperationResult<IBOInformation>(this.saveBOInformation((BOInformation) bo, this.getUserToken()));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-应用程序功能

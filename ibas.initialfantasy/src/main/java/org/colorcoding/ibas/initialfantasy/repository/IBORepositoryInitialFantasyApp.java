@@ -35,6 +35,15 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 */
 	IOperationResult<IBOInformation> fetchBOInformation(ICriteria criteria);
 
+	/**
+	 * 保存-业务对象信息
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IBOInformation> saveBOInformation(IBOInformation bo);
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-应用程序功能

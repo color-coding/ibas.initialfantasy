@@ -33,6 +33,8 @@ import * as ownershipViews from "./ownership/index";
 import * as privilegeViews from "./privilege/index";
 import * as roleViews from "./role/index";
 import * as userViews from "./user/index";
+import * as boinformationApps from "../../bsapp/boinformation/index";
+import * as boinformationViews from "./boinformation/index";
 
 /**
  * 视图导航
@@ -112,8 +114,8 @@ export default class Navigation extends ibas.ViewNavigation {
             case bocriteriaApps.BOCriteriaChooseApp.APPLICATION_ID:
                 view = new bocriteriaViews.BOCriteriaChooseView();
                 break;
-            case bocriteriaApps.BOCriteriaViewApp.APPLICATION_ID:
-                view = new bocriteriaViews.BOCriteriaViewView();
+            case bocriteriaApps.CriteriaEditorApp.APPLICATION_ID:
+                view = new bocriteriaViews.CriteriaEditorView();
                 break;
             case bocriteriaApps.BOCriteriaEditApp.APPLICATION_ID:
                 view = new bocriteriaViews.BOCriteriaEditView();
@@ -201,6 +203,18 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case userApps.UserEditApp.APPLICATION_ID:
                 view = new userViews.UserEditView();
+                break;
+            case boinformationApps.BOInformationListApp.APPLICATION_ID:
+                view = new boinformationViews.BOInformationListView();
+                break;
+            case boinformationApps.BOInformationChooseApp.APPLICATION_ID:
+                view = new boinformationViews.BOInformationChooseView();
+                break;
+            case boinformationApps.BOInformationViewApp.APPLICATION_ID:
+                view = new boinformationViews.BOInformationViewView();
+                break;
+            case boinformationApps.BOInformationEditApp.APPLICATION_ID:
+                view = new boinformationViews.BOInformationEditView();
                 break;
             default:
                 break;
