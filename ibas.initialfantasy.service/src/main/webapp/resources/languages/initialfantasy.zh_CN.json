@@ -41,11 +41,12 @@
   "initialfantasy_app_organization_choose": "组织选择",
   "initialfantasy_app_organization_view": "组织查看",
   "initialfantasy_app_organization_edit": "组织编辑",
-  "initialfantasy_func_organizationalstructure": "组织-结构",
+  "initialfantasy_func_organizationalstructure": "组织结构",
   "initialfantasy_app_organizationalstructure_list": "组织-结构列表",
   "initialfantasy_app_organizationalstructure_choose": "组织-结构选择",
   "initialfantasy_app_organizationalstructure_view": "组织-结构查看",
   "initialfantasy_app_organizationalstructure_edit": "组织-结构编辑",
+  "initialfantasy_app_organizationalstructure_wizard": "组织结构维护向导",
   "initialfantasy_func_ownership": "数据权限",
   "initialfantasy_app_ownership_list": "数据权限列表",
   "initialfantasy_app_ownership_choose": "数据权限选择",
@@ -79,5 +80,9 @@
   "initialfantasy_app_criteria_editor": "查询编辑",
   "initialfantasy_invaild_edit_target": "无效的编辑目标",
   "initialfantasy_edit_target": "编辑目标",
+  "initialfantasy_org_wizard_choose": "选择组织结构",
+  "initialfantasy_org_wizard_date": "维护有效日期",
+  "initialfantasy_org_wizard_alter": "调整结构",
+  "initialfantasy_org_wizard_save": "保存",
   "initialfantasy_closing_delimiter": "----结束----"
 }

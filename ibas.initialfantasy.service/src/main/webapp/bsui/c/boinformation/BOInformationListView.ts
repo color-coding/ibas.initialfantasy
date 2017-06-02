@@ -72,6 +72,7 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
             showHeader: false,
             subHeader: new sap.m.Bar("", {
                 contentLeft: [
+                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_new"),
                         type: sap.m.ButtonType.Transparent,
@@ -80,7 +81,6 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
                             that.fireViewEvents(that.newDataEvent);
                         }
                     }),
-                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_view"),
                         type: sap.m.ButtonType.Transparent,
@@ -89,6 +89,17 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
                                 utils.getTableSelecteds<bo.BOInformation>(that.table).firstOrDefault()
+                            );
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_data_delete"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://delete",
+                        press: function (): void {
+                            that.fireViewEvents(that.deleteDataEvent,
+                                // 获取表格选中的对象
+                                utils.getTableSelecteds<bo.BOInformation>(that.table)
                             );
                         }
                     }),
@@ -101,18 +112,6 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
                                 utils.getTableSelecteds<bo.BOInformation>(that.table).firstOrDefault()
-                            );
-                        }
-                    }),
-                    // new sap.m.ToolbarSeparator(""),// 加了后面不显示？
-                    new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_data_delete"),
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://delete",
-                        press: function (): void {
-                            that.fireViewEvents(that.deleteDataEvent,
-                                // 获取表格选中的对象
-                                utils.getTableSelecteds<bo.BOInformation>(that.table)
                             );
                         }
                     }),

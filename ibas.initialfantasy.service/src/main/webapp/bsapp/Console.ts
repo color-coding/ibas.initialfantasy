@@ -10,15 +10,15 @@ import * as ibas from "ibas/index";
 import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping } from "./applicationfunction/index";
 import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from "./applicationmodule/index";
 import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
-import { ApprovalRequestFunc, ApprovalRequestChooseServiceMapping, ApprovalRequestLinkServiceMapping } from "./approvalrequest/index";
-import { ApprovalTemplateFunc, ApprovalTemplateChooseServiceMapping, ApprovalTemplateLinkServiceMapping } from "./approvaltemplate/index";
-import { BOCriteriaFunc, BOCriteriaChooseServiceMapping } from "./bocriteria/index";
-import { BOFilteringFunc, BOFilteringChooseServiceMapping, BOFilteringLinkServiceMapping } from "./bofiltering/index";
+import { ApprovalRequestFunc, ApprovalRequestLinkServiceMapping } from "./approvalrequest/index";
+import { ApprovalTemplateFunc, ApprovalTemplateLinkServiceMapping } from "./approvaltemplate/index";
+import { BOCriteriaFunc, } from "./bocriteria/index";
+import { BOFilteringFunc, } from "./bofiltering/index";
 import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
-import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping } from "./organizationalstructure/index";
-import { OwnershipFunc, OwnershipChooseServiceMapping, OwnershipLinkServiceMapping } from "./ownership/index";
-import { PrivilegeFunc, PrivilegeChooseServiceMapping, PrivilegeLinkServiceMapping } from "./privilege/index";
-import { BOInformationFunc, BOInformationChooseServiceMapping, BOInformationLinkServiceMapping } from "./boinformation/index";
+import { OrganizationalStructureWizardFunc, OrganizationalStructureChooseServiceMapping } from "./organizationalstructure/index";
+import { OwnershipFunc, } from "./ownership/index";
+import { PrivilegeFunc, } from "./privilege/index";
+import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
 import { RoleFunc, RoleChooseServiceMapping, RoleLinkServiceMapping } from "./role/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping } from "./user/index";
 
@@ -45,25 +45,24 @@ export class Console extends ibas.ModuleConsole {
         this.register(new UserFunc());
         this.register(new RoleFunc());
         this.register(new OrganizationFunc());
+        this.register(new BOCriteriaFunc());
+        this.register(new OrganizationalStructureWizardFunc());
         if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)) {
             // 仅调试模式，启用以下功能
-            this.register(new OrganizationalStructureFunc());
-            this.register(new BOCriteriaFunc());
             this.register(new BOFilteringFunc());
             this.register(new OwnershipFunc());
             this.register(new PrivilegeFunc());
             this.register(new ApplicationFunctionFunc());
             this.register(new ApplicationModuleFunc());
             this.register(new ApplicationPlatformFunc());
+            this.register(new BOInformationFunc());
             this.register(new ApprovalTemplateFunc());
             this.register(new ApprovalRequestFunc());
-            this.register(new BOInformationFunc());
         }
         // 注册服务应用
         this.register(new ApplicationFunctionChooseServiceMapping());
         this.register(new ApplicationModuleChooseServiceMapping());
         this.register(new ApplicationPlatformChooseServiceMapping());
-        this.register(new ApprovalTemplateChooseServiceMapping());
         this.register(new ApprovalTemplateLinkServiceMapping());
         this.register(new OrganizationChooseServiceMapping());
         this.register(new OrganizationLinkServiceMapping());
@@ -72,6 +71,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new UserChooseServiceMapping());
         this.register(new UserLinkServiceMapping());
         this.register(new BOInformationChooseServiceMapping());
+        this.register(new OrganizationalStructureChooseServiceMapping());
         // 注册常驻应用
 
     }
