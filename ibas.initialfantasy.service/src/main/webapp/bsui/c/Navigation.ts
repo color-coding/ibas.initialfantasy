@@ -156,6 +156,9 @@ export default class Navigation extends ibas.ViewNavigation {
             case organizationalstructureApps.OrganizationalStructureEditApp.APPLICATION_ID:
                 view = new organizationalstructureViews.OrganizationalStructureEditView();
                 break;
+            case organizationalstructureApps.OrganizationalStructureWizardApp.APPLICATION_ID:
+                view = new organizationalstructureViews.OrganizationalStructureWizardView();
+                break;
             case ownershipApps.OwnershipListApp.APPLICATION_ID:
                 view = new ownershipViews.OwnershipListView();
                 break;

@@ -11,3 +11,4 @@ export * from "./OrganizationalStructureListView";
 export * from "./OrganizationalStructureChooseView";
 export * from "./OrganizationalStructureViewView";
 export * from "./OrganizationalStructureEditView";
+export * from "./OrganizationalStructureWizardView";

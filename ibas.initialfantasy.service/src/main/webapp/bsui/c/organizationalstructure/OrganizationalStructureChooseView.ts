@@ -60,6 +60,60 @@ export class OrganizationalStructureChooseView extends ibas.BOChooseView impleme
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             rows: "{/rows}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalstructure_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalstructure_organization"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "organization"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalstructure_belonging"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "belonging"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalstructure_manager"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "manager"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalstructure_validdate"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "validDate",
+                        formatter(data: Date): any {
+                            return ibas.dates.toString(data);
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalstructure_invaliddate"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "invalidDate",
+                        formatter(data: Date): any {
+                            return ibas.dates.toString(data);
+                        }
+                    })
+                }),
             ]
         });
         this.id = this.table.getId();
