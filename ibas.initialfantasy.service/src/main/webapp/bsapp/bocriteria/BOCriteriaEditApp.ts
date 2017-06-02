@@ -33,6 +33,10 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         // 其他事件
         this.view.deleteDataEvent = this.deleteData;
         this.view.createDataEvent = this.createData;
+        this.view.chooseApplicationEvent = this.chooseApplication;
+        this.view.chooseBOCodeEvent = this.chooseBOCode;
+        this.view.chooseRoleUserEvent = this.chooseRoleUser;
+        this.view.editCriteriaEvent = this.editCriteria;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -86,40 +90,36 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
     protected editData: bo.BOCriteria;
     /** 保存数据 */
     protected saveData(): void {
-        try {
-            let that: this = this;
-            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-            boRepository.saveBOCriteria({
-                beSaved: this.editData,
-                onCompleted(opRslt: ibas.IOperationResult<bo.BOCriteria>): void {
-                    try {
-                        that.busy(false);
-                        if (opRslt.resultCode !== 0) {
-                            throw new Error(opRslt.message);
-                        }
-                        if (opRslt.resultObjects.length === 0) {
-                            // 删除成功，释放当前对象
-                            that.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
-                            that.editData = undefined;
-                        } else {
-                            // 替换编辑对象
-                            that.editData = opRslt.resultObjects.firstOrDefault();
-                            that.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("sys_shell_data_save") + ibas.i18n.prop("sys_shell_sucessful"));
-                        }
-                        // 刷新当前视图
-                        that.viewShowed();
-                    } catch (error) {
-                        that.messages(error);
+        let that: this = this;
+        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+        boRepository.saveBOCriteria({
+            beSaved: this.editData,
+            onCompleted(opRslt: ibas.IOperationResult<bo.BOCriteria>): void {
+                try {
+                    that.busy(false);
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
                     }
+                    if (opRslt.resultObjects.length === 0) {
+                        // 删除成功，释放当前对象
+                        that.messages(ibas.emMessageType.SUCCESS,
+                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                        that.editData = undefined;
+                    } else {
+                        // 替换编辑对象
+                        that.editData = opRslt.resultObjects.firstOrDefault();
+                        that.messages(ibas.emMessageType.SUCCESS,
+                            ibas.i18n.prop("sys_shell_data_save") + ibas.i18n.prop("sys_shell_sucessful"));
+                    }
+                    // 刷新当前视图
+                    that.viewShowed();
+                } catch (error) {
+                    that.messages(error);
                 }
-            });
-            this.busy(true);
-            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_saving_data"));
-        } catch (error) {
-            this.messages(error);
-        }
+            }
+        });
+        this.busy(true);
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_saving_data"));
     }
     /** 删除数据 */
     protected deleteData(): void {
@@ -169,6 +169,40 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
             createData();
         }
     }
+    /** 选择应用 */
+    chooseApplication(): void {
+        // 未提供选择方法
+
+    }
+    /** 选择业务对象编码 */
+    chooseBOCode(): void {
+        // 未提供选择方法
+    }
+    /** 选择用户或角色 */
+    chooseRoleUser(): void {
+        let that: this = this;
+        if (this.editData.assignedType === bo.emAssignedType.ROLE) {
+            ibas.servicesManager.runChooseService<bo.Role>({
+                boCode: bo.BO_CODE_ROLE,
+                onCompleted(selecteds: ibas.List<bo.Role>): void {
+                    that.editData.assigned = selecteds.firstOrDefault().code;
+                }
+            });
+        } else if (this.editData.assignedType === bo.emAssignedType.USER) {
+            ibas.servicesManager.runChooseService<bo.User>({
+                boCode: bo.BO_CODE_USER,
+                onCompleted(selecteds: ibas.List<bo.User>): void {
+                    that.editData.assigned = selecteds.firstOrDefault().code;
+                }
+            });
+        }
+    }
+    /** 编辑查询 */
+    editCriteria(): void {
+        if (ibas.objects.isNull(this.view.useBOCode) || this.view.useBOCode.length === 0) {
+            throw new Error(ibas.i18n.prop("initialfantasy_please_choose_bocode"));
+        }
+    }
 }
 /** 视图-业务对象检索条件 */
 export interface IBOCriteriaEditView extends ibas.IBOEditView {
@@ -178,4 +212,15 @@ export interface IBOCriteriaEditView extends ibas.IBOEditView {
     deleteDataEvent: Function;
     /** 新建数据事件，参数1：是否克隆 */
     createDataEvent: Function;
+    /** 选择应用 */
+    chooseApplicationEvent: Function;
+    /** 选择业务对象编码 */
+    chooseBOCodeEvent: Function;
+    /** 选择用户或角色 */
+    chooseRoleUserEvent: Function;
+    /** 编辑查询 */
+    editCriteriaEvent: Function;
+    /** 使用的业务对象编码 */
+    readonly useBOCode: string;
+
 }

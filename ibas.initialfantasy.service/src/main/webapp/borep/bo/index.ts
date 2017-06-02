@@ -7,6 +7,7 @@
  */
 
 // 模块索引文件，此文件集中导出类
+export * from "../../api/Datas";
 export * from "./ApplicationFunction";
 export * from "./ApplicationModule";
 export * from "./ApplicationPlatform";
