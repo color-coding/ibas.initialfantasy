@@ -27,7 +27,7 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
     /** 移出结构元素事件 */
     removeStructureItemEvent: Function;
     /** 保存结构 */
-    saveEvent: Function;
+    saveStructuresEvent: Function;
     /** 加载组织所有节点 */
     loadStructuresEvent: Function;
     /** 绘制视图 */
@@ -41,11 +41,13 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
             }
         });
         this.txtOrgStructure.bindProperty("value", {
+            width: "100%",
             path: "/objectKey"
         });
         this.tableOrgStructure = new sap.ui.table.TreeTable("", {
-            enableSelectAll: false,
-            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+            enableSelectAll: true,
+            visibleRowCount: 12,
+            // visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -112,8 +114,9 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
             ]
         });
         this.tableOrgMember = new sap.ui.table.TreeTable("", {
-            enableSelectAll: false,
-            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+            enableSelectAll: true,
+            visibleRowCount: 12,
+            // visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -163,121 +166,150 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
                 }),
             ]
         });
-        this.form = new sap.ui.layout.form.SimpleForm("", {
+        this.forms.add(new sap.ui.layout.form.SimpleForm("", {
             content: [
-                new sap.m.Wizard("", {
-                    stepActivate(oControlEvent: any): void {
-                        /*
-                        for (var index: number = 0; index < this.getSteps().length; index++) {
-                            let step: sap.m.WizardStep = this.getSteps()[index];
-                            if (index === oControlEvent.getParameters().index) {
-                                step.setVisible(true);
-                            } else {
-                                step.setVisible(false);
-                            }
-                        }
-                        */
-                    },
-                    steps: [
-                        new sap.m.WizardStep("", {
-                            title: ibas.i18n.prop("initialfantasy_org_wizard_choose"),
-                            icon: "sap-icon://begin",
-                            content: [
-                                new sap.m.VBox("", {
-                                    alignItems: sap.m.FlexAlignItems.Center,
-                                    justifyContent: sap.m.FlexJustifyContent.Center,
-                                    width: "100%",
-                                    items: [
-                                        new sap.m.Label("", {
-                                            text: ibas.i18n.prop("bo_organizationalstructure_objectkey")
-                                        }),
-                                        this.txtOrgStructure,
-                                    ]
-                                })
-                            ]
+                new sap.ui.core.Title("", {
+                    text: ibas.i18n.prop("initialfantasy_org_wizard_choose")
+                }),
+                new sap.m.VBox("", {
+                    alignItems: sap.m.FlexAlignItems.Center,
+                    justifyContent: sap.m.FlexJustifyContent.Center,
+                    width: "100%",
+                    items: [
+                        new sap.m.Label("", {
+                            width: "100%",
+                            textAlign: sap.ui.core.TextAlign.Left,
+                            text: ibas.i18n.prop("bo_organizationalstructure")
                         }),
-                        new sap.m.WizardStep("", {
-                            title: ibas.i18n.prop("initialfantasy_org_wizard_date"),
-                            icon: "sap-icon://date-time",
-                            content: [
-                                new sap.m.VBox("", {
-                                    alignItems: sap.m.FlexAlignItems.Center,
-                                    justifyContent: sap.m.FlexJustifyContent.Center,
-                                    width: "100%",
-                                    items: [
-                                        new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_validdate") }),
-                                        new sap.m.DatePicker("", {
-                                            valueFormat: "yyyy-MM-dd",
-                                        }).bindProperty("dateValue", {
-                                            path: "/validDate"
-                                        }),
-                                        new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_invaliddate") }),
-                                        new sap.m.DatePicker("", {
-                                            valueFormat: "yyyy-MM-dd",
-                                        }).bindProperty("dateValue", {
-                                            path: "/invalidDate"
-                                        }),
-                                    ]
-                                })
-                            ]
+                        this.txtOrgStructure,
+                    ]
+                })
+            ]
+        }));
+        this.forms.add(new sap.ui.layout.form.SimpleForm("", {
+            content: [
+                new sap.ui.core.Title("", {
+                    text: ibas.i18n.prop("initialfantasy_org_wizard_date")
+                }),
+                new sap.m.VBox("", {
+                    alignItems: sap.m.FlexAlignItems.Center,
+                    justifyContent: sap.m.FlexJustifyContent.Center,
+                    width: "100%",
+                    items: [
+                        new sap.m.Label("", {
+                            width: "100%",
+                            textAlign: sap.ui.core.TextAlign.Left,
+                            text: ibas.i18n.prop("bo_organizationalstructure_validdate")
                         }),
-                        new sap.m.WizardStep("", {
-                            title: ibas.i18n.prop("initialfantasy_org_wizard_alter"),
-                            icon: "sap-icon://edit",
-                            content: [
-                                new sap.ui.layout.Splitter("", {
-                                    orientation: sap.ui.core.Orientation.Horizontal,
-                                    contentAreas: [
-                                        new sap.ui.layout.Splitter("", {
-                                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                                resizable: true,
-                                                size: "60%",
-                                            }),
-                                            contentAreas: [
-                                                this.tableOrgStructure,
-                                            ]
-                                        }),
-                                        new sap.ui.layout.Splitter("", {
-                                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                                resizable: true,
-                                                size: "40%",
-                                            }),
-                                            contentAreas: [
-                                                this.tableOrgMember,
-                                            ]
-                                        }),
-                                    ]
-                                })
-                            ]
+                        new sap.m.DatePicker("", {
+                            valueFormat: "yyyy-MM-dd",
+                        }).bindProperty("dateValue", {
+                            path: "/validDate"
                         }),
-                        new sap.m.WizardStep("", {
-                            title: ibas.i18n.prop("initialfantasy_org_wizard_save"),
-                            icon: "sap-icon://save",
-                            content: [
-
-                            ]
+                        new sap.m.Label("", {
+                            width: "100%",
+                            textAlign: sap.ui.core.TextAlign.Left,
+                            text: ibas.i18n.prop("bo_organizationalstructure_invaliddate")
+                        }),
+                        new sap.m.DatePicker("", {
+                            valueFormat: "yyyy-MM-dd",
+                        }).bindProperty("dateValue", {
+                            path: "/invalidDate"
                         }),
                     ]
                 })
             ]
-        });
+        }));
+        this.forms.add(new sap.ui.layout.form.SimpleForm("", {
+            content: [
+                new sap.ui.core.Title("", {
+                    text: ibas.i18n.prop("initialfantasy_org_wizard_alter")
+                }),
+                new sap.ui.layout.Splitter("", {
+                    orientation: sap.ui.core.Orientation.Horizontal,
+                    contentAreas: [
+                        new sap.ui.layout.Splitter("", {
+                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                                resizable: true,
+                                size: "60%",
+                            }),
+                            contentAreas: [
+                                this.tableOrgStructure,
+                            ]
+                        }),
+                        new sap.ui.layout.Splitter("", {
+                            layoutData: new sap.ui.layout.SplitterLayoutData("", {
+                                resizable: true,
+                                size: "40%",
+                            }),
+                            contentAreas: [
+                                this.tableOrgMember,
+                            ]
+                        }),
+                    ]
+                })]
+        }));
+        this.forms.add(new sap.ui.layout.form.SimpleForm("", {
+            content: [
+                new sap.ui.core.Title("", {
+                    text: ibas.i18n.prop("initialfantasy_org_wizard_save")
+                }),
+            ]
+        }));
         this.page = new sap.m.Page("", {
             showHeader: false,
-            subHeader: null,
-            content: [this.form]
+            subHeader: new sap.m.Bar("", {
+                contentLeft: [
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("initialfantasy_org_wizard_previous"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://navigation-left-arrow",
+                        press: function (): void {
+                            let form: any = that.page.getContent()[0];
+                            let index: number = that.forms.indexOf(form);
+                            if (index > 0) {
+                                that.page.removeContent(that.forms[index]);
+                                that.page.addContent(that.forms[index - 1]);
+                            }
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("initialfantasy_org_wizard_next"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://navigation-right-arrow",
+                        press: function (): void {
+                            let form: any = that.page.getContent()[0];
+                            let index: number = that.forms.indexOf(form);
+                            if (index < that.forms.length - 1) {
+                                that.page.removeContent(that.forms[index]);
+                                that.page.addContent(that.forms[index + 1]);
+                                if (index + 1 === 2) {
+                                    // 结构维护界面
+                                    that.fireViewEvents(that.loadStructuresEvent);
+                                } else if (index + 1 === 3) {
+                                    // 保存界面
+                                    that.fireViewEvents(that.saveStructuresEvent);
+                                }
+                            }
+                        }
+                    }),
+                ],
+            }),
+            content: [this.forms.firstOrDefault()]
         });
         this.id = this.page.getId();
         return this.page;
     }
     private page: sap.m.Page;
-    private form: sap.ui.layout.form.SimpleForm;
+    private forms: ibas.ArrayList<sap.ui.layout.form.SimpleForm> = new ibas.ArrayList<sap.ui.layout.form.SimpleForm>();
     private txtOrgStructure: sap.m.Input;
     private tableOrgStructure: sap.ui.table.TreeTable;
     private tableOrgMember: sap.ui.table.TreeTable;
 
     /** 显示根节点 */
     showRoot(root: bo.OrganizationalStructure): void {
-        this.form.setModel(new sap.ui.model.json.JSONModel(root));
+        this.forms[0].setModel(new sap.ui.model.json.JSONModel(root));
+        this.forms[1].setModel(new sap.ui.model.json.JSONModel(root));
     }
     /** 显示所有节点 */
     showStructures(root: bo.OrganizationalStructure): void {

@@ -34,7 +34,7 @@ export class OrganizationalStructureWizardApp extends ibas.Application<IOrganiza
         this.view.addMemberStructureEvent = this.addMemberStructure;
         this.view.removeStructureItemEvent = this.removeStructureItem;
         this.view.loadStructuresEvent = this.loadStructures;
-        this.view.saveEvent = this.save;
+        this.view.saveStructuresEvent = this.saveStructures;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -87,7 +87,7 @@ export class OrganizationalStructureWizardApp extends ibas.Application<IOrganiza
 
     }
     /** 保存结构 */
-    save(): void {
+    saveStructures(): void {
 
     }
 }
@@ -104,7 +104,7 @@ export interface IOrganizationalStructureWizardView extends ibas.IView {
     /** 移出结构元素事件 */
     removeStructureItemEvent: Function;
     /** 保存结构 */
-    saveEvent: Function;
+    saveStructuresEvent: Function;
     /** 显示根节点 */
     showRoot(root: bo.OrganizationalStructure): void;
     /** 加载组织所有节点 */

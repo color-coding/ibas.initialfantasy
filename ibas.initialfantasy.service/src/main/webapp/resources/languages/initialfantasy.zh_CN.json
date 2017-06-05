@@ -80,12 +80,14 @@
   "initialfantasy_app_criteria_editor": "查询编辑",
   "initialfantasy_invaild_edit_target": "无效的编辑目标",
   "initialfantasy_edit_target": "编辑目标",
-  "initialfantasy_org_wizard_choose": "选择组织结构",
-  "initialfantasy_org_wizard_date": "维护有效日期",
-  "initialfantasy_org_wizard_alter": "调整结构",
-  "initialfantasy_org_wizard_save": "保存",
+  "initialfantasy_org_wizard_choose": "1. 选择组织结构",
+  "initialfantasy_org_wizard_date": "2. 维护有效日期",
+  "initialfantasy_org_wizard_alter": "3. 调整结构",
+  "initialfantasy_org_wizard_save": "4. 保存",
   "initialfantasy_org_wizard_please_choose": "请选择组织，不选择为新建",
   "initialfantasy_org_wizard_must_be_organizationalstructure": "请选择组织节点",
   "initialfantasy_org_wizard_must_be_role": "请选择角色节点",
+  "initialfantasy_org_wizard_next": "下一步",
+  "initialfantasy_org_wizard_previous": "上一步",
   "initialfantasy_closing_delimiter": "----结束----"
 }
