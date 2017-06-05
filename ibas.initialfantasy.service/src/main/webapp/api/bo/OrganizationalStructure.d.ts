@@ -123,6 +123,8 @@ export interface IOrganizationalRole extends IBOSimpleLine {
     reference2: string;
     /** 角色 */
     role: string;
+    /** 组织-角色-成员集合 */
+    roleMembers: IRoleMembers;
 }
 
 /** 组织-角色 集合 */
@@ -132,3 +134,49 @@ export interface IOrganizationalRoles extends IBusinessObjects<IOrganizationalRo
     create(): IOrganizationalRole;
 }
 
+
+/** 组织-角色-成员 */
+export interface IRoleMember extends IBOSimpleLine {
+
+    /** 编号 */
+    objectKey: number;
+    /** 类型 */
+    objectCode: string;
+    /** 行号 */
+    lineId: number;
+    /** 实例号（版本） */
+    logInst: number;
+    /** 数据源 */
+    dataSource: string;
+    /** 创建日期 */
+    createDate: Date;
+    /** 创建时间 */
+    createTime: number;
+    /** 修改日期 */
+    updateDate: Date;
+    /** 修改时间 */
+    updateTime: number;
+    /** 创建用户 */
+    createUserSign: number;
+    /** 修改用户 */
+    updateUserSign: number;
+    /** 创建动作标识 */
+    createActionId: string;
+    /** 更新动作标识 */
+    updateActionId: string;
+    /** 参考1 */
+    reference1: string;
+    /** 参考2 */
+    reference2: string;
+    /** 角色-行号 */
+    roleLineId: number;
+    /** 成员 */
+    member: string;
+}
+
+/** 组织-角色-成员 集合 */
+export interface IRoleMembers extends IBusinessObjects<IRoleMember, IOrganizationalStructure> {
+
+    /** 创建并添加子项 */
+    create(): IRoleMember;
+}
