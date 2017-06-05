@@ -10,7 +10,6 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
-import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
@@ -24,7 +23,7 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = -8200787833608853899L;
+	private static final long serialVersionUID = -378899193198976218L;
 
 	/**
 	 * 当前类型
@@ -34,12 +33,12 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "${Company}_SYS_ROLEMEM";
+	public static final String DB_TABLE_NAME = "CC_SYS_ROLEMEM";
 
 	/**
 	 * 业务对象编码
 	 */
-	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_ORG_STRUCTURE";
+	public static final String BUSINESS_OBJECT_CODE = "CC_SYS_ORG_STRUCTURE";
 
 	/**
 	 * 业务对象名称
@@ -596,7 +595,7 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setObjectCode(BUSINESS_OBJECT_CODE);
 
 	}
 

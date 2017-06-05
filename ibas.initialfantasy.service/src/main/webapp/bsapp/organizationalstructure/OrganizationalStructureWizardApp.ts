@@ -28,6 +28,13 @@ export class OrganizationalStructureWizardApp extends ibas.Application<IOrganiza
     protected registerView(): void {
         super.registerView();
         // 其他事件
+        this.view.chooseOrgStructureEvent = this.chooseOrgStructure;
+        this.view.addOrgStructureEvent = this.addOrgStructure;
+        this.view.addRoleStructureEvent = this.addRoleStructure;
+        this.view.addMemberStructureEvent = this.addMemberStructure;
+        this.view.removeStructureItemEvent = this.removeStructureItem;
+        this.view.loadStructuresEvent = this.loadStructures;
+        this.view.saveEvent = this.save;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -37,8 +44,71 @@ export class OrganizationalStructureWizardApp extends ibas.Application<IOrganiza
     run(...args: any[]): void {
         super.run();
     }
+    /** 选择组织结构事件 */
+    chooseOrgStructure(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.OrganizationalStructure>({
+            boCode: bo.BO_CODE_ORGANIZATIONALSTRUCTURE,
+            criteria: [
+                // 根节点
+                new ibas.Condition(bo.OrganizationalStructure.PROPERTY_BELONGING_NAME, ibas.emConditionOperation.EQUAL, "-1"),
+            ],
+            onCompleted(selecteds: ibas.List<bo.OrganizationalStructure>): void {
+                that.view.showRoot(selecteds.firstOrDefault());
+            }
+        });
+    }
+    /** 添加组织结构事件 */
+    addOrgStructure(selected: bo.OrganizationalStructure): void {
+        if (!(selected instanceof bo.OrganizationalStructure)) {
+            throw new Error(ibas.i18n.prop("initialfantasy_org_wizard_must_be_organizationalstructure"));
+        }
+    }
+    /** 添加角色结构事件 */
+    addRoleStructure(selected: bo.OrganizationalStructure): void {
+        if (!(selected instanceof bo.OrganizationalStructure)) {
+            throw new Error(ibas.i18n.prop("initialfantasy_org_wizard_must_be_organizationalstructure"));
+        }
+
+    }
+    /** 添加成员结构事件 */
+    addMemberStructure(selected: bo.OrganizationalRole): void {
+        if (!(selected instanceof bo.OrganizationalStructure)) {
+            throw new Error(ibas.i18n.prop("initialfantasy_org_wizard_must_be_role"));
+        }
+
+    }
+    /** 移出结构元素事件 */
+    removeStructureItem(): void {
+
+    }
+    /** 加载组织所有节点 */
+    loadStructures(): void {
+
+    }
+    /** 保存结构 */
+    save(): void {
+
+    }
 }
 /** 视图-组织-结构 */
 export interface IOrganizationalStructureWizardView extends ibas.IView {
-
+    /** 选择组织结构事件 */
+    chooseOrgStructureEvent: Function;
+    /** 添加组织结构事件 */
+    addOrgStructureEvent: Function;
+    /** 添加角色结构事件 */
+    addRoleStructureEvent: Function;
+    /** 添加成员结构事件 */
+    addMemberStructureEvent: Function;
+    /** 移出结构元素事件 */
+    removeStructureItemEvent: Function;
+    /** 保存结构 */
+    saveEvent: Function;
+    /** 显示根节点 */
+    showRoot(root: bo.OrganizationalStructure): void;
+    /** 加载组织所有节点 */
+    loadStructuresEvent: Function;
+    /** 显示所有节点 */
+    showStructures(root: bo.OrganizationalStructure): void;
 }

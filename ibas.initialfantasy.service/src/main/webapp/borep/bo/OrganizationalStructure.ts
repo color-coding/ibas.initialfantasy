@@ -438,6 +438,17 @@ export class OrganizationalRole extends BOSimpleLine<OrganizationalRole> impleme
         this.setProperty(OrganizationalRole.PROPERTY_ROLE_NAME, value);
     }
 
+    /** 映射的属性名称-组织-角色-成员集合 */
+    static PROPERTY_ROLEMEMBERS_NAME: string = "RoleMembers";
+    /** 获取-组织-角色-成员集合 */
+    get roleMembers(): RoleMembers {
+        return this.getProperty<RoleMembers>(OrganizationalRole.PROPERTY_ROLEMEMBERS_NAME);
+    }
+    /** 设置-组织-角色-成员集合 */
+    set roleMembers(value: RoleMembers) {
+        this.setProperty(OrganizationalRole.PROPERTY_ROLEMEMBERS_NAME, value);
+    }
+
 
     /** 初始化数据 */
     protected init(): void {
@@ -450,6 +461,216 @@ export class OrganizationalRoles extends BusinessObjects<OrganizationalRole, Org
     /** 创建并添加子项 */
     create(): OrganizationalRole {
         let item: OrganizationalRole = new OrganizationalRole();
+        this.add(item);
+        return item;
+    }
+}
+/** 组织-角色-成员 */
+export class RoleMember extends BOSimpleLine<RoleMember> implements IRoleMember {
+
+    /** 构造函数 */
+    constructor() {
+        super();
+    }
+    /** 映射的属性名称-编号 */
+    static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
+    /** 获取-编号 */
+    get objectKey(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_OBJECTKEY_NAME);
+    }
+    /** 设置-编号 */
+    set objectKey(value: number) {
+        this.setProperty(RoleMember.PROPERTY_OBJECTKEY_NAME, value);
+    }
+
+    /** 映射的属性名称-类型 */
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
+    /** 获取-类型 */
+    get objectCode(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_OBJECTCODE_NAME);
+    }
+    /** 设置-类型 */
+    set objectCode(value: string) {
+        this.setProperty(RoleMember.PROPERTY_OBJECTCODE_NAME, value);
+    }
+
+    /** 映射的属性名称-行号 */
+    static PROPERTY_LINEID_NAME: string = "LineId";
+    /** 获取-行号 */
+    get lineId(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_LINEID_NAME);
+    }
+    /** 设置-行号 */
+    set lineId(value: number) {
+        this.setProperty(RoleMember.PROPERTY_LINEID_NAME, value);
+    }
+
+    /** 映射的属性名称-实例号（版本） */
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
+    /** 获取-实例号（版本） */
+    get logInst(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_LOGINST_NAME);
+    }
+    /** 设置-实例号（版本） */
+    set logInst(value: number) {
+        this.setProperty(RoleMember.PROPERTY_LOGINST_NAME, value);
+    }
+
+    /** 映射的属性名称-数据源 */
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
+    /** 获取-数据源 */
+    get dataSource(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_DATASOURCE_NAME);
+    }
+    /** 设置-数据源 */
+    set dataSource(value: string) {
+        this.setProperty(RoleMember.PROPERTY_DATASOURCE_NAME, value);
+    }
+
+    /** 映射的属性名称-创建日期 */
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
+    /** 获取-创建日期 */
+    get createDate(): Date {
+        return this.getProperty<Date>(RoleMember.PROPERTY_CREATEDATE_NAME);
+    }
+    /** 设置-创建日期 */
+    set createDate(value: Date) {
+        this.setProperty(RoleMember.PROPERTY_CREATEDATE_NAME, value);
+    }
+
+    /** 映射的属性名称-创建时间 */
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
+    /** 获取-创建时间 */
+    get createTime(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_CREATETIME_NAME);
+    }
+    /** 设置-创建时间 */
+    set createTime(value: number) {
+        this.setProperty(RoleMember.PROPERTY_CREATETIME_NAME, value);
+    }
+
+    /** 映射的属性名称-修改日期 */
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
+    /** 获取-修改日期 */
+    get updateDate(): Date {
+        return this.getProperty<Date>(RoleMember.PROPERTY_UPDATEDATE_NAME);
+    }
+    /** 设置-修改日期 */
+    set updateDate(value: Date) {
+        this.setProperty(RoleMember.PROPERTY_UPDATEDATE_NAME, value);
+    }
+
+    /** 映射的属性名称-修改时间 */
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
+    /** 获取-修改时间 */
+    get updateTime(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_UPDATETIME_NAME);
+    }
+    /** 设置-修改时间 */
+    set updateTime(value: number) {
+        this.setProperty(RoleMember.PROPERTY_UPDATETIME_NAME, value);
+    }
+
+    /** 映射的属性名称-创建用户 */
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
+    /** 获取-创建用户 */
+    get createUserSign(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_CREATEUSERSIGN_NAME);
+    }
+    /** 设置-创建用户 */
+    set createUserSign(value: number) {
+        this.setProperty(RoleMember.PROPERTY_CREATEUSERSIGN_NAME, value);
+    }
+
+    /** 映射的属性名称-修改用户 */
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
+    /** 获取-修改用户 */
+    get updateUserSign(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_UPDATEUSERSIGN_NAME);
+    }
+    /** 设置-修改用户 */
+    set updateUserSign(value: number) {
+        this.setProperty(RoleMember.PROPERTY_UPDATEUSERSIGN_NAME, value);
+    }
+
+    /** 映射的属性名称-创建动作标识 */
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
+    /** 获取-创建动作标识 */
+    get createActionId(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_CREATEACTIONID_NAME);
+    }
+    /** 设置-创建动作标识 */
+    set createActionId(value: string) {
+        this.setProperty(RoleMember.PROPERTY_CREATEACTIONID_NAME, value);
+    }
+
+    /** 映射的属性名称-更新动作标识 */
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
+    /** 获取-更新动作标识 */
+    get updateActionId(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_UPDATEACTIONID_NAME);
+    }
+    /** 设置-更新动作标识 */
+    set updateActionId(value: string) {
+        this.setProperty(RoleMember.PROPERTY_UPDATEACTIONID_NAME, value);
+    }
+
+    /** 映射的属性名称-参考1 */
+    static PROPERTY_REFERENCE1_NAME: string = "Reference1";
+    /** 获取-参考1 */
+    get reference1(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_REFERENCE1_NAME);
+    }
+    /** 设置-参考1 */
+    set reference1(value: string) {
+        this.setProperty(RoleMember.PROPERTY_REFERENCE1_NAME, value);
+    }
+
+    /** 映射的属性名称-参考2 */
+    static PROPERTY_REFERENCE2_NAME: string = "Reference2";
+    /** 获取-参考2 */
+    get reference2(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_REFERENCE2_NAME);
+    }
+    /** 设置-参考2 */
+    set reference2(value: string) {
+        this.setProperty(RoleMember.PROPERTY_REFERENCE2_NAME, value);
+    }
+
+    /** 映射的属性名称-角色-行号 */
+    static PROPERTY_ROLELINEID_NAME: string = "RoleLineId";
+    /** 获取-角色-行号 */
+    get roleLineId(): number {
+        return this.getProperty<number>(RoleMember.PROPERTY_ROLELINEID_NAME);
+    }
+    /** 设置-角色-行号 */
+    set roleLineId(value: number) {
+        this.setProperty(RoleMember.PROPERTY_ROLELINEID_NAME, value);
+    }
+
+    /** 映射的属性名称-成员 */
+    static PROPERTY_MEMBER_NAME: string = "Member";
+    /** 获取-成员 */
+    get member(): string {
+        return this.getProperty<string>(RoleMember.PROPERTY_MEMBER_NAME);
+    }
+    /** 设置-成员 */
+    set member(value: string) {
+        this.setProperty(RoleMember.PROPERTY_MEMBER_NAME, value);
+    }
+
+
+    /** 初始化数据 */
+    protected init(): void {
+    }
+}
+
+/** 组织-角色-成员 集合 */
+export class RoleMembers extends BusinessObjects<RoleMember, OrganizationalStructure> implements IRoleMembers {
+
+    /** 创建并添加子项 */
+    create(): RoleMember {
+        let item: RoleMember = new RoleMember();
         this.add(item);
         return item;
     }
