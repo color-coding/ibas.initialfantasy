@@ -25,6 +25,8 @@ import {
     IOrganizationalStructure,
     IOrganizationalRole,
     IOrganizationalRoles,
+    IRoleMember,
+    IRoleMembers,
     BO_CODE_ORGANIZATIONALSTRUCTURE
 } from "../../api/index";
 
