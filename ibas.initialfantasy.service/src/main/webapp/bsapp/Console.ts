@@ -52,9 +52,9 @@ export class Console extends ibas.ModuleConsole {
             this.register(new BOFilteringFunc());
             this.register(new OwnershipFunc());
             this.register(new PrivilegeFunc());
-            this.register(new ApplicationFunctionFunc());
-            this.register(new ApplicationModuleFunc());
             this.register(new ApplicationPlatformFunc());
+            this.register(new ApplicationModuleFunc());
+            this.register(new ApplicationFunctionFunc());
             this.register(new BOInformationFunc());
             this.register(new ApprovalTemplateFunc());
             this.register(new ApprovalRequestFunc());
