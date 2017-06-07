@@ -42,7 +42,7 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
         });
         this.txtOrgStructure.bindProperty("value", {
             width: "100%",
-            path: "/objectKey"
+            path: "{/objectKey}"
         });
         this.tableOrgStructure = new sap.ui.table.TreeTable("", {
             enableSelectAll: true,
@@ -204,7 +204,7 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
                         new sap.m.DatePicker("", {
                             valueFormat: "yyyy-MM-dd",
                         }).bindProperty("dateValue", {
-                            path: "/validDate"
+                            path: "{/validDate}"
                         }),
                         new sap.m.Label("", {
                             width: "100%",
@@ -214,7 +214,7 @@ export class OrganizationalStructureWizardView extends ibas.View implements IOrg
                         new sap.m.DatePicker("", {
                             valueFormat: "yyyy-MM-dd",
                         }).bindProperty("dateValue", {
-                            path: "/invalidDate"
+                            path: "{/invalidDate}"
                         }),
                     ]
                 })

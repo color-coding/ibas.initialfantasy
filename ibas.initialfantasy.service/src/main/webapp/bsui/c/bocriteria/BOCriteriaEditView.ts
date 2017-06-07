@@ -47,7 +47,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                         that.fireViewEvents(that.chooseApplicationEvent);
                     }
                 }).bindProperty("value", {
-                    path: "/applicationId"
+                    path: "{/applicationId}"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_name") }),
                 new sap.m.Input("", {
@@ -58,14 +58,14 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "/activated",
+                    path: "{/activated}",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assignedtype") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(bo.emAssignedType)
                 }).bindProperty("selectedKey", {
-                    path: "/assignedType",
+                    path: "{/assignedType}",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assigned") }),
@@ -75,7 +75,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                         that.fireViewEvents(that.chooseRoleUserEvent);
                     }
                 }).bindProperty("value", {
-                    path: "/assigned",
+                    path: "{/assigned}",
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_bocriteria_setting") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("initialfantasy_bocriteria_bocode") }),
@@ -83,9 +83,8 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_data") }),
                 new sap.m.TextArea("", {
                     rows: 6,
-
                 }).bindProperty("value", {
-                    path: "/data",
+                    path: "{/data}",
                 }),
                 new sap.m.Label("", {}),
                 new sap.m.Button("", {

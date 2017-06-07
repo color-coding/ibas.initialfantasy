@@ -36,15 +36,15 @@ export class UserViewView extends ibas.BOViewView implements IUserViewView {
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "/activated",
+                    path: "{/activated}",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: "" }),
-                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "/super",
+                    path: "{/super}",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),

@@ -40,7 +40,7 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "/activated",
+                    path: "{/activated}",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
