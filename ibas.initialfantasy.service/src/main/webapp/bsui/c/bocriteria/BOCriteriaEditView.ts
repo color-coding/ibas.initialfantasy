@@ -47,25 +47,26 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                         that.fireViewEvents(that.chooseApplicationEvent);
                     }
                 }).bindProperty("value", {
-                    path: "{/applicationId}"
+                    path: "/applicationId"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_name") }),
                 new sap.m.Input("", {
-                    value: "{/name}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/name",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assignedtype") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(bo.emAssignedType)
                 }).bindProperty("selectedKey", {
-                    path: "{/assignedType}",
+                    path: "/assignedType",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assigned") }),

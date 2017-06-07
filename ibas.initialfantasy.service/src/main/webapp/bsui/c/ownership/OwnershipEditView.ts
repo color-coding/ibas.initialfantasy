@@ -28,69 +28,73 @@ export class OwnershipEditView extends ibas.BOEditView implements IOwnershipEdit
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_usercode") }),
                 new sap.m.Input("", {
-                    value: "{/userCode}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/userCode"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_bocode") }),
                 new sap.m.Input("", {
-                    value: "{/bOCode}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/boCode"
                 }),
 
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_self") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
-                    path: "{/self}",
+                    path: "/self",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_lowerlevel") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
-                    path: "{/lowerLevel}",
+                    path: "/lowerLevel",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_equallevel") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
-                    path: "{/equalLevel}",
+                    path: "/equalLevel",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_higherlevel") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
-                    path: "{/higherLevel}",
+                    path: "/higherLevel",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_others") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emAuthoriseType)
                 }).bindProperty("selectedKey", {
-                    path: "{/others}",
+                    path: "/others",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectkey") }),
                 new sap.m.Input("", {
-                    value: "{/objectKey}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_ownership_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode"
                 }),
             ]
         });

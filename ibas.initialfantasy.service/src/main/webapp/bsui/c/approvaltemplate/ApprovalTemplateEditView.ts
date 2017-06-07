@@ -32,33 +32,37 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvaltemplate_name") }),
                 new sap.m.Input("", {
-                    value: "{/name}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/name",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvaltemplate_approvalobjectcode") }),
                 new sap.m.Input("", {
-                    value: "{/approvalObjectCode}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/approvalObjectCode",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvaltemplate_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvaltemplate_objectkey") }),
                 new sap.m.Input("", {
-                    value: "{/objectKey}",
                     enable: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvaltemplate_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode",
                 }),
             ]
         });
