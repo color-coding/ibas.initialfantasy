@@ -32,33 +32,38 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_name") }),
                 new sap.m.Input("", {
-                    value: "{/name}",
                     type: sap.m.InputType.Text,
                     editable: false,
+                }).bindProperty("value", {
+                    path: "/name"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_description") }),
                 new sap.m.Input("", {
-                    value: "{/description}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/description"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_objecttype") }),
                 new sap.m.Input("", {
-                    value: "{/objectType}",
                     type: sap.m.InputType.Text,
                     editable: false,
+                }).bindProperty("value", {
+                    path: "/objectType"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_code") }),
                 new sap.m.Input("", {
-                    value: "{/code}",
                     type: sap.m.InputType.Text,
                     editable: false,
+                }).bindProperty("value", {
+                    path: "/code"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_mapped") }),
                 new sap.m.Input("", {
-                    value: "{/mapped}",
                     type: sap.m.InputType.Text,
                     editable: false,
+                }).bindProperty("value", {
+                    path: "/mapped"
                 }),
             ]
         });

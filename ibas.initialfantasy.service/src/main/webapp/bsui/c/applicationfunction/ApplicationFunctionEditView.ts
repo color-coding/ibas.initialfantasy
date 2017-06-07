@@ -28,31 +28,35 @@ export class ApplicationFunctionEditView extends ibas.BOEditView implements IApp
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_moduleid") }),
                 new sap.m.Input("", {
-                    value: "{/moduleId}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/moduleId",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionid") }),
                 new sap.m.Input("", {
-                    value: "{/functionId}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/functionId",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
                 new sap.m.Input("", {
-                    value: "{/functionName}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/functionName",
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectkey") }),
                 new sap.m.Input("", {
-                    value: "{/objectKey}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
-                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode",
                 }),
             ]
         });

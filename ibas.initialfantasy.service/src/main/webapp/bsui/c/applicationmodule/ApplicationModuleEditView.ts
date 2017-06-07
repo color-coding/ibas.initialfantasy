@@ -28,38 +28,43 @@ export class ApplicationModuleEditView extends ibas.BOEditView implements IAppli
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_moduleid") }),
                 new sap.m.Input("", {
-                    value: "{/moduleId}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/moduleId",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_platformid") }),
                 new sap.m.Input("", {
-                    value: "{/platformId}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/platformId",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_modulename") }),
                 new sap.m.Input("", {
-                    value: "{/moduleName}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/moduleName",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_objectkey") }),
                 new sap.m.Input("", {
-                    value: "{/objectKey}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode",
                 }),
             ]
         });

@@ -32,40 +32,44 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_name") }),
                 new sap.m.Input("", {
-                    value: "{/name}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/name",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_approvalobjectcode") }),
                 new sap.m.Input("", {
-                    value: "{/approvalObjectCode}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/approvalObjectCode",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_approvalstatus") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emApprovalStatus)
                 }).bindProperty("selectedKey", {
-                    path: "{/approvalStatus}",
+                    path: "/approvalStatus",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_objectkey") }),
                 new sap.m.Input("", {
-                    value: "{/objectKey}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvalrequest_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode",
                 }),
             ]
         });

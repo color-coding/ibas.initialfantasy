@@ -28,40 +28,44 @@ export class ApplicationPlatformEditView extends ibas.BOEditView implements IApp
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_platformid") }),
                 new sap.m.Input("", {
-                    value: "{/platformId}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/platformId",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_platformcode") }),
                 new sap.m.Input("", {
-                    value: "{/platformCode}",
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/platformCode",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_platformdescription") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emPlantform)
                 }).bindProperty("selectedKey", {
-                    path: "{/platformDescription}",
+                    path: "/platformDescription",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_objectkey") }),
                 new sap.m.Input("", {
-                    value: "{/objectKey}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey",
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
                     enabled: false,
                     type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode",
                 }),
             ]
         });
