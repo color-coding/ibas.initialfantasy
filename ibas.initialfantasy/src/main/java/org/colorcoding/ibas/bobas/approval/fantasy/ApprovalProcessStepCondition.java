@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.approval.IApprovalProcessStepCondition;
+import org.colorcoding.ibas.bobas.approval.ValueMode;
 import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.serialization.ISerializer;
@@ -58,6 +59,17 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 		return null;
 	}
 
+	private ValueMode propertyValueMode = ValueMode.DB_FIELD;
+
+	@Override
+	public ValueMode getPropertyValueMode() {
+		return this.propertyValueMode;
+	}
+
+	public void setPropertyValueMode(ValueMode value) {
+		this.propertyValueMode = value;
+	}
+
 	private String propertyName;
 
 	@Override
@@ -89,6 +101,17 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 
 	public void setRelation(emConditionRelationship value) {
 		this.relation = value;
+	}
+
+	private ValueMode conditionValueMode = ValueMode.INPUT;
+
+	@Override
+	public ValueMode getConditionValueMode() {
+		return this.conditionValueMode;
+	}
+
+	public void setConditionValueMode(ValueMode value) {
+		this.conditionValueMode = value;
 	}
 
 	private String conditionValue;

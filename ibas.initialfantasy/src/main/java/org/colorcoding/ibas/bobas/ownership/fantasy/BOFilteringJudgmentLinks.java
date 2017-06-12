@@ -7,8 +7,8 @@ import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
 import org.colorcoding.ibas.bobas.core.fields.IManageFields;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.expressions.BOJudgmentLinks;
-import org.colorcoding.ibas.bobas.expressions.IPropertyValueOperter;
-import org.colorcoding.ibas.bobas.expressions.IValueOperter;
+import org.colorcoding.ibas.bobas.expressions.IPropertyValueOperator;
+import org.colorcoding.ibas.bobas.expressions.IValueOperator;
 import org.colorcoding.ibas.bobas.expressions.JudgmentLinkItem;
 import org.colorcoding.ibas.bobas.expressions.JudgmentLinksException;
 import org.colorcoding.ibas.bobas.expressions.JudmentOperations;
@@ -35,23 +35,23 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLinks {
 			}
 			jItem.setOperation(JudmentOperations.valueOf(item.getOperation()));
 			// 左边取值
-			IPropertyValueOperter propertyValueOperter = this.createPropertyValueOperter();
-			propertyValueOperter.setPropertyName(item.getPropertyName());
-			jItem.setLeftOperter(propertyValueOperter);
+			IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
+			propertyValueOperator.setPropertyName(item.getPropertyName());
+			jItem.setLeftOperter(propertyValueOperator);
 			// 右边取值
 			// 与值比较
-			IValueOperter valueOperter = this.createValueOperter();
-			valueOperter.setValue(item.getConditionValue());
-			jItem.setRightOperter(valueOperter);
+			IValueOperator ValueOperator = this.createValueOperator();
+			ValueOperator.setValue(item.getConditionValue());
+			jItem.setRightOperter(ValueOperator);
 			jLinkItems.add(jItem);
 		}
 		super.setJudgmentItems(jLinkItems.toArray(new JudgmentLinkItem[] {}));
 	}
 
 	@Override
-	public IPropertyValueOperter createPropertyValueOperter() {
+	public IPropertyValueOperator createPropertyValueOperator() {
 		// 使用数据库字段属性比较
-		return new IPropertyValueOperter() {
+		return new IPropertyValueOperator() {
 			private IManageFields value;
 			private IFieldData field = null;
 
