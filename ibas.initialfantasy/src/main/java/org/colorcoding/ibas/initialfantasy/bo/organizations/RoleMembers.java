@@ -6,7 +6,11 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObjects;
+import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
+import org.colorcoding.ibas.bobas.common.ISort;
+import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
@@ -66,19 +70,35 @@ public class RoleMembers extends BusinessObjects<IRoleMember, IOrganizationalRol
 	@Override
 	protected void afterAddItem(IRoleMember item) {
 		super.afterAddItem(item);
-		// TODO 设置关联值
+		item.setRoleLineId(this.getParent().getLineId());
+		item.setObjectKey(this.getParent().getObjectKey());
 	}
 
 	@Override
 	public ICriteria getElementCriteria() {
-		ICriteria criteria = super.getElementCriteria();
-		// TODO 添加关联查询条件
+		ICriteria criteria = new Criteria();
+		ICondition condition = criteria.getConditions().create();
+		condition.setAlias(RoleMember.PROPERTY_ROLELINEID.getName());
+		condition.setValue(this.getParent().getLineId());
+		condition = criteria.getConditions().create();
+		condition.setAlias(RoleMember.PROPERTY_OBJECTKEY.getName());
+		condition.setValue(this.getParent().getObjectKey());
+		ISort sort = criteria.getSorts().create();
+		sort.setAlias(RoleMember.PROPERTY_OBJECTKEY.getName());
+		sort.setSortType(SortType.ASCENDING);
+		sort = criteria.getSorts().create();
+		sort.setAlias(RoleMember.PROPERTY_LINEID.getName());
+		sort.setSortType(SortType.ASCENDING);
 		return criteria;
 	}
 
 	@Override
 	public void onParentPropertyChanged(PropertyChangeEvent evt) {
 		super.onParentPropertyChanged(evt);
-		// TODO 设置关联值
+		if (evt.getPropertyName().equals(OrganizationalRole.PROPERTY_LINEID.getName())) {
+			for (IRoleMember item : this) {
+				item.setRoleLineId(this.getParent().getLineId());
+			}
+		}
 	}
 }

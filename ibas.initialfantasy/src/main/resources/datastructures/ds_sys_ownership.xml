@@ -10,6 +10,8 @@
     <Property Name="EqualLevel" Description="部门-同级权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="EqualLevel"/>
     <Property Name="HigherLevel" Description="部门-上级权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="HigherLevel"/>
     <Property Name="Teams" Description="团队权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Teams"/>
+    <Property Name="Rules" Description="角色权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Rules"/>
+    <Property Name="RuleCodes" Description="角色编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="RuleCodes"/>
     <Property Name="Others" Description="其他情况权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Others"/>
     <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>

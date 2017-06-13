@@ -292,6 +292,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 						RuntimeLog.log(MSG_OWNERSHIP_JUDGER_USER_NOT_ALLOW_READ, user, ownership.getBOCode());
 					}
 				}
+				String[] roles = this.getOrganizationManager().getUserRoles(user);
 				if (canRead && bo.getDataOwner() != null) {
 					// 操作用户是否有权限读取当前数据
 					IUser owner = this.getOrganizationManager().getUser(bo.getDataOwner());
@@ -303,6 +304,19 @@ public class OwnershipJudger implements IOwnershipJudger {
 							OrganizationalRelationship relationship = this.getOrganizationManager()
 									.getRelationship(owner, user);
 							RuntimeLog.log(MSG_OWNERSHIP_JUDGER_RELATIONSHIP, user, relationship, owner);
+							// 当前用户是否为权限角色
+							boolean ruleShip = false;
+							if (ownership.getRuleCodes() != null) {
+								String[] tmpRules = ownership.getRuleCodes().split(",");
+								for (String tmp : tmpRules) {
+									for (String rule : roles) {
+										if (rule.equalsIgnoreCase(tmp.trim())) {
+											ruleShip = true;
+											break;
+										}
+									}
+								}
+							}
 							if (relationship == OrganizationalRelationship.LEADER) {
 								// 是数据所有者的领导
 								canRead = ownership.getHigherLevel() == emAuthoriseType.NONE ? false : true;
@@ -312,6 +326,9 @@ public class OwnershipJudger implements IOwnershipJudger {
 							} else if (relationship == OrganizationalRelationship.SUBORDINATE) {
 								// 是数据所有者的下属
 								canRead = ownership.getLowerLevel() == emAuthoriseType.NONE ? false : true;
+							} else if (ruleShip) {
+								// 角色权限
+								canRead = ownership.getRules() == emAuthoriseType.NONE ? false : true;
 							} else {
 								// 没关系
 								canRead = ownership.getOthers() == emAuthoriseType.NONE ? false : true;
@@ -322,7 +339,6 @@ public class OwnershipJudger implements IOwnershipJudger {
 				// 判断数据是否设置过滤条件
 				if (canRead) {
 					// 数据被设置了过滤条件
-					String[] roles = this.getOrganizationManager().getUserRoles(user);
 					canRead = !this.filtering(bo, roles);
 				}
 			}
@@ -361,6 +377,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 					RuntimeLog.log(MSG_OWNERSHIP_JUDGER_USER_NOT_ALLOW_SAVE, user, ownership.getBOCode());
 				}
 			}
+			String[] roles = this.getOrganizationManager().getUserRoles(user);
 			// 判断操作者对数据是否有权限
 			if (canSave && bo.getDataOwner() != null) {
 				IUser owner = this.getOrganizationManager().getUser(bo.getDataOwner());
@@ -372,6 +389,19 @@ public class OwnershipJudger implements IOwnershipJudger {
 						OrganizationalRelationship relationship = this.getOrganizationManager().getRelationship(owner,
 								user);
 						RuntimeLog.log(MSG_OWNERSHIP_JUDGER_RELATIONSHIP, user, relationship, owner);
+						// 当前用户是否为权限角色
+						boolean ruleShip = false;
+						if (ownership.getRuleCodes() != null) {
+							String[] tmpRules = ownership.getRuleCodes().split(",");
+							for (String tmp : tmpRules) {
+								for (String rule : roles) {
+									if (rule.equalsIgnoreCase(tmp.trim())) {
+										ruleShip = true;
+										break;
+									}
+								}
+							}
+						}
 						if (relationship == OrganizationalRelationship.LEADER) {
 							// 是数据所有者的领导
 							canSave = ownership.getHigherLevel() != emAuthoriseType.ALL ? false : true;
@@ -381,6 +411,9 @@ public class OwnershipJudger implements IOwnershipJudger {
 						} else if (relationship == OrganizationalRelationship.SUBORDINATE) {
 							// 是数据所有者的下属
 							canSave = ownership.getLowerLevel() != emAuthoriseType.ALL ? false : true;
+						} else if (ruleShip) {
+							// 角色权限
+							canSave = ownership.getRules() == emAuthoriseType.NONE ? false : true;
 						} else {
 							// 没关系
 							canSave = ownership.getOthers() != emAuthoriseType.ALL ? false : true;
