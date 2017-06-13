@@ -13,6 +13,7 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 
@@ -39,12 +40,12 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "CC_SYS_BOCRITERIA";
+	public static final String DB_TABLE_NAME = "${Company}_SYS_BOCRITERIA";
 
 	/**
 	 * 业务对象编码
 	 */
-	public static final String BUSINESS_OBJECT_CODE = "CC_SYS_BOCRITERIA";
+	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_BOCRITERIA";
 
 	/**
 	 * 业务对象名称
@@ -729,7 +730,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-		this.setObjectCode(BUSINESS_OBJECT_CODE);
+		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 
 	}
 

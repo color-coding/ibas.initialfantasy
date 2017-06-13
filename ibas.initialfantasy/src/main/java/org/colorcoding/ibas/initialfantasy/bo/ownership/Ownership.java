@@ -309,6 +309,70 @@ public class Ownership extends BusinessObject<Ownership> implements IOwnership {
 	}
 
 	/**
+	 * 属性名称-角色权限
+	 */
+	private static final String PROPERTY_RULES_NAME = "Rules";
+
+	/**
+	 * 角色权限 属性
+	 */
+	@DbField(name = "Rules", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emAuthoriseType> RulesProperty = registerProperty(PROPERTY_RULES_NAME,
+			emAuthoriseType.class, MY_CLASS);
+
+	/**
+	 * 获取-角色权限
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_RULES_NAME)
+	public final emAuthoriseType getRules() {
+		return this.getProperty(RulesProperty);
+	}
+
+	/**
+	 * 设置-角色权限
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setRules(emAuthoriseType value) {
+		this.setProperty(RulesProperty, value);
+	}
+
+	/**
+	 * 属性名称-角色编码
+	 */
+	private static final String PROPERTY_RULECODES_NAME = "RuleCodes";
+
+	/**
+	 * 角色编码 属性
+	 */
+	@DbField(name = "RuleCodes", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> RuleCodesProperty = registerProperty(PROPERTY_RULECODES_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-角色编码
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_RULECODES_NAME)
+	public final String getRuleCodes() {
+		return this.getProperty(RuleCodesProperty);
+	}
+
+	/**
+	 * 设置-角色编码
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setRuleCodes(String value) {
+		this.setProperty(RuleCodesProperty, value);
+	}
+
+	/**
 	 * 属性名称-其他情况权限
 	 */
 	private static final String PROPERTY_OTHERS_NAME = "Others";

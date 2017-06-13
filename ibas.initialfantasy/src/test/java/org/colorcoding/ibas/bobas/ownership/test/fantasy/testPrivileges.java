@@ -1,7 +1,10 @@
 package org.colorcoding.ibas.bobas.ownership.test.fantasy;
 
+import java.util.UUID;
+
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
+import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emConditionOperation;
@@ -9,8 +12,6 @@ import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
-import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFilteringCondition;
@@ -26,17 +27,28 @@ import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
 import org.colorcoding.ibas.initialfantasy.bo.ownership.IOwnership;
 import org.colorcoding.ibas.initialfantasy.bo.ownership.Ownership;
-import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
-import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
+import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 
 import junit.framework.TestCase;
+
+class BORepositoryInitialFantasy extends org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy {
+
+	public OperationResult<TestData> fetchTestData(ICriteria criteria) {
+		return super.fetch(criteria, this.getUserToken(), TestData.class);
+	}
+
+	public OperationResult<TestData> saveTestData(TestData bo) {
+		return super.save(bo, this.getUserToken());
+	}
+
+}
 
 public class testPrivileges extends TestCase {
 
 	public void testOwnership() throws InvalidTokenException {
 		IOperationResult<?> operationResult = null;
 		ICriteria criteria = null;
-		IBORepositoryInitialFantasyApp boRepository = new BORepositoryInitialFantasy();
+		BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
 		// 创建组织结构
 
@@ -108,7 +120,7 @@ public class testPrivileges extends TestCase {
 
 		// 定义所有权设置，张三，自，all；同事，no；下属，no；上级，view
 		IOwnership ownership = new Ownership();
-		ownership.setBOCode(MyConfiguration.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE));
+		ownership.setBOCode(MyConfiguration.applyVariables(TestData.BUSINESS_OBJECT_CODE));
 		ownership.setUserCode(User03.getCode());
 		ownership.setSelf(emAuthoriseType.ALL);
 		ownership.setEqualLevel(emAuthoriseType.NONE);
@@ -128,32 +140,36 @@ public class testPrivileges extends TestCase {
 		org.colorcoding.ibas.bobas.organization.fantasy.User orgUser02 = (org.colorcoding.ibas.bobas.organization.fantasy.User) orgManager
 				.getUser(User02.getDocEntry());
 		// 创建张三的数据
-		IBOCriteria data = new BOCriteria();
+		TestData data = new TestData();
+		data.setApplicationId(UUID.randomUUID().toString());
+		data.setName(String.format("test_%s", DateTime.getNow().getTime()));
+		data.setAssignedType(emAssignedType.USER);
+		data.setAssigned("tester");
 		// data.setDataOwner(User03.getObjectKey());
 		boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(orgUser03.getToken());// 设置当前用户
-		operationResult = boRepository.saveBOCriteria(data);
+		operationResult = boRepository.saveTestData(data);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 		// 其他人查询数据
 		boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(orgUser04.getToken());// 设置当前用户，同级李四
 		criteria = data.getCriteria();
-		operationResult = boRepository.fetchBOCriteria(criteria);
+		operationResult = boRepository.fetchTestData(criteria);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 		assertEquals("同事李四检索到张三的数据。", operationResult.getResultObjects().size(), 0);
 		boRepository = new BORepositoryInitialFantasy();
 		boRepository.setUserToken(orgUser02.getToken());// 设置当前用户，上级老王
 		criteria = data.getCriteria();
-		operationResult = boRepository.fetchBOCriteria(criteria);
+		operationResult = boRepository.fetchTestData(criteria);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 		assertEquals("经理老王没有检索到张三的数据。", operationResult.getResultObjects().size(), 1);
-		data = (IBOCriteria) operationResult.getResultObjects().firstOrDefault();
+		data = (TestData) operationResult.getResultObjects().firstOrDefault();
 		data.setName("经理老王修改了数据");
-		operationResult = boRepository.saveBOCriteria(data);
+		operationResult = boRepository.saveTestData(data);
 		assertNotNull("经理老王成功修改了张三的数据。", operationResult.getError());
 		// 启用过滤数据，更新过的数据
 		IBOFiltering boFiltering = new BOFiltering();
-		boFiltering.setBOCode(MyConfiguration.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE));
+		boFiltering.setBOCode(MyConfiguration.applyVariables(TestData.BUSINESS_OBJECT_CODE));
 		boFiltering.setRoleCode(Role01.getCode());
 		IBOFilteringCondition condition = boFiltering.getBOFilteringConditions().create();
 		condition.setPropertyName(BOFiltering.PROPERTY_LOGINST.getName());// 更新次数
@@ -165,13 +181,13 @@ public class testPrivileges extends TestCase {
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 
 		criteria = data.getCriteria();
-		operationResult = boRepository.fetchBOCriteria(criteria);
+		operationResult = boRepository.fetchTestData(criteria);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 		assertEquals("加了过滤条件的 张三数据被检索到了。", operationResult.getResultObjects().size(), 0);
 		data.setName("updated.");
-		operationResult = boRepository.saveBOCriteria(data);
+		operationResult = boRepository.saveTestData(data);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
-		operationResult = boRepository.fetchBOCriteria(criteria);
+		operationResult = boRepository.fetchTestData(criteria);
 		assertEquals(operationResult.getMessage(), operationResult.getResultCode(), 0);
 		assertEquals("没有检索到加了过滤条件的 数据。", operationResult.getResultObjects().size(), 1);
 	}
