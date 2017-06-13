@@ -5,6 +5,7 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
+import org.colorcoding.ibas.initialfantasy.data.emApprovalConditionType;
 
 /**
  * 审批模板步骤条件 接口
@@ -251,6 +252,21 @@ public interface IApprovalTemplateStepCondition extends IBOSimpleLine {
 	 *            值
 	 */
 	void setReference2(String value);
+
+	/**
+	 * 获取-比较的类型
+	 * 
+	 * @return 值
+	 */
+	emApprovalConditionType getConditionType();
+
+	/**
+	 * 设置-比较的类型
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setConditionType(emApprovalConditionType value);
 
 	/**
 	 * 获取-取值属性

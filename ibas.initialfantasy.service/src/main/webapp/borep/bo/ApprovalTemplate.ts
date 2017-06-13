@@ -11,6 +11,8 @@ import {
     emDocumentStatus,
     emBOStatus,
     emApprovalStatus,
+    emConditionOperation,
+    emConditionRelationship,
     BusinessObject,
     BusinessObjects,
     BOMasterData,
@@ -23,9 +25,12 @@ import {
 } from "ibas/index";
 import {
     emApprovalStepOwnerType,
+    emApprovalConditionType,
     IApprovalTemplate,
     IApprovalTemplateStep,
     IApprovalTemplateSteps,
+    IApprovalTemplateStepCondition,
+    IApprovalTemplateStepConditions,
     BO_CODE_APPROVALTEMPLATE
 } from "../../api/index";
 
@@ -538,6 +543,16 @@ export class ApprovalTemplateStep extends BOSimpleLine<ApprovalTemplateStep> imp
         this.setProperty(ApprovalTemplateStep.PROPERTY_STEPCANMODIFY_NAME, value);
     }
 
+    /** 映射的属性名称-审批模板步骤条件集合 */
+    static PROPERTY_APPROVALTEMPLATESTEPCONDITIONS_NAME: string = "ApprovalTemplateStepConditions";
+    /** 获取-审批模板步骤条件集合 */
+    get approvalTemplateStepConditions(): ApprovalTemplateStepConditions {
+        return this.getProperty<ApprovalTemplateStepConditions>(ApprovalTemplateStep.PROPERTY_APPROVALTEMPLATESTEPCONDITIONS_NAME);
+    }
+    /** 设置-审批模板步骤条件集合 */
+    set approvalTemplateStepConditions(value: ApprovalTemplateStepConditions) {
+        this.setProperty(ApprovalTemplateStep.PROPERTY_APPROVALTEMPLATESTEPCONDITIONS_NAME, value);
+    }
 
     /** 初始化数据 */
     protected init(): void {
@@ -550,6 +565,261 @@ export class ApprovalTemplateSteps extends BusinessObjects<ApprovalTemplateStep,
     /** 创建并添加子项 */
     create(): ApprovalTemplateStep {
         let item: ApprovalTemplateStep = new ApprovalTemplateStep();
+        this.add(item);
+        return item;
+    }
+}
+/** 审批模板步骤条件 */
+export class ApprovalTemplateStepCondition extends BOSimpleLine<ApprovalTemplateStepCondition> implements IApprovalTemplateStepCondition {
+
+    /** 构造函数 */
+    constructor() {
+        super();
+    }
+    /** 映射的属性名称-编号 */
+    static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
+    /** 获取-编号 */
+    get objectKey(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_OBJECTKEY_NAME);
+    }
+    /** 设置-编号 */
+    set objectKey(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_OBJECTKEY_NAME, value);
+    }
+
+    /** 映射的属性名称-类型 */
+    static PROPERTY_OBJECTCODE_NAME: string = "ObjectCode";
+    /** 获取-类型 */
+    get objectCode(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_OBJECTCODE_NAME);
+    }
+    /** 设置-类型 */
+    set objectCode(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_OBJECTCODE_NAME, value);
+    }
+
+    /** 映射的属性名称-行号 */
+    static PROPERTY_LINEID_NAME: string = "LineId";
+    /** 获取-行号 */
+    get lineId(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_LINEID_NAME);
+    }
+    /** 设置-行号 */
+    set lineId(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_LINEID_NAME, value);
+    }
+
+    /** 映射的属性名称-步骤行号 */
+    static PROPERTY_STEPLINEID_NAME: string = "StepLineId";
+    /** 获取-步骤行号 */
+    get stepLineId(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_STEPLINEID_NAME);
+    }
+    /** 设置-步骤行号 */
+    set stepLineId(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_STEPLINEID_NAME, value);
+    }
+
+    /** 映射的属性名称-实例号（版本） */
+    static PROPERTY_LOGINST_NAME: string = "LogInst";
+    /** 获取-实例号（版本） */
+    get logInst(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_LOGINST_NAME);
+    }
+    /** 设置-实例号（版本） */
+    set logInst(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_LOGINST_NAME, value);
+    }
+
+    /** 映射的属性名称-数据源 */
+    static PROPERTY_DATASOURCE_NAME: string = "DataSource";
+    /** 获取-数据源 */
+    get dataSource(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_DATASOURCE_NAME);
+    }
+    /** 设置-数据源 */
+    set dataSource(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_DATASOURCE_NAME, value);
+    }
+
+    /** 映射的属性名称-创建日期 */
+    static PROPERTY_CREATEDATE_NAME: string = "CreateDate";
+    /** 获取-创建日期 */
+    get createDate(): Date {
+        return this.getProperty<Date>(ApprovalTemplateStepCondition.PROPERTY_CREATEDATE_NAME);
+    }
+    /** 设置-创建日期 */
+    set createDate(value: Date) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_CREATEDATE_NAME, value);
+    }
+
+    /** 映射的属性名称-创建时间 */
+    static PROPERTY_CREATETIME_NAME: string = "CreateTime";
+    /** 获取-创建时间 */
+    get createTime(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_CREATETIME_NAME);
+    }
+    /** 设置-创建时间 */
+    set createTime(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_CREATETIME_NAME, value);
+    }
+
+    /** 映射的属性名称-修改日期 */
+    static PROPERTY_UPDATEDATE_NAME: string = "UpdateDate";
+    /** 获取-修改日期 */
+    get updateDate(): Date {
+        return this.getProperty<Date>(ApprovalTemplateStepCondition.PROPERTY_UPDATEDATE_NAME);
+    }
+    /** 设置-修改日期 */
+    set updateDate(value: Date) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_UPDATEDATE_NAME, value);
+    }
+
+    /** 映射的属性名称-修改时间 */
+    static PROPERTY_UPDATETIME_NAME: string = "UpdateTime";
+    /** 获取-修改时间 */
+    get updateTime(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_UPDATETIME_NAME);
+    }
+    /** 设置-修改时间 */
+    set updateTime(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_UPDATETIME_NAME, value);
+    }
+
+    /** 映射的属性名称-创建用户 */
+    static PROPERTY_CREATEUSERSIGN_NAME: string = "CreateUserSign";
+    /** 获取-创建用户 */
+    get createUserSign(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_CREATEUSERSIGN_NAME);
+    }
+    /** 设置-创建用户 */
+    set createUserSign(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_CREATEUSERSIGN_NAME, value);
+    }
+
+    /** 映射的属性名称-修改用户 */
+    static PROPERTY_UPDATEUSERSIGN_NAME: string = "UpdateUserSign";
+    /** 获取-修改用户 */
+    get updateUserSign(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_UPDATEUSERSIGN_NAME);
+    }
+    /** 设置-修改用户 */
+    set updateUserSign(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_UPDATEUSERSIGN_NAME, value);
+    }
+
+    /** 映射的属性名称-创建动作标识 */
+    static PROPERTY_CREATEACTIONID_NAME: string = "CreateActionId";
+    /** 获取-创建动作标识 */
+    get createActionId(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_CREATEACTIONID_NAME);
+    }
+    /** 设置-创建动作标识 */
+    set createActionId(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_CREATEACTIONID_NAME, value);
+    }
+
+    /** 映射的属性名称-更新动作标识 */
+    static PROPERTY_UPDATEACTIONID_NAME: string = "UpdateActionId";
+    /** 获取-更新动作标识 */
+    get updateActionId(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_UPDATEACTIONID_NAME);
+    }
+    /** 设置-更新动作标识 */
+    set updateActionId(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_UPDATEACTIONID_NAME, value);
+    }
+
+    /** 映射的属性名称-参考1 */
+    static PROPERTY_REFERENCE1_NAME: string = "Reference1";
+    /** 获取-参考1 */
+    get reference1(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_REFERENCE1_NAME);
+    }
+    /** 设置-参考1 */
+    set reference1(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_REFERENCE1_NAME, value);
+    }
+
+    /** 映射的属性名称-参考2 */
+    static PROPERTY_REFERENCE2_NAME: string = "Reference2";
+    /** 获取-参考2 */
+    get reference2(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_REFERENCE2_NAME);
+    }
+    /** 设置-参考2 */
+    set reference2(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_REFERENCE2_NAME, value);
+    }
+
+    /** 映射的属性名称-比较的类型 */
+    static PROPERTY_CONDITIONTYPE_NAME: string = "ConditionType";
+    /** 获取-比较的类型 */
+    get conditionType(): emApprovalConditionType {
+        return this.getProperty<emApprovalConditionType>(ApprovalTemplateStepCondition.PROPERTY_CONDITIONTYPE_NAME);
+    }
+    /** 设置-比较的类型 */
+    set conditionType(value: emApprovalConditionType) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_CONDITIONTYPE_NAME, value);
+    }
+
+    /** 映射的属性名称-取值属性 */
+    static PROPERTY_PROPERTYNAME_NAME: string = "PropertyName";
+    /** 获取-取值属性 */
+    get propertyName(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_PROPERTYNAME_NAME);
+    }
+    /** 设置-取值属性 */
+    set propertyName(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_PROPERTYNAME_NAME, value);
+    }
+
+    /** 映射的属性名称-比较的值 */
+    static PROPERTY_CONDITIONVALUE_NAME: string = "ConditionValue";
+    /** 获取-比较的值 */
+    get conditionValue(): string {
+        return this.getProperty<string>(ApprovalTemplateStepCondition.PROPERTY_CONDITIONVALUE_NAME);
+    }
+    /** 设置-比较的值 */
+    set conditionValue(value: string) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_CONDITIONVALUE_NAME, value);
+    }
+
+    /** 映射的属性名称-比较的方法 */
+    static PROPERTY_OPERATION_NAME: string = "Operation";
+    /** 获取-比较的方法 */
+    get operation(): emConditionOperation {
+        return this.getProperty<emConditionOperation>(ApprovalTemplateStepCondition.PROPERTY_OPERATION_NAME);
+    }
+    /** 设置-比较的方法 */
+    set operation(value: emConditionOperation) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_OPERATION_NAME, value);
+    }
+
+    /** 映射的属性名称-与上一个条件的关系 */
+    static PROPERTY_RELATIONSHIP_NAME: string = "Relationship";
+    /** 获取-与上一个条件的关系 */
+    get relationship(): emConditionRelationship {
+        return this.getProperty<emConditionRelationship>(ApprovalTemplateStepCondition.PROPERTY_RELATIONSHIP_NAME);
+    }
+    /** 设置-与上一个条件的关系 */
+    set relationship(value: emConditionRelationship) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_RELATIONSHIP_NAME, value);
+    }
+
+
+    /** 初始化数据 */
+    protected init(): void {
+    }
+}
+
+/** 审批模板步骤条件 集合 */
+export class ApprovalTemplateStepConditions extends BusinessObjects<ApprovalTemplateStepCondition, ApprovalTemplateStep>
+    implements IApprovalTemplateStepConditions {
+
+    /** 创建并添加子项 */
+    create(): ApprovalTemplateStepCondition {
+        let item: ApprovalTemplateStepCondition = new ApprovalTemplateStepCondition();
         this.add(item);
         return item;
     }

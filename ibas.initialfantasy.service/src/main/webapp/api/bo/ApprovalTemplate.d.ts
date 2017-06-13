@@ -12,6 +12,8 @@ import {
     emBOStatus,
     emApprovalStatus,
     emApprovalStepStatus,
+    emConditionOperation,
+    emConditionRelationship,
     IBusinessObject,
     IBusinessObjects,
     IBOMasterData,
@@ -22,7 +24,8 @@ import {
     IBOSimpleLine
 } from "ibas/index";
 import {
-    emApprovalStepOwnerType
+    emApprovalStepOwnerType,
+    emApprovalConditionType
 } from "../Datas";
 
 /** 审批模板 */
@@ -147,6 +150,8 @@ export interface IApprovalTemplateStep extends IBOSimpleLine {
     stepOrder: number;
     /** 步骤所有者可修改 */
     stepCanModify: emYesNo;
+    /** 审批模板步骤条件集合 */
+    approvalTemplateStepConditions: IApprovalTemplateStepConditions;
 }
 
 /** 审批模板步骤 集合 */
@@ -154,5 +159,60 @@ export interface IApprovalTemplateSteps extends IBusinessObjects<IApprovalTempla
 
     /** 创建并添加子项 */
     create(): IApprovalTemplateStep;
+}
+
+
+/** 审批模板步骤条件 */
+export interface IApprovalTemplateStepCondition extends IBOSimpleLine {
+
+    /** 编号 */
+    objectKey: number;
+    /** 类型 */
+    objectCode: string;
+    /** 行号 */
+    lineId: number;
+    /** 步骤行号 */
+    stepLineId: number;
+    /** 实例号（版本） */
+    logInst: number;
+    /** 数据源 */
+    dataSource: string;
+    /** 创建日期 */
+    createDate: Date;
+    /** 创建时间 */
+    createTime: number;
+    /** 修改日期 */
+    updateDate: Date;
+    /** 修改时间 */
+    updateTime: number;
+    /** 创建用户 */
+    createUserSign: number;
+    /** 修改用户 */
+    updateUserSign: number;
+    /** 创建动作标识 */
+    createActionId: string;
+    /** 更新动作标识 */
+    updateActionId: string;
+    /** 参考1 */
+    reference1: string;
+    /** 参考2 */
+    reference2: string;
+    /** 比较的类型 */
+    conditionType: emApprovalConditionType;
+    /** 取值属性 */
+    propertyName: string;
+    /** 比较的值 */
+    conditionValue: string;
+    /** 比较的方法 */
+    operation: emConditionOperation;
+    /** 与上一个条件的关系 */
+    relationship: emConditionRelationship;
+}
+
+/** 审批模板步骤条件 集合 */
+export interface IApprovalTemplateStepConditions extends IBusinessObjects<IApprovalTemplateStepCondition, IApprovalTemplateStep> {
+
+    /** 创建并添加子项 */
+    create(): IApprovalTemplateStepCondition;
 }
 

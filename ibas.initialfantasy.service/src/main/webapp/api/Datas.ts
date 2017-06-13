@@ -41,15 +41,27 @@ export const BO_CODE_USER: string = "${Company}_SYS_USER";
 /** 业务对象编码-业务对象信息 */
 export const BO_CODE_BOINFORMATION: string = "${Company}_SYS_BOINFO";
 
+/**
+ * 审批步骤所有者类型
+ */
 export enum emApprovalStepOwnerType {
     USER,
     /*
-     DATAOWNER,
-     DIRECTSUPERIOR,
-     DATAORGANIZATIONMANAGER,
-     PROJECTMANAGER,
-     PROJECTORGANIZATIONMANAGER
+     DATA_OWNER,
+     DIRECT_SUPERIOR,
+     DATA_ORGANIZATION_MANAGER,
+     PROJECT_MANAGER,
+     PROJECT_ORGANIZATION_MANAGER
     */
+}
+/**
+ * 审批条件类型
+ */
+export enum emApprovalConditionType {
+    /** 属性值 */
+    PROPERTY_VALUE,
+    /** SQL脚本 */
+    SQL_SCRIPT,
 }
 /**
  * 分配类型
