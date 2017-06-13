@@ -65,8 +65,9 @@
     <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
     <Property Name="Reference1" Description="参考1" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Ref1"/>
     <Property Name="Reference2" Description="参考2" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="Ref2"/>
-    <Property Name="PropertyName" Description="取值属性" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Alias"/>
-    <Property Name="ConditionValue" Description="比较的值" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="CondVal"/>
+    <Property Name="ConditionType" Description="比较的类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emApprovalConditionType" Mapped="Type"/>
+    <Property Name="PropertyName" Description="取值属性" DataType="Alphanumeric" DataSubType="Default" EditSize="140" Mapped="Alias"/>
+    <Property Name="ConditionValue" Description="比较的值" DataType="Alphanumeric" DataSubType="Default" EditSize="140" Mapped="Value"/>
     <Property Name="Operation" Description="比较的方法" DataType="Alphanumeric" DataSubType="Default" EditSize="2" DeclaredType="emConditionOperation" Mapped="Operation"/>
     <Property Name="Relationship" Description="与上一个条件的关系" DataType="Alphanumeric" DataSubType="Default" EditSize="3" DeclaredType="emConditionRelationship" Mapped="Relationship"/>
   </Model>

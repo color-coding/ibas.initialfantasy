@@ -17,6 +17,7 @@ import org.colorcoding.ibas.bobas.serialization.ISerializerManager;
 import org.colorcoding.ibas.bobas.serialization.SerializerFactory;
 import org.colorcoding.ibas.bobas.util.ArrayList;
 import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.IApprovalTemplateStepCondition;
+import org.colorcoding.ibas.initialfantasy.data.emApprovalConditionType;
 
 /**
  * 审批步骤条件
@@ -45,11 +46,23 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 			ArrayList<ApprovalProcessStepCondition> stepConditions = new ArrayList<ApprovalProcessStepCondition>();
 			for (IApprovalTemplateStepCondition item : conditions) {
 				ApprovalProcessStepCondition stepCondition = new ApprovalProcessStepCondition();
-				stepCondition.setRelation(item.getRelationship());
-				stepCondition.setPropertyName(item.getPropertyName());
-				stepCondition.setOperation(item.getOperation());
-				stepCondition.setConditionValue(item.getConditionValue());
+				if (item.getConditionType() != emApprovalConditionType.PROPERTY_VALUE) {
+					stepCondition.setPropertyValueMode(ValueMode.DB_FIELD);
+					stepCondition.setConditionValueMode(ValueMode.INPUT);
+					stepCondition.setRelation(item.getRelationship());
+					stepCondition.setPropertyName(item.getPropertyName());
+					stepCondition.setOperation(item.getOperation());
+					stepCondition.setConditionValue(item.getConditionValue());
+				} else if (item.getConditionType() != emApprovalConditionType.SQL_SCRIPT) {
+					stepCondition.setPropertyValueMode(ValueMode.DB_FIELD);
+					stepCondition.setConditionValueMode(ValueMode.SQL_SCRIPT);
+					stepCondition.setRelation(item.getRelationship());
+					stepCondition.setPropertyName(item.getPropertyName());
+					stepCondition.setOperation(item.getOperation());
+					stepCondition.setConditionValue(item.getConditionValue());
+				}
 				stepConditions.add(stepCondition);
+
 			}
 			ISerializer<?> serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
 			ByteArrayOutputStream writer = new ByteArrayOutputStream();

@@ -3,47 +3,35 @@ package org.colorcoding.ibas.initialfantasy.data;
 import org.colorcoding.ibas.bobas.mapping.Value;
 
 public enum emApprovalStepOwnerType {
-	/**
-	 * 直接上级
-	 */
-	@Value(value = "I")
-	DirectSuperior,
 
 	/**
 	 * 指定用户
 	 */
 	@Value(value = "U")
-	User,
-
+	USER,
+	/**
+	 * 直接上级
+	 */
+	@Value(value = "I")
+	DIRECT_SUPERIOR,
 	/**
 	 * 数据所有者
 	 */
 	@Value(value = "O")
-	DataOwner,
-
+	DATA_OWNER,
 	/**
 	 * 数据所属组织负责人
 	 */
 	@Value(value = "G")
-	DataOrganizationManager,
-
+	DATA_ORGANIZATION_MANAGER,
 	/**
 	 * 项目负责人
 	 */
 	@Value(value = "P")
-	ProjectManager,
-
+	PROJECT_MANAGER,
 	/**
 	 * 项目所属组织负责人
 	 */
 	@Value(value = "R")
-	ProjectOrganizationManager;
-
-	public int getValue() {
-		return this.ordinal();
-	}
-
-	public static emApprovalStepOwnerType forValue(int value) {
-		return values()[value];
-	}
+	PROJECT_ORGANIZATION_MANAGER;
 }

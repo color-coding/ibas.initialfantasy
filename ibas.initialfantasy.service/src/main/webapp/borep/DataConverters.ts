@@ -48,6 +48,18 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
             if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
                 return ibas.enums.toString(bo.emAssignedType, value);
             }
+        } else if (boName === bo.ApprovalTemplateStepCondition.name) {
+            if (property === bo.ApprovalTemplateStepCondition.PROPERTY_CONDITIONTYPE_NAME) {
+                return ibas.enums.toString(bo.emApprovalConditionType, value);
+            } else if (property === bo.ApprovalTemplateStepCondition.PROPERTY_RELATIONSHIP_NAME) {
+                return ibas.enums.toString(ibas.emConditionRelationship, value);
+            } else if (property === bo.ApprovalTemplateStepCondition.PROPERTY_OPERATION_NAME) {
+                return ibas.enums.toString(ibas.emConditionOperation, value);
+            }
+        } else if (boName === bo.ApprovalTemplateStep.name) {
+            if (property === bo.ApprovalTemplateStep.PROPERTY_STEPOWNERTYPE_NAME) {
+                return ibas.enums.toString(bo.emApprovalStepOwnerType, value);
+            }
         }
         return super.convertData(boName, property, value);
     }
@@ -67,6 +79,18 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
         } else if (boName === bo.BOCriteria.name) {
             if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
                 return ibas.enums.valueOf(bo.emAssignedType, value);
+            }
+        } else if (boName === bo.ApprovalTemplateStepCondition.name) {
+            if (property === bo.ApprovalTemplateStepCondition.PROPERTY_CONDITIONTYPE_NAME) {
+                return ibas.enums.valueOf(bo.emApprovalConditionType, value);
+            } else if (property === bo.ApprovalTemplateStepCondition.PROPERTY_RELATIONSHIP_NAME) {
+                return ibas.enums.valueOf(ibas.emConditionRelationship, value);
+            } else if (property === bo.ApprovalTemplateStepCondition.PROPERTY_OPERATION_NAME) {
+                return ibas.enums.valueOf(ibas.emConditionOperation, value);
+            }
+        } else if (boName === bo.ApprovalTemplateStep.name) {
+            if (property === bo.ApprovalTemplateStep.PROPERTY_STEPOWNERTYPE_NAME) {
+                return ibas.enums.valueOf(bo.emApprovalStepOwnerType, value);
             }
         }
         return super.parsingData(boName, property, value);

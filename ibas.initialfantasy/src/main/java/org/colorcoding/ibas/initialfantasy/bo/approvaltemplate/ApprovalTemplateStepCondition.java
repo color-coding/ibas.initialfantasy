@@ -16,6 +16,7 @@ import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.data.emApprovalConditionType;
 
 /**
  * 获取-审批模板步骤条件
@@ -29,7 +30,7 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 	/**
 	 * 序列化版本标记
 	 */
-	private static final long serialVersionUID = 1818591258263441479L;
+	private static final long serialVersionUID = -7560939348621929386L;
 
 	/**
 	 * 当前类型
@@ -564,6 +565,38 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 	}
 
 	/**
+	 * 属性名称-比较的类型
+	 */
+	private static final String PROPERTY_CONDITIONTYPE_NAME = "ConditionType";
+
+	/**
+	 * 比较的类型 属性
+	 */
+	@DbField(name = "Type", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emApprovalConditionType> PROPERTY_CONDITIONTYPE = registerProperty(
+			PROPERTY_CONDITIONTYPE_NAME, emApprovalConditionType.class, MY_CLASS);
+
+	/**
+	 * 获取-比较的类型
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CONDITIONTYPE_NAME)
+	public final emApprovalConditionType getConditionType() {
+		return this.getProperty(PROPERTY_CONDITIONTYPE);
+	}
+
+	/**
+	 * 设置-比较的类型
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setConditionType(emApprovalConditionType value) {
+		this.setProperty(PROPERTY_CONDITIONTYPE, value);
+	}
+
+	/**
 	 * 属性名称-取值属性
 	 */
 	private static final String PROPERTY_PROPERTYNAME_NAME = "PropertyName";
@@ -603,7 +636,7 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 	/**
 	 * 比较的值 属性
 	 */
-	@DbField(name = "CondVal", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Value", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
 	public static final IPropertyInfo<String> PROPERTY_CONDITIONVALUE = registerProperty(PROPERTY_CONDITIONVALUE_NAME,
 			String.class, MY_CLASS);
 
@@ -698,7 +731,6 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-
 	}
 
 	@Override
@@ -727,5 +759,4 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 		}
 		return DataConvert.toDbValue(value);
 	}
-
 }

@@ -70,7 +70,7 @@ public class testApprovalProcess extends TestCase {
 		IApprovalTemplateStep atStep02 = at.getApprovalTemplateSteps().create();
 		atStep02.setStepOrder(2);
 		atStep02.setStepName("boss审批");
-		atStep02.setStepOwnerType(emApprovalStepOwnerType.User);
+		atStep02.setStepOwnerType(emApprovalStepOwnerType.USER);
 		atStep02.setStepOwner(apBoss.getDocEntry());
 		// 步骤2的审批条件与步骤1相同
 		atStepCondition = atStep02.getApprovalTemplateStepConditions().create();
