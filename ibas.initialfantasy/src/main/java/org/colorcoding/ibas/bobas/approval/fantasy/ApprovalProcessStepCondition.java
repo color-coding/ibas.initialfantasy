@@ -46,14 +46,14 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 			ArrayList<ApprovalProcessStepCondition> stepConditions = new ArrayList<ApprovalProcessStepCondition>();
 			for (IApprovalTemplateStepCondition item : conditions) {
 				ApprovalProcessStepCondition stepCondition = new ApprovalProcessStepCondition();
-				if (item.getConditionType() != emApprovalConditionType.PROPERTY_VALUE) {
+				if (item.getConditionType() == emApprovalConditionType.PROPERTY_VALUE) {
 					stepCondition.setPropertyValueMode(ValueMode.DB_FIELD);
 					stepCondition.setConditionValueMode(ValueMode.INPUT);
 					stepCondition.setRelation(item.getRelationship());
 					stepCondition.setPropertyName(item.getPropertyName());
 					stepCondition.setOperation(item.getOperation());
 					stepCondition.setConditionValue(item.getConditionValue());
-				} else if (item.getConditionType() != emApprovalConditionType.SQL_SCRIPT) {
+				} else if (item.getConditionType() == emApprovalConditionType.SQL_SCRIPT) {
 					stepCondition.setPropertyValueMode(ValueMode.DB_FIELD);
 					stepCondition.setConditionValueMode(ValueMode.SQL_SCRIPT);
 					stepCondition.setRelation(item.getRelationship());
