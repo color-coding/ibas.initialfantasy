@@ -216,6 +216,7 @@ export class Organization extends BOMasterData<Organization> implements IOrganiz
     /** 初始化数据 */
     protected init(): void {
         this.objectCode = config.applyVariables(Organization.BUSINESS_OBJECT_CODE);
+        this.activated = emYesNo.YES;
     }
 }
 

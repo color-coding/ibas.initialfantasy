@@ -313,6 +313,7 @@ export class ApprovalTemplate extends BOSimple<ApprovalTemplate> implements IApp
     protected init(): void {
         this.approvalTemplateSteps = new ApprovalTemplateSteps(this);
         this.objectCode = config.applyVariables(ApprovalTemplate.BUSINESS_OBJECT_CODE);
+        this.activated = emYesNo.YES;
     }
 }
 

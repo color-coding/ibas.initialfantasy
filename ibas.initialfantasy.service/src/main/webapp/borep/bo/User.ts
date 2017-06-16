@@ -283,6 +283,7 @@ export class User extends BOMasterData<User> implements IUser {
     protected init(): void {
         this.objectCode = config.applyVariables(User.BUSINESS_OBJECT_CODE);
         this.super = emYesNo.NO;
+        this.activated = emYesNo.YES;
     }
 }
 

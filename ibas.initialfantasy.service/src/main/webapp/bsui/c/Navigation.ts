@@ -35,6 +35,8 @@ import * as roleViews from "./role/index";
 import * as userViews from "./user/index";
 import * as boinformationApps from "../../bsapp/boinformation/index";
 import * as boinformationViews from "./boinformation/index";
+import * as systemApps from "../../bsapp/system/index";
+import * as systemViews from "./system/index";
 
 /**
  * 视图导航
@@ -218,6 +220,9 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case boinformationApps.BOInformationEditApp.APPLICATION_ID:
                 view = new boinformationViews.BOInformationEditView();
+                break;
+            case systemApps.VariableChooseApp.APPLICATION_ID:
+                view = new systemViews.VariableChooseView();
                 break;
             default:
                 break;

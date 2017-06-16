@@ -33,7 +33,7 @@ export interface IBOFiltering extends IBOSimple {
     roleCode: string;
 
     /** 对象类型 */
-    bOCode: string;
+    boCode: string;
 
     /** 激活的 */
     activated: emYesNo;
@@ -88,7 +88,7 @@ export interface IBOFiltering extends IBOSimple {
 
 
     /** 业务对象筛选-条件集合 */
-    bOFilteringConditions: IBOFilteringConditions;
+    boFilteringConditions: IBOFilteringConditions;
 
 
 }

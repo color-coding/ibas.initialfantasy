@@ -33,8 +33,16 @@ export class OrganizationalStructureEditApp extends ibas.BOEditApplication<IOrga
         // 其他事件
         this.view.deleteDataEvent = this.deleteData;
         this.view.createDataEvent = this.createData;
+        this.view.chooseManagerEvent = this.chooseManager;
+        this.view.chooseOrganizationalStructureEvent = this.chooseOrganizationalStructure;
+        this.view.chooseOrganizationEvent = this.chooseOrganization;
         this.view.addOrganizationalRoleEvent = this.addOrganizationalRole;
         this.view.removeOrganizationalRoleEvent = this.removeOrganizationalRole;
+        this.view.chooseOrganizationalRoleEvent = this.chooseOrganizationalRole;
+        this.view.selectedOrganizationalRoleEvent = this.selectedOrganizationalRole;
+        this.view.addRoleMemberEvent = this.addRoleMember;
+        this.view.removeRoleMemberEvent = this.removeRoleMember;
+        this.view.choooseRoleMemberEvent = this.choooseRoleMember;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -198,6 +206,166 @@ export class OrganizationalStructureEditApp extends ibas.BOEditApplication<IOrga
         // 仅显示没有标记删除的
         this.view.showOrganizationalRoles(this.editData.organizationalRoles.filterDeleted());
     }
+    /** 选则-组织 */
+    chooseOrganization(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.Organization>({
+            boCode: bo.Organization.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.Organization.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.Organization>): void {
+                that.editData.organization = selecteds.firstOrDefault().code;
+            }
+        });
+    }
+    /** 选则-所属组织 */
+    chooseOrganizationalStructure(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.OrganizationalStructure>({
+            boCode: bo.OrganizationalStructure.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(
+                    bo.OrganizationalStructure.PROPERTY_OBJECTKEY_NAME,
+                    ibas.emConditionOperation.NOT_EQUAL,
+                    this.editData.objectKey
+                )
+            ],
+            onCompleted(selecteds: ibas.List<bo.OrganizationalStructure>): void {
+                that.editData.belonging = selecteds.firstOrDefault().objectKey;
+            }
+        });
+    }
+    /** 选则-经理 */
+    chooseManager(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.User>({
+            boCode: bo.User.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.User>): void {
+                that.editData.manager = selecteds.firstOrDefault().code;
+            }
+        });
+    }
+    /** 选则-组织角色 */
+    chooseOrganizationalRole(caller: bo.OrganizationalRole): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.Role>({
+            caller: caller,
+            boCode: bo.Role.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.Role.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.Role>): void {
+                // 获取触发的对象
+                let index: number = that.editData.organizationalRoles.indexOf(caller);
+                let item: bo.OrganizationalRole = that.editData.organizationalRoles[index];
+                // 选择返回数量多余触发数量时,自动创建新的项目
+                let created: boolean = false;
+                for (let selected of selecteds) {
+                    if (ibas.objects.isNull(item)) {
+                        item = that.editData.organizationalRoles.create();
+                        created = true;
+                    }
+                    item.role = selected.code;
+                    item = null;
+                }
+                if (created) {
+                    // 创建了新的行项目
+                    that.view.showOrganizationalRoles(that.editData.organizationalRoles.filterDeleted());
+                }
+            }
+        });
+    }
+    private editOrganizationalRole: bo.OrganizationalRole;
+    selectedOrganizationalRole(orgRole: bo.OrganizationalRole): void {
+        if (ibas.objects.isNull(orgRole)) {
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
+                ibas.i18n.prop("sys_shell_data_edit")
+            ));
+            return;
+        }
+        this.editOrganizationalRole = orgRole;
+        // 仅显示没有标记删除的
+        this.view.showRoleMembers(this.editOrganizationalRole.roleMembers.filterDeleted());
+    }
+    /** 添加角色-成员事件 */
+    addRoleMember(): void {
+        if (ibas.objects.isNull(this.editOrganizationalRole)) {
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
+                ibas.i18n.prop("sys_shell_data_edit")
+            ));
+            return;
+        }
+        this.editOrganizationalRole.roleMembers.create();
+        // 仅显示没有标记删除的
+        this.view.showRoleMembers(this.editOrganizationalRole.roleMembers.filterDeleted());
+    }
+    /** 删除角色-成员事件 */
+    removeRoleMember(items: bo.RoleMember[]): void {
+        if (ibas.objects.isNull(this.editOrganizationalRole)) {
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
+                ibas.i18n.prop("sys_shell_data_edit")
+            ));
+            return;
+        }
+        // 非数组，转为数组
+        if (!(items instanceof Array)) {
+            items = [items];
+        }
+        if (items.length === 0) {
+            return;
+        }
+        // 移除项目
+        for (let item of items) {
+            if (this.editOrganizationalRole.roleMembers.indexOf(item) >= 0) {
+                if (item.isNew) {
+                    // 新建的移除集合
+                    this.editOrganizationalRole.roleMembers.remove(item);
+                } else {
+                    // 非新建标记删除
+                    item.delete();
+                }
+            }
+        }
+        // 仅显示没有标记删除的
+        this.view.showRoleMembers(this.editOrganizationalRole.roleMembers.filterDeleted());
+    }
+    /** 选择-角色成员 */
+    choooseRoleMember(caller: bo.RoleMember): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.User>({
+            caller: caller,
+            boCode: bo.User.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.Role.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.User>): void {
+                // 获取触发的对象
+                if (ibas.objects.isNull(that.editOrganizationalRole)) {
+                    return;
+                }
+                let index: number = that.editOrganizationalRole.roleMembers.indexOf(caller);
+                let item: bo.RoleMember = that.editOrganizationalRole.roleMembers[index];
+                // 选择返回数量多余触发数量时,自动创建新的项目
+                let created: boolean = false;
+                for (let selected of selecteds) {
+                    if (ibas.objects.isNull(item)) {
+                        item = that.editOrganizationalRole.roleMembers.create();
+                        created = true;
+                    }
+                    item.member = selected.code;
+                    item = null;
+                }
+                if (created) {
+                    // 创建了新的行项目
+                    that.view.showRoleMembers(that.editOrganizationalRole.roleMembers.filterDeleted());
+                }
+            }
+        });
+    }
 
 }
 /** 视图-组织-结构 */
@@ -212,6 +380,24 @@ export interface IOrganizationalStructureEditView extends ibas.IBOEditView {
     addOrganizationalRoleEvent: Function;
     /** 删除组织-角色事件 */
     removeOrganizationalRoleEvent: Function;
+    /** 选则-组织 */
+    chooseOrganizationEvent: Function;
+    /** 选则-所属组织 */
+    chooseOrganizationalStructureEvent: Function;
+    /** 选则-经理 */
+    chooseManagerEvent: Function;
     /** 显示数据 */
     showOrganizationalRoles(datas: bo.OrganizationalRole[]): void;
+    /** 选则-组织角色 */
+    chooseOrganizationalRoleEvent: Function;
+    /** 选中-组织角色 */
+    selectedOrganizationalRoleEvent: Function;
+    /** 添加角色-成员事件 */
+    addRoleMemberEvent: Function;
+    /** 删除角色-成员事件 */
+    removeRoleMemberEvent: Function;
+    /** 显示数据 */
+    showRoleMembers(datas: bo.RoleMember[]): void;
+    /** 选择-角色成员 */
+    choooseRoleMemberEvent: Function;
 }

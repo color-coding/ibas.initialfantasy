@@ -72,7 +72,7 @@ export class OrganizationalStructureListView extends ibas.BOListView implements 
                     }).bindProperty("text", {
                         path: "validDate",
                         formatter(data: Date): any {
-                            return ibas.dates.toString(data);
+                            return ibas.dates.toString(data, "yyyy-MM-dd");
                         }
                     })
                 }),
@@ -83,7 +83,7 @@ export class OrganizationalStructureListView extends ibas.BOListView implements 
                     }).bindProperty("text", {
                         path: "invalidDate",
                         formatter(data: Date): any {
-                            return ibas.dates.toString(data);
+                            return ibas.dates.toString(data, "yyyy-MM-dd");
                         }
                     })
                 }),

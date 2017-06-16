@@ -53,11 +53,11 @@ export class BOFiltering extends BOSimple<BOFiltering> implements IBOFiltering {
     /** 映射的属性名称-对象类型 */
     static PROPERTY_BOCODE_NAME: string = "BOCode";
     /** 获取-对象类型 */
-    get bOCode(): string {
+    get boCode(): string {
         return this.getProperty<string>(BOFiltering.PROPERTY_BOCODE_NAME);
     }
     /** 设置-对象类型 */
-    set bOCode(value: string) {
+    set boCode(value: string) {
         this.setProperty(BOFiltering.PROPERTY_BOCODE_NAME, value);
     }
 
@@ -252,19 +252,20 @@ export class BOFiltering extends BOSimple<BOFiltering> implements IBOFiltering {
     /** 映射的属性名称-业务对象筛选-条件集合 */
     static PROPERTY_BOFILTERINGCONDITIONS_NAME: string = "BOFilteringConditions";
     /** 获取-业务对象筛选-条件集合 */
-    get bOFilteringConditions(): BOFilteringConditions {
+    get boFilteringConditions(): BOFilteringConditions {
         return this.getProperty<BOFilteringConditions>(BOFiltering.PROPERTY_BOFILTERINGCONDITIONS_NAME);
     }
     /** 设置-业务对象筛选-条件集合 */
-    set bOFilteringConditions(value: BOFilteringConditions) {
+    set boFilteringConditions(value: BOFilteringConditions) {
         this.setProperty(BOFiltering.PROPERTY_BOFILTERINGCONDITIONS_NAME, value);
     }
 
 
     /** 初始化数据 */
     protected init(): void {
-        this.bOFilteringConditions = new BOFilteringConditions(this);
+        this.boFilteringConditions = new BOFilteringConditions(this);
         this.objectCode = config.applyVariables(BOFiltering.BUSINESS_OBJECT_CODE);
+        this.activated = emYesNo.YES;
     }
 }
 
