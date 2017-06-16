@@ -20,6 +20,7 @@ import {
     BOSimple,
     BOSimpleLine,
     config,
+    dates, objects
 } from "ibas/index";
 import {
     IOrganizationalStructure,
@@ -254,9 +255,22 @@ export class OrganizationalStructure extends BOSimple<OrganizationalStructure> i
     protected init(): void {
         this.organizationalRoles = new OrganizationalRoles(this);
         this.objectCode = config.applyVariables(OrganizationalStructure.BUSINESS_OBJECT_CODE);
+        this.belonging = -1;
+        this.validDate = dates.today();
+        this.invalidDate = dates.valueOf("2099-12-31T00:00:00");
     }
 }
 
+/** 组织-角色 集合 */
+export class OrganizationalRoles extends BusinessObjects<OrganizationalRole, OrganizationalStructure> implements IOrganizationalRoles {
+
+    /** 创建并添加子项 */
+    create(): OrganizationalRole {
+        let item: OrganizationalRole = new OrganizationalRole();
+        this.add(item);
+        return item;
+    }
+}
 /** 组织-角色 */
 export class OrganizationalRole extends BOSimpleLine<OrganizationalRole> implements IOrganizationalRole {
 
@@ -454,19 +468,10 @@ export class OrganizationalRole extends BOSimpleLine<OrganizationalRole> impleme
 
     /** 初始化数据 */
     protected init(): void {
+        this.roleMembers = new RoleMembers(this);
     }
 }
 
-/** 组织-角色 集合 */
-export class OrganizationalRoles extends BusinessObjects<OrganizationalRole, OrganizationalStructure> implements IOrganizationalRoles {
-
-    /** 创建并添加子项 */
-    create(): OrganizationalRole {
-        let item: OrganizationalRole = new OrganizationalRole();
-        this.add(item);
-        return item;
-    }
-}
 /** 组织-角色-成员 */
 export class RoleMember extends BOSimpleLine<RoleMember> implements IRoleMember {
 
@@ -668,12 +673,18 @@ export class RoleMember extends BOSimpleLine<RoleMember> implements IRoleMember 
 }
 
 /** 组织-角色-成员 集合 */
-export class RoleMembers extends BusinessObjects<RoleMember, OrganizationalStructure> implements IRoleMembers {
+export class RoleMembers extends BusinessObjects<RoleMember, OrganizationalRole> implements IRoleMembers {
 
     /** 创建并添加子项 */
     create(): RoleMember {
         let item: RoleMember = new RoleMember();
         this.add(item);
         return item;
+    }
+    protected afterAdd(item: RoleMember): void {
+        super.afterAdd(item);
+        if (!objects.isNull(this.parent)) {
+            item.roleLineId = this.parent.lineId;
+        }
     }
 }

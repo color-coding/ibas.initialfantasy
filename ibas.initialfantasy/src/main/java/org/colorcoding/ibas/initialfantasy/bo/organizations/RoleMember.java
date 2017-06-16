@@ -10,6 +10,7 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
@@ -595,7 +596,7 @@ public class RoleMember extends BusinessObject<RoleMember> implements IRoleMembe
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-		this.setObjectCode(BUSINESS_OBJECT_CODE);
+		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 
 	}
 

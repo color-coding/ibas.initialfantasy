@@ -250,6 +250,7 @@ export class Privilege extends BOSimple<Privilege> implements IPrivilege {
     /** 初始化数据 */
     protected init(): void {
         this.objectCode = config.applyVariables(Privilege.BUSINESS_OBJECT_CODE);
+        this.activated = emYesNo.YES;
     }
 }
 

@@ -45,7 +45,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
             this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_data_created_new"));
         }
         this.view.showBOFiltering(this.editData);
-        this.view.showBOFilteringConditions(this.editData.bOFilteringConditions.filterDeleted());
+        this.view.showBOFilteringConditions(this.editData.boFilteringConditions.filterDeleted());
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
@@ -170,9 +170,9 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
     }
     /** 添加业务对象筛选-条件事件 */
     addBOFilteringCondition(): void {
-        this.editData.bOFilteringConditions.create();
+        this.editData.boFilteringConditions.create();
         // 仅显示没有标记删除的
-        this.view.showBOFilteringConditions(this.editData.bOFilteringConditions.filterDeleted());
+        this.view.showBOFilteringConditions(this.editData.boFilteringConditions.filterDeleted());
     }
     /** 删除业务对象筛选-条件事件 */
     removeBOFilteringCondition(items: bo.BOFilteringCondition[]): void {
@@ -185,10 +185,10 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
         }
         // 移除项目
         for (let item of items) {
-            if (this.editData.bOFilteringConditions.indexOf(item) >= 0) {
+            if (this.editData.boFilteringConditions.indexOf(item) >= 0) {
                 if (item.isNew) {
                     // 新建的移除集合
-                    this.editData.bOFilteringConditions.remove(item);
+                    this.editData.boFilteringConditions.remove(item);
                 } else {
                     // 非新建标记删除
                     item.delete();
@@ -196,7 +196,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
             }
         }
         // 仅显示没有标记删除的
-        this.view.showBOFilteringConditions(this.editData.bOFilteringConditions.filterDeleted());
+        this.view.showBOFilteringConditions(this.editData.boFilteringConditions.filterDeleted());
     }
 
 }

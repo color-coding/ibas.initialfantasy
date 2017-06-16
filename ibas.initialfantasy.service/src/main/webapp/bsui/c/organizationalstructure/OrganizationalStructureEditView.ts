@@ -23,12 +23,86 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
     addOrganizationalRoleEvent: Function;
     /** 删除组织-角色事件 */
     removeOrganizationalRoleEvent: Function;
+    /** 选则-组织角色 */
+    chooseOrganizationalRoleEvent: Function;
+    /** 选择-角色成员 */
+    choooseRoleMemberEvent: Function;
+    /** 选则-组织 */
+    chooseOrganizationEvent: Function;
+    /** 选则-所属组织 */
+    chooseOrganizationalStructureEvent: Function;
+    /** 选中-组织角色 */
+    selectedOrganizationalRoleEvent: Function;
+    /** 选则-经理 */
+    chooseManagerEvent: Function;
+    /** 添加角色-成员事件 */
+    addRoleMemberEvent: Function;
+    /** 删除角色-成员事件 */
+    removeRoleMemberEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             content: [
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_organization") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text,
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseOrganizationEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/organization"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_belonging") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text,
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseOrganizationalStructureEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/belonging"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_manager") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text,
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseManagerEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/manager"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_validdate") }),
+                new sap.m.DatePicker("", {
+                    valueFormat: "yyyy-MM-dd",
+                }).bindProperty("dateValue", {
+                    path: "/validDate"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_invaliddate") }),
+                new sap.m.DatePicker("", {
+                    valueFormat: "yyyy-MM-dd",
+                }).bindProperty("dateValue", {
+                    path: "/invalidDate"
+                }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_objectkey") }),
+                new sap.m.Input("", {
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_objectcode") }),
+                new sap.m.Input("", {
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode"
+                }),
             ]
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_organizationalrole") }));
@@ -57,12 +131,89 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
                 ]
             }),
             enableSelectAll: false,
-            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            // selectionMode: sap.ui.table.SelectionMode.Single,
+            visibleRowCount: 5,
             rows: "{/rows}",
             columns: [
-            ]
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_organizationalrole_role"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        showValueHelp: true,
+                        valueHelpRequest: function (): void {
+                            that.fireViewEvents(that.chooseOrganizationalRoleEvent,
+                                // 获取当前对象
+                                this.getBindingContext().getObject()
+                            );
+                        }
+                    }).bindProperty("value", {
+                        path: "role"
+                    })
+                }),
+            ],
+            rowSelectionChange: function (): void {
+                that.fireViewEvents(that.selectedOrganizationalRoleEvent,
+                    utils.getTableSelecteds<bo.RoleMember>(that.tableOrganizationalRole).firstOrDefault()
+                );
+            }
         });
         this.form.addContent(this.tableOrganizationalRole);
+        this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_rolemember") }));
+        this.tableRoleMember = new sap.ui.table.Table("", {
+            extension: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_data_add"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://add",
+                        press: function (): void {
+                            that.fireViewEvents(that.addRoleMemberEvent);
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_data_remove"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://less",
+                        press: function (): void {
+                            that.fireViewEvents(that.removeRoleMemberEvent,
+                                utils.getTableSelecteds<bo.RoleMember>(that.tableRoleMember)
+                            );
+                        }
+                    })
+                ]
+            }),
+            enableSelectAll: false,
+            visibleRowCount: 5,
+            rows: "{/rows}",
+            columns: [
+                /*
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_rolemember_rolelineid"),
+                    template: new sap.m.Text("", {
+                        width: "100%",
+                    }).bindProperty("text", {
+                        path: "roleLineId"
+                    })
+                }),
+                */
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_rolemember_member"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        showValueHelp: true,
+                        valueHelpRequest: function (): void {
+                            that.fireViewEvents(that.choooseRoleMemberEvent,
+                                // 获取当前对象
+                                this.getBindingContext().getObject()
+                            );
+                        }
+                    }).bindProperty("value", {
+                        path: "member"
+                    })
+                }),
+            ]
+        });
+        this.form.addContent(this.tableRoleMember);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -140,6 +291,7 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
         }
     }
     private tableOrganizationalRole: sap.ui.table.Table;
+    private tableRoleMember: sap.ui.table.Table;
 
     /** 显示数据 */
     showOrganizationalStructure(data: bo.OrganizationalStructure): void {
@@ -151,8 +303,14 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
     }
     /** 显示数据 */
     showOrganizationalRoles(datas: bo.OrganizationalRole[]): void {
-        this.tableOrganizationalRole.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+        this.tableOrganizationalRole.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableOrganizationalRole, datas);
+    }
+    /** 显示数据 */
+    showRoleMembers(datas: bo.RoleMember[]): void {
+        this.tableRoleMember.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.tableRoleMember, datas);
     }
 }
