@@ -436,6 +436,9 @@ public class OrganizationManager implements IOrganizationManager {
 				Organization organization = new Organization();
 				organization.setCode(orgItem.getOrganization());
 				organization.setManager(this.createUser(orgItem.getManager()));
+				if (organization.getManager() != User.UNKNOWN_USER && organization.getManager() != User.SYSTEM_USER) {
+					organization.getManager().setRole(String.format("MANAGER@%s", organization.getCode()));
+				}
 				for (IOrganizationalRole posItem : orgItem.getOrganizationalRoles()) {
 					for (IRoleMember empItem : posItem.getRoleMembers()) {
 						User user = this.createUser(empItem.getMember());
