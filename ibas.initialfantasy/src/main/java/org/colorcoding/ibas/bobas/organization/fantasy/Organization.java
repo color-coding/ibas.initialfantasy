@@ -36,11 +36,6 @@ public class Organization {
 		this.code = code;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("{Org [%s] manager [%s]}", this.getCode(), this.getManager());
-	}
-
 	@XmlElementWrapper(name = "organizations")
 	@XmlElement(name = "organization", type = Organization.class)
 	private List<Organization> organizations;
@@ -82,4 +77,8 @@ public class Organization {
 		this.members = members;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("{Org [%s] manager [%s]}", this.getCode(), this.getManager());
+	}
 }

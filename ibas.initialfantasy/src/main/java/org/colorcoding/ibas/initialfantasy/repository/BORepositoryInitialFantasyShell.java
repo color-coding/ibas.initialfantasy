@@ -70,10 +70,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (boUser == null) {
 				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
 			}
-			User sUser = User.create(boUser);
-			if (!sUser.checkPassword(password)) {
+			if (!boUser.checkPassword(password)) {
 				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
 			}
+			User sUser = User.create(boUser);
 			// 生成token
 			IOrganizationManager orgManager = OrganizationFactory.create().createManager();
 			org.colorcoding.ibas.bobas.organization.IUser tmpUser = orgManager.getUser(sUser.getId());
