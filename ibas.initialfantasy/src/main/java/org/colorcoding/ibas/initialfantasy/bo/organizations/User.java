@@ -17,6 +17,7 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
+import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.MyConsts;
 
@@ -29,6 +30,27 @@ import org.colorcoding.ibas.initialfantasy.MyConsts;
 @XmlRootElement(name = User.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
 @BOCode(User.BUSINESS_OBJECT_CODE)
 public class User extends BusinessObject<User> implements IUser, IApprovalData, IDataOwnership, IBOUserFields {
+
+	/**
+	 * 检查密码
+	 * 
+	 * @param password
+	 * @return
+	 */
+	public boolean checkPassword(String password) {
+		if (this.getPassword() == null) {
+			return false;
+		}
+		if (!this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 加密字符标记
+	 */
+	public final static String ENCRYPTED_CHARACTER_MARK = "=";
 
 	/**
 	 * 序列化版本标记
@@ -148,6 +170,10 @@ public class User extends BusinessObject<User> implements IUser, IApprovalData, 
 	 *            值
 	 */
 	public final void setPassword(String value) {
+		if (value != null && !value.isEmpty() && (!value.endsWith(ENCRYPTED_CHARACTER_MARK) && value.length() != 32)) {
+			// 没有加密的秘密，结尾不是 = 且长度不是32
+			value = EncryptMD5.md5(value) + ENCRYPTED_CHARACTER_MARK;
+		}
 		this.setProperty(PROPERTY_PASSWORD, value);
 	}
 

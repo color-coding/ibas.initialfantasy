@@ -67,16 +67,6 @@ public class User {
 		this._super = value;
 	}
 
-	/**
-	 * 检查密码
-	 * 
-	 * @param password
-	 * @return
-	 */
-	public boolean checkPassword(String password) {
-		return true;
-	}
-
 	@Override
 	public String toString() {
 		return String.format("{user: %s|%s}", this.getId(), this.getCode());
