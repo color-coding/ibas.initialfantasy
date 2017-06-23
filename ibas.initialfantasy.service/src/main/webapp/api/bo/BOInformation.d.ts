@@ -27,11 +27,11 @@ import {
 /** 业务对象信息 */
 export interface IBOInformation extends IBusinessObject {
 
-    /** 名称 */
-    name: string;
-
     /** 编码 */
     code: string;
+
+    /** 名称 */
+    name: string;
 
     /** 描述 */
     description: string;
@@ -50,8 +50,8 @@ export interface IBOInformation extends IBusinessObject {
 /** 业务对象属性信息 */
 export interface IBOPropertyInformation extends IBusinessObject {
 
-    /** 名称 */
-    name: string;
+    /** 编码 */
+    code: string;
     /** 属性名称 */
     property: string;
     /** 映射（字段） */
