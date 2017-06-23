@@ -37,17 +37,6 @@ export class BOInformation extends BusinessObject<BOInformation> implements IBOI
     constructor() {
         super();
     }
-    /** 映射的属性名称-名称 */
-    static PROPERTY_NAME_NAME: string = "Name";
-    /** 获取-名称 */
-    get name(): string {
-        return this.getProperty<string>(BOInformation.PROPERTY_NAME_NAME);
-    }
-    /** 设置-名称 */
-    set name(value: string) {
-        this.setProperty(BOInformation.PROPERTY_NAME_NAME, value);
-    }
-
     /** 映射的属性名称-编码 */
     static PROPERTY_CODE_NAME: string = "Code";
     /** 获取-编码 */
@@ -57,6 +46,17 @@ export class BOInformation extends BusinessObject<BOInformation> implements IBOI
     /** 设置-编码 */
     set code(value: string) {
         this.setProperty(BOInformation.PROPERTY_CODE_NAME, value);
+    }
+
+    /** 映射的属性名称-名称 */
+    static PROPERTY_NAME_NAME: string = "Name";
+    /** 获取-名称 */
+    get name(): string {
+        return this.getProperty<string>(BOInformation.PROPERTY_NAME_NAME);
+    }
+    /** 设置-名称 */
+    set name(value: string) {
+        this.setProperty(BOInformation.PROPERTY_NAME_NAME, value);
     }
 
     /** 映射的属性名称-描述 */
@@ -141,15 +141,15 @@ export class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
     constructor() {
         super();
     }
-    /** 映射的属性名称-名称 */
-    static PROPERTY_NAME_NAME: string = "Name";
-    /** 获取-名称 */
-    get name(): string {
-        return this.getProperty<string>(BOPropertyInformation.PROPERTY_NAME_NAME);
+    /** 映射的属性名称-编码 */
+    static PROPERTY_CODE_NAME: string = "Code";
+    /** 获取-编码 */
+    get code(): string {
+        return this.getProperty<string>(BOInformation.PROPERTY_CODE_NAME);
     }
-    /** 设置-名称 */
-    set name(value: string) {
-        this.setProperty(BOPropertyInformation.PROPERTY_NAME_NAME, value);
+    /** 设置-编码 */
+    set code(value: string) {
+        this.setProperty(BOInformation.PROPERTY_CODE_NAME, value);
     }
 
     /** 映射的属性名称-属性名称 */
@@ -248,11 +248,11 @@ export class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
         builder.append(BOInformation.BUSINESS_OBJECT_CODE);
         builder.append("].");
         builder.append("[");
-        builder.append(BOPropertyInformation.PROPERTY_NAME_NAME);
+        builder.append(BOPropertyInformation.PROPERTY_CODE_NAME);
         builder.append(" ");
         builder.append("=");
         builder.append(" ");
-        builder.append(this.name);
+        builder.append(this.code);
         builder.append("]");
         builder.append("&");
         builder.append("[");
@@ -269,8 +269,8 @@ export class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
     criteria(): ICriteria {
         let criteria: ICriteria = new Criteria();
         let condition: ICondition = criteria.conditions.create();
-        condition.alias = BOPropertyInformation.PROPERTY_NAME_NAME;
-        condition.value = this.name;
+        condition.alias = BOPropertyInformation.PROPERTY_CODE_NAME;
+        condition.value = this.code;
         condition = criteria.conditions.create();
         condition.alias = BOPropertyInformation.PROPERTY_PROPERTY_NAME;
         condition.value = this.property;

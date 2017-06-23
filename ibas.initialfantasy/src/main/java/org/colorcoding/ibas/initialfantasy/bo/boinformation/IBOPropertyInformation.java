@@ -10,19 +10,19 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 public interface IBOPropertyInformation extends IBusinessObject {
 
 	/**
-	 * 获取-名称
+	 * 获取-编码
 	 * 
 	 * @return 值
 	 */
-	String getName();
+	String getCode();
 
 	/**
-	 * 设置-名称
+	 * 设置-编码
 	 * 
 	 * @param value
 	 *            值
 	 */
-	void setName(String value);
+	void setCode(String value);
 
 	/**
 	 * 获取-属性名称

@@ -9,21 +9,6 @@ import org.colorcoding.ibas.bobas.bo.IBusinessObject;
 public interface IBOInformation extends IBusinessObject {
 
 	/**
-	 * 获取-名称
-	 * 
-	 * @return 值
-	 */
-	String getName();
-
-	/**
-	 * 设置-名称
-	 * 
-	 * @param value
-	 *            值
-	 */
-	void setName(String value);
-
-	/**
 	 * 获取-编码
 	 * 
 	 * @return 值
@@ -37,6 +22,21 @@ public interface IBOInformation extends IBusinessObject {
 	 *            值
 	 */
 	void setCode(String value);
+
+	/**
+	 * 获取-名称
+	 * 
+	 * @return 值
+	 */
+	String getName();
+
+	/**
+	 * 设置-名称
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setName(String value);
 
 	/**
 	 * 获取-描述

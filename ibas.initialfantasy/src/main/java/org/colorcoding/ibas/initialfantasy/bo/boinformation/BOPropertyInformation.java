@@ -41,35 +41,35 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	public static final String BUSINESS_OBJECT_NAME = "BOPropertyInformation";
 
 	/**
-	 * 属性名称-名称
+	 * 属性名称-编码
 	 */
-	private static final String PROPERTY_NAME_NAME = "Name";
+	private static final String PROPERTY_CODE_NAME = "Code";
 
 	/**
 	 * 名称 属性
 	 */
-	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
-	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
+	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
 	/**
-	 * 获取-名称
+	 * 获取-编码
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_NAME_NAME)
-	public final String getName() {
-		return this.getProperty(PROPERTY_NAME);
+	@XmlElement(name = PROPERTY_CODE_NAME)
+	public final String getCode() {
+		return this.getProperty(PROPERTY_CODE);
 	}
 
 	/**
-	 * 设置-名称
+	 * 设置-编码
 	 * 
 	 * @param value
 	 *            值
 	 */
-	public final void setName(String value) {
-		this.setProperty(PROPERTY_NAME, value);
+	public final void setCode(String value) {
+		this.setProperty(PROPERTY_CODE, value);
 	}
 
 	/**

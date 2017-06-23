@@ -41,38 +41,6 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	public static final String BUSINESS_OBJECT_NAME = "BOInformation";
 
 	/**
-	 * 属性名称-名称
-	 */
-	private static final String PROPERTY_NAME_NAME = "Name";
-
-	/**
-	 * 名称 属性
-	 */
-	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
-	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
-			MY_CLASS);
-
-	/**
-	 * 获取-名称
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_NAME_NAME)
-	public final String getName() {
-		return this.getProperty(PROPERTY_NAME);
-	}
-
-	/**
-	 * 设置-名称
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setName(String value) {
-		this.setProperty(PROPERTY_NAME, value);
-	}
-
-	/**
 	 * 属性名称-编码
 	 */
 	private static final String PROPERTY_CODE_NAME = "Code";
@@ -80,7 +48,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 编码 属性
 	 */
-	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
@@ -102,6 +70,38 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	 */
 	public final void setCode(String value) {
 		this.setProperty(PROPERTY_CODE, value);
+	}
+
+	/**
+	 * 属性名称-名称
+	 */
+	private static final String PROPERTY_NAME_NAME = "Name";
+
+	/**
+	 * 名称 属性
+	 */
+	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-名称
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_NAME_NAME)
+	public final String getName() {
+		return this.getProperty(PROPERTY_NAME);
+	}
+
+	/**
+	 * 设置-名称
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setName(String value) {
+		this.setProperty(PROPERTY_NAME, value);
 	}
 
 	/**
