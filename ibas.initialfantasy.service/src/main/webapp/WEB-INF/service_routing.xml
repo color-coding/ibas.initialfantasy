@@ -112,4 +112,36 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>d89c3bd0-8dab-4f62-8439-0b8a39c66bf2</Id>
+        <Name>BusinessOne</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/businessone/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/businessone/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>4d8b5b7d-b1ae-418b-abc8-67d70ae8c36e</Id>
+        <Name>BusinessOneUsers</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/businessone/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/businessone/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>
