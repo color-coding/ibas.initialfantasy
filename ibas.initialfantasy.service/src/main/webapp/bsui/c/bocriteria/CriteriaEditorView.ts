@@ -83,7 +83,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
             if (!ibas.objects.isNull(this.txtTarget.getValue())) {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
-                condition.alias = bo.BOInformation.PROPERTY_NAME_NAME;
+                condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                 condition.value = this.txtTarget.getValue();
                 let that: this = this;
                 let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();

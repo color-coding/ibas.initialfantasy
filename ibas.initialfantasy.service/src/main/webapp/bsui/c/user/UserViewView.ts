@@ -24,19 +24,19 @@ export class UserViewView extends ibas.BOViewView implements IUserViewView {
                 new sap.ui.core.Title("", { text: "" }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
                 new sap.m.Input("", {
-                    value: "{/code}",
+                    value: "/code",
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_name") }),
                 new sap.m.Input("", {
-                    value: "{/name}",
+                    value: "/name",
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_activated") }),
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/activated}",
+                    path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.ui.core.Title("", { text: "" }),
@@ -44,17 +44,17 @@ export class UserViewView extends ibas.BOViewView implements IUserViewView {
                 new sap.m.Select("", {
                     items: utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
-                    path: "{/super}",
+                    path: "/super",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
                 new sap.m.Input("", {
-                    value: "{/docEntry}",
+                    value: "/docEntry",
                     type: sap.m.InputType.Text
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_objectcode") }),
                 new sap.m.Input("", {
-                    value: "{/objectCode}",
+                    value: "/objectCode",
                     type: sap.m.InputType.Text
                 }),
             ]

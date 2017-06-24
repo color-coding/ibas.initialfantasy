@@ -99,7 +99,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     label: ibas.i18n.prop("bo_approvaltemplatestep_objectkey"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/objectKey}",
+                        value: "objectKey",
                         type: sap.m.InputType.Text
                     })
                 }),
@@ -107,7 +107,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     label: ibas.i18n.prop("bo_approvaltemplatestep_lineid"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/lineId}",
+                        value: "lineId",
                         type: sap.m.InputType.Text
                     })
                 }),
@@ -115,7 +115,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     label: ibas.i18n.prop("bo_approvaltemplatestep_loginst"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/logInst}",
+                        value: "logInst",
                         type: sap.m.InputType.Text
                     })
                 }),
@@ -123,7 +123,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     label: ibas.i18n.prop("bo_approvaltemplatestep_stepname"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/stepName}",
+                        value: "stepName",
                         type: sap.m.InputType.Text
                     })
                 }),
@@ -131,7 +131,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     label: ibas.i18n.prop("bo_approvaltemplatestep_stepownertype"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/stepOwnerType}",
+                        value: "stepOwnerType",
                         type: sap.m.InputType.Text
                     })
                 }),

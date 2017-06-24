@@ -106,7 +106,7 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                     label: ibas.i18n.prop("bo_approvalrequeststep_objectkey"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/objectKey}",
+                        value: "objectKey",
                         type: sap.m.InputType.Text
                     })
                 }),
@@ -124,7 +124,7 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                     label: ibas.i18n.prop("bo_approvalrequeststep_lineid"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/lineId}",
+                        value: "lineId",
                         type: sap.m.InputType.Text
                     })
                 }),
@@ -132,7 +132,7 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                     label: ibas.i18n.prop("bo_approvalrequeststep_stepname"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/stepName}",
+                        value: "stepName",
                         type: sap.m.InputType.Text
 
                     })
@@ -141,7 +141,7 @@ export class ApprovalRequestEditView extends ibas.BOEditView implements IApprova
                     label: ibas.i18n.prop("bo_approvalrequeststep_stepowner"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "{/stepOwner}",
+                        value: "stepOwner",
                         type: sap.m.InputType.Text
                     })
                 }),

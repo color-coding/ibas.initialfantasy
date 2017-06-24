@@ -156,7 +156,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			this.setUserToken(token);
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
-			condition.setAlias(BOInformation.PROPERTY_NAME.getName());
+			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
 			condition.setValue(boName);
 			IOperationResult<BOInformation> opRsltFetch = this.fetchBOInformation(criteria, token);
 			if (opRsltFetch.getError() != null) {
