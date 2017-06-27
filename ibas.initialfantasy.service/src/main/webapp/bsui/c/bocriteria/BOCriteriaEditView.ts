@@ -82,11 +82,8 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                 new sap.m.Label("", { text: ibas.i18n.prop("initialfantasy_bocriteria_bocode") }),
                 this.txtBOCode,
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_data") }),
-                new sap.ui.codeeditor.CodeEditor("", {
-                    type: "javascript",
-                    width: "100%",
-                    height: "200px",
-                    lineNumbers: false,
+                new sap.m.TextArea("", {
+                    rows: 6,
                 }).bindProperty("value", {
                     path: "/data",
                 }),
