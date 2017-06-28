@@ -60,6 +60,10 @@ class BOConverter4if extends ibas.BOConverter {
             if (property === bo.ApprovalTemplateStep.PROPERTY_STEPOWNERTYPE_NAME) {
                 return ibas.enums.toString(bo.emApprovalStepOwnerType, value);
             }
+        } else if (boName === bo.Privilege.name) {
+            if (property === bo.Privilege.PROPERTY_AUTHORISEVALUE_NAME) {
+                return ibas.enums.toString(ibas.emAuthoriseType, value);
+            }
         }
         return super.convertData(boName, property, value);
     }
@@ -91,6 +95,10 @@ class BOConverter4if extends ibas.BOConverter {
         } else if (boName === bo.ApprovalTemplateStep.name) {
             if (property === bo.ApprovalTemplateStep.PROPERTY_STEPOWNERTYPE_NAME) {
                 return ibas.enums.valueOf(bo.emApprovalStepOwnerType, value);
+            }
+        } else if (boName === bo.Privilege.name) {
+            if (property === bo.Privilege.PROPERTY_AUTHORISEVALUE_NAME) {
+                return ibas.enums.valueOf(ibas.emAuthoriseType, value);
             }
         }
         return super.parsingData(boName, property, value);

@@ -56,7 +56,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_VALUE_NAME)
+	@XmlElement(name = PROPERTY_SOURCE_NAME)
 	public final emPrivilegeSource getSource() {
 		return this.getProperty(PROPERTY_SOURCE);
 	}
