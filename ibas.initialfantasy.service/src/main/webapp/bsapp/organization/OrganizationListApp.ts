@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import { DataConverter4if } from "../../borep/DataConverters";
 import { OrganizationViewApp } from "./OrganizationViewApp";
 import { OrganizationEditApp } from "./OrganizationEditApp";
 
@@ -42,24 +43,24 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
     }
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
-            this.busy(true);
-            let that: this = this;
-            let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-            boRepository.fetchOrganization({
-                criteria: criteria,
-                onCompleted(opRslt: ibas.IOperationResult<bo.Organization>): void {
-                    try {
-                        if (opRslt.resultCode !== 0) {
-                            throw new Error(opRslt.message);
-                        }
-                        that.view.showData(opRslt.resultObjects);
-                        that.busy(false);
-                    } catch (error) {
-                        that.messages(error);
+        this.busy(true);
+        let that: this = this;
+        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+        boRepository.fetchOrganization({
+            criteria: criteria,
+            onCompleted(opRslt: ibas.IOperationResult<bo.Organization>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
                     }
+                    that.view.showData(opRslt.resultObjects);
+                    that.busy(false);
+                } catch (error) {
+                    that.messages(error);
                 }
-            });
-            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+            }
+        });
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
     }
     /** 新建数据 */
     protected newData(): void {
@@ -106,8 +107,8 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.Organization> = new ibas.ArrayList<bo.Organization>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.Organization> = new ibas.ArrayList<bo.Organization>();
+        if (data instanceof Array) {
             for (let item of data) {
                 if (ibas.objects.instanceOf(item, bo.Organization)) {
                     item.delete();
@@ -129,7 +130,7 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                        let saveMethod: Function = function(beSaved: bo.Organization):void {
+                        let saveMethod: Function = function (beSaved: bo.Organization): void {
                             boRepository.saveOrganization({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.Organization>): void {
@@ -145,7 +146,7 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                                                ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,
@@ -168,7 +169,12 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSelecteds(),
+                converter: new DataConverter4if(),
+            })
+        ];
     }
 }
 /** 视图-组织 */
@@ -179,4 +185,6 @@ export interface IOrganizationListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.Organization[]): void;
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Organization[];
 }

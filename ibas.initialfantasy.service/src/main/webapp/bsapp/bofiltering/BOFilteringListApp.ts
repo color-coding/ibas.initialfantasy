@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import { DataConverter4if } from "../../borep/DataConverters";
 import { BOFilteringViewApp } from "./BOFilteringViewApp";
 import { BOFilteringEditApp } from "./BOFilteringEditApp";
 
@@ -168,7 +169,12 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSelecteds(),
+                converter: new DataConverter4if(),
+            })
+        ];
     }
 }
 /** 视图-业务对象筛选 */
@@ -179,4 +185,6 @@ export interface IBOFilteringListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.BOFiltering[]): void;
+    /** 获取选择的数据 */
+    getSelecteds(): bo.BOFiltering[];
 }

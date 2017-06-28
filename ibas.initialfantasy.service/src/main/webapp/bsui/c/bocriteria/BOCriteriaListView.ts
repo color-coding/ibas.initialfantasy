@@ -233,4 +233,8 @@ export class BOCriteriaListView extends ibas.BOListView implements IBOCriteriaLi
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.BOCriteria[] {
+        return utils.getTableSelecteds<bo.BOCriteria>(this.table);
+    }
 }

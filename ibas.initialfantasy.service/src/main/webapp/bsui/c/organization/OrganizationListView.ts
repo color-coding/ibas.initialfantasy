@@ -214,4 +214,8 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Organization[] {
+        return utils.getTableSelecteds<bo.Organization>(this.table);
+    }
 }

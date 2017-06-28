@@ -231,5 +231,9 @@ export class OrganizationalStructureListView extends ibas.BOListView implements 
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.OrganizationalStructure[] {
+        return utils.getTableSelecteds<bo.OrganizationalStructure>(this.table);
+    }
 
 }

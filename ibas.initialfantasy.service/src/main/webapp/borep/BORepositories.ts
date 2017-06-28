@@ -9,19 +9,14 @@
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
 import { IBORepositoryInitialFantasy, BO_REPOSITORY_INITIALFANTASY } from "../api/index";
-import { DataConverterOnline, DataConverterOffline } from "./DataConverters";
+import { DataConverter4if } from "./DataConverters";
 
 /** <%Domain.Name%> 业务仓库 */
 export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication implements IBORepositoryInitialFantasy {
 
     /** 创建此模块的后端与前端数据的转换者 */
     protected createConverter(): ibas.IDataConverter {
-        if (this.offline) {
-            // 离线状态
-            return new DataConverterOffline();
-        } else {
-            return new DataConverterOnline();
-        }
+        return new DataConverter4if();
     }
 
     /**

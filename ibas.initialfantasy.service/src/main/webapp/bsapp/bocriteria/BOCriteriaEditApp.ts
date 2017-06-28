@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { DataConverterOnline } from "../../borep/DataConverters";
+import { DataConverter4if } from "../../borep/DataConverters";
 import { CriteriaEditorApp } from "./CriteriaEditorApp";
 
 /** 应用-业务对象检索条件 */
@@ -210,7 +210,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         let criteria: ibas.ICriteria;
         if (!ibas.objects.isNull(this.editData.data) && this.editData.data.length > 0) {
             let tmp: any = JSON.parse(this.editData.data);
-            let converter: DataConverterOnline = new DataConverterOnline();
+            let converter: DataConverter4if = new DataConverter4if();
             criteria = converter.parsing(tmp, "");
             if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
                 this.view.target = criteria.boCode;
@@ -231,7 +231,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
             criteria: criteria,
             onCompleted(opRslt: ibas.IOperationResult<ibas.ICriteria>): void {
                 // 编辑完成
-                let converter: DataConverterOnline = new DataConverterOnline();
+                let converter: DataConverter4if = new DataConverter4if();
                 let tmp: any = converter.convert(this.criteria, "");
                 that.editData.data = JSON.stringify(tmp);
             }

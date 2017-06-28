@@ -11,17 +11,17 @@ import * as bo from "./bo/index";
 import {
 } from "../api/index";
 
-/** InitialFantasy 模块的数据转换者 */
-export class DataConverterOnline extends ibas.DataConverter4j {
+/** 数据转换者 */
+export class DataConverter4if extends ibas.DataConverter4j {
 
     /** 创建业务对象转换者 */
     protected createConverter(): ibas.BOConverter {
-        return new InitialFantasyBOConverter();
+        return new BOConverter4if;
     }
 }
 
-/** InitialFantasy 模块的业务对象转换者 */
-class InitialFantasyBOConverter extends ibas.BOConverter {
+/** 业务对象转换者 */
+class BOConverter4if extends ibas.BOConverter {
 
     /**
      * 自定义解析
@@ -94,27 +94,5 @@ class InitialFantasyBOConverter extends ibas.BOConverter {
             }
         }
         return super.parsingData(boName, property, value);
-    }
-}
-/** InitialFantasy 模块的离线数据转换者 */
-export class DataConverterOffline implements ibas.IDataConverter {
-
-    /**
-     * 转换业务对象数据
-     * @param data 本地类型
-     * @param sign 特殊标记
-     * @returns 目标类型
-     */
-    convert(data: any, sign: string): any {
-        return data;
-    }
-    /**
-     * 解析业务对象数据
-     * @param data 目标类型
-     * @param sign 特殊标记
-     * @returns 本地类型
-     */
-    parsing(data: any, sign: string): any {
-        return data;
     }
 }

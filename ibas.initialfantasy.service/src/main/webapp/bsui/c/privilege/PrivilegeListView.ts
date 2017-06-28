@@ -239,4 +239,8 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Privilege[] {
+        return utils.getTableSelecteds<bo.Privilege>(this.table);
+    }
 }
