@@ -214,4 +214,8 @@ export class RoleListView extends ibas.BOListView implements IRoleListView {
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Role[] {
+        return utils.getTableSelecteds<bo.Role>(this.table);
+    }
 }

@@ -214,4 +214,8 @@ export class ApprovalTemplateListView extends ibas.BOListView implements IApprov
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.ApprovalTemplate[] {
+        return utils.getTableSelecteds<bo.ApprovalTemplate>(this.table);
+    }
 }

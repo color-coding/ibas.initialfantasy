@@ -177,4 +177,8 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.BOFiltering[] {
+        return utils.getTableSelecteds<bo.BOFiltering>(this.table);
+    }
 }

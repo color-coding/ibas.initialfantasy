@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import { DataConverter4if } from "../../borep/DataConverters";
 import { RoleViewApp } from "./RoleViewApp";
 import { RoleEditApp } from "./RoleEditApp";
 
@@ -168,7 +169,12 @@ export class RoleListApp extends ibas.BOListApplication<IRoleListView, bo.Role> 
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSelecteds(),
+                converter: new DataConverter4if(),
+            })
+        ];
     }
 }
 /** 视图-角色 */
@@ -179,4 +185,6 @@ export interface IRoleListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.Role[]): void;
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Role[];
 }

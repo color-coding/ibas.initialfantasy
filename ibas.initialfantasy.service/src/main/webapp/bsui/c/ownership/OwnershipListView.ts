@@ -278,4 +278,8 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
             this.table.setModel(null);
         }
     }
+    /** 获取选择的数据 */
+    getSelecteds(): bo.Ownership[] {
+        return utils.getTableSelecteds<bo.Ownership>(this.table);
+    }
 }

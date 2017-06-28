@@ -9,6 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
+import { DataConverter4if } from "../../borep/DataConverters";
 import { ApprovalTemplateViewApp } from "./ApprovalTemplateViewApp";
 import { ApprovalTemplateEditApp } from "./ApprovalTemplateEditApp";
 
@@ -168,7 +169,12 @@ export class ApprovalTemplateListApp extends ibas.BOListApplication<IApprovalTem
     }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-        return [];
+        return [
+            new ibas.BOListServiceProxy({
+                data: this.view.getSelecteds(),
+                converter: new DataConverter4if(),
+            })
+        ];
     }
 }
 /** 视图-审批模板 */
@@ -179,4 +185,6 @@ export interface IApprovalTemplateListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.ApprovalTemplate[]): void;
+    /** 获取选择的数据 */
+    getSelecteds(): bo.ApprovalTemplate[];
 }
