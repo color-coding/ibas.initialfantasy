@@ -15,11 +15,7 @@ import { ApprovalTemplateFunc, ApprovalTemplateLinkServiceMapping } from "./appr
 import { BOCriteriaFunc, } from "./bocriteria/index";
 import { BOFilteringFunc, } from "./bofiltering/index";
 import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
-import {
-    OrganizationalStructureFunc,
-    OrganizationalStructureWizardFunc,
-    OrganizationalStructureChooseServiceMapping
-} from "./organizationalstructure/index";
+import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping } from "./organizationalstructure/index";
 import { OwnershipFunc, } from "./ownership/index";
 import { PrivilegeFunc, } from "./privilege/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
@@ -54,7 +50,6 @@ export class Console extends ibas.ModuleConsole {
         this.register(new BOCriteriaFunc());
         if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)) {
             // 仅调试模式，启用以下功能
-            this.register(new OrganizationalStructureWizardFunc());
             this.register(new BOFilteringFunc());
             this.register(new OwnershipFunc());
             this.register(new PrivilegeFunc());
