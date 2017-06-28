@@ -151,33 +151,33 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 属性名称-目标标识
 	 */
-	private static final String PROPERTY_FUNCTIONID_NAME = "Target";
+	private static final String PROPERTY_TARGET_NAME = "Target";
 
 	/**
 	 * 目标标识 属性
 	 */
 	@DbField(name = "Target", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_FUNCTIONID = registerProperty(PROPERTY_FUNCTIONID_NAME,
-			String.class, MY_CLASS);
+	public static final IPropertyInfo<String> PROPERTY_TARGET = registerProperty(PROPERTY_TARGET_NAME, String.class,
+			MY_CLASS);
 
 	/**
 	 * 获取-目标标识
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_FUNCTIONID_NAME)
+	@XmlElement(name = PROPERTY_TARGET_NAME)
 	public final String getTarget() {
-		return this.getProperty(PROPERTY_FUNCTIONID);
+		return this.getProperty(PROPERTY_TARGET);
 	}
 
 	/**
-	 * 设置-功能标识
+	 * 设置-目标标识
 	 * 
 	 * @param value
 	 *            值
 	 */
 	public final void setTarget(String value) {
-		this.setProperty(PROPERTY_FUNCTIONID, value);
+		this.setProperty(PROPERTY_TARGET, value);
 	}
 
 	/**

@@ -133,7 +133,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                             return ibas.enums.describe(ibas.emAuthoriseType, data);
                         }
                     })
-                }),                
+                }),
             ]
         });
         this.form.addContent(this.table);
@@ -149,6 +149,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                             that.fireViewEvents(that.newDataEvent);
                         }
                     }),
+                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_view"),
                         type: sap.m.ButtonType.Transparent,
@@ -160,6 +161,7 @@ export class OwnershipListView extends ibas.BOListView implements IOwnershipList
                             );
                         }
                     }),
+                    */
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_edit"),
                         type: sap.m.ButtonType.Transparent,

@@ -33,6 +33,10 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         // 其他事件
         this.view.deleteDataEvent = this.deleteData;
         this.view.createDataEvent = this.createData;
+        this.view.chooseRoleEvent = this.chooseRole;
+        this.view.choosePlatformEvent = this.choosePlatform;
+        this.view.chooseModuleEvent = this.chooseModule;
+        this.view.chooseTargetEvent = this.chooseTarget;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -164,6 +168,61 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         } else {
             createData();
         }
+    }    /** 选择角色标识 */
+    private chooseRole(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.Role>({
+            boCode: bo.Role.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.Role.PROPERTY_ACTIVATED_NAME,
+                    ibas.emConditionOperation.EQUAL, "Y"),
+            ],
+            onCompleted(selecteds: ibas.List<bo.Role>): void {
+                that.editData.roleCode = selecteds.firstOrDefault().code;
+            }
+        });
+    }
+    /** 选择平台标识 */
+    private choosePlatform(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.ApplicationPlatform>({
+            boCode: bo.ApplicationPlatform.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.ApplicationPlatform.PROPERTY_ACTIVATED_NAME,
+                    ibas.emConditionOperation.EQUAL, "Y"),
+            ],
+            onCompleted(selecteds: ibas.List<bo.ApplicationPlatform>): void {
+                that.editData.platformId = selecteds.firstOrDefault().platformCode;
+            }
+        });
+    }
+    /** 选择模块标识 */
+    private chooseModule(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.ApplicationModule>({
+            boCode: bo.ApplicationModule.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.ApplicationModule.PROPERTY_ACTIVATED_NAME,
+                    ibas.emConditionOperation.EQUAL, "Y"),
+            ],
+            onCompleted(selecteds: ibas.List<bo.ApplicationModule>): void {
+                that.editData.moduleId = selecteds.firstOrDefault().moduleId;
+            }
+        });
+    }
+    /** 选择目标标识 */
+    private chooseTarget(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.ApplicationFunction>({
+            boCode: bo.ApplicationFunction.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.ApplicationFunction.PROPERTY_FUNCTIONID_NAME,
+                    ibas.emConditionOperation.EQUAL, "Y"),
+            ],
+            onCompleted(selecteds: ibas.List<bo.ApplicationFunction>): void {
+                that.editData.target = selecteds.firstOrDefault().functionId;
+            }
+        });
     }
 }
 /** 视图-系统权限 */
@@ -174,4 +233,12 @@ export interface IPrivilegeEditView extends ibas.IBOEditView {
     deleteDataEvent: Function;
     /** 新建数据事件，参数1：是否克隆 */
     createDataEvent: Function;
+    /** 选择角色标识 */
+    chooseRoleEvent: Function;
+    /** 选择平台标识 */
+    choosePlatformEvent: Function;
+    /** 选择模块标识 */
+    chooseModuleEvent: Function;
+    /** 选择目标标识 */
+    chooseTargetEvent: Function;
 }
