@@ -808,6 +808,27 @@ export class ApprovalTemplateStepCondition extends BOSimpleLine<ApprovalTemplate
         this.setProperty(ApprovalTemplateStepCondition.PROPERTY_RELATIONSHIP_NAME, value);
     }
 
+    /** 映射的属性名称-开括号数 */
+    static PROPERTY_BRACKETOPEN_NAME: string = "BracketOpen";
+    /** 获取-开括号数 */
+    get bracketOpen(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_BRACKETOPEN_NAME);
+    }
+    /** 设置-开括号数 */
+    set bracketOpen(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_BRACKETOPEN_NAME, value);
+    }
+
+    /** 映射的属性名称-闭括号数 */
+    static PROPERTY_BRACKETCLOSE_NAME: string = "BracketClose";
+    /** 获取-闭括号数 */
+    get bracketClose(): number {
+        return this.getProperty<number>(ApprovalTemplateStepCondition.PROPERTY_BRACKETCLOSE_NAME);
+    }
+    /** 设置-闭括号数 */
+    set bracketClose(value: number) {
+        this.setProperty(ApprovalTemplateStepCondition.PROPERTY_BRACKETCLOSE_NAME, value);
+    }
 
     /** 初始化数据 */
     protected init(): void {

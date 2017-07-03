@@ -8,6 +8,8 @@
   "bo_ownership_equallevel": "部门-同级权限",
   "bo_ownership_higherlevel": "部门-上级权限",
   "bo_ownership_teams": "团队权限",
+  "bo_ownership_rules": "角色权限",
+  "bo_ownership_rulecodes": "角色编码",
   "bo_ownership_others": "其他情况权限",
   "bo_ownership_objectkey": "对象编号",
   "bo_ownership_objectcode": "对象类型",

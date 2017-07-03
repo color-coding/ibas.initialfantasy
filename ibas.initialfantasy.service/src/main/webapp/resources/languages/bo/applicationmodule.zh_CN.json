@@ -4,6 +4,7 @@
   "bo_applicationmodule_platformid": "平台标识",
   "bo_applicationmodule_modulename": "模块名称",
   "bo_applicationmodule_modulecategory": "模块类别",
+  "bo_applicationmodule_moduleentry": "模块入口",
   "bo_applicationmodule_activated": "是否可用",
   "bo_applicationmodule_objectkey": "对象键值",
   "bo_applicationmodule_objectcode": "对象类型",

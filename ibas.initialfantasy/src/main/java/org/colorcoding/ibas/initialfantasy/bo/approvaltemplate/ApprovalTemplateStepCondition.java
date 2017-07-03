@@ -725,6 +725,70 @@ public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTempla
 	}
 
 	/**
+	 * 属性名称-开括号数
+	 */
+	private static final String PROPERTY_BRACKETOPEN_NAME = "BracketOpen";
+
+	/**
+	 * 开括号数 属性
+	 */
+	@DbField(name = "BracketOpen", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<Integer> PROPERTY_BRACKETOPEN = registerProperty(PROPERTY_BRACKETOPEN_NAME,
+			Integer.class, MY_CLASS);
+
+	/**
+	 * 获取-开括号数
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_BRACKETOPEN_NAME)
+	public final Integer getBracketOpen() {
+		return this.getProperty(PROPERTY_BRACKETOPEN);
+	}
+
+	/**
+	 * 设置-开括号数
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setBracketOpen(Integer value) {
+		this.setProperty(PROPERTY_BRACKETOPEN, value);
+	}
+
+	/**
+	 * 属性名称-闭括号数
+	 */
+	private static final String PROPERTY_BRACKETCLOSE_NAME = "BracketClose";
+
+	/**
+	 * 闭括号数 属性
+	 */
+	@DbField(name = "BracketClose", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<Integer> PROPERTY_BRACKETCLOSE = registerProperty(PROPERTY_BRACKETCLOSE_NAME,
+			Integer.class, MY_CLASS);
+
+	/**
+	 * 获取-闭括号数
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_BRACKETCLOSE_NAME)
+	public final Integer getBracketClose() {
+		return this.getProperty(PROPERTY_BRACKETCLOSE);
+	}
+
+	/**
+	 * 设置-闭括号数
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setBracketClose(Integer value) {
+		this.setProperty(PROPERTY_BRACKETCLOSE, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override

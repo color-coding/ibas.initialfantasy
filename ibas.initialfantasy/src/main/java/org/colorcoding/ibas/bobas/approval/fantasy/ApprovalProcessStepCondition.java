@@ -54,6 +54,8 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 					stepCondition.setPropertyName(item.getPropertyName());
 					stepCondition.setOperation(item.getOperation());
 					stepCondition.setConditionValue(item.getConditionValue());
+					stepCondition.setBracketOpen(item.getBracketOpen());
+					stepCondition.setBracketClose(item.getBracketClose());
 				} else if (item.getConditionType() == emApprovalConditionType.SQL_SCRIPT) {
 					stepCondition.setPropertyValueMode(ValueMode.PROPERTY);
 					stepCondition.setConditionValueMode(ValueMode.SQL_SCRIPT);
@@ -61,6 +63,8 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 					stepCondition.setPropertyName(item.getPropertyName());
 					stepCondition.setOperation(item.getOperation());
 					stepCondition.setConditionValue(item.getConditionValue());
+					stepCondition.setBracketOpen(item.getBracketOpen());
+					stepCondition.setBracketClose(item.getBracketClose());
 				}
 				stepConditions.add(stepCondition);
 			}
@@ -138,4 +142,25 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 		this.conditionValue = value;
 	}
 
+	private int bracketOpen;
+
+	@Override
+	public int getBracketOpen() {
+		return this.bracketOpen;
+	}
+
+	public void setBracketOpen(int value) {
+		this.bracketOpen = value;
+	}
+
+	private int bracketClose;
+
+	@Override
+	public int getBracketClose() {
+		return this.bracketClose;
+	}
+
+	public void setBracketClose(int value) {
+		this.bracketClose = value;
+	}
 }

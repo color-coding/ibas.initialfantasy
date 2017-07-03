@@ -36,6 +36,7 @@
   "bo_organizationalrole_reference1": "参考1",
   "bo_organizationalrole_reference2": "参考2",
   "bo_organizationalrole_role": "角色",
+  "bo_organizationalrole_rolemembers": "组织-角色-成员",
   "bo_rolemember": "组织-角色-成员",
   "bo_rolemember_objectkey": "编号",
   "bo_rolemember_objectcode": "类型",

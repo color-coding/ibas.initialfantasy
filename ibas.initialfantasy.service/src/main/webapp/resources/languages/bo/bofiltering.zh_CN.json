@@ -2,8 +2,8 @@
   "bo_bofiltering": "业务对象筛选",
   "bo_bofiltering_rolecode": "角色标识",
   "bo_bofiltering_bocode": "对象类型",
-  "bo_bofiltering_activated": "激活的",
   "bo_bofiltering_name": "名称",
+  "bo_bofiltering_activated": "激活的",
   "bo_bofiltering_objectkey": "编号",
   "bo_bofiltering_objectcode": "类型",
   "bo_bofiltering_loginst": "实例号（版本）",
@@ -38,5 +38,7 @@
   "bo_bofilteringcondition_conditionvalue": "比较的值",
   "bo_bofilteringcondition_operation": "比较的方法",
   "bo_bofilteringcondition_relationship": "与上一个条件的关系",
+  "bo_bofilteringcondition_bracketopen": "开括号数",
+  "bo_bofilteringcondition_bracketclose": "闭括号数",
   "bo_bofiltering_closing_delimiter": "----结束----"
 }

@@ -43,6 +43,9 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLinks {
 			IValueOperator ValueOperator = this.createValueOperator();
 			ValueOperator.setValue(item.getConditionValue());
 			jItem.setRightOperter(ValueOperator);
+			// 设置括号
+			jItem.setOpenBracket(item.getBracketOpen());
+			jItem.setCloseBracket(item.getBracketClose());
 			jLinkItems.add(jItem);
 		}
 		super.setJudgmentItems(jLinkItems.toArray(new JudgmentLinkItem[] {}));

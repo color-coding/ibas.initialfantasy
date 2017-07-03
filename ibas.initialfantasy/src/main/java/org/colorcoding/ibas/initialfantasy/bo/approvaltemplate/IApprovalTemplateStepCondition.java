@@ -344,4 +344,33 @@ public interface IApprovalTemplateStepCondition extends IBOSimpleLine {
 	 */
 	void setRelationship(emConditionRelationship value);
 
+	/**
+	 * 获取-开括号数
+	 * 
+	 * @return 值
+	 */
+	Integer getBracketOpen();
+
+	/**
+	 * 设置-开括号数
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setBracketOpen(Integer value);
+
+	/**
+	 * 获取-闭括号数
+	 * 
+	 * @return 值
+	 */
+	Integer getBracketClose();
+
+	/**
+	 * 设置-闭括号数
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setBracketClose(Integer value);
 }

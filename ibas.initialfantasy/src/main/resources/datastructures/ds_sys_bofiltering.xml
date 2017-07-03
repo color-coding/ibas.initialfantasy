@@ -40,6 +40,8 @@
     <Property Name="ConditionValue" Description="比较的值" DataType="Alphanumeric" DataSubType="Default" EditSize="50" Mapped="CondVal"/>
     <Property Name="Operation" Description="比较的方法" DataType="Alphanumeric" DataSubType="Default" EditSize="2" DeclaredType="emConditionOperation" Mapped="Operation"/>
     <Property Name="Relationship" Description="与上一个条件的关系" DataType="Alphanumeric" DataSubType="Default" EditSize="3" DeclaredType="emConditionRelationship" Mapped="Relationship"/>
+    <Property Name="BracketOpen" Description="开括号数" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="BracketOpen"/>
+    <Property Name="BracketClose" Description="闭括号数" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="BracketClose"/>
   </Model>
   <BusinessObject MappedModel="BOFiltering" ShortName="${Company}_SYS_BOFILTERING">
     <RelatedBO Relation="OneToMany" MappedModel="BOFilteringCondition"/>
