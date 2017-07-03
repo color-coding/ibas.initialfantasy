@@ -207,6 +207,10 @@ export interface IApprovalTemplateStepCondition extends IBOSimpleLine {
     operation: emConditionOperation;
     /** 与上一个条件的关系 */
     relationship: emConditionRelationship;
+    /** 开括号数 */
+    bracketOpen: number;
+    /** 闭括号数 */
+    bracketClose: number;
 }
 
 /** 审批模板步骤条件 集合 */

@@ -130,6 +130,12 @@ export interface IBOFilteringCondition extends IBOSimpleLine {
     operation: emConditionOperation;
     /** 与上一个条件的关系 */
     relationship: emConditionRelationship;
+
+    /** 开括号数 */
+    bracketOpen: number;
+
+    /** 闭括号数 */
+    bracketClose: number;
 }
 
 /** 业务对象筛选-条件 集合 */
