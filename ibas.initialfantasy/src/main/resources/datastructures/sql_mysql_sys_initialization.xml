@@ -58,7 +58,7 @@
                     userCode nvarchar(8)             /*用户编码*/
                 )
                 BEGIN
-                    IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `UserCode` = userCode AND `Super` = 'Y')  THEN
+                    IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `Code` = userCode AND `Super` = 'Y')  THEN
                         /* 超级用户全部权限 */
                         SELECT A.*,'A' AuthValue
                         FROM `${Company}_SYS_MODULE` A
