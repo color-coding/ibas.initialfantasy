@@ -42,25 +42,6 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationplatform_activated"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "activated",
-                        formatter(data: any): any {
-                            return ibas.enums.describe(ibas.emYesNo, data);
-                        }
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationplatform_platformid"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "platformId"
-                    })
-                }),
-                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationplatform_platformcode"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -77,6 +58,25 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                         formatter(data: any): any {
                             return ibas.enums.describe(ibas.emPlantform, data);
                         }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_activated"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "activated",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emYesNo, data);
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationplatform_platformid"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "platformId"
                     })
                 }),
             ]

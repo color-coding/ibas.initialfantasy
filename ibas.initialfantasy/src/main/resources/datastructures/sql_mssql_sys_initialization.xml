@@ -65,17 +65,17 @@
                 BEGIN
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
                         --超级用户全部权限
-                        SELECT A.*,'A' AuthValue 
+                        SELECT A.*,'A' AuthValue
                         FROM "${Company}_SYS_MODULE" A
-                        WHERE A."PlatformId" = @platform AND A."Activated" = 'Y' 
+                        WHERE A."PlatformId" = @platform AND A."Activated" = 'Y'
                     ELSE
                         --非超级用户，角色权限
-                        SELECT A.*,C.AuthValue 
+                        SELECT A.*,C.AuthValue
                         FROM "${Company}_SYS_MODULE" A INNER JOIN (
-                            SELECT DISTINCT B."ModuleId",B."AuthValue" 
-                            FROM "${Company}_SYS_PRIVILEGE" B 
+                            SELECT DISTINCT B."ModuleId",B."AuthValue"
+                            FROM "${Company}_SYS_PRIVILEGE" B
                             WHERE B."PlatformId" = @platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
-                                SELECT B."Role" 
+                                SELECT B."Role"
                                 FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
                                     INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
                                 WHERE A."ValidDate" &lt;= GETDATE() AND A."InvalidDate" &gt;= GETDATE() AND C."Member" = @userCode
@@ -100,7 +100,7 @@
                 AS
                 BEGIN
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
-                        -- 超级用户全部权限                    
+                        -- 超级用户全部权限
                         SELECT TOP 0 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
                         FROM "${Company}_SYS_PRIVILEGE"
                     ELSE
@@ -110,7 +110,7 @@
                         FROM "${Company}_SYS_OWNERSHIP"
                         WHERE "UserCode" = @userCode
                         UNION ALL
-                        SELECT "Source", "Target",  "Value"
+                        SELECT "Source", "Target", "Value"
                         FROM (
                             -- 模块的权限设置
                             SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
@@ -121,7 +121,7 @@
                             SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
                             FROM "${Company}_SYS_PRIVILEGE"
                             WHERE "PlatformId" = @platform AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
-                        ) T0 
+                        ) T0
                         WHERE T0."RoleCode" IN (
                             SELECT T1."Role"
                             FROM "${Company}_SYS_ORGSTRC" T0 INNER JOIN "${Company}_SYS_ORGROLE" T1 ON T0."ObjectKey" = T1."ObjectKey"
