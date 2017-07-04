@@ -69,6 +69,14 @@ export class ApplicationModuleChooseView extends ibas.BOChooseView implements IA
                     })
                 }),
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationmodule_modulename"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "moduleName"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationmodule_activated"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -93,14 +101,6 @@ export class ApplicationModuleChooseView extends ibas.BOChooseView implements IA
                         wrapping: false
                     }).bindProperty("text", {
                         path: "platformId"
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationmodule_modulename"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "moduleName"
                     })
                 }),
             ]

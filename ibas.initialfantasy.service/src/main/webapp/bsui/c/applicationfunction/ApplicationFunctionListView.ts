@@ -42,14 +42,6 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationfunction_moduleid"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "moduleId"
-                    })
-                }),
-                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationfunction_functionid"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -63,6 +55,14 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                         wrapping: false
                     }).bindProperty("text", {
                         path: "functionName"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationfunction_moduleid"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "moduleId"
                     })
                 }),
             ]
