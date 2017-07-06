@@ -74,7 +74,7 @@
                         FROM "${Company}_SYS_MODULE" A INNER JOIN (
                             SELECT DISTINCT B."ModuleId",B."AuthValue"
                             FROM "${Company}_SYS_PRIVILEGE" B
-                            WHERE B."PlatformId" = @platform AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                            WHERE B."PlatformId" = @platform AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
                                 SELECT B."Role"
                                 FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
                                     INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
@@ -108,7 +108,7 @@
                         -- 业务对象的权限设置
                         SELECT 'B' "Source", "BOCode" "Target", "Self" "Value"
                         FROM "${Company}_SYS_OWNERSHIP"
-                        WHERE "UserCode" = @userCode
+                        WHERE "UserCode" = @userCode AND "Activated" = 'Y'
                         UNION ALL
                         SELECT "Source", "Target", "Value"
                         FROM (
