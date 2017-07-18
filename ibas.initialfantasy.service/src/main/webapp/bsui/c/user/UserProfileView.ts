@@ -62,7 +62,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
                         target: "_self",
                         label: ibas.i18n.prop("bo_user_name"),
                         value: "{/name}",
-                        url: ibas.strings.format("#/{0}/user_change_name", this.id),
+                        url: ibas.strings.format("#/{0}/change_user_name", this.id),
                         type: sap.m.QuickViewGroupElementType.link
                     }));
             }
@@ -73,7 +73,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
                         target: "_self",
                         label: ibas.i18n.prop("bo_user_mail"),
                         value: "{/mail}",
-                        url: ibas.strings.format("#/{0}/user_change_mail", this.id),
+                        url: ibas.strings.format("#/{0}/change_user_mail", this.id),
                         type: sap.m.QuickViewGroupElementType.link
                     }));
             }
@@ -84,7 +84,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
                         target: "_self",
                         label: ibas.i18n.prop("bo_user_password"),
                         value: ibas.i18n.prop("initialfantasy_user_change_password"),
-                        url: ibas.strings.format("#/{0}/user_change_password", this.id),
+                        url: ibas.strings.format("#/{0}/change_user_password", this.id),
                         type: sap.m.QuickViewGroupElementType.link
                     }));
             }
