@@ -11,3 +11,4 @@ export * from "./UserListView";
 export * from "./UserChooseView";
 export * from "./UserViewView";
 export * from "./UserEditView";
+export * from "./UserProfileView";
