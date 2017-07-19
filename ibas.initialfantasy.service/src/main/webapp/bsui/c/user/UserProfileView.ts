@@ -53,7 +53,6 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
             });
             // 详细信息组
             let group: sap.m.QuickViewGroup = new sap.m.QuickViewGroup("", {
-                // heading: ibas.i18n.prop("initialfantasy_user_contact_details"),
             });
             // 用户名称
             if (!ibas.objects.isNull(user.name)) {
