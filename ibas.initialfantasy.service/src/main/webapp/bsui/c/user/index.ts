@@ -12,3 +12,4 @@ export * from "./UserChooseView";
 export * from "./UserViewView";
 export * from "./UserEditView";
 export * from "./UserProfileView";
+export * from "./ChangeUserProfileView";
