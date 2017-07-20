@@ -20,7 +20,7 @@ import { OwnershipFunc, } from "./ownership/index";
 import { PrivilegeFunc, } from "./privilege/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
 import { RoleFunc, RoleChooseServiceMapping, RoleLinkServiceMapping } from "./role/index";
-import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp } from "./user/index";
+import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
 import { VariableChooseServiceMapping } from "./system/index";
 
 /** 模块控制台 */
@@ -71,6 +71,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new RoleLinkServiceMapping());
         this.register(new UserChooseServiceMapping());
         this.register(new UserLinkServiceMapping());
+        this.register(new ChangeUserProfileMapping());
         this.register(new BOInformationChooseServiceMapping());
         this.register(new OrganizationalStructureChooseServiceMapping());
         this.register(new VariableChooseServiceMapping());
