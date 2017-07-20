@@ -28,13 +28,14 @@ export class UserProfileApp extends ibas.ResidentApplication<IUserProfileView> {
     protected registerView(): void {
         super.registerView();
         // 其他事件
+        this.view.saveUserEvent = this.saveUser;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成
         this.fetchUser();
     }
-
+    private user: bo.User;
     private fetchUser(): void {
         let that: this = this;
         let criteria: ibas.ICriteria = new ibas.Criteria();
@@ -45,13 +46,29 @@ export class UserProfileApp extends ibas.ResidentApplication<IUserProfileView> {
         boRepository.fetchUser({
             criteria: criteria,
             onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
-                let user: bo.User = opRslt.resultObjects.firstOrDefault();
-                if (ibas.objects.isNull(user)) {
-                    user = new bo.User();
-                    user.code = "UNKNOWN";
-                    user.name = ibas.i18n.prop("initialfantasy_unknown_user");
+                that.user = opRslt.resultObjects.firstOrDefault();
+                if (ibas.objects.isNull(that.user)) {
+                    that.user = new bo.User();
+                    that.user.code = "UNKNOWN";
+                    that.user.name = ibas.i18n.prop("initialfantasy_unknown_user");
                 }
-                that.view.showUser(user);
+                that.view.showUser(that.user);
+            }
+        });
+    }
+    private saveUser(): void {
+        let that: this = this;
+        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+        boRepository.saveUser({
+            beSaved: this.user,
+            onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
+                that.user = opRslt.resultObjects.firstOrDefault();
+                if (ibas.objects.isNull(that.user)) {
+                    that.user = new bo.User();
+                    that.user.code = "UNKNOWN";
+                    that.user.name = ibas.i18n.prop("initialfantasy_unknown_user");
+                }
+                that.view.showUser(that.user);
             }
         });
     }
@@ -60,4 +77,6 @@ export class UserProfileApp extends ibas.ResidentApplication<IUserProfileView> {
 export interface IUserProfileView extends ibas.IResidentView {
     /** 显示用户信息 */
     showUser(user: bo.User): void;
+    /** 保存用户事件 */
+    saveUserEvent: Function;
 }

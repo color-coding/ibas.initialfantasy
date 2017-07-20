@@ -11,10 +11,15 @@ import { utils } from "openui5/typings/ibas.utils";
 import { IUserProfileView, UserEditApp } from "../../../bsapp/user/index";
 import * as bo from "../../../borep/bo/index";
 
+const URL_HASH_SIGN_CHANGE_USER_NAME: string = "/change_user_name";
+const URL_HASH_SIGN_CHANGE_USER_MAIL: string = "/change_user_mail";
+const URL_HASH_SIGN_CHANGE_USER_PASSWORD: string = "/change_user_password";
 /**
  * 视图-建议
  */
 export class UserProfileView extends ibas.BOResidentView implements IUserProfileView {
+    /** 保存用户事件 */
+    saveUserEvent: Function;
     /** 绘制工具条视图 */
     darwBar(): any {
         let that: this = this;
@@ -61,7 +66,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
                         target: "_self",
                         label: ibas.i18n.prop("bo_user_name"),
                         value: "{/name}",
-                        url: ibas.strings.format("#/{0}/change_user_name", this.id),
+                        url: ibas.URL_HASH_SIGN_VIEWS + this.id + URL_HASH_SIGN_CHANGE_USER_NAME,
                         type: sap.m.QuickViewGroupElementType.link
                     }));
             }
@@ -72,7 +77,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
                         target: "_self",
                         label: ibas.i18n.prop("bo_user_mail"),
                         value: "{/mail}",
-                        url: ibas.strings.format("#/{0}/change_user_mail", this.id),
+                        url: ibas.URL_HASH_SIGN_VIEWS + this.id + URL_HASH_SIGN_CHANGE_USER_MAIL,
                         type: sap.m.QuickViewGroupElementType.link
                     }));
             }
@@ -83,7 +88,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
                         target: "_self",
                         label: ibas.i18n.prop("bo_user_password"),
                         value: ibas.i18n.prop("initialfantasy_user_change_password"),
-                        url: ibas.strings.format("#/{0}/change_user_password", this.id),
+                        url: ibas.URL_HASH_SIGN_VIEWS + this.id + URL_HASH_SIGN_CHANGE_USER_PASSWORD,
                         type: sap.m.QuickViewGroupElementType.link
                     }));
             }
@@ -94,5 +99,56 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
             this.form.addPage(page);
         }
         this.form.setModel(new sap.ui.model.json.JSONModel(user));
+    }
+    // 地址哈希值变化
+    onHashChange(event: HashChangeEvent): void {
+        super.onHashChange(event);
+        if (event.newURL.endsWith(URL_HASH_SIGN_CHANGE_USER_NAME)) {
+            this.showChangeUI(URL_HASH_SIGN_CHANGE_USER_NAME, [
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Password,
+                    value: "{/password}",
+                })
+            ]);
+        } else if (event.newURL.endsWith(URL_HASH_SIGN_CHANGE_USER_MAIL)) {
+            this.showChangeUI(URL_HASH_SIGN_CHANGE_USER_MAIL, [
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Password,
+                    value: "{/mail}",
+                })
+            ]);
+        } else if (event.newURL.endsWith(URL_HASH_SIGN_CHANGE_USER_PASSWORD)) {
+            this.showChangeUI(URL_HASH_SIGN_CHANGE_USER_PASSWORD, [
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Password,
+                    value: "{/password}",
+                })
+            ]);
+        }
+    }
+    private showChangeUI(sign: string, content: sap.ui.core.Control[]): void {
+        let that: this = this;
+        // 获取打开位置
+        let pos: number = 0;
+        for (let page of this.form.getPages()) {
+            for (let group of page.getGroups()) {
+                for (let item of group.getElements()) {
+                    pos = pos - 40;
+                }
+            }
+        }
+        // 生成打开视图
+        let popover: sap.m.Popover = new sap.m.Popover("", {
+            showHeader: false,
+            placement: sap.m.PlacementType.Bottom,
+            offsetY: pos,
+            afterClose(event: any): void {
+                // 关闭后自动触发保存事件
+                that.fireViewEvents(that.saveUserEvent);
+            },
+            content: content
+        });
+        (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+        popover.openBy(this.form, false);
     }
 }
