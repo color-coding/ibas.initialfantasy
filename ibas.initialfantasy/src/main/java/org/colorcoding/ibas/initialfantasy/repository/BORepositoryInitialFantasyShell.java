@@ -24,12 +24,11 @@ import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
 import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
 import org.colorcoding.ibas.bobas.repository.IBORepository4DbReadonly;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organizations.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.shells.ApplicationModule4Shell;
 import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shells.User;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
@@ -104,7 +103,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_MODULES"));
 			sp.addParameters("Platform", platform);
 			sp.addParameters("UserCode", user);
-			IOperationResult<?> opRsltModules = boRepository.fetch(sp, ApplicationModule.class);
+			IOperationResult<?> opRsltModules = boRepository.fetch(sp, ApplicationModule4Shell.class);
 			if (opRsltModules.getResultCode() != 0) {
 				throw new Exception(opRsltModules.getMessage());
 			}
@@ -113,8 +112,18 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			ServiceRouting serviceRouting = ServiceRouting.create();
 			for (Object item : opRsltModules.getResultObjects()) {
-				if (item instanceof IApplicationModule) {
-					UserModule userModule = UserModule.create((IApplicationModule) item);
+				if (item instanceof ApplicationModule4Shell) {
+					UserModule userModule = opRslt.getResultObjects()
+							.firstOrDefault(c -> c.getId().equals(((ApplicationModule4Shell) item).getModuleId()));
+					if (userModule == null) {
+						userModule = UserModule.create((ApplicationModule4Shell) item);
+					} else {
+						// 保留最大权限设置
+						if (userModule.getAuthorise()
+								.compareTo(((ApplicationModule4Shell) item).getAuthoriseValue()) < 0) {
+							continue;
+						}
+					}
 					serviceRouting.routing(userModule);// 设置有效服务
 					opRslt.addResultObjects(userModule);
 				}

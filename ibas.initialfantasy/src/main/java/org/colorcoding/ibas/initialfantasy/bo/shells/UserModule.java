@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
+import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 
 /**
  * 用户应用模块
@@ -18,11 +18,12 @@ import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
 @XmlType(name = "UserModule")
 @XmlRootElement(name = "UserModule")
 public class UserModule {
-	public static UserModule create(IApplicationModule applicationModule) {
+	public static UserModule create(ApplicationModule4Shell applicationModule) {
 		UserModule userModule = new UserModule();
 		userModule.setId(applicationModule.getModuleId());
 		userModule.setName(applicationModule.getModuleName());
 		userModule.setIndex(applicationModule.getModuleEntry());
+		userModule.setAuthorise(applicationModule.getAuthoriseValue());
 		userModule.setRepository("");
 		userModule.setAddress("");
 		return userModule;
@@ -100,6 +101,20 @@ public class UserModule {
 
 	public void setIndex(String index) {
 		this.index = index;
+	}
+
+	/**
+	 * 权限
+	 */
+	private emAuthoriseType authorise;
+
+	@XmlElement(name = "Authorise")
+	public final emAuthoriseType getAuthorise() {
+		return authorise;
+	}
+
+	public final void setAuthorise(emAuthoriseType authorise) {
+		this.authorise = authorise;
 	}
 
 	@Override
