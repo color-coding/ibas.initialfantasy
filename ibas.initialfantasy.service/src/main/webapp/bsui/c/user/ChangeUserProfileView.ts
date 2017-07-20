@@ -41,15 +41,43 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
     }
     /** 绘制视图 */
     darw(): any {
-        this.form = new sap.m.QuickView("", {
-            placement: sap.m.PlacementType.Bottom,
-            pages: [
+        let that: this = this;
+        this.form = new sap.ui.layout.form.SimpleForm("", {
+            content: [
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text,
+                    editable: false,
+                }).bindProperty("value", {
+                    path: "/code"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_name") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/name"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Password
+                }).bindProperty("value", {
+                    path: "/password"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_mail") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/mail"
+                }),
             ]
         });
         return this.form;
     }
-    private form: sap.m.QuickView;
+    private form: sap.ui.layout.form.SimpleForm;
     /** 显示用户信息 */
     showUser(user: bo.User): void {
+        this.form.setModel(new sap.ui.model.json.JSONModel(user));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.form, user);
     }
 }
