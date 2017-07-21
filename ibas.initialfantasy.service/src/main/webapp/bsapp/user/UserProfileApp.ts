@@ -50,7 +50,7 @@ export class UserProfileApp extends ibas.ResidentApplication<IUserProfileView> {
                 if (ibas.objects.isNull(that.user)) {
                     that.user = new bo.User();
                     that.user.code = "UNKNOWN";
-                    that.user.name = ibas.i18n.prop("initialfantasy_unknown_user");
+                    that.user.name = ibas.i18n.prop("sys_shell_unknown_user");
                 }
                 that.view.showUser(that.user);
             }
@@ -66,7 +66,7 @@ export class UserProfileApp extends ibas.ResidentApplication<IUserProfileView> {
                 if (ibas.objects.isNull(that.user)) {
                     that.user = new bo.User();
                     that.user.code = "UNKNOWN";
-                    that.user.name = ibas.i18n.prop("initialfantasy_unknown_user");
+                    that.user.name = ibas.i18n.prop("sys_shell_unknown_user");
                 }
                 that.view.showUser(that.user);
             }
