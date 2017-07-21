@@ -176,4 +176,36 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>7903fd4c-23b3-49e3-9db5-de61f5f5a24a</Id>
+        <Name>TuCao</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/tucao/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/tucao/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>7903fd4c-23b3-49e3-9db5-de61f5f5a24b</Id>
+        <Name>TuCaoUsers</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/tucao/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/tucao/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>
