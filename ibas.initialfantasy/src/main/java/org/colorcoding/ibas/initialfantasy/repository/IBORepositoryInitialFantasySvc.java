@@ -1,9 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
-import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
-import org.colorcoding.ibas.bobas.data.emApprovalResult;
 import org.colorcoding.ibas.bobas.repository.IBORepositorySmartService;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationFunction;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
@@ -346,24 +344,6 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 * @return 操作结果
 	 */
 	OperationResult<User> saveUser(User bo, String token);
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 审批操作
-	 * 
-	 * @param apRequestId
-	 *            审批请求编号
-	 * @param apStepId
-	 *            审批请求步骤编号
-	 * @param apResult
-	 *            审批的结果
-	 * @param judgment
-	 *            审批意见
-	 * @param token
-	 *            口令
-	 * @return
-	 */
-	OperationMessages approval(int apRequestId, int apStepId, emApprovalResult apResult, String judgment, String token);
 
 	// --------------------------------------------------------------------------------------------//
 
