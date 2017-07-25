@@ -208,4 +208,20 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>b3382a56-bdda-412c-bc2f-af17cd19142e</Id>
+        <Name>ApprovalProcess</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/approvalprocess/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/approvalprocess/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>

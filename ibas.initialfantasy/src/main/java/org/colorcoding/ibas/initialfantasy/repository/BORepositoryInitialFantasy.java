@@ -739,7 +739,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<IUser> saveUser(IUser bo) {
 		return new OperationResult<IUser>(this.saveUser((User) bo, this.getUserToken()));
-	} // --------------------------------------------------------------------------------------------//
+	}
+	// --------------------------------------------------------------------------------------------//
 
 	@Override
 	public OperationMessages approval(int apRequestId, int apStepId, emApprovalResult apResult, String judgment,
