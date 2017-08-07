@@ -557,6 +557,7 @@ export class ApprovalTemplateStep extends BOSimpleLine<ApprovalTemplateStep> imp
 
     /** 初始化数据 */
     protected init(): void {
+        this.approvalTemplateStepConditions = new ApprovalTemplateStepConditions(this);
     }
 }
 

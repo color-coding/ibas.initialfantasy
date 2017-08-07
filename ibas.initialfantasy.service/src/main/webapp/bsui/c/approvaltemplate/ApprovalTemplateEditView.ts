@@ -10,7 +10,7 @@ import * as ibas from "ibas/index";
 import { utils } from "openui5/typings/ibas.utils";
 import * as bo from "../../../borep/bo/index";
 import { IApprovalTemplateEditView } from "../../../bsapp/approvaltemplate/index";
-
+import { emApprovalStepOwnerType, emApprovalConditionType } from '../../../api/index';
 /**
  * 视图-ApprovalTemplate
  */
@@ -23,7 +23,20 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     addApprovalTemplateStepEvent: Function;
     /** 删除审批模板步骤事件 */
     removeApprovalTemplateStepEvent: Function;
-
+    /** 编辑审批模板步骤条件事件 */
+    editApprovalTemplateStepConditionsStartEvent: Function;
+    /** 编辑审批模板步骤条件结束事件 */
+    editApprovalTemplateStepConditionsEndEvent
+    /** 添加审批模板步骤条件事件 */
+    addApprovalTemplateStepConditionEvent: Function;
+    /** 删除审批模板步骤条件事件 */
+    removeApprovalTemplateStepConditionEvent: Function;
+    /** 选择业务对象类型 */
+    chooseApprovalTemplateBOInformationEvent: Function;
+    /** 审批步骤选择步骤所有者 */
+    chooseApprovalTemplateStepUserEvent: Function;
+    /** 审批步骤条件选择取值属性 */
+    chooseApprovalTemplateStepConditionBOPropertyInformationEvent: Function;
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
@@ -38,7 +51,10 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_approvaltemplate_approvalobjectcode") }),
                 new sap.m.Input("", {
-                    type: sap.m.InputType.Text
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseApprovalTemplateBOInformationEvent);
+                    }
                 }).bindProperty("value", {
                     path: "/approvalObjectCode",
                 }),
@@ -66,7 +82,8 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                 }),
             ]
         });
-        this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_approvaltemplatestep") }));
+        this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_approvaltemplatestep") });
+        this.form.addContent(this.tableTitle);
         this.tableApprovalTemplateStep = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -96,48 +113,183 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_approvaltemplatestep_objectkey"),
-                    template: new sap.m.Input("", {
-                        width: "100%",
-                        value: "objectKey",
-                        type: sap.m.InputType.Text
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_approvaltemplatestep_lineid"),
-                    template: new sap.m.Input("", {
-                        width: "100%",
-                        value: "lineId",
-                        type: sap.m.InputType.Text
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_approvaltemplatestep_loginst"),
-                    template: new sap.m.Input("", {
-                        width: "100%",
-                        value: "logInst",
-                        type: sap.m.InputType.Text
-                    })
-                }),
-                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_approvaltemplatestep_stepname"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "stepName",
+                        value: "{stepName}",
                         type: sap.m.InputType.Text
                     })
                 }),
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_approvaltemplatestep_stepownertype"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(emApprovalStepOwnerType)
+                    }).bindProperty("selectedKey", {
+                        path: "/stepOwnerType",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestep_stepowner"),
                     template: new sap.m.Input("", {
                         width: "100%",
-                        value: "stepOwnerType",
+                        showValueHelp: true,
+                        valueHelpRequest: function (): void {
+                            that.fireViewEvents(that.chooseApprovalTemplateStepUserEvent,
+                                // 获取当前对象
+                                this.getBindingContext().getObject()
+                            );
+                        }
+                    }).bindProperty("value", {
+                        path: "/stepOwner"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestep_steporder"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        value: "{stepOrder}",
+                        type: sap.m.InputType.Text
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestep_stepcanmodify"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emYesNo)
+                    }).bindProperty("selectedKey", {
+                        path: "/stepCanModify",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    template: new sap.m.Button("", {
+                        hAlign: sap.ui.core.HorizontalAlign.Center,
+                        text: ibas.i18n.prop("initialfantasy_edit_target"),
+                        type: sap.m.ButtonType.Transparent,
+                        press: function () {
+                            that.fireViewEvents(that.editApprovalTemplateStepConditionsStartEvent
+                                , this.getBindingContext().getObject()
+                            );
+                        }
+                    })
+                }),
+            ]
+        });
+        this.tableApprovalTemplateStepCondition = new sap.ui.table.Table("", {
+            extension: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_back"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://nav-back",
+                        press: function (): void {
+                            that.fireViewEvents(that.editApprovalTemplateStepConditionsEndEvent);
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_data_add"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://add",
+                        press: function (): void {
+                            that.fireViewEvents(that.addApprovalTemplateStepConditionEvent);
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("sys_shell_data_remove"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://less",
+                        press: function (): void {
+                            that.fireViewEvents(that.removeApprovalTemplateStepConditionEvent,
+                                // 获取表格选中的对象
+                                utils.getTableSelecteds<bo.ApprovalTemplateStepCondition>(that.tableApprovalTemplateStepCondition)
+                            );
+                        }
+                    })
+                ]
+            }),
+            visible: false,
+            enableSelectAll: false,
+            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            rows: "{/rows}",
+            columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_relationship"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emConditionRelationship)
+                    }).bindProperty("selectedKey", {
+                        path: "/relationship",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_bracketopen"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        value: "{bracketOpen}",
+                        type: sap.m.InputType.Text
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_conditiontype"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(emApprovalConditionType)
+                    }).bindProperty("selectedKey", {
+                        path: "/conditionType",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_propertyname"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        value: "{propertyName}",
+                        showValueHelp: true,
+                        valueHelpRequest: function (): void {
+                            that.fireViewEvents(that.chooseApprovalTemplateStepConditionBOPropertyInformationEvent,
+                                // 获取当前对象
+                                this.getBindingContext().getObject()
+                            );
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_operation"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emConditionOperation)
+                    }).bindProperty("selectedKey", {
+                        path: "/operation",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_conditionvalue"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        value: "{conditionValue}",
+                        type: sap.m.InputType.Text
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_bracketclose"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        value: "{bracketClose}",
                         type: sap.m.InputType.Text
                     })
                 }),
             ]
         });
-        this.form.addContent(this.tableApprovalTemplateStep);
+        this.form.addContent(new sap.ui.layout.VerticalLayout("", {
+            content: [
+                this.tableApprovalTemplateStep,
+                this.tableApprovalTemplateStepCondition
+            ]
+        }));
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -214,7 +366,9 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
             }
         }
     }
+    private tableTitle: sap.ui.core.Title;
     private tableApprovalTemplateStep: sap.ui.table.Table;
+    private tableApprovalTemplateStepCondition: sap.ui.table.Table;
 
     /** 显示数据 */
     showApprovalTemplate(data: bo.ApprovalTemplate): void {
@@ -226,7 +380,21 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateSteps(datas: bo.ApprovalTemplateStep[]): void {
+        this.tableApprovalTemplateStepCondition.setVisible(false);
+        this.tableApprovalTemplateStep.setVisible(true);
+        this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestep"));
+
         this.tableApprovalTemplateStep.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+        // 监听属性改变，并更新控件
+        utils.refreshModelChanged(this.tableApprovalTemplateStep, datas);
+    }
+    /** 显示数据 */
+    showApprovalTemplateStepConditions(datas: bo.ApprovalTemplateStepCondition[]): void {
+        this.tableApprovalTemplateStep.setVisible(false);
+        this.tableApprovalTemplateStepCondition.setVisible(true);
+        this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestepcondition"));
+
+        this.tableApprovalTemplateStepCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableApprovalTemplateStep, datas);
     }

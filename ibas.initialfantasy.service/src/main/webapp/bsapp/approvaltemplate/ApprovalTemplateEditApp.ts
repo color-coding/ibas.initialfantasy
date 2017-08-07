@@ -35,6 +35,14 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
         this.view.createDataEvent = this.createData;
         this.view.addApprovalTemplateStepEvent = this.addApprovalTemplateStep;
         this.view.removeApprovalTemplateStepEvent = this.removeApprovalTemplateStep;
+
+        this.view.editApprovalTemplateStepConditionsStartEvent = this.editApprovalTemplateStepConditionsStartEvent;
+        this.view.addApprovalTemplateStepConditionEvent = this.addApprovalTemplateStepCondition;
+        this.view.removeApprovalTemplateStepConditionEvent = this.removeApprovalTemplateStepCondition;
+        this.view.editApprovalTemplateStepConditionsEndEvent = this.editApprovalTemplateStepConditionsEndEvent;
+        this.view.chooseApprovalTemplateStepUserEvent = this.chooseApprovalTemplateStepUserEvent;
+        this.view.chooseApprovalTemplateBOInformationEvent = this.chooseApprovalTemplateBOInformationEvent;
+        this.view.chooseApprovalTemplateStepConditionBOPropertyInformationEvent = this.chooseApprovalTemplateStepConditionBOPropertyInformationEvent;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -85,8 +93,11 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
         }
         super.run();
     }
+
     /** 待编辑的数据 */
     protected editData: bo.ApprovalTemplate;
+    /** 待编辑的审批步骤数据 */
+    protected editApprovalTemplateStepData: bo.ApprovalTemplateStep;
     /** 保存数据 */
     protected saveData(): void {
         let that: this = this;
@@ -198,7 +209,116 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
         // 仅显示没有标记删除的
         this.view.showApprovalTemplateSteps(this.editData.approvalTemplateSteps.filterDeleted());
     }
+    ///** 编辑审批模板步骤条件开始事件 */
+    editApprovalTemplateStepConditionsStartEvent(item: bo.ApprovalTemplateStep): void {
+        this.editApprovalTemplateStepData = item;
+        // 仅显示没有标记删除的
+        this.view.showApprovalTemplateStepConditions(this.editApprovalTemplateStepData.approvalTemplateStepConditions.filterDeleted());
+    }
+    ///** 编辑审批模板步骤条件结束事件 */
+    editApprovalTemplateStepConditionsEndEvent(item: bo.ApprovalTemplateStep): void {
+        this.editApprovalTemplateStepData = null;
+        // 仅显示没有标记删除的
+        this.view.showApprovalTemplateSteps(this.editData.approvalTemplateSteps.filterDeleted());
+    }
+    /** 添加审批模板步骤条件事件 */
+    addApprovalTemplateStepCondition(): void {
+        if (!this.editApprovalTemplateStepData) {
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
+                ibas.i18n.prop("sys_shell_data_edit")));
+            return;
+        }
+        this.editApprovalTemplateStepData.approvalTemplateStepConditions.create();
+        // 仅显示没有标记删除的
+        this.view.showApprovalTemplateStepConditions(this.editApprovalTemplateStepData.approvalTemplateStepConditions.filterDeleted());
+    }
+    /** 删除审批模板步骤条件事件 */
+    removeApprovalTemplateStepCondition(items: bo.ApprovalTemplateStepCondition[]): void {
+        if (!this.editApprovalTemplateStepData) {
+            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
+                ibas.i18n.prop("sys_shell_data_edit")));
+            return;
+        }
+        // 非数组，转为数组
+        if (!(items instanceof Array)) {
+            items = [items];
+        }
+        if (items.length === 0) {
+            return;
+        }
+        // 移除项目
+        for (let item of items) {
+            if (this.editApprovalTemplateStepData.approvalTemplateStepConditions.indexOf(item) >= 0) {
+                if (item.isNew) {
+                    // 新建的移除集合
+                    this.editApprovalTemplateStepData.approvalTemplateStepConditions.remove(item);
+                } else {
+                    // 非新建标记删除
+                    item.delete();
+                }
+            }
+        }
+        // 仅显示没有标记删除的
+        this.view.showApprovalTemplateStepConditions(this.editApprovalTemplateStepData.approvalTemplateStepConditions.filterDeleted());
+    }
+    /** 选择业务对象类型 */
+    chooseApprovalTemplateBOInformationEvent() {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.BOInformation>({
+            boCode: bo.BOInformation.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.BOInformation>): void {
+                let selected = selecteds.firstOrDefault();
+                if (!ibas.objects.isNull(selected)) {
+                    that.editData.approvalObjectCode = selected.code;
+                }
+            }
+        });
+    }
+    /** 审批步骤选择步骤所有者 */
+    chooseApprovalTemplateStepUserEvent(caller: bo.ApprovalTemplateStep) {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.User>({
+            caller: caller,
+            boCode: bo.User.BUSINESS_OBJECT_CODE,
+            criteria: [
+                new ibas.Condition(bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+            ],
+            onCompleted(selecteds: ibas.List<bo.User>): void {
+                // 获取触发的对象
+                let index: number = that.editData.approvalTemplateSteps.indexOf(caller);
+                let item: bo.ApprovalTemplateStep = that.editData.approvalTemplateSteps[index];
 
+                let selected = selecteds.firstOrDefault();
+                if (!ibas.objects.isNull(item) && !ibas.objects.isNull(selected)) {
+                    item.stepOwner = selected.docEntry;
+                }
+            }
+        });
+    }
+    /** 审批步骤条件选择取值属性 */
+    chooseApprovalTemplateStepConditionBOPropertyInformationEvent(caller: bo.ApprovalTemplateStepCondition) {
+        // let that: this = this;
+        // ibas.servicesManager.runChooseService<bo.BOPropertyInformation>({
+        //     caller: caller,
+        //     boCode: bo.BOPropertyInformation.BUSINESS_OBJECT_CODE,
+        //     criteria: [
+        //         new ibas.Condition(bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, "Y")
+        //     ],
+        //     onCompleted(selecteds: ibas.List<bo.BOPropertyInformation>): void {
+        //         // 获取触发的对象
+        //         let index: number = that.editApprovalTemplateStepData.approvalTemplateStepConditions.indexOf(caller);
+        //         let item: bo.ApprovalTemplateStepCondition = that.editApprovalTemplateStepData.approvalTemplateStepConditions[index];
+
+        //         let selected = selecteds.firstOrDefault();
+        //         if (!ibas.objects.isNull(item) && !ibas.objects.isNull(selected)) {
+        //             item.propertyName = selected.property;
+        //         }
+        //     }
+        // }); 
+    }
 }
 /** 视图-审批模板 */
 export interface IApprovalTemplateEditView extends ibas.IBOEditView {
@@ -214,4 +334,20 @@ export interface IApprovalTemplateEditView extends ibas.IBOEditView {
     removeApprovalTemplateStepEvent: Function;
     /** 显示数据 */
     showApprovalTemplateSteps(datas: bo.ApprovalTemplateStep[]): void;
+    ///** 编辑审批模板步骤条件事件 */
+    editApprovalTemplateStepConditionsStartEvent: Function;
+    ///** 编辑审批模板步骤条件结束事件 */
+    editApprovalTemplateStepConditionsEndEvent
+    /** 添加审批模板步骤条件事件 */
+    addApprovalTemplateStepConditionEvent: Function;
+    /** 删除审批模板步骤条件事件 */
+    removeApprovalTemplateStepConditionEvent: Function;
+    /** 显示数据 */
+    showApprovalTemplateStepConditions(datas: bo.ApprovalTemplateStepCondition[]): void;
+    /** 选择业务对象类型 */
+    chooseApprovalTemplateBOInformationEvent: Function;
+    /** 审批步骤选择步骤所有者 */
+    chooseApprovalTemplateStepUserEvent: Function;
+    /** 审批步骤条件选择取值属性 */
+    chooseApprovalTemplateStepConditionBOPropertyInformationEvent: Function;
 }
