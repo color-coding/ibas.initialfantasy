@@ -126,7 +126,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         width: "100%",
                         items: utils.createComboBoxItems(emApprovalStepOwnerType)
                     }).bindProperty("selectedKey", {
-                        path: "/stepOwnerType",
+                        path: "stepOwnerType",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -142,7 +142,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                             );
                         }
                     }).bindProperty("value", {
-                        path: "/stepOwner"
+                        path: "stepOwner"
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -159,7 +159,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         width: "100%",
                         items: utils.createComboBoxItems(ibas.emYesNo)
                     }).bindProperty("selectedKey", {
-                        path: "/stepCanModify",
+                        path: "stepCanModify",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -220,7 +220,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         width: "100%",
                         items: utils.createComboBoxItems(ibas.emConditionRelationship)
                     }).bindProperty("selectedKey", {
-                        path: "/relationship",
+                        path: "relationship",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -238,7 +238,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         width: "100%",
                         items: utils.createComboBoxItems(emApprovalConditionType)
                     }).bindProperty("selectedKey", {
-                        path: "/conditionType",
+                        path: "conditionType",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -262,7 +262,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         width: "100%",
                         items: utils.createComboBoxItems(ibas.emConditionOperation)
                     }).bindProperty("selectedKey", {
-                        path: "/operation",
+                        path: "operation",
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
@@ -380,8 +380,8 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateSteps(datas: bo.ApprovalTemplateStep[]): void {
-        this.tableApprovalTemplateStepCondition.setVisible(false);
         this.tableApprovalTemplateStep.setVisible(true);
+        this.tableApprovalTemplateStepCondition.setVisible(false);
         this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestep"));
 
         this.tableApprovalTemplateStep.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
@@ -390,12 +390,12 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateStepConditions(datas: bo.ApprovalTemplateStepCondition[]): void {
-        this.tableApprovalTemplateStep.setVisible(false);
         this.tableApprovalTemplateStepCondition.setVisible(true);
+        this.tableApprovalTemplateStep.setVisible(false);
         this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestepcondition"));
 
         this.tableApprovalTemplateStepCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.tableApprovalTemplateStep, datas);
+        utils.refreshModelChanged(this.tableApprovalTemplateStepCondition, datas);
     }
 }
