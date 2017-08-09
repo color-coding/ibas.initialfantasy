@@ -84,10 +84,6 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
         });
         this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_approvaltemplatestep") });
         this.form.addContent(this.tableTitle);
-        this.splitterLayoutData = new sap.ui.layout.SplitterLayoutData("", {
-            resizable: false,
-            size: "100%"
-        });
         this.tableApprovalTemplateStep = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -112,7 +108,6 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     })
                 ]
             }),
-            layoutData: this.splitterLayoutData,
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
@@ -214,9 +209,6 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     })
                 ]
             }),
-            layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                size: "auto"
-            }),
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
@@ -291,13 +283,14 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                 }),
             ]
         });
-        this.splitter = new sap.ui.layout.Splitter("", {
-            contentAreas: [
+        this.splitContainer = new sap.m.SplitContainer("", {
+            mode: sap.m.SplitAppMode.HideMode,
+            detailPages: [
                 this.tableApprovalTemplateStep,
                 this.tableApprovalTemplateStepCondition
             ]
         })
-        this.form.addContent(this.splitter);
+        this.form.addContent(this.splitContainer);
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -375,8 +368,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
         }
     }
     private tableTitle: sap.ui.core.Title;
-    private splitter: sap.ui.layout.Splitter;
-    private splitterLayoutData: sap.ui.layout.SplitterLayoutData;
+    private splitContainer: sap.m.SplitContainer;
     private tableApprovalTemplateStep: sap.ui.table.Table;
     private tableApprovalTemplateStepCondition: sap.ui.table.Table;
 
@@ -390,9 +382,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateSteps(datas: bo.ApprovalTemplateStep[]): void {
-        //this.tableApprovalTemplateStep.setVisible(true);
-        //this.tableApprovalTemplateStepCondition.setVisible(false);
-        this.splitterLayoutData.setSize("100%");
+        this.splitContainer.backToTopDetail(null, null);
         this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestep"));
 
         this.tableApprovalTemplateStep.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
@@ -401,9 +391,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateStepConditions(datas: bo.ApprovalTemplateStepCondition[]): void {
-        //this.tableApprovalTemplateStepCondition.setVisible(true);
-        //this.tableApprovalTemplateStep.setVisible(false);
-        this.splitterLayoutData.setSize("0%");
+        this.splitContainer.toDetail(this.tableApprovalTemplateStepCondition.getId(), null, null, null);
         this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestepcondition"));
 
         this.tableApprovalTemplateStepCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
