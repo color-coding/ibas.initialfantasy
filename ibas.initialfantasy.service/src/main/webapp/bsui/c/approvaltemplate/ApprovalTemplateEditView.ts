@@ -83,7 +83,33 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
             ]
         });
         this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_approvaltemplatestep") });
-        this.form.addContent(this.tableTitle);
+        //this.form.addContent(this.tableTitle);
+
+        this.splitContainer = new sap.ui.unified.SplitContainer("", {
+            showSecondaryContent: true,
+            orientation: "Horizontal",
+            secondaryContentWidth: "100%"
+        });
+        let laybtn: sap.m.Button = new sap.m.Button("", {
+            type: sap.m.ButtonType.Transparent,
+            icon: "sap-icon://resize-vertical",
+            press: function (): void {
+                if (that.splitContainer.getOrientation() == sap.ui.core.Orientation.Vertical) {
+                    that.splitContainer.setOrientation(sap.ui.core.Orientation.Horizontal);
+                    that.splitContainer.setSecondaryContentWidth("50%");
+                    laybtn.setIcon("sap-icon://resize-vertical");
+                }
+                else {
+                    that.splitContainer.setOrientation(sap.ui.core.Orientation.Vertical);
+                    laybtn.setIcon("sap-icon://resize-horizontal");
+                    that.splitContainer.setSecondaryContentWidth("50%");
+                }
+            }
+        });
+        let editTypeCb: sap.m.CheckBox = new sap.m.CheckBox("", {
+            selected: true,
+            text: "全屏编辑"
+        });
         this.tableApprovalTemplateStep = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -108,9 +134,31 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     })
                 ]
             }),
+            title: ibas.i18n.prop("bo_approvaltemplatestep"),
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            visibleRowCountMode: "Auto",
             rows: "{/rows}",
+            rowActionCount: 1,
+            rowActionTemplate: new sap.ui.table.RowAction({
+                items: [
+                    new sap.ui.table.RowActionItem({
+                        icon: "sap-icon://slim-arrow-right",
+                        press: function (oEvent) {
+                            that.fireViewEvents(that.editApprovalTemplateStepConditionsStartEvent
+                                , this.getBindingContext().getObject()
+                            );
+                            if (that.splitContainer.getOrientation() == sap.ui.core.Orientation.Horizontal)
+                                if (editTypeCb.getSelected()) {
+                                    that.splitContainer.setSecondaryContentWidth("0%");
+                                } else {
+                                    that.splitContainer.setSecondaryContentWidth("50%");
+                                }
+
+                        },
+                    }),
+                ]
+            }),
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_approvaltemplatestep_stepname"),
@@ -163,31 +211,31 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
-                new sap.ui.table.Column("", {
-                    template: new sap.m.Button("", {
-                        hAlign: sap.ui.core.HorizontalAlign.Center,
-                        text: ibas.i18n.prop("initialfantasy_edit_target"),
-                        type: sap.m.ButtonType.Transparent,
-                        press: function () {
-                            that.fireViewEvents(that.editApprovalTemplateStepConditionsStartEvent
-                                , this.getBindingContext().getObject()
-                            );
-                        }
-                    })
-                }),
             ]
         });
         this.tableApprovalTemplateStepCondition = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_back"),
                         type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://nav-back",
+                        icon: "sap-icon://slim-arrow-left",
                         press: function (): void {
-                            that.fireViewEvents(that.editApprovalTemplateStepConditionsEndEvent);
+                            that.splitContainer.setSecondaryContentWidth("0%");
                         }
                     }),
+                    new sap.m.Button("", {
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://slim-arrow-right",
+                        press: function (): void {
+                            if (that.splitContainer.getSecondaryContentWidth() == "0%" && !editTypeCb.getSelected()) {
+                                that.splitContainer.setSecondaryContentWidth("50%");
+                            } else {
+                                that.splitContainer.setSecondaryContentWidth("100%");
+                                that.editApprovalTemplateStepConditionsEndEvent();
+                            }
+                        }
+                    }),
+                    laybtn,
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_add"),
                         type: sap.m.ButtonType.Transparent,
@@ -206,11 +254,14 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                                 utils.getTableSelecteds<bo.ApprovalTemplateStepCondition>(that.tableApprovalTemplateStepCondition)
                             );
                         }
-                    })
+                    }),
+                    editTypeCb
                 ]
             }),
+            title: ibas.i18n.prop("bo_approvaltemplatestepcondition"),
             enableSelectAll: false,
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            visibleRowCountMode: "Auto",
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
@@ -283,14 +334,12 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                 }),
             ]
         });
-        this.splitContainer = new sap.m.SplitContainer("", {
-            mode: sap.m.SplitAppMode.HideMode,
-            detailPages: [
-                this.tableApprovalTemplateStep,
-                this.tableApprovalTemplateStepCondition
-            ]
-        })
-        this.form.addContent(this.splitContainer);
+        this.splitContainer.addContent(this.tableApprovalTemplateStepCondition);
+
+        this.splitContainer.addSecondaryContent(
+            this.tableApprovalTemplateStep
+        );
+        //this.form.addContent(new sap.m.Page("", { content: [this.splitContainer] }));
         this.page = new sap.m.Page("", {
             showHeader: false,
             subHeader: new sap.m.Toolbar("", {
@@ -348,7 +397,10 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                     }),
                 ]
             }),
-            content: [this.form]
+            content: [
+                this.form,
+                this.splitContainer
+            ]
         });
         this.id = this.page.getId();
         return this.page;
@@ -368,7 +420,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
         }
     }
     private tableTitle: sap.ui.core.Title;
-    private splitContainer: sap.m.SplitContainer;
+    private splitContainer: sap.ui.unified.SplitContainer;
     private tableApprovalTemplateStep: sap.ui.table.Table;
     private tableApprovalTemplateStepCondition: sap.ui.table.Table;
 
@@ -382,7 +434,6 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateSteps(datas: bo.ApprovalTemplateStep[]): void {
-        this.splitContainer.backToTopDetail(null, null);
         this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestep"));
 
         this.tableApprovalTemplateStep.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
@@ -391,7 +442,6 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     }
     /** 显示数据 */
     showApprovalTemplateStepConditions(datas: bo.ApprovalTemplateStepCondition[]): void {
-        this.splitContainer.toDetail(this.tableApprovalTemplateStepCondition.getId(), null, null, null);
         this.tableTitle.setText(ibas.i18n.prop("bo_approvaltemplatestepcondition"));
 
         this.tableApprovalTemplateStepCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
