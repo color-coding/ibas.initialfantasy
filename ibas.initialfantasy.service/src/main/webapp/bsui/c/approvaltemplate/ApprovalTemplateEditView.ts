@@ -403,7 +403,7 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
         return items;
     }
     /** 刷新字段列表 */
-    private refreshBOPropertyInformationList(properies: bo.BOPropertyInformation[]): void {
+    refreshBOPropertyInformationList(properies: bo.BOPropertyInformation[]): void {
         this.columnApprovalTemplateStepConditionPropertyName.setTemplate(new sap.m.Select("", {
             width: "100%",
             selectedKey: "{propertyName}",
