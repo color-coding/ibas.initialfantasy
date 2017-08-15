@@ -213,6 +213,13 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                 }),
             ]
         });
+        this.columnApprovalTemplateStepConditionPropertyName = new sap.ui.table.Column("", {
+            label: ibas.i18n.prop("bo_approvaltemplatestepcondition_propertyname"),
+            template: new sap.m.Select("", {
+                width: "100%",
+                selectedKey: "{propertyName}"
+            })
+        });
         this.tableApprovalTemplateStepCondition = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -292,20 +299,21 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
                         type: "sap.ui.model.type.Integer"
                     })
                 }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_approvaltemplatestepcondition_propertyname"),
-                    template: new sap.m.Input("", {
-                        width: "100%",
-                        value: "{propertyName}",
-                        showValueHelp: true,
-                        valueHelpRequest: function (): void {
-                            that.fireViewEvents(that.chooseApprovalTemplateStepConditionBOPropertyInformationEvent,
-                                // 获取当前对象
-                                this.getBindingContext().getObject()
-                            );
-                        }
-                    })
-                }),
+                // new sap.ui.table.Column("", {
+                //     label: ibas.i18n.prop("bo_approvaltemplatestepcondition_propertyname"),
+                //     template: new sap.m.Input("", {
+                //         width: "100%",
+                //         value: "{propertyName}",
+                //         showValueHelp: true,
+                //         valueHelpRequest: function (): void {
+                //             that.fireViewEvents(that.chooseApprovalTemplateStepConditionBOPropertyInformationEvent,
+                //                 // 获取当前对象
+                //                 this.getBindingContext().getObject()
+                //             );
+                //         }
+                //     })
+                // }),
+                this.columnApprovalTemplateStepConditionPropertyName,
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_approvaltemplatestepcondition_operation"),
                     template: new sap.m.Select("", {
@@ -423,7 +431,32 @@ export class ApprovalTemplateEditView extends ibas.BOEditView implements IApprov
     private splitContainer: sap.ui.unified.SplitContainer;
     private tableApprovalTemplateStep: sap.ui.table.Table;
     private tableApprovalTemplateStepCondition: sap.ui.table.Table;
+    private columnApprovalTemplateStepConditionPropertyName: sap.ui.table.Column;
 
+    protected getPropertyListItem(properies: bo.BOPropertyInformation[]): sap.ui.core.ListItem[] {
+        let items: Array<sap.ui.core.ListItem> = [];
+        items.push(new sap.ui.core.ListItem("", {
+            key: "",
+            text: ibas.i18n.prop("sys_shell_please_chooose_data", ""),
+        }));
+        if (!ibas.objects.isNull(properies)) {
+            for (let property of properies) {
+                items.push(new sap.ui.core.ListItem("", {
+                    key: property.property,
+                    text: property.description,
+                }));
+            }
+        }
+        return items;
+    }
+    /** 刷新字段列表 */
+    refreshBOPropertyInformationList(properies: bo.BOPropertyInformation[]): void {
+        this.columnApprovalTemplateStepConditionPropertyName.setTemplate(new sap.m.Select("", {
+            width: "100%",
+            selectedKey: "{propertyName}",
+            items: this.getPropertyListItem(properies)
+        }));
+    }
     /** 显示数据 */
     showApprovalTemplate(data: bo.ApprovalTemplate): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
