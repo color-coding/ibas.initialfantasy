@@ -326,36 +326,35 @@ export class ApprovalTemplateEditApp extends ibas.BOEditApplication<IApprovalTem
     }
     /** 审批步骤条件选择取值属性 */
     chooseApprovalTemplateStepConditionBOPropertyInformationEvent(caller: bo.ApprovalTemplateStepCondition) {
-        let that: this = this;
-        try {
-            if (!this.editData.approvalObjectCode)
-                throw new Error(ibas.i18n.prop("initialfantasy_msg_property_can_not_empty", ibas.i18n.prop("bo_approvaltemplate_approvalobjectcode")));
-            let criteria: ibas.Criteria = new ibas.Criteria();
-            criteria.noChilds = false;
-            let cond = criteria.conditions.create();
-            cond.alias = bo.BOInformation.PROPERTY_CODE_NAME
-            cond.operation = ibas.emConditionOperation.EQUAL;
-            cond.value = this.editData.approvalObjectCode;
+        // let that: this = this;
+        // try {
+        //     if (!this.editData.approvalObjectCode)
+        //         throw new Error(ibas.i18n.prop("initialfantasy_msg_property_can_not_empty", ibas.i18n.prop("bo_approvaltemplate_approvalobjectcode")));
+        //     let criteria: ibas.Criteria = new ibas.Criteria();
+        //     criteria.noChilds = false;
+        //     let cond = criteria.conditions.create();
+        //     cond.alias = bo.BOInformation.PROPERTY_CODE_NAME
+        //     cond.operation = ibas.emConditionOperation.EQUAL;
+        //     cond.value = this.editData.approvalObjectCode;
 
-            ibas.servicesManager.runChooseService<bo.BOPropertyInformation>({
-                caller: caller,
-                boCode: bo.BOInformation.BUSINESS_OBJECT_CODE + ".1",
-                criteria: criteria,
-                onCompleted(selecteds: ibas.List<bo.BOPropertyInformation>): void {
-                    // 获取触发的对象
-                    let index: number = that.editApprovalTemplateStepData.approvalTemplateStepConditions.indexOf(caller);
-                    let item: bo.ApprovalTemplateStepCondition = that.editApprovalTemplateStepData.approvalTemplateStepConditions[index];
+        //     ibas.servicesManager.runChooseService<bo.BOPropertyInformation>({
+        //         caller: caller,
+        //         boCode: bo.BOInformation.BUSINESS_OBJECT_CODE + ".1",
+        //         criteria: criteria,
+        //         onCompleted(selecteds: ibas.List<bo.BOPropertyInformation>): void {
+        //             // 获取触发的对象
+        //             let index: number = that.editApprovalTemplateStepData.approvalTemplateStepConditions.indexOf(caller);
+        //             let item: bo.ApprovalTemplateStepCondition = that.editApprovalTemplateStepData.approvalTemplateStepConditions[index];
 
-                    let selected = selecteds.firstOrDefault();
-                    if (!ibas.objects.isNull(item) && !ibas.objects.isNull(selected)) {
-                        item.propertyName = selected.property;
-                    }
-                }
-            });
-        } catch (error) {
-            this.proceeding(ibas.emMessageType.ERROR, error.message);
-        }
-
+        //             let selected = selecteds.firstOrDefault();
+        //             if (!ibas.objects.isNull(item) && !ibas.objects.isNull(selected)) {
+        //                 item.propertyName = selected.property;
+        //             }
+        //         }
+        //     });
+        // } catch (error) {
+        //     this.proceeding(ibas.emMessageType.ERROR, error.message);
+        // }
     }
 }
 /** 视图-审批模板 */
