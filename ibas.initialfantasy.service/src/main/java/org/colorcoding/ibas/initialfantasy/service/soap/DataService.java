@@ -33,7 +33,7 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
  */
 @WebService
 @WebServicePath("data")
-public class DataService extends BORepositoryInitialFantasyShell {
+public class DataService extends BORepositoryInitialFantasyShell { 
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 用户登录

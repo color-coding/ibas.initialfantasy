@@ -35,7 +35,7 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
  * InitialFantasy 数据服务JSON
  */
 @Path("data")
-public class DataService extends BORepositoryInitialFantasyShell {
+public class DataService extends BORepositoryInitialFantasyShell { 
 
 	// --------------------------------------------------------------------------------------------//
 	/**

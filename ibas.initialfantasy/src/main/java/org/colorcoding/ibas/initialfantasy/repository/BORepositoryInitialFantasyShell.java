@@ -44,7 +44,54 @@ import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
  *
  */
 public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy implements IBORepositoryShell {
-
+	
+	@Override 
+	public OperationResult<User> userConnect(String token) {
+		OperationResult<User> opRslt = new OperationResult<User>();
+		try {
+			this.setUserToken(token);
+			org.colorcoding.ibas.bobas.organization.IUser currentUser =  this.getCurrentUser();
+			
+			ICriteria criteria = new Criteria();
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			condition = criteria.getConditions().create();
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organizations.User.PROPERTY_DOCENTRY.getName());
+			condition.setValue(currentUser.getId());
+			// 设置用户口令，系统用户
+			this.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
+			IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
+			if (opRsltUser.getError() != null) {
+				throw opRsltUser.getError();
+			}
+			if (opRsltUser.getResultCode() != 0) {
+				throw new Exception(opRsltUser.getMessage());
+			}
+			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
+			if (boUser == null) {
+				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
+			}
+			User sUser = User.create(boUser);
+			// 生成token
+			IOrganizationManager orgManager = OrganizationFactory.create().createManager();
+			org.colorcoding.ibas.bobas.organization.IUser tmpUser = orgManager.getUser(sUser.getId());
+			if (tmpUser instanceof org.colorcoding.ibas.bobas.organization.fantasy.User) {
+				org.colorcoding.ibas.bobas.organization.fantasy.User orgUser = (org.colorcoding.ibas.bobas.organization.fantasy.User) tmpUser;// 用户可能未分配组织
+				opRslt.setUserSign(orgUser.getToken());
+			} else {
+				// 设置连接口令
+				opRslt.setUserSign(UUID.randomUUID().toString());
+			}
+			opRslt.addResultObjects(sUser);
+			// 返回公司代码
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, "CONFIG_ITEM",
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC")));
+		} catch (Exception e) {
+			opRslt.setError(e);
+		}
+		return opRslt;
+	}
 	@Override
 	public OperationResult<User> userConnect(String user, String password) {
 		OperationResult<User> opRslt = new OperationResult<User>();
