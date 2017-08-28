@@ -52,8 +52,14 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("userConnect")
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> userConnect(
-			@QueryParam("user") String user, @QueryParam("password") String password) {
-		return super.userConnect(user, password);
+			@QueryParam("user") String user, @QueryParam("password") String password,
+			@QueryParam("token") String token) {
+		if (token != null) {
+			return super.userConnect(token);
+		} else {
+			return super.userConnect(user, password);
+		}
+
 	}
 
 	/**
