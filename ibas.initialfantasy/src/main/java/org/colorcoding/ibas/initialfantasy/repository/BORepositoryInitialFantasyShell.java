@@ -45,8 +45,8 @@ import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
  */
 public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy implements IBORepositoryShell {
 	
-	@Override 
-	public OperationResult<User> userConnect(String token) {
+	@Override
+	public OperationResult<User> tokenConnect(String token) {
 		OperationResult<User> opRslt = new OperationResult<User>();
 		try {
 			this.setUserToken(token);
@@ -365,5 +365,5 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		}
 		return opRslt;
 	}
-
+	
 }

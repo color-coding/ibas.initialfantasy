@@ -39,7 +39,23 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 用户登录
+	 * 用户口令登录
+	 * 
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("tokenConnect")
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> tokenConnect(
+			@QueryParam("token") String token) {
+		return super.tokenConnect(token);
+	}
+
+	/**
+	 * 用户密码登录
 	 * 
 	 * @param user
 	 *            用户
