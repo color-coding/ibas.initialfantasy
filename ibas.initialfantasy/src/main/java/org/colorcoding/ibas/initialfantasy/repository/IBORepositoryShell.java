@@ -16,6 +16,14 @@ import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
  */
 public interface IBORepositoryShell {
 	/**
+	 * 用户口令登录
+	 * 
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	OperationResult<User> tokenConnect(String token);
+	/**
 	 * 用户登录
 	 * 
 	 * @param token
