@@ -193,16 +193,16 @@
         </Providers>
     </ServiceInformation>
     <ServiceInformation>
-        <Id>7903fd4c-23b3-49e3-9db5-de61f5f5a24b</Id>
-        <Name>TuCaoUsers</Name>
+        <Id>420471fe-047f-4c73-ae26-fe9da158b615</Id>
+        <Name>FeedbackUsers</Name>
         <Providers>
             <Provider>
-                <Address>http://localhost:8080/tucao/services/rest/data</Address>
+                <Address>http://localhost:8080/feedback/services/rest/data</Address>
                 <Enabled>true</Enabled>
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/tucao/</Address>
+                <Address>.../../../test/apps/feedback/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -219,6 +219,22 @@
             </Provider>
             <Provider>
                 <Address>.../../../test/apps/approvalprocess/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>2bd803fd-975c-4f7c-aa41-1ca2991cc126</Id>
+        <Name>BusinessPartner</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/businesspartner/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/businesspartner/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>

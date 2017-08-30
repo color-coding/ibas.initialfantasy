@@ -26,6 +26,14 @@ public interface IBORepositoryShell {
 	/**
 	 * 用户登录
 	 * 
+	 * @param token
+	 *            用户token
+	 * @return 操作结果
+	 */
+	OperationResult<User> userConnect(String token);
+	/**
+	 * 用户登录
+	 * 
 	 * @param user
 	 *            用户
 	 * @param passwrod
