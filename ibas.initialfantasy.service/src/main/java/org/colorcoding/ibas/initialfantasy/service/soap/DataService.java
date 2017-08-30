@@ -36,6 +36,19 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 public class DataService extends BORepositoryInitialFantasyShell {
 	// --------------------------------------------------------------------------------------------//
 	/**
+	 * 用户口令登录
+	 * 
+	 * @param token
+	 *            用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> tokenConnect(
+			@WebParam(name = "token") String token) {
+		return super.tokenConnect(token);
+	}
+
+	/**
 	 * 用户登录
 	 * 
 	 * @param user
@@ -46,13 +59,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 */
 	@WebMethod
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> userConnect(
-			@WebParam(name = "user") String user, @WebParam(name = "password") String password,
-			@WebParam(name = "token") String token) {
-		if (token != null) {
-			return super.userConnect(token);
-		} else {
-			return super.userConnect(user, password);
-		}
+			@WebParam(name = "user") String user, @WebParam(name = "password") String password) {
+		return super.userConnect(user, password);
 	}
 
 	/**
