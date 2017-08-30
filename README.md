@@ -2,10 +2,10 @@
 基于ibas的初始应用系统。
 
 ## 鼓励师 | Encourager
-![](encourager.gif "ホワイトレッグ") 
-* 姓名：NA
-* 生日：NA
-* 国籍：NA
+![](encourager.gif "すぎはら あんり")
+* 姓名：杉原杏璃（すぎはら あんり）
+* 生日：1982年6月12日
+* 国籍：日本
 
 ## 项目结构 | Projects
 
