@@ -12,17 +12,17 @@
     <Action Name="create db" Isolated="true">
         <Step Name="check and create db">
             <Script>
-                create database if not exists `${DbName}` character set utf8;
+                CREATE DATABASE IF NOT EXISTS `${DbName}` CHARACTER SET UTF8;
             </Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
-        <Step Name="check and drop exists stored procedures">
+        <Step Name="check stored procedures exists">
             <Script>
-                DROP PROCEDURE IF EXISTS `${DbName}`.`${Company}_SP_TRANSACTION_NOTIFICATION`;
+                SELECT COUNT(0) FROM `mysql`.`proc` WHERE `db` = '${DbName}' AND `type` = 'PROCEDURE' AND `name` = '${Company}_SP_TRANSACTION_NOTIFICATION';
             </Script>
         </Step>
-        <Step Name="create stored procedures">
+        <Step Name="create stored procedures" RunOnValue="0">
             <Script>
                 CREATE PROCEDURE `${DbName}`.`${Company}_SP_TRANSACTION_NOTIFICATION` (
                     object_type varchar(30),                  /*对象类型（BOCode）*/
@@ -32,15 +32,15 @@
                     list_of_cols_val_tab_del varchar(255)     /*主键值*/
                 )
                 BEGIN
-                    declare error int;                             /*返回值(0 无错误)*/
-                    declare error_message varchar(200);            /*返回的消息*/
-                    set error = 0;
-                    set error_message = N'OK';
+                    DECLARE error int;                             /*返回值(0 无错误)*/
+                    DECLARE error_message varchar(200);            /*返回的消息*/
+                    SET error = 0;
+                    SET error_message = N'OK';
                     /*----------------------------------------------------------------------------------------------------------------------------*/
                     -- ADD YOUR CODE HERE
                     /* ----------------------------------------------------------------------------------------------------------------------------*/
                     -- return
-                    select error, error_message;
+                    SELECT error, error_message;
                 END;
             </Script>
         </Step>
@@ -58,24 +58,31 @@
                     userCode nvarchar(8)             /*用户编码*/
                 )
                 BEGIN
+                    DECLARE platform2 varchar(36);         /*平台编码*/
+                    IF (platform = 'DESKTOP' || platform = 'TABLET') THEN
+                        SET platform2 = 'COMBINATION';
+                    ELSE
+                        SET platform2 = platform;
+                    END IF;
+
                     IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `Code` = userCode AND `Super` = 'Y') THEN
                         /* 超级用户全部权限 */
                         SELECT A.*,'A' AuthValue
                         FROM `${Company}_SYS_MODULE` A
-                        WHERE A.`PlatformId` = platform AND A.`Activated` = 'Y';
+                        WHERE (A.`PlatformId` = platform OR A.`PlatformId` = platform2) AND A.`Activated` = 'Y';
                     ELSE
                         /* 非超级用户，角色权限 */
                         SELECT A.*,C.`AuthValue`
                         FROM `${Company}_SYS_MODULE` A INNER JOIN (
                             SELECT DISTINCT B.`ModuleId`,B.`AuthValue`
                             FROM `${Company}_SYS_PRIVILEGE` B
-                            WHERE B.`PlatformId` = platform AND B.`Activated` = 'Y' AND B.`AuthValue` &lt;&gt; 'N' AND B.`RoleCode` IN (
+                            WHERE (B.`PlatformId` = platform OR B.`PlatformId` = platform2) AND B.`Activated` = 'Y' AND B.`AuthValue` &lt;&gt; 'N' AND B.`RoleCode` IN (
                                 SELECT B.`Role`
                                 FROM `${Company}_SYS_ORGSTRC` A INNER JOIN `${Company}_SYS_ORGROLE` B ON A.`ObjectKey` = B.`ObjectKey`
                                       INNER JOIN `${Company}_SYS_ROLEMEM` C ON B.`ObjectKey` = C.`ObjectKey` AND B.`LineId` = C.`RoleId`
                                 WHERE A.`ValidDate` &lt;= GETDATE() AND A.`InvalidDate` &gt;= GETDATE() AND C.`Member` = userCode)
                         ) C ON A.`ModuleId` = C.`ModuleID`
-                        WHERE A.`PlatformId` = platform AND A.`Activated` = 'Y';
+                        WHERE (A.`PlatformId` = platform OR A.`PlatformId` = platform2) AND A.`Activated` = 'Y';
                     END IF;
                 END;
             </Script>
@@ -94,6 +101,13 @@
                     IN userCode nvarchar(8)             /*用户编码*/
               )
               BEGIN
+                DECLARE platform2 varchar(36);         /*平台编码*/
+                IF (platform = 'DESKTOP' || platform = 'TABLET') THEN
+                    SET platform2 = 'COMBINATION';
+                ELSE
+                    SET platform2 = platform;
+                END IF;
+
                 IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `Code` = userCode AND `Super` = 'Y') THEN
                     /*超级用户全部权限*/
                     SELECT 'M' `Source`, `ModuleId` `Target`, `AuthValue` `Value`
@@ -111,12 +125,12 @@
                         /*模块的权限设置*/
                         SELECT 'M' `Source`, `ModuleId` `Target`, `AuthValue` `Value`, `RoleCode`
                         FROM `${Company}_SYS_PRIVILEGE`
-                        WHERE `PlatformId` = platform AND `Activated` = 'Y' AND IFNULL(`Target`,'') = ''
+                        WHERE (`PlatformId` = platform OR `PlatformId` = platform2) AND `Activated` = 'Y' AND IFNULL(`Target`,'') = ''
                         UNION ALL
                         /*应用的权限设置*/
                         SELECT 'A' `Source`, `Target` `Target`, `AuthValue` `Value`, `RoleCode`
                         FROM `${Company}_SYS_PRIVILEGE`
-                        WHERE `PlatformId` = platform AND `Activated` = 'Y' AND IFNULL(`Target`,'') &lt;&gt; ''
+                        WHERE (`PlatformId` = platform OR `PlatformId` = platform2) AND `Activated` = 'Y' AND IFNULL(`Target`,'') &lt;&gt; ''
                     ) T0
                     WHERE T0.`RoleCode` IN (
                         SELECT T1.`Role`

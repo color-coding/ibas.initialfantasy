@@ -12,19 +12,19 @@
     <Action Name="create db" Isolated="true">
         <Step Name="check db exists">
             <Script>
-                select count(0) from sys.databases where name = '${DbName}';
+                SELECT COUNT(0) FROM sys.databases WHERE name = '${DbName}';
             </Script>
         </Step>
         <Step Name="create db" RunOnValue="0">
             <Script>
-                 create database "${DbName}";
+                 CREATE DATABASE "${DbName}";
             </Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from sys.sysobjects where name = '${Company}_SP_TRANSACTION_NOTIFICATION' AND type = 'P';
+                SELECT COUNT(0) FROM sys.sysobjects WHERE name = '${Company}_SP_TRANSACTION_NOTIFICATION' AND type = 'P';
             </Script>
         </Step>
         <Step Name="create stored procedures" RunOnValue="0">
@@ -37,15 +37,15 @@
                     @list_of_cols_val_tab_del nvarchar(255)    --主键值
                 AS
                 BEGIN
-                    declare @error int                             --返回值(0 无错误)
-                    declare @error_message nvarchar(200)           --返回的消息
-                    select @error = 0
-                    select @error_message = N'OK'
+                    DECLARE @error int                             --返回值(0 无错误)
+                    DECLARE @error_message nvarchar(200)           --返回的消息
+                    SELECT @error = 0
+                    SELECT @error_message = N'OK'
                     --------------------------------------------------------------------------------------------------------------------------------
                     --ADD YOUR CODE HERE
                     --------------------------------------------------------------------------------------------------------------------------------
                     --return
-                    select @error "Code", @error_message "Message"
+                    SELECT @error "Code", @error_message "Message"
                 END;
             </Script>
         </Step>
@@ -53,35 +53,46 @@
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P';
+                SELECT COUNT(0) FROM sys.sysobjects WHERE name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P';
             </Script>
         </Step>
-        <Step Name="create stored procedures" RunOnValue="0">
+        <Step Name="drop stored procedures" RunOnValue="1">
+            <Script>
+                DROP PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES;
+            </Script>
+        </Step>
+        <Step Name="create stored procedures">
             <Script>
                 CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES
                     @platform nvarchar(36),           /*平台代码*/
                     @userCode nvarchar(8)             /*用户编码*/
                 AS
                 BEGIN
+                    DECLARE @platform2 nvarchar(36)         --平台编码
+                    IF @platform = 'DESKTOP' OR @platform = 'TABLET'
+                        SET @platform2 = 'COMBINATION'
+                    ELSE
+                        SET @platform2 = @platform
+
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
                         --超级用户全部权限
                         SELECT A.*,'A' AuthValue
                         FROM "${Company}_SYS_MODULE" A
-                        WHERE A."PlatformId" = @platform AND A."Activated" = 'Y'
+                        WHERE (A."PlatformId" = @platform OR A."PlatformId" = @platform2) AND A."Activated" = 'Y'
                     ELSE
                         --非超级用户，角色权限
                         SELECT A.*,C.AuthValue
                         FROM "${Company}_SYS_MODULE" A INNER JOIN (
                             SELECT DISTINCT B."ModuleId",B."AuthValue"
                             FROM "${Company}_SYS_PRIVILEGE" B
-                            WHERE B."PlatformId" = @platform AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                            WHERE (B."PlatformId" = @platform OR B."PlatformId" = @platform2) AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
                                 SELECT B."Role"
                                 FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
                                     INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
                                 WHERE A."ValidDate" &lt;= GETDATE() AND A."InvalidDate" &gt;= GETDATE() AND C."Member" = @userCode
                                 )
                         ) C ON A."ModuleId" = C."ModuleId"
-                        WHERE A."PlatformId" = @platform AND A."Activated" = 'Y'
+                        WHERE (A."PlatformId" = @platform OR A."PlatformId" = @platform2) AND A."Activated" = 'Y'
                 END;
             </Script>
         </Step>
@@ -89,16 +100,27 @@
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
-                select count(0) from sys.sysobjects where name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P';
+                SELECT COUNT(0) FROM sys.sysobjects WHERE name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P';
             </Script>
         </Step>
-        <Step Name="create stored procedures" RunOnValue="0">
+        <Step Name="drop stored procedures" RunOnValue="1">
+            <Script>
+                DROP PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES;
+            </Script>
+        </Step>
+        <Step Name="create stored procedures">
             <Script>
                 CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES
                     @platform nvarchar(36),           /*平台代码*/
                     @userCode nvarchar(8)             /*用户编码*/
                 AS
                 BEGIN
+                    DECLARE @platform2 nvarchar(36)         --平台编码
+                    IF @platform = 'DESKTOP' OR @platform = 'TABLET'
+                        SET @platform2 = 'COMBINATION'
+                    ELSE
+                        SET @platform2 = @platform
+
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = @userCode AND "Super" = 'Y')
                         -- 超级用户全部权限
                         SELECT TOP 0 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
@@ -115,12 +137,12 @@
                             -- 模块的权限设置
                             SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
                             FROM "${Company}_SYS_PRIVILEGE"
-                            WHERE "PlatformId" = @platform AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
+                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
                             UNION ALL
                             -- 应用的权限设置
                             SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
                             FROM "${Company}_SYS_PRIVILEGE"
-                            WHERE "PlatformId" = @platform AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
+                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
                         ) T0
                         WHERE T0."RoleCode" IN (
                             SELECT T1."Role"

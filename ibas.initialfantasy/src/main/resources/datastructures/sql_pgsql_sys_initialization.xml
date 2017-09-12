@@ -12,12 +12,12 @@
     <Action Name="create db" Isolated="true" DbUrl="jdbc:postgresql://${DbServer}:${DbPort}/postgres">
         <Step Name="check db exists">
             <Script>
-                select count(0) from pg_database where datname = '${DbName}';
+                SELECT COUNT(0) FROM pg_database WHERE datname = '${DbName}';
             </Script>
         </Step>
         <Step Name="create db" RunOnValue="0">
             <Script>
-                 create database "${DbName}";
+                 CREATE DATABASE "${DbName}";
             </Script>
         </Step>
     </Action>
@@ -90,13 +90,20 @@
                 ) RETURNS SETOF "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES" AS $_$
                 DECLARE
                     result record;
+                    platform2 character varying;           /*平台代码*/
                 BEGIN
+                    IF (platform == 'DESKTOP' || platform == 'TABLET') THEN
+                        platform2 = 'COMBINATION';
+                    ELSE
+                        platform2 = platform;
+                    END IF;
+
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
                         /* 超级用户全部权限 */
                         FOR result IN
                             SELECT A."ModuleId",A."ModuleName",A."ModuleCategory",A."ModuleEntry"
                             FROM "${Company}_SYS_MODULE" A
-                            WHERE A."PlatformId" = platform AND A."Activated" = 'Y'
+                            WHERE (A."PlatformId" = platform OR A."PlatformId" = platform2) AND A."Activated" = 'Y'
                         LOOP
                           return next result;
                         END LOOP;
@@ -107,13 +114,13 @@
                             FROM "${Company}_SYS_MODULE" A INNER JOIN (
                                 SELECT DISTINCT B."ModuleId",B."AuthValue"
                                 FROM "${Company}_SYS_PRIVILEGE" B
-                                WHERE B."PlatformId" = platform AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                                WHERE (B."PlatformId" = platform OR B."PlatformId" = platform2) AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
                                     SELECT B."Role"
                                     FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
                                           INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
                                     WHERE A."ValidDate" &lt;= current_date AND A."InvalidDate" &gt;= current_date AND C."Member" = userCode)
                             ) C ON A."ModuleId" = C."ModuleId"
-                            WHERE A."PlatformId" = platform AND A."Activated" = 'Y'
+                            WHERE (A."PlatformId" = platform OR A."PlatformId" = platform2) AND A."Activated" = 'Y'
                         LOOP
                           return next result;
                         END LOOP;
@@ -147,7 +154,14 @@
                 ) RETURNS SETOF "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES" AS $_$
                 DECLARE
                     result record;
+                    platform2 character varying;           /*平台代码*/
                 BEGIN
+                    IF (platform == 'DESKTOP' || platform == 'TABLET') THEN
+                        platform2 = 'COMBINATION';
+                    ELSE
+                        platform2 = platform;
+                    END IF;
+
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
                         /* 超级用户全部权限 */
                         FOR result IN
@@ -170,12 +184,12 @@
                                 -- 模块的权限设置
                                 SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
                                 FROM "${Company}_SYS_PRIVILEGE"
-                                WHERE "PlatformId" = platform AND "Activated" = 'Y' AND COALESCE("Target",'') = ''
+                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') = ''
                                 UNION ALL
                                 -- 应用的权限设置
                                 SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
                                 FROM "${Company}_SYS_PRIVILEGE"
-                                WHERE "PlatformId" = platform AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
+                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
                             ) T0
                             WHERE T0."RoleCode" IN (
                                 SELECT T1."Role"
