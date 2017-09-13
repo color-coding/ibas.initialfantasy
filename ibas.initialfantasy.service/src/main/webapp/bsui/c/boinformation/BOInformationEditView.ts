@@ -104,6 +104,16 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
                     })
                 }),
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bopropertyinformation_editable"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emYesNo)
+                    }).bindProperty("selectedKey", {
+                        path: "editable",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_bopropertyinformation_mapped"),
                     template: new sap.m.Text("", {
                         wrapping: false

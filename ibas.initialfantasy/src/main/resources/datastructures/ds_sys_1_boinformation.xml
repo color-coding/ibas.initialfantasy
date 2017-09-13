@@ -18,5 +18,6 @@
     <Property Name="EditSize" Description="编辑大小" DataType="Numeric" DataSubType="Default" EditSize="6" Mapped="EditSize"/>
     <Property Name="Searched" Description="检索的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Searched"/>
     <Property Name="Systemed" Description="系统的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Systemed"/>
+    <Property Name="Editable" Description="可编辑" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Editable"/>
   </Model>
 </Domain>

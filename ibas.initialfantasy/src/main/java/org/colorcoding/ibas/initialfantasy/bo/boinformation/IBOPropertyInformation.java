@@ -144,4 +144,19 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	 */
 	void setSystemed(emYesNo value);
 
+	/**
+	 * 获取-可编辑
+	 * 
+	 * @return 值
+	 */
+	emYesNo getEditable();
+
+	/**
+	 * 设置-可编辑
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setEditable(emYesNo value);
+
 }

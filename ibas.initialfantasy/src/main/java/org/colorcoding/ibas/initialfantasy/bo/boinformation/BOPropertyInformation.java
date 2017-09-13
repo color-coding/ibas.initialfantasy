@@ -329,6 +329,37 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	}
 
 	/**
+	 * 属性名称-可编辑
+	 */
+	private static final String PROPERTY_EDITABLE_NAME = "Editable";
+	/**
+	 * 可编辑 属性
+	 */
+	@DbField(name = "Editable", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_EDITABLE = registerProperty(PROPERTY_EDITABLE_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-可编辑
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_EDITABLE_NAME)
+	public final emYesNo getEditable() {
+		return this.getProperty(PROPERTY_EDITABLE);
+	}
+
+	/**
+	 * 设置-可编辑
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setEditable(emYesNo value) {
+		this.setProperty(PROPERTY_EDITABLE, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override

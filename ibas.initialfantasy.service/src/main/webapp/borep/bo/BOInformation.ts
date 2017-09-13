@@ -239,6 +239,16 @@ export class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
     set systemed(value: emYesNo) {
         this.setProperty(BOPropertyInformation.PROPERTY_SYSTEMED_NAME, value);
     }
+    /** 映射的属性名称-可编辑 */
+    static PROPERTY_EDITABLE_NAME: string = "Editable";
+    /** 获取-可编辑 */
+    get editable(): emYesNo {
+        return this.getProperty<emYesNo>(BOPropertyInformation.PROPERTY_EDITABLE_NAME);
+    }
+    /** 设置-可编辑 */
+    set editable(value: emYesNo) {
+        this.setProperty(BOPropertyInformation.PROPERTY_EDITABLE_NAME, value);
+    }
 
     /** 字符串 */
     toString(): string {

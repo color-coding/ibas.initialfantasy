@@ -68,6 +68,8 @@ export interface IBOPropertyInformation extends IBusinessObject {
     searched: emYesNo;
     /** 系统的 */
     systemed: emYesNo;
+    /** 可编辑 */
+    editable: emYesNo;
 }
 
 /** 业务对象属性信息 集合 */

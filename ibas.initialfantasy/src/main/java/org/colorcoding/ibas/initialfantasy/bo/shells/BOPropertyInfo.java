@@ -24,6 +24,7 @@ public class BOPropertyInfo {
 		BOPropertyInfo propertyInfo = new BOPropertyInfo();
 		propertyInfo.setProperty(propertyItem.getProperty());
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
+		propertyInfo.setEditable(propertyItem.getEditable() == emYesNo.YES ? true : false);
 		propertyInfo.setDescription(propertyItem.getDescription());
 		return propertyInfo;
 	}
@@ -61,6 +62,18 @@ public class BOPropertyInfo {
 
 	public void setSearched(boolean searched) {
 		this.searched = searched;
+	}
+
+	/** 可编辑的 */
+	private boolean editable;
+
+	@XmlElement(name = "Editable")
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 	@Override
