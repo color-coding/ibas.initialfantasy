@@ -75,23 +75,23 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 属性名称-属性名称
 	 */
-	private static final String PROPERTY_PROPERTY_NAME = "Property";
+	private static final String PROPERTY_PROPERTY_NAME_NAME = "Property"; // 保持前端一致
 
 	/**
 	 * 属性名称 属性
 	 */
 	@DbField(name = "Property", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
-	public static final IPropertyInfo<String> PROPERTY_PROPERTY = registerProperty(PROPERTY_PROPERTY_NAME, String.class,
-			MY_CLASS);
+	public static final IPropertyInfo<String> PROPERTY_PROPERTY_NAME = registerProperty(PROPERTY_PROPERTY_NAME_NAME,
+			String.class, MY_CLASS);
 
 	/**
 	 * 获取-属性名称
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_PROPERTY_NAME)
-	public final String getProperty() {
-		return this.getProperty(PROPERTY_PROPERTY);
+	@XmlElement(name = PROPERTY_PROPERTY_NAME_NAME)
+	public final String getPropertyName() {
+		return this.getProperty(PROPERTY_PROPERTY_NAME);
 	}
 
 	/**
@@ -100,8 +100,8 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	 * @param value
 	 *            值
 	 */
-	public final void setProperty(String value) {
-		this.setProperty(PROPERTY_PROPERTY, value);
+	public final void setPropertyName(String value) {
+		this.setProperty(PROPERTY_PROPERTY_NAME, value);
 	}
 
 	/**

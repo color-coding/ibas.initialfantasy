@@ -22,7 +22,7 @@ public class BOPropertyInfo {
 
 	public static BOPropertyInfo create(IBOPropertyInformation propertyItem) {
 		BOPropertyInfo propertyInfo = new BOPropertyInfo();
-		propertyInfo.setProperty(propertyItem.getProperty());
+		propertyInfo.setProperty(propertyItem.getPropertyName());
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
 		propertyInfo.setEditable(propertyItem.getEditable() == emYesNo.YES ? true : false);
 		propertyInfo.setDescription(propertyItem.getDescription());

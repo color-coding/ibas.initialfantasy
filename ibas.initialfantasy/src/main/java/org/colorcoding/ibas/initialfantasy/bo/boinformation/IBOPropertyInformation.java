@@ -29,7 +29,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	 * 
 	 * @return 值
 	 */
-	String getProperty();
+	String getPropertyName();
 
 	/**
 	 * 设置-属性名称
@@ -37,7 +37,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	 * @param value
 	 *            值
 	 */
-	void setProperty(String value);
+	void setPropertyName(String value);
 
 	/**
 	 * 获取-映射（字段）
