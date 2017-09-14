@@ -44,6 +44,7 @@ export class OrganizationalStructureEditView extends ibas.BOEditView implements 
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
+            editable:true,
             content: [
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organizationalstructure_organization") }),

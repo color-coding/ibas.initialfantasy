@@ -43,6 +43,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
+            editable:true,
             content: [
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
                 new sap.m.Input("", {
