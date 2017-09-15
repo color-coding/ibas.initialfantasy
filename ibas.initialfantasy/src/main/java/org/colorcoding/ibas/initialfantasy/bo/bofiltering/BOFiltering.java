@@ -15,15 +15,14 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
  * 获取-业务对象筛选
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = BOFiltering.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@XmlRootElement(name = BOFiltering.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = BOFiltering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@XmlRootElement(name = BOFiltering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(BOFiltering.BUSINESS_OBJECT_CODE)
 public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFiltering {
 

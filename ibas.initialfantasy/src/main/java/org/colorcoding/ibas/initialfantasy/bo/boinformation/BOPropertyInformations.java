@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObjects;
 import org.colorcoding.ibas.bobas.common.ICriteria;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 业务对象属性信息 集合
  */
-@XmlType(name = BOPropertyInformations.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = BOPropertyInformations.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlSeeAlso({ BOPropertyInformation.class })
 public class BOPropertyInformations extends BusinessObjects<IBOPropertyInformation, IBOInformation>
 		implements IBOPropertyInformations {

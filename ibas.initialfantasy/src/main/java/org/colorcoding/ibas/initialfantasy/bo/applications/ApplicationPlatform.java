@@ -14,15 +14,14 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
  * 获取-应用程序平台
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = ApplicationPlatform.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@XmlRootElement(name = ApplicationPlatform.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ApplicationPlatform.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@XmlRootElement(name = ApplicationPlatform.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(ApplicationPlatform.BUSINESS_OBJECT_CODE)
 public class ApplicationPlatform extends BusinessObject<ApplicationPlatform> implements IApplicationPlatform {
 

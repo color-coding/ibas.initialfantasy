@@ -10,14 +10,14 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 获取-业务对象属性信息
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = BOPropertyInformation.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = BOPropertyInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class BOPropertyInformation extends BusinessObject<BOPropertyInformation> implements IBOPropertyInformation {
 
 	/**

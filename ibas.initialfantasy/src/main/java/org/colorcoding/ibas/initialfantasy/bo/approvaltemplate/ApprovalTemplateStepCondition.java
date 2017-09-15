@@ -15,7 +15,6 @@ import org.colorcoding.ibas.bobas.db.DataConvert;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
 import org.colorcoding.ibas.initialfantasy.data.emApprovalConditionType;
 
 /**
@@ -23,7 +22,7 @@ import org.colorcoding.ibas.initialfantasy.data.emApprovalConditionType;
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = ApprovalTemplateStepCondition.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ApprovalTemplateStepCondition.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class ApprovalTemplateStepCondition extends BusinessObject<ApprovalTemplateStepCondition>
 		implements IApprovalTemplateStepCondition {
 

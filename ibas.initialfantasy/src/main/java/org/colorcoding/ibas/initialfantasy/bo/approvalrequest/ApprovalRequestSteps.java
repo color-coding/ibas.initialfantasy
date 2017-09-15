@@ -2,12 +2,12 @@ package org.colorcoding.ibas.initialfantasy.bo.approvalrequest;
 
 import javax.xml.bind.annotation.*;
 import org.colorcoding.ibas.bobas.bo.*;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
 * 审批请求步骤 集合
 */
-@XmlType(name = ApprovalRequestSteps.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ApprovalRequestSteps.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlSeeAlso({ ApprovalRequestStep.class })
 public class ApprovalRequestSteps extends BusinessObjects<IApprovalRequestStep, IApprovalRequest> implements IApprovalRequestSteps {
 

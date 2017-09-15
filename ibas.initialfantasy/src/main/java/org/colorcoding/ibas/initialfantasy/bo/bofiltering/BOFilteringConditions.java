@@ -2,12 +2,12 @@ package org.colorcoding.ibas.initialfantasy.bo.bofiltering;
 
 import javax.xml.bind.annotation.*;
 import org.colorcoding.ibas.bobas.bo.*;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
 * 业务对象筛选-条件 集合
 */
-@XmlType(name = BOFilteringConditions.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = BOFilteringConditions.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlSeeAlso({ BOFilteringCondition.class })
 public class BOFilteringConditions extends BusinessObjects<IBOFilteringCondition, IBOFiltering> implements IBOFilteringConditions {
 

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 服务提供者
@@ -15,8 +15,8 @@ import org.colorcoding.ibas.initialfantasy.MyConsts;
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "ServiceProvider", namespace = MyConsts.NAMESPACE_SERVICE)
-@XmlRootElement(name = "ServiceProvider", namespace = MyConsts.NAMESPACE_SERVICE)
+@XmlType(name = "ServiceProvider", namespace = MyConfiguration.NAMESPACE_SERVICE)
+@XmlRootElement(name = "ServiceProvider", namespace = MyConfiguration.NAMESPACE_SERVICE)
 public class ServiceProvider {
 
 	public ServiceProvider() {

@@ -2,12 +2,12 @@ package org.colorcoding.ibas.initialfantasy.bo.organizations;
 
 import javax.xml.bind.annotation.*;
 import org.colorcoding.ibas.bobas.bo.*;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
 * 组织-角色 集合
 */
-@XmlType(name = OrganizationalRoles.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = OrganizationalRoles.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlSeeAlso({ OrganizationalRole.class })
 public class OrganizationalRoles extends BusinessObjects<IOrganizationalRole, IOrganizationalStructure> implements IOrganizationalRoles {
 

@@ -13,14 +13,13 @@ import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
  * 获取-业务对象筛选-条件
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = BOFilteringCondition.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = BOFilteringCondition.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> implements IBOFilteringCondition {
 
 	/**

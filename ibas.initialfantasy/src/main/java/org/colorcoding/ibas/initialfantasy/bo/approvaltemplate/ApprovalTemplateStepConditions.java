@@ -12,12 +12,12 @@ import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 审批模板步骤条件 集合
  */
-@XmlType(name = ApprovalTemplateStepConditions.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ApprovalTemplateStepConditions.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlSeeAlso({ ApprovalTemplateStepCondition.class })
 public class ApprovalTemplateStepConditions
 		extends BusinessObjects<IApprovalTemplateStepCondition, IApprovalTemplateStep>

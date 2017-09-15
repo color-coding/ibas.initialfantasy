@@ -15,15 +15,14 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
 
 /**
  * 获取-审批模板
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = ApprovalTemplate.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@XmlRootElement(name = ApprovalTemplate.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ApprovalTemplate.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@XmlRootElement(name = ApprovalTemplate.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(ApprovalTemplate.BUSINESS_OBJECT_CODE)
 public class ApprovalTemplate extends BusinessObject<ApprovalTemplate> implements IApprovalTemplate {
 

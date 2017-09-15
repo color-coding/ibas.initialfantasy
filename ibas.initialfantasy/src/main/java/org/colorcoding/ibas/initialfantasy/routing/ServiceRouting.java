@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.messages.RuntimeLog;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.MyConsts;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
 
 /**
@@ -26,8 +25,8 @@ import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "ServiceRouting", namespace = MyConsts.NAMESPACE_SERVICE)
-@XmlRootElement(name = "ServiceRouting", namespace = MyConsts.NAMESPACE_SERVICE)
+@XmlType(name = "ServiceRouting", namespace = MyConfiguration.NAMESPACE_SERVICE)
+@XmlRootElement(name = "ServiceRouting", namespace = MyConfiguration.NAMESPACE_SERVICE)
 @XmlSeeAlso({ ServiceInformation.class, ServiceProvider.class, ServiceInformations.class })
 public class ServiceRouting {
 	public static final String MSG_SERVICE_ROUTING_LOAD_CONFIG = "routing: load config [%s].";
