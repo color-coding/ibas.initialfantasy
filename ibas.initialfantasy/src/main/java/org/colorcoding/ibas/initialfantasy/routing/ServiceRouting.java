@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
+import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
 
@@ -115,7 +115,7 @@ public class ServiceRouting {
 		if (object instanceof ServiceRouting) {
 			ServiceRouting routing = (ServiceRouting) object;
 			this.services = routing.getServices();
-			RuntimeLog.log(MSG_SERVICE_ROUTING_LOAD_CONFIG, file.getPath());
+			Logger.log(MSG_SERVICE_ROUTING_LOAD_CONFIG, file.getPath());
 		}
 	}
 
@@ -184,7 +184,7 @@ public class ServiceRouting {
 		if ((module.getRepository() != null && module.getRepository() != "")
 				&& (module.getAddress() != null && module.getAddress() != "")) {
 			done = true;
-			RuntimeLog.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
+			Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
 					module.getAddress());
 		}
 		return done;

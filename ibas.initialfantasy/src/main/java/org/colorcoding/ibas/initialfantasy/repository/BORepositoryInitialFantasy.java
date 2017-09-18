@@ -8,9 +8,8 @@ import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.data.emApprovalResult;
-import org.colorcoding.ibas.bobas.i18n.i18n;
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
-import org.colorcoding.ibas.bobas.ownership.PermissionGroup;
+import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.bobas.repository.BORepositoryServiceApplication;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationFunction;
 import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
@@ -44,7 +43,6 @@ import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 /**
  * InitialFantasy仓库
  */
-@PermissionGroup("InitialFantasy")
 public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		implements IBORepositoryInitialFantasySvc, IBORepositoryInitialFantasyApp {
 	// --------------------------------------------------------------------------------------------//
@@ -751,7 +749,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 			ApprovalProcessManager apManager = new ApprovalProcessManager();
 			IApprovalProcess ap = apManager.loadApprovalProcess(apRequestId);
 			if (ap == null) {
-				throw new Exception(i18n.prop("msg_ap_not_exist_approval_request", apRequestId));
+				throw new Exception(I18N.prop("msg_ap_not_exist_approval_request", apRequestId));
 			}
 			if (ap instanceof ApprovalProcess) {
 				// 提前加载涉及的业务对象类型
@@ -763,7 +761,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 			ap.approval(apStepId, apResult, token, judgment);
 			ap.save();
 		} catch (Exception e) {
-			RuntimeLog.log(e);
+			Logger.log(e);
 			operationMessages.setError(e);
 		}
 		return operationMessages;

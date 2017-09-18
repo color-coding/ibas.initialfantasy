@@ -27,7 +27,7 @@ import org.colorcoding.ibas.bobas.core.ISingleDaemonTask;
 import org.colorcoding.ibas.bobas.core.InvalidDaemonTask;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
+import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
@@ -311,7 +311,7 @@ public class OrganizationManager implements IOrganizationManager {
 
 			});
 		} catch (InvalidDaemonTask e) {
-			RuntimeLog.log(e);
+			Logger.log(e);
 		}
 	}
 
@@ -356,11 +356,11 @@ public class OrganizationManager implements IOrganizationManager {
 					this.organizations = manager.organizations;
 					this.organizations_time_stamp = System.currentTimeMillis();
 					// 有效的数据
-					RuntimeLog.log(String.format("organization: read the cached data, [%s].", file.getPath()));
+					Logger.log(String.format("organization: read the cached data, [%s].", file.getPath()));
 					return;// 退出
 					// }
 				} catch (JAXBException | IOException e) {
-					RuntimeLog.log(e);
+					Logger.log(e);
 				}
 			}
 		}
@@ -371,7 +371,7 @@ public class OrganizationManager implements IOrganizationManager {
 			this.getUndistributedUsers().clear();// 初始化未分配组织的用户
 			this.organizations_time_stamp = System.currentTimeMillis();
 		}
-		RuntimeLog.log(String.format("organization: read data in the database."));
+		Logger.log(String.format("organization: read data in the database."));
 		try {
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
@@ -387,9 +387,9 @@ public class OrganizationManager implements IOrganizationManager {
 			marshaller.marshal(this, out);
 			out.flush();
 			out.close();
-			RuntimeLog.log(String.format("organization: cache data in file, [%s].", file.getPath()));
+			Logger.log(String.format("organization: cache data in file, [%s].", file.getPath()));
 		} catch (JAXBException | IOException e) {
-			RuntimeLog.log(e);
+			Logger.log(e);
 		}
 	}
 
@@ -400,7 +400,6 @@ public class OrganizationManager implements IOrganizationManager {
 			try {
 				repository = new BORepositoryInitialFantasy();
 				repository.setUserToken(User.SYSTEM_USER.getToken());
-				repository.setUseCache(false);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -451,7 +450,7 @@ public class OrganizationManager implements IOrganizationManager {
 				results.add(organization);
 			}
 		} catch (Exception e) {
-			RuntimeLog.log(e);
+			Logger.log(e);
 		}
 		return results;
 	}

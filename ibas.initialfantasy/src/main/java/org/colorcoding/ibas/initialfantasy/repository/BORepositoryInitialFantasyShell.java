@@ -16,8 +16,8 @@ import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.i18n.i18n;
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
+import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
@@ -70,7 +70,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
+				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
 			User sUser = User.create(boUser);
 			// 生成token
@@ -114,10 +114,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
+				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
 			if (!boUser.checkPassword(password)) {
-				throw new Exception(i18n.prop("msg_if_user_name_and_password_not_match"));
+				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
 			User sUser = User.create(boUser);
 			// 生成token
@@ -360,7 +360,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				try {
 					this.rollbackTransaction();
 				} catch (RepositoryException e1) {
-					RuntimeLog.log(e1);
+					Logger.log(e1);
 				}
 		}
 		return opRslt;

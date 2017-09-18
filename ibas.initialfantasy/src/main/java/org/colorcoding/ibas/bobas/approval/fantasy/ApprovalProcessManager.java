@@ -11,7 +11,7 @@ import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
+import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.ApprovalRequest;
 import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.IApprovalRequest;
@@ -47,7 +47,6 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 			try {
 				repository = new BORepositoryInitialFantasy();
 				repository.setUserToken(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER.getToken());
-				repository.setUseCache(false);
 			} catch (InvalidTokenException e) {
 				throw new RuntimeException(e);
 			}
@@ -79,7 +78,7 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 
 		IOperationResult<IApprovalTemplate> operationResult = boRepository.fetchApprovalTemplate(criteria);
 		if (operationResult.getError() != null) {
-			RuntimeLog.log(operationResult.getError());
+			Logger.log(operationResult.getError());
 		}
 		return new Iterator<IApprovalProcess>() {
 			int curIndex = 0;
@@ -126,7 +125,7 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<IApprovalRequest> operationResult = boRepository.fetchApprovalRequest(criteria);
 		if (operationResult.getError() != null) {
-			RuntimeLog.log(operationResult.getError());
+			Logger.log(operationResult.getError());
 		}
 		return ApprovalProcess.create(operationResult.getResultObjects().firstOrDefault());
 	}
@@ -151,7 +150,7 @@ public class ApprovalProcessManager extends org.colorcoding.ibas.bobas.approval.
 		IBORepositoryInitialFantasyApp boRepository = this.createRepository();
 		IOperationResult<IApprovalRequest> operationResult = boRepository.fetchApprovalRequest(criteria);
 		if (operationResult.getError() != null) {
-			RuntimeLog.log(operationResult.getError());
+			Logger.log(operationResult.getError());
 		}
 		return ApprovalProcess.create(operationResult.getResultObjects().firstOrDefault());
 	}

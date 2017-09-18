@@ -31,8 +31,6 @@ import junit.framework.TestCase;
 public class testApprovalProcess extends TestCase {
 
 	public void testCreateApprovalProcess() throws InvalidTokenException {
-		// 禁止缓存
-		MyConfiguration.addConfigValue(MyConfiguration.CONFIG_ITEM_BO_REPOSITORY_DISABLED_CACHE, true);
 		User apBoss = new User();
 		apBoss.setCode("UB" + DateTime.getNow().toString("HHmmss"));
 		apBoss.setName(apBoss.getCode());

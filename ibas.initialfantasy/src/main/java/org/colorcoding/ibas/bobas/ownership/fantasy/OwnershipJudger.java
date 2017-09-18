@@ -13,8 +13,8 @@ import org.colorcoding.ibas.bobas.core.InvalidDaemonTask;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.expressions.JudmentOperationException;
-import org.colorcoding.ibas.bobas.i18n.i18n;
-import org.colorcoding.ibas.bobas.messages.RuntimeLog;
+import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationManager;
@@ -22,7 +22,6 @@ import org.colorcoding.ibas.bobas.organization.fantasy.OrganizationalRelationshi
 import org.colorcoding.ibas.bobas.organization.fantasy.User;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.ownership.IOwnershipJudger;
-import org.colorcoding.ibas.bobas.ownership.NotConfiguredException;
 import org.colorcoding.ibas.bobas.ownership.UnauthorizedException;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.bobas.util.ArrayList;
@@ -84,7 +83,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 				}
 			});
 		} catch (InvalidDaemonTask e) {
-			RuntimeLog.log(e);
+			Logger.log(e);
 		}
 	}
 
@@ -122,7 +121,6 @@ public class OwnershipJudger implements IOwnershipJudger {
 			try {
 				repository = new BORepositoryInitialFantasy();
 				repository.setUserToken(User.SYSTEM_USER.getToken());
-				repository.setUseCache(false);
 			} catch (InvalidTokenException e) {
 				throw new RuntimeException(e);
 			}
@@ -266,11 +264,11 @@ public class OwnershipJudger implements IOwnershipJudger {
 						}
 					}
 				} catch (JudmentOperationException e) {
-					RuntimeLog.log(e);
+					Logger.log(e);
 				}
 			}
 			if (!finallyStatus) {
-				RuntimeLog.log(MSG_OWNERSHIP_JUDGER_DATA_FILTERED, roleCode, bo.toString());
+				Logger.log(MSG_OWNERSHIP_JUDGER_DATA_FILTERED, roleCode, bo.toString());
 				return true;
 			}
 		}
@@ -289,7 +287,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 					if (ownership.getSelf() == emAuthoriseType.NONE) {
 						// 设置了角色没有此对象权限
 						canRead = false;
-						RuntimeLog.log(MSG_OWNERSHIP_JUDGER_USER_NOT_ALLOW_READ, user, ownership.getBOCode());
+						Logger.log(MSG_OWNERSHIP_JUDGER_USER_NOT_ALLOW_READ, user, ownership.getBOCode());
 					}
 				}
 				String[] roles = this.getOrganizationManager().getUserRoles(user);
@@ -303,7 +301,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 							// 数据所有者配置了权限
 							OrganizationalRelationship relationship = this.getOrganizationManager()
 									.getRelationship(owner, user);
-							RuntimeLog.log(MSG_OWNERSHIP_JUDGER_RELATIONSHIP, user, relationship, owner);
+							Logger.log(MSG_OWNERSHIP_JUDGER_RELATIONSHIP, user, relationship, owner);
 							// 当前用户是否为权限角色
 							boolean ruleShip = false;
 							if (ownership.getRuleCodes() != null) {
@@ -348,7 +346,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 			if (!status) {
 				// 不允许读取数据
-				RuntimeLog.log(MSG_OWNERSHIP_JUDGER_NOT_ALLOW_READ, user.toString(), bo.toString());
+				Logger.log(MSG_OWNERSHIP_JUDGER_NOT_ALLOW_READ, user.toString(), bo.toString());
 			}
 		}
 		return status;
@@ -374,7 +372,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 				if (ownership.getSelf() != emAuthoriseType.ALL) {
 					// 设置了角色没有此对象权限
 					canSave = false;
-					RuntimeLog.log(MSG_OWNERSHIP_JUDGER_USER_NOT_ALLOW_SAVE, user, ownership.getBOCode());
+					Logger.log(MSG_OWNERSHIP_JUDGER_USER_NOT_ALLOW_SAVE, user, ownership.getBOCode());
 				}
 			}
 			String[] roles = this.getOrganizationManager().getUserRoles(user);
@@ -388,7 +386,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 					if (ownership != null) {
 						OrganizationalRelationship relationship = this.getOrganizationManager().getRelationship(owner,
 								user);
-						RuntimeLog.log(MSG_OWNERSHIP_JUDGER_RELATIONSHIP, user, relationship, owner);
+						Logger.log(MSG_OWNERSHIP_JUDGER_RELATIONSHIP, user, relationship, owner);
 						// 当前用户是否为权限角色
 						boolean ruleShip = false;
 						if (ownership.getRuleCodes() != null) {
@@ -428,7 +426,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 		}
 		if (!status) {
 			// 不允许读取数据
-			RuntimeLog.log(MSG_OWNERSHIP_JUDGER_NOT_ALLOW_SAVE, user.toString(), bo.toString());
+			Logger.log(MSG_OWNERSHIP_JUDGER_NOT_ALLOW_SAVE, user.toString(), bo.toString());
 		}
 		return status;
 	}
@@ -437,19 +435,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 	public boolean canSave(IDataOwnership bo, IUser user, boolean throwError) throws UnauthorizedException {
 		boolean status = this.canSave(bo, user);
 		if (throwError && !status) {
-			throw new UnauthorizedException(i18n.prop("msg_bobas_to_save_bo_unauthorized"));
-		}
-		return status;
-	}
-
-	@Override
-	public boolean canCall(String className, String methodName, IUser user)
-			throws NotConfiguredException, UnauthorizedException {
-		boolean status = false;
-
-		if (!status) {
-			// 不允许读取数据
-			RuntimeLog.log(MSG_OWNERSHIP_JUDGER_NOT_ALLOW_CALL, user.toString(), className, methodName);
+			throw new UnauthorizedException(I18N.prop("msg_bobas_to_save_bo_unauthorized"));
 		}
 		return status;
 	}
