@@ -6,17 +6,17 @@ import org.colorcoding.ibas.bobas.core.fields.IFieldData;
 import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
 import org.colorcoding.ibas.bobas.core.fields.IManageFields;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
-import org.colorcoding.ibas.bobas.expressions.BOJudgmentLinks;
+import org.colorcoding.ibas.bobas.expressions.BOJudgmentLink;
 import org.colorcoding.ibas.bobas.expressions.IPropertyValueOperator;
 import org.colorcoding.ibas.bobas.expressions.IValueOperator;
 import org.colorcoding.ibas.bobas.expressions.JudgmentLinkItem;
-import org.colorcoding.ibas.bobas.expressions.JudgmentLinksException;
-import org.colorcoding.ibas.bobas.expressions.JudmentOperations;
+import org.colorcoding.ibas.bobas.expressions.JudgmentLinkException;
+import org.colorcoding.ibas.bobas.expressions.JudmentOperation;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.util.ArrayList;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFilteringCondition;
 
-public class BOFilteringJudgmentLinks extends BOJudgmentLinks {
+public class BOFilteringJudgmentLinks extends BOJudgmentLink {
 
 	public void parsingConditions(List<IBOFilteringCondition> conditions) {
 		// 判断无条件
@@ -29,11 +29,11 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLinks {
 			jItem.setOpenBracket(0);
 			jItem.setCloseBracket(0);
 			if (item.getRelationship() == emConditionRelationship.NONE || item.getRelationship() == null) {
-				jItem.setRelationship(JudmentOperations.AND);
+				jItem.setRelationship(JudmentOperation.AND);
 			} else {
-				jItem.setRelationship(JudmentOperations.valueOf(item.getRelationship()));
+				jItem.setRelationship(JudmentOperation.valueOf(item.getRelationship()));
 			}
-			jItem.setOperation(JudmentOperations.valueOf(item.getOperation()));
+			jItem.setOperation(JudmentOperation.valueOf(item.getOperation()));
 			// 左边取值
 			IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
 			propertyValueOperator.setPropertyName(item.getPropertyName());
@@ -71,7 +71,7 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLinks {
 					}
 				}
 				if (this.field == null) {
-					throw new JudgmentLinksException(I18N.prop("msg_bobas_not_found_bo_field", this.getPropertyName()));
+					throw new JudgmentLinkException(I18N.prop("msg_bobas_not_found_bo_field", this.getPropertyName()));
 				}
 				return this.field;
 			}
@@ -79,7 +79,7 @@ public class BOFilteringJudgmentLinks extends BOJudgmentLinks {
 			@Override
 			public void setValue(Object value) {
 				if (value != null && !(value instanceof IManageFields)) {
-					throw new JudgmentLinksException(I18N.prop("msg_bobas_invaild_bo_type"));
+					throw new JudgmentLinkException(I18N.prop("msg_bobas_invaild_bo_type"));
 				}
 				this.value = (IManageFields) value;
 				this.field = null;

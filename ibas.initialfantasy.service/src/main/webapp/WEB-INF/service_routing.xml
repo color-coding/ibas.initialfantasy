@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE ServiceRouting>
 <ns:ServiceRouting xmlns:ns="http://colorcoding.org/ibas/initialfantasy/service">
     <ServiceInformation>
         <Id>c2b31c06-20d8-44a2-bb34-17f47ed01859</Id>

@@ -24,7 +24,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.core.Daemon;
 import org.colorcoding.ibas.bobas.core.ISingleDaemonTask;
-import org.colorcoding.ibas.bobas.core.InvalidDaemonTask;
+import org.colorcoding.ibas.bobas.core.InvalidDaemonTaskException;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.messages.Logger;
@@ -310,7 +310,7 @@ public class OrganizationManager implements IOrganizationManager {
 				}
 
 			});
-		} catch (InvalidDaemonTask e) {
+		} catch (InvalidDaemonTaskException e) {
 			Logger.log(e);
 		}
 	}

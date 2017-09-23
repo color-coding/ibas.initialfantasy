@@ -9,7 +9,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.core.Daemon;
 import org.colorcoding.ibas.bobas.core.IDaemonTask;
-import org.colorcoding.ibas.bobas.core.InvalidDaemonTask;
+import org.colorcoding.ibas.bobas.core.InvalidDaemonTaskException;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.expressions.JudmentOperationException;
@@ -82,7 +82,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 					return true;
 				}
 			});
-		} catch (InvalidDaemonTask e) {
+		} catch (InvalidDaemonTaskException e) {
 			Logger.log(e);
 		}
 	}
