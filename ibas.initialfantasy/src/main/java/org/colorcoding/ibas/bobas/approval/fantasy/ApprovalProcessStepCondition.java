@@ -34,8 +34,8 @@ public class ApprovalProcessStepCondition implements org.colorcoding.ibas.bobas.
 		if (condition != null) {
 			ISerializer<?> serializer = SerializerFactory.create().createManager().create(ISerializerManager.TYPE_JSON);
 			@SuppressWarnings("unchecked")
-			java.util.ArrayList<ApprovalProcessStepCondition> stepConditions = serializer.deserialize(condition,
-					ArrayList.class, ApprovalProcessStepCondition.class);
+			java.util.ArrayList<ApprovalProcessStepCondition> stepConditions = (java.util.ArrayList<ApprovalProcessStepCondition>) serializer
+					.deserialize(condition, ArrayList.class, ApprovalProcessStepCondition.class);
 			return stepConditions.toArray(new IApprovalProcessStepCondition[] {});
 		}
 		return null;
