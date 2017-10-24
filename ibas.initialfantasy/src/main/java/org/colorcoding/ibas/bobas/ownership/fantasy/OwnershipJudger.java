@@ -24,7 +24,7 @@ import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.ownership.IOwnershipJudger;
 import org.colorcoding.ibas.bobas.ownership.UnauthorizedException;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
-import org.colorcoding.ibas.bobas.util.ArrayList;
+import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;

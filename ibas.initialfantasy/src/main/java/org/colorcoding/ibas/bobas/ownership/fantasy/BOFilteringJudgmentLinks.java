@@ -13,7 +13,7 @@ import org.colorcoding.ibas.bobas.expressions.JudgmentLinkItem;
 import org.colorcoding.ibas.bobas.expressions.JudgmentLinkException;
 import org.colorcoding.ibas.bobas.expressions.JudmentOperation;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.util.ArrayList;
+import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFilteringCondition;
 
 public class BOFilteringJudgmentLinks extends BOJudgmentLink {
