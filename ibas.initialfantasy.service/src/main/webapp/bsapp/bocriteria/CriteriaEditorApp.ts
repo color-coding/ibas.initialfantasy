@@ -41,7 +41,15 @@ export class CriteriaEditorApp extends ibas.Application<ICriteriaEditorView> {
         this.edit(arguments[0]);
     }
     private get editData(): ibas.ICriteria {
-        return this.caller.criteria;
+        if (this.caller.criteria instanceof Array) {
+            let criteria: ibas.Criteria = new ibas.Criteria();
+            for (let item of this.caller.criteria) {
+                criteria.conditions.add(item);
+            }
+            return criteria;
+        } else {
+            return this.caller.criteria;
+        }
     }
     private caller: ICriteriaEditorCaller;
     edit(caller: ICriteriaEditorCaller): void {
