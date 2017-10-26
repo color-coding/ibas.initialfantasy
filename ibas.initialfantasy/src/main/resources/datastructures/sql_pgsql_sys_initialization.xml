@@ -115,10 +115,9 @@
                                 SELECT DISTINCT B."ModuleId",B."AuthValue"
                                 FROM "${Company}_SYS_PRIVILEGE" B
                                 WHERE (B."PlatformId" = platform OR B."PlatformId" = platform2) AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
-                                    SELECT B."Role"
-                                    FROM "${Company}_SYS_ORGSTRC" A INNER JOIN "${Company}_SYS_ORGROLE" B ON A."ObjectKey" = B."ObjectKey"
-                                          INNER JOIN "${Company}_SYS_ROLEMEM" C ON B."ObjectKey" = C."ObjectKey" AND B."LineId" = C."RoleId"
-                                    WHERE A."ValidDate" &lt;= current_date AND A."InvalidDate" &gt;= current_date AND C."Member" = userCode)
+                                    SELECT "OrgCode"
+                                    FROM "${Company}_SYS_USER"
+                                    WHERE "Code" = userCode)
                             ) C ON A."ModuleId" = C."ModuleId"
                             WHERE (A."PlatformId" = platform OR A."PlatformId" = platform2) AND A."Activated" = 'Y'
                         LOOP
@@ -173,12 +172,7 @@
                         END LOOP;
                     ELSE
                         -- 非超级用户，角色权限
-                        -- 业务对象的权限设置
                         FOR result IN
-                            SELECT 'B' "Source", "BOCode" "Target", "Self" "Value"
-                            FROM "${Company}_SYS_OWNERSHIP"
-                            WHERE "UserCode" = userCode AND "Activated" = 'Y'
-                            UNION ALL
                             SELECT "Source", "Target", "Value"
                             FROM (
                                 -- 模块的权限设置
@@ -192,10 +186,9 @@
                                 WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
                             ) T0
                             WHERE T0."RoleCode" IN (
-                                SELECT T1."Role"
-                                FROM "${Company}_SYS_ORGSTRC" T0 INNER JOIN "${Company}_SYS_ORGROLE" T1 ON T0."ObjectKey" = T1."ObjectKey"
-                                      INNER JOIN "${Company}_SYS_ROLEMEM" T2 ON T1."ObjectKey" = T2."ObjectKey" AND T1."LineId" = T2."RoleId"
-                                WHERE T0."ValidDate" &lt;= current_date AND T0."InvalidDate" &gt;= current_date AND T2."Member" = userCode
+                                SELECT "OrgCode"
+                                FROM "${Company}_SYS_USER"
+                                WHERE "Code" = userCode
                             )
                         LOOP
                           return next result;

@@ -8,24 +8,18 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.cxf.WebServicePath;
-import org.colorcoding.ibas.bobas.data.emApprovalResult;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationFunction;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationPlatform;
-import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.ApprovalRequest;
-import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.ApprovalTemplate;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.Organization;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
-import org.colorcoding.ibas.initialfantasy.bo.ownership.Ownership;
+import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
+import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasyShell;
 
 /**
@@ -34,6 +28,38 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 @WebService
 @WebServicePath("data")
 public class DataService extends BORepositoryInitialFantasyShell {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-组织
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<Organization> fetchOrganization(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchOrganization(criteria, token);
+	}
+
+	/**
+	 * 保存-组织
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<Organization> saveOrganization(@WebParam(name = "bo") Organization bo,
+			@WebParam(name = "token") String token) {
+		return super.saveOrganization(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 用户口令登录
@@ -43,7 +69,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> tokenConnect(
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shell.User> tokenConnect(
 			@WebParam(name = "token") String token) {
 		return super.tokenConnect(token);
 	}
@@ -58,7 +84,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shells.User> userConnect(
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shell.User> userConnect(
 			@WebParam(name = "user") String user, @WebParam(name = "password") String password) {
 		return super.userConnect(user, password);
 	}
@@ -239,68 +265,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-审批模板
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<ApprovalTemplate> fetchApprovalTemplate(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchApprovalTemplate(criteria, token);
-	}
-
-	/**
-	 * 保存-审批模板
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<ApprovalTemplate> saveApprovalTemplate(@WebParam(name = "bo") ApprovalTemplate bo,
-			@WebParam(name = "token") String token) {
-		return super.saveApprovalTemplate(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-审批记录
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<ApprovalRequest> fetchApprovalRequest(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchApprovalRequest(criteria, token);
-	}
-
-	/**
-	 * 保存-审批记录
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<ApprovalRequest> saveApprovalRequest(@WebParam(name = "bo") ApprovalRequest bo,
-			@WebParam(name = "token") String token) {
-		return super.saveApprovalRequest(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
 	 * 查询-业务对象检索条件
 	 * 
 	 * @param criteria
@@ -363,99 +327,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-组织
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Organization> fetchOrganization(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchOrganization(criteria, token);
-	}
-
-	/**
-	 * 保存-组织
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Organization> saveOrganization(@WebParam(name = "bo") Organization bo,
-			@WebParam(name = "token") String token) {
-		return super.saveOrganization(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-组织-结构
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<OrganizationalStructure> fetchOrganizationalStructure(
-			@WebParam(name = "criteria") Criteria criteria, @WebParam(name = "token") String token) {
-		return super.fetchOrganizationalStructure(criteria, token);
-	}
-
-	/**
-	 * 保存-组织-结构
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<OrganizationalStructure> saveOrganizationalStructure(
-			@WebParam(name = "bo") OrganizationalStructure bo, @WebParam(name = "token") String token) {
-		return super.saveOrganizationalStructure(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-数据权限
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Ownership> fetchOwnership(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchOwnership(criteria, token);
-	}
-
-	/**
-	 * 保存-数据权限
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Ownership> saveOwnership(@WebParam(name = "bo") Ownership bo,
-			@WebParam(name = "token") String token) {
-		return super.saveOwnership(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
 	 * 查询-系统权限
 	 * 
 	 * @param criteria
@@ -487,36 +358,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-角色
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Role> fetchRole(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchRole(criteria, token);
-	}
-
-	/**
-	 * 保存-角色
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Role> saveRole(@WebParam(name = "bo") Role bo, @WebParam(name = "token") String token) {
-		return super.saveRole(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
 	 * 查询-用户
 	 * 
 	 * @param criteria
@@ -543,28 +384,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@WebMethod
 	public OperationResult<User> saveUser(@WebParam(name = "bo") User bo, @WebParam(name = "token") String token) {
 		return super.saveUser(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 审批操作
-	 * 
-	 * @param apRequestId
-	 *            审批请求编号
-	 * @param apStepId
-	 *            审批请求步骤编号
-	 * @param apResult
-	 *            审批的结果
-	 * @param judgment
-	 *            审批意见
-	 * @param token
-	 *            口令
-	 * @return
-	 */
-	@WebMethod
-	public OperationMessages approval(int apRequestId, int apStepId, String apResult, String judgment, String token) {
-		emApprovalResult emApReslut = emApprovalResult.valueOf(apResult);
-		return super.approval(apRequestId, apStepId, emApReslut, judgment, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

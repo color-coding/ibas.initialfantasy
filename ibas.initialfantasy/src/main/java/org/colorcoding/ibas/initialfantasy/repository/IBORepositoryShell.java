@@ -2,11 +2,11 @@ package org.colorcoding.ibas.initialfantasy.repository;
 
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
-import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
-import org.colorcoding.ibas.initialfantasy.bo.shells.User;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.User;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
 
 /**
  * 壳应用

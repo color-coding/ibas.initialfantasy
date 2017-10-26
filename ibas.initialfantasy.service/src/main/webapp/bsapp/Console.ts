@@ -10,18 +10,13 @@ import * as ibas from "ibas/index";
 import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping } from "./applicationfunction/index";
 import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from "./applicationmodule/index";
 import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
-import { ApprovalRequestFunc, ApprovalRequestLinkServiceMapping } from "./approvalrequest/index";
-import { ApprovalTemplateFunc, ApprovalTemplateLinkServiceMapping } from "./approvaltemplate/index";
 import { BOCriteriaFunc, } from "./bocriteria/index";
 import { BOFilteringFunc, } from "./bofiltering/index";
 import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
-import { OrganizationalStructureFunc, OrganizationalStructureChooseServiceMapping } from "./organizationalstructure/index";
-import { OwnershipFunc, } from "./ownership/index";
 import { PrivilegeFunc, } from "./privilege/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
-import { RoleFunc, RoleChooseServiceMapping, RoleLinkServiceMapping } from "./role/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
-import { VariableChooseServiceMapping } from "./system/index";
+import { VariableChooseServiceMapping, RoleChooseServiceMapping } from "./system/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -44,36 +39,28 @@ export class Console extends ibas.ModuleConsole {
     protected registers(): void {
         // 注册功能
         this.register(new UserFunc());
-        this.register(new RoleFunc());
         this.register(new OrganizationFunc());
-        this.register(new OrganizationalStructureFunc());
         this.register(new BOCriteriaFunc());
         this.register(new PrivilegeFunc());
         if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)) {
             // 仅调试模式，启用以下功能
             this.register(new BOFilteringFunc());
-            this.register(new OwnershipFunc());
             this.register(new ApplicationPlatformFunc());
             this.register(new ApplicationModuleFunc());
             this.register(new ApplicationFunctionFunc());
             this.register(new BOInformationFunc());
-            this.register(new ApprovalTemplateFunc());
-            this.register(new ApprovalRequestFunc());
         }
         // 注册服务应用
         this.register(new ApplicationFunctionChooseServiceMapping());
         this.register(new ApplicationModuleChooseServiceMapping());
         this.register(new ApplicationPlatformChooseServiceMapping());
-        this.register(new ApprovalTemplateLinkServiceMapping());
         this.register(new OrganizationChooseServiceMapping());
-        this.register(new OrganizationLinkServiceMapping());
         this.register(new RoleChooseServiceMapping());
-        this.register(new RoleLinkServiceMapping());
+        this.register(new OrganizationLinkServiceMapping());
         this.register(new UserChooseServiceMapping());
         this.register(new UserLinkServiceMapping());
         this.register(new ChangeUserProfileMapping());
         this.register(new BOInformationChooseServiceMapping());
-        this.register(new OrganizationalStructureChooseServiceMapping());
         this.register(new VariableChooseServiceMapping());
         // 注册常驻应用
         this.register(new UserProfileApp());
@@ -85,15 +72,10 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/applicationfunction.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/applicationmodule.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/applicationplatform.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/approvalrequest.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/approvaltemplate.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/bocriteria.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/bofiltering.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/organization.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/organizationalstructure.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/ownership.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/privilege.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/role.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/user.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/boinformation.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/variable.json");

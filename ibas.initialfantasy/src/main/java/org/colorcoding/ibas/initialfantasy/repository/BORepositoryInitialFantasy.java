@@ -1,42 +1,25 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
-import org.colorcoding.ibas.bobas.approval.IApprovalProcess;
-import org.colorcoding.ibas.bobas.approval.fantasy.ApprovalProcess;
-import org.colorcoding.ibas.bobas.approval.fantasy.ApprovalProcessManager;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.common.OperationResult;
-import org.colorcoding.ibas.bobas.data.emApprovalResult;
-import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.bobas.repository.BORepositoryServiceApplication;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationFunction;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationPlatform;
-import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationFunction;
-import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.applications.IApplicationPlatform;
-import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.ApprovalRequest;
-import org.colorcoding.ibas.initialfantasy.bo.approvalrequest.IApprovalRequest;
-import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.ApprovalTemplate;
-import org.colorcoding.ibas.initialfantasy.bo.approvaltemplate.IApprovalTemplate;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationModule;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganization;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.IOrganizationalStructure;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.IRole;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.IUser;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.Organization;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.OrganizationalStructure;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.Role;
-import org.colorcoding.ibas.initialfantasy.bo.organizations.User;
-import org.colorcoding.ibas.initialfantasy.bo.ownership.IOwnership;
-import org.colorcoding.ibas.initialfantasy.bo.ownership.Ownership;
+import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
+import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
+import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 
@@ -45,6 +28,56 @@ import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
  */
 public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		implements IBORepositoryInitialFantasySvc, IBORepositoryInitialFantasyApp {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-组织
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Organization> fetchOrganization(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, Organization.class);
+	}
+
+	/**
+	 * 查询-组织（提前设置用户口令）
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IOrganization> fetchOrganization(ICriteria criteria) {
+		return new OperationResult<IOrganization>(this.fetchOrganization(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-组织
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Organization> saveOrganization(Organization bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-组织（提前设置用户口令）
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IOrganization> saveOrganization(IOrganization bo) {
+		return new OperationResult<IOrganization>(this.saveOrganization((Organization) bo, this.getUserToken()));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象信息
@@ -246,106 +279,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-审批模板
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<ApprovalTemplate> fetchApprovalTemplate(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApprovalTemplate.class);
-	}
-
-	/**
-	 * 查询-审批模板（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IApprovalTemplate> fetchApprovalTemplate(ICriteria criteria) {
-		return new OperationResult<IApprovalTemplate>(this.fetchApprovalTemplate(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-审批模板
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<ApprovalTemplate> saveApprovalTemplate(ApprovalTemplate bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-审批模板（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IApprovalTemplate> saveApprovalTemplate(IApprovalTemplate bo) {
-		return new OperationResult<IApprovalTemplate>(
-				this.saveApprovalTemplate((ApprovalTemplate) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-审批记录
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<ApprovalRequest> fetchApprovalRequest(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApprovalRequest.class);
-	}
-
-	/**
-	 * 查询-审批记录（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IApprovalRequest> fetchApprovalRequest(ICriteria criteria) {
-		return new OperationResult<IApprovalRequest>(this.fetchApprovalRequest(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-审批记录
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<ApprovalRequest> saveApprovalRequest(ApprovalRequest bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-审批记录（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IApprovalRequest> saveApprovalRequest(IApprovalRequest bo) {
-		return new OperationResult<IApprovalRequest>(
-				this.saveApprovalRequest((ApprovalRequest) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
 	 * 查询-业务对象检索条件
 	 * 
 	 * @param criteria
@@ -444,156 +377,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-组织
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Organization> fetchOrganization(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Organization.class);
-	}
-
-	/**
-	 * 查询-组织（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IOrganization> fetchOrganization(ICriteria criteria) {
-		return new OperationResult<IOrganization>(this.fetchOrganization(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-组织
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Organization> saveOrganization(Organization bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-组织（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IOrganization> saveOrganization(IOrganization bo) {
-		return new OperationResult<IOrganization>(this.saveOrganization((Organization) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-组织-结构
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<OrganizationalStructure> fetchOrganizationalStructure(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, OrganizationalStructure.class);
-	}
-
-	/**
-	 * 查询-组织-结构（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IOrganizationalStructure> fetchOrganizationalStructure(ICriteria criteria) {
-		return new OperationResult<IOrganizationalStructure>(
-				this.fetchOrganizationalStructure(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-组织-结构
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<OrganizationalStructure> saveOrganizationalStructure(OrganizationalStructure bo,
-			String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-组织-结构（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IOrganizationalStructure> saveOrganizationalStructure(IOrganizationalStructure bo) {
-		return new OperationResult<IOrganizationalStructure>(
-				this.saveOrganizationalStructure((OrganizationalStructure) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-数据权限
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Ownership> fetchOwnership(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Ownership.class);
-	}
-
-	/**
-	 * 查询-数据权限（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IOwnership> fetchOwnership(ICriteria criteria) {
-		return new OperationResult<IOwnership>(this.fetchOwnership(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-数据权限
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Ownership> saveOwnership(Ownership bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-数据权限（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IOwnership> saveOwnership(IOwnership bo) {
-		return new OperationResult<IOwnership>(this.saveOwnership((Ownership) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
 	 * 查询-系统权限
 	 * 
 	 * @param criteria
@@ -643,55 +426,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-角色
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Role> fetchRole(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Role.class);
-	}
-
-	/**
-	 * 查询-角色（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IRole> fetchRole(ICriteria criteria) {
-		return new OperationResult<IRole>(this.fetchRole(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-角色
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Role> saveRole(Role bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-角色（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IRole> saveRole(IRole bo) {
-		return new OperationResult<IRole>(this.saveRole((Role) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
 	 * 查询-用户
 	 * 
 	 * @param criteria
@@ -737,34 +471,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<IUser> saveUser(IUser bo) {
 		return new OperationResult<IUser>(this.saveUser((User) bo, this.getUserToken()));
-	}
-	// --------------------------------------------------------------------------------------------//
-
-	@Override
-	public OperationMessages approval(int apRequestId, int apStepId, emApprovalResult apResult, String judgment,
-			String token) {
-		OperationMessages operationMessages = new OperationMessages();
-		try {
-			this.setUserToken(token);
-			ApprovalProcessManager apManager = new ApprovalProcessManager();
-			IApprovalProcess ap = apManager.loadApprovalProcess(apRequestId);
-			if (ap == null) {
-				throw new Exception(I18N.prop("msg_ap_not_exist_approval_request", apRequestId));
-			}
-			if (ap instanceof ApprovalProcess) {
-				// 提前加载涉及的业务对象类型
-				ApprovalProcess myAP = (ApprovalProcess) ap;
-				myAP.loadClasses();
-			}
-			this.getRepository().setCurrentUser(org.colorcoding.ibas.bobas.organization.fantasy.User.SYSTEM_USER);
-			ap.setRepository(this.getRepository());
-			ap.approval(apStepId, apResult, token, judgment);
-			ap.save();
-		} catch (Exception e) {
-			Logger.log(e);
-			operationMessages.setError(e);
-		}
-		return operationMessages;
 	}
 
 	// --------------------------------------------------------------------------------------------//

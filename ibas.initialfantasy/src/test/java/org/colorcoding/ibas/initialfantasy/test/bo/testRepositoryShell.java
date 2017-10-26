@@ -10,13 +10,13 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationMessages;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.initialfantasy.bo.applications.ApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.shells.BOInfo;
-import org.colorcoding.ibas.initialfantasy.bo.shells.BOPropertyInfo;
-import org.colorcoding.ibas.initialfantasy.bo.shells.User;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserQuery;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BOPropertyInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.User;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasyShell;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryShell;
 
@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 public class testRepositoryShell extends TestCase {
 
 	private static String USER = "admin";
-	private static String PASSWORD = "admin";
+	private static String PASSWORD = "1q2w3e";
 	private static String PLANTFORM = "html5";
 
 	public void testUserConnect() {

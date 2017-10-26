@@ -65,36 +65,6 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
     }
 
     /**
-     * 查询 审批请求
-     * @param fetcher 查询者
-     */
-    fetchApprovalRequest(fetcher: ibas.FetchCaller<bo.ApprovalRequest>): void {
-        super.fetch(bo.ApprovalRequest.name, fetcher);
-    }
-    /**
-     * 保存 审批请求
-     * @param saver 保存者
-     */
-    saveApprovalRequest(saver: ibas.SaveCaller<bo.ApprovalRequest>): void {
-        super.save(bo.ApprovalRequest.name, saver);
-    }
-
-    /**
-     * 查询 审批模板
-     * @param fetcher 查询者
-     */
-    fetchApprovalTemplate(fetcher: ibas.FetchCaller<bo.ApprovalTemplate>): void {
-        super.fetch(bo.ApprovalTemplate.name, fetcher);
-    }
-    /**
-     * 保存 审批模板
-     * @param saver 保存者
-     */
-    saveApprovalTemplate(saver: ibas.SaveCaller<bo.ApprovalTemplate>): void {
-        super.save(bo.ApprovalTemplate.name, saver);
-    }
-
-    /**
      * 查询 业务对象检索条件
      * @param fetcher 查询者
      */
@@ -140,36 +110,6 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
     }
 
     /**
-     * 查询 组织-结构
-     * @param fetcher 查询者
-     */
-    fetchOrganizationalStructure(fetcher: ibas.FetchCaller<bo.OrganizationalStructure>): void {
-        super.fetch(bo.OrganizationalStructure.name, fetcher);
-    }
-    /**
-     * 保存 组织-结构
-     * @param saver 保存者
-     */
-    saveOrganizationalStructure(saver: ibas.SaveCaller<bo.OrganizationalStructure>): void {
-        super.save(bo.OrganizationalStructure.name, saver);
-    }
-
-    /**
-     * 查询 数据权限
-     * @param fetcher 查询者
-     */
-    fetchOwnership(fetcher: ibas.FetchCaller<bo.Ownership>): void {
-        super.fetch(bo.Ownership.name, fetcher);
-    }
-    /**
-     * 保存 数据权限
-     * @param saver 保存者
-     */
-    saveOwnership(saver: ibas.SaveCaller<bo.Ownership>): void {
-        super.save(bo.Ownership.name, saver);
-    }
-
-    /**
      * 查询 系统权限
      * @param fetcher 查询者
      */
@@ -182,21 +122,6 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
      */
     savePrivilege(saver: ibas.SaveCaller<bo.Privilege>): void {
         super.save(bo.Privilege.name, saver);
-    }
-
-    /**
-     * 查询 角色
-     * @param fetcher 查询者
-     */
-    fetchRole(fetcher: ibas.FetchCaller<bo.Role>): void {
-        super.fetch(bo.Role.name, fetcher);
-    }
-    /**
-     * 保存 角色
-     * @param saver 保存者
-     */
-    saveRole(saver: ibas.SaveCaller<bo.Role>): void {
-        super.save(bo.Role.name, saver);
     }
 
     /**

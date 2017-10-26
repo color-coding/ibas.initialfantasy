@@ -10,28 +10,18 @@ import * as ibas from "ibas/index";
 import * as applicationfunctionApps from "../../bsapp/applicationfunction/index";
 import * as applicationmoduleApps from "../../bsapp/applicationmodule/index";
 import * as applicationplatformApps from "../../bsapp/applicationplatform/index";
-import * as approvalrequestApps from "../../bsapp/approvalrequest/index";
-import * as approvaltemplateApps from "../../bsapp/approvaltemplate/index";
 import * as bocriteriaApps from "../../bsapp/bocriteria/index";
 import * as bofilteringApps from "../../bsapp/bofiltering/index";
 import * as organizationApps from "../../bsapp/organization/index";
-import * as organizationalstructureApps from "../../bsapp/organizationalstructure/index";
-import * as ownershipApps from "../../bsapp/ownership/index";
 import * as privilegeApps from "../../bsapp/privilege/index";
-import * as roleApps from "../../bsapp/role/index";
 import * as userApps from "../../bsapp/user/index";
 import * as applicationfunctionViews from "./applicationfunction/index";
 import * as applicationmoduleViews from "./applicationmodule/index";
 import * as applicationplatformViews from "./applicationplatform/index";
-import * as approvalrequestViews from "./approvalrequest/index";
-import * as approvaltemplateViews from "./approvaltemplate/index";
 import * as bocriteriaViews from "./bocriteria/index";
 import * as bofilteringViews from "./bofiltering/index";
 import * as organizationViews from "./organization/index";
-import * as organizationalstructureViews from "./organizationalstructure/index";
-import * as ownershipViews from "./ownership/index";
 import * as privilegeViews from "./privilege/index";
-import * as roleViews from "./role/index";
 import * as userViews from "./user/index";
 import * as boinformationApps from "../../bsapp/boinformation/index";
 import * as boinformationViews from "./boinformation/index";
@@ -86,30 +76,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case applicationplatformApps.ApplicationPlatformEditApp.APPLICATION_ID:
                 view = new applicationplatformViews.ApplicationPlatformEditView();
                 break;
-            case approvalrequestApps.ApprovalRequestListApp.APPLICATION_ID:
-                view = new approvalrequestViews.ApprovalRequestListView();
-                break;
-            case approvalrequestApps.ApprovalRequestChooseApp.APPLICATION_ID:
-                view = new approvalrequestViews.ApprovalRequestChooseView();
-                break;
-            case approvalrequestApps.ApprovalRequestViewApp.APPLICATION_ID:
-                view = new approvalrequestViews.ApprovalRequestViewView();
-                break;
-            case approvalrequestApps.ApprovalRequestEditApp.APPLICATION_ID:
-                view = new approvalrequestViews.ApprovalRequestEditView();
-                break;
-            case approvaltemplateApps.ApprovalTemplateListApp.APPLICATION_ID:
-                view = new approvaltemplateViews.ApprovalTemplateListView();
-                break;
-            case approvaltemplateApps.ApprovalTemplateChooseApp.APPLICATION_ID:
-                view = new approvaltemplateViews.ApprovalTemplateChooseView();
-                break;
-            case approvaltemplateApps.ApprovalTemplateViewApp.APPLICATION_ID:
-                view = new approvaltemplateViews.ApprovalTemplateViewView();
-                break;
-            case approvaltemplateApps.ApprovalTemplateEditApp.APPLICATION_ID:
-                view = new approvaltemplateViews.ApprovalTemplateEditView();
-                break;
             case bocriteriaApps.BOCriteriaListApp.APPLICATION_ID:
                 view = new bocriteriaViews.BOCriteriaListView();
                 break;
@@ -146,30 +112,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case organizationApps.OrganizationEditApp.APPLICATION_ID:
                 view = new organizationViews.OrganizationEditView();
                 break;
-            case organizationalstructureApps.OrganizationalStructureListApp.APPLICATION_ID:
-                view = new organizationalstructureViews.OrganizationalStructureListView();
-                break;
-            case organizationalstructureApps.OrganizationalStructureChooseApp.APPLICATION_ID:
-                view = new organizationalstructureViews.OrganizationalStructureChooseView();
-                break;
-            case organizationalstructureApps.OrganizationalStructureViewApp.APPLICATION_ID:
-                view = new organizationalstructureViews.OrganizationalStructureViewView();
-                break;
-            case organizationalstructureApps.OrganizationalStructureEditApp.APPLICATION_ID:
-                view = new organizationalstructureViews.OrganizationalStructureEditView();
-                break;
-            case ownershipApps.OwnershipListApp.APPLICATION_ID:
-                view = new ownershipViews.OwnershipListView();
-                break;
-            case ownershipApps.OwnershipChooseApp.APPLICATION_ID:
-                view = new ownershipViews.OwnershipChooseView();
-                break;
-            case ownershipApps.OwnershipViewApp.APPLICATION_ID:
-                view = new ownershipViews.OwnershipViewView();
-                break;
-            case ownershipApps.OwnershipEditApp.APPLICATION_ID:
-                view = new ownershipViews.OwnershipEditView();
-                break;
             case privilegeApps.PrivilegeListApp.APPLICATION_ID:
                 view = new privilegeViews.PrivilegeListView();
                 break;
@@ -181,18 +123,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case privilegeApps.PrivilegeEditApp.APPLICATION_ID:
                 view = new privilegeViews.PrivilegeEditView();
-                break;
-            case roleApps.RoleListApp.APPLICATION_ID:
-                view = new roleViews.RoleListView();
-                break;
-            case roleApps.RoleChooseApp.APPLICATION_ID:
-                view = new roleViews.RoleChooseView();
-                break;
-            case roleApps.RoleViewApp.APPLICATION_ID:
-                view = new roleViews.RoleViewView();
-                break;
-            case roleApps.RoleEditApp.APPLICATION_ID:
-                view = new roleViews.RoleEditView();
                 break;
             case userApps.UserListApp.APPLICATION_ID:
                 view = new userViews.UserListView();

@@ -171,13 +171,9 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
     }    /** 选择角色标识 */
     private chooseRole(): void {
         let that: this = this;
-        ibas.servicesManager.runChooseService<bo.Role>({
-            boCode: bo.Role.BUSINESS_OBJECT_CODE,
-            criteria: [
-                new ibas.Condition(bo.Role.PROPERTY_ACTIVATED_NAME,
-                    ibas.emConditionOperation.EQUAL, "Y"),
-            ],
-            onCompleted(selecteds: ibas.List<bo.Role>): void {
+        ibas.servicesManager.runChooseService<bo.IRole>({
+            boCode: bo.BO_CODE_ROLE,
+            onCompleted(selecteds: ibas.List<bo.IRole>): void {
                 that.editData.roleCode = selecteds.firstOrDefault().code;
             }
         });

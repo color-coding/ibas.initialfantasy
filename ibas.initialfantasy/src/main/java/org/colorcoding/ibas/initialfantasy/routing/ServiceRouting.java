@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.messages.Logger;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.bo.shells.UserModule;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 
 /**
  * 分配有效的服务

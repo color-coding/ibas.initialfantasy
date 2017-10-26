@@ -190,9 +190,9 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
     chooseRoleUser(): void {
         let that: this = this;
         if (this.editData.assignedType === bo.emAssignedType.ROLE) {
-            ibas.servicesManager.runChooseService<bo.Role>({
+            ibas.servicesManager.runChooseService<bo.IRole>({
                 boCode: bo.BO_CODE_ROLE,
-                onCompleted(selecteds: ibas.List<bo.Role>): void {
+                onCompleted(selecteds: ibas.List<bo.IRole>): void {
                     that.editData.assigned = selecteds.firstOrDefault().code;
                 }
             });
