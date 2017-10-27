@@ -33,7 +33,7 @@ export class CriteriaEditorApp extends ibas.Application<ICriteriaEditorView> {
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成
-        this.view.showTarget(this.editData.boCode);
+        this.view.showTarget(this.editData.businessObject);
         this.view.showConditions(this.editData.conditions);
     }
     /** 运行,覆盖原方法 */

@@ -1,7 +1,5 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
-import java.util.UUID;
-
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -129,16 +127,11 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	 * @return
 	 */
 	private org.colorcoding.ibas.bobas.organization.IUser organizeUser(IUser boUser) {
+		// 登录此即刷新组织用户
 		User sUser = User.create(boUser);
-		// 设置连接口令
 		IOrganizationManager orgManager = OrganizationFactory.create().createManager();
-		org.colorcoding.ibas.bobas.organization.IUser orgUser = orgManager.getUser(sUser.getId());
-		if (orgUser == null || orgUser == OrganizationFactory.UNKNOWN_USER) {
-			sUser.setToken(UUID.randomUUID().toString());
-			orgManager.register(sUser);
-			orgUser = sUser;
-		}
-		return orgUser;
+		orgManager.register(sUser);
+		return sUser;
 	}
 
 	@Override

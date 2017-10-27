@@ -32,6 +32,7 @@ public class testRepositoryShell extends TestCase {
 		IBORepositoryShell boRepository = new BORepositoryInitialFantasyShell();
 		IOperationResult<User> opRslt = boRepository.userConnect(USER, PASSWORD);
 		assertEquals(opRslt.getMessage(), 0, opRslt.getResultCode());
+		opRslt = boRepository.tokenConnect(opRslt.getUserSign());
 	}
 
 	private String getToken() throws Exception {
@@ -78,7 +79,7 @@ public class testRepositoryShell extends TestCase {
 		userQuery.setName("Test-" + DateTime.getNow().toString());
 		userQuery.setOrder(10);
 		ICriteria criteria = new Criteria();
-		criteria.setBOCode(ApplicationModule.BUSINESS_OBJECT_CODE);
+		criteria.setBusinessObject(ApplicationModule.BUSINESS_OBJECT_CODE);
 		criteria.setResultCount(30);
 		ICondition condition = criteria.getConditions().create();
 		condition.setAlias(ApplicationModule.PROPERTY_MODULEID.getName());

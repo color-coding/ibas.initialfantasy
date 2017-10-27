@@ -23,7 +23,11 @@ public class User implements org.colorcoding.ibas.bobas.organization.IUser {
 		sUser.setName(user.getName());
 		sUser.setBelong(user.getOrganization());
 		sUser.setSuper(user.getSuper() == emYesNo.YES ? true : false);
-		sUser.setToken(EncryptMD5.md5(user.getPassword() + user.getCode()));
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(user.getCreateActionId());
+		stringBuilder.append(user.getPassword());
+		stringBuilder.append(user.getCode());
+		sUser.setToken(EncryptMD5.md5(stringBuilder.toString()));
 		return sUser;
 	}
 

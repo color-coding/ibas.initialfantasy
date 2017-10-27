@@ -213,7 +213,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
             let converter: DataConverter4if = new DataConverter4if();
             criteria = converter.parsing(tmp, "");
             if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
-                this.view.target = criteria.boCode;
+                this.view.target = criteria.businessObject;
             }
         }
         if (ibas.objects.isNull(this.view.target) || this.view.target.length === 0) {
@@ -221,7 +221,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         }
         if (ibas.objects.isNull(criteria)) {
             criteria = new ibas.Criteria();
-            criteria.boCode = this.view.target;
+            criteria.businessObject = this.view.target;
         }
         let that: this = this;
         let editor: CriteriaEditorApp = new CriteriaEditorApp();
