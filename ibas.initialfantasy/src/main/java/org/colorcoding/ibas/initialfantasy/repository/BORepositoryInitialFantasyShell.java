@@ -10,14 +10,14 @@ import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.ISqlStoredProcedure;
 import org.colorcoding.ibas.bobas.common.OperationInformation;
-import org.colorcoding.ibas.bobas.common.OperationMessages;
+import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.messages.Logger;
+import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
@@ -49,6 +49,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		OperationResult<User> opRslt = new OperationResult<User>();
 		try {
 			this.setUserToken(token);
+			// 当前口令被失败，判断用户状态
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
@@ -56,9 +57,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
 			condition.setValue(this.getCurrentUser().getId());
-			// 设置用户口令，系统用户
-			this.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
+			// 新仓库查询用户，避免权限问题
+			BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell();
+			boRepository.setCurrentUser(OrganizationFactory.SYSTEM_USER.getToken());
+			IOperationResult<IUser> opRsltUser = boRepository.fetchUser(criteria);
 			if (opRsltUser.getError() != null) {
 				throw opRsltUser.getError();
 			}
@@ -67,19 +69,11 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid"));
 			}
-			User sUser = User.create(boUser);
-			// 设置连接口令
-			IOrganizationManager orgManager = OrganizationFactory.create().createManager();
-			org.colorcoding.ibas.bobas.organization.IUser orgUser = orgManager.getUser(sUser.getId());
-			if (orgUser == null) {
-				sUser.setToken(UUID.randomUUID().toString());
-				orgManager.register(sUser);
-				orgUser = sUser;
-			}
+			org.colorcoding.ibas.bobas.organization.IUser orgUser = this.organizeUser(boUser);
 			opRslt.setUserSign(orgUser.getToken());
-			opRslt.addResultObjects(sUser);
+			opRslt.addResultObjects(orgUser);
 			// 返回公司代码
 			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, "CONFIG_ITEM",
 					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC")));
@@ -111,22 +105,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid"));
 			}
 			if (!boUser.checkPassword(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
-			User sUser = User.create(boUser);
-			// 设置连接口令
-			IOrganizationManager orgManager = OrganizationFactory.create().createManager();
-			org.colorcoding.ibas.bobas.organization.IUser orgUser = orgManager.getUser(sUser.getId());
-			if (orgUser == null || orgUser == OrganizationFactory.UNKNOWN_USER) {
-				sUser.setToken(UUID.randomUUID().toString());
-				orgManager.register(sUser);
-				orgUser = sUser;
-			}
+			org.colorcoding.ibas.bobas.organization.IUser orgUser = this.organizeUser(boUser);
 			opRslt.setUserSign(orgUser.getToken());
-			opRslt.addResultObjects(sUser);
+			opRslt.addResultObjects(orgUser);
 			// 返回公司代码
 			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, "CONFIG_ITEM",
 					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC")));
@@ -134,6 +120,25 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			opRslt.setError(e);
 		}
 		return opRslt;
+	}
+
+	/**
+	 * 组织用户
+	 * 
+	 * @param boUser
+	 * @return
+	 */
+	private org.colorcoding.ibas.bobas.organization.IUser organizeUser(IUser boUser) {
+		User sUser = User.create(boUser);
+		// 设置连接口令
+		IOrganizationManager orgManager = OrganizationFactory.create().createManager();
+		org.colorcoding.ibas.bobas.organization.IUser orgUser = orgManager.getUser(sUser.getId());
+		if (orgUser == null || orgUser == OrganizationFactory.UNKNOWN_USER) {
+			sUser.setToken(UUID.randomUUID().toString());
+			orgManager.register(sUser);
+			orgUser = sUser;
+		}
+		return orgUser;
 	}
 
 	@Override
@@ -284,8 +289,8 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	}
 
 	@Override
-	public OperationMessages saveUserQuery(UserQuery query, String token) {
-		OperationMessages opRslt = new OperationMessages();
+	public OperationMessage saveUserQuery(UserQuery query, String token) {
+		OperationMessage opRslt = new OperationMessage();
 		boolean myTrans = false;
 		try {
 			this.setUserToken(token);
@@ -311,7 +316,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				}
 				IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 				if (boUser == null) {
-					throw new Exception(I18N.prop("msg_if_not_found_user", this.getCurrentUser().getId()));
+					throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
 				}
 				query.setUser(boUser.getCode());
 			}

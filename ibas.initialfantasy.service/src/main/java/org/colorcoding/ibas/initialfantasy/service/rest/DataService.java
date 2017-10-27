@@ -8,7 +8,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.colorcoding.ibas.bobas.common.Criteria;
-import org.colorcoding.ibas.bobas.common.OperationMessages;
+import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
@@ -173,7 +173,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveUserQuery")
-	public OperationMessages saveUserQuery(UserQuery query, @QueryParam("token") String token) {
+	public OperationMessage saveUserQuery(UserQuery query, @QueryParam("token") String token) {
 		return super.saveUserQuery(query, token);
 	}
 

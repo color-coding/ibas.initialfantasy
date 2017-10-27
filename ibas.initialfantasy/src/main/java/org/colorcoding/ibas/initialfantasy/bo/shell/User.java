@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
+import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -22,6 +23,7 @@ public class User implements org.colorcoding.ibas.bobas.organization.IUser {
 		sUser.setName(user.getName());
 		sUser.setBelong(user.getOrganization());
 		sUser.setSuper(user.getSuper() == emYesNo.YES ? true : false);
+		sUser.setToken(EncryptMD5.md5(user.getPassword() + user.getCode()));
 		return sUser;
 	}
 

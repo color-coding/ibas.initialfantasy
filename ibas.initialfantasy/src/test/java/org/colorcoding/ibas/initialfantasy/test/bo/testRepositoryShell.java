@@ -8,7 +8,7 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.bobas.common.OperationMessages;
+import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
@@ -89,7 +89,7 @@ public class testRepositoryShell extends TestCase {
 		condition.setOperation(ConditionOperation.IS_NULL);
 		condition.setRelationship(ConditionRelationship.OR);
 		userQuery.setCriteria(criteria);
-		OperationMessages opRsltSave = boRepository.saveUserQuery(userQuery, this.getToken());
+		OperationMessage opRsltSave = boRepository.saveUserQuery(userQuery, this.getToken());
 		assertEquals(opRsltSave.getMessage(), 0, opRsltSave.getResultCode());
 		IOperationResult<UserQuery> opRsltFetch = boRepository.fetchUserQueries(USER, userQuery.getId(),
 				this.getToken());

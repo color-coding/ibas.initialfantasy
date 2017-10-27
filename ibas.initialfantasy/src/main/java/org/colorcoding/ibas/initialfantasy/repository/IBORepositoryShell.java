@@ -1,6 +1,6 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
-import org.colorcoding.ibas.bobas.common.OperationMessages;
+import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
@@ -83,7 +83,7 @@ public interface IBORepositoryShell {
 	 *            用户口令
 	 * @return 操作结果
 	 */
-	OperationMessages saveUserQuery(UserQuery query, String token);
+	OperationMessage saveUserQuery(UserQuery query, String token);
 
 	/**
 	 * 查询业务对象信息

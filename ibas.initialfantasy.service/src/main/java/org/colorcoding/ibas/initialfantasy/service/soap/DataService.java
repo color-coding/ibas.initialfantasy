@@ -5,7 +5,7 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import org.colorcoding.ibas.bobas.common.Criteria;
-import org.colorcoding.ibas.bobas.common.OperationMessages;
+import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.cxf.WebServicePath;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
@@ -150,7 +150,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationMessages saveUserQuery(@WebParam(name = "query") UserQuery query,
+	public OperationMessage saveUserQuery(@WebParam(name = "query") UserQuery query,
 			@WebParam(name = "token") String token) {
 		return super.saveUserQuery(query, token);
 	}
