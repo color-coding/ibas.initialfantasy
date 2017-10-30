@@ -67,7 +67,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid"));
+				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", token));
 			}
 			org.colorcoding.ibas.bobas.organization.IUser orgUser = this.organizeUser(boUser);
 			opRslt.setUserSign(orgUser.getToken());
@@ -103,7 +103,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid"));
+				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", user));
 			}
 			if (!boUser.checkPassword(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
