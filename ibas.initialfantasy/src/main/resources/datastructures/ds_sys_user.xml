@@ -2,7 +2,7 @@
 <!DOCTYPE Domain>
 <Domain Name="InitialFantasy" ShortName="IF">
   <Model Name="User" Description="用户" ModelType="MasterData" Mapped="${Company}_SYS_USER">
-    <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Code" UniqueKey="Yes"/>
+    <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Code" PrimaryKey="Yes" UniqueKey="Yes"/>
     <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name"/>
     <Property Name="Password" Description="用户密码" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Password"/>
     <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
