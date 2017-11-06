@@ -32,73 +32,74 @@ export class PrivilegeEditView extends ibas.BOEditView implements IPrivilegeEdit
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
-            editable:true,
-            content: [new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_rolecode") }),
-            new sap.m.Input("", {
-                showValueHelp: true,
-                valueHelpRequest: function (): void {
-                    that.fireViewEvents(that.chooseRoleEvent);
-                }
-            }).bindProperty("value", {
-                path: "/roleCode"
-            }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_platformid") }),
-            new sap.m.Input("", {
-                showValueHelp: true,
-                valueHelpRequest: function (): void {
-                    that.fireViewEvents(that.choosePlatformEvent);
-                }
-            }).bindProperty("value", {
-                path: "/platformId"
-            }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_moduleid") }),
-            new sap.m.Input("", {
-                showValueHelp: true,
-                valueHelpRequest: function (): void {
-                    that.fireViewEvents(that.chooseModuleEvent);
-                }
-            }).bindProperty("value", {
-                path: "/moduleId"
-            }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_target") }),
-            new sap.m.Input("", {
-                showValueHelp: true,
-                valueHelpRequest: function (): void {
-                    that.fireViewEvents(that.chooseTargetEvent);
-                }
-            }).bindProperty("value", {
-                path: "/target",
-            }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_activated") }),
-            new sap.m.Select("", {
-                items: utils.createComboBoxItems(ibas.emYesNo)
-            }).bindProperty("selectedKey", {
-                path: "/activated",
-                type: "sap.ui.model.type.Integer"
-            }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_authorisevalue") }),
-            new sap.m.Select("", {
-                items: utils.createComboBoxItems(ibas.emAuthoriseType)
-            }).bindProperty("selectedKey", {
-                path: "/authoriseValue",
-                type: "sap.ui.model.type.Integer"
-            }),
-            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_objectkey") }),
-            new sap.m.Input("", {
-                enabled: false,
-                type: sap.m.InputType.Text
-            }).bindProperty("value", {
-                path: "/objectKey"
-            }),
-            new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_objectcode") }),
-            new sap.m.Input("", {
-                enabled: false,
-                type: sap.m.InputType.Text
-            }).bindProperty("value", {
-                path: "/objectCode"
-            }),
+            editable: true,
+            content: [
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_rolecode") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseRoleEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/roleCode"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_platformid") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.choosePlatformEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/platformId"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_moduleid") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseModuleEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/moduleId"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_target") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseTargetEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/target",
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_authorisevalue") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emAuthoriseType)
+                }).bindProperty("selectedKey", {
+                    path: "/authoriseValue",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_objectkey") }),
+                new sap.m.Input("", {
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_objectcode") }),
+                new sap.m.Input("", {
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode"
+                }),
             ]
         });
         this.page = new sap.m.Page("", {

@@ -168,7 +168,8 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         } else {
             createData();
         }
-    }    /** 选择角色标识 */
+    }
+    /** 选择角色标识 */
     private chooseRole(): void {
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.IRole>({

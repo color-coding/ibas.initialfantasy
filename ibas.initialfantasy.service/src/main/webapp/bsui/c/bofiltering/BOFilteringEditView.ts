@@ -23,16 +23,74 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
     addBOFilteringConditionEvent: Function;
     /** 删除业务对象筛选-条件事件 */
     removeBOFilteringConditionEvent: Function;
+    /** 选择角色事件 */
+    chooseRoleEvent: Function;
+    /** 选择业务对象事件 */
+    chooseBusinessObjectEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
-            editable:true,
+            editable: true,
             content: [
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_name") }),
+                new sap.m.Input("", {
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/name"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_rolecode") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseRoleEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/roleCode"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_bocode") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseBusinessObjectEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/boCode"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_activated") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(ibas.emYesNo)
+                }).bindProperty("selectedKey", {
+                    path: "/activated",
+                    type: "sap.ui.model.type.Integer"
+                }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectkey") }),
+                new sap.m.Input("", {
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectKey"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectcode") }),
+                new sap.m.Input("", {
+                    enabled: false,
+                    type: sap.m.InputType.Text
+                }).bindProperty("value", {
+                    path: "/objectCode"
+                }),
             ]
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bofilteringcondition") }));
+        this.columnBOProperty = new sap.ui.table.Column("", {
+            label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
+            template: new sap.m.Select("", {
+                width: "100%",
+                selectedKey: "{propertyName}"
+            })
+        });
         this.tableBOFilteringCondition = new sap.ui.table.Table("", {
             extension: new sap.m.Toolbar("", {
                 content: [
@@ -61,6 +119,51 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emConditionRelationship)
+                    }).bindProperty("selectedKey", {
+                        path: "relationship",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        selectedKey: "{bracketOpen}",
+                        items: this.getCharListItem("(")
+                    })
+                }),
+                this.columnBOProperty,
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        items: utils.createComboBoxItems(ibas.emConditionOperation)
+                    }).bindProperty("selectedKey", {
+                        path: "operation",
+                        type: "sap.ui.model.type.Integer"
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
+                    template: new sap.m.Input("", {
+                        width: "100%",
+                        value: "{conditionValue}",
+                        type: sap.m.InputType.Text
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
+                    template: new sap.m.Select("", {
+                        width: "100%",
+                        selectedKey: "{bracketClose}",
+                        items: this.getCharListItem(")")
+                    })
+                }),
             ]
         });
         this.form.addContent(this.tableBOFilteringCondition);
@@ -126,8 +229,28 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
         this.id = this.page.getId();
         return this.page;
     }
+    /** 获取重复的字符 */
+    private getCharListItem(char: string): sap.ui.core.ListItem[] {
+        // 获取重复的字符
+        let count: number = 4;
+        let items: Array<sap.ui.core.ListItem> = [];
+        items.push(new sap.ui.core.ListItem("", {
+            key: 0,
+            text: "",
+        }));
+        let vChar: string = char;
+        for (let i: number = 1; i < count; i++) {
+            items.push(new sap.ui.core.ListItem("", {
+                key: i,
+                text: vChar,
+            }));
+            vChar = vChar + char;
+        }
+        return items;
+    }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
+    private columnBOProperty: sap.ui.table.Column;
     /** 改变视图状态 */
     private changeViewStatus(data: bo.BOFiltering): void {
         if (ibas.objects.isNull(data)) {
@@ -152,8 +275,32 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
     }
     /** 显示数据 */
     showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void {
-        this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+        this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
         utils.refreshModelChanged(this.tableBOFilteringCondition, datas);
+    }
+    /** 刷新字段列表 */
+    refreshBOProperties(properies: bo.BOPropertyInformation[]): void {
+        this.columnBOProperty.setTemplate(new sap.m.Select("", {
+            width: "100%",
+            selectedKey: "{propertyName}",
+            items: this.getPropertyListItem(properies)
+        }));
+    }
+    private getPropertyListItem(properies: bo.BOPropertyInformation[]): sap.ui.core.ListItem[] {
+        let items: Array<sap.ui.core.ListItem> = [];
+        items.push(new sap.ui.core.ListItem("", {
+            key: "",
+            text: ibas.i18n.prop("sys_shell_please_chooose_data", ""),
+        }));
+        if (!ibas.objects.isNull(properies)) {
+            for (let property of properies) {
+                items.push(new sap.ui.core.ListItem("", {
+                    key: property.property,
+                    text: property.description,
+                }));
+            }
+        }
+        return items;
     }
 }

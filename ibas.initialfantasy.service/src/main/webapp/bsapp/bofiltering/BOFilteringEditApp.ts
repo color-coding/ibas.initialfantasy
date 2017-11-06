@@ -35,6 +35,8 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
         this.view.createDataEvent = this.createData;
         this.view.addBOFilteringConditionEvent = this.addBOFilteringCondition;
         this.view.removeBOFilteringConditionEvent = this.removeBOFilteringCondition;
+        this.view.chooseBusinessObjectEvent = this.chooseBusinessObject;
+        this.view.chooseRoleEvent = this.chooseRole;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -198,10 +200,46 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
         // 仅显示没有标记删除的
         this.view.showBOFilteringConditions(this.editData.boFilteringConditions.filterDeleted());
     }
+    /** 选择角色标识 */
+    private chooseRole(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.IRole>({
+            boCode: bo.BO_CODE_ROLE,
+            onCompleted(selecteds: ibas.List<bo.IRole>): void {
+                that.editData.roleCode = selecteds.firstOrDefault().code;
+                if (ibas.strings.isEmpty(that.editData.name)) {
+                    that.editData.name = selecteds.firstOrDefault().name + "-";
+                } else if (that.editData.name.indexOf("-") >= 0) {
+                    that.editData.name = selecteds.firstOrDefault().name + that.editData.name.substring(that.editData.name.indexOf("-"));
+                }
+            }
+        });
+    }
+    /** 选择业务对象标识 */
+    private chooseBusinessObject(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.BOInformation>({
+            boCode: bo.BO_CODE_BOINFORMATION,
+            onCompleted(selecteds: ibas.List<bo.BOInformation>): void {
+                that.editData.boCode = selecteds.firstOrDefault().code;
+                if (ibas.strings.isEmpty(that.editData.name)) {
+                    that.editData.name = "-" + selecteds.firstOrDefault().description;
+                } else if (that.editData.name.indexOf("-") >= 0) {
+                    that.editData.name = that.editData.name.substring(0, that.editData.name.indexOf("-"))
+                        + "-" + selecteds.firstOrDefault().description;
+                }
+                that.view.refreshBOProperties(selecteds.firstOrDefault().boPropertyInformations);
+            }
+        });
+    }
 
 }
 /** 视图-业务对象筛选 */
 export interface IBOFilteringEditView extends ibas.IBOEditView {
+    /** 选择角色事件 */
+    chooseRoleEvent: Function;
+    /** 选择业务对象事件 */
+    chooseBusinessObjectEvent: Function;
     /** 显示数据 */
     showBOFiltering(data: bo.BOFiltering): void;
     /** 删除数据事件 */
@@ -214,4 +252,6 @@ export interface IBOFilteringEditView extends ibas.IBOEditView {
     removeBOFilteringConditionEvent: Function;
     /** 显示数据 */
     showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void;
+    /** 刷新字段列表 */
+    refreshBOProperties(properies: bo.BOPropertyInformation[]): void;
 }
