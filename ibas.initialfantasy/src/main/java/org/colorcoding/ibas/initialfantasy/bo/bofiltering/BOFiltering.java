@@ -15,6 +15,7 @@ import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 
 /**
  * 获取-业务对象筛选
@@ -145,6 +146,38 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	 */
 	public final void setActivated(emYesNo value) {
 		this.setProperty(PROPERTY_ACTIVATED, value);
+	}
+
+	/**
+	 * 属性名称-筛选类型
+	 */
+	private static final String PROPERTY_FILTERINGTYPE_NAME = "FilteringType";
+
+	/**
+	 * 筛选类型 属性
+	 */
+	@DbField(name = "FilteringType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emFilteringType> PROPERTY_FILTERINGTYPE = registerProperty(
+			PROPERTY_FILTERINGTYPE_NAME, emFilteringType.class, MY_CLASS);
+
+	/**
+	 * 获取-筛选类型
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_FILTERINGTYPE_NAME)
+	public final emFilteringType getFilteringType() {
+		return this.getProperty(PROPERTY_FILTERINGTYPE);
+	}
+
+	/**
+	 * 设置-筛选类型
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setFilteringType(emFilteringType value) {
+		this.setProperty(PROPERTY_FILTERINGTYPE, value);
 	}
 
 	/**
@@ -701,6 +734,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 		this.setBOFilteringConditions(new BOFilteringConditions(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setActivated(emYesNo.YES);
+		this.setFilteringType(emFilteringType.UNAVAILABLE);
 
 	}
 

@@ -52,6 +52,10 @@ class BOConverter4if extends ibas.BOConverter {
             if (property === bo.Privilege.PROPERTY_AUTHORISEVALUE_NAME) {
                 return ibas.enums.toString(ibas.emAuthoriseType, value);
             }
+        } else if (boName === bo.BOFiltering.name) {
+            if (property === bo.BOFiltering.PROPERTY_FILTERINGTYPE_NAME) {
+                return ibas.enums.toString(bo.emFilteringType, value);
+            }
         }
         return super.convertData(boName, property, value);
     }
@@ -75,6 +79,10 @@ class BOConverter4if extends ibas.BOConverter {
         } else if (boName === bo.Privilege.name) {
             if (property === bo.Privilege.PROPERTY_AUTHORISEVALUE_NAME) {
                 return ibas.enums.valueOf(ibas.emAuthoriseType, value);
+            }
+        } else if (boName === bo.BOFiltering.name) {
+            if (property === bo.BOFiltering.PROPERTY_FILTERINGTYPE_NAME) {
+                return ibas.enums.valueOf(bo.emFilteringType, value);
             }
         }
         return super.parsingData(boName, property, value);

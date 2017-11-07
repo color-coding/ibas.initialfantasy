@@ -4,6 +4,7 @@
   "bo_bofiltering_bocode": "对象类型",
   "bo_bofiltering_name": "名称",
   "bo_bofiltering_activated": "激活的",
+  "bo_bofiltering_filteringtype": "筛选类型",
   "bo_bofiltering_objectkey": "编号",
   "bo_bofiltering_objectcode": "类型",
   "bo_bofiltering_loginst": "实例号（版本）",

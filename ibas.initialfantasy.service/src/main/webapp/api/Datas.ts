@@ -45,6 +45,15 @@ export enum emAssignedType {
     /** 角色 */
     ROLE,
 }
+/**
+ * 筛选类型
+ */
+export enum emFilteringType {
+	/** 不可用的 */
+	UNAVAILABLE,
+	/** 可用的 */
+	AVAILABLE
+}
 /** 分配-角色 */
 export interface IRole {
     /** 编码 */

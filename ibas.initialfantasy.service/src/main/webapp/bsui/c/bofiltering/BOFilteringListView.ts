@@ -34,6 +34,14 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_bofiltering_objectkey"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "objectKey"
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_bofiltering_name"),
                     template: new sap.m.Text("", {
                         wrapping: false

@@ -19,6 +19,8 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
     deleteDataEvent: Function;
     /** 新建数据事件，参数1：是否克隆 */
     createDataEvent: Function;
+    /** 选择组织 */
+    chooseOrganizationEvent: Function;
 
     /** 绘制视图 */
     darw(): any {
@@ -58,6 +60,15 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                 }).bindProperty("selectedKey", {
                     path: "/super",
                     type: "sap.ui.model.type.Integer"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_organization") }),
+                new sap.m.Input("", {
+                    showValueHelp: true,
+                    valueHelpRequest: function (): void {
+                        that.fireViewEvents(that.chooseOrganizationEvent);
+                    }
+                }).bindProperty("value", {
+                    path: "/organization"
                 }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),

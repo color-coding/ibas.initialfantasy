@@ -119,4 +119,5 @@ public class testRepositoryShell extends TestCase {
 		assertEquals("not deleted.", 0, opRsltFetch.getResultObjects().size());
 
 	}
+
 }

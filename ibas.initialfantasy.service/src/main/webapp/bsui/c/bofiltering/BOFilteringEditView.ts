@@ -66,6 +66,13 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_filteringtype") }),
+                new sap.m.Select("", {
+                    items: utils.createComboBoxItems(bo.emFilteringType)
+                }).bindProperty("selectedKey", {
+                    path: "/filteringType",
+                    type: "sap.ui.model.type.Integer"
+                }),
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectkey") }),
                 new sap.m.Input("", {

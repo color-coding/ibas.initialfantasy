@@ -33,6 +33,7 @@ export class UserEditApp extends ibas.BOEditApplication<IUserEditView, bo.User> 
         // 其他事件
         this.view.deleteDataEvent = this.deleteData;
         this.view.createDataEvent = this.createData;
+        this.view.chooseOrganizationEvent = this.chooseOrganization;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -165,6 +166,16 @@ export class UserEditApp extends ibas.BOEditApplication<IUserEditView, bo.User> 
             createData();
         }
     }
+    /** 选择组织标识 */
+    private chooseOrganization(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<bo.Organization>({
+            boCode: bo.BO_CODE_ORGANIZATION,
+            onCompleted(selecteds: ibas.List<bo.Organization>): void {
+                that.editData.organization = selecteds.firstOrDefault().code;
+            }
+        });
+    }
 }
 /** 视图-用户 */
 export interface IUserEditView extends ibas.IBOEditView {
@@ -174,4 +185,6 @@ export interface IUserEditView extends ibas.IBOEditView {
     deleteDataEvent: Function;
     /** 新建数据事件，参数1：是否克隆 */
     createDataEvent: Function;
+    /** 选择组织 */
+    chooseOrganizationEvent: Function;
 }

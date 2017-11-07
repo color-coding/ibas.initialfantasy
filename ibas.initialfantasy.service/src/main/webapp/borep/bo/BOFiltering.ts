@@ -27,7 +27,8 @@ import {
     IBOFiltering,
     IBOFilteringCondition,
     IBOFilteringConditions,
-    BO_CODE_BOFILTERING
+    BO_CODE_BOFILTERING,
+    emFilteringType
 } from "../../api/index";
 
 /** 业务对象筛选 */
@@ -70,6 +71,17 @@ export class BOFiltering extends BOSimple<BOFiltering> implements IBOFiltering {
     /** 设置-激活的 */
     set activated(value: emYesNo) {
         this.setProperty(BOFiltering.PROPERTY_ACTIVATED_NAME, value);
+    }
+
+    /** 映射的属性名称-筛选类型 */
+    static PROPERTY_FILTERINGTYPE_NAME: string = "FilteringType";
+    /** 获取-筛选类型 */
+    get filteringType(): emFilteringType {
+        return this.getProperty<emFilteringType>(BOFiltering.PROPERTY_FILTERINGTYPE_NAME);
+    }
+    /** 设置-筛选类型 */
+    set filteringType(value: emFilteringType) {
+        this.setProperty(BOFiltering.PROPERTY_FILTERINGTYPE_NAME, value);
     }
 
     /** 映射的属性名称-名称 */
