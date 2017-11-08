@@ -60,7 +60,7 @@ export class ApplicationFunctionChooseView extends ibas.BOChooseView implements 
             visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
             rows: "{/rows}",
             columns: [
-                 new sap.ui.table.Column("", {
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationfunction_objectkey"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -81,7 +81,10 @@ export class ApplicationFunctionChooseView extends ibas.BOChooseView implements 
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
-                        path: "functionName"
+                        path: "functionName",
+                        formatter(data: any): any {
+                            return ibas.i18n.prop(data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {

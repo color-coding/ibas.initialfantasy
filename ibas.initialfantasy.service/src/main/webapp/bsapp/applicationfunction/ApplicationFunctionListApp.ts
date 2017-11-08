@@ -35,6 +35,7 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
         // 其他事件
         this.view.editDataEvent = this.editData;
         this.view.deleteDataEvent = this.deleteData;
+        this.view.registerFunctionsEvent = this.registerFunctions;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -166,6 +167,52 @@ export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicat
             }
         });
     }
+    private registerFunctions(): void {
+        let modules: ibas.List<ibas.IModule> = ibas.variablesManager.getWatcher().modules();
+        let that: this = this;
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let conditionModule: ibas.ICondition = criteria.conditions.create();
+        conditionModule.alias = bo.ApplicationFunction.PROPERTY_MODULEID_NAME;
+        conditionModule.operation = ibas.emConditionOperation.EQUAL;
+        let conditionFunction: ibas.ICondition = criteria.conditions.create();
+        conditionFunction.alias = bo.ApplicationFunction.PROPERTY_FUNCTIONID_NAME;
+        conditionFunction.operation = ibas.emConditionOperation.EQUAL;
+        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+        for (let module of modules) {
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_register_module_functions", module.description));
+            conditionModule.value = module.id;
+            for (let func of module.functions()) {
+                conditionFunction.value = func.id;
+                boRepository.fetchApplicationFunction({
+                    criteria: criteria,
+                    onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                        try {
+                            if (opRslt.resultCode === 0 && opRslt.resultObjects.length === 0) {
+                                let boFunc: bo.ApplicationFunction = new bo.ApplicationFunction;
+                                boFunc.moduleId = module.id;
+                                boFunc.functionId = func.id;
+                                boFunc.functionName = func.name;
+                                boRepository.saveApplicationFunction({
+                                    beSaved: boFunc,
+                                    onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                                        try {
+                                            if (opRslt.resultCode !== 0) {
+                                                throw new Error(opRslt.message);
+                                            }
+                                        } catch (error) {
+                                            that.proceeding(error);
+                                        }
+                                    }
+                                });
+                            }
+                        } catch (error) {
+                            that.messages(error);
+                        }
+                    }
+                });
+            }
+        }
+    }
     /** 获取服务的契约 */
     protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
         return [];
@@ -179,4 +226,6 @@ export interface IApplicationFunctionListView extends ibas.IBOListView {
     deleteDataEvent: Function;
     /** 显示数据 */
     showData(datas: bo.ApplicationFunction[]): void;
+    /** 注册功能 */
+    registerFunctionsEvent: Function;
 }

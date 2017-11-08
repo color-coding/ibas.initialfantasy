@@ -90,6 +90,7 @@ public class User implements org.colorcoding.ibas.bobas.organization.IUser {
 	private String token;
 
 	@Override
+	@XmlElement(name = "Token")
 	public String getToken() {
 		return this.token;
 	}

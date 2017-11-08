@@ -46,7 +46,10 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
-                        path: "moduleName"
+                        path: "moduleName",
+                        formatter(data: any): any {
+                            return ibas.i18n.prop(ibas.strings.toString(data).toLowerCase());
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -61,19 +64,22 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                     })
                 }),
                 new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_applicationmodule_platformid"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "platformId",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emPlantform, data);
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationmodule_moduleid"),
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
                         path: "moduleId"
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("bo_applicationmodule_platformid"),
-                    template: new sap.m.Text("", {
-                        wrapping: false
-                    }).bindProperty("text", {
-                        path: "platformId"
                     })
                 }),
             ]
@@ -83,6 +89,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
             showHeader: false,
             subHeader: new sap.m.Bar("", {
                 contentLeft: [
+                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_new"),
                         type: sap.m.ButtonType.Transparent,
@@ -91,7 +98,6 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                             that.fireViewEvents(that.newDataEvent);
                         }
                     }),
-                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_view"),
                         type: sap.m.ButtonType.Transparent,
@@ -103,7 +109,6 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                             );
                         }
                     }),
-                    */
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_edit"),
                         type: sap.m.ButtonType.Transparent,
@@ -127,6 +132,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                             );
                         }
                     }),
+                    */
                 ],
                 contentRight: [
                     new sap.m.Button("", {

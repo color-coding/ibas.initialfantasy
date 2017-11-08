@@ -42,12 +42,12 @@ export class Console extends ibas.ModuleConsole {
         this.register(new OrganizationFunc());
         this.register(new BOCriteriaFunc());
         this.register(new PrivilegeFunc());
-        if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE, false)) {
-            // 仅调试模式，启用以下功能
+        if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true) {
+            // 仅调超级用户，启用以下功能
             this.register(new BOFilteringFunc());
-            this.register(new ApplicationPlatformFunc());
-            this.register(new ApplicationModuleFunc());
             this.register(new ApplicationFunctionFunc());
+            this.register(new ApplicationModuleFunc());
+            this.register(new ApplicationPlatformFunc());
             this.register(new BOInformationFunc());
         }
         // 注册服务应用

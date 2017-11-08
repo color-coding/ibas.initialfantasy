@@ -23,6 +23,8 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
     editDataEvent: Function;
     /** 删除数据事件，参数：删除对象集合 */
     deleteDataEvent: Function;
+    /** 注册功能 */
+    registerFunctionsEvent: Function;
     /** 绘制视图 */
     darw(): any {
         let that: this = this;
@@ -33,7 +35,7 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             columns: [
-                 new sap.ui.table.Column("", {
+                new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_applicationfunction_objectkey"),
                     template: new sap.m.Text("", {
                         wrapping: false
@@ -54,7 +56,10 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                     template: new sap.m.Text("", {
                         wrapping: false
                     }).bindProperty("text", {
-                        path: "functionName"
+                        path: "functionName",
+                        formatter(data: any): any {
+                            return ibas.i18n.prop(data);
+                        }
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -72,6 +77,7 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
             showHeader: false,
             subHeader: new sap.m.Bar("", {
                 contentLeft: [
+                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_new"),
                         type: sap.m.ButtonType.Transparent,
@@ -80,7 +86,6 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                             that.fireViewEvents(that.newDataEvent);
                         }
                     }),
-                    /*
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_view"),
                         type: sap.m.ButtonType.Transparent,
@@ -92,7 +97,6 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                             );
                         }
                     }),
-                    */
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_edit"),
                         type: sap.m.ButtonType.Transparent,
@@ -104,6 +108,7 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                             );
                         }
                     }),
+                    */
                     // new sap.m.ToolbarSeparator(""),// 加了后面不显示？
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("sys_shell_data_delete"),
@@ -114,6 +119,14 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
                                 // 获取表格选中的对象
                                 utils.getTableSelecteds<bo.ApplicationFunction>(that.table)
                             );
+                        }
+                    }),
+                    new sap.m.Button("", {
+                        text: ibas.i18n.prop("initialfantasy_register_functions"),
+                        type: sap.m.ButtonType.Transparent,
+                        icon: "sap-icon://activate",
+                        press: function (): void {
+                            that.fireViewEvents(that.registerFunctionsEvent);
                         }
                     }),
                 ],

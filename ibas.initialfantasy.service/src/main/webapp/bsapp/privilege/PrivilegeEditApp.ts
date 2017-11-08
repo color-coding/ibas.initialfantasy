@@ -212,10 +212,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.ApplicationFunction>({
             boCode: bo.ApplicationFunction.BUSINESS_OBJECT_CODE,
-            criteria: [
-                new ibas.Condition(bo.ApplicationFunction.PROPERTY_FUNCTIONID_NAME,
-                    ibas.emConditionOperation.EQUAL, "Y"),
-            ],
+            criteria: [],
             onCompleted(selecteds: ibas.List<bo.ApplicationFunction>): void {
                 that.editData.target = selecteds.firstOrDefault().functionId;
             }
