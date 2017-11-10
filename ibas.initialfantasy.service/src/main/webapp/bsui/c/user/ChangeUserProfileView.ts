@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import { IChangeUserProfileView } from "../../../bsapp/user/index";
 import * as bo from "../../../borep/bo/index";
 
@@ -79,6 +79,6 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
     showUser(user: bo.User): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(user));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.form, user);
+        openui5.utils.refreshModelChanged(this.form, user);
     }
 }

@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { IBOInformationEditView } from "../../../bsapp/boinformation/index";
 
@@ -75,7 +75,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
                 ]
             }),
             enableSelectAll: false,
-            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
@@ -98,7 +98,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
                     label: ibas.i18n.prop("bo_bopropertyinformation_searched"),
                     template: new sap.m.Select("", {
                         width: "100%",
-                        items: utils.createComboBoxItems(ibas.emYesNo)
+                        items: openui5.utils.createComboBoxItems(ibas.emYesNo)
                     }).bindProperty("selectedKey", {
                         path: "searched",
                         type: "sap.ui.model.type.Integer"
@@ -108,7 +108,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
                     label: ibas.i18n.prop("bo_bopropertyinformation_editable"),
                     template: new sap.m.Select("", {
                         width: "100%",
-                        items: utils.createComboBoxItems(ibas.emYesNo)
+                        items: openui5.utils.createComboBoxItems(ibas.emYesNo)
                     }).bindProperty("selectedKey", {
                         path: "editable",
                         type: "sap.ui.model.type.Integer"
@@ -154,7 +154,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
         // 新建时：禁用删除，
         if (data.isNew) {
             if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
+                openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }
         }
         // 不可编辑：已批准，
@@ -165,7 +165,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
     showBOInformation(data: bo.BOInformation): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.form, data);
+        openui5.utils.refreshModelChanged(this.form, data);
         // 改变视图状态
         this.changeViewStatus(data);
     }
@@ -173,6 +173,6 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
     showBOPropertyInformations(datas: bo.BOPropertyInformation[]): void {
         this.tableBOPropertyInformation.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.tableBOPropertyInformation, datas);
+        openui5.utils.refreshModelChanged(this.tableBOPropertyInformation, datas);
     }
 }

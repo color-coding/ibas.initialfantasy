@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../../borep/BORepositories";
 import { ICriteriaEditorView } from "../../../bsapp/bocriteria/index";
@@ -128,7 +128,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
-                            let selected: any = utils.getTableSelecteds(that.table).firstOrDefault();
+                            let selected: any = openui5.utils.getTableSelecteds(that.table).firstOrDefault();
                             that.fireViewEvents(that.removeConditionEvent, selected);
                         }
                     })
@@ -145,7 +145,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     template: new sap.m.Select("", {
                         width: "100%",
                         selectedKey: "{relationship}",
-                        items: utils.createComboBoxItems(ibas.emConditionRelationship)
+                        items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship)
                     })
                 }),
                 new sap.ui.table.Column("", {
@@ -175,7 +175,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     template: new sap.m.Select("", {
                         width: "100%",
                         selectedKey: "{operation}",
-                        items: utils.createComboBoxItems(ibas.emConditionOperation)
+                        items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
                     })
                 }),
                 new sap.ui.table.Column("", {

@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { IBOFilteringEditView } from "../../../bsapp/bofiltering/index";
 
@@ -61,14 +61,14 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_activated") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: openui5.utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_filteringtype") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(bo.emFilteringType)
+                    items: openui5.utils.createComboBoxItems(bo.emFilteringType)
                 }).bindProperty("selectedKey", {
                     path: "/filteringType",
                     type: "sap.ui.model.type.Integer"
@@ -116,21 +116,21 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                         press: function (): void {
                             that.fireViewEvents(that.removeBOFilteringConditionEvent,
                                 // 获取表格选中的对象
-                                utils.getTableSelecteds<bo.BOFilteringCondition>(that.tableBOFilteringCondition)
+                                openui5.utils.getTableSelecteds<bo.BOFilteringCondition>(that.tableBOFilteringCondition)
                             );
                         }
                     })
                 ]
             }),
             enableSelectAll: false,
-            visibleRowCount: ibas.config.get(utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
+            visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
                     template: new sap.m.Select("", {
                         width: "100%",
-                        items: utils.createComboBoxItems(ibas.emConditionRelationship)
+                        items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship)
                     }).bindProperty("selectedKey", {
                         path: "relationship",
                         type: "sap.ui.model.type.Integer"
@@ -149,7 +149,7 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                     label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
                     template: new sap.m.Select("", {
                         width: "100%",
-                        items: utils.createComboBoxItems(ibas.emConditionOperation)
+                        items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
                     }).bindProperty("selectedKey", {
                         path: "operation",
                         type: "sap.ui.model.type.Integer"
@@ -266,7 +266,7 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
         // 新建时：禁用删除，
         if (data.isNew) {
             if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
+                openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }
         }
     }
@@ -276,7 +276,7 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
     showBOFiltering(data: bo.BOFiltering): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.form, data);
+        openui5.utils.refreshModelChanged(this.form, data);
         // 改变视图状态
         this.changeViewStatus(data);
     }
@@ -284,7 +284,7 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
     showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void {
         this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.tableBOFilteringCondition, datas);
+        openui5.utils.refreshModelChanged(this.tableBOFilteringCondition, datas);
     }
     /** 刷新字段列表 */
     refreshBOProperties(properies: bo.BOPropertyInformation[]): void {

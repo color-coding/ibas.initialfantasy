@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { utils } from "openui5/typings/ibas.utils";
+import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
 import { IBOCriteriaEditView } from "../../../bsapp/bocriteria/index";
 
@@ -58,14 +58,14 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_activated") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(ibas.emYesNo)
+                    items: openui5.utils.createComboBoxItems(ibas.emYesNo)
                 }).bindProperty("selectedKey", {
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assignedtype") }),
                 new sap.m.Select("", {
-                    items: utils.createComboBoxItems(bo.emAssignedType)
+                    items: openui5.utils.createComboBoxItems(bo.emAssignedType)
                 }).bindProperty("selectedKey", {
                     path: "/assignedType",
                     type: "sap.ui.model.type.Integer"
@@ -177,7 +177,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
         // 新建时：禁用删除，
         if (data.isNew) {
             if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
+                openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
             }
         }
     }
@@ -186,7 +186,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
     showBOCriteria(data: bo.BOCriteria): void {
         this.form.setModel(new sap.ui.model.json.JSONModel(data));
         // 监听属性改变，并更新控件
-        utils.refreshModelChanged(this.form, data);
+        openui5.utils.refreshModelChanged(this.form, data);
         // 改变视图状态
         this.changeViewStatus(data);
     }
