@@ -12,11 +12,31 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
 
 /**
  * InitialFantasy仓库应用
  */
 public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-项目
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IProject> fetchProject(ICriteria criteria);
+
+	/**
+	 * 保存-项目
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IProject> saveProject(IProject bo);
 
 	// --------------------------------------------------------------------------------------------//
 	/**

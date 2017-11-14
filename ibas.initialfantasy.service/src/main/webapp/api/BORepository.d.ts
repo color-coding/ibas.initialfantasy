@@ -47,7 +47,7 @@ export interface IBORepositoryInitialFantasy {
      * @param saver 保存者
      */
     saveApplicationPlatform(saver: SaveCaller<bo.IApplicationPlatform>);
- 
+
     /**
      * 查询 业务对象检索条件
      * @param fetcher 查询者
@@ -113,5 +113,16 @@ export interface IBORepositoryInitialFantasy {
      * @param saver 保存者
      */
     saveBOInformation(saver: SaveCaller<bo.IBOInformation>);
+
+    /**
+     * 查询 项目
+     * @param fetcher 查询者
+     */
+    fetchProject(fetcher: FetchCaller<bo.IProject>);
+    /**
+     * 保存 项目
+     * @param saver 保存者
+     */
+    saveProject(saver: SaveCaller<bo.IProject>);
 
 }

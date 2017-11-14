@@ -27,6 +27,8 @@ import * as boinformationApps from "../../bsapp/boinformation/index";
 import * as boinformationViews from "./boinformation/index";
 import * as systemApps from "../../bsapp/system/index";
 import * as systemViews from "./system/index";
+import * as projectApps from "../../bsapp/project/index";
+import * as projectViews from "./project/index";
 
 /**
  * 视图导航
@@ -156,6 +158,18 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case systemApps.VariableChooseApp.APPLICATION_ID:
                 view = new systemViews.VariableChooseView();
+                break;
+            case projectApps.ProjectListApp.APPLICATION_ID:
+                view = new projectViews.ProjectListView();
+                break;
+            case projectApps.ProjectChooseApp.APPLICATION_ID:
+                view = new projectViews.ProjectChooseView();
+                break;
+            case projectApps.ProjectViewApp.APPLICATION_ID:
+                view = new projectViews.ProjectViewView();
+                break;
+            case projectApps.ProjectEditApp.APPLICATION_ID:
+                view = new projectViews.ProjectEditView();
                 break;
             default:
                 break;

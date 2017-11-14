@@ -14,6 +14,7 @@ import { BOCriteriaFunc, } from "./bocriteria/index";
 import { BOFilteringFunc, } from "./bofiltering/index";
 import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
 import { PrivilegeFunc, } from "./privilege/index";
+import { ProjectFunc, ProjectChooseServiceMapping, ProjectLinkServiceMapping } from "./project/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
 import { VariableChooseServiceMapping, RoleChooseServiceMapping } from "./system/index";
@@ -40,6 +41,7 @@ export class Console extends ibas.ModuleConsole {
         // 注册功能
         this.register(new UserFunc());
         this.register(new OrganizationFunc());
+        this.register(new ProjectFunc());
         this.register(new BOCriteriaFunc());
         this.register(new PrivilegeFunc());
         if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true) {
@@ -62,6 +64,8 @@ export class Console extends ibas.ModuleConsole {
         this.register(new ChangeUserProfileMapping());
         this.register(new BOInformationChooseServiceMapping());
         this.register(new VariableChooseServiceMapping());
+        this.register(new ProjectChooseServiceMapping());
+        this.register(new ProjectLinkServiceMapping());
         // 注册常驻应用
         this.register(new UserProfileApp());
     }
@@ -79,6 +83,7 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/user.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/boinformation.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/variable.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/project.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");

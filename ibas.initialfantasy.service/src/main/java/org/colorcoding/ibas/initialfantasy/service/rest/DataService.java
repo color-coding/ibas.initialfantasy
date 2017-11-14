@@ -19,6 +19,7 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
+import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
@@ -30,6 +31,42 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
  */
 @Path("data")
 public class DataService extends BORepositoryInitialFantasyShell {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-项目
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchProject")
+	public OperationResult<Project> fetchProject(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchProject(criteria, token);
+	}
+
+	/**
+	 * 保存-项目
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveProject")
+	public OperationResult<Project> saveProject(Project bo, @QueryParam("token") String token) {
+		return super.saveProject(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-组织

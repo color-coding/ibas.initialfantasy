@@ -6,5 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 
-
-
+// 模块索引文件，此文件集中导出类
+export * from "./ProjectListView";
+export * from "./ProjectChooseView";
+export * from "./ProjectViewView";
+export * from "./ProjectEditView";

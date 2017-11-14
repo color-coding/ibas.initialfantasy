@@ -153,6 +153,20 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
         super.save(bo.BOInformation.name, saver);
     }
 
+    /**
+     * 查询 项目
+     * @param fetcher 查询者
+     */
+    fetchProject(fetcher: ibas.FetchCaller<bo.Project>): void {
+        super.fetch(bo.Project.name, fetcher);
+    }
+    /**
+     * 保存 项目
+     * @param saver 保存者
+     */
+    saveProject(saver: ibas.SaveCaller<bo.Project>): void {
+        super.save(bo.Project.name, saver);
+    }
 }
 // 注册业务对象仓库到工厂
 ibas.boFactory.register(BO_REPOSITORY_INITIALFANTASY, BORepositoryInitialFantasy);

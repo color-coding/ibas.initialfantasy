@@ -16,6 +16,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
+import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
@@ -28,6 +29,36 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 @WebService
 @WebServicePath("data")
 public class DataService extends BORepositoryInitialFantasyShell {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-项目
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<Project> fetchProject(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchProject(criteria, token);
+	}
+
+	/**
+	 * 保存-项目
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<Project> saveProject(@WebParam(name = "bo") Project bo,
+			@WebParam(name = "token") String token) {
+		return super.saveProject(bo, token);
+	}
 
 	// --------------------------------------------------------------------------------------------//
 	/**

@@ -35,6 +35,8 @@ export const BO_CODE_BOINFORMATION: string = "${Company}_SYS_BOINFO";
 export const BO_CODE_SYSTEM_VARIABLE: string = "${Company}_SYS_VARIABLE";
 /** 业务对象编码-用户角色（默认与组织相同） */
 export const BO_CODE_ROLE: string = "${Company}_SYS_ROLE";
+/** 业务对象编码-项目 */
+export const BO_CODE_PROJECT: string = "${Company}_SYS_PROJECT";
 
 /**
  * 分配类型
@@ -49,10 +51,10 @@ export enum emAssignedType {
  * 筛选类型
  */
 export enum emFilteringType {
-	/** 不可用的 */
-	UNAVAILABLE,
-	/** 可用的 */
-	AVAILABLE
+    /** 不可用的 */
+    UNAVAILABLE,
+    /** 可用的 */
+    AVAILABLE
 }
 /** 分配-角色 */
 export interface IRole {
