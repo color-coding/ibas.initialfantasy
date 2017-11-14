@@ -62,7 +62,7 @@ public interface IProject extends IBOMasterData {
 	 * 
 	 * @return 值
 	 */
-	String getManager();
+	Integer getManager();
 
 	/**
 	 * 设置-项目经理
@@ -70,7 +70,7 @@ public interface IProject extends IBOMasterData {
 	 * @param value
 	 *            值
 	 */
-	void setManager(String value);
+	void setManager(Integer value);
 
 	/**
 	 * 获取-状态

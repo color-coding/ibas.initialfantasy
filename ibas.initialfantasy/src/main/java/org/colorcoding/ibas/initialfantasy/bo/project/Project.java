@@ -160,8 +160,8 @@ public class Project extends BusinessObject<Project>
 	/**
 	 * 项目经理 属性
 	 */
-	@DbField(name = "Manager", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<String> PROPERTY_MANAGER = registerProperty(PROPERTY_MANAGER_NAME, String.class,
+	@DbField(name = "Manager", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<Integer> PROPERTY_MANAGER = registerProperty(PROPERTY_MANAGER_NAME, Integer.class,
 			MY_CLASS);
 
 	/**
@@ -170,7 +170,7 @@ public class Project extends BusinessObject<Project>
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_MANAGER_NAME)
-	public final String getManager() {
+	public final Integer getManager() {
 		return this.getProperty(PROPERTY_MANAGER);
 	}
 
@@ -180,7 +180,7 @@ public class Project extends BusinessObject<Project>
 	 * @param value
 	 *            值
 	 */
-	public final void setManager(String value) {
+	public final void setManager(Integer value) {
 		this.setProperty(PROPERTY_MANAGER, value);
 	}
 

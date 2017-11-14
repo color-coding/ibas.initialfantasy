@@ -187,7 +187,7 @@ export class ProjectEditApp extends ibas.BOEditApplication<IProjectEditView, bo.
             onCompleted(selecteds: ibas.List<bo.Organization>): void {
                 let members: ibas.StringBuilder = new ibas.StringBuilder();
                 for (let item of selecteds) {
-                    members.append(item.code);
+                    members.append(item.docEntry);
                     members.append(ibas.DATA_SEPARATOR);
                 }
                 that.editData.teamMembers = members.toString();
@@ -201,7 +201,7 @@ export class ProjectEditApp extends ibas.BOEditApplication<IProjectEditView, bo.
             boCode: bo.BO_CODE_USER,
             chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<bo.Organization>): void {
-                that.editData.manager = selecteds.firstOrDefault().code;
+                that.editData.manager = selecteds.firstOrDefault().docEntry;
             }
         });
     }

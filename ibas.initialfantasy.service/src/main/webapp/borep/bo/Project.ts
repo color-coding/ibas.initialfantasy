@@ -71,11 +71,11 @@ export class Project extends BOMasterData<Project> implements IProject {
     /** 映射的属性名称-项目经理 */
     static PROPERTY_MANAGER_NAME: string = "Manager";
     /** 获取-项目经理 */
-    get manager(): string {
-        return this.getProperty<string>(Project.PROPERTY_MANAGER_NAME);
+    get manager(): number {
+        return this.getProperty<number>(Project.PROPERTY_MANAGER_NAME);
     }
     /** 设置-项目经理 */
-    set manager(value: string) {
+    set manager(value: number) {
         this.setProperty(Project.PROPERTY_MANAGER_NAME, value);
     }
 

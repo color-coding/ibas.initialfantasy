@@ -37,7 +37,7 @@ export interface IProject extends IBOMasterData {
     activated: emYesNo;
 
     /** 项目经理 */
-    manager: string;
+    manager: number;
 
     /** 状态 */
     status: emDocumentStatus;
