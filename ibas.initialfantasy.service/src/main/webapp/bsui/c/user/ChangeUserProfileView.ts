@@ -43,7 +43,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
-            editable:true,
+            editable: true,
             content: [
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
                 new sap.m.Input("", {
@@ -72,7 +72,16 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
                 }),
             ]
         });
-        return this.form;
+        return new sap.m.Dialog("", {
+            title: this.title,
+            type: sap.m.DialogType.Standard,
+            state: sap.ui.core.ValueState.None,
+            stretchOnPhone: true,
+            horizontalScrolling: true,
+            verticalScrolling: true,
+            content: [this.form],
+            buttons: [this.darwBars()]
+        });
     }
     private form: sap.ui.layout.form.SimpleForm;
     /** 显示用户信息 */
