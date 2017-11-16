@@ -150,7 +150,7 @@ export class ApplicationModuleChooseView extends ibas.BOChooseView implements IA
                 for (let item of datas) {
                     hDatas.rows.push(item);
                 }
-                model.refresh(false);
+                model.refresh(false);                done = true;
 
             }
         }
