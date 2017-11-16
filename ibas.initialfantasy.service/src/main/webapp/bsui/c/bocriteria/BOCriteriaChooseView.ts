@@ -155,8 +155,8 @@ export class BOCriteriaChooseView extends ibas.BOChooseView implements IBOCriter
                 for (let item of datas) {
                     hDatas.rows.push(item);
                 }
-                model.refresh(false);                done = true;
-
+                model.refresh(false);
+                done = true;
             }
         }
         if (!done) {
