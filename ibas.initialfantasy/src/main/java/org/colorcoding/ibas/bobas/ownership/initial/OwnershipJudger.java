@@ -187,7 +187,7 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 
 	public void parsingConditions(List<IBOFilteringCondition> conditions) {
 		// 判断无条件
-		if (conditions != null && conditions.size() == 0) {
+		if (conditions == null || conditions.size() == 0) {
 			return;
 		}
 		ArrayList<JudgmentLinkItem> jLinkItems = new ArrayList<JudgmentLinkItem>();

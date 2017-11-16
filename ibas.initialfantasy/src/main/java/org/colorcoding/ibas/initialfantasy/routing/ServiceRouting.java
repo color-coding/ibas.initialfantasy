@@ -181,8 +181,8 @@ public class ServiceRouting {
 			}
 		}
 		// 判断模块是否可用
-		if ((module.getRepository() != null && module.getRepository() != "")
-				&& (module.getAddress() != null && module.getAddress() != "")) {
+		if ((module.getRepository() != null && !module.getRepository().isEmpty())
+				&& (module.getAddress() != null && !module.getAddress().isEmpty())) {
 			done = true;
 			Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
 					module.getAddress());
