@@ -20,6 +20,30 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
     }
 
     /**
+     * 上传文件
+     * @param caller 调用者
+     */
+    upload(caller: ibas.UploadFileCaller<ibas.FileData>): void {
+        if (!this.address.endsWith("/")) { this.address += "/"; }
+        let fileRepository: ibas.FileRepositoryUploadAjax = new ibas.FileRepositoryUploadAjax();
+        fileRepository.address = this.address.replace("/services/rest/data/", "/services/rest/file/");
+        fileRepository.token = this.token;
+        fileRepository.converter = this.createConverter();
+        fileRepository.upload("upload", caller);
+    }
+    /**
+     * 下载文件
+     * @param caller 调用者
+     */
+    download(caller: ibas.DownloadFileCaller<Blob>): void {
+        if (!this.address.endsWith("/")) { this.address += "/"; }
+        let fileRepository: ibas.FileRepositoryDownloadAjax = new ibas.FileRepositoryDownloadAjax();
+        fileRepository.address = this.address.replace("/services/rest/data/", "/services/rest/file/");
+        fileRepository.token = this.token;
+        fileRepository.converter = this.createConverter();
+        fileRepository.download("download", caller);
+    }
+    /**
      * 查询 应用程序功能
      * @param fetcher 查询者
      */
