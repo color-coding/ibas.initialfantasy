@@ -25,11 +25,14 @@ export class Console extends ibas.ModuleConsole {
     static CONSOLE_ID: string = "c2b31c06-20d8-44a2-bb34-17f47ed01859";
     /** 模块-名称 */
     static CONSOLE_NAME: string = "InitialFantasy";
+    /** 模块-版本 */
+    static CONSOLE_VERSION: string = "0.1.0";
     /** 构造函数 */
     constructor() {
         super();
         this.id = Console.CONSOLE_ID;
         this.name = Console.CONSOLE_NAME;
+        this.version = Console.CONSOLE_VERSION;
     }
     private _navigation: ibas.IViewNavigation;
     /** 创建视图导航 */
