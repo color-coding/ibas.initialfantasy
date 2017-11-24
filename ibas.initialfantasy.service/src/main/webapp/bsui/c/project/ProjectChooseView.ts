@@ -102,14 +102,14 @@ export class ProjectChooseView extends ibas.BOChooseView implements IProjectChoo
             content: [this.table],
             buttons: [
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_data_new"),
+                    text: ibas.i18n.prop("shell_data_new"),
                     type: sap.m.ButtonType.Transparent,
                     press: function (): void {
                         that.fireViewEvents(that.newDataEvent);
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_data_choose"),
+                    text: ibas.i18n.prop("shell_data_choose"),
                     type: sap.m.ButtonType.Transparent,
                     press: function (): void {
                         that.fireViewEvents(that.chooseDataEvent,
@@ -119,7 +119,7 @@ export class ProjectChooseView extends ibas.BOChooseView implements IProjectChoo
                     }
                 }),
                 new sap.m.Button("", {
-                    text: ibas.i18n.prop("sys_shell_exit"),
+                    text: ibas.i18n.prop("shell_exit"),
                     type: sap.m.ButtonType.Transparent,
                     press: function (): void {
                         that.fireViewEvents(that.closeEvent);

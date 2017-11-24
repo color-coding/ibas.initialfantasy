@@ -22,7 +22,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
         let that: this = this;
         return [
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_data_save"),
+                text: ibas.i18n.prop("shell_data_save"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://create",
                 press: function (): void {
@@ -30,7 +30,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_exit"),
+                text: ibas.i18n.prop("shell_exit"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://inspect-down",
                 press: function (): void {

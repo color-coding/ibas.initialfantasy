@@ -28,7 +28,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
         let that: this = this;
         return [
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_confirm"),
+                text: ibas.i18n.prop("shell_confirm"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://accept",
                 press: function (): void {
@@ -36,7 +36,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                 }
             }),
             new sap.m.Button("", {
-                text: ibas.i18n.prop("sys_shell_exit"),
+                text: ibas.i18n.prop("shell_exit"),
                 type: sap.m.ButtonType.Transparent,
                 // icon: "sap-icon://inspect-down",
                 press: function (): void {
@@ -116,7 +116,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
             extension: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_data_add"),
+                        text: ibas.i18n.prop("shell_data_add"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://add",
                         press: function (): void {
@@ -124,7 +124,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                         }
                     }),
                     new sap.m.Button("", {
-                        text: ibas.i18n.prop("sys_shell_data_remove"),
+                        text: ibas.i18n.prop("shell_data_remove"),
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
@@ -139,7 +139,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
             rows: "{/}",
             columns: [
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_relationship"),
+                    label: ibas.i18n.prop("shell_query_condition_relationship"),
                     width: "100px",
                     autoResizable: true,
                     template: new sap.m.Select("", {
@@ -149,7 +149,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_bracketopen"),
+                    label: ibas.i18n.prop("shell_query_condition_bracketopen"),
                     width: "100px",
                     autoResizable: true,
                     template: new sap.m.Select("", {
@@ -159,7 +159,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_alias"),
+                    label: ibas.i18n.prop("shell_query_condition_alias"),
                     width: "200px",
                     autoResizable: true,
                     template: new sap.m.Select("", {
@@ -169,7 +169,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_operation"),
+                    label: ibas.i18n.prop("shell_query_condition_operation"),
                     width: "140px",
                     autoResizable: true,
                     template: new sap.m.Select("", {
@@ -179,7 +179,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_value"),
+                    label: ibas.i18n.prop("shell_query_condition_value"),
                     width: "120px",
                     autoResizable: true,
                     template: new sap.m.Input("", {
@@ -187,7 +187,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                     })
                 }),
                 new sap.ui.table.Column("", {
-                    label: ibas.i18n.prop("sys_shell_query_condition_bracketclose"),
+                    label: ibas.i18n.prop("shell_query_condition_bracketclose"),
                     width: "100px",
                     autoResizable: true,
                     template: new sap.m.Select("", {
@@ -222,7 +222,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
         let items: Array<sap.ui.core.ListItem> = [];
         items.push(new sap.ui.core.ListItem("", {
             key: "",
-            text: ibas.i18n.prop("sys_shell_please_chooose_data", ""),
+            text: ibas.i18n.prop("shell_please_chooose_data", ""),
         }));
         if (!ibas.objects.isNull(properies)) {
             for (let property of properies) {

@@ -61,7 +61,7 @@ export class ChangeUserProfileApp
                 if (ibas.objects.isNull(that.user)) {
                     that.user = new bo.User();
                     that.user.code = "UNKNOWN";
-                    that.user.name = ibas.i18n.prop("sys_shell_unknown_user");
+                    that.user.name = ibas.i18n.prop("shell_unknown_user");
                 }
                 that.view.showUser(that.user);
             }
@@ -79,12 +79,12 @@ export class ChangeUserProfileApp
                         throw new Error(opRslt.message);
                     }
                     that.messages(ibas.emMessageType.SUCCESS,
-                        ibas.i18n.prop("sys_shell_data_save") + ibas.i18n.prop("sys_shell_sucessful"));
+                        ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
                     that.user = opRslt.resultObjects.firstOrDefault();
                     if (ibas.objects.isNull(that.user)) {
                         that.user = new bo.User();
                         that.user.code = "UNKNOWN";
-                        that.user.name = ibas.i18n.prop("sys_shell_unknown_user");
+                        that.user.name = ibas.i18n.prop("shell_unknown_user");
                     }
                     that.view.showUser(that.user);
                 } catch (error) {
@@ -93,7 +93,7 @@ export class ChangeUserProfileApp
             }
         });
         this.busy(true);
-        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_saving_data"));
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
     }
 }
 /** 视图-更改用户配置 */

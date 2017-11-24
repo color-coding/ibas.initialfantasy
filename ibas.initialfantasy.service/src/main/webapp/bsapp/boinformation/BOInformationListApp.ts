@@ -60,7 +60,7 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
                     }
                 }
             });
-            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
         } catch (error) {
             this.messages(error);
         }
@@ -76,8 +76,8 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
     protected viewData(data: bo.BOInformation): void {
         // 检查目标数据
         if (ibas.objects.isNull(data)) {
-            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
-                ibas.i18n.prop("sys_shell_data_view")
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                ibas.i18n.prop("shell_data_view")
             ));
             return;
         }
@@ -91,8 +91,8 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
     protected editData(data: bo.BOInformation): void {
         // 检查目标数据
         if (ibas.objects.isNull(data)) {
-            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
-                ibas.i18n.prop("sys_shell_data_edit")
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                ibas.i18n.prop("shell_data_edit")
             ));
             return;
         }
@@ -105,8 +105,8 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
     protected deleteData(data: bo.BOInformation): void {
         // 检查目标数据
         if (ibas.objects.isNull(data)) {
-            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("sys_shell_please_chooose_data",
-                ibas.i18n.prop("sys_shell_data_delete")
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                ibas.i18n.prop("shell_data_delete")
             ));
             return;
         }
@@ -127,7 +127,7 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
         this.messages({
             type: ibas.emMessageType.QUESTION,
             title: ibas.i18n.prop(this.name),
-            message: ibas.i18n.prop("sys_shell_whether_to_delete", beDeleteds.length),
+            message: ibas.i18n.prop("shell_whether_to_delete", beDeleteds.length),
             actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
             onCompleted(action: ibas.emMessageAction): void {
                 if (action === ibas.emMessageAction.YES) {
@@ -149,15 +149,15 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("sys_shell_data_delete") + ibas.i18n.prop("sys_shell_sucessful"));
+                                            ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,
-                                            ibas.i18n.prop("sys_shell_data_delete_error", beSaved, error.message));
+                                            ibas.i18n.prop("shell_data_delete_error", beSaved, error.message));
                                     }
                                 }
                             });
-                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_data_deleting", beSaved));
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_deleting", beSaved));
                         };
                         that.busy(true);
                         // 开始保存

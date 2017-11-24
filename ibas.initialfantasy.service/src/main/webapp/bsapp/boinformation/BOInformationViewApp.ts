@@ -80,7 +80,7 @@ export class BOInformationViewApp extends ibas.BOViewService<IBOInformationViewV
                     }
                 }
             });
-            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("sys_shell_fetching_data"));
+            this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
         } catch (error) {
             that.messages(error);
         }
