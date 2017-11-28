@@ -19,6 +19,7 @@ import { ProjectFunc, ProjectChooseServiceMapping, ProjectLinkServiceMapping } f
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
 import { VariableChooseServiceMapping, RoleChooseServiceMapping } from "./system/index";
+import { BONumberingFunc } from "./bonumbering/index";
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
@@ -50,6 +51,7 @@ export class Console extends ibas.ModuleConsole {
             this.register(new ApplicationModuleFunc());
             this.register(new ApplicationPlatformFunc());
             this.register(new BOInformationFunc());
+            this.register(new BONumberingFunc());
         }
         // 注册服务应用
         this.register(new ApplicationFunctionChooseServiceMapping());

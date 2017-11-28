@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.approval.IApprovalData;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
@@ -28,7 +29,8 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlType(name = User.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = User.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(User.BUSINESS_OBJECT_CODE)
-public class User extends BusinessObject<User> implements IUser, IApprovalData, IDataOwnership, IBOUserFields {
+public class User extends BusinessObject<User>
+		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey {
 
 	public static String encrypt(String value) {
 		if (value != null && !value.isEmpty() && (!value.endsWith(ENCRYPTED_CHARACTER_MARK) && value.length() != 32)) {
@@ -797,6 +799,11 @@ public class User extends BusinessObject<User> implements IUser, IApprovalData, 
 	 */
 	public final void setOrganization(String value) {
 		this.setProperty(PROPERTY_ORGANIZATION, value);
+	}
+
+	@Override
+	public void setSeriesValue(Object value) {
+		this.setCode((String) value);
 	}
 
 	/**

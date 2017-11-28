@@ -29,6 +29,8 @@ import * as systemApps from "../../bsapp/system/index";
 import * as systemViews from "./system/index";
 import * as projectApps from "../../bsapp/project/index";
 import * as projectViews from "./project/index";
+import * as bonumberingApps from "../../bsapp/bonumbering/index";
+import * as bonumberingViews from "./bonumbering/index";
 
 /**
  * 视图导航
@@ -170,6 +172,12 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case projectApps.ProjectEditApp.APPLICATION_ID:
                 view = new projectViews.ProjectEditView();
+                break;
+            case bonumberingApps.BONumberingListApp.APPLICATION_ID:
+                view = new bonumberingViews.BONumberingListView();
+                break;
+            case bonumberingApps.BONumberingEditApp.APPLICATION_ID:
+                view = new bonumberingViews.BONumberingEditView();
                 break;
             default:
                 break;

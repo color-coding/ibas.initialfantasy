@@ -9,6 +9,8 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
@@ -249,6 +251,52 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 * @return 操作结果
 	 */
 	OperationResult<User> saveUser(User bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<BONumbering> fetchBONumbering(ICriteria criteria, String token);
+
+	/**
+	 * 保存-业务对象编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<BONumbering> saveBONumbering(BONumbering bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象序列编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria, String token);
+
+	/**
+	 * 保存-业务对象序列编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo, String token);
 
 	// --------------------------------------------------------------------------------------------//
 

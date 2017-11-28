@@ -16,6 +16,10 @@ import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
@@ -526,4 +530,103 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 
 	// --------------------------------------------------------------------------------------------//
 
+	/**
+	 * 查询-业务对象编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BONumbering> fetchBONumbering(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BONumbering.class);
+	}
+
+	/**
+	 * 查询-业务对象编号方式（提前设置用户口令）
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBONumbering> fetchBONumbering(ICriteria criteria) {
+		return new OperationResult<IBONumbering>(this.fetchBONumbering(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-业务对象编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BONumbering> saveBONumbering(BONumbering bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-业务对象编号方式（提前设置用户口令）
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBONumbering> saveBONumbering(IBONumbering bo) {
+		return new OperationResult<IBONumbering>(this.saveBONumbering((BONumbering) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象序列编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BOSeriesNumbering.class);
+	}
+
+	/**
+	 * 查询-业务对象序列编号方式（提前设置用户口令）
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria) {
+		return new OperationResult<IBOSeriesNumbering>(this.fetchBOSeriesNumbering(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-业务对象序列编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-业务对象序列编号方式（提前设置用户口令）
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOSeriesNumbering> saveBOSeriesNumbering(IBOSeriesNumbering bo) {
+		return new OperationResult<IBOSeriesNumbering>(
+				this.saveBOSeriesNumbering((BOSeriesNumbering) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
 }

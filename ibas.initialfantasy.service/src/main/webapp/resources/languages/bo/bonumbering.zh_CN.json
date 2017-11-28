@@ -1,0 +1,15 @@
+{
+  "bo_bonumbering": "业务对象编号方式",
+  "bo_bonumbering_objectcode": "对象编码",
+  "bo_bonumbering_documentsubtype": "子类型",
+  "bo_bonumbering_autokey": "自动序号",
+  "bo_bonumbering_defaultseries": "默认序列",
+  "bo_boseriesnumbering": "业务对象序列编号方式",
+  "bo_boseriesnumbering_objectcode": "对象编码",
+  "bo_boseriesnumbering_series": "序列",
+  "bo_boseriesnumbering_seriesname": "序列名称",
+  "bo_boseriesnumbering_nextnumber": "下一个序号",
+  "bo_boseriesnumbering_locked": "已锁定",
+  "bo_boseriesnumbering_template": "模板",
+  "bo_bonumbering_closing_delimiter": "----结束----"
+}

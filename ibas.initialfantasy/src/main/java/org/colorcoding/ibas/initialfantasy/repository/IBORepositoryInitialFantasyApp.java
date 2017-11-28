@@ -9,6 +9,8 @@ import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
@@ -208,6 +210,44 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IUser> saveUser(IUser bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IBONumbering> fetchBONumbering(ICriteria criteria);
+
+	/**
+	 * 保存-业务对象编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IBONumbering> saveBONumbering(IBONumbering bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象序列编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IBOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria);
+
+	/**
+	 * 保存-业务对象序列编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IBOSeriesNumbering> saveBOSeriesNumbering(IBOSeriesNumbering bo);
 
 	// --------------------------------------------------------------------------------------------//
 

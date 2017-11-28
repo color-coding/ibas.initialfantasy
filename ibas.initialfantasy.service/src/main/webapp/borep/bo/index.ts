@@ -18,6 +18,7 @@ export * from "./Privilege";
 export * from "./User";
 export * from "./BOInformation";
 export * from "./Project";
+export * from "./BONumbering";
 
 // 注册业务对象到工厂
 import * as ibas from "ibas/index";
