@@ -7,6 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
+import { CONSOLE_ID, CONSOLE_NAME, CONSOLE_VERSION } from "../api/index";
 import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping } from "./applicationfunction/index";
 import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from "./applicationmodule/index";
 import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
@@ -21,18 +22,12 @@ import { VariableChooseServiceMapping, RoleChooseServiceMapping } from "./system
 
 /** 模块控制台 */
 export class Console extends ibas.ModuleConsole {
-    /** 模块-标识 */
-    static CONSOLE_ID: string = "c2b31c06-20d8-44a2-bb34-17f47ed01859";
-    /** 模块-名称 */
-    static CONSOLE_NAME: string = "InitialFantasy";
-    /** 模块-版本 */
-    static CONSOLE_VERSION: string = "0.1.0";
     /** 构造函数 */
     constructor() {
         super();
-        this.id = Console.CONSOLE_ID;
-        this.name = Console.CONSOLE_NAME;
-        this.version = Console.CONSOLE_VERSION;
+        this.id = CONSOLE_ID;
+        this.name = CONSOLE_NAME;
+        this.version = CONSOLE_VERSION;
         this.copyright = ibas.i18n.prop("shell_license");
     }
     private _navigation: ibas.IViewNavigation;

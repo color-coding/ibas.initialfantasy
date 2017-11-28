@@ -8,11 +8,19 @@
 
 // 共享的数据
 import {
-    emYesNo
+    strings,
+    MODULE_REPOSITORY_NAME_TEMPLATE,
+    emYesNo,
 } from "ibas/index";
 
+/** 模块-标识 */
+export const CONSOLE_ID: string = "c2b31c06-20d8-44a2-bb34-17f47ed01859";
+/** 模块-名称 */
+export const CONSOLE_NAME: string = "InitialFantasy";
+/** 模块-版本 */
+export const CONSOLE_VERSION: string = "0.1.0";
 /** 业务仓库名称 */
-export const BO_REPOSITORY_INITIALFANTASY: string = "BORepositoryInitialFantasy";
+export const BO_REPOSITORY_INITIALFANTASY: string = strings.format(MODULE_REPOSITORY_NAME_TEMPLATE, CONSOLE_NAME);
 /** 业务对象编码-应用程序功能 */
 export const BO_CODE_APPLICATIONFUNCTION: string = "${Company}_SYS_FUNCTION";
 /** 业务对象编码-应用程序模块 */
