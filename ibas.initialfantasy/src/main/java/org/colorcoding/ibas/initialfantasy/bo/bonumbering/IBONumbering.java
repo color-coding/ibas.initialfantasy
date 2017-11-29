@@ -53,19 +53,4 @@ public interface IBONumbering extends IBusinessObject {
 	 */
 	void setAutoKey(Integer value);
 
-	/**
-	 * 获取-默认序列
-	 * 
-	 * @return 值
-	 */
-	Integer getDefaultSeries();
-
-	/**
-	 * 设置-默认序列
-	 * 
-	 * @param value
-	 *            值
-	 */
-	void setDefaultSeries(Integer value);
-
 }

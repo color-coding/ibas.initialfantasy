@@ -67,17 +67,6 @@ export class BONumbering extends BusinessObject<BONumbering> {
         this.setProperty(BONumbering.PROPERTY_AUTOKEY_NAME, value);
     }
 
-    /** 映射的属性名称-默认序列 */
-    static PROPERTY_DEFAULTSERIES_NAME: string = "DefaultSeries";
-    /** 获取-默认序列 */
-    get defaultSeries(): number {
-        return this.getProperty<number>(BONumbering.PROPERTY_DEFAULTSERIES_NAME);
-    }
-    /** 设置-默认序列 */
-    set defaultSeries(value: number) {
-        this.setProperty(BONumbering.PROPERTY_DEFAULTSERIES_NAME, value);
-    }
-
     /** 字符串 */
     toString(): string {
         let builder: StringBuilder = new StringBuilder();

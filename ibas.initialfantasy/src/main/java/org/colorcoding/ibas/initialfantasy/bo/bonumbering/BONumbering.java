@@ -136,45 +136,6 @@ public class BONumbering extends BusinessObject<BONumbering> implements IBONumbe
 	}
 
 	/**
-	 * 属性名称-默认序列
-	 */
-	private static final String PROPERTY_DEFAULTSERIES_NAME = "DefaultSeries";
-
-	/**
-	 * 默认序列 属性
-	 */
-	@DbField(name = "DefSeries", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<Integer> PROPERTY_DEFAULTSERIES = registerProperty(PROPERTY_DEFAULTSERIES_NAME,
-			Integer.class, MY_CLASS);
-
-	/**
-	 * 获取-默认序列
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_DEFAULTSERIES_NAME)
-	public final Integer getDefaultSeries() {
-		return this.getProperty(PROPERTY_DEFAULTSERIES);
-	}
-
-	/**
-	 * 设置-默认序列
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setDefaultSeries(Integer value) {
-		this.setProperty(PROPERTY_DEFAULTSERIES, value);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-
-		return stringBuilder.toString();
-	}
-
-	/**
 	 * 初始化数据
 	 */
 	@Override

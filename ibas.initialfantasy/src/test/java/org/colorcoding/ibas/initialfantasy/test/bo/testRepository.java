@@ -7,9 +7,7 @@ import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
-import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
@@ -43,23 +41,6 @@ public class testRepository extends TestCase {
 			if (opRsltBOSeries.getError() != null) {
 				throw opRsltBOSeries.getError();
 			}
-		}
-		criteria = new Criteria();
-		condition = criteria.getConditions().create();
-		condition.setAlias(BONumbering.PROPERTY_OBJECTCODE.getName());
-		condition.setValue(MyConfiguration.applyVariables(User.BUSINESS_OBJECT_CODE));
-		condition = criteria.getConditions().create();
-		condition.setAlias(BONumbering.PROPERTY_DOCUMENTSUBTYPE.getName());
-		condition.setValue("--");
-		IOperationResult<IBONumbering> opRsltBONum = boRepository.fetchBONumbering(criteria);
-		if (opRsltBONum.getError() != null) {
-			throw opRsltBONum.getError();
-		}
-		IBONumbering boNumbering = opRsltBONum.getResultObjects().firstOrDefault();
-		boNumbering.setDefaultSeries(seriesNumbering.getSeries());
-		opRsltBONum = boRepository.saveBONumbering(boNumbering);
-		if (opRsltBONum.getError() != null) {
-			throw opRsltBONum.getError();
 		}
 		User user = new User();
 		user.setSeries(seriesNumbering.getSeries());// 自动编号系列
