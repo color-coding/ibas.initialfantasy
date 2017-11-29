@@ -264,17 +264,6 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 */
 	OperationResult<BONumbering> fetchBONumbering(ICriteria criteria, String token);
 
-	/**
-	 * 保存-业务对象编号方式
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	OperationResult<BONumbering> saveBONumbering(BONumbering bo, String token);
-
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象序列编号方式

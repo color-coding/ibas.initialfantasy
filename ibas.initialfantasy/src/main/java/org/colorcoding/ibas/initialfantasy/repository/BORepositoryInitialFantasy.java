@@ -554,30 +554,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		return new OperationResult<IBONumbering>(this.fetchBONumbering(criteria, this.getUserToken()));
 	}
 
-	/**
-	 * 保存-业务对象编号方式
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<BONumbering> saveBONumbering(BONumbering bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-业务对象编号方式（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IBONumbering> saveBONumbering(IBONumbering bo) {
-		return new OperationResult<IBONumbering>(this.saveBONumbering((BONumbering) bo, this.getUserToken()));
-	}
-
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象序列编号方式

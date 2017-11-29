@@ -184,14 +184,6 @@ export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication imp
         super.fetch(bo.BONumbering.name, fetcher);
     }
     /**
-     * 保存 业务对象编号方式
-     * @param saver 保存者
-     */
-    saveBONumbering(saver: ibas.SaveCaller<bo.BONumbering>): void {
-        super.save(bo.BONumbering.name, saver);
-    }
-
-    /**
      * 查询 业务对象序列编号方式
      * @param fetcher 查询者
      */

@@ -221,15 +221,6 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 */
 	IOperationResult<IBONumbering> fetchBONumbering(ICriteria criteria);
 
-	/**
-	 * 保存-业务对象编号方式
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	IOperationResult<IBONumbering> saveBONumbering(IBONumbering bo);
-
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象序列编号方式

@@ -52,23 +52,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.fetchBONumbering(criteria, token);
 	}
 
-	/**
-	 * 保存-业务对象编号方式
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveBONumbering")
-	public OperationResult<BONumbering> saveBONumbering(BONumbering bo, @QueryParam("token") String token) {
-		return super.saveBONumbering(bo, token);
-	}
-
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象序列编号方式
