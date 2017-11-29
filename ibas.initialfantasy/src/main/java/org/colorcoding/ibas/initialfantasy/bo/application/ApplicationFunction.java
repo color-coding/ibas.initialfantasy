@@ -57,7 +57,7 @@ public class ApplicationFunction extends BusinessObject<ApplicationFunction> imp
 	/**
 	 * 模块标识 属性
 	 */
-	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_MODULEID = registerProperty(PROPERTY_MODULEID_NAME, String.class,
 			MY_CLASS);
 
@@ -89,7 +89,7 @@ public class ApplicationFunction extends BusinessObject<ApplicationFunction> imp
 	/**
 	 * 功能标识 属性
 	 */
-	@DbField(name = "FunctionId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "FunctionId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_FUNCTIONID = registerProperty(PROPERTY_FUNCTIONID_NAME,
 			String.class, MY_CLASS);
 

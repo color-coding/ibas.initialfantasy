@@ -58,7 +58,7 @@ public class ApplicationPlatform extends BusinessObject<ApplicationPlatform> imp
 	/**
 	 * 平台标识 属性
 	 */
-	@DbField(name = "PlatformId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "PlatformId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_PLATFORMID = registerProperty(PROPERTY_PLATFORMID_NAME,
 			String.class, MY_CLASS);
 
