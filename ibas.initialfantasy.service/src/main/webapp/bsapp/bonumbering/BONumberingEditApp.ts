@@ -28,64 +28,35 @@ export class BONumberingEditApp extends ibas.Application<IBONumberingEditView> {
     protected registerView(): void {
         super.registerView();
         // 其他事件
+        this.view.saveBOSeriesNumberingEvent = this.saveBOSeriesNumbering;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成
-        if (ibas.objects.isNull(this.editData)) {
-            // 创建编辑对象实例
-            this.editData = new bo.BONumbering();
-            this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
-        }
         this.view.showBONumbering(this.editData);
+        this.fetchBOSeriesNumbering();
     }
     /** 运行,覆盖原方法 */
     run(...args: any[]): void {
-        let that: this = this;
-        if (ibas.objects.instanceOf(arguments[0], bo.BONumbering)) {
-            // 尝试重新查询编辑对象
-            let criteria: ibas.ICriteria = arguments[0].criteria();
-            if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
-                // 有效的查询对象查询
-                let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                boRepository.fetchBONumbering({
-                    criteria: criteria,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.BONumbering>): void {
-                        let data: bo.BONumbering;
-                        if (opRslt.resultCode === 0) {
-                            data = opRslt.resultObjects.firstOrDefault();
-                        }
-                        if (ibas.objects.instanceOf(data, bo.BONumbering)) {
-                            // 查询到了有效数据
-                            that.editData = data;
-                            that.show();
-                        } else {
-                            // 数据重新检索无效
-                            that.messages({
-                                type: ibas.emMessageType.WARNING,
-                                message: ibas.i18n.prop("shell_data_deleted_and_created"),
-                                onCompleted(): void {
-                                    that.show();
-                                }
-                            });
-                        }
-                    }
-                });
-                // 开始查询数据
-                return;
-            }
-        }
+        this.editData = arguments[0];
         super.run();
     }
     /** 待编辑的数据 */
     protected editData: bo.BONumbering;
     /** 保存数据 */
-    protected saveData(): void {
+    protected saveBOSeriesNumbering(bo: bo.BOSeriesNumbering): void {
         let that: this = this;
+        if (ibas.strings.isEmpty(bo.objectCode)) {
+            bo.objectCode = this.editData.objectCode;
+        }
+        if (ibas.strings.isEmpty(bo.template)) {
+            // 默认编码，八位流水，不足补零
+            bo.template = "%08d";
+        }
         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-        boRepository.saveBONumbering({
-            beSaved: this.editData,
-            onCompleted(opRslt: ibas.IOperationResult<bo.BONumbering>): void {
+        boRepository.saveBOSeriesNumbering({
+            beSaved: bo,
+            onCompleted(opRslt: ibas.IOperationResult<bo.BOSeriesNumbering>): void {
                 try {
                     that.busy(false);
                     if (opRslt.resultCode !== 0) {
@@ -97,10 +68,10 @@ export class BONumberingEditApp extends ibas.Application<IBONumberingEditView> {
                             ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
                         that.editData = undefined;
                     } else {
-                        // 替换编辑对象
-                        that.editData = opRslt.resultObjects.firstOrDefault();
+                        // 从新查询所有
                         that.messages(ibas.emMessageType.SUCCESS,
                             ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                        that.fetchBOSeriesNumbering();
                     }
                     // 刷新当前视图
                     that.viewShowed();
@@ -112,9 +83,38 @@ export class BONumberingEditApp extends ibas.Application<IBONumberingEditView> {
         this.busy(true);
         this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
     }
+    /** 查询数据 */
+    protected fetchBOSeriesNumbering(): void {
+        this.busy(true);
+        let criteria: ibas.ICriteria = new ibas.Criteria();
+        let condition: ibas.ICondition = criteria.conditions.create();
+        condition.alias = bo.BOSeriesNumbering.PROPERTY_OBJECTCODE_NAME;
+        condition.value = this.editData.objectCode;
+        let that: this = this;
+        let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
+        boRepository.fetchBOSeriesNumbering({
+            criteria: criteria,
+            onCompleted(opRslt: ibas.IOperationResult<bo.BOSeriesNumbering>): void {
+                try {
+                    if (opRslt.resultCode !== 0) {
+                        throw new Error(opRslt.message);
+                    }
+                    that.view.showBOSeriesNumbering(opRslt.resultObjects);
+                    that.busy(false);
+                } catch (error) {
+                    that.messages(error);
+                }
+            }
+        });
+        this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
+    }
 }
 /** 视图-业务对象编号方式 */
-export interface IBONumberingEditView extends ibas.IBOEditView {
+export interface IBONumberingEditView extends ibas.IBOView {
     /** 显示数据 */
     showBONumbering(data: bo.BONumbering): void;
+    /** 保存系列编号方式 */
+    saveBOSeriesNumberingEvent: Function;
+    /** 显示数据 */
+    showBOSeriesNumbering(datas: bo.BOSeriesNumbering[]): void;
 }

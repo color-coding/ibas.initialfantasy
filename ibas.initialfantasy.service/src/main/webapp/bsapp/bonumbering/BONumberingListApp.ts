@@ -31,6 +31,7 @@ export class BONumberingListApp extends ibas.Application<IBONumberingListView> {
         super.registerView();
         // 其他事件
         this.view.editDataEvent = this.editData;
+        this.view.fetchDataEvent = this.fetchData;
     }
     /** 启动应用 */
     run(...args: any[]): void {
@@ -49,6 +50,7 @@ export class BONumberingListApp extends ibas.Application<IBONumberingListView> {
     /** 查询数据 */
     protected fetchData(criteria: ibas.ICriteria): void {
         this.busy(true);
+        criteria.result = -1;// 解决不了多主键分页问题，目前都查
         let that: this = this;
         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
         boRepository.fetchBONumbering({

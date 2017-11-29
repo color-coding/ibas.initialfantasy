@@ -85,6 +85,7 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/boinformation.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/variable.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/project.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/bonumbering.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");

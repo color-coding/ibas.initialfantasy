@@ -42,3 +42,6 @@ import { BOInformation } from "./BOInformation";
 ibas.boFactory.register(BOInformation.BUSINESS_OBJECT_CODE, BOInformation);
 import { Project } from "./Project";
 ibas.boFactory.register(Project.BUSINESS_OBJECT_CODE, Project);
+import { BONumbering, BOSeriesNumbering } from "./BONumbering";
+ibas.boFactory.register(BONumbering);
+ibas.boFactory.register(BOSeriesNumbering);

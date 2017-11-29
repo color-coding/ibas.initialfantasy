@@ -26,7 +26,7 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
-            editable:true,
+            editable: true,
             content: [
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
@@ -84,6 +84,22 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     type: sap.m.InputType.Text
                 }).bindProperty("value", {
                     path: "/objectCode"
+                }),
+                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_series") }),
+                new sap.m.Select("", {
+                    items: [
+                        new sap.ui.core.Item("", {
+                            text: ibas.i18n.prop("shell_manual"),
+                            key: "0",
+                        }),
+                        new sap.ui.core.Item("", {
+                            text: ibas.i18n.prop("shell_automatic"),
+                            key: "1",
+                        }),
+                    ]
+                }).bindProperty("selectedKey", {
+                    path: "/series",
+                    type: "sap.ui.model.type.Integer"
                 }),
             ]
         });

@@ -16,6 +16,8 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
@@ -31,6 +33,78 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
  */
 @Path("data")
 public class DataService extends BORepositoryInitialFantasyShell {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBONumbering")
+	public OperationResult<BONumbering> fetchBONumbering(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchBONumbering(criteria, token);
+	}
+
+	/**
+	 * 保存-业务对象编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBONumbering")
+	public OperationResult<BONumbering> saveBONumbering(BONumbering bo, @QueryParam("token") String token) {
+		return super.saveBONumbering(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象序列编号方式
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBOSeriesNumbering")
+	public OperationResult<BOSeriesNumbering> fetchBOSeriesNumbering(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchBOSeriesNumbering(criteria, token);
+	}
+
+	/**
+	 * 保存-业务对象序列编号方式
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBOSeriesNumbering")
+	public OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo,
+			@QueryParam("token") String token) {
+		return super.saveBOSeriesNumbering(bo, token);
+	}
 
 	// --------------------------------------------------------------------------------------------//
 	/**
