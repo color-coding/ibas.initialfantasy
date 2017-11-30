@@ -43,7 +43,6 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 
 	@Override
 	public OperationResult<User> tokenConnect(String token) {
-		OperationResult<User> opRslt = new OperationResult<User>();
 		try {
 			this.setUserToken(token);
 			// 当前口令被失败，判断用户状态
@@ -68,34 +67,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (boUser == null) {
 				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", token));
 			}
-			org.colorcoding.ibas.bobas.organization.IUser orgUser = this.organizeUser(boUser);
-			opRslt.setUserSign(orgUser.getToken());
-			opRslt.addResultObjects(orgUser);
-			// 返回公司代码
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC"),
-					"CONFIG_ITEM"));
-			// 返回审批方法
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY, "initial"),
-					"CONFIG_ITEM"));
-			// 返回组织方式
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY, "initial"),
-					"CONFIG_ITEM"));
-			// 返回权限判断方式
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY, "initial"),
-					"CONFIG_ITEM"));
+			return this.createConnectResult(boUser);
 		} catch (Exception e) {
-			opRslt.setError(e);
+			return new OperationResult<User>(e);
 		}
-		return opRslt;
 	}
 
 	@Override
 	public OperationResult<User> userConnect(String user, String password) {
-		OperationResult<User> opRslt = new OperationResult<User>();
 		try {
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
@@ -120,43 +99,41 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (!boUser.checkPassword(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
-			org.colorcoding.ibas.bobas.organization.IUser orgUser = this.organizeUser(boUser);
-			opRslt.setUserSign(orgUser.getToken());
-			opRslt.addResultObjects(orgUser);
-			// 返回公司代码
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC"),
-					"CONFIG_ITEM"));
-			// 返回审批方法
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY, "initial"),
-					"CONFIG_ITEM"));
-			// 返回组织方式
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY, "initial"),
-					"CONFIG_ITEM"));
-			// 返回权限判断方式
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY,
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY, "initial"),
-					"CONFIG_ITEM"));
+			return this.createConnectResult(boUser);
 		} catch (Exception e) {
-			opRslt.setError(e);
+			return new OperationResult<User>(e);
 		}
-		return opRslt;
 	}
 
-	/**
-	 * 组织用户
-	 *
-	 * @param boUser
-	 * @return
-	 */
-	private org.colorcoding.ibas.bobas.organization.IUser organizeUser(IUser boUser) {
+	private OperationResult<User> createConnectResult(IUser boUser) {
+		OperationResult<User> opRslt = new OperationResult<User>();
 		// 登录此即刷新组织用户
-		User sUser = User.create(boUser);
-		IOrganizationManager orgManager = OrganizationFactory.create().createManager();
-		orgManager.register(sUser);
-		return sUser;
+		User orgUser = User.create(boUser);
+		OrganizationFactory.create().createManager().register(orgUser);
+		opRslt.setUserSign(orgUser.getToken());
+		opRslt.addResultObjects(orgUser);
+		String tag = "CONFIG_ITEM", value = null;
+		// 返回公司代码
+		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY);
+		if (value != null && !value.isEmpty()) {
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, value, tag));
+		}
+		// 返回审批方法
+		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY);
+		if (value != null && !value.isEmpty()) {
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY, value, tag));
+		}
+		// 返回组织方式
+		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY);
+		if (value != null && !value.isEmpty()) {
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY, value, tag));
+		}
+		// 返回权限判断方式
+		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY);
+		if (value != null && !value.isEmpty()) {
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY, value, tag));
+		}
+		return opRslt;
 	}
 
 	@Override

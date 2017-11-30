@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { CONSOLE_ID, CONSOLE_NAME, CONSOLE_VERSION } from "../api/index";
+import { CONSOLE_ID, CONSOLE_NAME, CONSOLE_VERSION, CONFIG_VALUE_ORGANIZATION_WAY } from "../api/index";
 import { ApplicationFunctionFunc, ApplicationFunctionChooseServiceMapping } from "./applicationfunction/index";
 import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from "./applicationmodule/index";
 import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
@@ -58,7 +58,6 @@ export class Console extends ibas.ModuleConsole {
         this.register(new ApplicationModuleChooseServiceMapping());
         this.register(new ApplicationPlatformChooseServiceMapping());
         this.register(new OrganizationChooseServiceMapping());
-        this.register(new RoleChooseServiceMapping());
         this.register(new OrganizationLinkServiceMapping());
         this.register(new UserChooseServiceMapping());
         this.register(new UserLinkServiceMapping());
@@ -67,6 +66,10 @@ export class Console extends ibas.ModuleConsole {
         this.register(new VariableChooseServiceMapping());
         this.register(new ProjectChooseServiceMapping());
         this.register(new ProjectLinkServiceMapping());
+        if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
+            // 组织为本模块实现
+            this.register(new RoleChooseServiceMapping());
+        }
         // 注册常驻应用
         this.register(new UserProfileApp());
     }
