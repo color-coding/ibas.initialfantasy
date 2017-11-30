@@ -36,9 +36,8 @@ import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
 /**
  * 带壳应用的业务仓库
- * 
- * @author Niuren.Zhu
  *
+ * @author Niuren.Zhu
  */
 public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy implements IBORepositoryShell {
 
@@ -73,8 +72,21 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			opRslt.setUserSign(orgUser.getToken());
 			opRslt.addResultObjects(orgUser);
 			// 返回公司代码
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, "CONFIG_ITEM",
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC")));
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC"),
+					"CONFIG_ITEM"));
+			// 返回审批方法
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY, "initial"),
+					"CONFIG_ITEM"));
+			// 返回组织方式
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY, "initial"),
+					"CONFIG_ITEM"));
+			// 返回权限判断方式
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY, "initial"),
+					"CONFIG_ITEM"));
 		} catch (Exception e) {
 			opRslt.setError(e);
 		}
@@ -112,8 +124,21 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			opRslt.setUserSign(orgUser.getToken());
 			opRslt.addResultObjects(orgUser);
 			// 返回公司代码
-			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, "CONFIG_ITEM",
-					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC")));
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY, "CC"),
+					"CONFIG_ITEM"));
+			// 返回审批方法
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY, "initial"),
+					"CONFIG_ITEM"));
+			// 返回组织方式
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY, "initial"),
+					"CONFIG_ITEM"));
+			// 返回权限判断方式
+			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY,
+					MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY, "initial"),
+					"CONFIG_ITEM"));
 		} catch (Exception e) {
 			opRslt.setError(e);
 		}
@@ -122,7 +147,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 
 	/**
 	 * 组织用户
-	 * 
+	 *
 	 * @param boUser
 	 * @return
 	 */
