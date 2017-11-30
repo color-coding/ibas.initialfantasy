@@ -53,7 +53,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 对象编码 属性
 	 */
-	@DbField(name = "ObjectCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "ObjectCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_OBJECTCODE = registerProperty(PROPERTY_OBJECTCODE_NAME,
 			String.class, MY_CLASS);
 
@@ -213,7 +213,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 模板 属性
 	 */
-	@DbField(name = "Template", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Template", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_TEMPLATE = registerProperty(PROPERTY_TEMPLATE_NAME, String.class,
 			MY_CLASS);
 
