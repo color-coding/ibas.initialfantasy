@@ -81,7 +81,7 @@ export class UserEditApp extends ibas.BOEditApplication<IUserEditView, bo.User> 
                 return;
             }
         }
-        super.run();
+        super.run.apply(this, args);
     }
     /** 待编辑的数据 */
     protected editData: bo.User;

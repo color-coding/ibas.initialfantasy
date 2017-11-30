@@ -51,7 +51,7 @@ export class ApplicationFunctionViewApp extends ibas.BOViewService<IApplicationF
             this.viewData = arguments[0];
             this.show();
         } else {
-            super.run();
+            super.run.apply(this, args);
         }
     }
     private viewData: bo.ApplicationFunction;

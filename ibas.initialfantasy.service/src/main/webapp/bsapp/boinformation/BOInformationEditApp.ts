@@ -83,7 +83,7 @@ export class BOInformationEditApp extends ibas.BOEditApplication<IBOInformationE
                 return;
             }
         }
-        super.run();
+        super.run.apply(this, args);
     }
     /** 待编辑的数据 */
     protected editData: bo.BOInformation;

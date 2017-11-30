@@ -84,7 +84,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
                 return;
             }
         }
-        super.run();
+        super.run.apply(this, args);
     }
     /** 待编辑的数据 */
     protected editData: bo.Privilege;

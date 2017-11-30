@@ -33,16 +33,6 @@ export class BONumberingListApp extends ibas.Application<IBONumberingListView> {
         this.view.editDataEvent = this.editData;
         this.view.fetchDataEvent = this.fetchData;
     }
-    /** 启动应用 */
-    run(...args: any[]): void {
-        let criteria: ibas.ICriteria = arguments[0];
-        if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
-            // 传入了查询，则使用
-            this.view.query(criteria);
-        } else {
-            super.run();
-        }
-    }
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成

@@ -11,9 +11,7 @@ import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 
 /** 应用-更改用户配置 */
-export class ChangeUserProfileApp
-    extends ibas.Application<IChangeUserProfileView>
-    implements ibas.IService<ibas.IDataServiceContract> {
+export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IDataServiceContract> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "2868c3e7-52e3-409d-acba-a62ad0a668bb";
@@ -38,7 +36,7 @@ export class ChangeUserProfileApp
     }
     /** 运行服务 */
     run(contract: ibas.IDataServiceContract): void {
-        super.run();
+        super.run.apply(this, contract);
         let criteria: ibas.ICriteria = new ibas.Criteria();
         let condition: ibas.ICondition = criteria.conditions.create();
         condition.alias = bo.User.PROPERTY_CODE_NAME;

@@ -85,7 +85,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
                 return;
             }
         }
-        super.run();
+        super.run.apply(this, args);
     }
     /** 待编辑的数据 */
     protected editData: bo.BOFiltering;

@@ -37,16 +37,6 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
         this.view.editDataEvent = this.editData;
         this.view.deleteDataEvent = this.deleteData;
     }
-    /** 启动应用 */
-    run(...args: any[]): void {
-        let criteria: ibas.ICriteria = arguments[0];
-        if (ibas.objects.instanceOf(criteria, ibas.Criteria)) {
-            // 传入了查询，则使用
-            this.view.query(criteria);
-        } else {
-            super.run();
-        }
-    }
     /** 视图显示后 */
     protected viewShowed(): void {
         // 视图加载完成
@@ -117,8 +107,8 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
             ));
             return;
         }
-        let beDeleteds:ibas.ArrayList<bo.Project> = new ibas.ArrayList<bo.Project>();
-        if (data instanceof Array ) {
+        let beDeleteds: ibas.ArrayList<bo.Project> = new ibas.ArrayList<bo.Project>();
+        if (data instanceof Array) {
             for (let item of data) {
                 if (ibas.objects.instanceOf(item, bo.Project)) {
                     item.delete();
@@ -140,7 +130,7 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
                 if (action === ibas.emMessageAction.YES) {
                     try {
                         let boRepository: BORepositoryInitialFantasy = new BORepositoryInitialFantasy();
-                        let saveMethod: Function = function(beSaved: bo.Project):void {
+                        let saveMethod: Function = function (beSaved: bo.Project): void {
                             boRepository.saveProject({
                                 beSaved: beSaved,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.Project>): void {
@@ -156,7 +146,7 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
                                             // 处理完成
                                             that.busy(false);
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                            ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
                                         }
                                     } catch (error) {
                                         that.messages(ibas.emMessageType.ERROR,
