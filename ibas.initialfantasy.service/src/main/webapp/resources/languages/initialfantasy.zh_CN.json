@@ -68,9 +68,5 @@
   "initialfantasy_edit_target": "编辑目标",
   "initialfantasy_register_functions": "注册功能",
   "initialfantasy_register_module_functions": "正在注册[{0}]模块功能，请稍后",
-  "em_user": "用户",
-  "em_role": "角色",
-  "em_unavailable": "不可用",
-  "em_available": "可用的",
   "initialfantasy_closing_delimiter": "----结束----"
 }
