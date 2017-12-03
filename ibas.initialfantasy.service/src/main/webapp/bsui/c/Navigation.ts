@@ -161,6 +161,9 @@ export default class Navigation extends ibas.ViewNavigation {
             case systemApps.VariableChooseApp.APPLICATION_ID:
                 view = new systemViews.VariableChooseView();
                 break;
+            case systemApps.ConfigChooseApp.APPLICATION_ID:
+                view = new systemViews.ConfigChooseView();
+                break;
             case projectApps.ProjectListApp.APPLICATION_ID:
                 view = new projectViews.ProjectListView();
                 break;

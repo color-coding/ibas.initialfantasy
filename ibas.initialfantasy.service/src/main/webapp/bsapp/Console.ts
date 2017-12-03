@@ -18,7 +18,7 @@ import { PrivilegeFunc, } from "./privilege/index";
 import { ProjectFunc, ProjectChooseServiceMapping, ProjectLinkServiceMapping } from "./project/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
-import { VariableChooseServiceMapping, RoleChooseServiceMapping } from "./system/index";
+import { VariableChooseServiceMapping, RoleChooseServiceMapping, ConfigChooseServiceMapping } from "./system/index";
 import { BONumberingFunc } from "./bonumbering/index";
 
 /** 模块控制台 */
@@ -64,6 +64,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new ChangeUserProfileMapping());
         this.register(new BOInformationChooseServiceMapping());
         this.register(new VariableChooseServiceMapping());
+        this.register(new ConfigChooseServiceMapping());
         this.register(new ProjectChooseServiceMapping());
         this.register(new ProjectLinkServiceMapping());
         if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
@@ -88,6 +89,7 @@ export class Console extends ibas.ModuleConsole {
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/user.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/boinformation.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/variable.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bo/config.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/project.json");
         ibas.i18n.load(this.rootUrl + "resources/languages/bo/bonumbering.json");
         // 设置资源属性

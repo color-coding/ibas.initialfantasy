@@ -45,6 +45,8 @@ export const BO_CODE_USER: string = "${Company}_SYS_USER";
 export const BO_CODE_BOINFORMATION: string = "${Company}_SYS_BOINFO";
 /** 业务对象编码-系统变量 */
 export const BO_CODE_SYSTEM_VARIABLE: string = "${Company}_SYS_VARIABLE";
+/** 业务对象编码-系统配置 */
+export const BO_CODE_SYSTEM_CONFIG: string = "${Company}_SYS_CONFIG";
 /** 业务对象编码-用户角色（默认与组织相同） */
 export const BO_CODE_ROLE: string = "${Company}_SYS_ROLE";
 /** 业务对象编码-项目 */
