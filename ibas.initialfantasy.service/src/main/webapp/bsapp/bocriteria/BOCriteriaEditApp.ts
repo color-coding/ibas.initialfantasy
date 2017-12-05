@@ -36,7 +36,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         this.view.deleteDataEvent = this.deleteData;
         this.view.createDataEvent = this.createData;
         this.view.chooseApplicationEvent = this.chooseApplication;
-        this.view.chooseTargetEvent = this.chooseTarget;
+        this.view.chooseBusinessObjectEvent = this.chooseBusinessObject;
         this.view.chooseRoleUserEvent = this.chooseRoleUser;
         this.view.editCriteriaEvent = this.editCriteria;
     }
@@ -177,12 +177,12 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
 
     }
     /** 选择业务对象编码 */
-    chooseTarget(): void {
+    chooseBusinessObject(): void {
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.BOInformation>({
             boCode: bo.BO_CODE_BOINFORMATION,
             onCompleted(selecteds: ibas.List<bo.BOInformation>): void {
-                that.view.target = selecteds.firstOrDefault().name;
+                that.view.target = selecteds.firstOrDefault().code;
             }
         });
     }
@@ -249,7 +249,7 @@ export interface IBOCriteriaEditView extends ibas.IBOEditView {
     /** 选择应用 */
     chooseApplicationEvent: Function;
     /** 选择查询目标 */
-    chooseTargetEvent: Function;
+    chooseBusinessObjectEvent: Function;
     /** 选择用户或角色 */
     chooseRoleUserEvent: Function;
     /** 编辑查询 */

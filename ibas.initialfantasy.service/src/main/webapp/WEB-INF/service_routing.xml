@@ -305,4 +305,36 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>18199a3e-29a7-4d43-ab4b-4de5454eb0a4</Id>
+        <Name>OrganizedRoles</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/organizedroles/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/organizedroles/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>d67cc3ce-2713-4de1-96d6-de884c1d68b3</Id>
+        <Name>OrganizedPosts</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/organizedposts/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/organizedposts/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>

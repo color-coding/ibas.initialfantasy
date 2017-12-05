@@ -64,8 +64,16 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                 })
             ]
         });
-        this.id = this.form.getId();
-        return this.form;
+        return new sap.m.Dialog("", {
+            title: this.title,
+            type: sap.m.DialogType.Standard,
+            state: sap.ui.core.ValueState.None,
+            stretchOnPhone: true,
+            horizontalScrolling: true,
+            verticalScrolling: true,
+            content: [this.form],
+            buttons: [this.darwBars()]
+        });
     }
     private page: sap.m.Page;
     private form: sap.ui.layout.form.SimpleForm;
