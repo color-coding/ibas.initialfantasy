@@ -99,7 +99,7 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
         app.run(data);
     }
     /** 删除数据，参数：目标数据集合 */
-    protected deleteData(data: bo.Project): void {
+    protected deleteData(data: bo.Project | bo.Project[]): void {
         // 检查目标数据
         if (ibas.objects.isNull(data)) {
             this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -110,11 +110,12 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
         let beDeleteds: ibas.ArrayList<bo.Project> = new ibas.ArrayList<bo.Project>();
         if (data instanceof Array) {
             for (let item of data) {
-                if (ibas.objects.instanceOf(item, bo.Project)) {
-                    item.delete();
-                    beDeleteds.add(item);
-                }
+                item.delete();
+                beDeleteds.add(item);
             }
+        } else {
+            data.delete();
+            beDeleteds.add(data);
         }
         // 没有选择删除的对象
         if (beDeleteds.length === 0) {
