@@ -149,14 +149,12 @@ public class ServiceRouting {
 		if (module == null || module.getId() == null) {
 			return done;
 		}
-		for (int i = 0; i < services.size(); i++) {
-			ServiceInformation service = services.get(i);
+		for (ServiceInformation service : this.getServices()) {
 			if (!module.getId().equals(service.getId())) {
 				// 相同的模块ID
 				continue;
 			}
-			for (int j = 0; j < service.getProviders().length; j++) {
-				ServiceProvider provider = service.getProviders()[j];
+			for (ServiceProvider provider : service.getProviders()) {
 				if (!provider.check()) {
 					// 无效的服务
 					continue;
