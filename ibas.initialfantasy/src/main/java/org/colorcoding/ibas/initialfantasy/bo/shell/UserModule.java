@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
+import org.colorcoding.ibas.bobas.serialization.Serializable;
 
 /**
  * 用户应用模块
@@ -17,7 +18,9 @@ import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "UserModule")
 @XmlRootElement(name = "UserModule")
-public class UserModule {
+public class UserModule extends Serializable {
+	private static final long serialVersionUID = 3831331968318582560L;
+
 	public static UserModule create(ApplicationModule4Shell applicationModule) {
 		UserModule userModule = new UserModule();
 		userModule.setId(applicationModule.getModuleId());

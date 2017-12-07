@@ -8,13 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
+import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "User")
 @XmlRootElement(name = "User")
-public class User implements org.colorcoding.ibas.bobas.organization.IUser {
+public class User extends Serializable implements org.colorcoding.ibas.bobas.organization.IUser {
+
+	private static final long serialVersionUID = 1850586878174104320L;
 
 	public static User create(IUser user) {
 		User sUser = new User();

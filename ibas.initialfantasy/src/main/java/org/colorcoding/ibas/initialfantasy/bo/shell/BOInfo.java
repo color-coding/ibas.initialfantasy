@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
 
@@ -21,7 +22,9 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformati
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "BOInfo")
 @XmlRootElement(name = "BOInfo")
-public class BOInfo {
+public class BOInfo extends Serializable {
+
+	private static final long serialVersionUID = -1142157290145455819L;
 
 	public static BOInfo create(IBOInformation boItem) {
 		BOInfo boInfo = new BOInfo();

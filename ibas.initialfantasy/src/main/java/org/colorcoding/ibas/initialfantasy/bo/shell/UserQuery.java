@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
+import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 
 /**
@@ -18,7 +19,9 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "UserQuery")
 @XmlRootElement(name = "UserQuery")
-public class UserQuery {
+public class UserQuery extends Serializable {
+
+	private static final long serialVersionUID = -4083527956575040669L;
 
 	public static UserQuery create(BOCriteria boItem) {
 		UserQuery query = new UserQuery();

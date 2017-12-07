@@ -1,12 +1,12 @@
 package org.colorcoding.ibas.initialfantasy.routing;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,7 +14,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.data.ArrayList;
+import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.message.Logger;
+import org.colorcoding.ibas.bobas.serialization.ISerializer;
+import org.colorcoding.ibas.bobas.serialization.SerializationException;
+import org.colorcoding.ibas.bobas.serialization.SerializerFactory;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 
@@ -27,13 +32,13 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "ServiceRouting", namespace = MyConfiguration.NAMESPACE_SERVICE)
 @XmlRootElement(name = "ServiceRouting", namespace = MyConfiguration.NAMESPACE_SERVICE)
-@XmlSeeAlso({ ServiceInformation.class, ServiceProvider.class, ServiceInformations.class })
+@XmlSeeAlso({ ServiceInformation.class, ServiceProvider.class })
 public class ServiceRouting {
 	public static final String MSG_SERVICE_ROUTING_LOAD_CONFIG = "routing: load config [%s].";
 	public static final String MSG_SERVICE_ROUTING_ADDRESS = "routing: module [%s - %s].\n  data: [%s].\n  view: [%s].";
 
 	private ServiceRouting() {
-
+		this.services = new ArrayList<>();
 	}
 
 	private volatile static ServiceRouting instance;
@@ -51,11 +56,11 @@ public class ServiceRouting {
 	}
 
 	@XmlElement(name = "ServiceInformation", type = ServiceInformation.class)
-	private ServiceInformations services;
+	private List<ServiceInformation> services;
 
-	protected ServiceInformations getServices() {
+	protected List<ServiceInformation> getServices() {
 		if (this.services == null) {
-			this.services = new ServiceInformations();
+			this.services = new ArrayList<>();
 		}
 		return services;
 	}
@@ -91,27 +96,17 @@ public class ServiceRouting {
 		if (file.exists()) {
 			file.delete();
 		}
-		file.createNewFile();
-		try {
-			JAXBContext context = JAXBContext.newInstance(ServiceRouting.class);
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");// //编码格式
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);// 是否格式化生成的xml串
-			marshaller.marshal(routing, file);
-		} catch (JAXBException e) {
-			file.delete();
-			throw e;
-		}
+		ISerializer<?> serializer = SerializerFactory.create().createManager().create("xml");
+		serializer.serialize(routing, new FileOutputStream(file));
 	}
 
-	public void load() throws JAXBException {
+	public void load() throws JAXBException, SerializationException, FileNotFoundException {
 		File file = new File(this.getServiceFilePath());
 		if (!file.exists()) {
 			return;
 		}
-		JAXBContext context = JAXBContext.newInstance(ServiceRouting.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		Object object = unmarshaller.unmarshal(file);
+		ISerializer<?> serializer = SerializerFactory.create().createManager().create("xml");
+		Object object = serializer.deserialize(new FileInputStream(file), ServiceRouting.class);
 		if (object instanceof ServiceRouting) {
 			ServiceRouting routing = (ServiceRouting) object;
 			this.services = routing.getServices();
@@ -134,12 +129,11 @@ public class ServiceRouting {
 				provider.setEnabled(true);
 				information.addProvider(provider);
 				routing.getServices().add(information);
-
 				this.save(routing);
 			}
 			this.load();
-		} catch (JAXBException | IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			Logger.log(e);
 		}
 	}
 

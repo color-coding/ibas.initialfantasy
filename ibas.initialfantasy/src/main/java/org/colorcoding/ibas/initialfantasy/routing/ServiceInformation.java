@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -18,7 +19,10 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "ServiceInformation", namespace = MyConfiguration.NAMESPACE_SERVICE)
 @XmlRootElement(name = "ServiceInformation", namespace = MyConfiguration.NAMESPACE_SERVICE)
-public class ServiceInformation {
+public class ServiceInformation extends Serializable {
+
+	private static final long serialVersionUID = 1640998860336850685L;
+
 	private String id;
 
 	/**
@@ -98,11 +102,7 @@ public class ServiceInformation {
 	/**
 	 * 添加-服务提供者
 	 * 
-	 * public void setProviders(ServiceProvider[] providers) { this.providers =
-	 * providers; }
-	 * 
 	 */
-
 	public void addProvider(ServiceProvider provider) {
 		int index = 0;
 		if (this.providers == null || this.providers.length == 0) {
