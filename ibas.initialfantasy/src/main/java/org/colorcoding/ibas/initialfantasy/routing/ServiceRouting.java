@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.data.ArrayList;
+import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.serialization.ISerializer;
@@ -53,6 +54,24 @@ public class ServiceRouting {
 			}
 		}
 		return instance;
+	}
+
+	private String runtime;
+
+	/**
+	 * 获取-运行时
+	 * 
+	 */
+	public String getRuntime() {
+		return runtime;
+	}
+
+	/**
+	 * 设置-运行时
+	 * 
+	 */
+	public void setRuntime(String runtime) {
+		this.runtime = runtime;
 	}
 
 	@XmlElement(name = "ServiceInformation", type = ServiceInformation.class)
@@ -109,6 +128,12 @@ public class ServiceRouting {
 		Object object = serializer.deserialize(new FileInputStream(file), ServiceRouting.class);
 		if (object instanceof ServiceRouting) {
 			ServiceRouting routing = (ServiceRouting) object;
+			for (ServiceInformation item : routing.getServices()) {
+				if (item.getRuntime() == null || item.getRuntime().isEmpty()) {
+					item.setRuntime(this.getRuntime());
+				}
+				this.getServices().add(item);
+			}
 			this.services = routing.getServices();
 			Logger.log(MSG_SERVICE_ROUTING_LOAD_CONFIG, file.getPath());
 		}
@@ -116,6 +141,7 @@ public class ServiceRouting {
 
 	protected void initialize() {
 		try {
+			this.setRuntime(Long.toString(DateTime.getNow().getTime()));
 			File file = new File(this.getServiceFilePath());
 			if (!file.exists()) {
 				ServiceRouting routing = new ServiceRouting();
@@ -154,6 +180,7 @@ public class ServiceRouting {
 				// 相同的模块ID
 				continue;
 			}
+			module.setRuntime(service.getRuntime());
 			for (ServiceProvider provider : service.getProviders()) {
 				if (!provider.check()) {
 					// 无效的服务

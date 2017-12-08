@@ -68,7 +68,6 @@ public class ServiceInformation extends Serializable {
 	/**
 	 * 获取-服务描述
 	 * 
-	 * @return
 	 */
 	@XmlElement(name = "Description")
 	public String getDescription() {
@@ -81,6 +80,25 @@ public class ServiceInformation extends Serializable {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	private String runtime;
+
+	/**
+	 * 获取-运行时
+	 * 
+	 */
+	@XmlElement(name = "Runtime")
+	public String getRuntime() {
+		return runtime;
+	}
+
+	/**
+	 * 设置-运行时
+	 * 
+	 */
+	public void setRuntime(String runtime) {
+		this.runtime = runtime;
 	}
 
 	@XmlElementWrapper(name = "Providers")

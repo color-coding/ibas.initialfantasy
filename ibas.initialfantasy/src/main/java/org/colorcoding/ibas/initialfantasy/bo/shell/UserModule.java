@@ -120,6 +120,25 @@ public class UserModule extends Serializable {
 		this.authorise = authorise;
 	}
 
+	private String runtime;
+
+	/**
+	 * 获取-运行时
+	 * 
+	 */
+	@XmlElement(name = "Runtime")
+	public String getRuntime() {
+		return runtime;
+	}
+
+	/**
+	 * 设置-运行时
+	 * 
+	 */
+	public void setRuntime(String runtime) {
+		this.runtime = runtime;
+	}
+
 	@Override
 	public String toString() {
 		return String.format("{module: %s|%s}", this.getId(), this.getName());
