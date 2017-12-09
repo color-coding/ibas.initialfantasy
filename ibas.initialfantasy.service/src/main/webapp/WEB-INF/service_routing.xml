@@ -162,6 +162,22 @@
         </Providers>
     </ServiceInformation>
     <ServiceInformation>
+        <Id>689bc97c-c7a8-4e7f-a5e4-b2003da0ffa0</Id>
+        <Name>IntegrationDevelopment</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/integration/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/integration/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
         <Id>bad47859-3d74-4b2b-975a-48c635406be4</Id>
         <Name>Materials</Name>
         <Providers>
