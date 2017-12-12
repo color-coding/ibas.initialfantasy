@@ -53,6 +53,7 @@ export class BONumberingEditView extends ibas.BOView implements IBONumberingEdit
             selectionMode: sap.ui.table.SelectionMode.None,
             extension: new sap.m.Toolbar("", {
                 content: [
+                    new sap.m.ToolbarSpacer(""),
                     new sap.m.Button("", {
                         text: ibas.i18n.prop("shell_data_add"),
                         type: sap.m.ButtonType.Transparent,
@@ -72,6 +73,27 @@ export class BONumberingEditView extends ibas.BOView implements IBONumberingEdit
             enableSelectAll: false,
             visibleRowCount: 5,
             rows: "{/rows}",
+            rowActionCount: 2,
+            rowActionTemplate: new sap.ui.table.RowAction({
+                items: [
+                    new sap.ui.table.RowActionItem({
+                        icon: "sap-icon://save",
+                        press: function (oEvent: any): void {
+                            that.fireViewEvents(that.saveBOSeriesNumberingEvent, this.getBindingContext().getObject());
+                        },
+                    }),
+                    new sap.ui.table.RowActionItem({
+                        icon: "sap-icon://delete",
+                        press: function (oEvent: any): void {
+                            let bo: bo.BOSeriesNumbering = this.getBindingContext().getObject();
+                            if (!ibas.objects.isNull(bo)) {
+                                bo.delete();
+                                that.fireViewEvents(that.saveBOSeriesNumberingEvent, bo);
+                            }
+                        },
+                    }),
+                ]
+            }),
             columns: [
                 new sap.ui.table.Column("", {
                     label: ibas.i18n.prop("bo_boseriesnumbering_series"),
@@ -113,16 +135,6 @@ export class BONumberingEditView extends ibas.BOView implements IBONumberingEdit
                         wrapping: false
                     }).bindProperty("text", {
                         path: "nextNumber"
-                    })
-                }),
-                new sap.ui.table.Column("", {
-                    template: new sap.m.Button("", {
-                        width: "100%",
-                        type: sap.m.ButtonType.Transparent,
-                        icon: "sap-icon://save",
-                        press: function (): void {
-                            that.fireViewEvents(that.saveBOSeriesNumberingEvent, this.getBindingContext().getObject());
-                        }
                     })
                 }),
             ]

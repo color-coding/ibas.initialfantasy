@@ -74,7 +74,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
                 content: [
                 ]
             }),
-            enableSelectAll: false,
+            selectionMode: sap.ui.table.SelectionMode.None,
             visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
             rows: "{/rows}",
             columns: [

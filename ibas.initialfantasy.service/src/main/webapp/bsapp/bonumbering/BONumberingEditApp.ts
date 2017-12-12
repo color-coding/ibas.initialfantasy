@@ -66,7 +66,6 @@ export class BONumberingEditApp extends ibas.Application<IBONumberingEditView> {
                         // 删除成功，释放当前对象
                         that.messages(ibas.emMessageType.SUCCESS,
                             ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
-                        that.editData = undefined;
                     } else {
                         // 从新查询所有
                         that.messages(ibas.emMessageType.SUCCESS,
@@ -85,6 +84,9 @@ export class BONumberingEditApp extends ibas.Application<IBONumberingEditView> {
     }
     /** 查询数据 */
     protected fetchBOSeriesNumbering(): void {
+        if (ibas.objects.isNull(this.editData)) {
+            return;
+        }
         this.busy(true);
         let criteria: ibas.ICriteria = new ibas.Criteria();
         let condition: ibas.ICondition = criteria.conditions.create();
