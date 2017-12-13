@@ -51,7 +51,7 @@ export class BONumberingEditView extends ibas.BOView implements IBONumberingEdit
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_boseriesnumbering") }));
         this.table = new sap.ui.table.Table("", {
             selectionMode: sap.ui.table.SelectionMode.None,
-            extension: new sap.m.Toolbar("", {
+            toolbar: new sap.m.Toolbar("", {
                 content: [
                     new sap.m.ToolbarSpacer(""),
                     new sap.m.Button("", {
@@ -71,6 +71,7 @@ export class BONumberingEditView extends ibas.BOView implements IBONumberingEdit
                 ]
             }),
             enableSelectAll: false,
+            selectionBehavior: sap.ui.table.SelectionBehavior.Row,
             visibleRowCount: 5,
             rows: "{/rows}",
             rowActionCount: 2,

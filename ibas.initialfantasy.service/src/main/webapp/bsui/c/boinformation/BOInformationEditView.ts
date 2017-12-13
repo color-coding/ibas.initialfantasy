@@ -70,7 +70,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
         });
         this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bopropertyinformation") }));
         this.tableBOPropertyInformation = new sap.ui.table.Table("", {
-            extension: new sap.m.Toolbar("", {
+            toolbar: new sap.m.Toolbar("", {
                 content: [
                 ]
             }),
