@@ -290,32 +290,16 @@
         </Providers>
     </ServiceInformation>
     <ServiceInformation>
-        <Id>8d71fc16-7eb7-49d8-9ffb-5fcc91998aa2</Id>
-        <Name>Receipts</Name>
+        <Id>77d894db-e7f7-4fdd-910c-7835612407be</Id>
+        <Name>ReceiptPayment</Name>
         <Providers>
             <Provider>
-                <Address>http://localhost:8080/receipts/services/rest/data</Address>
+                <Address>http://localhost:8080/receiptpayment/services/rest/data</Address>
                 <Enabled>true</Enabled>
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/receipts/</Address>
-                <Enabled>true</Enabled>
-                <Type>VIEW</Type>
-            </Provider>
-        </Providers>
-    </ServiceInformation>
-    <ServiceInformation>
-        <Id>0f0ddc35-04df-45be-8bea-26b354882743</Id>
-        <Name>Payments</Name>
-        <Providers>
-            <Provider>
-                <Address>http://localhost:8080/payments/services/rest/data</Address>
-                <Enabled>true</Enabled>
-                <Type>DATA</Type>
-            </Provider>
-            <Provider>
-                <Address>.../../../test/apps/payments/</Address>
+                <Address>.../../../test/apps/receiptpayment/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
