@@ -60,6 +60,12 @@ class BOConverter4if extends ibas.BOConverter {
             if (property === bo.Project.PROPERTY_STATUS_NAME) {
                 return ibas.enums.toString(ibas.emDocumentStatus, value);
             }
+        }else if (boName === bo.BOPropertyInformation.name) {
+            if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
+                property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME ||
+                property === bo.BOPropertyInformation.PROPERTY_EDITABLE_NAME) {
+                return ibas.enums.toString(ibas.emYesNo, value);
+            }
         }
         return super.convertData(boName, property, value);
     }
@@ -91,6 +97,12 @@ class BOConverter4if extends ibas.BOConverter {
         } else if (boName === bo.Project.name) {
             if (property === bo.Project.PROPERTY_STATUS_NAME) {
                 return ibas.enums.valueOf(ibas.emDocumentStatus, value);
+            }
+        }else if (boName === bo.BOPropertyInformation.name) {
+            if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
+                property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME ||
+                property === bo.BOPropertyInformation.PROPERTY_EDITABLE_NAME) {
+                return ibas.enums.valueOf(ibas.emYesNo, value);
             }
         }
         return super.parsingData(boName, property, value);
