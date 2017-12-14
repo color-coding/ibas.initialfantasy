@@ -3,6 +3,7 @@ package org.colorcoding.ibas.initialfantasy.bo.bonumbering;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
@@ -22,6 +23,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = BOSeriesNumbering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlType(name = BOSeriesNumbering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> implements IBOSeriesNumbering, IBOMaxValueKey {
 
