@@ -37,9 +37,11 @@ export class BONumberingEditApp extends ibas.Application<IBONumberingEditView> {
         this.fetchBOSeriesNumbering();
     }
     /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
+    run(): void;
+    run(data: bo.BONumbering): void;
+    run(): void {
         this.editData = arguments[0];
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 待编辑的数据 */
     protected editData: bo.BONumbering;

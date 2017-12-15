@@ -48,7 +48,9 @@ export class BOInformationEditApp extends ibas.BOEditApplication<IBOInformationE
         this.view.showBOPropertyInformations(this.editData.boPropertyInformations.filterDeleted());
     }
     /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
+    run(): void;
+    run(data: bo.BOInformation): void;
+    run(): void {
         let that: this = this;
         if (ibas.objects.instanceOf(arguments[0], bo.BOInformation)) {
             // 尝试重新查询编辑对象
@@ -83,7 +85,7 @@ export class BOInformationEditApp extends ibas.BOEditApplication<IBOInformationE
                 return;
             }
         }
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 待编辑的数据 */
     protected editData: bo.BOInformation;

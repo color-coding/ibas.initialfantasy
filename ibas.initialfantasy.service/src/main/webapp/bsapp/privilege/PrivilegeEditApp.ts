@@ -49,7 +49,9 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         this.view.showPrivilege(this.editData);
     }
     /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
+    run(): void;
+    run(data: bo.Privilege): void;
+    run(): void {
         let that: this = this;
         if (ibas.objects.instanceOf(arguments[0], bo.Privilege)) {
             // 尝试重新查询编辑对象
@@ -84,7 +86,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
                 return;
             }
         }
-        super.run.apply(this, args);
+        super.run.apply(this, arguments);
     }
     /** 待编辑的数据 */
     protected editData: bo.Privilege;

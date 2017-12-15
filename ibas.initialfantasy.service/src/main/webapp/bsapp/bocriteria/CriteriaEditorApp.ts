@@ -37,7 +37,7 @@ export class CriteriaEditorApp extends ibas.Application<ICriteriaEditorView> {
         this.view.showConditions(this.editData.conditions);
     }
     /** 运行,覆盖原方法 */
-    run(...args: any[]): void {
+    run(): void {
         this.edit(arguments[0]);
     }
     private get editData(): ibas.ICriteria {

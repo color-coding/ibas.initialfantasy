@@ -11,7 +11,7 @@ import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 
 /** 应用-更改用户配置 */
-export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IDataServiceContract> {
+export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IServiceCaller> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "2868c3e7-52e3-409d-acba-a62ad0a668bb";
@@ -34,19 +34,29 @@ export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileVie
     protected viewShowed(): void {
         // 视图加载完成
     }
-    /** 运行服务 */
-    run(contract: ibas.IDataServiceContract): void {
-        super.run.apply(this, contract);
-        let criteria: ibas.ICriteria = new ibas.Criteria();
-        let condition: ibas.ICondition = criteria.conditions.create();
-        condition.alias = bo.User.PROPERTY_CODE_NAME;
-        if (!ibas.objects.isNull(contract) && !ibas.objects.isNull(contract.data)) {
-            condition.value = (<string>contract.data).substring((<string>contract.data).lastIndexOf("/") + 1);
+    /** 运行 */
+    run(): void;
+    /**
+     * 运行
+     * @param caller 服务调用者
+     */
+    run(caller: ibas.IServiceCaller): void;
+    /** 运行 */
+    run(): void {
+        super.run.apply(this, arguments);
+        if (arguments.length === 1) {
+            let caller: ibas.IServiceCaller = arguments[0];
+            let criteria: ibas.ICriteria = new ibas.Criteria();
+            let condition: ibas.ICondition = criteria.conditions.create();
+            condition.alias = bo.User.PROPERTY_CODE_NAME;
+            if (!ibas.strings.isEmpty(caller.category)) {
+                condition.value = caller.category.substring(caller.category.lastIndexOf("/") + 1);
+            }
+            if (ibas.objects.isNull(condition.value)) {
+                condition.value = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
+            }
+            this.fetchUser(criteria);
         }
-        if (ibas.objects.isNull(condition.value)) {
-            condition.value = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
-        }
-        this.fetchUser(criteria);
     }
     private user: bo.User;
     private fetchUser(criteria: ibas.ICriteria): void {
