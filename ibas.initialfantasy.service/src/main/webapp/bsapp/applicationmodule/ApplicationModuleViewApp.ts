@@ -49,7 +49,7 @@ export class ApplicationModuleViewApp extends ibas.BOViewService<IApplicationMod
     run(): void;
     run(data: bo.ApplicationModule): void;
     run(): void {
-        if (!(arguments[0] instanceof bo.ApplicationModule)) {
+        if (ibas.objects.instanceOf(arguments[0], bo.ApplicationModule)) {
             this.viewData = arguments[0];
             this.show();
         } else {
@@ -102,7 +102,7 @@ export class ApplicationModuleLinkServiceMapping extends ibas.BOLinkServiceMappi
         this.boCode = ApplicationModuleViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new ApplicationModuleViewApp();
     }

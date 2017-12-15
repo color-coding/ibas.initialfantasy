@@ -11,7 +11,7 @@ import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 
 /** 应用-更改用户配置 */
-export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IServiceCaller> {
+export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IServiceCaller<ibas.IServiceContract>> {
 
     /** 应用标识 */
     static APPLICATION_ID: string = "2868c3e7-52e3-409d-acba-a62ad0a668bb";
@@ -40,12 +40,12 @@ export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileVie
      * 运行
      * @param caller 服务调用者
      */
-    run(caller: ibas.IServiceCaller): void;
+    run(caller: ibas.IServiceCaller<ibas.IServiceContract>): void;
     /** 运行 */
     run(): void {
         super.run.apply(this, arguments);
         if (arguments.length === 1) {
-            let caller: ibas.IServiceCaller = arguments[0];
+            let caller: ibas.IServiceCaller<ibas.IServiceContract> = arguments[0];
             let criteria: ibas.ICriteria = new ibas.Criteria();
             let condition: ibas.ICondition = criteria.conditions.create();
             condition.alias = bo.User.PROPERTY_CODE_NAME;
@@ -120,7 +120,7 @@ export class ChangeUserProfileMapping extends ibas.ServiceMapping {
         this.name = ChangeUserProfileApp.APPLICATION_NAME;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IServiceContract> {
         return new ChangeUserProfileApp();
     }

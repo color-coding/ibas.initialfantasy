@@ -49,7 +49,7 @@ export class ApplicationPlatformViewApp extends ibas.BOViewService<IApplicationP
     run(): void;
     run(data: bo.ApplicationPlatform): void;
     run(): void {
-        if (!(arguments[0] instanceof bo.ApplicationPlatform)) {
+        if (ibas.objects.instanceOf(arguments[0], bo.ApplicationPlatform)) {
             this.viewData = arguments[0];
             this.show();
         } else {
@@ -102,7 +102,7 @@ export class ApplicationPlatformLinkServiceMapping extends ibas.BOLinkServiceMap
         this.boCode = ApplicationPlatformViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new ApplicationPlatformViewApp();
     }

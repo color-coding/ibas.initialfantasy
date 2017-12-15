@@ -7,7 +7,7 @@
  */
 
 import * as ibas from "ibas/index";
-import { BO_CODE_ROLE } from "../../borep/bo/index";
+import { BO_CODE_ROLE,IRole } from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { OrganizationChooseApp } from "../organization/OrganizationChooseApp";
 
@@ -39,8 +39,8 @@ export class RoleChooseServiceMapping extends ibas.BOChooseServiceMapping {
         this.boCode = RoleChooseApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
-    create(): ibas.IService<ibas.IServiceCaller> {
+    /** 创建服务实例 */
+    create(): ibas.IService<ibas.IBOChooseServiceCaller<IRole>> {
         return new RoleChooseApp();
     }
 }

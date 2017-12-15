@@ -49,7 +49,7 @@ export class BOInformationViewApp extends ibas.BOViewService<IBOInformationViewV
     run(): void;
     run(data: bo.BOInformation): void;
     run(): void {
-        if (!(arguments[0] instanceof bo.BOInformation)) {
+        if (ibas.objects.instanceOf(arguments[0], bo.BOInformation)) {
             this.viewData = arguments[0];
             this.show();
         } else {
@@ -106,7 +106,7 @@ export class BOInformationLinkServiceMapping extends ibas.BOLinkServiceMapping {
         this.boCode = BOInformationViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new BOInformationViewApp();
     }

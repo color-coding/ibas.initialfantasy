@@ -102,7 +102,7 @@ export class ProjectLinkServiceMapping extends ibas.BOLinkServiceMapping {
         this.boCode = ProjectViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new ProjectViewApp();
     }

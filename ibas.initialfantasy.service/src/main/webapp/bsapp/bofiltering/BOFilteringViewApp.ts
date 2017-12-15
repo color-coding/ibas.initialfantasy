@@ -49,7 +49,7 @@ export class BOFilteringViewApp extends ibas.BOViewService<IBOFilteringViewView>
     run(): void;
     run(data: bo.BOFiltering): void;
     run(): void {
-        if (!(arguments[0] instanceof bo.BOFiltering)) {
+        if (ibas.objects.instanceOf(arguments[0], bo.BOFiltering)) {
             this.viewData = arguments[0];
             this.show();
         } else {
@@ -102,7 +102,7 @@ export class BOFilteringLinkServiceMapping extends ibas.BOLinkServiceMapping {
         this.boCode = BOFilteringViewApp.BUSINESS_OBJECT_CODE;
         this.description = ibas.i18n.prop(this.name);
     }
-    /** 创建服务并运行 */
+    /** 创建服务实例 */
     create(): ibas.IService<ibas.IBOLinkServiceCaller> {
         return new BOFilteringViewApp();
     }
