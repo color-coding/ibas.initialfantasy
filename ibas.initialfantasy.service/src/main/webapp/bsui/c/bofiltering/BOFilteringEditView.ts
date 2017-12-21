@@ -34,7 +34,7 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true,
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_general_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_name") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text

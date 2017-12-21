@@ -32,7 +32,7 @@ export class ProjectEditView extends ibas.BOEditView implements IProjectEditView
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true, // 编辑模式影响行高
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_basis_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_general_information") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_project_code") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text
