@@ -51,6 +51,7 @@ export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileVie
             condition.alias = bo.User.PROPERTY_CODE_NAME;
             if (!ibas.strings.isEmpty(caller.category)) {
                 condition.value = caller.category.substring(caller.category.lastIndexOf("/") + 1);
+                ibas.hashEventManager.changeHash("#");
             }
             if (ibas.objects.isNull(condition.value)) {
                 condition.value = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
