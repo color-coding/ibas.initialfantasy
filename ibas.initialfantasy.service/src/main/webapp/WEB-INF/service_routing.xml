@@ -66,6 +66,22 @@
         </Providers>
     </ServiceInformation>
     <ServiceInformation>
+        <Id>41218cef-18b4-4399-ab3c-7ba37bf34b5c</Id>
+        <Name>BarCode</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/barcode/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../../test/apps/barcode/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
         <Id>0dda2ecb-af63-4a3d-b087-aa3dda8179b4</Id>
         <Name>ReportAnalysis</Name>
         <Providers>

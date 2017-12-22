@@ -23,6 +23,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
         // 不重复创建工具条钮
         if (ibas.objects.isNull(this.bar)) {
             this.bar = new sap.m.Button("", {
+                tooltip: this.title,
                 icon: "sap-icon://my-view",
                 type: sap.m.ButtonType.Transparent,
                 press: function (): void {
