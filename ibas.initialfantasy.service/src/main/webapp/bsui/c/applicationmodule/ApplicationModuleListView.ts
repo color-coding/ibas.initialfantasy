@@ -107,7 +107,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.ApplicationModule>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.ApplicationModule>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -118,7 +118,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.ApplicationModule>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.ApplicationModule>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -130,7 +130,7 @@ export class ApplicationModuleListView extends ibas.BOListView implements IAppli
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.ApplicationModule>(that.table)
+                                openui5.utils.getSelecteds<bo.ApplicationModule>(that.table)
                             );
                         }
                     }),

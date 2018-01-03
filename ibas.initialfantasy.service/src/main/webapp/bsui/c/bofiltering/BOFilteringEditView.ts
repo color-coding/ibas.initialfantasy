@@ -116,7 +116,7 @@ export class BOFilteringEditView extends ibas.BOEditView implements IBOFiltering
                         press: function (): void {
                             that.fireViewEvents(that.removeBOFilteringConditionEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOFilteringCondition>(that.tableBOFilteringCondition)
+                                openui5.utils.getSelecteds<bo.BOFilteringCondition>(that.tableBOFilteringCondition)
                             );
                         }
                     })

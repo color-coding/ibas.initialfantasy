@@ -38,7 +38,7 @@ export class PrivilegeChooseView extends ibas.BOChooseView implements IPrivilege
                 press: function (): void {
                     that.fireViewEvents(that.chooseDataEvent,
                         // 获取表格选中的对象
-                        openui5.utils.getTableSelecteds<bo.Privilege>(that.table)
+                        openui5.utils.getSelecteds<bo.Privilege>(that.table)
                     );
                 }
             }),

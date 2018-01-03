@@ -136,7 +136,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                         type: sap.m.ButtonType.Transparent,
                         icon: "sap-icon://less",
                         press: function (): void {
-                            let selected: any = openui5.utils.getTableSelecteds(that.table).firstOrDefault();
+                            let selected: any = openui5.utils.getSelecteds(that.table).firstOrDefault();
                             that.fireViewEvents(that.removeConditionEvent, selected);
                         }
                     })

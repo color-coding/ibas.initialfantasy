@@ -119,7 +119,7 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Privilege>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.Privilege>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -131,7 +131,7 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Privilege>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.Privilege>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -143,7 +143,7 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Privilege>(that.table)
+                                openui5.utils.getSelecteds<bo.Privilege>(that.table)
                             );
                         }
                     }),
@@ -242,6 +242,6 @@ export class PrivilegeListView extends ibas.BOListView implements IPrivilegeList
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.Privilege[] {
-        return openui5.utils.getTableSelecteds<bo.Privilege>(this.table);
+        return openui5.utils.getSelecteds<bo.Privilege>(this.table);
     }
 }

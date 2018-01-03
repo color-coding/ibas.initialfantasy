@@ -104,7 +104,7 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.ApplicationPlatform>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.ApplicationPlatform>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -115,7 +115,7 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.ApplicationPlatform>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.ApplicationPlatform>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -127,7 +127,7 @@ export class ApplicationPlatformListView extends ibas.BOListView implements IApp
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.ApplicationPlatform>(that.table)
+                                openui5.utils.getSelecteds<bo.ApplicationPlatform>(that.table)
                             );
                         }
                     }),

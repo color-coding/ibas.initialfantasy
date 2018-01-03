@@ -38,7 +38,7 @@ export class OrganizationChooseView extends ibas.BOChooseView implements IOrgani
                 press: function (): void {
                     that.fireViewEvents(that.chooseDataEvent,
                         // 获取表格选中的对象
-                        openui5.utils.getTableSelecteds<bo.Organization>(that.table)
+                        openui5.utils.getSelecteds<bo.Organization>(that.table)
                     );
                 }
             }),

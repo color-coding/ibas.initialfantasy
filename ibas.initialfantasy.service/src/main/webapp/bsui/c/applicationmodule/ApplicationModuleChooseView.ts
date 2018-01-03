@@ -38,7 +38,7 @@ export class ApplicationModuleChooseView extends ibas.BOChooseView implements IA
                 press: function (): void {
                     that.fireViewEvents(that.chooseDataEvent,
                         // 获取表格选中的对象
-                        openui5.utils.getTableSelecteds<bo.ApplicationModule>(that.table)
+                        openui5.utils.getSelecteds<bo.ApplicationModule>(that.table)
                     );
                 }
             }),

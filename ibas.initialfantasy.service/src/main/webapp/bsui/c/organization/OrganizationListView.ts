@@ -92,7 +92,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Organization>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.Organization>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -104,7 +104,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Organization>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.Organization>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -116,7 +116,7 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.Organization>(that.table)
+                                openui5.utils.getSelecteds<bo.Organization>(that.table)
                             );
                         }
                     }),
@@ -215,6 +215,6 @@ export class OrganizationListView extends ibas.BOListView implements IOrganizati
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.Organization[] {
-        return openui5.utils.getTableSelecteds<bo.Organization>(this.table);
+        return openui5.utils.getSelecteds<bo.Organization>(this.table);
     }
 }

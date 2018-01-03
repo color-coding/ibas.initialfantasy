@@ -38,7 +38,7 @@ export class BOFilteringChooseView extends ibas.BOChooseView implements IBOFilte
                 press: function (): void {
                     that.fireViewEvents(that.chooseDataEvent,
                         // 获取表格选中的对象
-                        openui5.utils.getTableSelecteds<bo.BOFiltering>(that.table)
+                        openui5.utils.getSelecteds<bo.BOFiltering>(that.table)
                     );
                 }
             }),

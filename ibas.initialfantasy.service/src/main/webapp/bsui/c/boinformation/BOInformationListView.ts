@@ -90,7 +90,7 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOInformation>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.BOInformation>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -101,7 +101,7 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOInformation>(that.table)
+                                openui5.utils.getSelecteds<bo.BOInformation>(that.table)
                             );
                         }
                     }),
@@ -113,7 +113,7 @@ export class BOInformationListView extends ibas.BOListView implements IBOInforma
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOInformation>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.BOInformation>(that.table).firstOrDefault()
                             );
                         }
                     }),

@@ -100,7 +100,7 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
                         press: function (): void {
                             that.fireViewEvents(that.viewDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOFiltering>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.BOFiltering>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -112,7 +112,7 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
                         press: function (): void {
                             that.fireViewEvents(that.editDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOFiltering>(that.table).firstOrDefault()
+                                openui5.utils.getSelecteds<bo.BOFiltering>(that.table).firstOrDefault()
                             );
                         }
                     }),
@@ -124,7 +124,7 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
                         press: function (): void {
                             that.fireViewEvents(that.deleteDataEvent,
                                 // 获取表格选中的对象
-                                openui5.utils.getTableSelecteds<bo.BOFiltering>(that.table)
+                                openui5.utils.getSelecteds<bo.BOFiltering>(that.table)
                             );
                         }
                     }),
@@ -223,6 +223,6 @@ export class BOFilteringListView extends ibas.BOListView implements IBOFiltering
     }
     /** 获取选择的数据 */
     getSelecteds(): bo.BOFiltering[] {
-        return openui5.utils.getTableSelecteds<bo.BOFiltering>(this.table);
+        return openui5.utils.getSelecteds<bo.BOFiltering>(this.table);
     }
 }

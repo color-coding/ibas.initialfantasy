@@ -38,7 +38,7 @@ export class UserChooseView extends ibas.BOChooseView implements IUserChooseView
                 press: function (): void {
                     that.fireViewEvents(that.chooseDataEvent,
                         // 获取表格选中的对象
-                        openui5.utils.getTableSelecteds<bo.User>(that.table)
+                        openui5.utils.getSelecteds<bo.User>(that.table)
                     );
                 }
             }),
