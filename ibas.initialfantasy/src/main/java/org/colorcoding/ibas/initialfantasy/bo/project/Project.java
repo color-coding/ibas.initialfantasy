@@ -1,5 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.project;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -18,6 +20,7 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.ownership.ITeamDataOwnership;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -29,7 +32,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlRootElement(name = Project.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(Project.BUSINESS_OBJECT_CODE)
 public class Project extends BusinessObject<Project>
-		implements IProject, IBOTagDeleted, IBOTagReferenced, IApprovalData {
+		implements IProject, IBOTagDeleted, IBOTagReferenced, IApprovalData, ITeamDataOwnership {
 
 	/**
 	 * 序列化版本标记
@@ -886,6 +889,23 @@ public class Project extends BusinessObject<Project>
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
+	}
+
+	@Override
+	public Integer[] getTeamUsers() {
+		String users = this.getTeamMembers();
+		if (users == null || users.isEmpty()) {
+			return new Integer[] {};
+		}
+		ArrayList<Integer> members = new ArrayList<>();
+		for (String item : users.split(",")) {
+			item = item.trim();
+			if (item.isEmpty()) {
+				continue;
+			}
+			members.add(Integer.valueOf(item));
+		}
+		return members.toArray(new Integer[] {});
 	}
 
 	/**
