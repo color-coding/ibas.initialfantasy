@@ -67,7 +67,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (boUser == null) {
 				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", token));
 			}
-			return this.createConnectResult(boUser);
+			return this.connectResult(boUser);
 		} catch (Exception e) {
 			return new OperationResult<User>(e);
 		}
@@ -99,13 +99,13 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (!boUser.checkPassword(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
-			return this.createConnectResult(boUser);
+			return this.connectResult(boUser);
 		} catch (Exception e) {
 			return new OperationResult<User>(e);
 		}
 	}
 
-	private OperationResult<User> createConnectResult(IUser boUser) {
+	private OperationResult<User> connectResult(IUser boUser) {
 		OperationResult<User> opRslt = new OperationResult<User>();
 		// 登录此即刷新组织用户
 		User orgUser = User.create(boUser);

@@ -193,6 +193,22 @@ public class User extends BusinessObject<User>
 		this.setProperty(PROPERTY_PASSWORD, encrypt(value));
 	}
 
+	private String tmp_password;
+
+	@Override
+	protected void beforeMarshal() {
+		super.beforeMarshal();
+		this.tmp_password = this.getProperty(PROPERTY_PASSWORD);
+		this.setProperty(PROPERTY_PASSWORD, null);
+	}
+
+	@Override
+	protected void afterMarshal() {
+		this.setProperty(PROPERTY_PASSWORD, this.tmp_password);
+		this.tmp_password = null;
+		super.afterMarshal();
+	}
+
 	/**
 	 * 属性名称-激活
 	 */
