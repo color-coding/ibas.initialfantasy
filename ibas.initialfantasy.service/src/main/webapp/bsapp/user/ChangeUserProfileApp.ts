@@ -11,6 +11,7 @@ import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 
 /** 应用-更改用户配置 */
+// tslint:disable-next-line:max-line-length
 export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IServiceCaller<ibas.IServiceContract>> {
 
     /** 应用标识 */
@@ -51,7 +52,7 @@ export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileVie
             condition.alias = bo.User.PROPERTY_CODE_NAME;
             if (!ibas.strings.isEmpty(caller.category)) {
                 condition.value = caller.category.substring(caller.category.lastIndexOf("/") + 1);
-                ibas.hashEventManager.changeHash("#");
+                ibas.urls.changeHash("#");
             }
             if (ibas.objects.isNull(condition.value)) {
                 condition.value = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
