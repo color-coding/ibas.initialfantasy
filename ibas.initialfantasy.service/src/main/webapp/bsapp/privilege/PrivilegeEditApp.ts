@@ -195,7 +195,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
             boCode: bo.ApplicationPlatform.BUSINESS_OBJECT_CODE,
             criteria: [
                 new ibas.Condition(bo.ApplicationPlatform.PROPERTY_ACTIVATED_NAME,
-                    ibas.emConditionOperation.EQUAL, "Y"),
+                    ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
             ],
             onCompleted(selecteds: ibas.List<bo.ApplicationPlatform>): void {
                 that.editData.platformId = selecteds.firstOrDefault().platformCode;
@@ -209,7 +209,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
             boCode: bo.ApplicationModule.BUSINESS_OBJECT_CODE,
             criteria: [
                 new ibas.Condition(bo.ApplicationModule.PROPERTY_ACTIVATED_NAME,
-                    ibas.emConditionOperation.EQUAL, "Y"),
+                    ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
             ],
             onCompleted(selecteds: ibas.List<bo.ApplicationModule>): void {
                 that.editData.moduleId = selecteds.firstOrDefault().moduleId;
