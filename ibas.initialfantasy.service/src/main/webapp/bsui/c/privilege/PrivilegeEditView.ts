@@ -34,7 +34,7 @@ export class PrivilegeEditView extends ibas.BOEditView implements IPrivilegeEdit
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true,
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_general_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_rolecode") }),
                 new sap.m.Input("", {
                     showValueHelp: true,
@@ -85,7 +85,7 @@ export class PrivilegeEditView extends ibas.BOEditView implements IPrivilegeEdit
                     path: "/authoriseValue",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_objectkey") }),
                 new sap.m.Input("", {
                     enabled: false,

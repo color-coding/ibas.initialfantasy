@@ -40,7 +40,7 @@ export class BOCriteriaEditView extends ibas.BOEditView implements IBOCriteriaEd
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true,
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_general_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_applicationid") }),
                 new sap.m.Input("", {
                     showValueHelp: true,

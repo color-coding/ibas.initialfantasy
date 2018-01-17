@@ -26,7 +26,7 @@ export class ApplicationPlatformEditView extends ibas.BOEditView implements IApp
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable:true,
             content: [
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_general_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_platformid") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text
@@ -53,7 +53,7 @@ export class ApplicationPlatformEditView extends ibas.BOEditView implements IApp
                     path: "/activated",
                     type: "sap.ui.model.type.Integer"
                 }),
-                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_other_information") }),
+                new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationplatform_objectkey") }),
                 new sap.m.Input("", {
                     enabled: false,
