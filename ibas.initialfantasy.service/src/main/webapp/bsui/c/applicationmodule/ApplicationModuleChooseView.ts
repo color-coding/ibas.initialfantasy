@@ -113,7 +113,8 @@ export class ApplicationModuleChooseView extends ibas.BOChooseView implements IA
                 }),
             ]
         });
-        this.id = this.table.getId();
+        // 调整选择样式风格
+        openui5.utils.changeSelectionStyle(this.table, this.chooseType);
         // 添加列表自动查询事件
         openui5.utils.triggerNextResults({
             listener: this.table,
