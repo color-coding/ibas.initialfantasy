@@ -214,6 +214,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.IRole>({
             boCode: bo.BO_CODE_ROLE,
+            chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<bo.IRole>): void {
                 that.editData.roleCode = selecteds.firstOrDefault().code;
                 if (ibas.strings.isEmpty(that.editData.name)) {
@@ -229,6 +230,7 @@ export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditV
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.BOInformation>({
             boCode: bo.BO_CODE_BOINFORMATION,
+            chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<bo.BOInformation>): void {
                 that.editData.boCode = selecteds.firstOrDefault().code;
                 if (ibas.strings.isEmpty(that.editData.name)) {

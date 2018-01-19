@@ -183,6 +183,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.IRole>({
             boCode: bo.BO_CODE_ROLE,
+            chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<bo.IRole>): void {
                 that.editData.roleCode = selecteds.firstOrDefault().code;
             }
@@ -193,6 +194,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.ApplicationPlatform>({
             boCode: bo.ApplicationPlatform.BUSINESS_OBJECT_CODE,
+            chooseType: ibas.emChooseType.SINGLE,
             criteria: [
                 new ibas.Condition(bo.ApplicationPlatform.PROPERTY_ACTIVATED_NAME,
                     ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
@@ -207,6 +209,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.ApplicationModule>({
             boCode: bo.ApplicationModule.BUSINESS_OBJECT_CODE,
+            chooseType: ibas.emChooseType.SINGLE,
             criteria: [
                 new ibas.Condition(bo.ApplicationModule.PROPERTY_ACTIVATED_NAME,
                     ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
@@ -221,6 +224,7 @@ export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView,
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.ApplicationFunction>({
             boCode: bo.ApplicationFunction.BUSINESS_OBJECT_CODE,
+            chooseType: ibas.emChooseType.SINGLE,
             criteria: [],
             onCompleted(selecteds: ibas.List<bo.ApplicationFunction>): void {
                 that.editData.target = selecteds.firstOrDefault().functionId;

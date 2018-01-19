@@ -86,9 +86,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case bocriteriaApps.BOCriteriaChooseApp.APPLICATION_ID:
                 view = new bocriteriaViews.BOCriteriaChooseView();
                 break;
-            case bocriteriaApps.CriteriaEditorApp.APPLICATION_ID:
-                view = new bocriteriaViews.CriteriaEditorView();
-                break;
             case bocriteriaApps.BOCriteriaEditApp.APPLICATION_ID:
                 view = new bocriteriaViews.BOCriteriaEditView();
                 break;
@@ -163,6 +160,9 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case systemApps.ConfigChooseApp.APPLICATION_ID:
                 view = new systemViews.ConfigChooseView();
+                break;
+            case systemApps.CriteriaEditorService.APPLICATION_ID:
+                view = new systemViews.CriteriaEditorView();
                 break;
             case projectApps.ProjectListApp.APPLICATION_ID:
                 view = new projectViews.ProjectListView();

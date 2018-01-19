@@ -10,3 +10,4 @@
 export * from "./VariableChooseApp";
 export * from "./ConfigChooseApp";
 export * from "./RoleChooseApp";
+export * from "./CriteriaEditorService";

@@ -18,7 +18,10 @@ import { PrivilegeFunc, } from "./privilege/index";
 import { ProjectFunc, ProjectChooseServiceMapping, ProjectLinkServiceMapping } from "./project/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
 import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
-import { VariableChooseServiceMapping, RoleChooseServiceMapping, ConfigChooseServiceMapping } from "./system/index";
+import {
+    VariableChooseServiceMapping, RoleChooseServiceMapping,
+    ConfigChooseServiceMapping, CriteriaEditorServiceMapping,
+} from "./system/index";
 import { BONumberingFunc } from "./bonumbering/index";
 
 /** 模块控制台 */
@@ -67,6 +70,7 @@ export class Console extends ibas.ModuleConsole {
         this.register(new ConfigChooseServiceMapping());
         this.register(new ProjectChooseServiceMapping());
         this.register(new ProjectLinkServiceMapping());
+        this.register(new CriteriaEditorServiceMapping());
         if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
             // 组织为本模块实现
             this.register(new RoleChooseServiceMapping());

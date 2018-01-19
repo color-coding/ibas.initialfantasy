@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { DataConverter4if } from "../../borep/DataConverters";
-import { CriteriaEditorApp } from "./CriteriaEditorApp";
 
 /** 应用-业务对象检索条件 */
 export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditView, bo.BOCriteria> {
@@ -190,6 +189,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         let that: this = this;
         ibas.servicesManager.runChooseService<bo.BOInformation>({
             boCode: bo.BO_CODE_BOINFORMATION,
+            chooseType: ibas.emChooseType.SINGLE,
             onCompleted(selecteds: ibas.List<bo.BOInformation>): void {
                 that.view.target = selecteds.firstOrDefault().code;
             }
@@ -201,6 +201,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         if (this.editData.assignedType === bo.emAssignedType.ROLE) {
             ibas.servicesManager.runChooseService<bo.IRole>({
                 boCode: bo.BO_CODE_ROLE,
+                chooseType: ibas.emChooseType.SINGLE,
                 onCompleted(selecteds: ibas.List<bo.IRole>): void {
                     that.editData.assigned = selecteds.firstOrDefault().code;
                 }
@@ -208,6 +209,7 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
         } else if (this.editData.assignedType === bo.emAssignedType.USER) {
             ibas.servicesManager.runChooseService<bo.User>({
                 boCode: bo.BO_CODE_USER,
+                chooseType: ibas.emChooseType.SINGLE,
                 onCompleted(selecteds: ibas.List<bo.User>): void {
                     that.editData.assigned = selecteds.firstOrDefault().code;
                 }
@@ -233,15 +235,14 @@ export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditVie
             criteria.businessObject = this.view.target;
         }
         let that: this = this;
-        let editor: CriteriaEditorApp = new CriteriaEditorApp();
-        editor.viewShower = this.viewShower;
-        editor.navigation = this.navigation;
-        editor.edit({
-            criteria: criteria,
-            onCompleted(opRslt: ibas.IOperationResult<ibas.ICriteria>): void {
-                // 编辑完成
+        ibas.servicesManager.runApplicationService<ibas.ICriteriaEditorServiceContract, ibas.ICriteria>({
+            proxy: new ibas.CriteriaEditorServiceProxy({
+                target: this.view.target,
+                criteria: criteria
+            }),
+            onCompleted(result: ibas.ICriteria): void {
                 let converter: DataConverter4if = new DataConverter4if();
-                let tmp: any = converter.convert(this.criteria, "");
+                let tmp: any = converter.convert(result, "");
                 that.editData.data = JSON.stringify(tmp);
             }
         });

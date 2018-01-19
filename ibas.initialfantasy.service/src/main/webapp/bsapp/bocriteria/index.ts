@@ -10,5 +10,4 @@
 export * from "./BOCriteriaFunc";
 export * from "./BOCriteriaListApp";
 export * from "./BOCriteriaChooseApp";
-export * from "./CriteriaEditorApp";
 export * from "./BOCriteriaEditApp";
