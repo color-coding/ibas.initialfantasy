@@ -121,6 +121,9 @@ export class ApplicationPlatformListApp extends ibas.BOListApplication<IApplicat
         }
         // 没有选择删除的对象
         if (beDeleteds.length === 0) {
+            this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                ibas.i18n.prop("shell_data_delete")
+            ));
             return;
         }
         let that: this = this;
