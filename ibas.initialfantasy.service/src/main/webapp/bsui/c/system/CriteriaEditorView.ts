@@ -24,15 +24,17 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
     darw(): any {
         let that: this = this;
         this.txtTarget = new sap.m.Input("", {
+            width: "70%",
             editable: false
         });
         this.form = new sap.ui.layout.form.SimpleForm("", {
+            editable: true,
             content: [
                 new sap.m.Toolbar("", {
                     content: [
                         new sap.m.Label("", {
                             text: ibas.i18n.prop("initialfantasy_edit_target"),
-                            width: "20%"
+                            width: "30%"
                         }),
                         this.txtTarget,
                     ]
@@ -46,7 +48,9 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
             stretchOnPhone: true,
             horizontalScrolling: true,
             verticalScrolling: true,
-            content: [this.form],
+            content: [
+                this.form
+            ],
             buttons: [
                 new sap.m.Button("", {
                     text: ibas.i18n.prop("shell_confirm"),
@@ -76,6 +80,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
     showTarget(target: string, aliases: ibas.KeyText[]): void {
         this.txtTarget.setValue(target);
         this.table = this.createTable(aliases);
+        this.form.addContent(this.table);
     }
     /** 显示查询条件 */
     showConditions(datas: ibas.ICondition[]): void {

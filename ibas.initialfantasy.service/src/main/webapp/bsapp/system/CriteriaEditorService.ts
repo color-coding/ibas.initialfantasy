@@ -67,11 +67,19 @@ export class CriteriaEditorService
                 }
             }
         }
+        // 设置名称
+        if (typeof contract.target === "string") {
+            this.editData.businessObject = contract.target;
+        } else if (typeof contract.target === "object") {
+            this.editData.businessObject = ibas.objects.getName(ibas.objects.getType(contract.target));
+        } else if (typeof contract.target === "function") {
+            this.editData.businessObject = ibas.objects.getName(contract.target);
+        }
+        // 设置查询条件字段
         if (this.aliases.length === 0) {
             // 尝试从目标解析
             if (typeof contract.target === "string") {
                 // 编辑的对象名称，从数据库中查询
-                this.editData.businessObject = contract.target;
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
@@ -89,19 +97,19 @@ export class CriteriaEditorService
                     }
                 });
                 return;
-            } else if (typeof contract.target === "object") {
+            } else if (typeof contract.target === "function") {
                 // 编辑的为对象，解析对象属性
-                let name: string = ibas.objects.getName(contract.target);
-                if (!ibas.strings.isEmpty(name)) {
-                    this.editData.businessObject = name;
-                    name = name.toLowerCase();
+                if (!ibas.strings.isEmpty(this.editData.businessObject)) {
+                    let name: string = this.editData.businessObject.toLowerCase();
                     for (let item of Object.getOwnPropertyNames(contract.target)) {
-                        let key: string = item;
-                        let text: string = ibas.i18n.prop("bo_" + name + "_" + item.toString());
-                        if (text.startsWith("[") && text.endsWith("]")) {
-                            text = key;
+                        if (item.startsWith("PROPERTY_") && item.endsWith("_NAME")) {
+                            let key: string = contract.target[item];
+                            let text: string = ibas.i18n.prop("bo_" + name + "_" + key.toLowerCase());
+                            if (text.startsWith("[") && text.endsWith("]")) {
+                                text = key;
+                            }
+                            this.aliases.add(new ibas.KeyText(key, text));
                         }
-                        this.aliases.add(new ibas.KeyText(key, text));
                     }
                 }
             }
