@@ -97,6 +97,9 @@ public class OwnershipJudger implements IOwnershipJudger {
 		}
 		List<IBOFiltering> filterings = this.getBOFilterings(bo.getObjectCode(), roles);
 		for (IBOFiltering filtering : filterings) {
+			if (filtering == null) {
+				continue;
+			}
 			BOFilteringJudgmentLink judgmentLink = new BOFilteringJudgmentLink();
 			judgmentLink.parsingConditions(filtering.getBOFilteringConditions());
 			boolean matching = judgmentLink.judge(bo);
@@ -172,11 +175,18 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 			IBORepositoryInitialFantasyApp boRepository = new BORepositoryInitialFantasy();
 			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<?> operationResult = boRepository.fetchBOFiltering(criteria);
-			for (IBOFiltering filtering : operationResult.getResultObjects().toArray(new IBOFiltering[] {})) {
-				String key = String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(), filtering.getRoleCode());
-				this.boFilterings.put(key, filtering);// 缓存数据
+			IOperationResult<IBOFiltering> operationResult = boRepository.fetchBOFiltering(criteria);
+			for (IBOFiltering filtering : operationResult.getResultObjects()) {
+				this.boFilterings.put(
+						String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(), filtering.getRoleCode()),
+						filtering);// 缓存数据
 				filterings.add(filtering);// 返回数据
+			}
+			// 缓存未配置的
+			for (String role : doRoles) {
+				if (filterings.firstOrDefault(c -> c.getRoleCode().equals(role)) == null) {
+					this.boFilterings.put(String.format(FILTERING_KEY_TEMPLATE, boCode, role), null);// 缓存数据
+				}
 			}
 		}
 		return filterings;
