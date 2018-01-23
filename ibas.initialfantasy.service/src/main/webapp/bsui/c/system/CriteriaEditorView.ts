@@ -24,33 +24,25 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
     darw(): any {
         let that: this = this;
         this.txtTarget = new sap.m.Input("", {
-            width: "70%",
             editable: false
         });
-        this.form = new sap.ui.layout.form.SimpleForm("", {
-            editable: true,
-            content: [
-                new sap.m.Toolbar("", {
-                    content: [
-                        new sap.m.Label("", {
-                            text: ibas.i18n.prop("initialfantasy_edit_target"),
-                            width: "30%"
-                        }),
-                        this.txtTarget,
-                    ]
-                })
-            ]
-        });
-        return new sap.m.Dialog("", {
+        this.form = new sap.m.Dialog("", {
             title: this.title,
             type: sap.m.DialogType.Standard,
             state: sap.ui.core.ValueState.None,
             stretchOnPhone: true,
             horizontalScrolling: true,
             verticalScrolling: true,
-            content: [
-                this.form
-            ],
+            subHeader: new sap.m.Toolbar("", {
+                content: [
+                    new sap.m.ToolbarSpacer("", { width: "5px" }),
+                    new sap.m.Label("", {
+                        text: ibas.i18n.prop("initialfantasy_edit_target"),
+                    }),
+                    this.txtTarget,
+                    new sap.m.ToolbarSpacer("", { width: "5px" }),
+                ]
+            }),
             buttons: [
                 new sap.m.Button("", {
                     text: ibas.i18n.prop("shell_confirm"),
@@ -70,9 +62,9 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
                 }),
             ]
         });
+        return this.form;
     }
-    private page: sap.m.Page;
-    private form: sap.ui.layout.form.SimpleForm;
+    private form: sap.m.Dialog;
     private table: sap.ui.table.Table;
     private txtTarget: sap.m.Input;
 
