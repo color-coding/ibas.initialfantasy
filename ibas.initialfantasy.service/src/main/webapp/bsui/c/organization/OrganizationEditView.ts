@@ -24,7 +24,7 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
     darw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
-            editable:true,
+            editable: true,
             content: [
                 new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_code") }),
@@ -32,6 +32,13 @@ export class OrganizationEditView extends ibas.BOEditView implements IOrganizati
                     type: sap.m.InputType.Text
                 }).bindProperty("value", {
                     path: "/code"
+                }),
+                new sap.m.ex.SeriesSelect("", {
+                    objectCode: ibas.config.applyVariables(bo.BO_CODE_ORGANIZATION),
+                    bindingValue: {
+                        path: "/series",
+                        type: "sap.ui.model.type.Integer",
+                    }
                 }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_name") }),
                 new sap.m.Input("", {

@@ -39,6 +39,13 @@ export class ProjectEditView extends ibas.BOEditView implements IProjectEditView
                 }).bindProperty("value", {
                     path: "/code"
                 }),
+                new sap.m.ex.SeriesSelect("", {
+                    objectCode: ibas.config.applyVariables(bo.BO_CODE_PROJECT),
+                    bindingValue: {
+                        path: "/series",
+                        type: "sap.ui.model.type.Integer",
+                    }
+                }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_project_name") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text

@@ -35,6 +35,13 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                 }).bindProperty("value", {
                     path: "/code"
                 }),
+                new sap.m.ex.SeriesSelect("", {
+                    objectCode: ibas.config.applyVariables(bo.BO_CODE_USER),
+                    bindingValue: {
+                        path: "/series",
+                        type: "sap.ui.model.type.Integer",
+                    }
+                }),
                 new sap.m.Label("", { text: ibas.i18n.prop("bo_user_name") }),
                 new sap.m.Input("", {
                     type: sap.m.InputType.Text
@@ -84,22 +91,6 @@ export class UserEditView extends ibas.BOEditView implements IUserEditView {
                     type: sap.m.InputType.Text
                 }).bindProperty("value", {
                     path: "/objectCode"
-                }),
-                new sap.m.Label("", { text: ibas.i18n.prop("bo_user_series") }),
-                new sap.m.Select("", {
-                    items: [
-                        new sap.ui.core.Item("", {
-                            text: ibas.i18n.prop("shell_manual"),
-                            key: "0",
-                        }),
-                        new sap.ui.core.Item("", {
-                            text: ibas.i18n.prop("shell_automatic"),
-                            key: "1",
-                        }),
-                    ]
-                }).bindProperty("selectedKey", {
-                    path: "/series",
-                    type: "sap.ui.model.type.Integer"
                 }),
             ]
         });

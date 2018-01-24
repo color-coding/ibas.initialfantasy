@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.approval.IApprovalData;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
 import org.colorcoding.ibas.bobas.bo.IBOTagDeleted;
 import org.colorcoding.ibas.bobas.bo.IBOTagReferenced;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
@@ -34,7 +35,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlRootElement(name = Project.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(Project.BUSINESS_OBJECT_CODE)
 public class Project extends BusinessObject<Project>
-		implements IProject, IBOTagDeleted, IBOTagReferenced, IApprovalData, ITeamDataOwnership {
+		implements IProject, IBOTagDeleted, IBOTagReferenced, IApprovalData, ITeamDataOwnership, IBOSeriesKey {
 
 	/**
 	 * 序列化版本标记
@@ -908,6 +909,11 @@ public class Project extends BusinessObject<Project>
 			members.add(Integer.valueOf(item));
 		}
 		return members.toArray(new Integer[] {});
+	}
+
+	@Override
+	public void setSeriesValue(Object value) {
+		this.setCode((String) value);
 	}
 
 	/**
