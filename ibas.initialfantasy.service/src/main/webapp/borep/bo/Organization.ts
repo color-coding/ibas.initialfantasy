@@ -57,13 +57,13 @@ export class Organization extends BOMasterData<Organization> implements IOrganiz
         this.setProperty(Organization.PROPERTY_NAME_NAME, value);
     }
 
-    /** 映射的属性名称-是否启用 */
+    /** 映射的属性名称-激活 */
     static PROPERTY_ACTIVATED_NAME: string = "Activated";
-    /** 获取-是否启用 */
+    /** 获取-激活 */
     get activated(): emYesNo {
         return this.getProperty<emYesNo>(Organization.PROPERTY_ACTIVATED_NAME);
     }
-    /** 设置-是否启用 */
+    /** 设置-激活 */
     set activated(value: emYesNo) {
         this.setProperty(Organization.PROPERTY_ACTIVATED_NAME, value);
     }

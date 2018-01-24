@@ -117,7 +117,7 @@ public class Organization extends BusinessObject<Organization> implements IOrgan
 	}
 
 	/**
-	 * 属性名称-是否启用
+	 * 属性名称-激活
 	 */
 	private static final String PROPERTY_ACTIVATED_NAME = "Activated";
 
@@ -129,7 +129,7 @@ public class Organization extends BusinessObject<Organization> implements IOrgan
 			emYesNo.class, MY_CLASS);
 
 	/**
-	 * 获取-是否启用
+	 * 获取-激活
 	 * 
 	 * @return 值
 	 */
@@ -139,7 +139,7 @@ public class Organization extends BusinessObject<Organization> implements IOrgan
 	}
 
 	/**
-	 * 设置-是否启用
+	 * 设置-激活
 	 * 
 	 * @param value
 	 *            值

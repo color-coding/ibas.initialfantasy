@@ -57,13 +57,13 @@ export class Project extends BOMasterData<Project> implements IProject {
         this.setProperty(Project.PROPERTY_NAME_NAME, value);
     }
 
-    /** 映射的属性名称-是否启用 */
+    /** 映射的属性名称-激活 */
     static PROPERTY_ACTIVATED_NAME: string = "Activated";
-    /** 获取-是否启用 */
+    /** 获取-激活 */
     get activated(): emYesNo {
         return this.getProperty<emYesNo>(Project.PROPERTY_ACTIVATED_NAME);
     }
-    /** 设置-是否启用 */
+    /** 设置-激活 */
     set activated(value: emYesNo) {
         this.setProperty(Project.PROPERTY_ACTIVATED_NAME, value);
     }

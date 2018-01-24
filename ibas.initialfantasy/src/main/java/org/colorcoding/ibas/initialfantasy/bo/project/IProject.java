@@ -43,14 +43,14 @@ public interface IProject extends IBOMasterData {
 	void setName(String value);
 
 	/**
-	 * 获取-是否启用
+	 * 获取-激活
 	 * 
 	 * @return 值
 	 */
 	emYesNo getActivated();
 
 	/**
-	 * 设置-是否启用
+	 * 设置-激活
 	 * 
 	 * @param value
 	 *            值
