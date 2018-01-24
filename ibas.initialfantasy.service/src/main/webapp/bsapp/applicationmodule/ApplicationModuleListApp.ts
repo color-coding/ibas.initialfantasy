@@ -9,7 +9,6 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { ApplicationModuleViewApp } from "./ApplicationModuleViewApp";
 import { ApplicationModuleEditApp } from "./ApplicationModuleEditApp";
 
 /** 列表应用-应用程序模块 */
@@ -80,11 +79,6 @@ export class ApplicationModuleListApp extends ibas.BOListApplication<IApplicatio
             ));
             return;
         }
-        let app: ApplicationModuleViewApp = new ApplicationModuleViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.ApplicationModule): void {

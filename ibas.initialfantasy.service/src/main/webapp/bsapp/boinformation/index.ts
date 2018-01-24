@@ -10,5 +10,4 @@
 export * from "./BOInformationFunc";
 export * from "./BOInformationListApp";
 export * from "./BOInformationChooseApp";
-export * from "./BOInformationViewApp";
 export * from "./BOInformationEditApp";

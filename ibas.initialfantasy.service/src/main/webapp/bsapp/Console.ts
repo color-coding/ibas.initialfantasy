@@ -13,11 +13,11 @@ import { ApplicationModuleFunc, ApplicationModuleChooseServiceMapping, } from ".
 import { ApplicationPlatformFunc, ApplicationPlatformChooseServiceMapping } from "./applicationplatform/index";
 import { BOCriteriaFunc, } from "./bocriteria/index";
 import { BOFilteringFunc, } from "./bofiltering/index";
-import { OrganizationFunc, OrganizationChooseServiceMapping, OrganizationLinkServiceMapping } from "./organization/index";
+import { OrganizationFunc, OrganizationChooseServiceMapping, } from "./organization/index";
 import { PrivilegeFunc, } from "./privilege/index";
-import { ProjectFunc, ProjectChooseServiceMapping, ProjectLinkServiceMapping } from "./project/index";
+import { ProjectFunc, ProjectChooseServiceMapping, } from "./project/index";
 import { BOInformationFunc, BOInformationChooseServiceMapping } from "./boinformation/index";
-import { UserFunc, UserChooseServiceMapping, UserLinkServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
+import { UserFunc, UserChooseServiceMapping, UserProfileApp, ChangeUserProfileMapping } from "./user/index";
 import {
     VariableChooseServiceMapping, RoleChooseServiceMapping,
     ConfigChooseServiceMapping, CriteriaEditorServiceMapping,
@@ -61,15 +61,12 @@ export class Console extends ibas.ModuleConsole {
         this.register(new ApplicationModuleChooseServiceMapping());
         this.register(new ApplicationPlatformChooseServiceMapping());
         this.register(new OrganizationChooseServiceMapping());
-        this.register(new OrganizationLinkServiceMapping());
         this.register(new UserChooseServiceMapping());
-        this.register(new UserLinkServiceMapping());
         this.register(new ChangeUserProfileMapping());
         this.register(new BOInformationChooseServiceMapping());
         this.register(new VariableChooseServiceMapping());
         this.register(new ConfigChooseServiceMapping());
         this.register(new ProjectChooseServiceMapping());
-        this.register(new ProjectLinkServiceMapping());
         this.register(new CriteriaEditorServiceMapping());
         if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
             // 组织为本模块实现

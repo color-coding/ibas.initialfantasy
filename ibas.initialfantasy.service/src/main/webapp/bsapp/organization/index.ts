@@ -10,5 +10,4 @@
 export * from "./OrganizationFunc";
 export * from "./OrganizationListApp";
 export * from "./OrganizationChooseApp";
-export * from "./OrganizationViewApp";
 export * from "./OrganizationEditApp";

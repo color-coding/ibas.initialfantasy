@@ -10,5 +10,4 @@
 export * from "./ApplicationFunctionFunc";
 export * from "./ApplicationFunctionListApp";
 export * from "./ApplicationFunctionChooseApp";
-export * from "./ApplicationFunctionViewApp";
 export * from "./ApplicationFunctionEditApp";

@@ -10,5 +10,4 @@
 export * from "./BOFilteringFunc";
 export * from "./BOFilteringListApp";
 export * from "./BOFilteringChooseApp";
-export * from "./BOFilteringViewApp";
 export * from "./BOFilteringEditApp";

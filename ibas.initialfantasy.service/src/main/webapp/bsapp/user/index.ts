@@ -10,7 +10,6 @@
 export * from "./UserFunc";
 export * from "./UserListApp";
 export * from "./UserChooseApp";
-export * from "./UserViewApp";
 export * from "./UserEditApp";
 export * from "./UserProfileApp";
 export * from "./ChangeUserProfileApp";

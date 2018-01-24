@@ -50,9 +50,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case applicationfunctionApps.ApplicationFunctionChooseApp.APPLICATION_ID:
                 view = new applicationfunctionViews.ApplicationFunctionChooseView();
                 break;
-            case applicationfunctionApps.ApplicationFunctionViewApp.APPLICATION_ID:
-                view = new applicationfunctionViews.ApplicationFunctionViewView();
-                break;
             case applicationfunctionApps.ApplicationFunctionEditApp.APPLICATION_ID:
                 view = new applicationfunctionViews.ApplicationFunctionEditView();
                 break;
@@ -62,9 +59,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case applicationmoduleApps.ApplicationModuleChooseApp.APPLICATION_ID:
                 view = new applicationmoduleViews.ApplicationModuleChooseView();
                 break;
-            case applicationmoduleApps.ApplicationModuleViewApp.APPLICATION_ID:
-                view = new applicationmoduleViews.ApplicationModuleViewView();
-                break;
             case applicationmoduleApps.ApplicationModuleEditApp.APPLICATION_ID:
                 view = new applicationmoduleViews.ApplicationModuleEditView();
                 break;
@@ -73,9 +67,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case applicationplatformApps.ApplicationPlatformChooseApp.APPLICATION_ID:
                 view = new applicationplatformViews.ApplicationPlatformChooseView();
-                break;
-            case applicationplatformApps.ApplicationPlatformViewApp.APPLICATION_ID:
-                view = new applicationplatformViews.ApplicationPlatformViewView();
                 break;
             case applicationplatformApps.ApplicationPlatformEditApp.APPLICATION_ID:
                 view = new applicationplatformViews.ApplicationPlatformEditView();
@@ -95,9 +86,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case bofilteringApps.BOFilteringChooseApp.APPLICATION_ID:
                 view = new bofilteringViews.BOFilteringChooseView();
                 break;
-            case bofilteringApps.BOFilteringViewApp.APPLICATION_ID:
-                view = new bofilteringViews.BOFilteringViewView();
-                break;
             case bofilteringApps.BOFilteringEditApp.APPLICATION_ID:
                 view = new bofilteringViews.BOFilteringEditView();
                 break;
@@ -106,9 +94,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case organizationApps.OrganizationChooseApp.APPLICATION_ID:
                 view = new organizationViews.OrganizationChooseView();
-                break;
-            case organizationApps.OrganizationViewApp.APPLICATION_ID:
-                view = new organizationViews.OrganizationViewView();
                 break;
             case organizationApps.OrganizationEditApp.APPLICATION_ID:
                 view = new organizationViews.OrganizationEditView();
@@ -119,9 +104,6 @@ export default class Navigation extends ibas.ViewNavigation {
             case privilegeApps.PrivilegeChooseApp.APPLICATION_ID:
                 view = new privilegeViews.PrivilegeChooseView();
                 break;
-            case privilegeApps.PrivilegeViewApp.APPLICATION_ID:
-                view = new privilegeViews.PrivilegeViewView();
-                break;
             case privilegeApps.PrivilegeEditApp.APPLICATION_ID:
                 view = new privilegeViews.PrivilegeEditView();
                 break;
@@ -130,9 +112,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case userApps.UserChooseApp.APPLICATION_ID:
                 view = new userViews.UserChooseView();
-                break;
-            case userApps.UserViewApp.APPLICATION_ID:
-                view = new userViews.UserViewView();
                 break;
             case userApps.UserEditApp.APPLICATION_ID:
                 view = new userViews.UserEditView();
@@ -148,9 +127,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case boinformationApps.BOInformationChooseApp.APPLICATION_ID:
                 view = new boinformationViews.BOInformationChooseView();
-                break;
-            case boinformationApps.BOInformationViewApp.APPLICATION_ID:
-                view = new boinformationViews.BOInformationViewView();
                 break;
             case boinformationApps.BOInformationEditApp.APPLICATION_ID:
                 view = new boinformationViews.BOInformationEditView();
@@ -169,9 +145,6 @@ export default class Navigation extends ibas.ViewNavigation {
                 break;
             case projectApps.ProjectChooseApp.APPLICATION_ID:
                 view = new projectViews.ProjectChooseView();
-                break;
-            case projectApps.ProjectViewApp.APPLICATION_ID:
-                view = new projectViews.ProjectViewView();
                 break;
             case projectApps.ProjectEditApp.APPLICATION_ID:
                 view = new projectViews.ProjectEditView();

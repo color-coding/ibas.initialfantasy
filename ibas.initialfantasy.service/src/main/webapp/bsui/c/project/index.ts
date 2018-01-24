@@ -9,5 +9,4 @@
 // 模块索引文件，此文件集中导出类
 export * from "./ProjectListView";
 export * from "./ProjectChooseView";
-export * from "./ProjectViewView";
 export * from "./ProjectEditView";

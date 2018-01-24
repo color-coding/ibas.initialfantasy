@@ -10,5 +10,4 @@
 export * from "./PrivilegeFunc";
 export * from "./PrivilegeListApp";
 export * from "./PrivilegeChooseApp";
-export * from "./PrivilegeViewApp";
 export * from "./PrivilegeEditApp";

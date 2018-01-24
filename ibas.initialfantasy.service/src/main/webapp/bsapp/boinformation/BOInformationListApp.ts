@@ -9,7 +9,6 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { BOInformationViewApp } from "./BOInformationViewApp";
 import { BOInformationEditApp } from "./BOInformationEditApp";
 
 /** 列表应用-业务对象信息 */
@@ -54,9 +53,9 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
                             throw new Error(opRslt.message);
                         }
                         if (opRslt.resultObjects.length === 0) {
-                        that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
-                    }
-                    that.view.showData(opRslt.resultObjects);
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
+                        }
+                        that.view.showData(opRslt.resultObjects);
                         that.busy(false);
                     } catch (error) {
                         that.messages(error);
@@ -84,11 +83,6 @@ export class BOInformationListApp extends ibas.BOListApplication<IBOInformationL
             ));
             return;
         }
-        let app: BOInformationViewApp = new BOInformationViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.BOInformation): void {

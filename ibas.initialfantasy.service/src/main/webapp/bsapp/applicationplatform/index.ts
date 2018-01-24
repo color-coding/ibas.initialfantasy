@@ -10,5 +10,4 @@
 export * from "./ApplicationPlatformFunc";
 export * from "./ApplicationPlatformListApp";
 export * from "./ApplicationPlatformChooseApp";
-export * from "./ApplicationPlatformViewApp";
 export * from "./ApplicationPlatformEditApp";

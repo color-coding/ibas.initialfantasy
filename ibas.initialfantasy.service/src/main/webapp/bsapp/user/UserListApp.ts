@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { DataConverter4if } from "../../borep/DataConverters";
-import { UserViewApp } from "./UserViewApp";
 import { UserEditApp } from "./UserEditApp";
 
 /** 列表应用-用户 */
@@ -81,11 +80,6 @@ export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> 
             ));
             return;
         }
-        let app: UserViewApp = new UserViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.User): void {

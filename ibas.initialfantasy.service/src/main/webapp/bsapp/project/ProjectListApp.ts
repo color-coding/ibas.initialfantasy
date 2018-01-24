@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { DataConverter4if } from "../../borep/DataConverters";
-import { ProjectViewApp } from "./ProjectViewApp";
 import { ProjectEditApp } from "./ProjectEditApp";
 
 /** 列表应用-项目 */
@@ -81,11 +80,6 @@ export class ProjectListApp extends ibas.BOListApplication<IProjectListView, bo.
             ));
             return;
         }
-        let app: ProjectViewApp = new ProjectViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.Project): void {

@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { DataConverter4if } from "../../borep/DataConverters";
-import { OrganizationViewApp } from "./OrganizationViewApp";
 import { OrganizationEditApp } from "./OrganizationEditApp";
 
 /** 列表应用-组织 */
@@ -81,11 +80,6 @@ export class OrganizationListApp extends ibas.BOListApplication<IOrganizationLis
             ));
             return;
         }
-        let app: OrganizationViewApp = new OrganizationViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.Organization): void {

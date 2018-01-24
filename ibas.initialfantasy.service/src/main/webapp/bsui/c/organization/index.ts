@@ -9,5 +9,4 @@
 // 模块索引文件，此文件集中导出类
 export * from "./OrganizationListView";
 export * from "./OrganizationChooseView";
-export * from "./OrganizationViewView";
 export * from "./OrganizationEditView";

@@ -10,5 +10,4 @@
 export * from "./ProjectFunc";
 export * from "./ProjectListApp";
 export * from "./ProjectChooseApp";
-export * from "./ProjectViewApp";
 export * from "./ProjectEditApp";

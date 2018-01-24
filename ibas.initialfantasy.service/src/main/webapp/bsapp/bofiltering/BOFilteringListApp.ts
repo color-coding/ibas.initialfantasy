@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { DataConverter4if } from "../../borep/DataConverters";
-import { BOFilteringViewApp } from "./BOFilteringViewApp";
 import { BOFilteringEditApp } from "./BOFilteringEditApp";
 
 /** 列表应用-业务对象筛选 */
@@ -81,11 +80,6 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
             ));
             return;
         }
-        let app: BOFilteringViewApp = new BOFilteringViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.BOFiltering): void {

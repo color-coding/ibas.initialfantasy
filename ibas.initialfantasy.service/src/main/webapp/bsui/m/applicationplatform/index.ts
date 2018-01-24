@@ -9,5 +9,4 @@
 // 模块索引文件，此文件集中导出类
 export * from "./ApplicationPlatformListView";
 export * from "./ApplicationPlatformChooseView";
-export * from "./ApplicationPlatformViewView";
 export * from "./ApplicationPlatformEditView";

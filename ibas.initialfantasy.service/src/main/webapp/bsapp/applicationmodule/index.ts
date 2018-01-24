@@ -10,5 +10,4 @@
 export * from "./ApplicationModuleFunc";
 export * from "./ApplicationModuleListApp";
 export * from "./ApplicationModuleChooseApp";
-export * from "./ApplicationModuleViewApp";
 export * from "./ApplicationModuleEditApp";

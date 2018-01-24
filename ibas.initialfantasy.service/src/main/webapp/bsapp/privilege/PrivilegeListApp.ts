@@ -10,7 +10,6 @@ import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
 import { DataConverter4if } from "../../borep/DataConverters";
-import { PrivilegeViewApp } from "./PrivilegeViewApp";
 import { PrivilegeEditApp } from "./PrivilegeEditApp";
 
 /** 列表应用-系统权限 */
@@ -81,11 +80,6 @@ export class PrivilegeListApp extends ibas.BOListApplication<IPrivilegeListView,
             ));
             return;
         }
-        let app: PrivilegeViewApp = new PrivilegeViewApp();
-        app.navigation = this.navigation;
-        app.viewShower = this.viewShower;
-        app.run(data);
-
     }
     /** 编辑数据，参数：目标数据 */
     protected editData(data: bo.Privilege): void {

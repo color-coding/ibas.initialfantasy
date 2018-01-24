@@ -9,5 +9,4 @@
 // 模块索引文件，此文件集中导出类
 export * from "./BOFilteringListView";
 export * from "./BOFilteringChooseView";
-export * from "./BOFilteringViewView";
 export * from "./BOFilteringEditView";
