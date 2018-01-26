@@ -19,7 +19,7 @@ export class BONumberingEditView extends ibas.BOView implements IBONumberingEdit
     /** 保存系列编号方式 */
     saveBOSeriesNumberingEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true, // 编辑模式影响行高

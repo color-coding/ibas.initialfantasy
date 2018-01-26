@@ -22,7 +22,7 @@ export class BONumberingListView extends ibas.BOQueryView implements IBONumberin
     /** 编辑数据，参数：目标数据 */
     editDataEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {

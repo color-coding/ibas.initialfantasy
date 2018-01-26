@@ -20,7 +20,7 @@ export class ProjectChooseView extends ibas.BOChooseView implements IProjectChoo
         return bo.Project;
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.table = new sap.ui.table.Table("", {
             enableSelectAll: false,

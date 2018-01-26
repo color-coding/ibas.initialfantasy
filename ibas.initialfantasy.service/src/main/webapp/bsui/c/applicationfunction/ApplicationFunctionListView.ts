@@ -26,7 +26,7 @@ export class ApplicationFunctionListView extends ibas.BOListView implements IApp
     /** 注册功能 */
     registerFunctionsEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("");
         this.table = new sap.ui.table.Table("", {

@@ -21,7 +21,7 @@ export class CriteriaEditorView extends ibas.BODialogView implements ICriteriaEd
     /** 确定 */
     confirmEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.txtTarget = new sap.m.Input("", {
             editable: false

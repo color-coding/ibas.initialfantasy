@@ -25,7 +25,7 @@ export class BOInformationEditView extends ibas.BOEditView implements IBOInforma
     removeBOPropertyInformationEvent: Function;
 
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true,

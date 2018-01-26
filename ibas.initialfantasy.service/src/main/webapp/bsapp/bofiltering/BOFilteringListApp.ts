@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { DataConverter4if } from "../../borep/DataConverters";
+import { DataConverter4IF } from "../../borep/DataConverters";
 import { BOFilteringEditApp } from "./BOFilteringEditApp";
 
 /** 列表应用-业务对象筛选 */
@@ -173,7 +173,7 @@ export class BOFilteringListApp extends ibas.BOListApplication<IBOFilteringListV
         return [
             new ibas.BOListServiceProxy({
                 data: this.view.getSelecteds(),
-                converter: new DataConverter4if(),
+                converter: new DataConverter4IF(),
             })
         ];
     }

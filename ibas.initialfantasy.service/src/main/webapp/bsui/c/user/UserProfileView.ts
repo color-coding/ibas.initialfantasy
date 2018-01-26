@@ -18,7 +18,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
     /** 保存用户事件 */
     saveUserEvent: Function;
     /** 绘制工具条视图 */
-    darwBar(): any {
+    drawBar(): any {
         let that: this = this;
         // 不重复创建工具条钮
         if (ibas.objects.isNull(this.bar)) {
@@ -37,7 +37,7 @@ export class UserProfileView extends ibas.BOResidentView implements IUserProfile
     /** 激活完整视图事件 */
     showFullViewEvent: Function;
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         this.form = new sap.m.QuickView("", {
             placement: sap.m.PlacementType.Bottom,
             pages: [

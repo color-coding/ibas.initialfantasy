@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { DataConverter4if } from "../../borep/DataConverters";
+import { DataConverter4IF } from "../../borep/DataConverters";
 import { PrivilegeEditApp } from "./PrivilegeEditApp";
 
 /** 列表应用-系统权限 */
@@ -173,7 +173,7 @@ export class PrivilegeListApp extends ibas.BOListApplication<IPrivilegeListView,
         return [
             new ibas.BOListServiceProxy({
                 data: this.view.getSelecteds(),
-                converter: new DataConverter4if(),
+                converter: new DataConverter4IF(),
             })
         ];
     }

@@ -9,7 +9,7 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryInitialFantasy } from "../../borep/BORepositories";
-import { DataConverter4if } from "../../borep/DataConverters";
+import { DataConverter4IF } from "../../borep/DataConverters";
 import { BONumberingEditApp } from "./BONumberingEditApp";
 
 /** 列表应用-业务对象编号方式 */

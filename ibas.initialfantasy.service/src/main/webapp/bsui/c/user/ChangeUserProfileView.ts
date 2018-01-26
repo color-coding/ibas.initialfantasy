@@ -18,7 +18,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
     /** 保存用户事件 */
     saveUserEvent: Function;
     /** 绘制工具条 */
-    darwBars(): any {
+    drawBars(): any {
         let that: this = this;
         return [
             new sap.m.Button("", {
@@ -40,7 +40,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
         ];
     }
     /** 绘制视图 */
-    darw(): any {
+    draw(): any {
         let that: this = this;
         this.form = new sap.ui.layout.form.SimpleForm("", {
             editable: true,
@@ -80,7 +80,7 @@ export class ChangeUserProfileView extends ibas.BODialogView implements IChangeU
             horizontalScrolling: true,
             verticalScrolling: true,
             content: [this.form],
-            buttons: [this.darwBars()]
+            buttons: [this.drawBars()]
         });
     }
     private form: sap.ui.layout.form.SimpleForm;

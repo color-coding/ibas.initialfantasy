@@ -9,14 +9,14 @@
 import * as ibas from "ibas/index";
 import * as bo from "./bo/index";
 import { IBORepositoryInitialFantasy, BO_REPOSITORY_INITIALFANTASY } from "../api/index";
-import { DataConverter4if } from "./DataConverters";
+import { DataConverter4IF } from "./DataConverters";
 
 /** <%Domain.Name%> 业务仓库 */
 export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication implements IBORepositoryInitialFantasy {
 
     /** 创建此模块的后端与前端数据的转换者 */
     protected createConverter(): ibas.IDataConverter {
-        return new DataConverter4if();
+        return new DataConverter4IF();
     }
 
     /**
