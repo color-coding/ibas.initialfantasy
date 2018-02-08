@@ -79,20 +79,7 @@ export class Console extends ibas.ModuleConsole {
     run(): void {
         // 加载语言-框架默认
         ibas.i18n.load(this.rootUrl + "resources/languages/initialfantasy.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/enums.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/applicationfunction.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/applicationmodule.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/applicationplatform.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/bocriteria.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/bofiltering.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/organization.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/privilege.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/user.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/boinformation.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/variable.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/config.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/project.json");
-        ibas.i18n.load(this.rootUrl + "resources/languages/bo/bonumbering.json");
+        ibas.i18n.load(this.rootUrl + "resources/languages/bos.json");
         // 设置资源属性
         this.description = ibas.i18n.prop(this.name.toLowerCase());
         this.icon = ibas.i18n.prop(this.name.toLowerCase() + "_icon");
