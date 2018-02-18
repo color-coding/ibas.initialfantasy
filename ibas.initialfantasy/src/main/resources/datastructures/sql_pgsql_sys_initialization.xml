@@ -92,7 +92,7 @@
                     result record;
                     platform2 character varying;           /*平台代码*/
                 BEGIN
-                    IF (platform == 'DESKTOP' || platform == 'TABLET') THEN
+                    IF (platform = 'DESKTOP' OR platform = 'TABLET') THEN
                         platform2 = 'COMBINATION';
                     ELSE
                         platform2 = platform;
@@ -155,7 +155,7 @@
                     result record;
                     platform2 character varying;           /*平台代码*/
                 BEGIN
-                    IF (platform == 'DESKTOP' || platform == 'TABLET') THEN
+                    IF (platform = 'DESKTOP' OR platform = 'TABLET') THEN
                         platform2 = 'COMBINATION';
                     ELSE
                         platform2 = platform;
