@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright color-coding studio. All Rights Reserved.
+ * Copyright Color-Coding Studio. All Rights Reserved.
  *
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,12 +9,12 @@
 import * as ibas from "ibas/index";
 import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
-import { IBONumberingEditView } from "../../../bsapp/bonumbering/index";
+import { ibas.IBONumberingEditView } from "../../../bsapp/bonumbering/index";
 
 /**
  * 编辑视图-业务对象编号方式
  */
-export class BONumberingEditView extends ibas.BOView implements IBONumberingEditView {
+export class BONumberingEditView extends ibas.BOView implements ibas.IBONumberingEditView {
 
     /** 保存系列编号方式 */
     saveBOSeriesNumberingEvent: Function;

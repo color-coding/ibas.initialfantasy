@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright color-coding studio. All Rights Reserved.
+ * Copyright Color-Coding Studio. All Rights Reserved.
  *
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,12 +9,12 @@
 import * as ibas from "ibas/index";
 import * as openui5 from "openui5/index";
 import * as bo from "../../../borep/bo/index";
-import { IBOCriteriaChooseView } from "../../../bsapp/bocriteria/index";
+import { ibas.IBOCriteriaChooseView } from "../../../bsapp/bocriteria/index";
 
 /**
  * 视图-BOCriteria
  */
-export class BOCriteriaChooseView extends ibas.BOChooseView implements IBOCriteriaChooseView {
+export class BOCriteriaChooseView extends ibas.BOChooseView implements ibas.IBOCriteriaChooseView {
     /** 返回查询的对象 */
     get queryTarget(): any {
         return bo.BOCriteria;
@@ -122,7 +122,7 @@ export class BOCriteriaChooseView extends ibas.BOChooseView implements IBOCriter
         openui5.utils.changeSelectionStyle(this.table, this.chooseType);
         // 添加列表自动查询事件
         openui5.utils.triggerNextResults({
-            listener: this.table,
+            ibas.IListener: this.table,
             next(data: any): void {
                 if (ibas.objects.isNull(that.lastCriteria)) {
                     return;
