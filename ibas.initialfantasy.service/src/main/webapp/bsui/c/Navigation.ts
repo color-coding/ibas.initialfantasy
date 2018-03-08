@@ -5,159 +5,150 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-
-import * as ibas from "ibas/index";
-import * as applicationfunctionApps from "../../bsapp/applicationfunction/index";
-import * as applicationmoduleApps from "../../bsapp/applicationmodule/index";
-import * as applicationplatformApps from "../../bsapp/applicationplatform/index";
-import * as bocriteriaApps from "../../bsapp/bocriteria/index";
-import * as bofilteringApps from "../../bsapp/bofiltering/index";
-import * as organizationApps from "../../bsapp/organization/index";
-import * as privilegeApps from "../../bsapp/privilege/index";
-import * as userApps from "../../bsapp/user/index";
-import * as applicationfunctionViews from "./applicationfunction/index";
-import * as applicationmoduleViews from "./applicationmodule/index";
-import * as applicationplatformViews from "./applicationplatform/index";
-import * as bocriteriaViews from "./bocriteria/index";
-import * as bofilteringViews from "./bofiltering/index";
-import * as organizationViews from "./organization/index";
-import * as privilegeViews from "./privilege/index";
-import * as userViews from "./user/index";
-import * as boinformationApps from "../../bsapp/boinformation/index";
-import * as boinformationViews from "./boinformation/index";
-import * as systemApps from "../../bsapp/system/index";
-import * as systemViews from "./system/index";
-import * as projectApps from "../../bsapp/project/index";
-import * as projectViews from "./project/index";
-import * as bonumberingApps from "../../bsapp/bonumbering/index";
-import * as bonumberingViews from "./bonumbering/index";
-
-/**
- * 视图导航
- */
-export default class Navigation extends ibas.ViewNavigation {
-
-    /**
-     * 创建实例
-     * @param id 应用id
-     */
-    protected newView(id: string): ibas.IView {
-        let view: ibas.IView = null;
-        switch (id) {
-            case applicationfunctionApps.ApplicationFunctionListApp.APPLICATION_ID:
-                view = new applicationfunctionViews.ApplicationFunctionListView();
-                break;
-            case applicationfunctionApps.ApplicationFunctionChooseApp.APPLICATION_ID:
-                view = new applicationfunctionViews.ApplicationFunctionChooseView();
-                break;
-            case applicationfunctionApps.ApplicationFunctionEditApp.APPLICATION_ID:
-                view = new applicationfunctionViews.ApplicationFunctionEditView();
-                break;
-            case applicationmoduleApps.ApplicationModuleListApp.APPLICATION_ID:
-                view = new applicationmoduleViews.ApplicationModuleListView();
-                break;
-            case applicationmoduleApps.ApplicationModuleChooseApp.APPLICATION_ID:
-                view = new applicationmoduleViews.ApplicationModuleChooseView();
-                break;
-            case applicationmoduleApps.ApplicationModuleEditApp.APPLICATION_ID:
-                view = new applicationmoduleViews.ApplicationModuleEditView();
-                break;
-            case applicationplatformApps.ApplicationPlatformListApp.APPLICATION_ID:
-                view = new applicationplatformViews.ApplicationPlatformListView();
-                break;
-            case applicationplatformApps.ApplicationPlatformChooseApp.APPLICATION_ID:
-                view = new applicationplatformViews.ApplicationPlatformChooseView();
-                break;
-            case applicationplatformApps.ApplicationPlatformEditApp.APPLICATION_ID:
-                view = new applicationplatformViews.ApplicationPlatformEditView();
-                break;
-            case bocriteriaApps.BOCriteriaListApp.APPLICATION_ID:
-                view = new bocriteriaViews.BOCriteriaListView();
-                break;
-            case bocriteriaApps.BOCriteriaChooseApp.APPLICATION_ID:
-                view = new bocriteriaViews.BOCriteriaChooseView();
-                break;
-            case bocriteriaApps.BOCriteriaEditApp.APPLICATION_ID:
-                view = new bocriteriaViews.BOCriteriaEditView();
-                break;
-            case bofilteringApps.BOFilteringListApp.APPLICATION_ID:
-                view = new bofilteringViews.BOFilteringListView();
-                break;
-            case bofilteringApps.BOFilteringChooseApp.APPLICATION_ID:
-                view = new bofilteringViews.BOFilteringChooseView();
-                break;
-            case bofilteringApps.BOFilteringEditApp.APPLICATION_ID:
-                view = new bofilteringViews.BOFilteringEditView();
-                break;
-            case organizationApps.OrganizationListApp.APPLICATION_ID:
-                view = new organizationViews.OrganizationListView();
-                break;
-            case organizationApps.OrganizationChooseApp.APPLICATION_ID:
-                view = new organizationViews.OrganizationChooseView();
-                break;
-            case organizationApps.OrganizationEditApp.APPLICATION_ID:
-                view = new organizationViews.OrganizationEditView();
-                break;
-            case privilegeApps.PrivilegeListApp.APPLICATION_ID:
-                view = new privilegeViews.PrivilegeListView();
-                break;
-            case privilegeApps.PrivilegeChooseApp.APPLICATION_ID:
-                view = new privilegeViews.PrivilegeChooseView();
-                break;
-            case privilegeApps.PrivilegeEditApp.APPLICATION_ID:
-                view = new privilegeViews.PrivilegeEditView();
-                break;
-            case userApps.UserListApp.APPLICATION_ID:
-                view = new userViews.UserListView();
-                break;
-            case userApps.UserChooseApp.APPLICATION_ID:
-                view = new userViews.UserChooseView();
-                break;
-            case userApps.UserEditApp.APPLICATION_ID:
-                view = new userViews.UserEditView();
-                break;
-            case userApps.UserProfileApp.APPLICATION_ID:
-                view = new userViews.UserProfileView();
-                break;
-            case userApps.ChangeUserProfileApp.APPLICATION_ID:
-                view = new userViews.ChangeUserProfileView();
-                break;
-            case boinformationApps.BOInformationListApp.APPLICATION_ID:
-                view = new boinformationViews.BOInformationListView();
-                break;
-            case boinformationApps.BOInformationChooseApp.APPLICATION_ID:
-                view = new boinformationViews.BOInformationChooseView();
-                break;
-            case boinformationApps.BOInformationEditApp.APPLICATION_ID:
-                view = new boinformationViews.BOInformationEditView();
-                break;
-            case systemApps.VariableChooseApp.APPLICATION_ID:
-                view = new systemViews.VariableChooseView();
-                break;
-            case systemApps.ConfigChooseApp.APPLICATION_ID:
-                view = new systemViews.ConfigChooseView();
-                break;
-            case systemApps.CriteriaEditorService.APPLICATION_ID:
-                view = new systemViews.CriteriaEditorView();
-                break;
-            case projectApps.ProjectListApp.APPLICATION_ID:
-                view = new projectViews.ProjectListView();
-                break;
-            case projectApps.ProjectChooseApp.APPLICATION_ID:
-                view = new projectViews.ProjectChooseView();
-                break;
-            case projectApps.ProjectEditApp.APPLICATION_ID:
-                view = new projectViews.ProjectEditView();
-                break;
-            case bonumberingApps.BONumberingListApp.APPLICATION_ID:
-                view = new bonumberingViews.BONumberingListView();
-                break;
-            case bonumberingApps.BONumberingEditApp.APPLICATION_ID:
-                view = new bonumberingViews.BONumberingEditView();
-                break;
-            default:
-                break;
+/// <reference path="../../3rdparty/ibas/index.d.ts" />
+/// <reference path="../../3rdparty/openui5/index.d.ts" />
+/// <reference path="../../index.d.ts" />
+/// <reference path="./applicationfunction/index.ts" />
+/// <reference path="./applicationmodule/index.ts" />
+/// <reference path="./applicationplatform/index.ts" />
+/// <reference path="./bocriteria/index.ts" />
+/// <reference path="./bofiltering/index.ts" />
+/// <reference path="./organization/index.ts" />
+/// <reference path="./privilege/index.ts" />
+/// <reference path="./user/index.ts" />
+/// <reference path="./boinformation/index.ts" />
+/// <reference path="./system/index.ts" />
+/// <reference path="./project/index.ts" />
+/// <reference path="./bonumbering/index.ts" />
+namespace initialfantasy {
+    export namespace ui {
+        /**
+         * 视图导航
+         */
+        export class Navigation extends ibas.ViewNavigation {
+            /**
+             * 创建实例
+             * @param id 应用id
+             */
+            protected newView(id: string): ibas.IView {
+                let view: ibas.IView = null;
+                switch (id) {
+                    case app.ApplicationFunctionListApp.APPLICATION_ID:
+                        view = new c.ApplicationFunctionListView();
+                        break;
+                    case app.ApplicationFunctionChooseApp.APPLICATION_ID:
+                        view = new c.ApplicationFunctionChooseView();
+                        break;
+                    case app.ApplicationFunctionEditApp.APPLICATION_ID:
+                        view = new c.ApplicationFunctionEditView();
+                        break;
+                    case app.ApplicationModuleListApp.APPLICATION_ID:
+                        view = new c.ApplicationModuleListView();
+                        break;
+                    case app.ApplicationModuleChooseApp.APPLICATION_ID:
+                        view = new c.ApplicationModuleChooseView();
+                        break;
+                    case app.ApplicationModuleEditApp.APPLICATION_ID:
+                        view = new c.ApplicationModuleEditView();
+                        break;
+                    case app.ApplicationPlatformListApp.APPLICATION_ID:
+                        view = new c.ApplicationPlatformListView();
+                        break;
+                    case app.ApplicationPlatformChooseApp.APPLICATION_ID:
+                        view = new c.ApplicationPlatformChooseView();
+                        break;
+                    case app.ApplicationPlatformEditApp.APPLICATION_ID:
+                        view = new c.ApplicationPlatformEditView();
+                        break;
+                    case app.BOCriteriaListApp.APPLICATION_ID:
+                        view = new c.BOCriteriaListView();
+                        break;
+                    case app.BOCriteriaChooseApp.APPLICATION_ID:
+                        view = new c.BOCriteriaChooseView();
+                        break;
+                    case app.BOCriteriaEditApp.APPLICATION_ID:
+                        view = new c.BOCriteriaEditView();
+                        break;
+                    case app.BOFilteringListApp.APPLICATION_ID:
+                        view = new c.BOFilteringListView();
+                        break;
+                    case app.BOFilteringChooseApp.APPLICATION_ID:
+                        view = new c.BOFilteringChooseView();
+                        break;
+                    case app.BOFilteringEditApp.APPLICATION_ID:
+                        view = new c.BOFilteringEditView();
+                        break;
+                    case app.OrganizationListApp.APPLICATION_ID:
+                        view = new c.OrganizationListView();
+                        break;
+                    case app.OrganizationChooseApp.APPLICATION_ID:
+                        view = new c.OrganizationChooseView();
+                        break;
+                    case app.OrganizationEditApp.APPLICATION_ID:
+                        view = new c.OrganizationEditView();
+                        break;
+                    case app.PrivilegeListApp.APPLICATION_ID:
+                        view = new c.PrivilegeListView();
+                        break;
+                    case app.PrivilegeChooseApp.APPLICATION_ID:
+                        view = new c.PrivilegeChooseView();
+                        break;
+                    case app.PrivilegeEditApp.APPLICATION_ID:
+                        view = new c.PrivilegeEditView();
+                        break;
+                    case app.UserListApp.APPLICATION_ID:
+                        view = new c.UserListView();
+                        break;
+                    case app.UserChooseApp.APPLICATION_ID:
+                        view = new c.UserChooseView();
+                        break;
+                    case app.UserEditApp.APPLICATION_ID:
+                        view = new c.UserEditView();
+                        break;
+                    case app.UserProfileApp.APPLICATION_ID:
+                        view = new c.UserProfileView();
+                        break;
+                    case app.ChangeUserProfileApp.APPLICATION_ID:
+                        view = new c.ChangeUserProfileView();
+                        break;
+                    case app.BOInformationListApp.APPLICATION_ID:
+                        view = new c.BOInformationListView();
+                        break;
+                    case app.BOInformationChooseApp.APPLICATION_ID:
+                        view = new c.BOInformationChooseView();
+                        break;
+                    case app.BOInformationEditApp.APPLICATION_ID:
+                        view = new c.BOInformationEditView();
+                        break;
+                    case app.VariableChooseApp.APPLICATION_ID:
+                        view = new c.VariableChooseView();
+                        break;
+                    case app.ConfigChooseApp.APPLICATION_ID:
+                        view = new c.ConfigChooseView();
+                        break;
+                    case app.CriteriaEditorService.APPLICATION_ID:
+                        view = new c.CriteriaEditorView();
+                        break;
+                    case app.ProjectListApp.APPLICATION_ID:
+                        view = new c.ProjectListView();
+                        break;
+                    case app.ProjectChooseApp.APPLICATION_ID:
+                        view = new c.ProjectChooseView();
+                        break;
+                    case app.ProjectEditApp.APPLICATION_ID:
+                        view = new c.ProjectEditView();
+                        break;
+                    case app.BONumberingListApp.APPLICATION_ID:
+                        view = new c.BONumberingListView();
+                        break;
+                    case app.BONumberingEditApp.APPLICATION_ID:
+                        view = new c.BONumberingEditView();
+                        break;
+                    default:
+                        break;
+                }
+                return view;
+            }
         }
-        return view;
     }
 }
