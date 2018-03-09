@@ -11,7 +11,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/initialfantasy/</Address>
+                <Address>.../../test/apps/initialfantasy/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -27,7 +27,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/trainingtesting/</Address>
+                <Address>.../../test/apps/trainingtesting/</Address>
                 <Enabled>false</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -43,7 +43,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/importexport/</Address>
+                <Address>.../../test/apps/importexport/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -59,7 +59,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/documents/</Address>
+                <Address>.../../test/apps/documents/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -75,7 +75,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/barcode/</Address>
+                <Address>.../../test/apps/barcode/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -91,7 +91,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/reportanalysis/</Address>
+                <Address>.../../test/apps/reportanalysis/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -107,55 +107,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/reportanalysis/</Address>
-                <Enabled>true</Enabled>
-                <Type>VIEW</Type>
-            </Provider>
-        </Providers>
-    </ServiceInformation>
-    <ServiceInformation>
-        <Id>c4d3da42-0a53-480b-98fe-bf551a9581c7</Id>
-        <Name>BusinessObjectsEnterprise</Name>
-        <Providers>
-            <Provider>
-                <Address>http://localhost:8080/businessobjectsenterprise/services/rest/data</Address>
-                <Enabled>true</Enabled>
-                <Type>DATA</Type>
-            </Provider>
-            <Provider>
-                <Address>.../../../test/apps/businessobjectsenterprise/</Address>
-                <Enabled>true</Enabled>
-                <Type>VIEW</Type>
-            </Provider>
-        </Providers>
-    </ServiceInformation>
-    <ServiceInformation>
-        <Id>d89c3bd0-8dab-4f62-8439-0b8a39c66bf2</Id>
-        <Name>BusinessOne</Name>
-        <Providers>
-            <Provider>
-                <Address>http://localhost:8080/businessone/services/rest/data</Address>
-                <Enabled>true</Enabled>
-                <Type>DATA</Type>
-            </Provider>
-            <Provider>
-                <Address>.../../../test/apps/businessone/</Address>
-                <Enabled>true</Enabled>
-                <Type>VIEW</Type>
-            </Provider>
-        </Providers>
-    </ServiceInformation>
-    <ServiceInformation>
-        <Id>4d8b5b7d-b1ae-418b-abc8-67d70ae8c36e</Id>
-        <Name>BusinessOneUsers</Name>
-        <Providers>
-            <Provider>
-                <Address>http://localhost:8080/businessone/services/rest/data</Address>
-                <Enabled>true</Enabled>
-                <Type>DATA</Type>
-            </Provider>
-            <Provider>
-                <Address>.../../../test/apps/businessone/</Address>
+                <Address>.../../test/apps/reportanalysis/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -171,7 +123,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/integration/</Address>
+                <Address>.../../test/apps/integration/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -187,7 +139,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/integration/</Address>
+                <Address>.../../test/apps/integration/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -203,7 +155,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/materials/</Address>
+                <Address>.../../test/apps/materials/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -219,7 +171,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/feedback/</Address>
+                <Address>.../../test/apps/feedback/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -235,7 +187,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/feedback/</Address>
+                <Address>.../../test/apps/feedback/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -251,7 +203,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/approvalprocess/</Address>
+                <Address>.../../test/apps/approvalprocess/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -267,7 +219,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/businesspartner/</Address>
+                <Address>.../../test/apps/businesspartner/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -283,7 +235,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/sales/</Address>
+                <Address>.../../test/apps/sales/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -299,7 +251,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/purchase/</Address>
+                <Address>.../../test/apps/purchase/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -315,7 +267,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/receiptpayment/</Address>
+                <Address>.../../test/apps/receiptpayment/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -331,7 +283,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/organizedroles/</Address>
+                <Address>.../../test/apps/organizedroles/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
@@ -347,7 +299,7 @@
                 <Type>DATA</Type>
             </Provider>
             <Provider>
-                <Address>.../../../test/apps/organizedposts/</Address>
+                <Address>.../../test/apps/organizedposts/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>

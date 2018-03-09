@@ -25,7 +25,7 @@ public class UserModule extends Serializable {
 		UserModule userModule = new UserModule();
 		userModule.setId(applicationModule.getModuleId());
 		userModule.setName(applicationModule.getModuleName());
-		userModule.setIndex(applicationModule.getModuleEntry());
+		userModule.setConsole(applicationModule.getModuleEntry());
 		userModule.setAuthorise(applicationModule.getAuthoriseValue());
 		userModule.setRepository("");
 		userModule.setAddress("");
@@ -137,6 +137,25 @@ public class UserModule extends Serializable {
 	 */
 	public void setRuntime(String runtime) {
 		this.runtime = runtime;
+	}
+
+	private String console;
+
+	/**
+	 * 获取-控制台
+	 * 
+	 */
+	@XmlElement(name = "Console")
+	public final String getConsole() {
+		return console;
+	}
+
+	/**
+	 * 设置-控制台
+	 * 
+	 */
+	public final void setConsole(String console) {
+		this.console = console;
 	}
 
 	@Override
