@@ -24,19 +24,19 @@
 namespace initialfantasy {
     export namespace bo {
         // 注册业务对象仓库到工厂
-        ibas.boFactory.register(BO_REPOSITORY_INITIALFANTASY, BORepositoryInitialFantasy);
+        boFactory.register(BO_REPOSITORY_INITIALFANTASY, BORepositoryInitialFantasy);
         // 注册业务对象到工厂
-        ibas.boFactory.register(BONumbering);
-        ibas.boFactory.register(BOSeriesNumbering);
-        ibas.boFactory.register(ApplicationFunction.BUSINESS_OBJECT_CODE, ApplicationFunction);
-        ibas.boFactory.register(ApplicationModule.BUSINESS_OBJECT_CODE, ApplicationModule);
-        ibas.boFactory.register(ApplicationPlatform.BUSINESS_OBJECT_CODE, ApplicationPlatform);
-        ibas.boFactory.register(BOCriteria.BUSINESS_OBJECT_CODE, BOCriteria);
-        ibas.boFactory.register(BOFiltering.BUSINESS_OBJECT_CODE, BOFiltering);
-        ibas.boFactory.register(Organization.BUSINESS_OBJECT_CODE, Organization);
-        ibas.boFactory.register(Privilege.BUSINESS_OBJECT_CODE, Privilege);
-        ibas.boFactory.register(User.BUSINESS_OBJECT_CODE, User);
-        ibas.boFactory.register(BOInformation.BUSINESS_OBJECT_CODE, BOInformation);
-        ibas.boFactory.register(Project.BUSINESS_OBJECT_CODE, Project);
+        boFactory.register(BONumbering);
+        boFactory.register(BOSeriesNumbering);
+        boFactory.register(ApplicationFunction.BUSINESS_OBJECT_CODE, ApplicationFunction);
+        boFactory.register(ApplicationModule.BUSINESS_OBJECT_CODE, ApplicationModule);
+        boFactory.register(ApplicationPlatform.BUSINESS_OBJECT_CODE, ApplicationPlatform);
+        boFactory.register(BOCriteria.BUSINESS_OBJECT_CODE, BOCriteria);
+        boFactory.register(BOFiltering.BUSINESS_OBJECT_CODE, BOFiltering);
+        boFactory.register(Organization.BUSINESS_OBJECT_CODE, Organization);
+        boFactory.register(Privilege.BUSINESS_OBJECT_CODE, Privilege);
+        boFactory.register(User.BUSINESS_OBJECT_CODE, User);
+        boFactory.register(BOInformation.BUSINESS_OBJECT_CODE, BOInformation);
+        boFactory.register(Project.BUSINESS_OBJECT_CODE, Project);
     }
 }
