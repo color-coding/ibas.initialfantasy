@@ -18,22 +18,6 @@
         </Providers>
     </ServiceInformation>
     <ServiceInformation>
-        <Id>e6424319-a311-440e-bc89-a825f82d5847</Id>
-        <Name>TrainingTesting</Name>
-        <Providers>
-            <Provider>
-                <Address>http://localhost:8080/trainingtesting/services/rest/data</Address>
-                <Enabled>true</Enabled>
-                <Type>DATA</Type>
-            </Provider>
-            <Provider>
-                <Address>.../../test/apps/trainingtesting/</Address>
-                <Enabled>false</Enabled>
-                <Type>VIEW</Type>
-            </Provider>
-        </Providers>
-    </ServiceInformation>
-    <ServiceInformation>
         <Id>cbd4ef0f-ee88-4ea7-96c7-13f974026b58</Id>
         <Name>ImportExport</Name>
         <Providers>
@@ -268,22 +252,6 @@
             </Provider>
             <Provider>
                 <Address>.../../test/apps/receiptpayment/</Address>
-                <Enabled>true</Enabled>
-                <Type>VIEW</Type>
-            </Provider>
-        </Providers>
-    </ServiceInformation>
-    <ServiceInformation>
-        <Id>18199a3e-29a7-4d43-ab4b-4de5454eb0a4</Id>
-        <Name>OrganizedRoles</Name>
-        <Providers>
-            <Provider>
-                <Address>http://localhost:8080/organizedroles/services/rest/data</Address>
-                <Enabled>true</Enabled>
-                <Type>DATA</Type>
-            </Provider>
-            <Provider>
-                <Address>.../../test/apps/organizedroles/</Address>
                 <Enabled>true</Enabled>
                 <Type>VIEW</Type>
             </Provider>
