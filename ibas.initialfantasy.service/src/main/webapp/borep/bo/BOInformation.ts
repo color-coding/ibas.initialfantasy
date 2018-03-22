@@ -91,7 +91,7 @@ namespace initialfantasy {
                 builder.append(BOInformation.BUSINESS_OBJECT_CODE);
                 builder.append("].");
                 builder.append("[");
-                builder.append(BOInformation.PROPERTY_NAME_NAME);
+                builder.append(BOInformation.PROPERTY_CODE_NAME);
                 builder.append(" ");
                 builder.append("=");
                 builder.append(" ");
@@ -104,8 +104,8 @@ namespace initialfantasy {
             criteria(): ibas.ICriteria {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
-                condition.alias = BOInformation.PROPERTY_NAME_NAME;
-                condition.value = this.name;
+                condition.alias = BOInformation.PROPERTY_CODE_NAME;
+                condition.value = this.code;
                 return criteria;
             }
             /** 初始化数据 */
