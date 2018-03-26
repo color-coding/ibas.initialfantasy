@@ -70,7 +70,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 			if (data == null || user == null) {
 				return false;
 			}
-			return this.filtering(data, OrganizationFactory.create().createManager().getRoles(user));
+			return this.filtering(data, user);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -89,9 +89,9 @@ public class OwnershipJudger implements IOwnershipJudger {
 	 * @throws InvalidTokenException
 	 * @throws JudmentOperationException
 	 */
-	protected boolean filtering(IDataOwnership bo, String[] roles)
-			throws InvalidTokenException, JudmentOperationException {
+	protected boolean filtering(IDataOwnership bo, IUser user) throws InvalidTokenException, JudmentOperationException {
 		boolean status = true;
+		String[] roles = OrganizationFactory.create().createManager().getRoles(user);
 		if (bo == null || roles == null || roles.length == 0) {
 			return status;
 		}
@@ -102,6 +102,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 			BOFilteringJudgmentLink judgmentLink = new BOFilteringJudgmentLink();
 			judgmentLink.parsingConditions(filtering.getBOFilteringConditions());
+			judgmentLink.setCurrentUser(user);
 			boolean matching = judgmentLink.judge(bo);
 			if (filtering.getFilteringType() == emFilteringType.AVAILABLE) {
 				// 可用过滤
@@ -195,6 +196,21 @@ public class OwnershipJudger implements IOwnershipJudger {
 
 class BOFilteringJudgmentLink extends BOJudgmentLink {
 
+	/** 变量-用户ID */
+	public static final String VARIABLE_NAME_USER_ID = "${USER_ID}";
+	/** 变量-用户归属 */
+	public static final String VARIABLE_NAME_USER_BELONG = "${USER_BELONG}";
+
+	private IUser currentUser;
+
+	public final IUser getCurrentUser() {
+		return currentUser;
+	}
+
+	public final void setCurrentUser(IUser currentUser) {
+		this.currentUser = currentUser;
+	}
+
 	public void parsingConditions(List<IBOFilteringCondition> conditions) {
 		// 判断无条件
 		if (conditions == null || conditions.size() == 0) {
@@ -218,7 +234,13 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			// 右边取值
 			// 与值比较
 			IValueOperator ValueOperator = this.createValueOperator();
-			ValueOperator.setValue(item.getConditionValue());
+			if (VARIABLE_NAME_USER_ID.equals(item.getConditionValue())) {
+				ValueOperator.setValue(this.getCurrentUser().getId());
+			} else if (VARIABLE_NAME_USER_BELONG.equals(item.getConditionValue())) {
+				ValueOperator.setValue(this.getCurrentUser().getBelong());
+			} else {
+				ValueOperator.setValue(item.getConditionValue());
+			}
 			jItem.setRightOperter(ValueOperator);
 			// 设置括号
 			jItem.setOpenBracket(item.getBracketOpen());
@@ -229,7 +251,7 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 	}
 
 	@Override
-	public IPropertyValueOperator createPropertyValueOperator() {
+	protected IPropertyValueOperator createPropertyValueOperator() {
 		// 使用数据库字段属性比较
 		return new IPropertyValueOperator() {
 			private IManageFields value;
@@ -298,4 +320,5 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			}
 		};
 	}
+
 }
