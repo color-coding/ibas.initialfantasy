@@ -3,6 +3,7 @@ package org.colorcoding.ibas.bobas.ownership.initial;
 import java.util.HashMap;
 import java.util.List;
 
+import org.colorcoding.ibas.bobas.MyConfiguration;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -38,6 +39,11 @@ import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantas
 
 public class OwnershipJudger implements IOwnershipJudger {
 
+	/**
+	 * 配置项目-数据读取默认值
+	 */
+	public final static String CONFIG_ITEM_DATA_READABLE_DEFAULT_VALUE = "DataReadableDefault";
+
 	public static final String MSG_OWNERSHIP_JUDGER_DATA_FILTERED = "judger: role [%s] filtered data [%s].";
 
 	@Override
@@ -72,6 +78,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 			}
 			return this.filtering(data, user);
 		} catch (Exception e) {
+			Logger.log(e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -90,7 +97,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 	 * @throws JudmentOperationException
 	 */
 	protected boolean filtering(IDataOwnership bo, IUser user) throws InvalidTokenException, JudmentOperationException {
-		boolean status = true;
+		boolean status = MyConfiguration.getConfigValue(CONFIG_ITEM_DATA_READABLE_DEFAULT_VALUE, true);
 		String[] roles = OrganizationFactory.create().createManager().getRoles(user);
 		if (bo == null || roles == null || roles.length == 0) {
 			return status;
@@ -101,8 +108,8 @@ public class OwnershipJudger implements IOwnershipJudger {
 				continue;
 			}
 			BOFilteringJudgmentLink judgmentLink = new BOFilteringJudgmentLink();
-			judgmentLink.parsingConditions(filtering.getBOFilteringConditions());
 			judgmentLink.setCurrentUser(user);
+			judgmentLink.parsingConditions(filtering.getBOFilteringConditions());
 			boolean matching = judgmentLink.judge(bo);
 			if (filtering.getFilteringType() == emFilteringType.AVAILABLE) {
 				// 可用过滤

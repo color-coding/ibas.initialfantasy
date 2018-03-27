@@ -183,7 +183,8 @@ namespace initialfantasy {
                     boCode: bo.BO_CODE_ROLE,
                     chooseType: ibas.emChooseType.SINGLE,
                     onCompleted(selecteds: ibas.IList<bo.IRole>): void {
-                        that.editData.roleCode = selecteds.firstOrDefault().code;
+                        let selected: bo.IRole = selecteds.firstOrDefault();
+                        that.editData.roleCode = selected.code;
                     }
                 });
             }
@@ -198,34 +199,54 @@ namespace initialfantasy {
                             ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
                     ],
                     onCompleted(selecteds: ibas.IList<bo.ApplicationPlatform>): void {
-                        that.editData.platformId = selecteds.firstOrDefault().platformCode;
+                        let selected: bo.ApplicationPlatform = selecteds.firstOrDefault();
+                        that.editData.platformId = selected.platformCode;
                     }
                 });
             }
             /** 选择模块标识 */
             private chooseModule(): void {
                 let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.ApplicationModule.PROPERTY_ACTIVATED_NAME;
+                condition.operation = ibas.emConditionOperation.EQUAL;
+                condition.value = ibas.emYesNo.YES.toString();
+                if (!ibas.strings.isEmpty(this.editData.platformId)) {
+                    condition = criteria.conditions.create();
+                    condition.alias = bo.ApplicationModule.PROPERTY_PLATFORMID_NAME;
+                    condition.operation = ibas.emConditionOperation.EQUAL;
+                    condition.value = this.editData.platformId;
+                }
                 ibas.servicesManager.runChooseService<bo.ApplicationModule>({
                     boCode: bo.ApplicationModule.BUSINESS_OBJECT_CODE,
                     chooseType: ibas.emChooseType.SINGLE,
-                    criteria: [
-                        new ibas.Condition(bo.ApplicationModule.PROPERTY_ACTIVATED_NAME,
-                            ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
-                    ],
+                    criteria: criteria,
                     onCompleted(selecteds: ibas.IList<bo.ApplicationModule>): void {
-                        that.editData.moduleId = selecteds.firstOrDefault().moduleId;
+                        let selected: bo.ApplicationModule = selecteds.firstOrDefault();
+                        that.editData.moduleId = selected.moduleId;
+                        that.editData.platformId = selected.platformId;
                     }
                 });
             }
             /** 选择目标标识 */
             private chooseTarget(): void {
                 let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                if (ibas.strings.isEmpty(this.editData.moduleId)) {
+                    return;
+                }
                 ibas.servicesManager.runChooseService<bo.ApplicationFunction>({
                     boCode: bo.ApplicationFunction.BUSINESS_OBJECT_CODE,
                     chooseType: ibas.emChooseType.SINGLE,
-                    criteria: [],
+                    criteria: [
+                        new ibas.Condition(bo.ApplicationFunction.PROPERTY_MODULEID_NAME,
+                            ibas.emConditionOperation.EQUAL, this.editData.moduleId),
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.ApplicationFunction>): void {
-                        that.editData.target = selecteds.firstOrDefault().functionId;
+                        let selected: bo.ApplicationFunction = selecteds.firstOrDefault();
+                        that.editData.moduleId = selected.moduleId;
+                        that.editData.target = selected.functionId;
                     }
                 });
             }

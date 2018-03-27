@@ -51,22 +51,30 @@ namespace initialfantasy {
                                 path: "/platformId"
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_moduleid") }),
-                            new sap.m.Input("", {
-                                showValueHelp: true,
+                            new sap.m.ex.BOInput("", {
+                                boText: "moduleName",
+                                boKey: "moduleId",
+                                boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONMODULE),
+                                repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseModuleEvent);
+                                },
+                                bindingValue: {
+                                    path: "/moduleId"
                                 }
-                            }).bindProperty("value", {
-                                path: "/moduleId"
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_target") }),
-                            new sap.m.Input("", {
-                                showValueHelp: true,
+                            new sap.m.ex.BOInput("", {
+                                boText: "functionName",
+                                boKey: "functionId",
+                                boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONFUNCTION),
+                                repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseTargetEvent);
+                                },
+                                bindingValue: {
+                                    path: "/target"
                                 }
-                            }).bindProperty("value", {
-                                path: "/target",
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_activated") }),
                             new sap.m.Select("", {
