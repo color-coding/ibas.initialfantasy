@@ -214,11 +214,12 @@ namespace initialfantasy {
                     boCode: bo.BO_CODE_ROLE,
                     chooseType: ibas.emChooseType.SINGLE,
                     onCompleted(selecteds: ibas.IList<bo.IRole>): void {
-                        that.editData.roleCode = selecteds.firstOrDefault().code;
+                        let selected: bo.IRole = selecteds.firstOrDefault();
+                        that.editData.roleCode = selected.code;
                         if (ibas.strings.isEmpty(that.editData.name)) {
-                            that.editData.name = selecteds.firstOrDefault().name + "-";
+                            that.editData.name = selected.name + "-";
                         } else if (that.editData.name.indexOf("-") >= 0) {
-                            that.editData.name = selecteds.firstOrDefault().name + that.editData.name.substring(that.editData.name.indexOf("-"));
+                            that.editData.name = selected.name + that.editData.name.substring(that.editData.name.indexOf("-"));
                         }
                     }
                 });
@@ -230,14 +231,15 @@ namespace initialfantasy {
                     boCode: bo.BO_CODE_BOINFORMATION,
                     chooseType: ibas.emChooseType.SINGLE,
                     onCompleted(selecteds: ibas.IList<bo.BOInformation>): void {
-                        that.editData.boCode = selecteds.firstOrDefault().code;
+                        let selected: bo.BOInformation = selecteds.firstOrDefault();
+                        that.editData.boCode = selected.code;
                         if (ibas.strings.isEmpty(that.editData.name)) {
-                            that.editData.name = "-" + selecteds.firstOrDefault().description;
+                            that.editData.name = "-" + selected.description;
                         } else if (that.editData.name.indexOf("-") >= 0) {
-                            that.editData.name = that.editData.name.substring(0, that.editData.name.indexOf("-"))
-                                + "-" + selecteds.firstOrDefault().description;
+                            that.editData.name =
+                                that.editData.name.substring(0, that.editData.name.indexOf("-")) + "-" + selected.description;
                         }
-                        that.view.refreshBOProperties(selecteds.firstOrDefault().boPropertyInformations);
+                        that.view.showBOFiltering(that.editData);
                     }
                 });
             }
@@ -261,8 +263,6 @@ namespace initialfantasy {
             removeBOFilteringConditionEvent: Function;
             /** 显示数据 */
             showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void;
-            /** 刷新字段列表 */
-            refreshBOProperties(properies: bo.BOPropertyInformation[]): void;
         }
     }
 }
