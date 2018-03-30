@@ -24,7 +24,7 @@ namespace initialfantasy {
                 chooseRoleEvent: Function;
                 /** 选择业务对象事件 */
                 chooseBusinessObjectEvent: Function;
-
+                propertySelet: sap.m.ex.BOChildSelect;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -88,11 +88,22 @@ namespace initialfantasy {
                         ]
                     });
                     this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bofilteringcondition") }));
-                    this.columnBOProperty = new sap.ui.table.Column("", {
+                    let columnBOProperty: sap.ui.table.Column = new sap.ui.table.Column("", {
                         label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
-                        template: new sap.m.Select("", {
+                        template: that.propertySelet = new sap.m.ex.BOChildSelect("", {
+                            blank:true,
                             width: "100%",
-                            selectedKey: "{propertyName}"
+                            boKey: "property",
+                            boText: "description",
+                            boCode: ibas.config.applyVariables(bo.BO_CODE_BOINFORMATION),
+                            repositoryName: bo.BORepositoryInitialFantasy.name,
+                            childPropertyName: "boPropertyInformations",
+                            bindingValue: {
+                                path: "propertyName"
+                            },
+                            onLoadItemsCompleted: function (oEvent: any): void {
+                                columnBOProperty.setTemplate(that.propertySelet);
+                            }
                         })
                     });
                     this.tableBOFilteringCondition = new sap.ui.table.Table("", {
@@ -142,7 +153,7 @@ namespace initialfantasy {
                                     items: this.getCharListItem("(")
                                 })
                             }),
-                            this.columnBOProperty,
+                            columnBOProperty,
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
                                 template: new sap.m.Select("", {
@@ -247,7 +258,6 @@ namespace initialfantasy {
                 }
                 private page: sap.m.Page;
                 private form: sap.ui.layout.form.SimpleForm;
-                private columnBOProperty: sap.ui.table.Column;
                 /** 改变视图状态 */
                 private changeViewStatus(data: bo.BOFiltering): void {
                     if (ibas.objects.isNull(data)) {
@@ -269,36 +279,15 @@ namespace initialfantasy {
                     openui5.utils.refreshModelChanged(this.form, data);
                     // 改变视图状态
                     this.changeViewStatus(data);
+                    this.propertySelet.setCriteria([
+                        new ibas.Condition("code", ibas.emConditionOperation.EQUAL, data.boCode)
+                    ]);
                 }
                 /** 显示数据 */
                 showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void {
                     this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                     // 监听属性改变，并更新控件
                     openui5.utils.refreshModelChanged(this.tableBOFilteringCondition, datas);
-                }
-                /** 刷新字段列表 */
-                refreshBOProperties(properies: bo.BOPropertyInformation[]): void {
-                    this.columnBOProperty.setTemplate(new sap.m.Select("", {
-                        width: "100%",
-                        selectedKey: "{propertyName}",
-                        items: this.getPropertyListItem(properies)
-                    }));
-                }
-                private getPropertyListItem(properies: bo.BOPropertyInformation[]): sap.ui.core.ListItem[] {
-                    let items: Array<sap.ui.core.ListItem> = [];
-                    items.push(new sap.ui.core.ListItem("", {
-                        key: "",
-                        text: ibas.i18n.prop("shell_please_chooose_data", ""),
-                    }));
-                    if (!ibas.objects.isNull(properies)) {
-                        for (let property of properies) {
-                            items.push(new sap.ui.core.ListItem("", {
-                                key: property.property,
-                                text: property.description,
-                            }));
-                        }
-                    }
-                    return items;
                 }
             }
         }

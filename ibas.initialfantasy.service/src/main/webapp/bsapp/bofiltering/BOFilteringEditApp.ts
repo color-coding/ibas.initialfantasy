@@ -230,14 +230,10 @@ namespace initialfantasy {
                     boCode: bo.BO_CODE_BOINFORMATION,
                     chooseType: ibas.emChooseType.SINGLE,
                     onCompleted(selecteds: ibas.IList<bo.BOInformation>): void {
-                        that.editData.boCode = selecteds.firstOrDefault().code;
-                        if (ibas.strings.isEmpty(that.editData.name)) {
-                            that.editData.name = "-" + selecteds.firstOrDefault().description;
-                        } else if (that.editData.name.indexOf("-") >= 0) {
-                            that.editData.name = that.editData.name.substring(0, that.editData.name.indexOf("-"))
-                                + "-" + selecteds.firstOrDefault().description;
+                        if (that.editData.boCode !== selecteds.firstOrDefault().code) {
+                            that.editData.boCode = selecteds.firstOrDefault().code;
+                            that.view.showBOFiltering(that.editData);
                         }
-                        that.view.refreshBOProperties(selecteds.firstOrDefault().boPropertyInformations);
                     }
                 });
             }
@@ -261,8 +257,6 @@ namespace initialfantasy {
             removeBOFilteringConditionEvent: Function;
             /** 显示数据 */
             showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void;
-            /** 刷新字段列表 */
-            refreshBOProperties(properies: bo.BOPropertyInformation[]): void;
         }
     }
 }
