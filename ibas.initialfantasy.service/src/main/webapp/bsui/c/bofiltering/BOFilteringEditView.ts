@@ -8,9 +8,7 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
-            /**
-             * 视图-BOFiltering
-             */
+            /** 视图-BOFiltering */
             export class BOFilteringEditView extends ibas.BOEditView implements app.IBOFilteringEditView {
                 /** 删除数据事件 */
                 deleteDataEvent: Function;
@@ -24,7 +22,6 @@ namespace initialfantasy {
                 chooseRoleEvent: Function;
                 /** 选择业务对象事件 */
                 chooseBusinessObjectEvent: Function;
-                propertySelect: sap.m.ex.BOChildSelect;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -88,7 +85,7 @@ namespace initialfantasy {
                         ]
                     });
                     this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bofilteringcondition") }));
-                    let columnBOProperty: sap.ui.table.Column = new sap.ui.table.Column("", {
+                    let columnProperty: sap.ui.table.Column = new sap.ui.table.Column("", {
                         label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
                         template: that.propertySelect = new sap.m.ex.BOChildSelect("", {
                             blank: true,
@@ -96,13 +93,13 @@ namespace initialfantasy {
                             boKey: "property",
                             boText: "description",
                             boCode: ibas.config.applyVariables(bo.BO_CODE_BOINFORMATION),
-                            repositoryName: bo.BORepositoryInitialFantasy.name,
+                            repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
                             childPropertyName: "boPropertyInformations",
                             bindingValue: {
                                 path: "propertyName"
                             },
                             onLoadItemsCompleted: function (oEvent: any): void {
-                                columnBOProperty.setTemplate(that.propertySelect);
+                                columnProperty.setTemplate(that.propertySelect);
                             }
                         })
                     });
@@ -149,11 +146,13 @@ namespace initialfantasy {
                                 label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{bracketOpen}",
                                     items: this.getCharListItem("(")
+                                }).bindProperty("selectedKey", {
+                                    path: "bracketOpen",
+                                    type: "sap.ui.model.type.Integer"
                                 })
                             }),
-                            columnBOProperty,
+                            columnProperty,
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
                                 template: new sap.m.Select("", {
@@ -168,16 +167,19 @@ namespace initialfantasy {
                                 label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
                                 template: new sap.m.Input("", {
                                     width: "100%",
-                                    value: "{conditionValue}",
                                     type: sap.m.InputType.Text
+                                }).bindProperty("value", {
+                                    path: "conditionValue",
                                 })
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{bracketClose}",
                                     items: this.getCharListItem(")")
+                                }).bindProperty("selectedKey", {
+                                    path: "bracketClose",
+                                    type: "sap.ui.model.type.Integer"
                                 })
                             }),
                         ]
@@ -258,6 +260,7 @@ namespace initialfantasy {
                 }
                 private page: sap.m.Page;
                 private form: sap.ui.layout.form.SimpleForm;
+                private propertySelect: sap.m.ex.BOChildSelect;
                 /** 改变视图状态 */
                 private changeViewStatus(data: bo.BOFiltering): void {
                     if (ibas.objects.isNull(data)) {
@@ -271,7 +274,6 @@ namespace initialfantasy {
                     }
                 }
                 private tableBOFilteringCondition: sap.ui.table.Table;
-
                 /** 显示数据 */
                 showBOFiltering(data: bo.BOFiltering): void {
                     this.form.setModel(new sap.ui.model.json.JSONModel(data));

@@ -69,6 +69,12 @@ namespace initialfantasy {
                         property === bo.BOPropertyInformation.PROPERTY_EDITABLE_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
                     }
+                } else if (boName === bo.BOFilteringCondition.name) {
+                    if (property === bo.BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME) {
+                        return ibas.enums.toString(ibas.emConditionRelationship, value);
+                    } else if (property === bo.BOFilteringCondition.PROPERTY_OPERATION_NAME) {
+                        return ibas.enums.toString(ibas.emConditionOperation, value);
+                    }
                 }
                 return super.convertData(boName, property, value);
             }
@@ -106,6 +112,12 @@ namespace initialfantasy {
                         property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME ||
                         property === bo.BOPropertyInformation.PROPERTY_EDITABLE_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.BOFilteringCondition.name) {
+                    if (property === bo.BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME) {
+                        return ibas.enums.valueOf(ibas.emConditionRelationship, value);
+                    } else if (property === bo.BOFilteringCondition.PROPERTY_OPERATION_NAME) {
+                        return ibas.enums.valueOf(ibas.emConditionOperation, value);
                     }
                 }
                 return super.parsingData(boName, property, value);

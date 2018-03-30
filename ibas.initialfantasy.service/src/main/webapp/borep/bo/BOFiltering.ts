@@ -476,6 +476,8 @@ namespace initialfantasy {
 
             /** 初始化数据 */
             protected init(): void {
+                this.operation = ibas.emConditionOperation.EQUAL;
+                this.relationship = ibas.emConditionRelationship.AND;
             }
         }
 

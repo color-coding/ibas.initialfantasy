@@ -111,8 +111,10 @@ namespace initialfantasy {
                                 autoResizable: true,
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{relationship}",
                                     items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship)
+                                }).bindProperty("selectedKey", {
+                                    path: "relationship",
+                                    type: "sap.ui.model.type.Integer"
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -121,8 +123,10 @@ namespace initialfantasy {
                                 autoResizable: true,
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{bracketOpen}",
                                     items: this.getCharListItem("(")
+                                }).bindProperty("selectedKey", {
+                                    path: "bracketOpen",
+                                    type: "sap.ui.model.type.Integer"
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -131,8 +135,9 @@ namespace initialfantasy {
                                 autoResizable: true,
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{alias}",
                                     items: this.getPropertyListItem(aliases)
+                                }).bindProperty("selectedKey", {
+                                    path: "alias",
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -141,8 +146,10 @@ namespace initialfantasy {
                                 autoResizable: true,
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{operation}",
                                     items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
+                                }).bindProperty("selectedKey", {
+                                    path: "operation",
+                                    type: "sap.ui.model.type.Integer"
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -150,7 +157,9 @@ namespace initialfantasy {
                                 width: "120px",
                                 autoResizable: true,
                                 template: new sap.m.Input("", {
-                                    value: "{value}"
+                                    width: "100%",
+                                }).bindProperty("value", {
+                                    path: "value",
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -159,8 +168,10 @@ namespace initialfantasy {
                                 autoResizable: true,
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    selectedKey: "{bracketClose}",
                                     items: this.getCharListItem(")")
+                                }).bindProperty("selectedKey", {
+                                    path: "bracketClose",
+                                    type: "sap.ui.model.type.Integer"
                                 })
                             })
                         ]
