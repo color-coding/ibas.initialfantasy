@@ -79,7 +79,7 @@
         </Step>
         <Step Name="create return type">
             <Script>
-                CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES" AS ("ModuleId" character varying,"ModuleName" character varying,"ModuleCategory" character varying,"ModuleEntry" character varying);
+                CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES" AS ("ModuleId" character varying,"ModuleName" character varying,"ModuleCategory" character varying,"ModuleEntry" character varying,"AuthValue" character varying);
             </Script>
         </Step>
         <Step Name="create stored procedures">
@@ -101,7 +101,7 @@
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
                         /* 超级用户全部权限 */
                         FOR result IN
-                            SELECT A."ModuleId",A."ModuleName",A."ModuleCategory",A."ModuleEntry"
+                            SELECT A."ModuleId",A."ModuleName",A."ModuleCategory",A."ModuleEntry",CAST('A' as character varying) "AuthValue"
                             FROM "${Company}_SYS_MODULE" A
                             WHERE (A."PlatformId" = platform OR A."PlatformId" = platform2) AND A."Activated" = 'Y'
                         LOOP
@@ -110,7 +110,7 @@
                     ELSE
                         /* 非超级用户，角色权限 */
                         FOR result IN
-                            SELECT A."ModuleId",A."ModuleName",A."ModuleCategory",A."ModuleEntry"
+                            SELECT A."ModuleId",A."ModuleName",A."ModuleCategory",A."ModuleEntry",C."AuthValue"
                             FROM "${Company}_SYS_MODULE" A INNER JOIN (
                                 SELECT DISTINCT B."ModuleId",B."AuthValue"
                                 FROM "${Company}_SYS_PRIVILEGE" B
@@ -164,7 +164,7 @@
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
                         /* 超级用户全部权限 */
                         FOR result IN
-                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value"
+                            SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value"
                             FROM "${Company}_SYS_PRIVILEGE"
                             LIMIT 0
                         LOOP
@@ -176,12 +176,12 @@
                             SELECT "Source", "Target", "Value"
                             FROM (
                                 -- 模块的权限设置
-                                SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
+                                SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
                                 FROM "${Company}_SYS_PRIVILEGE"
                                 WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') = ''
                                 UNION ALL
                                 -- 应用的权限设置
-                                SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
+                                SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
                                 FROM "${Company}_SYS_PRIVILEGE"
                                 WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
                             ) T0
