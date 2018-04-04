@@ -292,6 +292,38 @@ public class User extends BusinessObject<User>
 	}
 
 	/**
+	 * 属性名称-电话号码
+	 */
+	private static final String PROPERTY_PHONE_NAME = "Phone";
+
+	/**
+	 * 电话号码 属性
+	 */
+	@DbField(name = "Phone", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_PHONE = registerProperty(PROPERTY_PHONE_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-电话号码
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_PHONE_NAME)
+	public final String getPhone() {
+		return this.getProperty(PROPERTY_PHONE);
+	}
+
+	/**
+	 * 设置-电话号码
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setPhone(String value) {
+		this.setProperty(PROPERTY_PHONE, value);
+	}
+
+	/**
 	 * 属性名称-对象编号
 	 */
 	private static final String PROPERTY_DOCENTRY_NAME = "DocEntry";

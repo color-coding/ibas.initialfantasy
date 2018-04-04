@@ -109,6 +109,21 @@ public interface IUser extends IBOMasterData {
 	void setMail(String value);
 
 	/**
+	 * 获取-电话号码
+	 * 
+	 * @return 值
+	 */
+	String getPhone();
+
+	/**
+	 * 设置-电话号码
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setPhone(String value);
+
+	/**
 	 * 获取-对象编号
 	 * 
 	 * @return 值

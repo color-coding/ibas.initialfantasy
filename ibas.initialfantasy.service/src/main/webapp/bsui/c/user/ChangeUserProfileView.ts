@@ -67,6 +67,12 @@ namespace initialfantasy {
                             }).bindProperty("value", {
                                 path: "/mail"
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_phone") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text
+                            }).bindProperty("value", {
+                                path: "/phone"
+                            }),
                         ]
                     });
                     return new sap.m.Dialog("", {

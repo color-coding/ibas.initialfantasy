@@ -83,6 +83,17 @@ namespace initialfantasy {
                 this.setProperty(User.PROPERTY_MAIL_NAME, value);
             }
 
+            /** 映射的属性名称-电话号码 */
+            static PROPERTY_PHONE_NAME: string = "Phone";
+            /** 获取-电话号码 */
+            get phone(): string {
+                return this.getProperty<string>(User.PROPERTY_PHONE_NAME);
+            }
+            /** 设置-电话号码 */
+            set phone(value: string) {
+                this.setProperty(User.PROPERTY_PHONE_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
             /** 获取-对象编号 */

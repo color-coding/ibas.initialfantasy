@@ -8,6 +8,7 @@
     <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="Super" Description="超级用户" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Super"/>
     <Property Name="Mail" Description="电子邮件地址" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Mail"/>
+    <Property Name="Phone" Description="电话号码" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Phone"/>
     <Property Name="DocEntry" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
