@@ -133,7 +133,11 @@ namespace initialfantasy {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://action",
                                     press: function (event: any): void {
-                                        that.fireViewEvents(that.callServicesEvent, {
+                                        ibas.servicesManager.showServices({
+                                            proxy: new ibas.BOListServiceProxy({
+                                                data: openui5.utils.getSelecteds(that.table),
+                                                converter: new bo.DataConverter(),
+                                            }),
                                             displayServices(services: ibas.IServiceAgent[]): void {
                                                 if (ibas.objects.isNull(services) || services.length === 0) {
                                                     return;
@@ -214,10 +218,6 @@ namespace initialfantasy {
                         this.table.setFirstVisibleRow(0);
                         this.table.setModel(null);
                     }
-                }
-                /** 获取选择的数据 */
-                getSelecteds(): bo.Project[] {
-                    return openui5.utils.getSelecteds<bo.Project>(this.table);
                 }
             }
         }

@@ -211,10 +211,6 @@ namespace initialfantasy {
                     }
                 }
             }
-            /** 获取服务的契约 */
-            protected getServiceProxies(): ibas.IServiceProxy<ibas.IServiceContract>[] {
-                return [];
-            }
         }
         /** 视图-应用程序功能 */
         export interface IApplicationFunctionListView extends ibas.IBOListView {
