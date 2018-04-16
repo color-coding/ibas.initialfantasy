@@ -74,7 +74,7 @@ namespace initialfantasy {
                                 }).bindProperty("text", {
                                     path: "moduleName",
                                     formatter(data: any): any {
-                                        return ibas.i18n.prop(ibas.strings.toString(data).toLowerCase());
+                                        return ibas.i18n.prop(ibas.strings.valueOf(data).toLowerCase());
                                     }
                                 })
                             }),
