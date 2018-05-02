@@ -76,6 +76,8 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	@Override
 	public OperationResult<User> userConnect(String user, String password) {
 		try {
+			// 设置用户口令，系统用户
+			this.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
@@ -83,8 +85,26 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_CODE.getName());
 			condition.setValue(user);
-			// 设置用户口令，系统用户
-			this.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+			if (user != null && !user.isEmpty()) {
+				// 邮箱登录
+				condition.setBracketOpen(1);
+				if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_MAIL_LOGIN, false)) {
+					condition = criteria.getConditions().create();
+					condition
+							.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_MAIL.getName());
+					condition.setValue(user);
+					condition.setRelationship(ConditionRelationship.OR);
+				}
+				// 手机登录
+				if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_PHONE_LOGIN, false)) {
+					condition = criteria.getConditions().create();
+					condition.setAlias(
+							org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_PHONE.getName());
+					condition.setValue(user);
+					condition.setRelationship(ConditionRelationship.OR);
+				}
+				condition.setBracketClose(1);
+			}
 			IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
 			if (opRsltUser.getError() != null) {
 				throw opRsltUser.getError();

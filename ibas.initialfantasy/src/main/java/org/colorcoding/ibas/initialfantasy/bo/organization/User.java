@@ -14,6 +14,8 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -22,6 +24,8 @@ import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.logic.IUserMailCheckContract;
+import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 
 /**
  * 获取-用户
@@ -32,7 +36,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlRootElement(name = User.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(User.BUSINESS_OBJECT_CODE)
 public class User extends BusinessObject<User>
-		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey {
+		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey, IBusinessLogicsHost {
 
 	public static String encrypt(String value) {
 		if (value != null && !value.isEmpty() && (!value.endsWith(ENCRYPTED_CHARACTER_MARK) && value.length() != 32)) {
@@ -855,6 +859,49 @@ public class User extends BusinessObject<User>
 	protected IBusinessRule[] registerRules() {
 		return new IBusinessRule[] { // 注册的业务规则
 				new BusinessRuleRequired(PROPERTY_CODE), // 要求有值
+		};
+	}
+
+	@Override
+	public IBusinessLogicContract[] getContracts() {
+		return new IBusinessLogicContract[] {
+
+				new IUserMailCheckContract() {
+
+					@Override
+					public String getIdentifiers() {
+						return User.this.getIdentifiers();
+					}
+
+					@Override
+					public String getMail() {
+						return User.this.getMail();
+					}
+
+					@Override
+					public String getCode() {
+						return User.this.getCode();
+					}
+				},
+
+				new IUserPhoneCheckContract() {
+
+					@Override
+					public String getIdentifiers() {
+						return User.this.getIdentifiers();
+					}
+
+					@Override
+					public String getPhone() {
+						return User.this.getPhone();
+					}
+
+					@Override
+					public String getCode() {
+						return User.this.getCode();
+					}
+				}
+
 		};
 	}
 }

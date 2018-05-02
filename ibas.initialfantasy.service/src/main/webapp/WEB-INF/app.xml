@@ -32,5 +32,9 @@
         <add key="OrgManagerExpiry" value="-1" />
         <!-- 配置项目-权限过期时间（建议120） -->
         <add key="OwnJudgerExpiry" value="-1" />
+        <!-- 配置项目-允许邮箱登录 -->
+        <add key="LoginMail" value="true" />
+        <!-- 配置项目-允许手机登录 -->
+        <add key="LoginPhone" value="true" />
     </appSettings>
 </ns2:configuration>
