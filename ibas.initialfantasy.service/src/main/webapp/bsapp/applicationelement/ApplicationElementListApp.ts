@@ -5,24 +5,24 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
+/// <reference path="../../3rdparty/shell/index.d.ts" />
 namespace initialfantasy {
     export namespace app {
-
-        /** 列表应用-应用程序功能 */
-        export class ApplicationFunctionListApp extends ibas.BOListApplication<IApplicationFunctionListView, bo.ApplicationFunction> {
+        /** 列表应用-应用程序元素 */
+        export class ApplicationElementListApp extends ibas.BOListApplication<IApplicationElementListView, bo.ApplicationElement> {
 
             /** 应用标识 */
-            static APPLICATION_ID: string = "e70cc787-664d-479a-a1aa-2dbb7b559d58";
+            static APPLICATION_ID: string = "59eca6f3-6a45-4ea4-a722-1f76ac9f6a0f";
             /** 应用名称 */
-            static APPLICATION_NAME: string = "initialfantasy_app_applicationfunction_list";
+            static APPLICATION_NAME: string = "initialfantasy_app_applicationelement_list";
             /** 业务对象编码 */
-            static BUSINESS_OBJECT_CODE: string = bo.ApplicationFunction.BUSINESS_OBJECT_CODE;
+            static BUSINESS_OBJECT_CODE: string = bo.ApplicationElement.BUSINESS_OBJECT_CODE;
             /** 构造函数 */
             constructor() {
                 super();
-                this.id = ApplicationFunctionListApp.APPLICATION_ID;
-                this.name = ApplicationFunctionListApp.APPLICATION_NAME;
-                this.boCode = ApplicationFunctionListApp.BUSINESS_OBJECT_CODE;
+                this.id = ApplicationElementListApp.APPLICATION_ID;
+                this.name = ApplicationElementListApp.APPLICATION_NAME;
+                this.boCode = ApplicationElementListApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
             /** 注册视图 */
@@ -31,7 +31,7 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.editDataEvent = this.editData;
                 this.view.deleteDataEvent = this.deleteData;
-                this.view.registerFunctionsEvent = this.registerFunctions;
+                this.view.registerElementsEvent = this.registerElements;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -42,12 +42,16 @@ namespace initialfantasy {
                 this.busy(true);
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                boRepository.fetchApplicationFunction({
+                boRepository.fetchApplicationElement({
                     criteria: criteria,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                    onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
                         try {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
+                            }
+                            if (!that.isViewShowed()) {
+                                // 没显示视图，先显示
+                                that.show();
                             }
                             if (opRslt.resultObjects.length === 0) {
                                 that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
@@ -63,13 +67,13 @@ namespace initialfantasy {
             }
             /** 新建数据 */
             protected newData(): void {
-                let app: ApplicationFunctionEditApp = new ApplicationFunctionEditApp();
+                let app: ApplicationElementEditApp = new ApplicationElementEditApp();
                 app.navigation = this.navigation;
                 app.viewShower = this.viewShower;
                 app.run();
             }
             /** 查看数据，参数：目标数据 */
-            protected viewData(data: bo.ApplicationFunction): void {
+            protected viewData(data: bo.ApplicationElement): void {
                 // 检查目标数据
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -79,7 +83,7 @@ namespace initialfantasy {
                 }
             }
             /** 编辑数据，参数：目标数据 */
-            protected editData(data: bo.ApplicationFunction): void {
+            protected editData(data: bo.ApplicationElement): void {
                 // 检查目标数据
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -87,13 +91,13 @@ namespace initialfantasy {
                     ));
                     return;
                 }
-                let app: ApplicationFunctionEditApp = new ApplicationFunctionEditApp();
+                let app: ApplicationElementEditApp = new ApplicationElementEditApp();
                 app.navigation = this.navigation;
                 app.viewShower = this.viewShower;
                 app.run(data);
             }
             /** 删除数据，参数：目标数据集合 */
-            protected deleteData(data: bo.ApplicationFunction | bo.ApplicationFunction[]): void {
+            protected deleteData(data: bo.ApplicationElement | bo.ApplicationElement[]): void {
                 // 检查目标数据
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -101,7 +105,7 @@ namespace initialfantasy {
                     ));
                     return;
                 }
-                let beDeleteds: ibas.ArrayList<bo.ApplicationFunction> = new ibas.ArrayList<bo.ApplicationFunction>();
+                let beDeleteds: ibas.ArrayList<bo.ApplicationElement> = new ibas.ArrayList<bo.ApplicationElement>();
                 if (data instanceof Array) {
                     for (let item of data) {
                         item.delete();
@@ -128,10 +132,10 @@ namespace initialfantasy {
                         if (action === ibas.emMessageAction.YES) {
                             try {
                                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                                let saveMethod: Function = function (beSaved: bo.ApplicationFunction): void {
-                                    boRepository.saveApplicationFunction({
+                                let saveMethod: Function = function (beSaved: bo.ApplicationElement): void {
+                                    boRepository.saveApplicationElement({
                                         beSaved: beSaved,
-                                        onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                                        onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
                                             try {
                                                 if (opRslt.resultCode !== 0) {
                                                     throw new Error(opRslt.message);
@@ -165,34 +169,43 @@ namespace initialfantasy {
                     }
                 });
             }
-            private registerFunctions(): void {
-                let modules: ibas.IList<ibas.IModule> = ibas.variablesManager.getWatcher().modules();
+            private registerElements(): void {
+                let modules: ibas.IModule[] = shell.app.consoleManager.modules();
                 let that: this = this;
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let conditionModule: ibas.ICondition = criteria.conditions.create();
-                conditionModule.alias = bo.ApplicationFunction.PROPERTY_MODULEID_NAME;
+                conditionModule.alias = bo.ApplicationElement.PROPERTY_MODULEID_NAME;
                 conditionModule.operation = ibas.emConditionOperation.EQUAL;
-                let conditionFunction: ibas.ICondition = criteria.conditions.create();
-                conditionFunction.alias = bo.ApplicationFunction.PROPERTY_FUNCTIONID_NAME;
-                conditionFunction.operation = ibas.emConditionOperation.EQUAL;
+                let conditionElement: ibas.ICondition = criteria.conditions.create();
+                conditionElement.alias = bo.ApplicationElement.PROPERTY_ELEMENTID_NAME;
+                conditionElement.operation = ibas.emConditionOperation.EQUAL;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                 for (let module of modules) {
-                    this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_register_module_functions", module.description));
+                    this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_register_module_elements", module.description));
                     conditionModule.value = module.id;
-                    for (let func of module.functions()) {
-                        conditionFunction.value = func.id;
-                        boRepository.fetchApplicationFunction({
+                    for (let element of module.elements()) {
+                        conditionElement.value = element.id;
+                        boRepository.fetchApplicationElement({
                             criteria: criteria,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
                                 try {
                                     if (opRslt.resultCode === 0 && opRslt.resultObjects.length === 0) {
-                                        let boFunc: bo.ApplicationFunction = new bo.ApplicationFunction;
-                                        boFunc.moduleId = module.id;
-                                        boFunc.functionId = func.id;
-                                        boFunc.functionName = func.name;
-                                        boRepository.saveApplicationFunction({
-                                            beSaved: boFunc,
-                                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                                        let boElement: bo.ApplicationElement = new bo.ApplicationElement;
+                                        boElement.moduleId = module.id;
+                                        boElement.elementId = element.id;
+                                        boElement.elementName = element.name;
+                                        if (element instanceof ibas.ModuleFunction) {
+                                            boElement.elementType = bo.emElementType.FUNCTION;
+                                        } else if (element instanceof ibas.Application) {
+                                            boElement.elementType = bo.emElementType.APPLICATION;
+                                        } else if (element instanceof ibas.ServiceMapping) {
+                                            boElement.elementType = bo.emElementType.SERVICE;
+                                        } else {
+                                            return;
+                                        }
+                                        boRepository.saveApplicationElement({
+                                            beSaved: boElement,
+                                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
                                                 try {
                                                     if (opRslt.resultCode !== 0) {
                                                         throw new Error(opRslt.message);
@@ -212,16 +225,16 @@ namespace initialfantasy {
                 }
             }
         }
-        /** 视图-应用程序功能 */
-        export interface IApplicationFunctionListView extends ibas.IBOListView {
+        /** 视图-应用程序元素 */
+        export interface IApplicationElementListView extends ibas.IBOListView {
             /** 编辑数据事件，参数：编辑对象 */
             editDataEvent: Function;
             /** 删除数据事件，参数：删除对象集合 */
             deleteDataEvent: Function;
             /** 显示数据 */
-            showData(datas: bo.ApplicationFunction[]): void;
-            /** 注册功能 */
-            registerFunctionsEvent: Function;
+            showData(datas: bo.ApplicationElement[]): void;
+            /** 注册元素 */
+            registerElementsEvent: Function;
         }
     }
 }

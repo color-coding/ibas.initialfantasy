@@ -65,9 +65,9 @@ namespace initialfantasy {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_target") }),
                             new sap.m.ex.BOInput("", {
-                                boText: "functionName",
-                                boKey: "functionId",
-                                boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONFUNCTION),
+                                boText: "elementName",
+                                boKey: "elementId",
+                                boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONELEMENT),
                                 repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseTargetEvent);

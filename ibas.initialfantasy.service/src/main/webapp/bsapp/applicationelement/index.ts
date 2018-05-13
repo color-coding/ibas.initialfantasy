@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-/// <reference path="./ApplicationFunctionChooseApp.ts" />
-/// <reference path="./ApplicationFunctionEditApp.ts" />
-/// <reference path="./ApplicationFunctionFunc.ts" />
-/// <reference path="./ApplicationFunctionListApp.ts" />
+/// <reference path="./ApplicationElementFunc.ts" />
+/// <reference path="./ApplicationElementListApp.ts" />
+/// <reference path="./ApplicationElementChooseApp.ts" />
+/// <reference path="./ApplicationElementEditApp.ts" />

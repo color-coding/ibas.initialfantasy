@@ -3,7 +3,7 @@ package org.colorcoding.ibas.initialfantasy.repository;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.repository.IBORepositoryApplication;
-import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
@@ -20,6 +20,25 @@ import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
  * InitialFantasy仓库应用
  */
 public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序元素
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IApplicationElement> fetchApplicationElement(ICriteria criteria);
+
+	/**
+	 * 保存-应用程序元素
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IApplicationElement> saveApplicationElement(IApplicationElement bo);
 
 	// --------------------------------------------------------------------------------------------//
 	/**
@@ -77,25 +96,6 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOInformation> saveBOInformation(IBOInformation bo);
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-应用程序功能
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	IOperationResult<IApplicationFunction> fetchApplicationFunction(ICriteria criteria);
-
-	/**
-	 * 保存-应用程序功能
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	IOperationResult<IApplicationFunction> saveApplicationFunction(IApplicationFunction bo);
 
 	// --------------------------------------------------------------------------------------------//
 	/**

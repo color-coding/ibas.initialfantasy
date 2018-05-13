@@ -73,9 +73,6 @@ namespace initialfantasy {
                                     wrapping: false
                                 }).bindProperty("text", {
                                     path: "moduleName",
-                                    formatter(data: any): any {
-                                        return ibas.i18n.prop(ibas.strings.valueOf(data).toLowerCase());
-                                    }
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -98,14 +95,6 @@ namespace initialfantasy {
                                     formatter(data: any): any {
                                         return ibas.enums.describe(ibas.emPlantform, data);
                                     }
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_applicationmodule_moduleid"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "moduleId"
                                 })
                             }),
                         ]

@@ -7,7 +7,7 @@
  */
 /// <reference path="../3rdparty/ibas/index.d.ts" />
 /// <reference path="../api/index.ts" />
-/// <reference path="./bo/ApplicationFunction.ts" />
+/// <reference path="./bo/ApplicationElement.ts" />
 /// <reference path="./bo/ApplicationModule.ts" />
 /// <reference path="./bo/ApplicationPlatform.ts" />
 /// <reference path="./bo/BOCriteria.ts" />
@@ -28,7 +28,7 @@ namespace initialfantasy {
         // 注册业务对象到工厂
         boFactory.register(BONumbering);
         boFactory.register(BOSeriesNumbering);
-        boFactory.register(ApplicationFunction.BUSINESS_OBJECT_CODE, ApplicationFunction);
+        boFactory.register(ApplicationElement.BUSINESS_OBJECT_CODE, ApplicationElement);
         boFactory.register(ApplicationModule.BUSINESS_OBJECT_CODE, ApplicationModule);
         boFactory.register(ApplicationPlatform.BUSINESS_OBJECT_CODE, ApplicationPlatform);
         boFactory.register(BOCriteria.BUSINESS_OBJECT_CODE, BOCriteria);

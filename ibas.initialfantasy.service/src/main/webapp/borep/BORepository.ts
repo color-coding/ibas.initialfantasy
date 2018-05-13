@@ -41,18 +41,18 @@ namespace initialfantasy {
                 fileRepository.download("download", caller);
             }
             /**
-             * 查询 应用程序功能
+             * 查询 应用程序元素
              * @param fetcher 查询者
              */
-            fetchApplicationFunction(fetcher: ibas.IFetchCaller<bo.ApplicationFunction>): void {
-                super.fetch(bo.ApplicationFunction.name, fetcher);
+            fetchApplicationElement(fetcher: ibas.IFetchCaller<bo.ApplicationElement>): void {
+                super.fetch(bo.ApplicationElement.name, fetcher);
             }
             /**
-             * 保存 应用程序功能
+             * 保存 应用程序元素
              * @param saver 保存者
              */
-            saveApplicationFunction(saver: ibas.ISaveCaller<bo.ApplicationFunction>): void {
-                super.save(bo.ApplicationFunction.name, saver);
+            saveApplicationElement(saver: ibas.ISaveCaller<bo.ApplicationElement>): void {
+                super.save(bo.ApplicationElement.name, saver);
             }
 
             /**

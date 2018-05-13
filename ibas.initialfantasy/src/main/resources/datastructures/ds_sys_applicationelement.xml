@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Domain>
 <Domain Name="InitialFantasy" ShortName="IF">
-  <Model Name="ApplicationFunction" Description="应用程序功能" ModelType="Simple" Mapped="${Company}_SYS_FUNCTION">
+  <Model Name="ApplicationElement" Description="应用程序元素" ModelType="Simple" Mapped="${Company}_SYS_ELEMENT">
     <Property Name="ModuleId" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleId" UniqueKey="Yes"/>
-    <Property Name="FunctionId" Description="功能标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="FunctionId" UniqueKey="Yes"/>
-    <Property Name="FunctionName" Description="功能名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="FunctionName"/>
+    <Property Name="ElementId" Description="元素标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ElementId" UniqueKey="Yes"/>
+    <Property Name="ElementName" Description="元素名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ElementName"/>
+    <Property Name="ElementType" Description="元素类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" Mapped="ElementType" DeclaredType="emElementType" />
     <Property Name="ObjectKey" Description="对象键值" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
@@ -18,5 +19,5 @@
     <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
     <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
   </Model>
-  <BusinessObject MappedModel="ApplicationFunction" ShortName="${Company}_SYS_FUNCTION"/>
+  <BusinessObject MappedModel="ApplicationElement" ShortName="${Company}_SYS_ELEMENT"/>
 </Domain>

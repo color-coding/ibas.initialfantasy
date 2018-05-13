@@ -4,10 +4,10 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.repository.BORepositoryServiceApplication;
-import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
-import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
@@ -34,6 +34,55 @@ import org.colorcoding.ibas.initialfantasy.bo.project.Project;
  */
 public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		implements IBORepositoryInitialFantasySvc, IBORepositoryInitialFantasyApp {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序元素
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<ApplicationElement> fetchApplicationElement(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, ApplicationElement.class);
+	}
+
+	/**
+	 * 查询-应用程序元素（提前设置用户口令）
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IApplicationElement> fetchApplicationElement(ICriteria criteria) {
+		return new OperationResult<IApplicationElement>(this.fetchApplicationElement(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-应用程序元素
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<ApplicationElement> saveApplicationElement(ApplicationElement bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-应用程序元素（提前设置用户口令）
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IApplicationElement> saveApplicationElement(IApplicationElement bo) {
+		return new OperationResult<IApplicationElement>(
+				this.saveApplicationElement((ApplicationElement) bo, this.getUserToken()));
+	}
 
 	// --------------------------------------------------------------------------------------------//
 	/**
@@ -180,56 +229,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<IBOInformation> saveBOInformation(IBOInformation bo) {
 		return new OperationResult<IBOInformation>(this.saveBOInformation((BOInformation) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-应用程序功能
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<ApplicationFunction> fetchApplicationFunction(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApplicationFunction.class);
-	}
-
-	/**
-	 * 查询-应用程序功能（提前设置用户口令）
-	 * 
-	 * @param criteria
-	 *            查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IApplicationFunction> fetchApplicationFunction(ICriteria criteria) {
-		return new OperationResult<IApplicationFunction>(this.fetchApplicationFunction(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-应用程序功能
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
-	 * @return 操作结果
-	 */
-	public OperationResult<ApplicationFunction> saveApplicationFunction(ApplicationFunction bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-应用程序功能（提前设置用户口令）
-	 * 
-	 * @param bo
-	 *            对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IApplicationFunction> saveApplicationFunction(IApplicationFunction bo) {
-		return new OperationResult<IApplicationFunction>(
-				this.saveApplicationFunction((ApplicationFunction) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

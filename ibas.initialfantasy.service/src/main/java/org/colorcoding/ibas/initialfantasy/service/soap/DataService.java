@@ -8,7 +8,7 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.cxf.WebServicePath;
-import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
@@ -203,7 +203,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-应用程序功能
+	 * 查询-应用程序元素
 	 * 
 	 * @param criteria
 	 *            查询
@@ -212,13 +212,13 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationResult<ApplicationFunction> fetchApplicationFunction(@WebParam(name = "criteria") Criteria criteria,
+	public OperationResult<ApplicationElement> fetchApplicationElement(@WebParam(name = "criteria") Criteria criteria,
 			@WebParam(name = "token") String token) {
-		return super.fetchApplicationFunction(criteria, token);
+		return super.fetchApplicationElement(criteria, token);
 	}
 
 	/**
-	 * 保存-应用程序功能
+	 * 保存-应用程序元素
 	 * 
 	 * @param bo
 	 *            对象实例
@@ -227,9 +227,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationResult<ApplicationFunction> saveApplicationFunction(@WebParam(name = "bo") ApplicationFunction bo,
+	public OperationResult<ApplicationElement> saveApplicationElement(@WebParam(name = "bo") ApplicationElement bo,
 			@WebParam(name = "token") String token) {
-		return super.saveApplicationFunction(bo, token);
+		return super.saveApplicationElement(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

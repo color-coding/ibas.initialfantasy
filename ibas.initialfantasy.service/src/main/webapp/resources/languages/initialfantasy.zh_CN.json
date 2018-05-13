@@ -1,11 +1,11 @@
 {
   "initialfantasy": "系统中心",
   "initialfantasy_icon": "sap-icon://addresses",
-  "initialfantasy_func_applicationfunction": "应用程序功能",
-  "initialfantasy_app_applicationfunction_list": "应用程序功能列表",
-  "initialfantasy_app_applicationfunction_choose": "应用程序功能选择",
-  "initialfantasy_app_applicationfunction_view": "应用程序功能查看",
-  "initialfantasy_app_applicationfunction_edit": "应用程序功能编辑",
+  "initialfantasy_func_applicationelement": "应用程序元素",
+  "initialfantasy_app_applicationelement_list": "应用程序元素列表",
+  "initialfantasy_app_applicationelement_choose": "应用程序元素选择",
+  "initialfantasy_app_applicationelement_view": "应用程序元素查看",
+  "initialfantasy_app_applicationelement_edit": "应用程序元素编辑",
   "initialfantasy_func_applicationmodule": "应用程序模块",
   "initialfantasy_app_applicationmodule_list": "应用程序模块列表",
   "initialfantasy_app_applicationmodule_choose": "应用程序模块选择",
@@ -67,7 +67,7 @@
   "initialfantasy_app_criteria_editor": "查询编辑",
   "initialfantasy_invaild_edit_target": "无效的编辑目标",
   "initialfantasy_edit_target": "目标",
-  "initialfantasy_register_functions": "注册功能",
-  "initialfantasy_register_module_functions": "正在注册[{0}]模块功能，请稍后",
+  "initialfantasy_register_elements": "注册应用元素",
+  "initialfantasy_register_module_elements": "正在注册[{0}]应用元素，请稍后",
   "initialfantasy_closing_delimiter": "----结束----"
 }

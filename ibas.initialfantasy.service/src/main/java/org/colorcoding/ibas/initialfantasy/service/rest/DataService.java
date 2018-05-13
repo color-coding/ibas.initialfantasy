@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
-import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
@@ -291,7 +291,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	// --------------------------------------------------------------------------------------------//
 	/**
-	 * 查询-应用程序功能
+	 * 查询-应用程序元素
 	 * 
 	 * @param criteria
 	 *            查询
@@ -302,14 +302,14 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchApplicationFunction")
-	public OperationResult<ApplicationFunction> fetchApplicationFunction(Criteria criteria,
+	@Path("fetchApplicationElement")
+	public OperationResult<ApplicationElement> fetchApplicationElement(Criteria criteria,
 			@QueryParam("token") String token) {
-		return super.fetchApplicationFunction(criteria, token);
+		return super.fetchApplicationElement(criteria, token);
 	}
 
 	/**
-	 * 保存-应用程序功能
+	 * 保存-应用程序元素
 	 * 
 	 * @param bo
 	 *            对象实例
@@ -320,10 +320,10 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveApplicationFunction")
-	public OperationResult<ApplicationFunction> saveApplicationFunction(ApplicationFunction bo,
+	@Path("saveApplicationElement")
+	public OperationResult<ApplicationElement> saveApplicationElement(ApplicationElement bo,
 			@QueryParam("token") String token) {
-		return super.saveApplicationFunction(bo, token);
+		return super.saveApplicationElement(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

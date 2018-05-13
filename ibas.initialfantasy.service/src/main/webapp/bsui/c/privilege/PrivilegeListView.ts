@@ -57,19 +57,27 @@ namespace initialfantasy {
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_moduleid"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "moduleId"
-                                })
+                                template: new sap.m.ex.BOText("", {
+                                    boText: "moduleName",
+                                    boKey: "moduleId",
+                                    boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONMODULE),
+                                    repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
+                                    bindingValue: {
+                                        path: "moduleId"
+                                    }
+                                }),
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_target"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "target"
-                                })
+                                template: new sap.m.ex.BOText("", {
+                                    boText: "elementName",
+                                    boKey: "elementId",
+                                    boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONELEMENT),
+                                    repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
+                                    bindingValue: {
+                                        path: "target"
+                                    }
+                                }),
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_activated"),

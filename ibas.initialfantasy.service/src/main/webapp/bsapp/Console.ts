@@ -7,7 +7,7 @@
  */
 /// <reference path="../3rdparty/ibas/index.d.ts" />
 /// <reference path="../borep/index.ts" />
-/// <reference path="./applicationfunction/index.ts" />
+/// <reference path="./applicationelement/index.ts" />
 /// <reference path="./applicationmodule/index.ts" />
 /// <reference path="./applicationplatform/index.ts" />
 /// <reference path="./bocriteria/index.ts" />
@@ -49,14 +49,14 @@ namespace initialfantasy {
                 if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true) {
                     // 仅调超级用户，启用以下功能
                     this.register(new BOFilteringFunc());
-                    this.register(new ApplicationFunctionFunc());
+                    this.register(new ApplicationElementFunc());
                     this.register(new ApplicationModuleFunc());
                     this.register(new ApplicationPlatformFunc());
                     this.register(new BOInformationFunc());
                     this.register(new BONumberingFunc());
                 }
                 // 注册服务应用
-                this.register(new ApplicationFunctionChooseServiceMapping());
+                this.register(new ApplicationElementChooseServiceMapping());
                 this.register(new ApplicationModuleChooseServiceMapping());
                 this.register(new ApplicationPlatformChooseServiceMapping());
                 this.register(new OrganizationChooseServiceMapping());

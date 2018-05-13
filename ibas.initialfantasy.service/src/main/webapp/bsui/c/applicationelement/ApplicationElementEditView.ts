@@ -8,10 +8,8 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
-            /**
-             * 视图-ApplicationFunction
-             */
-            export class ApplicationFunctionEditView extends ibas.BOEditView implements app.IApplicationFunctionEditView {
+            /** 编辑视图-应用程序元素 */
+            export class ApplicationElementEditView extends ibas.BOEditView implements app.IApplicationElementEditView {
                 /** 删除数据事件 */
                 deleteDataEvent: Function;
                 /** 新建数据事件，参数1：是否克隆 */
@@ -20,42 +18,16 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_moduleid") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/moduleId",
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionid") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/functionId",
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_functionname") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/functionName",
-                            }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectkey") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectKey",
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationfunction_objectcode") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                            }).bindProperty("value", {
-                                path: "/objectCode",
-                            }),
+                        ]
+                    });
+                    this.layoutMain = new sap.ui.layout.VerticalLayout("", {
+                        width: "100%",
+                        height: "100%",
+                        content: [
+                            formTop,
                         ]
                     });
                     this.page = new sap.m.Page("", {
@@ -107,15 +79,16 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        content: [this.form]
+                        content: [this.layoutMain]
                     });
-                    this.id = this.page.getId();
                     return this.page;
                 }
+
                 private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
+                private layoutMain: sap.ui.layout.VerticalLayout;
+
                 /** 改变视图状态 */
-                private changeViewStatus(data: bo.ApplicationFunction): void {
+                private changeViewStatus(data: bo.ApplicationElement): void {
                     if (ibas.objects.isNull(data)) {
                         return;
                     }
@@ -125,13 +98,15 @@ namespace initialfantasy {
                             openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
                         }
                     }
+                    // 不可编辑：已批准，
                 }
 
                 /** 显示数据 */
-                showApplicationFunction(data: bo.ApplicationFunction): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
+                showApplicationElement(data: bo.ApplicationElement): void {
+                    this.layoutMain.setModel(new sap.ui.model.json.JSONModel(data));
+                    this.layoutMain.bindObject("/");
                     // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, data);
+                    openui5.utils.refreshModelChanged(this.layoutMain, data);
                     // 改变视图状态
                     this.changeViewStatus(data);
                 }

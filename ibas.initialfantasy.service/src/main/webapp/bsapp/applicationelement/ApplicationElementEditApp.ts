@@ -5,24 +5,23 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
-namespace initialfantasy {
+ namespace initialfantasy {
     export namespace app {
-
-        /** 应用-应用程序功能 */
-        export class ApplicationFunctionEditApp extends ibas.BOEditApplication<IApplicationFunctionEditView, bo.ApplicationFunction> {
+        /** 编辑应用-应用程序元素 */
+        export class ApplicationElementEditApp extends ibas.BOEditApplication<IApplicationElementEditView, bo.ApplicationElement> {
 
             /** 应用标识 */
-            static APPLICATION_ID: string = "df4cd983-ba4a-4e2c-9583-ff480efa2cf9";
+            static APPLICATION_ID: string = "07d839a8-1b11-4439-9d4d-e10d3c3669dd";
             /** 应用名称 */
-            static APPLICATION_NAME: string = "initialfantasy_app_applicationfunction_edit";
+            static APPLICATION_NAME: string = "initialfantasy_app_applicationelement_edit";
             /** 业务对象编码 */
-            static BUSINESS_OBJECT_CODE: string = bo.ApplicationFunction.BUSINESS_OBJECT_CODE;
+            static BUSINESS_OBJECT_CODE: string = bo.ApplicationElement.BUSINESS_OBJECT_CODE;
             /** 构造函数 */
             constructor() {
                 super();
-                this.id = ApplicationFunctionEditApp.APPLICATION_ID;
-                this.name = ApplicationFunctionEditApp.APPLICATION_NAME;
-                this.boCode = ApplicationFunctionEditApp.BUSINESS_OBJECT_CODE;
+                this.id = ApplicationElementEditApp.APPLICATION_ID;
+                this.name = ApplicationElementEditApp.APPLICATION_NAME;
+                this.boCode = ApplicationElementEditApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
             /** 注册视图 */
@@ -37,18 +36,17 @@ namespace initialfantasy {
                 // 视图加载完成
                 if (ibas.objects.isNull(this.editData)) {
                     // 创建编辑对象实例
-                    this.editData = new bo.ApplicationFunction();
+                    this.editData = new bo.ApplicationElement();
                     this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
                 }
-                this.view.showApplicationFunction(this.editData);
+                this.view.showApplicationElement(this.editData);
             }
-            /** 运行,覆盖原方法 */
             run(): void;
-            run(data: bo.ApplicationFunction): void;
+            run(data: bo.ApplicationElement): void;
             run(): void {
                 let that: this = this;
-                if (ibas.objects.instanceOf(arguments[0], bo.ApplicationFunction)) {
-                    let data: bo.ApplicationFunction = arguments[0];
+                if (ibas.objects.instanceOf(arguments[0], bo.ApplicationElement)) {
+                    let data: bo.ApplicationElement = arguments[0];
                     // 新对象直接编辑
                     if (data.isNew) {
                         that.editData = data;
@@ -60,14 +58,14 @@ namespace initialfantasy {
                     if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
                         // 有效的查询对象查询
                         let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                        boRepository.fetchApplicationFunction({
+                        boRepository.fetchApplicationElement({
                             criteria: criteria,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
-                                let data: bo.ApplicationFunction;
+                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
+                                let data: bo.ApplicationElement;
                                 if (opRslt.resultCode === 0) {
                                     data = opRslt.resultObjects.firstOrDefault();
                                 }
-                                if (ibas.objects.instanceOf(data, bo.ApplicationFunction)) {
+                                if (ibas.objects.instanceOf(data, bo.ApplicationElement)) {
                                     // 查询到了有效数据
                                     that.editData = data;
                                     that.show();
@@ -83,21 +81,20 @@ namespace initialfantasy {
                                 }
                             }
                         });
-                        // 开始查询数据
-                        return;
+                        return; // 退出
                     }
                 }
                 super.run.apply(this, arguments);
             }
             /** 待编辑的数据 */
-            protected editData: bo.ApplicationFunction;
+            protected editData: bo.ApplicationElement;
             /** 保存数据 */
             protected saveData(): void {
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                boRepository.saveApplicationFunction({
+                boRepository.saveApplicationElement({
                     beSaved: this.editData,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationFunction>): void {
+                    onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
                         try {
                             that.busy(false);
                             if (opRslt.resultCode !== 0) {
@@ -151,7 +148,7 @@ namespace initialfantasy {
                         that.viewShowed();
                     } else {
                         // 新建对象
-                        that.editData = new bo.ApplicationFunction();
+                        that.editData = new bo.ApplicationElement();
                         that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
                         that.viewShowed();
                     }
@@ -173,10 +170,10 @@ namespace initialfantasy {
                 }
             }
         }
-        /** 视图-应用程序功能 */
-        export interface IApplicationFunctionEditView extends ibas.IBOEditView {
+        /** 视图-应用程序元素 */
+        export interface IApplicationElementEditView extends ibas.IBOEditView {
             /** 显示数据 */
-            showApplicationFunction(data: bo.ApplicationFunction): void;
+            showApplicationElement(data: bo.ApplicationElement): void;
             /** 删除数据事件 */
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */

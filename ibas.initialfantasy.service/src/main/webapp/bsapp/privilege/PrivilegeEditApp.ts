@@ -236,17 +236,17 @@ namespace initialfantasy {
                 if (ibas.strings.isEmpty(this.editData.moduleId)) {
                     return;
                 }
-                ibas.servicesManager.runChooseService<bo.ApplicationFunction>({
-                    boCode: bo.ApplicationFunction.BUSINESS_OBJECT_CODE,
+                ibas.servicesManager.runChooseService<bo.ApplicationElement>({
+                    boCode: bo.ApplicationElement.BUSINESS_OBJECT_CODE,
                     chooseType: ibas.emChooseType.SINGLE,
                     criteria: [
-                        new ibas.Condition(bo.ApplicationFunction.PROPERTY_MODULEID_NAME,
+                        new ibas.Condition(bo.ApplicationElement.PROPERTY_MODULEID_NAME,
                             ibas.emConditionOperation.EQUAL, this.editData.moduleId),
                     ],
-                    onCompleted(selecteds: ibas.IList<bo.ApplicationFunction>): void {
-                        let selected: bo.ApplicationFunction = selecteds.firstOrDefault();
+                    onCompleted(selecteds: ibas.IList<bo.ApplicationElement>): void {
+                        let selected: bo.ApplicationElement = selecteds.firstOrDefault();
                         that.editData.moduleId = selected.moduleId;
-                        that.editData.target = selected.functionId;
+                        that.editData.target = selected.elementId;
                     }
                 });
             }
