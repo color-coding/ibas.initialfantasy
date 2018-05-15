@@ -273,4 +273,36 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>e25dde1f-2d1f-48de-a519-a0f9e88090ae</Id>
+        <Name>ThirdPartyApp</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/thirdpartyapp/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../test/apps/thirdpartyapp/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
+    <ServiceInformation>
+        <Id>e25dde1f-2d1f-48de-a519-a0f9e88090af</Id>
+        <Name>ThirdPartyAppUsers</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/thirdpartyapp/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../test/apps/thirdpartyapp/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>
