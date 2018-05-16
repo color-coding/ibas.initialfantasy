@@ -96,14 +96,11 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_user_super"),
+                                label: ibas.i18n.prop("bo_user_organization"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "super",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emYesNo, data);
-                                    }
+                                    path: "organization"
                                 })
                             }),
                         ]

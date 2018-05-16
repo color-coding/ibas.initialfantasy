@@ -283,5 +283,11 @@
         "em_role": "角色",
         "em_unavailable": "不可用",
         "em_available": "可用的"
+    },
+    {
+        "em_module": "模块",
+        "em_function": "功能",
+        "em_application": "应用",
+        "em_service": "服务"
     }
 ]

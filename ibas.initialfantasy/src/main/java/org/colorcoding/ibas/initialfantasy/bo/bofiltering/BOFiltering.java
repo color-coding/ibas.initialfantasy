@@ -60,7 +60,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 角色标识 属性
 	 */
-	@DbField(name = "RoleCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "RoleCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_ROLECODE = registerProperty(PROPERTY_ROLECODE_NAME, String.class,
 			MY_CLASS);
 
@@ -92,7 +92,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 对象类型 属性
 	 */
-	@DbField(name = "BOCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "BOCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_BOCODE = registerProperty(PROPERTY_BOCODE_NAME, String.class,
 			MY_CLASS);
 

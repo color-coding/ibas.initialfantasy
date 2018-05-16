@@ -77,6 +77,14 @@ namespace initialfantasy {
                                     }
                                 })
                             }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_user_organization"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "organization"
+                                })
+                            }),
                         ]
                     });
                     this.form.addContent(this.table);
