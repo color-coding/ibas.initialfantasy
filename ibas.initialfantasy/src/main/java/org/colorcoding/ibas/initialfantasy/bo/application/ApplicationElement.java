@@ -38,12 +38,12 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 数据库表
 	 */
-	public static final String DB_TABLE_NAME = "CC_SYS_ELEMENT";
+	public static final String DB_TABLE_NAME = "${Company}_SYS_ELEMENT";
 
 	/**
 	 * 业务对象编码
 	 */
-	public static final String BUSINESS_OBJECT_CODE = "CC_SYS_ELEMENT";
+	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_ELEMENT";
 
 	/**
 	 * 业务对象名称
