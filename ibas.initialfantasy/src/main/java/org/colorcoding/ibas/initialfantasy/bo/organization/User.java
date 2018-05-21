@@ -1,5 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.organization;
 
+import java.util.UUID;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -852,7 +854,7 @@ public class User extends BusinessObject<User>
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setActivated(emYesNo.YES);
-
+		this.setPassword(EncryptMD5.shortText(UUID.randomUUID().toString()));
 	}
 
 	@Override
