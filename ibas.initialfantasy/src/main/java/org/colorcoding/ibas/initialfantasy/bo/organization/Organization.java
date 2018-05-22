@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
@@ -26,7 +27,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlType(name = Organization.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = Organization.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(Organization.BUSINESS_OBJECT_CODE)
-public class Organization extends BusinessObject<Organization> implements IOrganization, IBOSeriesKey {
+public class Organization extends BusinessObject<Organization> implements IOrganization, IBOSeriesKey, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
