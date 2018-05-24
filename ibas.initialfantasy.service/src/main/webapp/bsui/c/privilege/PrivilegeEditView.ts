@@ -48,32 +48,33 @@ namespace initialfantasy {
                                     that.fireViewEvents(that.choosePlatformEvent);
                                 }
                             }).bindProperty("value", {
-                                path: "/platformId"
+                                path: "/platformId",
+                                formatter(data: any): any {
+                                    return ibas.enums.describe(ibas.emPlantform, data);
+                                }
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_moduleid") }),
-                            new sap.m.ex.BOInput("", {
-                                boText: "moduleName",
-                                boKey: "moduleId",
-                                boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONMODULE),
-                                repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
+                            new sap.m.Input("", {
+                                showValueHelp: true,
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseModuleEvent);
                                 },
-                                bindingValue: {
-                                    path: "/moduleId"
+                            }).bindProperty("value", {
+                                path: "/moduleId",
+                                formatter(data: any): any {
+                                    return ibas.i18n.prop(data);
                                 }
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_target") }),
-                            new sap.m.ex.BOInput("", {
-                                boText: "elementName",
-                                boKey: "elementId",
-                                boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONELEMENT),
-                                repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
+                            new sap.m.Input("", {
+                                showValueHelp: true,
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseTargetEvent);
                                 },
-                                bindingValue: {
-                                    path: "/target"
+                            }).bindProperty("value", {
+                                path: "/target",
+                                formatter(data: any): any {
+                                    return ibas.i18n.prop(data);
                                 }
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_privilege_activated") }),

@@ -80,7 +80,10 @@ namespace initialfantasy {
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "platformId"
+                                    path: "platformId",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(ibas.emPlantform, data);
+                                    }
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -88,7 +91,10 @@ namespace initialfantasy {
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "moduleId"
+                                    path: "moduleId",
+                                    formatter(data: any): any {
+                                        return ibas.i18n.prop(data);
+                                    }
                                 })
                             }),
                             new sap.ui.table.Column("", {
@@ -96,7 +102,13 @@ namespace initialfantasy {
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "target"
+                                    path: "target",
+                                    formatter(data: any): any {
+                                        if (ibas.strings.isEmpty(data)) {
+                                            return data;
+                                        }
+                                        return ibas.i18n.prop(data);
+                                    }
                                 })
                             }),
                             new sap.ui.table.Column("", {

@@ -34,15 +34,14 @@ namespace initialfantasy {
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_moduleid"),
-                                template: new sap.m.ex.BOText("", {
-                                    boText: "moduleName",
-                                    boKey: "moduleId",
-                                    boCode: ibas.config.applyVariables(bo.BO_CODE_APPLICATIONMODULE),
-                                    repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
-                                    bindingValue: {
-                                        path: "moduleId"
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "moduleId",
+                                    formatter(data: any): any {
+                                        return ibas.i18n.prop(data);
                                     }
-                                }),
+                                })
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationelement_elementtype"),
@@ -60,7 +59,10 @@ namespace initialfantasy {
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "elementName",
+                                    path: "elementId",
+                                    formatter(data: any): any {
+                                        return ibas.i18n.prop(data);
+                                    }
                                 })
                             }),
                         ]

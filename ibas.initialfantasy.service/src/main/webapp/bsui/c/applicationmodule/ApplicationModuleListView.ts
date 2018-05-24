@@ -41,11 +41,22 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_applicationmodule_modulename"),
+                                label: ibas.i18n.prop("bo_applicationmodule_moduleid"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
                                     path: "moduleName",
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationmodule_modulename"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "moduleId",
+                                    formatter(data: any): any {
+                                        return ibas.i18n.prop(data);
+                                    }
                                 })
                             }),
                             new sap.ui.table.Column("", {

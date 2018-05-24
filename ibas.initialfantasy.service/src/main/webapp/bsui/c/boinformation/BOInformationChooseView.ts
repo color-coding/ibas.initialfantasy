@@ -83,14 +83,6 @@ namespace initialfantasy {
                                     path: "code"
                                 })
                             }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_boinformation_objecttype"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "objecttype"
-                                })
-                            }),
                         ]
                     });
                     // 调整选择样式风格
