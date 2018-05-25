@@ -24,7 +24,7 @@ namespace initialfantasy {
                     this.form = new sap.ui.layout.form.SimpleForm("");
                     this.table = new sap.ui.table.Table("", {
                         enableSelectAll: false,
-                        selectionMode: sap.ui.table.SelectionMode.Single,
+                        selectionMode: sap.ui.table.SelectionMode.MultiToggle,
                         selectionBehavior: sap.ui.table.SelectionBehavior.Row,
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
@@ -56,6 +56,7 @@ namespace initialfantasy {
                             }),
                         ]
                     });
+                    openui5.utils.changeSelectionStyle(this.table, ibas.emChooseType.SINGLE);
                     this.form.addContent(this.table);
                     this.page = new sap.m.Page("", {
                         showHeader: false,
