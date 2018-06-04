@@ -13,6 +13,7 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.project.Project;
@@ -31,7 +32,7 @@ public class Resolver implements ContextResolver<JAXBContext> {
 			if (jaxbContext == null) {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, UserFieldProxy.class, ApplicationFunction.class,
 						ApplicationModule.class, ApplicationPlatform.class, BOCriteria.class, BOFiltering.class,
-						Project.class, Privilege.class, User.class);
+						Organization.class, Project.class, Privilege.class, User.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();
