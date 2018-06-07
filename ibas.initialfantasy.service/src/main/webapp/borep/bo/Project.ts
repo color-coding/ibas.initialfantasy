@@ -61,28 +61,6 @@ namespace initialfantasy {
                 this.setProperty(Project.PROPERTY_MANAGER_NAME, value);
             }
 
-            /** 映射的属性名称-状态 */
-            static PROPERTY_STATUS_NAME: string = "Status";
-            /** 获取-状态 */
-            get status(): ibas.emDocumentStatus {
-                return this.getProperty<ibas.emDocumentStatus>(Project.PROPERTY_STATUS_NAME);
-            }
-            /** 设置-状态 */
-            set status(value: ibas.emDocumentStatus) {
-                this.setProperty(Project.PROPERTY_STATUS_NAME, value);
-            }
-
-            /** 映射的属性名称-审批状态 */
-            static PROPERTY_APPROVALSTATUS_NAME: string = "ApprovalStatus";
-            /** 获取-审批状态 */
-            get approvalStatus(): ibas.emApprovalStatus {
-                return this.getProperty<ibas.emApprovalStatus>(Project.PROPERTY_APPROVALSTATUS_NAME);
-            }
-            /** 设置-审批状态 */
-            set approvalStatus(value: ibas.emApprovalStatus) {
-                this.setProperty(Project.PROPERTY_APPROVALSTATUS_NAME, value);
-            }
-
             /** 映射的属性名称-数据所有者 */
             static PROPERTY_DATAOWNER_NAME: string = "DataOwner";
             /** 获取-数据所有者 */

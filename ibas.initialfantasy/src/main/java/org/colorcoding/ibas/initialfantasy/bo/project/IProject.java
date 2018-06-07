@@ -2,8 +2,6 @@ package org.colorcoding.ibas.initialfantasy.bo.project;
 
 import org.colorcoding.ibas.bobas.bo.IBOMasterData;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.emApprovalStatus;
-import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 
 /**
@@ -71,36 +69,6 @@ public interface IProject extends IBOMasterData {
 	 *            值
 	 */
 	void setManager(Integer value);
-
-	/**
-	 * 获取-状态
-	 * 
-	 * @return 值
-	 */
-	emDocumentStatus getStatus();
-
-	/**
-	 * 设置-状态
-	 * 
-	 * @param value
-	 *            值
-	 */
-	void setStatus(emDocumentStatus value);
-
-	/**
-	 * 获取-审批状态
-	 * 
-	 * @return 值
-	 */
-	emApprovalStatus getApprovalStatus();
-
-	/**
-	 * 设置-审批状态
-	 * 
-	 * @param value
-	 *            值
-	 */
-	void setApprovalStatus(emApprovalStatus value);
 
 	/**
 	 * 获取-数据所有者

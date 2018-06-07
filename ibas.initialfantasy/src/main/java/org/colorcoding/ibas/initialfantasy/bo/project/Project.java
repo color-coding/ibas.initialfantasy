@@ -8,15 +8,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.colorcoding.ibas.bobas.approval.IApprovalData;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
 import org.colorcoding.ibas.bobas.bo.IBOTagDeleted;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.emApprovalStatus;
-import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
@@ -35,7 +32,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlRootElement(name = Project.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(Project.BUSINESS_OBJECT_CODE)
 public class Project extends BusinessObject<Project>
-		implements IProject, IApprovalData, ITeamDataOwnership, IBOSeriesKey, IBOTagDeleted, IBOUserFields {
+		implements IProject, ITeamDataOwnership, IBOSeriesKey, IBOTagDeleted, IBOUserFields {
 
 	/**
 	 * 序列化版本标记
@@ -188,70 +185,6 @@ public class Project extends BusinessObject<Project>
 	 */
 	public final void setManager(Integer value) {
 		this.setProperty(PROPERTY_MANAGER, value);
-	}
-
-	/**
-	 * 属性名称-状态
-	 */
-	private static final String PROPERTY_STATUS_NAME = "Status";
-
-	/**
-	 * 状态 属性
-	 */
-	@DbField(name = "Status", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emDocumentStatus> PROPERTY_STATUS = registerProperty(PROPERTY_STATUS_NAME,
-			emDocumentStatus.class, MY_CLASS);
-
-	/**
-	 * 获取-状态
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_STATUS_NAME)
-	public final emDocumentStatus getStatus() {
-		return this.getProperty(PROPERTY_STATUS);
-	}
-
-	/**
-	 * 设置-状态
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setStatus(emDocumentStatus value) {
-		this.setProperty(PROPERTY_STATUS, value);
-	}
-
-	/**
-	 * 属性名称-审批状态
-	 */
-	private static final String PROPERTY_APPROVALSTATUS_NAME = "ApprovalStatus";
-
-	/**
-	 * 审批状态 属性
-	 */
-	@DbField(name = "ApvlStatus", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emApprovalStatus> PROPERTY_APPROVALSTATUS = registerProperty(
-			PROPERTY_APPROVALSTATUS_NAME, emApprovalStatus.class, MY_CLASS);
-
-	/**
-	 * 获取-审批状态
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_APPROVALSTATUS_NAME)
-	public final emApprovalStatus getApprovalStatus() {
-		return this.getProperty(PROPERTY_APPROVALSTATUS);
-	}
-
-	/**
-	 * 设置-审批状态
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setApprovalStatus(emApprovalStatus value) {
-		this.setProperty(PROPERTY_APPROVALSTATUS, value);
 	}
 
 	/**

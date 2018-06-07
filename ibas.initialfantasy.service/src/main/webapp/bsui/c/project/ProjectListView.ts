@@ -67,14 +67,19 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_project_status"),
+                                label: ibas.i18n.prop("bo_project_reference1"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "status",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emDocumentStatus, data);
-                                    }
+                                    path: "reference1"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_project_reference2"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "reference2"
                                 })
                             }),
                         ]
