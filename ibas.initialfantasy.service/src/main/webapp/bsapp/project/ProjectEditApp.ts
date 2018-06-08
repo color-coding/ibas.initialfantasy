@@ -180,6 +180,10 @@ namespace initialfantasy {
                 let that: this = this;
                 ibas.servicesManager.runChooseService<bo.Organization>({
                     boCode: bo.BO_CODE_ORGANIZATION,
+                    chooseType: ibas.emChooseType.MULTIPLE,
+                    criteria: [
+                        new ibas.Condition(bo.Organization.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.Organization>): void {
                         that.editData.organization = selecteds.firstOrDefault().code;
                     }
@@ -191,6 +195,9 @@ namespace initialfantasy {
                 ibas.servicesManager.runChooseService<bo.Organization>({
                     boCode: bo.BO_CODE_USER,
                     chooseType: ibas.emChooseType.MULTIPLE,
+                    criteria: [
+                        new ibas.Condition(bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.Organization>): void {
                         let members: ibas.StringBuilder = new ibas.StringBuilder();
                         for (let item of selecteds) {
@@ -207,6 +214,9 @@ namespace initialfantasy {
                 ibas.servicesManager.runChooseService<bo.Organization>({
                     boCode: bo.BO_CODE_USER,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition(bo.User.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.Organization>): void {
                         that.editData.manager = selecteds.firstOrDefault().docEntry;
                     }

@@ -98,12 +98,17 @@ namespace initialfantasy {
                             }).bindProperty("value", {
                                 path: "/objectCode"
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_status") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(ibas.emDocumentStatus)
-                            }).bindProperty("selectedKey", {
-                                path: "/status",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference1") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text
+                            }).bindProperty("value", {
+                                path: "/reference1"
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_project_reference2") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text
+                            }).bindProperty("value", {
+                                path: "/reference2"
                             }),
                         ]
                     });
@@ -173,14 +178,6 @@ namespace initialfantasy {
                         if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
                             openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
                         }
-                    }
-                    // 不可编辑：已批准，
-                    if (data.approvalStatus === ibas.emApprovalStatus.APPROVED) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                        openui5.utils.changeFormEditable(this.form, false);
                     }
                 }
 
