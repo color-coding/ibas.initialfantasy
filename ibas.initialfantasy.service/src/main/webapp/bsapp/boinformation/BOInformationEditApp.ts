@@ -96,7 +96,7 @@ namespace initialfantasy {
             protected editData: bo.BOInformation;
             /** 保存数据 */
             protected saveData(): void {
-                try {
+                    this.busy(true);
                     let that: this = this;
                     let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                     boRepository.saveBOInformation({
@@ -125,11 +125,7 @@ namespace initialfantasy {
                             }
                         }
                     });
-                    this.busy(true);
                     this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
-                } catch (error) {
-                    this.messages(error);
-                }
             }
             /** 删除数据 */
             protected deleteData(): void {

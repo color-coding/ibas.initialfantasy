@@ -36,7 +36,6 @@ namespace initialfantasy {
             }
             /** 查询数据 */
             protected fetchData(criteria: ibas.ICriteria): void {
-                try {
                     this.busy(true);
                     let that: this = this;
                     let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
@@ -44,6 +43,7 @@ namespace initialfantasy {
                         criteria: criteria,
                         onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
                             try {
+                                    that.busy(false);
                                 if (opRslt.resultCode !== 0) {
                                     throw new Error(opRslt.message);
                                 }
@@ -60,7 +60,6 @@ namespace initialfantasy {
                                         that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
                                     }
                                     that.view.showData(opRslt.resultObjects);
-                                    that.busy(false);
                                 }
                             } catch (error) {
                                 that.messages(error);
@@ -68,9 +67,6 @@ namespace initialfantasy {
                         }
                     });
                     this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
-                } catch (error) {
-                    this.messages(error);
-                }
             }
             /** 新建数据 */
             protected newData(): void {

@@ -45,6 +45,7 @@ namespace initialfantasy {
             protected editData: bo.BONumbering;
             /** 保存数据 */
             protected saveBOSeriesNumbering(data: bo.BOSeriesNumbering): void {
+                this.busy(true);
                 let that: this = this;
                 if (ibas.strings.isEmpty(data.objectCode)) {
                     data.objectCode = this.editData.objectCode;
@@ -79,7 +80,6 @@ namespace initialfantasy {
                         }
                     }
                 });
-                this.busy(true);
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 查询数据 */

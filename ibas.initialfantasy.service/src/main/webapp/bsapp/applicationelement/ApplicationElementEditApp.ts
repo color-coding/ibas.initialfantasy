@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
- namespace initialfantasy {
+namespace initialfantasy {
     export namespace app {
         /** 编辑应用-应用程序元素 */
         export class ApplicationElementEditApp extends ibas.BOEditApplication<IApplicationElementEditView, bo.ApplicationElement> {
@@ -90,6 +90,7 @@
             protected editData: bo.ApplicationElement;
             /** 保存数据 */
             protected saveData(): void {
+                this.busy(true);
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                 boRepository.saveApplicationElement({
@@ -118,7 +119,6 @@
                         }
                     }
                 });
-                this.busy(true);
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 删除数据 */
