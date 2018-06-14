@@ -43,6 +43,7 @@ namespace initialfantasy {
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<bo.Project>): void {
                         try {
+                            that.busy(false);
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
@@ -55,8 +56,7 @@ namespace initialfantasy {
                                     // 没显示视图，先显示
                                     that.show();
                                 }
-                                that.view.showData(opRslt.resultObjects);
-                                that.busy(false);
+                                that.view.showData(opRslt.resultObjects);                                
                             }
                         } catch (error) {
                             that.messages(error);

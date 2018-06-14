@@ -93,6 +93,7 @@ namespace initialfantasy {
             protected editData: bo.Organization;
             /** 保存数据 */
             protected saveData(): void {
+                this.busy(true);
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                 boRepository.saveOrganization({
@@ -121,7 +122,6 @@ namespace initialfantasy {
                         }
                     }
                 });
-                this.busy(true);
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 删除数据 */
