@@ -41,6 +41,20 @@ namespace initialfantasy {
                 fileRepository.download("download", caller);
             }
             /**
+             * 查询 应用程序配置
+             * @param fetcher 查询者
+             */
+            fetchApplicationConfig(fetcher: ibas.IFetchCaller<bo.ApplicationConfig>): void {
+                super.fetch(bo.ApplicationConfig.name, fetcher);
+            }
+            /**
+             * 保存 应用程序配置
+             * @param saver 保存者
+             */
+            saveApplicationConfig(saver: ibas.ISaveCaller<bo.ApplicationConfig>): void {
+                super.save(bo.ApplicationConfig.name, saver);
+            }
+            /**
              * 查询 应用程序元素
              * @param fetcher 查询者
              */

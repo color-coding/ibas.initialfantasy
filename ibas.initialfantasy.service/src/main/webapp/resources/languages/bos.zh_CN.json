@@ -1,5 +1,24 @@
 [
     {
+        "bo_applicationconfig": "应用程序配置",
+        "bo_applicationconfig_configgroup": "配置组",
+        "bo_applicationconfig_configkey": "配置项",
+        "bo_applicationconfig_configvalue": "配置值",
+        "bo_applicationconfig_objectkey": "对象键值",
+        "bo_applicationconfig_objectcode": "对象类型",
+        "bo_applicationconfig_datasource": "数据源",
+        "bo_applicationconfig_createdate": "创建日期",
+        "bo_applicationconfig_createtime": "创建时间",
+        "bo_applicationconfig_updatedate": "修改日期",
+        "bo_applicationconfig_updatetime": "修改时间",
+        "bo_applicationconfig_createactionid": "创建动作标识",
+        "bo_applicationconfig_updateactionid": "更新动作标识",
+        "bo_applicationconfig_loginst": "实例号（版本）",
+        "bo_applicationconfig_createusersign": "创建用户",
+        "bo_applicationconfig_updateusersign": "修改用户",
+        "bo_applicationconfig_closing_delimiter": "----结束----"
+    },
+    {
         "bo_applicationelement": "应用程序元素",
         "bo_applicationelement_moduleid": "模块标识",
         "bo_applicationelement_elementid": "元素标识",

@@ -230,6 +230,16 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyInformation.PROPERTY_EDITABLE_NAME, value);
             }
 
+            /** 映射的属性名称-业务对象属性值集合 */
+            static PROPERTY_BOPROPERTYVALUES_NAME: string = "BOPropertyValues";
+            /** 获取-业务对象属性信息集合 */
+            get boPropertyValues(): BOPropertyValues {
+                return this.getProperty<BOPropertyValues>(BOPropertyInformation.PROPERTY_BOPROPERTYVALUES_NAME);
+            }
+            /** 设置-业务对象属性值集合 */
+            set boPropertyValues(value: BOPropertyValues) {
+                this.setProperty(BOPropertyInformation.PROPERTY_BOPROPERTYVALUES_NAME, value);
+            }
             /** 字符串 */
             toString(): string {
                 let builder: ibas.StringBuilder = new ibas.StringBuilder();
@@ -279,6 +289,121 @@ namespace initialfantasy {
             /** 创建并添加子项 */
             create(): BOPropertyInformation {
                 let item: BOPropertyInformation = new BOPropertyInformation();
+                this.add(item);
+                return item;
+            }
+        }
+
+        /** 业务对象属性值 */
+        export class BOPropertyValue extends ibas.BusinessObject<BOPropertyValue> implements IBOPropertyValue {
+
+            /** 构造函数 */
+            constructor() {
+                super();
+            }
+            /** 映射的属性名称-编码 */
+            static PROPERTY_CODE_NAME: string = "Code";
+            /** 获取-编码 */
+            get code(): string {
+                return this.getProperty<string>(BOPropertyValue.PROPERTY_CODE_NAME);
+            }
+            /** 设置-编码 */
+            set code(value: string) {
+                this.setProperty(BOPropertyValue.PROPERTY_CODE_NAME, value);
+            }
+
+            /** 映射的属性名称-属性名称 */
+            static PROPERTY_PROPERTY_NAME: string = "Property";
+            /** 获取-属性名称 */
+            get property(): string {
+                return this.getProperty<string>(BOPropertyValue.PROPERTY_PROPERTY_NAME);
+            }
+            /** 设置-属性名称 */
+            set property(value: string) {
+                this.setProperty(BOPropertyValue.PROPERTY_PROPERTY_NAME, value);
+            }
+
+            /** 映射的属性名称-值 */
+            static PROPERTY_VALUE_NAME: string = "Value";
+            /** 获取-值 */
+            get value(): string {
+                return this.getProperty<string>(BOPropertyValue.PROPERTY_VALUE_NAME);
+            }
+            /** 设置-值 */
+            set value(value: string) {
+                this.setProperty(BOPropertyValue.PROPERTY_VALUE_NAME, value);
+            }
+
+            /** 映射的属性名称-描述 */
+            static PROPERTY_DESCRIPTION_NAME: string = "Description";
+            /** 获取-描述 */
+            get description(): string {
+                return this.getProperty<string>(BOPropertyValue.PROPERTY_DESCRIPTION_NAME);
+            }
+            /** 设置-描述 */
+            set description(value: string) {
+                this.setProperty(BOPropertyValue.PROPERTY_DESCRIPTION_NAME, value);
+            }
+
+            /** 字符串 */
+            toString(): string {
+                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                builder.append("{");
+                builder.append("[");
+                builder.append(BOInformation.BUSINESS_OBJECT_CODE);
+                builder.append("].");
+                builder.append("[");
+                builder.append(BOPropertyValue.PROPERTY_CODE_NAME);
+                builder.append(" ");
+                builder.append("=");
+                builder.append(" ");
+                builder.append(this.code);
+                builder.append("]");
+                builder.append("&");
+                builder.append("[");
+                builder.append(BOPropertyValue.PROPERTY_PROPERTY_NAME);
+                builder.append(" ");
+                builder.append("=");
+                builder.append(" ");
+                builder.append(this.property);
+                builder.append("]");
+                builder.append("&");
+                builder.append("[");
+                builder.append(BOPropertyValue.PROPERTY_VALUE_NAME);
+                builder.append(" ");
+                builder.append("=");
+                builder.append(" ");
+                builder.append(this.value);
+                builder.append("]");
+                builder.append("}");
+                return builder.toString();
+            }
+            /** 获取查询 */
+            criteria(): ibas.ICriteria {
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = BOPropertyValue.PROPERTY_CODE_NAME;
+                condition.value = this.code;
+                condition = criteria.conditions.create();
+                condition.alias = BOPropertyValue.PROPERTY_PROPERTY_NAME;
+                condition.value = this.property;
+                condition = criteria.conditions.create();
+                condition.alias = BOPropertyValue.PROPERTY_VALUE_NAME;
+                condition.value = this.value;
+                return criteria;
+            }
+
+            /** 初始化数据 */
+            protected init(): void {
+                //
+            }
+        }
+
+        /** 业务对象属性信息 集合 */
+        export class BOPropertyValues extends ibas.BusinessObjects<BOPropertyValue, BOPropertyInformation> implements IBOPropertyValues {
+            /** 创建并添加子项 */
+            create(): BOPropertyValue {
+                let item: BOPropertyValue = new BOPropertyValue();
                 this.add(item);
                 return item;
             }

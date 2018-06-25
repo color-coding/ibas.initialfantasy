@@ -3,6 +3,7 @@ package org.colorcoding.ibas.initialfantasy.repository;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.repository.IBORepositorySmartService;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
@@ -20,6 +21,29 @@ import org.colorcoding.ibas.initialfantasy.bo.project.Project;
  * InitialFantasy仓库服务
  */
 public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartService {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<ApplicationConfig> fetchApplicationConfig(ICriteria criteria, String token);
+
+	/**
+	 * 保存-应用程序配置
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	OperationResult<ApplicationConfig> saveApplicationConfig(ApplicationConfig bo, String token);
 
 	// --------------------------------------------------------------------------------------------//
 	/**

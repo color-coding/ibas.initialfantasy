@@ -20,4 +20,10 @@
     <Property Name="Systemed" Description="系统的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Systemed"/>
     <Property Name="Editable" Description="可编辑" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Editable"/>
   </Model>
+  <Model Name="BOPropertyValue" Description="业务对象属性值" ModelType="Unspecified" Mapped="${Company}_SYS_BOI2">
+    <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Code" PrimaryKey="Yes"/>
+    <Property Name="PropertyName" Description="属性名称" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Property" PrimaryKey="Yes"/>
+    <Property Name="Value" Description="值" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Value" PrimaryKey="Yes"/>
+    <Property Name="Description" Description="描述" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Descrp"/>
+  </Model>
 </Domain>

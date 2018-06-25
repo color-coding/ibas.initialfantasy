@@ -4,9 +4,11 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.repository.BORepositoryServiceApplication;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
@@ -34,6 +36,56 @@ import org.colorcoding.ibas.initialfantasy.bo.project.Project;
  */
 public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		implements IBORepositoryInitialFantasySvc, IBORepositoryInitialFantasyApp {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<ApplicationConfig> fetchApplicationConfig(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, ApplicationConfig.class);
+	}
+
+	/**
+	 * 查询-应用程序配置（提前设置用户口令）
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IApplicationConfig> fetchApplicationConfig(ICriteria criteria) {
+		return new OperationResult<IApplicationConfig>(this.fetchApplicationConfig(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-应用程序配置
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	public OperationResult<ApplicationConfig> saveApplicationConfig(ApplicationConfig bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-应用程序配置（提前设置用户口令）
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IApplicationConfig> saveApplicationConfig(IApplicationConfig bo) {
+		return new OperationResult<IApplicationConfig>(
+				this.saveApplicationConfig((ApplicationConfig) bo, this.getUserToken()));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-应用程序元素

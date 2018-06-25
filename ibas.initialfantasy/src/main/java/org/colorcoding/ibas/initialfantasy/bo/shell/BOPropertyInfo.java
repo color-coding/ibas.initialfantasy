@@ -1,14 +1,18 @@
 package org.colorcoding.ibas.initialfantasy.bo.shell;
 
+import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyValue;
 
 /**
  * 业务对象属性信息
@@ -29,10 +33,14 @@ public class BOPropertyInfo extends Serializable {
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
 		propertyInfo.setEditable(propertyItem.getEditable() == emYesNo.YES ? true : false);
 		propertyInfo.setDescription(propertyItem.getDescription());
+		ArrayList<BOPropertyValue> propertyValues = new ArrayList<>();
+		for (IBOPropertyValue propertyValue : propertyItem.getBOPropertyValues()) {
+			propertyValues.add(BOPropertyValue.create(propertyValue));
+		}
+		propertyInfo.setValues(propertyValues.toArray(new BOPropertyValue[] {}));
 		return propertyInfo;
 	}
 
-	/** 属性 */
 	private String property;
 
 	@XmlElement(name = "Property")
@@ -67,7 +75,6 @@ public class BOPropertyInfo extends Serializable {
 		this.searched = searched;
 	}
 
-	/** 可编辑的 */
 	private boolean editable;
 
 	@XmlElement(name = "Editable")
@@ -77,6 +84,18 @@ public class BOPropertyInfo extends Serializable {
 
 	public void setEditable(boolean editable) {
 		this.editable = editable;
+	}
+
+	private BOPropertyValue[] values;
+
+	@XmlElementWrapper(name = "Values")
+	@XmlElement(name = "Values", type = BOPropertyValue.class)
+	public BOPropertyValue[] getValues() {
+		return values;
+	}
+
+	public void setValues(BOPropertyValue[] values) {
+		this.values = values;
 	}
 
 	@Override
