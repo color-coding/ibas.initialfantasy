@@ -8,6 +8,7 @@
 /// <reference path="../../3rdparty/ibas/index.d.ts" />
 /// <reference path="../../3rdparty/openui5/index.d.ts" />
 /// <reference path="../../index.d.ts" />
+/// <reference path="./applicationconfig/index.ts" />
 /// <reference path="./applicationelement/index.ts" />
 /// <reference path="./applicationmodule/index.ts" />
 /// <reference path="./applicationplatform/index.ts" />
@@ -33,6 +34,12 @@ namespace initialfantasy {
             protected newView(id: string): ibas.IView {
                 let view: ibas.IView = null;
                 switch (id) {
+                    case app.ApplicationConfigListApp.APPLICATION_ID:
+                        view = new c.ApplicationConfigListView();
+                        break;
+                    case app.ApplicationConfigEditApp.APPLICATION_ID:
+                        view = new c.ApplicationConfigEditView();
+                        break;
                     case app.ApplicationElementListApp.APPLICATION_ID:
                         view = new c.ApplicationElementListView();
                         break;

@@ -1,6 +1,9 @@
 {
   "initialfantasy": "系统中心",
   "initialfantasy_icon": "sap-icon://addresses",
+  "initialfantasy_func_applicationconfig": "应用程序配置",
+  "initialfantasy_app_applicationconfig_list": "应用程序配置列表",
+  "initialfantasy_app_applicationconfig_edit": "应用程序配置编辑",
   "initialfantasy_func_applicationelement": "应用程序元素",
   "initialfantasy_app_applicationelement_list": "应用程序元素列表",
   "initialfantasy_app_applicationelement_choose": "应用程序元素选择",

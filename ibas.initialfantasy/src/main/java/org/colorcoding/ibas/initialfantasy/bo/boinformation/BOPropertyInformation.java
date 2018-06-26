@@ -3,6 +3,7 @@ package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
@@ -360,11 +361,45 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	}
 
 	/**
+	 * 属性名称-业务对象属性信息
+	 */
+	private static final String PROPERTY_BOPROPERTYVALUES_NAME = "BOPropertyValues";
+
+	/**
+	 * 业务对象属性信息的集合属性
+	 * 
+	 */
+	public static final IPropertyInfo<IBOPropertyValues> PROPERTY_BOPROPERTYVALUES = registerProperty(
+			PROPERTY_BOPROPERTYVALUES_NAME, IBOPropertyValues.class, MY_CLASS);
+
+	/**
+	 * 获取-业务对象属性值集合
+	 * 
+	 * @return 值
+	 */
+	@XmlElementWrapper(name = PROPERTY_BOPROPERTYVALUES_NAME)
+	@XmlElement(name = BOPropertyValue.BUSINESS_OBJECT_NAME, type = BOPropertyValue.class)
+	public final IBOPropertyValues getBOPropertyValues() {
+		return this.getProperty(PROPERTY_BOPROPERTYVALUES);
+	}
+
+	/**
+	 * 设置-业务对象属性值集合
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setBOPropertyValues(IBOPropertyValues value) {
+		this.setProperty(PROPERTY_BOPROPERTYVALUES, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
+		this.setBOPropertyValues(new BOPropertyValues(this));
 
 	}
 

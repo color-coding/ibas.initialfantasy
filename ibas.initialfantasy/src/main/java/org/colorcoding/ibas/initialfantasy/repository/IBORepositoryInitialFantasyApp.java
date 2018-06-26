@@ -3,6 +3,7 @@ package org.colorcoding.ibas.initialfantasy.repository;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.repository.IBORepositoryApplication;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
@@ -20,6 +21,25 @@ import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
  * InitialFantasy仓库应用
  */
 public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication {
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IApplicationConfig> fetchApplicationConfig(ICriteria criteria);
+
+	/**
+	 * 保存-应用程序配置
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IApplicationConfig> saveApplicationConfig(IApplicationConfig bo);
 
 	// --------------------------------------------------------------------------------------------//
 	/**
