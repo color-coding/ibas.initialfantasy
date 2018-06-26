@@ -28,6 +28,38 @@ namespace initialfantasy {
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationconfig_objectkey"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "objectKey"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationconfig_configgroup"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "configGroup"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationconfig_configkey"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "configKey"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationconfig_configvalue"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "configValue"
+                                })
+                            }),
                         ]
                     });
                     // 添加列表自动查询事件
@@ -50,14 +82,6 @@ namespace initialfantasy {
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_new"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://create",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.newDataEvent);
-                                    }
-                                }),
-                                new sap.m.Button("", {
                                     text: ibas.i18n.prop("shell_data_edit"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
@@ -68,53 +92,6 @@ namespace initialfantasy {
                                         );
                                     }
                                 }),
-                                new sap.m.ToolbarSeparator(""),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_delete"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://delete",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.deleteDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.ApplicationConfig>(that.table)
-                                        );
-                                    }
-                                }),
-                                new sap.m.ToolbarSpacer(""),
-                                new sap.m.Button("", {
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://action",
-                                    press: function (event: any): void {
-                                        ibas.servicesManager.showServices({
-                                            proxy: new ibas.BOServiceProxy({
-                                                data: openui5.utils.getSelecteds(that.table),
-                                                converter: new bo.DataConverter(),
-                                            }),
-                                            displayServices(services: ibas.IServiceAgent[]): void {
-                                                if (ibas.objects.isNull(services) || services.length === 0) {
-                                                    return;
-                                                }
-                                                let popover: sap.m.Popover = new sap.m.Popover("", {
-                                                    showHeader: false,
-                                                    placement: sap.m.PlacementType.Bottom,
-                                                });
-                                                for (let service of services) {
-                                                    popover.addContent(new sap.m.Button({
-                                                        text: ibas.i18n.prop(service.name),
-                                                        type: sap.m.ButtonType.Transparent,
-                                                        icon: service.icon,
-                                                        press: function (): void {
-                                                            service.run();
-                                                            popover.close();
-                                                        }
-                                                    }));
-                                                }
-                                                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
-                                                popover.openBy(event.getSource(), true);
-                                            }
-                                        });
-                                    }
-                                })
                             ]
                         }),
                         content: [

@@ -8,6 +8,7 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.cxf.WebServicePath;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
@@ -29,6 +30,37 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 @WebService
 @WebServicePath("data")
 public class DataService extends BORepositoryInitialFantasyShell {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<ApplicationConfig> fetchApplicationConfig(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchApplicationConfig(criteria, token);
+	}
+
+	/**
+	 * 保存-应用程序配置
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<ApplicationConfig> saveApplicationConfig(@WebParam(name = "bo") ApplicationConfig bo,
+			@WebParam(name = "token") String token) {
+		return super.saveApplicationConfig(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-项目

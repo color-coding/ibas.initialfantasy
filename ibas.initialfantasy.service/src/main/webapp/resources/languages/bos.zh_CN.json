@@ -169,6 +169,9 @@
         "bo_bopropertyinformation_searched": "检索的",
         "bo_bopropertyinformation_systemed": "系统的",
         "bo_bopropertyinformation_editable": "可编辑",
+        "bo_bopropertyvalue": "业务对象属性可选值",
+        "bo_bopropertyvalue_value": "值",
+        "bo_bopropertyvalue_description": "描述",
         "bo_boinformation_closing_delimiter": "----结束----"
     },
     {

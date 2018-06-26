@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -17,7 +18,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements IBOPropertyValue {
+public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements IBOPropertyValue, IBOCustomKey {
 
 	/**
 	 * 序列化版本标记
@@ -111,7 +112,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 值 属性
 	 */
-	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "Value", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_VALUE = registerProperty(PROPERTY_VALUE_NAME, String.class,
 			MY_CLASS);
 
