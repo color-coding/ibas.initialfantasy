@@ -41,7 +41,10 @@ namespace initialfantasy {
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "configGroup"
+                                    path: "configGroup",
+                                    formatter(data: any): any {
+                                        return ibas.i18n.prop(data);
+                                    }
                                 })
                             }),
                             new sap.ui.table.Column("", {
