@@ -37,6 +37,17 @@ namespace initialfantasy {
                 this.setProperty(ApplicationConfig.PROPERTY_CONFIGKEY_NAME, value);
             }
 
+            /** 映射的属性名称-配置说明 */
+            static PROPERTY_CONFIGDESCRIPTION_NAME: string = "ConfigDescription";
+            /** 获取-配置说明 */
+            get configDescription(): string {
+                return this.getProperty<string>(ApplicationConfig.PROPERTY_CONFIGDESCRIPTION_NAME);
+            }
+            /** 设置-配置说明 */
+            set configDescription(value: string) {
+                this.setProperty(ApplicationConfig.PROPERTY_CONFIGDESCRIPTION_NAME, value);
+            }
+
             /** 映射的属性名称-配置值 */
             static PROPERTY_CONFIGVALUE_NAME: string = "ConfigValue";
             /** 获取-配置值 */

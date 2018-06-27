@@ -3,6 +3,7 @@
         "bo_applicationconfig": "应用程序配置",
         "bo_applicationconfig_configgroup": "配置组",
         "bo_applicationconfig_configkey": "配置项",
+        "bo_applicationconfig_configdescription": "配置说明",
         "bo_applicationconfig_configvalue": "配置值",
         "bo_applicationconfig_objectkey": "对象键值",
         "bo_applicationconfig_objectcode": "对象类型",

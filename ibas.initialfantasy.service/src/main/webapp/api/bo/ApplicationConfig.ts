@@ -13,6 +13,8 @@ namespace initialfantasy {
             configGroup: string;
             /** 配置项 */
             configKey: string;
+            /** 配置说明 */
+            configDescription: string;
             /** 配置值 */
             configValue: string;
             /** 对象键值 */

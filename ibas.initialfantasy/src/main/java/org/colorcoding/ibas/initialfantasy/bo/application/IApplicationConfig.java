@@ -40,6 +40,21 @@ public interface IApplicationConfig extends IBOSimple {
 	void setConfigKey(String value);
 
 	/**
+	 * 获取-配置说明
+	 * 
+	 * @return 值
+	 */
+	String getConfigDescription();
+
+	/**
+	 * 设置-配置说明
+	 * 
+	 * @param value
+	 *            值
+	 */
+	void setConfigDescription(String value);
+
+	/**
 	 * 获取-配置值
 	 * 
 	 * @return 值

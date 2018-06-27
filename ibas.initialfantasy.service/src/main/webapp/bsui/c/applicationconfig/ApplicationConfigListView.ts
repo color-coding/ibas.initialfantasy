@@ -53,6 +53,14 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationconfig_configdescription"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "configDescription"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationconfig_configvalue"),
                                 template: new sap.m.Text("", {
                                     wrapping: false

@@ -36,6 +36,13 @@ namespace initialfantasy {
                             }).bindProperty("value", {
                                 path: "configKey"
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configdescription") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text,
+                                editable: false,
+                            }).bindProperty("value", {
+                                path: "configDescription"
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configvalue") }),
                             new sap.m.Input("", {
                                 type: sap.m.InputType.Text
