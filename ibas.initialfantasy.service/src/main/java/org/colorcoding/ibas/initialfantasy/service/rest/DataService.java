@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
@@ -33,6 +34,42 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
  */
 @Path("data")
 public class DataService extends BORepositoryInitialFantasyShell {
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置
+	 * 
+	 * @param criteria
+	 *            查询
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchApplicationConfig")
+	public OperationResult<ApplicationConfig> fetchApplicationConfig(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchApplicationConfig(criteria, token);
+	}
+
+	/**
+	 * 保存-应用程序配置
+	 * 
+	 * @param bo
+	 *            对象实例
+	 * @param token
+	 *            口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveApplicationConfig")
+	public OperationResult<ApplicationConfig> saveApplicationConfig(ApplicationConfig bo,
+			@QueryParam("token") String token) {
+		return super.saveApplicationConfig(bo, token);
+	}
 
 	// --------------------------------------------------------------------------------------------//
 	/**

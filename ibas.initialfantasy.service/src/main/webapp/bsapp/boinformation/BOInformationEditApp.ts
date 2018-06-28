@@ -33,6 +33,9 @@ namespace initialfantasy {
                 this.view.createDataEvent = this.createData;
                 this.view.addBOPropertyInformationEvent = this.addBOPropertyInformation;
                 this.view.removeBOPropertyInformationEvent = this.removeBOPropertyInformation;
+                this.view.editBOPropertyInformationEvent = this.editBOPropertyInformation;
+                this.view.addBOPropertyValueEvent = this.addBOPropertyValue;
+                this.view.removeBOPropertyValueEvent = this.removeBOPropertyValue;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -96,36 +99,36 @@ namespace initialfantasy {
             protected editData: bo.BOInformation;
             /** 保存数据 */
             protected saveData(): void {
-                    this.busy(true);
-                    let that: this = this;
-                    let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                    boRepository.saveBOInformation({
-                        beSaved: this.editData,
-                        onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
-                            try {
-                                that.busy(false);
-                                if (opRslt.resultCode !== 0) {
-                                    throw new Error(opRslt.message);
-                                }
-                                if (opRslt.resultObjects.length === 0) {
-                                    // 删除成功，释放当前对象
-                                    that.messages(ibas.emMessageType.SUCCESS,
-                                        ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
-                                    that.editData = undefined;
-                                } else {
-                                    // 替换编辑对象
-                                    that.editData = opRslt.resultObjects.firstOrDefault();
-                                    that.messages(ibas.emMessageType.SUCCESS,
-                                        ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
-                                }
-                                // 刷新当前视图
-                                that.viewShowed();
-                            } catch (error) {
-                                that.messages(error);
+                this.busy(true);
+                let that: this = this;
+                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                boRepository.saveBOInformation({
+                    beSaved: this.editData,
+                    onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
+                        try {
+                            that.busy(false);
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
                             }
+                            if (opRslt.resultObjects.length === 0) {
+                                // 删除成功，释放当前对象
+                                that.messages(ibas.emMessageType.SUCCESS,
+                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                that.editData = undefined;
+                            } else {
+                                // 替换编辑对象
+                                that.editData = opRslt.resultObjects.firstOrDefault();
+                                that.messages(ibas.emMessageType.SUCCESS,
+                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                            }
+                            // 刷新当前视图
+                            that.viewShowed();
+                        } catch (error) {
+                            that.messages(error);
                         }
-                    });
-                    this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
+                    }
+                });
+                this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 删除数据 */
             protected deleteData(): void {
@@ -205,7 +208,58 @@ namespace initialfantasy {
                 // 仅显示没有标记删除的
                 this.view.showBOPropertyInformations(this.editData.boPropertyInformations.filterDeleted());
             }
-
+            private editBOPropertyInformationData: bo.BOPropertyInformation;
+            /** 编辑属性值事件 */
+            editBOPropertyInformation(item: bo.BOPropertyInformation): void {
+                this.editBOPropertyInformationData = item;
+                if (ibas.objects.isNull(this.editBOPropertyInformationData)) {
+                    // 无编辑对象
+                    this.view.showBOPropertyInformations(this.editData.boPropertyInformations.filterDeleted());
+                } else {
+                    // 存在编辑对象
+                    this.view.showBOPropertyValues(this.editBOPropertyInformationData.boPropertyValues.filterDeleted());
+                }
+            }
+            /** 添加属性值事件 */
+            addBOPropertyValue(): void {
+                if (!this.editBOPropertyInformationData) {
+                    this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("shell_data_edit")));
+                    return;
+                }
+                this.editBOPropertyInformationData.boPropertyValues.create();
+                // 仅显示没有标记删除的
+                this.view.showBOPropertyValues(this.editBOPropertyInformationData.boPropertyValues.filterDeleted());
+            }
+            /** 删除属性值事件 */
+            removeBOPropertyValue(items: bo.BOPropertyValue[]): void {
+                if (!this.editBOPropertyInformationData) {
+                    this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("shell_data_edit")));
+                    return;
+                }
+                // 非数组，转为数组
+                if (!(items instanceof Array)) {
+                    items = [items];
+                }
+                if (items.length === 0) {
+                    return;
+                }
+                // 移除项目
+                for (let item of items) {
+                    if (this.editBOPropertyInformationData.boPropertyValues.indexOf(item) >= 0) {
+                        if (item.isNew) {
+                            // 新建的移除集合
+                            this.editBOPropertyInformationData.boPropertyValues.remove(item);
+                        } else {
+                            // 非新建标记删除
+                            item.delete();
+                        }
+                    }
+                }
+                // 仅显示没有标记删除的
+                this.view.showBOPropertyValues(this.editBOPropertyInformationData.boPropertyValues.filterDeleted());
+            }
         }
         /** 视图-业务对象信息 */
         export interface IBOInformationEditView extends ibas.IBOEditView {
@@ -221,6 +275,14 @@ namespace initialfantasy {
             removeBOPropertyInformationEvent: Function;
             /** 显示数据 */
             showBOPropertyInformations(datas: bo.BOPropertyInformation[]): void;
+            /** 编辑业务对象属性信息 */
+            editBOPropertyInformationEvent: Function;
+            /** 添加业务对象属性值事件 */
+            addBOPropertyValueEvent: Function;
+            /** 删除业务对象属性值事件 */
+            removeBOPropertyValueEvent: Function;
+            /** 显示数据 */
+            showBOPropertyValues(datas: bo.BOPropertyValue[]): void;
         }
     }
 }

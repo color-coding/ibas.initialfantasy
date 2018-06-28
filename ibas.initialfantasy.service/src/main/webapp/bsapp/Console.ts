@@ -51,9 +51,11 @@ namespace initialfantasy {
                     this.register(new PrivilegeFunc());
                     this.register(new BOFilteringFunc());
                     this.register(new ApplicationElementFunc());
-                    this.register(new ApplicationModuleFunc());
-                    this.register(new ApplicationPlatformFunc());
                     this.register(new ApplicationConfigFunc());
+                    if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE) === true) {
+                        this.register(new ApplicationModuleFunc());
+                        this.register(new ApplicationPlatformFunc());
+                    }
                     this.register(new BOInformationFunc());
                     this.register(new BONumberingFunc());
                 }

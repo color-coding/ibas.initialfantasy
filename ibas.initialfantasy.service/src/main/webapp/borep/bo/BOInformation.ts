@@ -279,7 +279,8 @@ namespace initialfantasy {
 
             /** 初始化数据 */
             protected init(): void {
-                //
+                this.boPropertyValues = new BOPropertyValues(this);
+                this.editable = ibas.emYesNo.YES;
             }
         }
 

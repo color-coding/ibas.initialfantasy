@@ -114,6 +114,38 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	}
 
 	/**
+	 * 属性名称-配置说明
+	 */
+	private static final String PROPERTY_CONFIGDESCRIPTION_NAME = "ConfigDescription";
+
+	/**
+	 * 配置说明 属性
+	 */
+	@DbField(name = "ConfigDescrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_CONFIGDESCRIPTION = registerProperty(
+			PROPERTY_CONFIGDESCRIPTION_NAME, String.class, MY_CLASS);
+
+	/**
+	 * 获取-配置说明
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CONFIGDESCRIPTION_NAME)
+	public final String getConfigDescription() {
+		return this.getProperty(PROPERTY_CONFIGDESCRIPTION);
+	}
+
+	/**
+	 * 设置-配置说明
+	 * 
+	 * @param value
+	 *            值
+	 */
+	public final void setConfigDescription(String value) {
+		this.setProperty(PROPERTY_CONFIGDESCRIPTION, value);
+	}
+
+	/**
 	 * 属性名称-配置值
 	 */
 	private static final String PROPERTY_CONFIGVALUE_NAME = "ConfigValue";

@@ -26,6 +26,8 @@
         <add key="OrganizationWay" value="initial" />
         <!-- 配置项目-权限判断方式 -->
         <add key="OwnershipWay" value="initial" />
+        <!-- 配置项目-配置方式 -->
+        <add key="ConfigurationWay" value="initial" />
         <!-- 配置项目-数据可读默认值 -->
         <add key="DataReadableDefault" value="true" />
         <!-- 配置项目-组织过期时间（建议600） -->

@@ -21,6 +21,35 @@ namespace initialfantasy {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configgroup") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text,
+                                editable: false,
+                            }).bindProperty("value", {
+                                path: "configGroup"
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configkey") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text,
+                                editable: false,
+                            }).bindProperty("value", {
+                                path: "configKey"
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configdescription") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text,
+                                editable: false,
+                            }).bindProperty("value", {
+                                path: "configDescription"
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configvalue") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text
+                            }).bindProperty("value", {
+                                path: "configValue"
+                            }),
+                            new sap.ui.core.Title("", {}),
                         ]
                     });
                     this.layoutMain = new sap.ui.layout.VerticalLayout("", {

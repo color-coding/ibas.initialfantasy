@@ -4,6 +4,7 @@
   <Model Name="ApplicationConfig" Description="应用程序配置" ModelType="Simple" Mapped="${Company}_SYS_CONFIG">
     <Property Name="ConfigGroup" Description="配置组" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ConfigGroup" UniqueKey="Yes"/>
     <Property Name="ConfigKey" Description="配置项" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="ConfigKey" UniqueKey="Yes"/>
+    <Property Name="ConfigDescription" Description="配置说明" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ConfigDescrp"/>
     <Property Name="ConfigValue" Description="配置值" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ConfigValue"/>
     <Property Name="ObjectKey" Description="对象键值" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>

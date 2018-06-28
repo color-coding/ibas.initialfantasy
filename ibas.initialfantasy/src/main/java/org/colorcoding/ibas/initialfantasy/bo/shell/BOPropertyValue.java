@@ -16,8 +16,8 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyValue;
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "BOPropertyInfo")
-@XmlRootElement(name = "BOPropertyInfo")
+@XmlType(name = "BOPropertyValue")
+@XmlRootElement(name = "BOPropertyValue")
 public class BOPropertyValue extends Serializable {
 
 	private static final long serialVersionUID = 4495333357468284953L;
