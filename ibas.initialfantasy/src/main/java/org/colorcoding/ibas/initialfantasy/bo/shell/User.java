@@ -10,6 +10,7 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 
 @XmlAccessorType(XmlAccessType.NONE)
@@ -30,6 +31,7 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		stringBuilder.append(user.getCreateActionId());
 		stringBuilder.append(user.getPassword());
 		stringBuilder.append(user.getCode());
+		stringBuilder.append(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_KEY, "CC"));
 		sUser.setToken(EncryptMD5.md5(stringBuilder.toString()));
 		return sUser;
 	}

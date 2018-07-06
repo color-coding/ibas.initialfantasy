@@ -74,41 +74,6 @@ namespace initialfantasy {
                                         that.fireViewEvents(that.saveDataEvent);
                                     }
                                 }),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_delete"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://delete",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.deleteDataEvent);
-                                    }
-                                }),
-                                new sap.m.ToolbarSeparator(""),
-                                new sap.m.MenuButton("", {
-                                    text: ibas.strings.format("{0}/{1}",
-                                        ibas.i18n.prop("shell_data_new"), ibas.i18n.prop("shell_data_clone")),
-                                    icon: "sap-icon://create",
-                                    type: sap.m.ButtonType.Transparent,
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_data_new"),
-                                                icon: "sap-icon://create",
-                                                press: function (): void {
-                                                    // 创建新的对象
-                                                    that.fireViewEvents(that.createDataEvent, false);
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_data_clone"),
-                                                icon: "sap-icon://copy",
-                                                press: function (): void {
-                                                    // 复制当前对象
-                                                    that.fireViewEvents(that.createDataEvent, true);
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                }),
                             ]
                         }),
                         content: [this.layoutMain]
