@@ -32,6 +32,8 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 	public void save() {
 	}
 
+	private volatile boolean initialized = false;
+
 	@Override
 	public synchronized void update() {
 		try {
@@ -48,33 +50,36 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 			for (IApplicationConfig item : operationResult.getResultObjects()) {
 				this.addConfigValue(item.getConfigKey(), item.getConfigValue());
 			}
-			Daemon.register(new IDaemonTask() {
+			if (!this.initialized) {
+				this.initialized = true;
+				Daemon.register(new IDaemonTask() {
 
-				@Override
-				public void run() {
-					ConfigurationManager.this.update();
-				}
+					@Override
+					public void run() {
+						ConfigurationManager.this.update();
+					}
 
-				@Override
-				public boolean isActivated() {
-					return true;
-				}
+					@Override
+					public boolean isActivated() {
+						return true;
+					}
 
-				private String name = "configuration updater";
+					private String name = "configuration updater";
 
-				@Override
-				public String getName() {
-					return this.name;
-				}
+					@Override
+					public String getName() {
+						return this.name;
+					}
 
-				private long interval = MyConfiguration.getConfigValue(CONFIG_ITEM_CONFIGURATION_MANAGER_EXPIRY_VALUE,
-						MyConfiguration.isDebugMode() ? 180 : 600);
+					private long interval = MyConfiguration.getConfigValue(
+							CONFIG_ITEM_CONFIGURATION_MANAGER_EXPIRY_VALUE, MyConfiguration.isDebugMode() ? 180 : 600);
 
-				@Override
-				public long getInterval() {
-					return this.interval;
-				}
-			});
+					@Override
+					public long getInterval() {
+						return this.interval;
+					}
+				});
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
