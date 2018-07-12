@@ -178,6 +178,9 @@ namespace initialfantasy {
                 let that: this = this;
                 ibas.servicesManager.runChooseService<bo.Organization>({
                     boCode: bo.BO_CODE_ORGANIZATION,
+                    criteria: [
+                        new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.Organization>): void {
                         that.editData.organization = selecteds.firstOrDefault().code;
                     }

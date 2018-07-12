@@ -213,6 +213,9 @@ namespace initialfantasy {
                 ibas.servicesManager.runChooseService<bo.IRole>({
                     boCode: bo.BO_CODE_ROLE,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.IRole>): void {
                         let selected: bo.IRole = selecteds.firstOrDefault();
                         that.editData.roleCode = selected.code;
@@ -227,9 +230,16 @@ namespace initialfantasy {
             /** 选择业务对象标识 */
             private chooseBusinessObject(): void {
                 let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                criteria.noChilds = true;
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = "Code";
+                condition.value = ".";
+                condition.operation = ibas.emConditionOperation.NOT_CONTAIN;
                 ibas.servicesManager.runChooseService<bo.BOInformation>({
                     boCode: bo.BO_CODE_BOINFORMATION,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: criteria,
                     onCompleted(selecteds: ibas.IList<bo.BOInformation>): void {
                         let selected: bo.BOInformation = selecteds.firstOrDefault();
                         that.editData.boCode = selected.code;

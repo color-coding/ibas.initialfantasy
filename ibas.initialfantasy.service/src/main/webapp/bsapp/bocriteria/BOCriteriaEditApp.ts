@@ -177,28 +177,38 @@ namespace initialfantasy {
                 }
             }
             /** 选择应用 */
-            chooseApplication(): void {
+            private chooseApplication(): void {
                 // 未提供选择方法
 
             }
             /** 选择业务对象编码 */
-            chooseBusinessObject(): void {
+            private chooseBusinessObject(): void {
                 let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                criteria.noChilds = true;
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = "Code";
+                condition.value = ".";
+                condition.operation = ibas.emConditionOperation.NOT_CONTAIN;
                 ibas.servicesManager.runChooseService<bo.BOInformation>({
                     boCode: bo.BO_CODE_BOINFORMATION,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: criteria,
                     onCompleted(selecteds: ibas.IList<bo.BOInformation>): void {
                         that.view.target = selecteds.firstOrDefault().code;
                     }
                 });
             }
             /** 选择用户或角色 */
-            chooseRoleUser(): void {
+            private chooseRoleUser(): void {
                 let that: this = this;
                 if (this.editData.assignedType === bo.emAssignedType.ROLE) {
                     ibas.servicesManager.runChooseService<bo.IRole>({
                         boCode: bo.BO_CODE_ROLE,
                         chooseType: ibas.emChooseType.SINGLE,
+                        criteria: [
+                            new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                        ],
                         onCompleted(selecteds: ibas.IList<bo.IRole>): void {
                             that.editData.assigned = selecteds.firstOrDefault().code;
                         }
@@ -207,6 +217,9 @@ namespace initialfantasy {
                     ibas.servicesManager.runChooseService<bo.User>({
                         boCode: bo.BO_CODE_USER,
                         chooseType: ibas.emChooseType.SINGLE,
+                        criteria: [
+                            new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                        ],
                         onCompleted(selecteds: ibas.IList<bo.User>): void {
                             that.editData.assigned = selecteds.firstOrDefault().code;
                         }
@@ -214,7 +227,7 @@ namespace initialfantasy {
                 }
             }
             /** 编辑查询 */
-            editCriteria(): void {
+            private editCriteria(): void {
                 let criteria: ibas.ICriteria;
                 if (!ibas.objects.isNull(this.editData.data) && this.editData.data.length > 0) {
                     let tmp: any = JSON.parse(this.editData.data);

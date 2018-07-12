@@ -182,6 +182,9 @@ namespace initialfantasy {
                 ibas.servicesManager.runChooseService<bo.IRole>({
                     boCode: bo.BO_CODE_ROLE,
                     chooseType: ibas.emChooseType.SINGLE,
+                    criteria: [
+                        new ibas.Condition("Activated", ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES)
+                    ],
                     onCompleted(selecteds: ibas.IList<bo.IRole>): void {
                         let selected: bo.IRole = selecteds.firstOrDefault();
                         that.editData.roleCode = selected.code;
@@ -195,8 +198,7 @@ namespace initialfantasy {
                     boCode: bo.ApplicationPlatform.BUSINESS_OBJECT_CODE,
                     chooseType: ibas.emChooseType.SINGLE,
                     criteria: [
-                        new ibas.Condition(bo.ApplicationPlatform.PROPERTY_ACTIVATED_NAME,
-                            ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
+                        new ibas.Condition(bo.ApplicationPlatform.PROPERTY_ACTIVATED_NAME, ibas.emConditionOperation.EQUAL, ibas.emYesNo.YES),
                     ],
                     onCompleted(selecteds: ibas.IList<bo.ApplicationPlatform>): void {
                         let selected: bo.ApplicationPlatform = selecteds.firstOrDefault();
@@ -240,8 +242,7 @@ namespace initialfantasy {
                     boCode: bo.ApplicationElement.BUSINESS_OBJECT_CODE,
                     chooseType: ibas.emChooseType.SINGLE,
                     criteria: [
-                        new ibas.Condition(bo.ApplicationElement.PROPERTY_MODULEID_NAME,
-                            ibas.emConditionOperation.EQUAL, this.editData.moduleId),
+                        new ibas.Condition(bo.ApplicationElement.PROPERTY_MODULEID_NAME, ibas.emConditionOperation.EQUAL, this.editData.moduleId),
                     ],
                     onCompleted(selecteds: ibas.IList<bo.ApplicationElement>): void {
                         let selected: bo.ApplicationElement = selecteds.firstOrDefault();

@@ -25,6 +25,16 @@ namespace initialfantasy {
                 this.boCode = RoleChooseApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
+            protected fetchData(criteria: ibas.ICriteria): void {
+                if (!ibas.objects.isNull(criteria)) {
+                    if (criteria.sorts.length === 0) {
+                        let sort: ibas.ISort = criteria.sorts.create();
+                        sort.alias = bo.Organization.PROPERTY_DOCENTRY_NAME;
+                        sort.sortType = ibas.emSortType.DESCENDING;
+                    }
+                }
+                super.fetchData(criteria);
+            }
         }
         /** 角色选择服务映射 */
         export class RoleChooseServiceMapping extends ibas.BOChooseServiceMapping {
