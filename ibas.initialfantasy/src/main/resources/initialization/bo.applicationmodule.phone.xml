@@ -2,6 +2,7 @@
 <!DOCTYPE ApplicationModule>
 <ns:ApplicationModule xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
 	<Activated>YES</Activated>
+	<ModuleEntry>ConsolePhone</ModuleEntry>
 	<ModuleId>c2b31c06-20d8-44a2-bb34-17f47ed01859</ModuleId>
 	<ModuleName>InitialFantasy</ModuleName>
 	<PlatformId>PHONE</PlatformId>
