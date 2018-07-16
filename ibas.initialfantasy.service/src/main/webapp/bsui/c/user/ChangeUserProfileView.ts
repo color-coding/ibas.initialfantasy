@@ -14,28 +14,6 @@ namespace initialfantasy {
             export class ChangeUserProfileView extends ibas.BODialogView implements app.IChangeUserProfileView {
                 /** 保存用户事件 */
                 saveUserEvent: Function;
-                /** 绘制工具条 */
-                drawBars(): any {
-                    let that: this = this;
-                    return [
-                        new sap.m.Button("", {
-                            text: ibas.i18n.prop("shell_data_save"),
-                            type: sap.m.ButtonType.Transparent,
-                            // icon: "sap-icon://create",
-                            press: function (): void {
-                                that.fireViewEvents(that.saveUserEvent);
-                            }
-                        }),
-                        new sap.m.Button("", {
-                            text: ibas.i18n.prop("shell_exit"),
-                            type: sap.m.ButtonType.Transparent,
-                            // icon: "sap-icon://inspect-down",
-                            press: function (): void {
-                                that.fireViewEvents(that.closeEvent);
-                            }
-                        }),
-                    ];
-                }
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -83,7 +61,24 @@ namespace initialfantasy {
                         horizontalScrolling: true,
                         verticalScrolling: true,
                         content: [this.form],
-                        buttons: [this.drawBars()]
+                        buttons: [
+                            new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_data_save"),
+                                type: sap.m.ButtonType.Transparent,
+                                // icon: "sap-icon://create",
+                                press: function (): void {
+                                    that.fireViewEvents(that.saveUserEvent);
+                                }
+                            }),
+                            new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_exit"),
+                                type: sap.m.ButtonType.Transparent,
+                                // icon: "sap-icon://inspect-down",
+                                press: function (): void {
+                                    that.fireViewEvents(that.closeEvent);
+                                }
+                            }),
+                        ]
                     });
                 }
                 private form: sap.ui.layout.form.SimpleForm;
