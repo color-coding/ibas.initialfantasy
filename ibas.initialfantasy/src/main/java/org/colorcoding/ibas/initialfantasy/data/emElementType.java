@@ -21,4 +21,7 @@ public enum emElementType {
 	/** 服务 */
 	@Value(value = "S")
 	SERVICE,
+	/** 其他 */
+	@Value(value = "O")
+	OTHER,
 }

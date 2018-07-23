@@ -201,7 +201,7 @@ namespace initialfantasy {
                                         } else if (element instanceof ibas.ServiceMapping) {
                                             boElement.elementType = bo.emElementType.SERVICE;
                                         } else {
-                                            return;
+                                            boElement.elementType = bo.emElementType.OTHER;
                                         }
                                         boRepository.saveApplicationElement({
                                             beSaved: boElement,
