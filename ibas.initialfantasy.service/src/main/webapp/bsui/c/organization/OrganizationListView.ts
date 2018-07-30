@@ -20,6 +20,8 @@ namespace initialfantasy {
                 editDataEvent: Function;
                 /** 删除数据事件，参数：删除对象集合 */
                 deleteDataEvent: Function;
+                /** 项目事件 */
+                projectEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -115,6 +117,15 @@ namespace initialfantasy {
                                             // 获取表格选中的对象
                                             openui5.utils.getSelecteds<bo.Organization>(that.table)
                                         );
+                                    }
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_func_project"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://project-definition-triangle",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.projectEvent);
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),

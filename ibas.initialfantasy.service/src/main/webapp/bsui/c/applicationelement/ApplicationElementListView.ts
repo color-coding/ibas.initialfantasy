@@ -20,6 +20,10 @@ namespace initialfantasy {
                 deleteDataEvent: Function;
                 /** 注册元素 */
                 registerElementsEvent: Function;
+                /** 应用程序平台 */
+                applicationPlatformEvent: Function;
+                /** 应用程序模块 */
+                applicationModuleEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -142,6 +146,24 @@ namespace initialfantasy {
                                     icon: "sap-icon://activate",
                                     press: function (): void {
                                         that.fireViewEvents(that.registerElementsEvent);
+                                    }
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_func_applicationplatform"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://provision",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.applicationPlatformEvent);
+                                    }
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_func_applicationmodule"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://settings",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.applicationModuleEvent);
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),

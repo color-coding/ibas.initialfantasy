@@ -32,6 +32,8 @@ namespace initialfantasy {
                 this.view.editDataEvent = this.editData;
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.registerElementsEvent = this.registerElements;
+                this.view.applicationModuleEvent = this.applicationModule;
+                this.view.applicationPlatformEvent = this.applicationPlatform;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -224,6 +226,20 @@ namespace initialfantasy {
                     }
                 }
             }
+            /** 应用程序平台 */
+            private applicationPlatform(): void {
+                let app: ApplicationPlatformListApp = new ApplicationPlatformListApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run();
+            }
+            /** 应用程序平台 */
+            private applicationModule(): void {
+                let app: ApplicationModuleListApp = new ApplicationModuleListApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run();
+            }
         }
         /** 视图-应用程序元素 */
         export interface IApplicationElementListView extends ibas.IBOListView {
@@ -231,6 +247,10 @@ namespace initialfantasy {
             editDataEvent: Function;
             /** 删除数据事件，参数：删除对象集合 */
             deleteDataEvent: Function;
+            /** 应用程序平台 */
+            applicationPlatformEvent: Function;
+            /** 应用程序模块 */
+            applicationModuleEvent: Function;
             /** 显示数据 */
             showData(datas: bo.ApplicationElement[]): void;
             /** 注册元素 */

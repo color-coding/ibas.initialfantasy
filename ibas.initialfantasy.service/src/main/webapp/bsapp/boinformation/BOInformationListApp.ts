@@ -31,6 +31,7 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.editDataEvent = this.editData;
                 this.view.deleteDataEvent = this.deleteData;
+                this.view.boNumberingEvent = this.boNumbering;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -38,27 +39,27 @@ namespace initialfantasy {
             }
             /** 查询数据 */
             protected fetchData(criteria: ibas.ICriteria): void {
-                    this.busy(true);
-                    let that: this = this;
-                    let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                    boRepository.fetchBOInformation({
-                        criteria: criteria,
-                        onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
-                            try {
-                                that.busy(false);
-                                if (opRslt.resultCode !== 0) {
-                                    throw new Error(opRslt.message);
-                                }
-                                if (opRslt.resultObjects.length === 0) {
-                                    that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
-                                }
-                                that.view.showData(opRslt.resultObjects);
-                            } catch (error) {
-                                that.messages(error);
+                this.busy(true);
+                let that: this = this;
+                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                boRepository.fetchBOInformation({
+                    criteria: criteria,
+                    onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
+                        try {
+                            that.busy(false);
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
                             }
+                            if (opRslt.resultObjects.length === 0) {
+                                that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
+                            }
+                            that.view.showData(opRslt.resultObjects);
+                        } catch (error) {
+                            that.messages(error);
                         }
-                    });
-                    this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
+                    }
+                });
+                this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
             }
             /** 新建数据 */
             protected newData(): void {
@@ -164,6 +165,12 @@ namespace initialfantasy {
                     }
                 });
             }
+            private boNumbering(): void {
+                let app: BONumberingListApp = new BONumberingListApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run();
+            }
         }
         /** 视图-业务对象信息 */
         export interface IBOInformationListView extends ibas.IBOListView {
@@ -171,6 +178,8 @@ namespace initialfantasy {
             editDataEvent: Function;
             /** 删除数据事件，参数：删除对象集合 */
             deleteDataEvent: Function;
+            /** 业务对象编号 */
+            boNumberingEvent: Function;
             /** 显示数据 */
             showData(datas: bo.BOInformation[]): void;
         }
