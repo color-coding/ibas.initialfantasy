@@ -8,11 +8,14 @@ import javax.xml.bind.JAXBException;
 
 import org.colorcoding.ibas.bobas.bo.UserFieldProxy;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
@@ -31,8 +34,9 @@ public class Resolver implements ContextResolver<JAXBContext> {
 		try {
 			if (jaxbContext == null) {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, UserFieldProxy.class, ApplicationFunction.class,
-						ApplicationModule.class, ApplicationPlatform.class, BOCriteria.class, BOFiltering.class,
-						Organization.class, Project.class, Privilege.class, User.class);
+						ApplicationModule.class, ApplicationPlatform.class, ApplicationElement.class, BOCriteria.class,
+						BOFiltering.class, BOInformation.class, BONumbering.class, Organization.class, Project.class,
+						Privilege.class, User.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();
