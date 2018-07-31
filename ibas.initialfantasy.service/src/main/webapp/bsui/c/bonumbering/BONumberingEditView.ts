@@ -27,7 +27,7 @@ namespace initialfantasy {
                                 type: sap.m.InputType.Text,
                                 editable: false,
                             }).bindProperty("value", {
-                                path: "/objectCode"
+                                path: "/objectCode",
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_documentsubtype") }),
                             new sap.m.Input("", {

@@ -42,20 +42,14 @@ namespace initialfantasy {
                 // 注册功能
                 this.register(new UserFunc());
                 this.register(new OrganizationFunc());
-                // this.register(new ProjectFunc());
                 this.register(new BOCriteriaFunc());
                 if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true) {
                     // 仅调超级用户，启用以下功能
                     this.register(new PrivilegeFunc());
                     this.register(new BOFilteringFunc());
+                    this.register(new ApplicationConfigFunc());
                     this.register(new ApplicationElementFunc());
-                    // this.register(new ApplicationConfigFunc());
-                    if (ibas.config.get(ibas.CONFIG_ITEM_DEBUG_MODE) === true) {
-                        // this.register(new ApplicationModuleFunc());
-                        // this.register(new ApplicationPlatformFunc());
-                    }
                     this.register(new BOInformationFunc());
-                    // this.register(new BONumberingFunc());
                 }
                 // 注册服务应用
                 this.register(new ApplicationElementChooseServiceMapping());

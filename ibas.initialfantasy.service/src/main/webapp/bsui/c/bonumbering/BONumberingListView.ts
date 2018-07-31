@@ -35,7 +35,7 @@ namespace initialfantasy {
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "objectCode"
+                                    path: "objectCode",
                                 })
                             }),
                             new sap.ui.table.Column("", {
