@@ -1,4 +1,4 @@
-package org.colorcoding.ibas.initialfantasy.test.bo;
+package org.colorcoding.ibas.initialfantasy.test;
 
 import java.util.UUID;
 
@@ -22,7 +22,7 @@ import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryShell;
 
 import junit.framework.TestCase;
 
-public class testRepositoryShell extends TestCase {
+public class TestRepositoryShell extends TestCase {
 
 	private static String USER = "admin";
 	private static String PASSWORD = "1q2w3e";
