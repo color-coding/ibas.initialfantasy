@@ -101,7 +101,9 @@ namespace initialfantasy {
                                     wrapping: false
                                 }).bindProperty("text", {
                                     path: "property"
-                                })
+                                }),
+                                sortProperty: "property",
+                                filterProperty: "property"
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
@@ -109,7 +111,9 @@ namespace initialfantasy {
                                     width: "100%",
                                 }).bindProperty("value", {
                                     path: "description"
-                                })
+                                }),
+                                sortProperty: "description",
+                                filterProperty: "description"
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_searched"),
@@ -137,7 +141,9 @@ namespace initialfantasy {
                                     wrapping: false
                                 }).bindProperty("text", {
                                     path: "mapped"
-                                })
+                                }),
+                                sortProperty: "mapped",
+                                filterProperty: "mapped"
                             }),
                         ]
                     });
