@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns:ApplicationConfig xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
-    <ConfigGroup>c2b31c06-20d8-44a2-bb34-17f47ed01859</ConfigGroup>
-    <ConfigKey>UserTokenKey</ConfigKey>
-    <ConfigDescription>用户口令码</ConfigDescription>
-    <ConfigValue>16829bdb-b059-4841-aa15-5c9fcb36f782</ConfigValue>
-</ns:ApplicationConfig>
