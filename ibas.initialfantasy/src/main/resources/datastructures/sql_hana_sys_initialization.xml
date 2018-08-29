@@ -21,39 +21,6 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
-        <Step Name="check stored procedures exists">
-            <Script>
-                SELECT COUNT(0) FROM "PROCEDURES" WHERE "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SP_TRANSACTION_NOTIFICATION';
-            </Script>
-        </Step>
-        <Step Name="create stored procedures" RunOnValue="0">
-            <Script>
-                CREATE PROCEDURE "${DbName}"."${Company}_SP_TRANSACTION_NOTIFICATION" (
-                    IN object_type nvarchar(30),                       --对象类型（BOCode）
-                    IN transaction_type nvarchar(1),                   --业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）
-                    IN num_of_cols_in_key integer,                     --主键个数
-                    IN list_of_key_cols_tab_del nvarchar(255),         --主键名称
-                    IN list_of_cols_val_tab_del nvarchar(255)          --主键值
-                )
-                LANGUAGE SQLSCRIPT AS
-                BEGIN
-                    --返回值
-                    DECLARE error integer;
-                    --返回值(0 无错误)
-                    DECLARE error_message nvarchar(200);
-                    --返回的消息
-                    SELECT 0 INTO error FROM dummy;
-                    SELECT 'OK' INTO error_message FROM dummy;
-                    --------------------------------------------------------------------------------------------------------------------------------
-                    --ADD YOUR CODE HERE
-                    --------------------------------------------------------------------------------------------------------------------------------
-                    --返回结果
-                    SELECT TO_INTEGER(error) "code", error_message "message" FROM dummy;
-                END;
-            </Script>
-        </Step>
-    </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
         <Step Name="check stored procedures exists">
             <Script>

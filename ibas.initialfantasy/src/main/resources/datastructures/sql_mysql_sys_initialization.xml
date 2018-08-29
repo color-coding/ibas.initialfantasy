@@ -5,43 +5,14 @@
     <Name>sql_mysql_ibas_initialization</Name>
     <Description>基于MYSQL的结构映射说明</Description>
     <Integrated>true</Integrated>
-    <DriverName>com.mysql.jdbc.Driver</DriverName>
-    <DbUrl>jdbc:mysql://${DbServer}:${DbPort}/mysql?useUnicode=true&amp;characterEncoding=utf8</DbUrl>
+    <DriverName>com.mysql.cj.jdbc.Driver</DriverName>
+    <DbUrl>jdbc:mysql://${DbServer}:${DbPort}/mysql?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC</DbUrl>
     <DbUser>${DbUser}</DbUser>
     <DbPassword>${DbPassword}</DbPassword>
     <Action Name="create db" Isolated="true">
         <Step Name="check and create db">
             <Script>
-                CREATE DATABASE IF NOT EXISTS `${DbName}` CHARACTER SET UTF8;
-            </Script>
-        </Step>
-    </Action>
-    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
-        <Step Name="check stored procedures exists">
-            <Script>
-                SELECT COUNT(0) FROM `mysql`.`proc` WHERE `db` = '${DbName}' AND `type` = 'PROCEDURE' AND `name` = '${Company}_SP_TRANSACTION_NOTIFICATION';
-            </Script>
-        </Step>
-        <Step Name="create stored procedures" RunOnValue="0">
-            <Script>
-                CREATE PROCEDURE `${DbName}`.`${Company}_SP_TRANSACTION_NOTIFICATION` (
-                    object_type varchar(30),                  /*对象类型（BOCode）*/
-                    transaction_type char(1),                 /*业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）*/
-                    num_of_cols_in_key int,                   /*主键个数*/
-                    list_of_key_cols_tab_del varchar(255),    /*主键名称*/
-                    list_of_cols_val_tab_del varchar(255)     /*主键值*/
-                )
-                BEGIN
-                    DECLARE error int;                             /*返回值(0 无错误)*/
-                    DECLARE error_message varchar(200);            /*返回的消息*/
-                    SET error = 0;
-                    SET error_message = N'OK';
-                    /*----------------------------------------------------------------------------------------------------------------------------*/
-                    -- ADD YOUR CODE HERE
-                    /* ----------------------------------------------------------------------------------------------------------------------------*/
-                    -- return
-                    SELECT error, error_message;
-                END;
+                CREATE DATABASE IF NOT EXISTS `${DbName}` CHARACTER SET utf8mb4;
             </Script>
         </Step>
     </Action>

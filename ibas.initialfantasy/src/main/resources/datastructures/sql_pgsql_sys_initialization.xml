@@ -21,51 +21,6 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION">
-        <Step Name="check and drop exists stored procedures">
-            <Script>
-                DROP FUNCTION IF EXISTS "${Company}_SP_TRANSACTION_NOTIFICATION"(character varying, character, integer, character varying, character varying);
-            </Script>
-        </Step>
-        <Step Name="check and drop exists return type">
-            <Script>
-                DROP TYPE IF EXISTS "RESULT_TYPE_${Company}_SP_TRANSACTION_NOTIFICATION";
-            </Script>
-        </Step>
-        <Step Name="create return type">
-            <Script>
-                CREATE TYPE "RESULT_TYPE_${Company}_SP_TRANSACTION_NOTIFICATION" AS ("Error" integer,"Message" character varying);
-            </Script>
-        </Step>
-        <Step Name="create stored procedures">
-            <Script>
-                CREATE OR REPLACE FUNCTION "${Company}_SP_TRANSACTION_NOTIFICATION" (
-                    object_type character varying,                             /*对象类型（BOCode）*/
-                    transaction_type character,                                /*业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）*/
-                    num_of_cols_in_key integer,                                /*主键个数*/
-                    list_of_key_cols_tab_del character varying,                /*主键名称*/
-                    list_of_cols_val_tab_del character varying                 /*主键值*/
-                ) RETURNS SETOF "RESULT_TYPE_${Company}_SP_TRANSACTION_NOTIFICATION" AS $_$
-                DECLARE
-                    error integer;                                            /*返回值(0 无错误)*/
-                    error_message character varying;                               /*返回的消息*/
-                    result record;
-                BEGIN
-                    /* 返回值 */
-                    error = 0;
-                    error_message = N'OK';
-                    /*--------------------------------------------------------------------------------------------------------------------------------*/
-                    /*ADD YOUR CODE HERE*/
-                    /*--------------------------------------------------------------------------------------------------------------------------------*/
-                    /*return*/
-                    FOR result IN SELECT error "Error",error_message "Message" LOOP
-                      RETURN NEXT result;
-                    END LOOP;
-                END;
-                $_$ LANGUAGE plpgsql;
-            </Script>
-        </Step>
-    </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
         <Step Name="check and drop exists stored procedures">
             <Script>

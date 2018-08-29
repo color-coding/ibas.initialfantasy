@@ -21,35 +21,6 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SP_TRANSACTION_NOTIFICATION" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
-        <Step Name="check stored procedures exists">
-            <Script>
-                SELECT COUNT(0) FROM sys.sysobjects WHERE name = '${Company}_SP_TRANSACTION_NOTIFICATION' AND type = 'P';
-            </Script>
-        </Step>
-        <Step Name="create stored procedures" RunOnValue="0">
-            <Script>
-                CREATE PROCEDURE ${Company}_SP_TRANSACTION_NOTIFICATION
-                    @object_type nvarchar(30),                 --对象类型（BOCode）
-                    @transaction_type nchar(1),                --业务类型（Add:A-添加, Update:U-更新, Delete:D-删除）
-                    @num_of_cols_in_key int,                   --主键个数
-                    @list_of_key_cols_tab_del nvarchar(255),   --主键名称
-                    @list_of_cols_val_tab_del nvarchar(255)    --主键值
-                AS
-                BEGIN
-                    DECLARE @error int                             --返回值(0 无错误)
-                    DECLARE @error_message nvarchar(200)           --返回的消息
-                    SELECT @error = 0
-                    SELECT @error_message = N'OK'
-                    --------------------------------------------------------------------------------------------------------------------------------
-                    --ADD YOUR CODE HERE
-                    --------------------------------------------------------------------------------------------------------------------------------
-                    --return
-                    SELECT @error "Code", @error_message "Message"
-                END;
-            </Script>
-        </Step>
-    </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
         <Step Name="check stored procedures exists">
             <Script>
