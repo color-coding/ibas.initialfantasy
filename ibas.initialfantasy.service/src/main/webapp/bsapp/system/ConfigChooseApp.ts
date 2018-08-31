@@ -33,6 +33,7 @@ namespace initialfantasy {
             /** 视图显示后 */
             protected viewShowed(): void {
                 // 视图加载完成
+                super.viewShowed();
                 this.view.showData(ibas.config.all());
             }
             /** 查询数据 */
