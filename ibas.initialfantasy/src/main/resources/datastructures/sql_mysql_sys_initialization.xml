@@ -6,30 +6,23 @@
     <Description>基于MYSQL的结构映射说明</Description>
     <Integrated>true</Integrated>
     <DriverName>com.mysql.cj.jdbc.Driver</DriverName>
-    <DbUrl>jdbc:mysql://${DbServer}:${DbPort}/mysql?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC</DbUrl>
+    <DbUrl>jdbc:mysql://${DbServer}:${DbPort}/${DbName}?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=UTC</DbUrl>
     <DbUser>${DbUser}</DbUser>
     <DbPassword>${DbPassword}</DbPassword>
-    <Action Name="create db" Isolated="true">
-        <Step Name="check and create db">
-            <Script>
-                CREATE DATABASE IF NOT EXISTS `${DbName}` CHARACTER SET utf8mb4;
-            </Script>
-        </Step>
-    </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
         <Step Name="check stored procedures exists">
             <Script>
-                DROP PROCEDURE IF EXISTS `${DbName}`.`${Company}_SYS_SP_GET_USER_MODULES`;
+                DROP PROCEDURE IF EXISTS `${Company}_SYS_SP_GET_USER_MODULES`;
             </Script>
         </Step>
         <Step Name="create stored procedures">
             <Script>
-                CREATE PROCEDURE `${DbName}`.`${Company}_SYS_SP_GET_USER_MODULES` (
+                CREATE PROCEDURE `${Company}_SYS_SP_GET_USER_MODULES` (
                     platform nvarchar(36),           /*平台代码*/
                     userCode nvarchar(8)             /*用户编码*/
                 )
                 BEGIN
-                    DECLARE platform2 varchar(36);         /*平台编码*/
+                    DECLARE platform2 nvarchar(36);         /*平台编码*/
                     IF (platform = 'DESKTOP' || platform = 'TABLET') THEN
                         SET platform2 = 'COMBINATION';
                     ELSE
@@ -61,17 +54,17 @@
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
         <Step Name="check stored procedures exists">
             <Script>
-              DROP PROCEDURE IF EXISTS `${DbName}`.`${Company}_SYS_SP_GET_USER_PRIVILEGES`;
+              DROP PROCEDURE IF EXISTS `${Company}_SYS_SP_GET_USER_PRIVILEGES`;
             </Script>
         </Step>
         <Step Name="create stored procedures">
             <Script>
-              CREATE PROCEDURE `${DbName}`.`${Company}_SYS_SP_GET_USER_PRIVILEGES` (
+              CREATE PROCEDURE `${Company}_SYS_SP_GET_USER_PRIVILEGES` (
                     IN platform nvarchar(36),           /*平台代码*/
                     IN userCode nvarchar(8)             /*用户编码*/
               )
               BEGIN
-                DECLARE platform2 varchar(36);         /*平台编码*/
+                DECLARE platform2 nvarchar(36);         /*平台编码*/
                 IF (platform = 'DESKTOP' || platform = 'TABLET') THEN
                     SET platform2 = 'COMBINATION';
                 ELSE

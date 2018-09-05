@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE DataStructureOrchestration>
+<ns2:DataStructureOrchestration
+    xmlns:ns2="http://colorcoding.org/btulz/transformers">
+    <Name>sql_sybase_ibas_initialization</Name>
+    <Description>基于SYBASE的结构映射说明</Description>
+    <Integrated>true</Integrated>
+    <DriverName>com.sybase.jdbc4.jdbc.SybDriver</DriverName>
+    <DbUrl>jdbc:sybase:Tds:${DbServer}:${DbPort}?ServiceName=${DbName}</DbUrl>
+    <DbUser>${DbUser}</DbUser>
+    <DbPassword>${DbPassword}</DbPassword>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+        <Step Name="create stored procedures">
+            <Script>
+                CREATE OR REPLACE PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES(
+                    IN platform nvarchar(36),           /*平台代码*/
+                    IN userCode nvarchar(8)             /*用户编码*/
+                )
+                BEGIN
+                    DECLARE platform2 nvarchar(36);         /*平台编码*/
+                    IF (platform = 'DESKTOP' OR platform = 'TABLET') THEN
+                        SET platform2 = 'COMBINATION';
+                    ELSE
+                        SET platform2 = platform;
+                    END IF;
+
+                    IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
+                        --超级用户全部权限
+                        SELECT A.*,'A' AuthValue
+                        FROM "${Company}_SYS_MODULE" A
+                        WHERE (A."PlatformId" = platform OR A."PlatformId" = platform2) AND A."Activated" = 'Y'
+                    ELSE
+                        --非超级用户，角色权限
+                        SELECT A.*,C.AuthValue
+                        FROM "${Company}_SYS_MODULE" A INNER JOIN (
+                            SELECT DISTINCT B."ModuleId",B."AuthValue"
+                            FROM "${Company}_SYS_PRIVILEGE" B
+                            WHERE (B."PlatformId" = platform OR B."PlatformId" = platform2) AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
+                                SELECT "OrgCode"
+                                FROM "${Company}_SYS_USER"
+                                WHERE "Code" = userCode)
+                        ) C ON A."ModuleId" = C."ModuleId"
+                        WHERE (A."PlatformId" = platform OR A."PlatformId" = platform2) AND A."Activated" = 'Y'
+                    END IF
+                END;
+            </Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
+        <Step Name="create stored procedures">
+            <Script>
+                CREATE OR REPLACE PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES (
+                    platform nvarchar(36),           /*平台代码*/
+                    userCode nvarchar(8)             /*用户编码*/
+                )
+                BEGIN
+                    DECLARE platform2 nvarchar(36);         /*平台编码*/
+                    IF (platform = 'DESKTOP' OR platform = 'TABLET') THEN
+                        SET platform2 = 'COMBINATION';
+                    ELSE
+                        SET platform2 = platform;
+                    END IF;
+
+                    IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
+                        -- 超级用户全部权限
+                        SELECT NULL "Source", NULL "Target", NULL "Value"
+                    ELSE
+                        -- 非超级用户，角色权限
+                        SELECT "Source", "Target", "Value"
+                        FROM (
+                            -- 模块的权限设置
+                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
+                            UNION ALL
+                            -- 应用的权限设置
+                            SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
+                        ) T0
+                        WHERE T0."RoleCode" IN (
+                            SELECT "OrgCode"
+                            FROM "${Company}_SYS_USER"
+                            WHERE "Code" = userCode
+                        )
+                    END IF
+                END;
+            </Script>
+        </Step>
+    </Action>
+</ns2:DataStructureOrchestration>

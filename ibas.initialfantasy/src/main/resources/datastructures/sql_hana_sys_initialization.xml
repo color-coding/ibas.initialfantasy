@@ -6,22 +6,10 @@
     <Description>基于HANA的结构映射说明</Description>
     <Integrated>true</Integrated>
     <DriverName>com.sap.db.jdbc.Driver</DriverName>
-    <DbUrl>jdbc:sap://${DbServer}:${DbPort}</DbUrl>
+    <DbUrl>jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;</DbUrl>
     <DbUser>${DbUser}</DbUser>
     <DbPassword>${DbPassword}</DbPassword>
-    <Action Name="create db" Isolated="true">
-        <Step Name="check db exists">
-            <Script>
-                SELECT COUNT(0) FROM "SCHEMAS" WHERE "SCHEMA_NAME" = '${DbName}';
-            </Script>
-        </Step>
-        <Step Name="create db" RunOnValue="0">
-            <Script>
-                 CREATE SCHEMA "${DbName}";
-            </Script>
-        </Step>
-    </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
         <Step Name="check stored procedures exists">
             <Script>
                 SELECT COUNT(0) FROM "PROCEDURES" WHERE "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SYS_SP_GET_USER_MODULES';
@@ -29,12 +17,12 @@
         </Step>
         <Step Name="drop stored procedures" RunOnValue="1">
             <Script>
-                DROP PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_MODULES";
+                DROP PROCEDURE "${Company}_SYS_SP_GET_USER_MODULES";
             </Script>
         </Step>
         <Step Name="create stored procedures">
             <Script>
-                CREATE PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_MODULES" (
+                CREATE PROCEDURE "${Company}_SYS_SP_GET_USER_MODULES" (
                     IN platform nvarchar(36),           --平台代码
                     IN userCode nvarchar(8)             --用户编码
                 )
@@ -72,7 +60,7 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES" Isolated="true" DbUrl="jdbc:sap://${DbServer}:${DbPort}/?currentschema=&quot;${DbName}&quot;">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
         <Step Name="check stored procedures exists">
             <Script>
                 SELECT COUNT(0) FROM "PROCEDURES" WHERE "SCHEMA_NAME" = '${DbName}' and "PROCEDURE_NAME" = '${Company}_SYS_SP_GET_USER_PRIVILEGES';
@@ -80,12 +68,12 @@
         </Step>
         <Step Name="drop stored procedures" RunOnValue="1">
             <Script>
-                DROP PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_PRIVILEGES";
+                DROP PROCEDURE "${Company}_SYS_SP_GET_USER_PRIVILEGES";
             </Script>
         </Step>
         <Step Name="create stored procedures">
             <Script>
-                CREATE PROCEDURE "${DbName}"."${Company}_SYS_SP_GET_USER_PRIVILEGES" (
+                CREATE PROCEDURE "${Company}_SYS_SP_GET_USER_PRIVILEGES" (
                     IN platform nvarchar(36),           --平台代码
                     IN userCode nvarchar(8)             --用户编码
                 )

@@ -6,25 +6,13 @@
     <Description>基于MSSQL的结构映射说明</Description>
     <Integrated>true</Integrated>
     <DriverName>com.microsoft.sqlserver.jdbc.SQLServerDriver</DriverName>
-    <DbUrl>jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=master;ApplicationName=btulz.transforms</DbUrl>
+    <DbUrl>jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName}</DbUrl>
     <DbUser>${DbUser}</DbUser>
     <DbPassword>${DbPassword}</DbPassword>
-    <Action Name="create db" Isolated="true">
-        <Step Name="check db exists">
-            <Script>
-                SELECT COUNT(0) FROM sys.databases WHERE name = '${DbName}';
-            </Script>
-        </Step>
-        <Step Name="create db" RunOnValue="0">
-            <Script>
-                 CREATE DATABASE "${DbName}";
-            </Script>
-        </Step>
-    </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
         <Step Name="check stored procedures exists">
             <Script>
-                SELECT COUNT(0) FROM sys.sysobjects WHERE name = '${Company}_SYS_SP_GET_USER_MODULES' AND type = 'P';
+                SELECT COUNT(0) FROM "sys"."sysobjects" WHERE "name" = '${Company}_SYS_SP_GET_USER_MODULES' AND "type" = 'P';
             </Script>
         </Step>
         <Step Name="drop stored procedures" RunOnValue="1">
@@ -66,10 +54,10 @@
             </Script>
         </Step>
     </Action>
-    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES" Isolated="true" DbUrl="jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};ApplicationName=btulz.transforms">
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
         <Step Name="check stored procedures exists">
             <Script>
-                SELECT COUNT(0) FROM sys.sysobjects WHERE name = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND type = 'P';
+                SELECT COUNT(0) FROM "sys"."sysobjects" WHERE "name" = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND "type" = 'P';
             </Script>
         </Step>
         <Step Name="drop stored procedures" RunOnValue="1">
