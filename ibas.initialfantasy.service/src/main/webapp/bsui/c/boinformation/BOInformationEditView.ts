@@ -102,18 +102,16 @@ namespace initialfantasy {
                                 }).bindProperty("text", {
                                     path: "property"
                                 }),
-                                sortProperty: "property",
-                                filterProperty: "property"
+                                sortProperty: "property"
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
-                                template: new sap.m.Input("", {
-                                    width: "100%",
-                                }).bindProperty("value", {
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
                                     path: "description"
                                 }),
-                                sortProperty: "description",
-                                filterProperty: "description"
+                                sortProperty: "description"
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_searched"),
@@ -126,12 +124,12 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_bopropertyinformation_editable"),
+                                label: ibas.i18n.prop("bo_bopropertyinformation_authorised"),
                                 template: new sap.m.Select("", {
                                     width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emYesNo)
+                                    items: openui5.utils.createComboBoxItems(ibas.emAuthoriseType)
                                 }).bindProperty("selectedKey", {
-                                    path: "editable",
+                                    path: "authorised",
                                     type: "sap.ui.model.type.Integer"
                                 })
                             }),
@@ -142,8 +140,7 @@ namespace initialfantasy {
                                 }).bindProperty("text", {
                                     path: "mapped"
                                 }),
-                                sortProperty: "mapped",
-                                filterProperty: "mapped"
+                                sortProperty: "mapped"
                             }),
                         ]
                     });

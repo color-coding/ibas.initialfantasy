@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
 import org.colorcoding.ibas.bobas.bo.IBusinessObject;
+import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 
 /**
@@ -19,8 +20,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCode(String value);
 
@@ -34,8 +34,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-属性名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setPropertyName(String value);
 
@@ -49,8 +48,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-映射（字段）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setMapped(String value);
 
@@ -64,8 +62,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-描述
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDescription(String value);
 
@@ -79,8 +76,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-数据类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataType(String value);
 
@@ -94,8 +90,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-编辑类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setEditType(String value);
 
@@ -109,8 +104,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-编辑大小
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setEditSize(Integer value);
 
@@ -124,8 +118,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-检索的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setSearched(emYesNo value);
 
@@ -139,25 +132,23 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-系统的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setSystemed(emYesNo value);
 
 	/**
-	 * 获取-可编辑
+	 * 获取-授权的
 	 * 
 	 * @return 值
 	 */
-	emYesNo getEditable();
+	emAuthoriseType getAuthorised();
 
 	/**
-	 * 设置-可编辑
+	 * 设置-授权的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
-	void setEditable(emYesNo value);
+	void setAuthorised(emAuthoriseType value);
 
 	/**
 	 * 获取-业务对象属性值集合
@@ -169,8 +160,7 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	/**
 	 * 设置-业务对象属性值集合
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setBOPropertyValues(IBOPropertyValues value);
 }

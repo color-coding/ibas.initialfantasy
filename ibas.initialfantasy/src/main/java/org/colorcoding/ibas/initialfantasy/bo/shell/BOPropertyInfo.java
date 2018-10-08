@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
@@ -31,7 +32,7 @@ public class BOPropertyInfo extends Serializable {
 		BOPropertyInfo propertyInfo = new BOPropertyInfo();
 		propertyInfo.setProperty(propertyItem.getPropertyName());
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
-		propertyInfo.setEditable(propertyItem.getEditable() == emYesNo.YES ? true : false);
+		propertyInfo.setAuthorised(propertyItem.getAuthorised());
 		propertyInfo.setDescription(propertyItem.getDescription());
 		ArrayList<BOPropertyValue> propertyValues = new ArrayList<>();
 		for (IBOPropertyValue propertyValue : propertyItem.getBOPropertyValues()) {
@@ -75,15 +76,15 @@ public class BOPropertyInfo extends Serializable {
 		this.searched = searched;
 	}
 
-	private boolean editable;
+	private emAuthoriseType authorised;
 
-	@XmlElement(name = "Editable")
-	public boolean isEditable() {
-		return editable;
+	@XmlElement(name = "Authorised")
+	public emAuthoriseType getAuthorised() {
+		return authorised;
 	}
 
-	public void setEditable(boolean editable) {
-		this.editable = editable;
+	public void setAuthorised(emAuthoriseType authorised) {
+		this.authorised = authorised;
 	}
 
 	private BOPropertyValue[] values;

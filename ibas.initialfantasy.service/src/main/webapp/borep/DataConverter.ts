@@ -61,9 +61,10 @@ namespace initialfantasy {
                     }
                 } else if (boName === bo.BOPropertyInformation.name) {
                     if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
-                        property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME ||
-                        property === bo.BOPropertyInformation.PROPERTY_EDITABLE_NAME) {
+                        property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
+                    } else if (property === bo.BOPropertyInformation.PROPERTY_AUTHORISED_NAME) {
+                        return ibas.enums.toString(ibas.emAuthoriseType, value);
                     }
                 } else if (boName === bo.BOFilteringCondition.name) {
                     if (property === bo.BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME) {
@@ -105,9 +106,10 @@ namespace initialfantasy {
                     }
                 } else if (boName === bo.BOPropertyInformation.name) {
                     if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
-                        property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME ||
-                        property === bo.BOPropertyInformation.PROPERTY_EDITABLE_NAME) {
+                        property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
+                    } else if (property === bo.BOPropertyInformation.PROPERTY_AUTHORISED_NAME) {
+                        return ibas.enums.valueOf(ibas.emAuthoriseType, value);
                     }
                 } else if (boName === bo.BOFilteringCondition.name) {
                     if (property === bo.BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME) {

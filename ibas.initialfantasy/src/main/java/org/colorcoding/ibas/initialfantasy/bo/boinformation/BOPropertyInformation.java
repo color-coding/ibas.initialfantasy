@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -68,8 +69,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCode(String value) {
 		this.setProperty(PROPERTY_CODE, value);
@@ -100,8 +100,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-属性名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setPropertyName(String value) {
 		this.setProperty(PROPERTY_PROPERTY, value);
@@ -132,8 +131,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-映射（字段）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setMapped(String value) {
 		this.setProperty(PROPERTY_MAPPED, value);
@@ -164,8 +162,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-描述
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDescription(String value) {
 		this.setProperty(PROPERTY_DESCRIPTION, value);
@@ -196,8 +193,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-数据类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataType(String value) {
 		this.setProperty(PROPERTY_DATATYPE, value);
@@ -228,8 +224,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-编辑类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setEditType(String value) {
 		this.setProperty(PROPERTY_EDITTYPE, value);
@@ -260,8 +255,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-编辑大小
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setEditSize(Integer value) {
 		this.setProperty(PROPERTY_EDITSIZE, value);
@@ -292,8 +286,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-检索的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSearched(emYesNo value) {
 		this.setProperty(PROPERTY_SEARCHED, value);
@@ -324,42 +317,41 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-系统的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSystemed(emYesNo value) {
 		this.setProperty(PROPERTY_SYSTEMED, value);
 	}
 
 	/**
-	 * 属性名称-可编辑
+	 * 属性名称-授权的
 	 */
-	private static final String PROPERTY_EDITABLE_NAME = "Editable";
-	/**
-	 * 可编辑 属性
-	 */
-	@DbField(name = "Editable", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emYesNo> PROPERTY_EDITABLE = registerProperty(PROPERTY_EDITABLE_NAME,
-			emYesNo.class, MY_CLASS);
+	private static final String PROPERTY_AUTHORISED_NAME = "Authorised";
 
 	/**
-	 * 获取-可编辑
+	 * 授权的 属性
+	 */
+	@DbField(name = "Authorised", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emAuthoriseType> PROPERTY_AUTHORISED = registerProperty(PROPERTY_AUTHORISED_NAME,
+			emAuthoriseType.class, MY_CLASS);
+
+	/**
+	 * 获取-授权的
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_EDITABLE_NAME)
-	public final emYesNo getEditable() {
-		return this.getProperty(PROPERTY_EDITABLE);
+	@XmlElement(name = PROPERTY_AUTHORISED_NAME)
+	public final emAuthoriseType getAuthorised() {
+		return this.getProperty(PROPERTY_AUTHORISED);
 	}
 
 	/**
-	 * 设置-可编辑
+	 * 设置-授权的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
-	public final void setEditable(emYesNo value) {
-		this.setProperty(PROPERTY_EDITABLE, value);
+	public final void setAuthorised(emAuthoriseType value) {
+		this.setProperty(PROPERTY_AUTHORISED, value);
 	}
 
 	/**
@@ -388,8 +380,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 设置-业务对象属性值集合
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setBOPropertyValues(IBOPropertyValues value) {
 		this.setProperty(PROPERTY_BOPROPERTYVALUES, value);
@@ -401,6 +392,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
+		this.setAuthorised(emAuthoriseType.ALL);
 		this.setBOPropertyValues(new BOPropertyValues(this));
 
 	}
