@@ -18,6 +18,7 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 
@@ -36,7 +37,7 @@ public class Resolver implements ContextResolver<JAXBContext> {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, UserFieldProxy.class, ApplicationFunction.class,
 						ApplicationModule.class, ApplicationPlatform.class, ApplicationElement.class, BOCriteria.class,
 						BOFiltering.class, BOInformation.class, BONumbering.class, Organization.class, Project.class,
-						Privilege.class, User.class);
+						Privilege.class, User.class, PostingPeriod.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();

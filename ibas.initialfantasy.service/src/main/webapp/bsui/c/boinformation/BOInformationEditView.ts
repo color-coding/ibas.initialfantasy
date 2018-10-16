@@ -34,6 +34,13 @@ namespace initialfantasy {
                         editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_code") }),
+                            new sap.m.Input("", {
+                                type: sap.m.InputType.Text,
+                                editable: false,
+                            }).bindProperty("value", {
+                                path: "/code"
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_name") }),
                             new sap.m.Input("", {
                                 type: sap.m.InputType.Text,
@@ -43,7 +50,8 @@ namespace initialfantasy {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_description") }),
                             new sap.m.Input("", {
-                                type: sap.m.InputType.Text
+                                type: sap.m.InputType.Text,
+                                editable: false,
                             }).bindProperty("value", {
                                 path: "/description"
                             }),
@@ -54,13 +62,6 @@ namespace initialfantasy {
                                 editable: false,
                             }).bindProperty("value", {
                                 path: "/objectType"
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_code") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
-                                editable: false,
-                            }).bindProperty("value", {
-                                path: "/code"
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_mapped") }),
                             new sap.m.Input("", {

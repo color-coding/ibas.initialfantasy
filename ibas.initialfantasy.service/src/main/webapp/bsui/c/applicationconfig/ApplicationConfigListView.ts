@@ -18,6 +18,8 @@ namespace initialfantasy {
                 editDataEvent: Function;
                 /** 删除数据事件，参数：删除对象集合 */
                 deleteDataEvent: Function;
+                /** 过账期间 */
+                postingPeriodEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -101,6 +103,15 @@ namespace initialfantasy {
                                             // 获取表格选中的对象
                                             openui5.utils.getSelecteds<bo.ApplicationConfig>(that.table).firstOrDefault()
                                         );
+                                    }
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_func_postingperiod"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://appointment-2",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.postingPeriodEvent);
                                     }
                                 }),
                             ]

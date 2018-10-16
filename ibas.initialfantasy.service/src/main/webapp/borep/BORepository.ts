@@ -223,6 +223,22 @@ namespace initialfantasy {
             saveProject(saver: ibas.ISaveCaller<bo.Project>): void {
                 super.save(bo.Project.name, saver);
             }
+
+            /**
+             * 查询 过账期间
+             * @param fetcher 查询者
+             */
+            fetchPostingPeriod(fetcher: ibas.IFetchCaller<bo.PostingPeriod>): void {
+                super.fetch(bo.PostingPeriod.name, fetcher);
+            }
+            /**
+             * 保存 过账期间
+             * @param saver 保存者
+             */
+            savePostingPeriod(saver: ibas.ISaveCaller<bo.PostingPeriod>): void {
+                super.save(bo.PostingPeriod.name, saver);
+            }
+
         }
     }
 }

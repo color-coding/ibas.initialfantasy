@@ -26,6 +26,8 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.postingperiod.IPostingPeriod;
+import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
@@ -40,10 +42,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序配置
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationConfig> fetchApplicationConfig(ICriteria criteria, String token) {
@@ -53,8 +53,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序配置（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationConfig> fetchApplicationConfig(ICriteria criteria) {
@@ -64,10 +63,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序配置
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationConfig> saveApplicationConfig(ApplicationConfig bo, String token) {
@@ -77,8 +74,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序配置（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationConfig> saveApplicationConfig(IApplicationConfig bo) {
@@ -90,10 +86,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序元素
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationElement> fetchApplicationElement(ICriteria criteria, String token) {
@@ -103,8 +97,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序元素（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationElement> fetchApplicationElement(ICriteria criteria) {
@@ -114,10 +107,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序元素
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationElement> saveApplicationElement(ApplicationElement bo, String token) {
@@ -127,8 +118,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序元素（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationElement> saveApplicationElement(IApplicationElement bo) {
@@ -140,10 +130,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-项目
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<Project> fetchProject(ICriteria criteria, String token) {
@@ -153,8 +141,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-项目（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IProject> fetchProject(ICriteria criteria) {
@@ -164,10 +151,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-项目
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<Project> saveProject(Project bo, String token) {
@@ -177,8 +162,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-项目（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IProject> saveProject(IProject bo) {
@@ -189,10 +173,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-组织
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<Organization> fetchOrganization(ICriteria criteria, String token) {
@@ -202,8 +184,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-组织（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IOrganization> fetchOrganization(ICriteria criteria) {
@@ -213,10 +194,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-组织
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<Organization> saveOrganization(Organization bo, String token) {
@@ -226,8 +205,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-组织（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IOrganization> saveOrganization(IOrganization bo) {
@@ -238,10 +216,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象信息
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOInformation> fetchBOInformation(ICriteria criteria, String token) {
@@ -251,8 +227,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象信息（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOInformation> fetchBOInformation(ICriteria criteria) {
@@ -262,10 +237,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象信息
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOInformation> saveBOInformation(BOInformation bo, String token) {
@@ -275,8 +248,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象信息（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOInformation> saveBOInformation(IBOInformation bo) {
@@ -287,10 +259,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序模块
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationModule> fetchApplicationModule(ICriteria criteria, String token) {
@@ -300,8 +270,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序模块（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationModule> fetchApplicationModule(ICriteria criteria) {
@@ -311,10 +280,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序模块
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationModule> saveApplicationModule(ApplicationModule bo, String token) {
@@ -324,8 +291,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序模块（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationModule> saveApplicationModule(IApplicationModule bo) {
@@ -337,10 +303,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序平台
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationPlatform> fetchApplicationPlatform(ICriteria criteria, String token) {
@@ -350,8 +314,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-应用程序平台（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationPlatform> fetchApplicationPlatform(ICriteria criteria) {
@@ -361,10 +324,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序平台
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationPlatform> saveApplicationPlatform(ApplicationPlatform bo, String token) {
@@ -374,8 +335,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-应用程序平台（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IApplicationPlatform> saveApplicationPlatform(IApplicationPlatform bo) {
@@ -387,10 +347,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象检索条件
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOCriteria> fetchBOCriteria(ICriteria criteria, String token) {
@@ -400,8 +358,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象检索条件（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOCriteria> fetchBOCriteria(ICriteria criteria) {
@@ -411,10 +368,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象检索条件
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOCriteria> saveBOCriteria(BOCriteria bo, String token) {
@@ -424,8 +379,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象检索条件（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOCriteria> saveBOCriteria(IBOCriteria bo) {
@@ -436,10 +390,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象筛选
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOFiltering> fetchBOFiltering(ICriteria criteria, String token) {
@@ -449,8 +401,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象筛选（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOFiltering> fetchBOFiltering(ICriteria criteria) {
@@ -460,10 +411,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象筛选
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOFiltering> saveBOFiltering(BOFiltering bo, String token) {
@@ -473,8 +422,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象筛选（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOFiltering> saveBOFiltering(IBOFiltering bo) {
@@ -485,10 +433,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-系统权限
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<Privilege> fetchPrivilege(ICriteria criteria, String token) {
@@ -498,8 +444,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-系统权限（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IPrivilege> fetchPrivilege(ICriteria criteria) {
@@ -509,10 +454,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-系统权限
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<Privilege> savePrivilege(Privilege bo, String token) {
@@ -522,8 +465,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-系统权限（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IPrivilege> savePrivilege(IPrivilege bo) {
@@ -534,10 +476,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-用户
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<User> fetchUser(ICriteria criteria, String token) {
@@ -547,8 +487,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-用户（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IUser> fetchUser(ICriteria criteria) {
@@ -558,10 +497,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-用户
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<User> saveUser(User bo, String token) {
@@ -571,8 +508,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-用户（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IUser> saveUser(IUser bo) {
@@ -584,10 +520,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象编号方式
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BONumbering> fetchBONumbering(ICriteria criteria, String token) {
@@ -597,8 +531,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象编号方式（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBONumbering> fetchBONumbering(ICriteria criteria) {
@@ -609,10 +542,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象序列编号方式
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria, String token) {
@@ -622,8 +553,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 查询-业务对象序列编号方式（提前设置用户口令）
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria) {
@@ -633,10 +563,8 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象序列编号方式
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	public OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo, String token) {
@@ -646,8 +574,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	/**
 	 * 保存-业务对象序列编号方式（提前设置用户口令）
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	public IOperationResult<IBOSeriesNumbering> saveBOSeriesNumbering(IBOSeriesNumbering bo) {
@@ -655,5 +582,47 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 				this.saveBOSeriesNumbering((BOSeriesNumbering) bo, this.getUserToken()));
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-过账期间
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<PostingPeriod> fetchPostingPeriod(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, PostingPeriod.class);
+	}
+
+	/**
+	 * 查询-过账期间（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IPostingPeriod> fetchPostingPeriod(ICriteria criteria) {
+		return new OperationResult<IPostingPeriod>(this.fetchPostingPeriod(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-过账期间
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<PostingPeriod> savePostingPeriod(PostingPeriod bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-过账期间（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IPostingPeriod> savePostingPeriod(IPostingPeriod bo) {
+		return new OperationResult<IPostingPeriod>(this.savePostingPeriod((PostingPeriod) bo, this.getUserToken()));
+	}
 	// --------------------------------------------------------------------------------------------//
 }

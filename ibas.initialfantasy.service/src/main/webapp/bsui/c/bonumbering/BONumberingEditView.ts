@@ -45,6 +45,7 @@ namespace initialfantasy {
                             }),
                         ]
                     });
+                    this.form.addContent(new sap.ui.core.Title("", {}));
                     this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_boseriesnumbering") }));
                     this.table = new sap.ui.table.Table("", {
                         selectionMode: sap.ui.table.SelectionMode.None,

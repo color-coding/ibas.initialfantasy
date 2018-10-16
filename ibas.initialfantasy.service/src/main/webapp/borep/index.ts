@@ -19,6 +19,7 @@
 /// <reference path="./bo/Privilege.ts" />
 /// <reference path="./bo/Project.ts" />
 /// <reference path="./bo/User.ts" />
+/// <reference path="./bo/PostingPeriod.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 
@@ -40,5 +41,6 @@ namespace initialfantasy {
         boFactory.register(User.BUSINESS_OBJECT_CODE, User);
         boFactory.register(BOInformation.BUSINESS_OBJECT_CODE, BOInformation);
         boFactory.register(Project.BUSINESS_OBJECT_CODE, Project);
+        boFactory.register(PostingPeriod.BUSINESS_OBJECT_CODE, PostingPeriod);
     }
 }

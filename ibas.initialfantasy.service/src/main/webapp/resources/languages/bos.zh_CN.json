@@ -294,6 +294,28 @@
         "bo_user_closing_delimiter": "----结束----"
     },
     {
+        "bo_postingperiod": "过账期间",
+        "bo_postingperiod_name": "名称",
+        "bo_postingperiod_category": "类别",
+        "bo_postingperiod_status": "状态",
+        "bo_postingperiod_postingdatefrom": "账期开始日期",
+        "bo_postingperiod_postingdateto": "账期结束日期",
+        "bo_postingperiod_objectkey": "对象编号",
+        "bo_postingperiod_objectcode": "对象类型",
+        "bo_postingperiod_createdate": "创建日期",
+        "bo_postingperiod_createtime": "创建时间",
+        "bo_postingperiod_updatedate": "修改日期",
+        "bo_postingperiod_updatetime": "修改时间",
+        "bo_postingperiod_loginst": "实例号（版本）",
+        "bo_postingperiod_series": "服务系列",
+        "bo_postingperiod_datasource": "数据源",
+        "bo_postingperiod_createusersign": "创建用户",
+        "bo_postingperiod_updateusersign": "修改用户",
+        "bo_postingperiod_createactionid": "创建动作标识",
+        "bo_postingperiod_updateactionid": "更新动作标识",
+        "bo_postingperiod_closing_delimiter": "----结束----"
+    },
+    {
         "bo_variable": "系统变量",
         "bo_variable_key": "名称",
         "bo_variable_value": "值",

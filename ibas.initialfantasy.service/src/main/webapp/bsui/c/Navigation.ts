@@ -21,6 +21,7 @@
 /// <reference path="./system/index.ts" />
 /// <reference path="./project/index.ts" />
 /// <reference path="./bonumbering/index.ts" />
+/// <reference path="./postingperiod/index.ts" />
 namespace initialfantasy {
     export namespace ui {
         /**
@@ -150,6 +151,15 @@ namespace initialfantasy {
                         break;
                     case app.BONumberingEditApp.APPLICATION_ID:
                         view = new c.BONumberingEditView();
+                        break;
+                    case app.PostingPeriodListApp.APPLICATION_ID:
+                        view = new c.PostingPeriodListView();
+                        break;
+                    case app.PostingPeriodChooseApp.APPLICATION_ID:
+                        view = new c.PostingPeriodChooseView();
+                        break;
+                    case app.PostingPeriodEditApp.APPLICATION_ID:
+                        view = new c.PostingPeriodEditView();
                         break;
                     default:
                         break;

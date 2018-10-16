@@ -140,6 +140,17 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveProject(saver: ibas.ISaveCaller<bo.IProject>): void;
+
+            /**
+             * 查询 过账期间
+             * @param fetcher 查询者
+             */
+            fetchPostingPeriod(fetcher: ibas.IFetchCaller<bo.IPostingPeriod>): void;
+            /**
+             * 保存 过账期间
+             * @param saver 保存者
+             */
+            savePostingPeriod(saver: ibas.ISaveCaller<bo.IPostingPeriod>): void;
         }
     }
 }

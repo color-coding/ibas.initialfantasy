@@ -14,6 +14,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.postingperiod.IPostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
 
@@ -26,8 +27,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-应用程序配置
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationConfig> fetchApplicationConfig(ICriteria criteria);
@@ -35,8 +35,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-应用程序配置
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationConfig> saveApplicationConfig(IApplicationConfig bo);
@@ -45,8 +44,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-应用程序元素
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationElement> fetchApplicationElement(ICriteria criteria);
@@ -54,8 +52,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-应用程序元素
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationElement> saveApplicationElement(IApplicationElement bo);
@@ -64,8 +61,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-项目
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IProject> fetchProject(ICriteria criteria);
@@ -73,8 +69,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-项目
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IProject> saveProject(IProject bo);
@@ -83,8 +78,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-组织
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IOrganization> fetchOrganization(ICriteria criteria);
@@ -92,8 +86,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-组织
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IOrganization> saveOrganization(IOrganization bo);
@@ -102,8 +95,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-业务对象信息
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOInformation> fetchBOInformation(ICriteria criteria);
@@ -111,8 +103,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-业务对象信息
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOInformation> saveBOInformation(IBOInformation bo);
@@ -121,8 +112,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-应用程序模块
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationModule> fetchApplicationModule(ICriteria criteria);
@@ -130,8 +120,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-应用程序模块
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationModule> saveApplicationModule(IApplicationModule bo);
@@ -140,8 +129,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-应用程序平台
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationPlatform> fetchApplicationPlatform(ICriteria criteria);
@@ -149,8 +137,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-应用程序平台
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationPlatform> saveApplicationPlatform(IApplicationPlatform bo);
@@ -159,8 +146,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-业务对象检索条件
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOCriteria> fetchBOCriteria(ICriteria criteria);
@@ -168,8 +154,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-业务对象检索条件
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOCriteria> saveBOCriteria(IBOCriteria bo);
@@ -178,8 +163,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-业务对象筛选
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOFiltering> fetchBOFiltering(ICriteria criteria);
@@ -187,8 +171,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-业务对象筛选
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOFiltering> saveBOFiltering(IBOFiltering bo);
@@ -197,8 +180,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-系统权限
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IPrivilege> fetchPrivilege(ICriteria criteria);
@@ -206,8 +188,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-系统权限
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IPrivilege> savePrivilege(IPrivilege bo);
@@ -216,8 +197,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-用户
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IUser> fetchUser(ICriteria criteria);
@@ -225,8 +205,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-用户
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IUser> saveUser(IUser bo);
@@ -235,8 +214,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-业务对象编号方式
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IBONumbering> fetchBONumbering(ICriteria criteria);
@@ -245,8 +223,7 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 查询-业务对象序列编号方式
 	 * 
-	 * @param criteria
-	 *            查询
+	 * @param criteria 查询
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria);
@@ -254,11 +231,27 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	/**
 	 * 保存-业务对象序列编号方式
 	 * 
-	 * @param bo
-	 *            对象实例
+	 * @param bo 对象实例
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOSeriesNumbering> saveBOSeriesNumbering(IBOSeriesNumbering bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-过账期间
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IPostingPeriod> fetchPostingPeriod(ICriteria criteria);
+
+	/**
+	 * 保存-过账期间
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IPostingPeriod> savePostingPeriod(IPostingPeriod bo);
 
 	// --------------------------------------------------------------------------------------------//
 

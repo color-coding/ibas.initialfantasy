@@ -76,6 +76,10 @@ namespace initialfantasy {
                     if (property === bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME) {
                         return ibas.enums.toString(emElementType, value);
                     }
+                } else if (boName === bo.PostingPeriod.name) {
+                    if (property === bo.PostingPeriod.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.toString(emPeriodStatus, value);
+                    }
                 }
                 return super.convertData(boName, property, value);
             }
@@ -120,6 +124,10 @@ namespace initialfantasy {
                 } else if (boName === bo.ApplicationElement.name) {
                     if (property === bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME) {
                         return ibas.enums.valueOf(emElementType, value);
+                    }
+                } else if (boName === bo.PostingPeriod.name) {
+                    if (property === bo.PostingPeriod.PROPERTY_STATUS_NAME) {
+                        return ibas.enums.valueOf(emPeriodStatus, value);
                     }
                 }
                 return super.parsingData(boName, property, value);

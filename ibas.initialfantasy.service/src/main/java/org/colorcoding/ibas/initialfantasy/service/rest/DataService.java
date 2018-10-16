@@ -21,6 +21,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
@@ -38,10 +39,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-应用程序配置
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -56,10 +55,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-应用程序配置
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -75,10 +72,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-业务对象编号方式
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -93,10 +88,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-业务对象序列编号方式
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -111,10 +104,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-业务对象序列编号方式
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -130,10 +121,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-项目
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -147,10 +136,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-项目
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -165,10 +152,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-组织
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -182,10 +167,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-组织
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -200,8 +183,7 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 用户口令登录
 	 * 
-	 * @param token
-	 *            用户口令
+	 * @param token 用户口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -216,10 +198,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 用户密码登录
 	 * 
-	 * @param user
-	 *            用户
-	 * @param passwrod
-	 *            密码
+	 * @param user     用户
+	 * @param passwrod 密码
 	 * @return 操作结果
 	 */
 	@POST
@@ -234,12 +214,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询用户模块
 	 * 
-	 * @param user
-	 *            用户
-	 * @param platform
-	 *            平台
-	 * @param token
-	 *            用户口令
+	 * @param user     用户
+	 * @param platform 平台
+	 * @param token    用户口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -254,12 +231,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询用户权限
 	 * 
-	 * @param user
-	 *            用户
-	 * @param platform
-	 *            平台
-	 * @param token
-	 *            用户口令
+	 * @param user     用户
+	 * @param platform 平台
+	 * @param token    用户口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -274,12 +248,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询用户查询
 	 * 
-	 * @param user
-	 *            用户
-	 * @param queryId
-	 *            查询标识
-	 * @param token
-	 *            用户口令
+	 * @param user    用户
+	 * @param queryId 查询标识
+	 * @param token   用户口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -294,10 +265,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询用户查询
 	 * 
-	 * @param query
-	 *            查询
-	 * @param token
-	 *            用户口令
+	 * @param query 查询
+	 * @param token 用户口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -311,10 +280,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询业务对象信息
 	 * 
-	 * @param boName
-	 *            对象名称
-	 * @param token
-	 *            用户口令
+	 * @param boName 对象名称
+	 * @param token  用户口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -330,10 +297,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-应用程序元素
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -348,10 +313,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-应用程序元素
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -367,10 +330,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-应用程序模块
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -385,10 +346,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-应用程序模块
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -404,10 +363,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-应用程序平台
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -422,10 +379,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-应用程序平台
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -441,10 +396,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-业务对象检索条件
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -458,10 +411,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-业务对象检索条件
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -476,10 +427,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-业务对象筛选
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -493,10 +442,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-业务对象筛选
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -511,10 +458,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-系统权限
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -528,10 +473,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-系统权限
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -546,10 +489,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-用户
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -563,10 +504,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-用户
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -581,10 +520,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询-业务对象信息
 	 * 
-	 * @param criteria
-	 *            查询
-	 * @param token
-	 *            口令
+	 * @param criteria 查询
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -598,10 +535,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 保存-业务对象信息
 	 * 
-	 * @param bo
-	 *            对象实例
-	 * @param token
-	 *            口令
+	 * @param bo    对象实例
+	 * @param token 口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -612,6 +547,36 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.saveBOInformation(bo, token);
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-过账期间
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchPostingPeriod")
+	public OperationResult<PostingPeriod> fetchPostingPeriod(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchPostingPeriod(criteria, token);
+	}
+
+	/**
+	 * 保存-过账期间
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("savePostingPeriod")
+	public OperationResult<PostingPeriod> savePostingPeriod(PostingPeriod bo, @QueryParam("token") String token) {
+		return super.savePostingPeriod(bo, token);
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }
