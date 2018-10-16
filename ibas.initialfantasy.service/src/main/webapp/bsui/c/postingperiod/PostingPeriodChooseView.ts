@@ -24,6 +24,65 @@ namespace initialfantasy {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_objectkey"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "objectKey"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_name"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "name"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_category"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "category"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_status"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "status",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(bo.emPeriodStatus, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_postingdatefrom"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false,
+                                }).bindProperty("text", {
+                                    path: "postingDateFrom",
+                                    type: new sap.ui.model.type.Date({
+                                        pattern: "yyyy-MM-dd",
+                                        strictParsing: true,
+                                    })
+                                }),
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_postingdateto"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false,
+                                }).bindProperty("text", {
+                                    path: "postingDateTo",
+                                    type: new sap.ui.model.type.Date({
+                                        pattern: "yyyy-MM-dd",
+                                        strictParsing: true,
+                                    })
+                                }),
+                            }),
                         ]
                     });
                     // 调整选择样式风格

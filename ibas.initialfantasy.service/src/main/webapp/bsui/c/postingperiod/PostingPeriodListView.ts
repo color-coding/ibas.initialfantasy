@@ -28,6 +28,65 @@ namespace initialfantasy {
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         rows: "{/rows}",
                         columns: [
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_objectkey"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "objectKey"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_name"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "name"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_category"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "category"
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_status"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "status",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(bo.emPeriodStatus, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_postingdatefrom"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false,
+                                }).bindProperty("text", {
+                                    path: "postingDateFrom",
+                                    type: new sap.ui.model.type.Date({
+                                        pattern: "yyyy-MM-dd",
+                                        strictParsing: true,
+                                    })
+                                }),
+                            }),
+                            new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_postingperiod_postingdateto"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false,
+                                }).bindProperty("text", {
+                                    path: "postingDateTo",
+                                    type: new sap.ui.model.type.Date({
+                                        pattern: "yyyy-MM-dd",
+                                        strictParsing: true,
+                                    })
+                                }),
+                            }),
                         ]
                     });
                     // 添加列表自动查询事件
