@@ -129,28 +129,6 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveBOInformation(saver: ibas.ISaveCaller<bo.IBOInformation>): void;
-
-            /**
-             * 查询 项目
-             * @param fetcher 查询者
-             */
-            fetchProject(fetcher: ibas.IFetchCaller<bo.IProject>): void;
-            /**
-             * 保存 项目
-             * @param saver 保存者
-             */
-            saveProject(saver: ibas.ISaveCaller<bo.IProject>): void;
-
-            /**
-             * 查询 过账期间
-             * @param fetcher 查询者
-             */
-            fetchPostingPeriod(fetcher: ibas.IFetchCaller<bo.IPostingPeriod>): void;
-            /**
-             * 保存 过账期间
-             * @param saver 保存者
-             */
-            savePostingPeriod(saver: ibas.ISaveCaller<bo.IPostingPeriod>): void;
         }
     }
 }

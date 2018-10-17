@@ -30,7 +30,6 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.editDataEvent = this.editData;
                 this.view.deleteDataEvent = this.deleteData;
-                this.view.postingPeriodEvent = this.postingPeriod;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -170,12 +169,6 @@ namespace initialfantasy {
                     }
                 });
             }
-            private postingPeriod(): void {
-                let app: PostingPeriodListApp = new PostingPeriodListApp();
-                app.navigation = this.navigation;
-                app.viewShower = this.viewShower;
-                app.run();
-            }
         }
         /** 视图-应用程序配置 */
         export interface IApplicationConfigListView extends ibas.IBOListView {
@@ -183,8 +176,6 @@ namespace initialfantasy {
             editDataEvent: Function;
             /** 删除数据事件，参数：删除对象集合 */
             deleteDataEvent: Function;
-            /** 过账期间 */
-            postingPeriodEvent: Function;
             /** 显示数据 */
             showData(datas: bo.ApplicationConfig[]): void;
         }

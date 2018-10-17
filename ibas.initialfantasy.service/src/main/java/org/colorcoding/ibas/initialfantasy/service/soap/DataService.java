@@ -16,9 +16,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
-import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
@@ -56,33 +54,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	public OperationResult<ApplicationConfig> saveApplicationConfig(@WebParam(name = "bo") ApplicationConfig bo,
 			@WebParam(name = "token") String token) {
 		return super.saveApplicationConfig(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-项目
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Project> fetchProject(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchProject(criteria, token);
-	}
-
-	/**
-	 * 保存-项目
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<Project> saveProject(@WebParam(name = "bo") Project bo,
-			@WebParam(name = "token") String token) {
-		return super.saveProject(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -394,32 +365,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.saveUser(bo, token);
 	}
 
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-过账期间
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<PostingPeriod> fetchPostingPeriod(@WebParam(name = "criteria") Criteria criteria,
-			@WebParam(name = "token") String token) {
-		return super.fetchPostingPeriod(criteria, token);
-	}
-
-	/**
-	 * 保存-过账期间
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<PostingPeriod> savePostingPeriod(@WebParam(name = "bo") PostingPeriod bo,
-			@WebParam(name = "token") String token) {
-		return super.savePostingPeriod(bo, token);
-	}
 	// --------------------------------------------------------------------------------------------//
 
 }

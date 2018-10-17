@@ -26,12 +26,8 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
-import org.colorcoding.ibas.initialfantasy.bo.postingperiod.IPostingPeriod;
-import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
-import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 
 /**
  * InitialFantasy仓库
@@ -124,49 +120,6 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	public IOperationResult<IApplicationElement> saveApplicationElement(IApplicationElement bo) {
 		return new OperationResult<IApplicationElement>(
 				this.saveApplicationElement((ApplicationElement) bo, this.getUserToken()));
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-项目
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Project> fetchProject(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Project.class);
-	}
-
-	/**
-	 * 查询-项目（提前设置用户口令）
-	 * 
-	 * @param criteria 查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IProject> fetchProject(ICriteria criteria) {
-		return new OperationResult<IProject>(this.fetchProject(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-项目
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	public OperationResult<Project> saveProject(Project bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-项目（提前设置用户口令）
-	 * 
-	 * @param bo 对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IProject> saveProject(IProject bo) {
-		return new OperationResult<IProject>(this.saveProject((Project) bo, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -582,47 +535,5 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 				this.saveBOSeriesNumbering((BOSeriesNumbering) bo, this.getUserToken()));
 	}
 
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-过账期间
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	public OperationResult<PostingPeriod> fetchPostingPeriod(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, PostingPeriod.class);
-	}
-
-	/**
-	 * 查询-过账期间（提前设置用户口令）
-	 * 
-	 * @param criteria 查询
-	 * @return 操作结果
-	 */
-	public IOperationResult<IPostingPeriod> fetchPostingPeriod(ICriteria criteria) {
-		return new OperationResult<IPostingPeriod>(this.fetchPostingPeriod(criteria, this.getUserToken()));
-	}
-
-	/**
-	 * 保存-过账期间
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	public OperationResult<PostingPeriod> savePostingPeriod(PostingPeriod bo, String token) {
-		return super.save(bo, token);
-	}
-
-	/**
-	 * 保存-过账期间（提前设置用户口令）
-	 * 
-	 * @param bo 对象实例
-	 * @return 操作结果
-	 */
-	public IOperationResult<IPostingPeriod> savePostingPeriod(IPostingPeriod bo) {
-		return new OperationResult<IPostingPeriod>(this.savePostingPeriod((PostingPeriod) bo, this.getUserToken()));
-	}
 	// --------------------------------------------------------------------------------------------//
 }

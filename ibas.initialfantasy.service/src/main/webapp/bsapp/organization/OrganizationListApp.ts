@@ -31,7 +31,6 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.editDataEvent = this.editData;
                 this.view.deleteDataEvent = this.deleteData;
-                this.view.projectEvent = this.project;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -167,12 +166,6 @@ namespace initialfantasy {
                     }
                 });
             }
-            protected project(): void {
-                let app: ProjectListApp = new ProjectListApp();
-                app.navigation = this.navigation;
-                app.viewShower = this.viewShower;
-                app.run();
-            }
         }
         /** 视图-组织 */
         export interface IOrganizationListView extends ibas.IBOListView {
@@ -180,8 +173,6 @@ namespace initialfantasy {
             editDataEvent: Function;
             /** 删除数据事件，参数：删除对象集合 */
             deleteDataEvent: Function;
-            /** 项目事件 */
-            projectEvent: Function;
             /** 显示数据 */
             showData(datas: bo.Organization[]): void;
         }

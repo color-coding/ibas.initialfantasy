@@ -70,17 +70,6 @@ namespace initialfantasy {
             AVAILABLE
         }
         /**
-         * 期间状态
-         */
-        export enum emPeriodStatus {
-            /** 打开 */
-            OPEN,
-            /** 关闭 */
-            LOCKED,
-            /** 结算 */
-            CLOSED
-        }
-        /**
          * 元素类型
          */
         export enum emElementType {

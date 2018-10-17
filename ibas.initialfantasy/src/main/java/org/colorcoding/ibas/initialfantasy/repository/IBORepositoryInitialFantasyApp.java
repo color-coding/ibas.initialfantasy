@@ -14,9 +14,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
-import org.colorcoding.ibas.initialfantasy.bo.postingperiod.IPostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
-import org.colorcoding.ibas.initialfantasy.bo.project.IProject;
 
 /**
  * InitialFantasy仓库应用
@@ -56,23 +54,6 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationElement> saveApplicationElement(IApplicationElement bo);
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-项目
-	 * 
-	 * @param criteria 查询
-	 * @return 操作结果
-	 */
-	IOperationResult<IProject> fetchProject(ICriteria criteria);
-
-	/**
-	 * 保存-项目
-	 * 
-	 * @param bo 对象实例
-	 * @return 操作结果
-	 */
-	IOperationResult<IProject> saveProject(IProject bo);
 
 	// --------------------------------------------------------------------------------------------//
 	/**
@@ -235,23 +216,6 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOSeriesNumbering> saveBOSeriesNumbering(IBOSeriesNumbering bo);
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-过账期间
-	 * 
-	 * @param criteria 查询
-	 * @return 操作结果
-	 */
-	IOperationResult<IPostingPeriod> fetchPostingPeriod(ICriteria criteria);
-
-	/**
-	 * 保存-过账期间
-	 * 
-	 * @param bo 对象实例
-	 * @return 操作结果
-	 */
-	IOperationResult<IPostingPeriod> savePostingPeriod(IPostingPeriod bo);
 
 	// --------------------------------------------------------------------------------------------//
 

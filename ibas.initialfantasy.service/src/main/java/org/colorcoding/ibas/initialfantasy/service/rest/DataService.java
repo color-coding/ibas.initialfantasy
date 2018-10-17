@@ -21,9 +21,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
-import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
@@ -115,37 +113,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	public OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo,
 			@QueryParam("token") String token) {
 		return super.saveBOSeriesNumbering(bo, token);
-	}
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-项目
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchProject")
-	public OperationResult<Project> fetchProject(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchProject(criteria, token);
-	}
-
-	/**
-	 * 保存-项目
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("saveProject")
-	public OperationResult<Project> saveProject(Project bo, @QueryParam("token") String token) {
-		return super.saveProject(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -547,36 +514,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.saveBOInformation(bo, token);
 	}
 
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-过账期间
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchPostingPeriod")
-	public OperationResult<PostingPeriod> fetchPostingPeriod(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchPostingPeriod(criteria, token);
-	}
-
-	/**
-	 * 保存-过账期间
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("savePostingPeriod")
-	public OperationResult<PostingPeriod> savePostingPeriod(PostingPeriod bo, @QueryParam("token") String token) {
-		return super.savePostingPeriod(bo, token);
-	}
 	// --------------------------------------------------------------------------------------------//
 
 }

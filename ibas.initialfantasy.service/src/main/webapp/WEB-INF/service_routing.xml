@@ -305,4 +305,20 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>ac70d488-d8fc-478a-af00-c70ef779a50b</Id>
+        <Name>Finance</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/finance/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../test/apps/finance/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>

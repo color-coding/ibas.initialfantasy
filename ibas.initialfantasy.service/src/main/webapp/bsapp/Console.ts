@@ -17,10 +17,8 @@
 /// <reference path="./bonumbering/index.ts" />
 /// <reference path="./organization/index.ts" />
 /// <reference path="./privilege/index.ts" />
-/// <reference path="./project/index.ts" />
 /// <reference path="./system/index.ts" />
 /// <reference path="./user/index.ts" />
-/// <reference path="./postingperiod/index.ts" />
 namespace initialfantasy {
     export namespace app {
         /** 模块控制台 */
@@ -62,9 +60,7 @@ namespace initialfantasy {
                 this.register(new BOInformationChooseServiceMapping());
                 this.register(new VariableChooseServiceMapping());
                 this.register(new ConfigChooseServiceMapping());
-                this.register(new ProjectChooseServiceMapping());
                 this.register(new CriteriaEditorServiceMapping());
-                this.register(new PostingPeriodChooseServiceMapping());
                 if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
                     // 组织为本模块实现
                     this.register(new RoleChooseServiceMapping());
@@ -117,7 +113,6 @@ namespace initialfantasy {
                 this.register(new BOInformationChooseServiceMapping());
                 this.register(new VariableChooseServiceMapping());
                 this.register(new ConfigChooseServiceMapping());
-                this.register(new ProjectChooseServiceMapping());
                 this.register(new CriteriaEditorServiceMapping());
             }
         }

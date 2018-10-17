@@ -14,9 +14,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
-import org.colorcoding.ibas.initialfantasy.bo.postingperiod.PostingPeriod;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.project.Project;
 
 /**
  * InitialFantasy仓库服务
@@ -60,25 +58,6 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 * @return 操作结果
 	 */
 	OperationResult<ApplicationElement> saveApplicationElement(ApplicationElement bo, String token);
-
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-项目
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	OperationResult<Project> fetchProject(ICriteria criteria, String token);
-
-	/**
-	 * 保存-项目
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	OperationResult<Project> saveProject(Project bo, String token);
 
 	// --------------------------------------------------------------------------------------------//
 	/**
@@ -262,24 +241,6 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 */
 	OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo, String token);
 
-	// --------------------------------------------------------------------------------------------//
-	/**
-	 * 查询-过账期间
-	 * 
-	 * @param criteria 查询
-	 * @param token    口令
-	 * @return 操作结果
-	 */
-	OperationResult<PostingPeriod> fetchPostingPeriod(ICriteria criteria, String token);
-
-	/**
-	 * 保存-过账期间
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
-	OperationResult<PostingPeriod> savePostingPeriod(PostingPeriod bo, String token);
 	// --------------------------------------------------------------------------------------------//
 
 }
