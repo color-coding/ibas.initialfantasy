@@ -79,7 +79,7 @@ public class BOInfo extends Serializable {
 	private BOPropertyInfo[] properties;
 
 	@XmlElementWrapper(name = "Properties")
-	@XmlElement(name = "Properties", type = BOPropertyInfo.class)
+	@XmlElement(name = "Property", type = BOPropertyInfo.class)
 	public BOPropertyInfo[] getProperties() {
 		return properties;
 	}
