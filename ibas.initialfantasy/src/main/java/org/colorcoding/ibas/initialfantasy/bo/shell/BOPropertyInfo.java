@@ -90,7 +90,7 @@ public class BOPropertyInfo extends Serializable {
 	private BOPropertyValue[] values;
 
 	@XmlElementWrapper(name = "Values")
-	@XmlElement(name = "Values", type = BOPropertyValue.class)
+	@XmlElement(name = "Value", type = BOPropertyValue.class)
 	public BOPropertyValue[] getValues() {
 		return values;
 	}
