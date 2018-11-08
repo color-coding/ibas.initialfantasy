@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
@@ -20,6 +21,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement(name = BOPropertyInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlType(name = BOPropertyInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 		implements IBOPropertyInformation, IBOCustomKey {
@@ -52,7 +54,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 名称 属性
 	 */
-	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
@@ -83,7 +85,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 属性名称 属性
 	 */
-	@DbField(name = "Property", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "Property", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_PROPERTY = registerProperty(PROPERTY_PROPERTY_NAME, String.class,
 			MY_CLASS);
 
