@@ -189,6 +189,8 @@ namespace initialfantasy {
                                     width: "100%",
                                 }).bindProperty("value", {
                                     path: "value"
+                                }).bindProperty("editable", {
+                                    path: "isNew"
                                 })
                             }),
                             new sap.ui.table.Column("", {
