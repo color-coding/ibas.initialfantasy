@@ -90,7 +90,7 @@ namespace initialfantasy {
                         template: that.propertySelect = new sap.m.ex.BOChildSelect("", {
                             blank: true,
                             width: "100%",
-                            boKey: "property",
+                            boKey: "mapped",
                             boText: "description",
                             boCode: ibas.config.applyVariables(bo.BO_CODE_BOINFORMATION),
                             repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,

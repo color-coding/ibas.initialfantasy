@@ -57,7 +57,6 @@ namespace initialfantasy {
                     });
                     this.layoutMain = new sap.ui.layout.VerticalLayout("", {
                         width: "100%",
-                        height: "100%",
                         content: [
                             formTop,
                         ]
