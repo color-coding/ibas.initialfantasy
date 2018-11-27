@@ -172,9 +172,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	 * @return 操作结果
 	 */
 	@WebMethod
-	public OperationResult<BOInfo> fetchBOInfos(@WebParam(name = "boName") String boName,
+	public OperationResult<BOInfo> fetchBOInfos(@WebParam(name = "boCode") String boCode,
 			@WebParam(name = "token") String token) {
-		return super.fetchBOInfos(boName, token);
+		return super.fetchBOInfos(boCode, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

@@ -255,9 +255,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOInfos")
-	public OperationResult<BOInfo> fetchBOInfos(@QueryParam("boName") String boName,
+	public OperationResult<BOInfo> fetchBOInfos(@QueryParam("boCode") String boCode,
 			@QueryParam("token") String token) {
-		return super.fetchBOInfos(boName, token);
+		return super.fetchBOInfos(boCode, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//
