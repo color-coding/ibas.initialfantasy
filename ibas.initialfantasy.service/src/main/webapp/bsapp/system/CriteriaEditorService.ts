@@ -90,6 +90,9 @@ namespace initialfantasy {
                             onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
                                 let boInfo: bo.BOInformation = opRslt.resultObjects.firstOrDefault();
                                 for (let item of boInfo.boPropertyInformations) {
+                                    if (ibas.strings.isEmpty(item.editType)) {
+                                        continue;
+                                    }
                                     that.aliases.add(new ibas.KeyText(item.property, item.description));
                                 }
                                 that.show();

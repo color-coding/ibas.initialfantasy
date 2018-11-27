@@ -31,9 +31,13 @@ public class BOPropertyInfo extends Serializable {
 	public static BOPropertyInfo create(IBOPropertyInformation propertyItem) {
 		BOPropertyInfo propertyInfo = new BOPropertyInfo();
 		propertyInfo.setProperty(propertyItem.getPropertyName());
-		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
-		propertyInfo.setAuthorised(propertyItem.getAuthorised());
 		propertyInfo.setDescription(propertyItem.getDescription());
+		propertyInfo.setDataType(propertyItem.getDataType());
+		propertyInfo.setEditType(propertyItem.getEditType());
+		propertyInfo.setEditSize(propertyItem.getEditSize());
+		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
+		propertyInfo.setSystemed(propertyItem.getSystemed() == emYesNo.YES ? true : false);
+		propertyInfo.setAuthorised(propertyItem.getAuthorised());
 		ArrayList<BOPropertyValue> propertyValues = new ArrayList<>();
 		for (IBOPropertyValue propertyValue : propertyItem.getBOPropertyValues()) {
 			propertyValues.add(BOPropertyValue.create(propertyValue));
@@ -56,12 +60,45 @@ public class BOPropertyInfo extends Serializable {
 	private String description;
 
 	@XmlElement(name = "Description")
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public final void setDescription(String description) {
 		this.description = description;
+	}
+
+	private String dataType;
+
+	@XmlElement(name = "DataType")
+	public final String getDataType() {
+		return dataType;
+	}
+
+	public final void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	private String editType;
+
+	@XmlElement(name = "EditType")
+	public final String getEditType() {
+		return editType;
+	}
+
+	public final void setEditType(String editType) {
+		this.editType = editType;
+	}
+
+	private Integer editSize;
+
+	@XmlElement(name = "EditSize")
+	public final Integer getEditSize() {
+		return editSize;
+	}
+
+	public final void setEditSize(Integer editSize) {
+		this.editSize = editSize;
 	}
 
 	/** 查询 */
@@ -74,6 +111,17 @@ public class BOPropertyInfo extends Serializable {
 
 	public void setSearched(boolean searched) {
 		this.searched = searched;
+	}
+
+	private boolean systemed;
+
+	@XmlElement(name = "Systemed")
+	public final boolean isSystemed() {
+		return systemed;
+	}
+
+	public final void setSystemed(boolean systemed) {
+		this.systemed = systemed;
 	}
 
 	private emAuthoriseType authorised;
