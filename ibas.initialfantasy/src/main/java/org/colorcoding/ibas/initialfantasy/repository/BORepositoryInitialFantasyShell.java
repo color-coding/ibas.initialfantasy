@@ -1,5 +1,6 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
+import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -222,14 +223,21 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	}
 
 	@Override
-	public OperationResult<BOInfo> fetchBOInfos(String boName, String token) {
+	public OperationResult<BOInfo> fetchBOInfos(String boCode, String token) {
 		OperationResult<BOInfo> opRslt = new OperationResult<>();
 		try {
 			this.setUserToken(token);
+			// 主对象及子对象一并返回
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
-			condition.setValue(boName);
+			condition.setOperation(ConditionOperation.EQUAL);
+			condition.setValue(boCode);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
+			condition.setOperation(ConditionOperation.START);
+			condition.setValue(boCode + ".");
 			IOperationResult<BOInformation> opRsltFetch = this.fetchBOInformation(criteria, token);
 			if (opRsltFetch.getError() != null) {
 				throw opRsltFetch.getError();
