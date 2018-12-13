@@ -45,21 +45,6 @@ namespace initialfantasy {
                         ]
                     });
                     this.id = this.table.getId();
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
-                            if (ibas.objects.isNull(that.lastCriteria)) {
-                                return;
-                            }
-                            let criteria: ibas.ICriteria = that.lastCriteria.next(data);
-                            if (ibas.objects.isNull(criteria)) {
-                                return;
-                            }
-                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
-                            that.fireViewEvents(that.fetchDataEvent, criteria);
-                        }
-                    });
                     return new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
@@ -94,35 +79,11 @@ namespace initialfantasy {
                 private table: sap.ui.table.Table;
                 /** 显示数据 */
                 showData(datas: ibas.KeyValue[]): void {
-                    let done: boolean = false;
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                    }
-                    this.table.setBusy(false);
+                    this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                 }
-
                 /** 记录上次查询条件，表格滚动时自动触发 */
                 query(criteria: ibas.ICriteria): void {
                     super.query(criteria);
-                    // 清除历史数据
-                    if (this.isDisplayed) {
-                        this.table.setBusy(true);
-                        this.table.setFirstVisibleRow(0);
-                        this.table.setModel(null);
-                    }
                 }
             }
         }
