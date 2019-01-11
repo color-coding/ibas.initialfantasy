@@ -11,26 +11,21 @@ namespace initialfantasy {
             /**
              * 视图-用户配置
              */
-            export class UserProfileView extends ibas.BOResidentView implements app.IUserProfileView {
+            export class UserProfileView extends ibas.ResidentView implements app.IUserProfileView {
                 /** 保存用户事件 */
                 saveUserEvent: Function;
                 /** 绘制工具条视图 */
                 drawBar(): any {
                     let that: this = this;
-                    // 不重复创建工具条钮
-                    if (ibas.objects.isNull(this.bar)) {
-                        this.bar = new sap.m.Button("", {
-                            tooltip: this.title,
-                            icon: "sap-icon://my-view",
-                            type: sap.m.ButtonType.Transparent,
-                            press: function (): void {
-                                that.fireViewEvents(that.showFullViewEvent);
-                            }
-                        });
-                    }
-                    return this.bar;
+                    return new sap.m.Button("", {
+                        tooltip: this.title,
+                        icon: "sap-icon://my-view",
+                        type: sap.m.ButtonType.Transparent,
+                        press: function (): void {
+                            that.fireViewEvents(that.showFullViewEvent);
+                        }
+                    });
                 }
-                private bar: sap.m.Button;
                 /** 激活完整视图事件 */
                 showFullViewEvent: Function;
                 /** 绘制视图 */

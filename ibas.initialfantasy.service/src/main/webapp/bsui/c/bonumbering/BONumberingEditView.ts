@@ -11,7 +11,7 @@ namespace initialfantasy {
             /**
              * 编辑视图-业务对象编号方式
              */
-            export class BONumberingEditView extends ibas.BOView implements app.IBONumberingEditView {
+            export class BONumberingEditView extends ibas.View implements app.IBONumberingEditView {
 
                 /** 保存系列编号方式 */
                 saveBOSeriesNumberingEvent: Function;
