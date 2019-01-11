@@ -11,7 +11,7 @@ namespace initialfantasy {
             /**
              * 视图-更改用户配置
              */
-            export class ChangeUserProfileView extends ibas.BODialogView implements app.IChangeUserProfileView {
+            export class ChangeUserProfileView extends ibas.DialogView implements app.IChangeUserProfileView {
                 /** 保存用户事件 */
                 saveUserEvent: Function;
                 /** 绘制视图 */

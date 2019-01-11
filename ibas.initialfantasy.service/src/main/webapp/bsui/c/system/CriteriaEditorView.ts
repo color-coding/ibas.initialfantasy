@@ -11,7 +11,7 @@ namespace initialfantasy {
             /**
              * 视图-查询编辑
              */
-            export class CriteriaEditorView extends ibas.BODialogView implements app.ICriteriaEditorView {
+            export class CriteriaEditorView extends ibas.DialogView implements app.ICriteriaEditorView {
                 /** 添加查询条件 */
                 addConditionEvent: Function;
                 /** 移出查询 */
