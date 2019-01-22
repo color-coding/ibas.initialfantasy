@@ -14,6 +14,7 @@ import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
+import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
@@ -25,6 +26,8 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.identity.IUserIdentity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.shell.ApplicationModule4Shell;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
@@ -130,6 +133,56 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		OperationResult<User> opRslt = new OperationResult<User>();
 		// 登录此即刷新组织用户
 		User orgUser = User.create(boUser);
+		// 获取用户身份
+		ICriteria criteria = new Criteria();
+		ICondition condition = criteria.getConditions().create();
+		condition.setAlias(UserIdentity.PROPERTY_USER.getName());
+		condition.setValue(orgUser.getCode());
+		// 有效日期
+		DateTime today = DateTime.getToday();
+		condition = criteria.getConditions().create();
+		condition.setBracketOpen(1);
+		condition.setAlias(UserIdentity.PROPERTY_VALIDDATE.getName());
+		condition.setOperation(ConditionOperation.IS_NULL);
+		condition = criteria.getConditions().create();
+		condition.setRelationship(ConditionRelationship.OR);
+		condition.setBracketOpen(1);
+		condition.setAlias(UserIdentity.PROPERTY_VALIDDATE.getName());
+		condition.setOperation(ConditionOperation.NOT_NULL);
+		condition = criteria.getConditions().create();
+		condition.setBracketClose(2);
+		condition.setAlias(UserIdentity.PROPERTY_VALIDDATE.getName());
+		condition.setOperation(ConditionOperation.LESS_EQUAL);
+		condition.setValue(today);
+		// 失效日期
+		condition = criteria.getConditions().create();
+		condition.setBracketOpen(1);
+		condition.setAlias(UserIdentity.PROPERTY_INVALIDDATE.getName());
+		condition.setOperation(ConditionOperation.IS_NULL);
+		condition = criteria.getConditions().create();
+		condition.setRelationship(ConditionRelationship.OR);
+		condition.setBracketOpen(1);
+		condition.setAlias(UserIdentity.PROPERTY_INVALIDDATE.getName());
+		condition.setOperation(ConditionOperation.NOT_NULL);
+		condition = criteria.getConditions().create();
+		condition.setBracketClose(2);
+		condition.setAlias(UserIdentity.PROPERTY_INVALIDDATE.getName());
+		condition.setOperation(ConditionOperation.GRATER_EQUAL);
+		condition.setValue(today);
+		// 排序
+		ISort sort = criteria.getSorts().create();
+		sort.setAlias(UserIdentity.PROPERTY_IDENTITY.getName());
+		sort.setSortType(SortType.ASCENDING);
+		IOperationResult<IUserIdentity> opRsltIdentity = this.fetchUserIdentity(criteria);
+		StringBuilder stringBuilder = new StringBuilder();
+		for (IUserIdentity item : opRsltIdentity.getResultObjects()) {
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append(",");
+			}
+			stringBuilder.append(item.getIdentity());
+		}
+		orgUser.setIdentities(stringBuilder.toString());
+		// 注册用户
 		OrganizationFactory.create().createManager().register(orgUser);
 		opRslt.setUserSign(orgUser.getToken());
 		opRslt.addResultObjects(orgUser);

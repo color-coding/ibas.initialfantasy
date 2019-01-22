@@ -8,24 +8,19 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
-            /**
-             * 视图-User
-             */
-            export class UserListView extends ibas.BOListView implements app.IUserListView {
+            /** 列表视图-身份 */
+            export class IdentityListView extends ibas.BOListView implements app.IIdentityListView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {
-                    return bo.User;
+                    return bo.Identity;
                 }
                 /** 编辑数据，参数：目标数据 */
                 editDataEvent: Function;
                 /** 删除数据事件，参数：删除对象集合 */
                 deleteDataEvent: Function;
-                /** 用户身份事件 */
-                userIdentityEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("");
                     this.table = new sap.ui.table.Table("", {
                         enableSelectAll: false,
                         selectionBehavior: sap.ui.table.SelectionBehavior.Row,
@@ -34,7 +29,7 @@ namespace initialfantasy {
                         rows: "{/rows}",
                         columns: [
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_user_code"),
+                                label: ibas.i18n.prop("bo_identity_code"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
@@ -42,7 +37,7 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_user_name"),
+                                label: ibas.i18n.prop("bo_identity_name"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
@@ -50,7 +45,7 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_user_activated"),
+                                label: ibas.i18n.prop("bo_identity_activated"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
@@ -60,29 +55,24 @@ namespace initialfantasy {
                                     }
                                 })
                             }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_user_super"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "super",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emYesNo, data);
-                                    }
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_user_organization"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "organization"
-                                })
-                            }),
                         ]
                     });
-                    this.form.addContent(this.table);
-                    this.page = new sap.m.Page("", {
+                    // 添加列表自动查询事件
+                    openui5.utils.triggerNextResults({
+                        listener: this.table,
+                        next(data: any): void {
+                            if (ibas.objects.isNull(that.lastCriteria)) {
+                                return;
+                            }
+                            let criteria: ibas.ICriteria = that.lastCriteria.next(data);
+                            if (ibas.objects.isNull(criteria)) {
+                                return;
+                            }
+                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
+                            that.fireViewEvents(that.fetchDataEvent, criteria);
+                        }
+                    });
+                    return new sap.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -94,19 +84,6 @@ namespace initialfantasy {
                                         that.fireViewEvents(that.newDataEvent);
                                     }
                                 }),
-                                /*
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_view"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://display",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.viewDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.User>(that.table).firstOrDefault()
-                                        );
-                                    }
-                                }),
-                                */
                                 new sap.m.Button("", {
                                     text: ibas.i18n.prop("shell_data_edit"),
                                     type: sap.m.ButtonType.Transparent,
@@ -114,7 +91,7 @@ namespace initialfantasy {
                                     press: function (): void {
                                         that.fireViewEvents(that.editDataEvent,
                                             // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.User>(that.table).firstOrDefault()
+                                            openui5.utils.getSelecteds<bo.Identity>(that.table).firstOrDefault()
                                         );
                                     }
                                 }),
@@ -126,17 +103,8 @@ namespace initialfantasy {
                                     press: function (): void {
                                         that.fireViewEvents(that.deleteDataEvent,
                                             // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.User>(that.table)
+                                            openui5.utils.getSelecteds<bo.Identity>(that.table)
                                         );
-                                    }
-                                }),
-                                new sap.m.ToolbarSeparator(""),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("bo_useridentity"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://business-card",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.userIdentityEvent);
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),
@@ -176,31 +144,18 @@ namespace initialfantasy {
                                 })
                             ]
                         }),
-                        content: [this.form]
+                        content: [
+                            new sap.ui.layout.form.SimpleForm("", {
+                                content: [
+                                    this.table,
+                                ]
+                            })
+                        ]
                     });
-                    this.id = this.page.getId();
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
-                            if (ibas.objects.isNull(that.lastCriteria)) {
-                                return;
-                            }
-                            let criteria: ibas.ICriteria = that.lastCriteria.next(data);
-                            if (ibas.objects.isNull(criteria)) {
-                                return;
-                            }
-                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
-                            that.fireViewEvents(that.fetchDataEvent, criteria);
-                        }
-                    });
-                    return this.page;
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
                 private table: sap.ui.table.Table;
                 /** 显示数据 */
-                showData(datas: bo.User[]): void {
+                showData(datas: bo.Identity[]): void {
                     let done: boolean = false;
                     let model: sap.ui.model.Model = this.table.getModel(undefined);
                     if (!ibas.objects.isNull(model)) {
@@ -220,7 +175,6 @@ namespace initialfantasy {
                     }
                     this.table.setBusy(false);
                 }
-
                 /** 记录上次查询条件，表格滚动时自动触发 */
                 query(criteria: ibas.ICriteria): void {
                     super.query(criteria);

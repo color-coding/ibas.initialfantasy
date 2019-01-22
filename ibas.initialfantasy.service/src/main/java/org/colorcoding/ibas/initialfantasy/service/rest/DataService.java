@@ -19,6 +19,8 @@ import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
+import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
@@ -512,6 +514,68 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Path("saveBOInformation")
 	public OperationResult<BOInformation> saveBOInformation(BOInformation bo, @QueryParam("token") String token) {
 		return super.saveBOInformation(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchIdentity")
+	public OperationResult<Identity> fetchIdentity(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchIdentity(criteria, token);
+	}
+
+	/**
+	 * 保存-身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveIdentity")
+	public OperationResult<Identity> saveIdentity(Identity bo, @QueryParam("token") String token) {
+		return super.saveIdentity(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchUserIdentity")
+	public OperationResult<UserIdentity> fetchUserIdentity(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchUserIdentity(criteria, token);
+	}
+
+	/**
+	 * 保存-用户身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveUserIdentity")
+	public OperationResult<UserIdentity> saveUserIdentity(UserIdentity bo, @QueryParam("token") String token) {
+		return super.saveUserIdentity(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

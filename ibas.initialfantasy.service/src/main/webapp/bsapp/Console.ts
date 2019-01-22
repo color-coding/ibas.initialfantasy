@@ -18,6 +18,8 @@
 /// <reference path="./privilege/index.ts" />
 /// <reference path="./system/index.ts" />
 /// <reference path="./user/index.ts" />
+/// <reference path="./identity/index.ts" />
+/// <reference path="./useridentity/index.ts" />
 namespace initialfantasy {
     export namespace app {
         /** 模块控制台 */
@@ -59,6 +61,7 @@ namespace initialfantasy {
                 this.register(new BOInformationChooseServiceMapping());
                 this.register(new VariableChooseServiceMapping());
                 this.register(new ConfigChooseServiceMapping());
+                this.register(new IdentityChooseServiceMapping());
                 this.register(new CriteriaEditorServiceMapping());
                 if (ibas.strings.equalsIgnoreCase(CONFIG_VALUE_ORGANIZATION_WAY, ibas.config.get(ibas.CONFIG_ITEM_ORGANIZATION_WAY))) {
                     // 组织为本模块实现

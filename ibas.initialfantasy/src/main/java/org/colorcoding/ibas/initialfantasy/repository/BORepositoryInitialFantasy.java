@@ -22,6 +22,10 @@ import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
+import org.colorcoding.ibas.initialfantasy.bo.identity.IIdentity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.IUserIdentity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
@@ -535,5 +539,90 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 				this.saveBOSeriesNumbering((BOSeriesNumbering) bo, this.getUserToken()));
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Identity> fetchIdentity(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, Identity.class);
+	}
+
+	/**
+	 * 查询-身份（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IIdentity> fetchIdentity(ICriteria criteria) {
+		return new OperationResult<IIdentity>(this.fetchIdentity(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<Identity> saveIdentity(Identity bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-身份（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IIdentity> saveIdentity(IIdentity bo) {
+		return new OperationResult<IIdentity>(this.saveIdentity((Identity) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<UserIdentity> fetchUserIdentity(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, UserIdentity.class);
+	}
+
+	/**
+	 * 查询-用户身份（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IUserIdentity> fetchUserIdentity(ICriteria criteria) {
+		return new OperationResult<IUserIdentity>(this.fetchUserIdentity(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-用户身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<UserIdentity> saveUserIdentity(UserIdentity bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-用户身份（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IUserIdentity> saveUserIdentity(IUserIdentity bo) {
+		return new OperationResult<IUserIdentity>(this.saveUserIdentity((UserIdentity) bo, this.getUserToken()));
+	}
 	// --------------------------------------------------------------------------------------------//
 }

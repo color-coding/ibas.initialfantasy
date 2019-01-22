@@ -46,10 +46,10 @@ namespace initialfantasy {
         export const BO_CODE_SYSTEM_CONFIG: string = "${Company}_SYS_CONFIG";
         /** 业务对象编码-用户角色（默认与组织相同） */
         export const BO_CODE_ROLE: string = "${Company}_SYS_ROLE";
-        /** 业务对象编码-项目 */
-        export const BO_CODE_PROJECT: string = "${Company}_SYS_PROJECT";
-        /** 业务对象编码-过账期间 */
-        export const BO_CODE_POSTINGPERIOD: string = "${Company}_SYS_PERIOD";
+        /** 业务对象编码-身份 */
+        export const BO_CODE_IDENTITY: string = "${Company}_SYS_IDENTITY";
+        /** 业务对象编码-用户身份 */
+        export const BO_CODE_USERIDENTITY: string = "${Company}_SYS_USERIDENTITY";
 
         /**
          * 分配类型
