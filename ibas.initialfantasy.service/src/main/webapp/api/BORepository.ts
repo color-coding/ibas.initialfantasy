@@ -129,6 +129,26 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveBOInformation(saver: ibas.ISaveCaller<bo.IBOInformation>): void;
+            /**
+             * 查询 身份
+             * @param fetcher 查询者
+             */
+            fetchIdentity(fetcher: ibas.IFetchCaller<bo.IIdentity>): void;
+            /**
+             * 保存 身份
+             * @param saver 保存者
+             */
+            saveIdentity(saver: ibas.ISaveCaller<bo.IIdentity>): void;
+            /**
+             * 查询 用户身份
+             * @param fetcher 查询者
+             */
+            fetchUserIdentity(fetcher: ibas.IFetchCaller<bo.IUserIdentity>): void;
+            /**
+             * 保存 用户身份
+             * @param saver 保存者
+             */
+            saveUserIdentity(saver: ibas.ISaveCaller<bo.IUserIdentity>): void;
         }
     }
 }

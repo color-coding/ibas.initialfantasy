@@ -18,6 +18,8 @@
 /// <reference path="./boinformation/index.ts" />
 /// <reference path="./system/index.ts" />
 /// <reference path="./bonumbering/index.ts" />
+/// <reference path="./identity/index.ts" />
+/// <reference path="./useridentity/index.ts" />
 namespace initialfantasy {
     export namespace ui {
         /**
@@ -138,6 +140,24 @@ namespace initialfantasy {
                         break;
                     case app.BONumberingEditApp.APPLICATION_ID:
                         view = new c.BONumberingEditView();
+                        break;
+                    case app.IdentityListApp.APPLICATION_ID:
+                        view = new c.IdentityListView();
+                        break;
+                    case app.IdentityChooseApp.APPLICATION_ID:
+                        view = new c.IdentityChooseView();
+                        break;
+                    case app.IdentityEditApp.APPLICATION_ID:
+                        view = new c.IdentityEditView();
+                        break;
+                    case app.UserIdentityListApp.APPLICATION_ID:
+                        view = new c.UserIdentityListView();
+                        break;
+                    case app.UserIdentityChooseApp.APPLICATION_ID:
+                        view = new c.UserIdentityChooseView();
+                        break;
+                    case app.UserIdentityEditApp.APPLICATION_ID:
+                        view = new c.UserIdentityEditView();
                         break;
                     default:
                         break;

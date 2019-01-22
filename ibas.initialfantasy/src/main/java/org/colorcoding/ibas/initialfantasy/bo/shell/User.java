@@ -92,6 +92,17 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		this.belong = belong;
 	}
 
+	private String identities;
+
+	@XmlElement(name = "Identities")
+	public final String getIdentities() {
+		return identities;
+	}
+
+	public final void setIdentities(String identities) {
+		this.identities = identities;
+	}
+
 	private String token;
 
 	@Override

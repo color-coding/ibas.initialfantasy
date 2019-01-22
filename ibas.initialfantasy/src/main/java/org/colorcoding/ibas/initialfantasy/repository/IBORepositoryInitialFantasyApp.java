@@ -12,6 +12,8 @@ import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
+import org.colorcoding.ibas.initialfantasy.bo.identity.IIdentity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.IUserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
@@ -217,6 +219,39 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 */
 	IOperationResult<IBOSeriesNumbering> saveBOSeriesNumbering(IBOSeriesNumbering bo);
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-身份
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IIdentity> fetchIdentity(ICriteria criteria);
+
+	/**
+	 * 保存-身份
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IIdentity> saveIdentity(IIdentity bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户身份
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IUserIdentity> fetchUserIdentity(ICriteria criteria);
+
+	/**
+	 * 保存-用户身份
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IUserIdentity> saveUserIdentity(IUserIdentity bo);
 	// --------------------------------------------------------------------------------------------//
 
 }

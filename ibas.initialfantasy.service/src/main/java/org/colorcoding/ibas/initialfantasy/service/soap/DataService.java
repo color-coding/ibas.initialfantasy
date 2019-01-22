@@ -14,6 +14,8 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
+import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
@@ -365,6 +367,59 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.saveUser(bo, token);
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<Identity> fetchIdentity(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchIdentity(criteria, token);
+	}
+
+	/**
+	 * 保存-身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<Identity> saveIdentity(@WebParam(name = "bo") Identity bo,
+			@WebParam(name = "token") String token) {
+		return super.saveIdentity(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<UserIdentity> fetchUserIdentity(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchUserIdentity(criteria, token);
+	}
+
+	/**
+	 * 保存-用户身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<UserIdentity> saveUserIdentity(@WebParam(name = "bo") UserIdentity bo,
+			@WebParam(name = "token") String token) {
+		return super.saveUserIdentity(bo, token);
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }

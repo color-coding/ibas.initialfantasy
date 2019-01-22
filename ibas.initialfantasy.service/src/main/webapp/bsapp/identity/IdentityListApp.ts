@@ -7,22 +7,20 @@
  */
 namespace initialfantasy {
     export namespace app {
-
-        /** 列表应用-用户 */
-        export class UserListApp extends ibas.BOListApplication<IUserListView, bo.User> {
-
+        /** 列表应用-身份 */
+        export class IdentityListApp extends ibas.BOListApplication<IIdentityListView, bo.Identity> {
             /** 应用标识 */
-            static APPLICATION_ID: string = "4019d501-fd71-4f5b-8171-c5410fd2823d";
+            static APPLICATION_ID: string = "88f9d672-5153-449e-9a55-b2ae5c481064";
             /** 应用名称 */
-            static APPLICATION_NAME: string = "initialfantasy_app_user_list";
+            static APPLICATION_NAME: string = "initialfantasy_app_identity_list";
             /** 业务对象编码 */
-            static BUSINESS_OBJECT_CODE: string = bo.User.BUSINESS_OBJECT_CODE;
+            static BUSINESS_OBJECT_CODE: string = bo.Identity.BUSINESS_OBJECT_CODE;
             /** 构造函数 */
             constructor() {
                 super();
-                this.id = UserListApp.APPLICATION_ID;
-                this.name = UserListApp.APPLICATION_NAME;
-                this.boCode = UserListApp.BUSINESS_OBJECT_CODE;
+                this.id = IdentityListApp.APPLICATION_ID;
+                this.name = IdentityListApp.APPLICATION_NAME;
+                this.boCode = IdentityListApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
             /** 注册视图 */
@@ -31,7 +29,6 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.editDataEvent = this.editData;
                 this.view.deleteDataEvent = this.deleteData;
-                this.view.userIdentityEvent = this.userIdentity;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -43,13 +40,17 @@ namespace initialfantasy {
                 this.busy(true);
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                boRepository.fetchUser({
+                boRepository.fetchIdentity({
                     criteria: criteria,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
+                    onCompleted(opRslt: ibas.IOperationResult<bo.Identity>): void {
                         try {
                             that.busy(false);
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
+                            }
+                            if (!that.isViewShowed()) {
+                                // 没显示视图，先显示
+                                that.show();
                             }
                             if (opRslt.resultObjects.length === 0) {
                                 that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_fetched_none"));
@@ -64,13 +65,13 @@ namespace initialfantasy {
             }
             /** 新建数据 */
             protected newData(): void {
-                let app: UserEditApp = new UserEditApp();
+                let app: IdentityEditApp = new IdentityEditApp();
                 app.navigation = this.navigation;
                 app.viewShower = this.viewShower;
                 app.run();
             }
             /** 查看数据，参数：目标数据 */
-            protected viewData(data: bo.User): void {
+            protected viewData(data: bo.Identity): void {
                 // 检查目标数据
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -80,7 +81,7 @@ namespace initialfantasy {
                 }
             }
             /** 编辑数据，参数：目标数据 */
-            protected editData(data: bo.User): void {
+            protected editData(data: bo.Identity): void {
                 // 检查目标数据
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -88,13 +89,13 @@ namespace initialfantasy {
                     ));
                     return;
                 }
-                let app: UserEditApp = new UserEditApp();
+                let app: IdentityEditApp = new IdentityEditApp();
                 app.navigation = this.navigation;
                 app.viewShower = this.viewShower;
                 app.run(data);
             }
             /** 删除数据，参数：目标数据集合 */
-            protected deleteData(data: bo.User | bo.User[]): void {
+            protected deleteData(data: bo.Identity | bo.Identity[]): void {
                 // 检查目标数据
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -102,7 +103,7 @@ namespace initialfantasy {
                     ));
                     return;
                 }
-                let beDeleteds: ibas.ArrayList<bo.User> = new ibas.ArrayList<bo.User>();
+                let beDeleteds: ibas.ArrayList<bo.Identity> = new ibas.ArrayList<bo.Identity>();
                 if (data instanceof Array) {
                     for (let item of data) {
                         item.delete();
@@ -129,10 +130,10 @@ namespace initialfantasy {
                         if (action === ibas.emMessageAction.YES) {
                             try {
                                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                                let saveMethod: Function = function (beSaved: bo.User): void {
-                                    boRepository.saveUser({
+                                let saveMethod: Function = function (beSaved: bo.Identity): void {
+                                    boRepository.saveIdentity({
                                         beSaved: beSaved,
-                                        onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
+                                        onCompleted(opRslt: ibas.IOperationResult<bo.Identity>): void {
                                             try {
                                                 if (opRslt.resultCode !== 0) {
                                                     throw new Error(opRslt.message);
@@ -167,23 +168,15 @@ namespace initialfantasy {
                     }
                 });
             }
-            private userIdentity(): void {
-                let app: UserIdentityListApp = new UserIdentityListApp();
-                app.navigation = this.navigation;
-                app.viewShower = this.viewShower;
-                app.run();
-            }
         }
-        /** 视图-用户 */
-        export interface IUserListView extends ibas.IBOListView {
+        /** 视图-身份 */
+        export interface IIdentityListView extends ibas.IBOListView {
             /** 编辑数据事件，参数：编辑对象 */
             editDataEvent: Function;
             /** 删除数据事件，参数：删除对象集合 */
             deleteDataEvent: Function;
             /** 显示数据 */
-            showData(datas: bo.User[]): void;
-            /** 用户身份事件 */
-            userIdentityEvent: Function;
+            showData(datas: bo.Identity[]): void;
         }
     }
 }
