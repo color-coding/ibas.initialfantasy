@@ -83,9 +83,9 @@ namespace initialfantasy {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
                         rows: "{/rows}",
                         rowActionCount: 1,
-                        rowActionTemplate: new sap.ui.table.RowAction({
+                        rowActionTemplate: new sap.ui.table.RowAction("", {
                             items: [
-                                new sap.ui.table.RowActionItem({
+                                new sap.ui.table.RowActionItem("", {
                                     icon: "sap-icon://slim-arrow-right",
                                     press: function (oEvent: any): void {
                                         that.fireViewEvents(that.editBOPropertyInformationEvent

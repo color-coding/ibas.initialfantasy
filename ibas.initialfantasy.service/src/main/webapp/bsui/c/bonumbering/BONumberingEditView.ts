@@ -73,15 +73,15 @@ namespace initialfantasy {
                         visibleRowCount: 5,
                         rows: "{/rows}",
                         rowActionCount: 2,
-                        rowActionTemplate: new sap.ui.table.RowAction({
+                        rowActionTemplate: new sap.ui.table.RowAction("", {
                             items: [
-                                new sap.ui.table.RowActionItem({
+                                new sap.ui.table.RowActionItem("", {
                                     icon: "sap-icon://save",
                                     press: function (oEvent: any): void {
                                         that.fireViewEvents(that.saveBOSeriesNumberingEvent, this.getBindingContext().getObject());
                                     },
                                 }),
-                                new sap.ui.table.RowActionItem({
+                                new sap.ui.table.RowActionItem("", {
                                     icon: "sap-icon://delete",
                                     press: function (oEvent: any): void {
                                         let bo: bo.BOSeriesNumbering = this.getBindingContext().getObject();
