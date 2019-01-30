@@ -8,6 +8,7 @@
     <Property Name="Target" Description="目标标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Target"/>
     <Property Name="Activated" Description="是否可用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="AuthoriseValue" Description="权限类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="AuthValue"/>
+    <Property Name="Automatic" Description="自动运行" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Automatic"/>
     <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>

@@ -83,6 +83,17 @@ namespace initialfantasy {
                 this.setProperty(Privilege.PROPERTY_AUTHORISEVALUE_NAME, value);
             }
 
+            /** 映射的属性名称-自动运行 */
+            static PROPERTY_AUTOMATIC_NAME: string = "Automatic";
+            /** 获取-自动运行 */
+            get automatic(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Privilege.PROPERTY_AUTOMATIC_NAME);
+            }
+            /** 设置-自动运行 */
+            set automatic(value: ibas.emYesNo) {
+                this.setProperty(Privilege.PROPERTY_AUTOMATIC_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
             /** 获取-对象编号 */
@@ -232,6 +243,7 @@ namespace initialfantasy {
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(Privilege.BUSINESS_OBJECT_CODE);
                 this.activated = ibas.emYesNo.YES;
+                this.automatic = ibas.emYesNo.NO;
             }
         }
     }

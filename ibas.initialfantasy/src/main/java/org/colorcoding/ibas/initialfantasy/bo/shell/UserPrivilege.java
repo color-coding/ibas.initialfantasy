@@ -10,6 +10,7 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -64,8 +65,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 设置-来源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSource(emPrivilegeSource value) {
 		this.setProperty(PROPERTY_SOURCE, value);
@@ -96,8 +96,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 设置-目标
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setTarget(String value) {
 		this.setProperty(PROPERTY_TARGET, value);
@@ -128,11 +127,41 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 设置-权限值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setValue(emAuthoriseType value) {
 		this.setProperty(PROPERTY_VALUE, value);
+	}
+
+	/**
+	 * 属性名称-自动运行
+	 */
+	private static final String PROPERTY_AUTOMATIC_NAME = "Automatic";
+
+	/**
+	 * 自动运行 属性
+	 */
+	@DbField(name = "Automatic", type = DbFieldType.ALPHANUMERIC, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_AUTOMATIC = registerProperty(PROPERTY_AUTOMATIC_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-自动运行
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_AUTOMATIC_NAME)
+	public final emYesNo getAutomatic() {
+		return this.getProperty(PROPERTY_AUTOMATIC);
+	}
+
+	/**
+	 * 设置-自动运行
+	 * 
+	 * @param value 值
+	 */
+	public final void setAutomatic(emYesNo value) {
+		this.setProperty(PROPERTY_AUTOMATIC, value);
 	}
 
 	@Override

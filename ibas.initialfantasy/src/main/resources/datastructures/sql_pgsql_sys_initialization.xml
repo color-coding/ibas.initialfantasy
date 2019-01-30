@@ -85,7 +85,7 @@
         </Step>
         <Step Name="create return type">
             <Script>
-                CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES" AS ("Source" character varying, "Target" character varying, "Value" character varying);
+                CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES" AS ("Source" character varying, "Target" character varying, "Value" character varying, "Automatic" character varying);
             </Script>
         </Step>
         <Step Name="create stored procedures">
@@ -107,7 +107,7 @@
                     IF EXISTS (SELECT 0 FROM "${Company}_SYS_USER" WHERE "Code" = userCode AND "Super" = 'Y') THEN
                         /* 超级用户全部权限 */
                         FOR result IN
-                            SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value"
+                            SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value", CAST('N' as character varying) "Automatic"
                             FROM "${Company}_SYS_PRIVILEGE"
                             LIMIT 0
                         LOOP
@@ -116,15 +116,15 @@
                     ELSE
                         -- 非超级用户，角色权限
                         FOR result IN
-                            SELECT "Source", "Target", "Value"
+                            SELECT "Source", "Target", "Value", "Automatic"
                             FROM (
                                 -- 模块的权限设置
-                                SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode"
+                                SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
                                 FROM "${Company}_SYS_PRIVILEGE"
                                 WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') = ''
                                 UNION ALL
                                 -- 应用的权限设置
-                                SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode"
+                                SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
                                 FROM "${Company}_SYS_PRIVILEGE"
                                 WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
                             ) T0

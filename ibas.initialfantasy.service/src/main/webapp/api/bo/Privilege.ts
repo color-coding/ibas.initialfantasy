@@ -29,6 +29,9 @@ namespace initialfantasy {
             /** 权限类型 */
             authoriseValue: ibas.emAuthoriseType;
 
+            /** 自动运行 */
+            automatic: ibas.emYesNo;
+
             /** 对象编号 */
             objectKey: number;
 
