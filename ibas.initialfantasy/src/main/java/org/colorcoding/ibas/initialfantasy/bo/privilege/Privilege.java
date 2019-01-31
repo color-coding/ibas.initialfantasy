@@ -76,8 +76,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-角色标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setRoleCode(String value) {
 		this.setProperty(PROPERTY_ROLECODE, value);
@@ -108,8 +107,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-平台标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setPlatformId(String value) {
 		this.setProperty(PROPERTY_PLATFORMID, value);
@@ -140,8 +138,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-模块标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setModuleId(String value) {
 		this.setProperty(PROPERTY_MODULEID, value);
@@ -172,8 +169,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-目标标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setTarget(String value) {
 		this.setProperty(PROPERTY_TARGET, value);
@@ -204,8 +200,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-是否可用
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setActivated(emYesNo value) {
 		this.setProperty(PROPERTY_ACTIVATED, value);
@@ -236,11 +231,41 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-权限类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setAuthoriseValue(emAuthoriseType value) {
 		this.setProperty(PROPERTY_AUTHORISEVALUE, value);
+	}
+
+	/**
+	 * 属性名称-自动运行
+	 */
+	private static final String PROPERTY_AUTOMATIC_NAME = "Automatic";
+
+	/**
+	 * 自动运行 属性
+	 */
+	@DbField(name = "Automatic", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_AUTOMATIC = registerProperty(PROPERTY_AUTOMATIC_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-自动运行
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_AUTOMATIC_NAME)
+	public final emYesNo getAutomatic() {
+		return this.getProperty(PROPERTY_AUTOMATIC);
+	}
+
+	/**
+	 * 设置-自动运行
+	 * 
+	 * @param value 值
+	 */
+	public final void setAutomatic(emYesNo value) {
+		this.setProperty(PROPERTY_AUTOMATIC, value);
 	}
 
 	/**
@@ -268,8 +293,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-对象编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectKey(Integer value) {
 		this.setProperty(PROPERTY_OBJECTKEY, value);
@@ -300,8 +324,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -332,8 +355,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateDate(DateTime value) {
 		this.setProperty(PROPERTY_CREATEDATE, value);
@@ -364,8 +386,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateTime(Short value) {
 		this.setProperty(PROPERTY_CREATETIME, value);
@@ -396,8 +417,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateDate(DateTime value) {
 		this.setProperty(PROPERTY_UPDATEDATE, value);
@@ -428,8 +448,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateTime(Short value) {
 		this.setProperty(PROPERTY_UPDATETIME, value);
@@ -460,8 +479,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLogInst(Integer value) {
 		this.setProperty(PROPERTY_LOGINST, value);
@@ -492,8 +510,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-服务系列
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSeries(Integer value) {
 		this.setProperty(PROPERTY_SERIES, value);
@@ -524,8 +541,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
@@ -556,8 +572,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateUserSign(Integer value) {
 		this.setProperty(PROPERTY_CREATEUSERSIGN, value);
@@ -588,8 +603,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateUserSign(Integer value) {
 		this.setProperty(PROPERTY_UPDATEUSERSIGN, value);
@@ -620,8 +634,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateActionId(String value) {
 		this.setProperty(PROPERTY_CREATEACTIONID, value);
@@ -652,8 +665,7 @@ public class Privilege extends BusinessObject<Privilege> implements IPrivilege {
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);

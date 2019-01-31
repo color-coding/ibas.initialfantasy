@@ -73,20 +73,20 @@
 
                 IF EXISTS (SELECT 0 FROM `${Company}_SYS_USER` WHERE `Code` = userCode AND `Super` = 'Y') THEN
                     /*超级用户全部权限*/
-                    SELECT 'M' `Source`, `ModuleId` `Target`, `AuthValue` `Value`
+                    SELECT 'M' `Source`, `ModuleId` `Target`, `AuthValue` `Value`, 'N' `Automatic`
                     FROM `${Company}_SYS_PRIVILEGE`
                     LIMIT 0,0;
                 ELSE
                     /*非超级用户，角色权限*/
-                    SELECT `Source`, `Target`, `Value`
+                    SELECT `Source`, `Target`, `Value`, `Automatic`
                     FROM (
                         /*模块的权限设置*/
-                        SELECT 'M' `Source`, `ModuleId` `Target`, `AuthValue` `Value`, `RoleCode`
+                        SELECT 'M' `Source`, `ModuleId` `Target`, `AuthValue` `Value`, `RoleCode`, `Automatic`
                         FROM `${Company}_SYS_PRIVILEGE`
                         WHERE (`PlatformId` = platform OR `PlatformId` = platform2) AND `Activated` = 'Y' AND IFNULL(`Target`,'') = ''
                         UNION ALL
                         /*应用的权限设置*/
-                        SELECT 'A' `Source`, `Target` `Target`, `AuthValue` `Value`, `RoleCode`
+                        SELECT 'A' `Source`, `Target` `Target`, `AuthValue` `Value`, `RoleCode`, `Automatic`
                         FROM `${Company}_SYS_PRIVILEGE`
                         WHERE (`PlatformId` = platform OR `PlatformId` = platform2) AND `Activated` = 'Y' AND IFNULL(`Target`,'') &lt;&gt; ''
                     ) T0
