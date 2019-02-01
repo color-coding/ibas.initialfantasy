@@ -100,23 +100,7 @@ namespace initialfantasy {
             }
             /** 删除数据，参数：目标数据集合 */
             protected deleteData(data: bo.ApplicationElement | bo.ApplicationElement[]): void {
-                // 检查目标数据
-                if (ibas.objects.isNull(data)) {
-                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
-                        ibas.i18n.prop("shell_data_delete")
-                    ));
-                    return;
-                }
-                let beDeleteds: ibas.ArrayList<bo.ApplicationElement> = new ibas.ArrayList<bo.ApplicationElement>();
-                if (data instanceof Array) {
-                    for (let item of data) {
-                        item.delete();
-                        beDeleteds.add(item);
-                    }
-                } else {
-                    data.delete();
-                    beDeleteds.add(data);
-                }
+                let beDeleteds: ibas.IList<bo.ApplicationElement> = ibas.arrays.create(data);
                 // 没有选择删除的对象
                 if (beDeleteds.length === 0) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
@@ -124,6 +108,10 @@ namespace initialfantasy {
                     ));
                     return;
                 }
+                // 标记删除对象
+                beDeleteds.forEach((value) => {
+                    value.delete();
+                });
                 let that: this = this;
                 this.messages({
                     type: ibas.emMessageType.QUESTION,
@@ -131,49 +119,38 @@ namespace initialfantasy {
                     message: ibas.i18n.prop("shell_multiple_data_delete_continue", beDeleteds.length),
                     actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
                     onCompleted(action: ibas.emMessageAction): void {
-                        if (action === ibas.emMessageAction.YES) {
-                            try {
-                                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                                let saveMethod: Function = function (beSaved: bo.ApplicationElement): void {
-                                    boRepository.saveApplicationElement({
-                                        beSaved: beSaved,
-                                        onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
-                                            try {
-                                                if (opRslt.resultCode !== 0) {
-                                                    throw new Error(opRslt.message);
-                                                }
-                                                // 保存下一个数据
-                                                let index: number = beDeleteds.indexOf(beSaved) + 1;
-                                                if (index > 0 && index < beDeleteds.length) {
-                                                    saveMethod(beDeleteds[index]);
-                                                } else {
-                                                    // 处理完成
-                                                    that.busy(false);
-                                                    that.messages(ibas.emMessageType.SUCCESS,
-                                                        ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
-                                                }
-                                            } catch (error) {
-                                                that.busy(false);
-                                                that.messages(ibas.emMessageType.ERROR,
-                                                    ibas.i18n.prop("shell_data_delete_error", beSaved, error.message));
-                                            }
-                                        }
-                                    });
-                                    that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_deleting", beSaved));
-                                };
-                                that.busy(true);
-                                // 开始保存
-                                saveMethod(beDeleteds.firstOrDefault());
-                            } catch (error) {
-                                that.busy(false);
-                                that.messages(error);
-                            }
+                        if (action !== ibas.emMessageAction.YES) {
+                            return;
                         }
+                        let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                        ibas.queues.execute(beDeleteds, (data, next) => {
+                            // 处理数据
+                            boRepository.saveApplicationElement({
+                                beSaved: data,
+                                onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
+                                    if (opRslt.resultCode !== 0) {
+                                        next(new Error(ibas.i18n.prop("shell_data_delete_error", data, opRslt.message)));
+                                    } else {
+                                        next();
+                                    }
+                                }
+                            });
+                            that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_data_deleting", data));
+                        }, (error) => {
+                            // 处理完成
+                            if (error instanceof Error) {
+                                that.messages(ibas.emMessageType.ERROR, error.message);
+                            } else {
+                                that.messages(ibas.emMessageType.SUCCESS,
+                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                            }
+                            that.busy(false);
+                        });
+                        that.busy(true);
                     }
                 });
             }
             private registerElements(): void {
-                let modules: ibas.IModule[] = shell.app.consoleManager.modules();
                 let that: this = this;
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let conditionModule: ibas.ICondition = criteria.conditions.create();
@@ -183,7 +160,7 @@ namespace initialfantasy {
                 conditionElement.alias = bo.ApplicationElement.PROPERTY_ELEMENTID_NAME;
                 conditionElement.operation = ibas.emConditionOperation.EQUAL;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                for (let module of modules) {
+                shell.app.modules.forEach((module) => {
                     this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_register_module_elements", module.description));
                     conditionModule.value = module.id;
                     for (let element of module.elements()) {
@@ -191,41 +168,33 @@ namespace initialfantasy {
                         boRepository.fetchApplicationElement({
                             criteria: criteria,
                             onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
-                                try {
-                                    if (opRslt.resultCode === 0 && opRslt.resultObjects.length === 0) {
-                                        let boElement: bo.ApplicationElement = new bo.ApplicationElement;
-                                        boElement.moduleId = module.id;
-                                        boElement.elementId = element.id;
-                                        boElement.elementName = element.name;
-                                        if (element instanceof ibas.ModuleFunction) {
-                                            boElement.elementType = bo.emElementType.FUNCTION;
-                                        } else if (element instanceof ibas.Application) {
-                                            boElement.elementType = bo.emElementType.APPLICATION;
-                                        } else if (element instanceof ibas.ServiceMapping) {
-                                            boElement.elementType = bo.emElementType.SERVICE;
-                                        } else {
-                                            boElement.elementType = bo.emElementType.OTHER;
-                                        }
-                                        boRepository.saveApplicationElement({
-                                            beSaved: boElement,
-                                            onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
-                                                try {
-                                                    if (opRslt.resultCode !== 0) {
-                                                        throw new Error(opRslt.message);
-                                                    }
-                                                } catch (error) {
-                                                    that.proceeding(error);
-                                                }
-                                            }
-                                        });
+                                if (opRslt.resultCode === 0 && opRslt.resultObjects.length === 0) {
+                                    let boElement: bo.ApplicationElement = new bo.ApplicationElement;
+                                    boElement.moduleId = module.id;
+                                    boElement.elementId = element.id;
+                                    boElement.elementName = element.name;
+                                    if (element instanceof ibas.ModuleFunction) {
+                                        boElement.elementType = bo.emElementType.FUNCTION;
+                                    } else if (element instanceof ibas.Application) {
+                                        boElement.elementType = bo.emElementType.APPLICATION;
+                                    } else if (element instanceof ibas.ServiceMapping) {
+                                        boElement.elementType = bo.emElementType.SERVICE;
+                                    } else {
+                                        boElement.elementType = bo.emElementType.OTHER;
                                     }
-                                } catch (error) {
-                                    that.messages(error);
+                                    boRepository.saveApplicationElement({
+                                        beSaved: boElement,
+                                        onCompleted(opRslt: ibas.IOperationResult<bo.ApplicationElement>): void {
+                                            if (opRslt.resultCode !== 0) {
+                                                that.proceeding(new Error(opRslt.message));
+                                            }
+                                        }
+                                    });
                                 }
                             }
                         });
                     }
-                }
+                });
             }
             /** 应用程序平台 */
             private applicationPlatform(): void {
