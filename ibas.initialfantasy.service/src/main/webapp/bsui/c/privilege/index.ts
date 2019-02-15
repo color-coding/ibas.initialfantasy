@@ -8,3 +8,4 @@
 /// <reference path="./PrivilegeChooseView.ts" />
 /// <reference path="./PrivilegeEditView.ts" />
 /// <reference path="./PrivilegeListView.ts" />
+/// <reference path="./PrivilegeConfigView.ts" />
