@@ -7,9 +7,7 @@
  */
 namespace initialfantasy {
     export namespace app {
-
         export class PrivilegeFunc extends ibas.ModuleFunction {
-
             /** 功能标识 */
             static FUNCTION_ID = "44cd9600-bee0-4a95-8b01-361482914879";
             /** 功能名称 */
@@ -23,7 +21,7 @@ namespace initialfantasy {
             }
             /** 默认功能 */
             default(): ibas.IApplication<ibas.IView> {
-                let app: PrivilegeListApp = new PrivilegeListApp();
+                let app: PrivilegeConfigApp = new PrivilegeConfigApp();
                 app.navigation = this.navigation;
                 return app;
             }
