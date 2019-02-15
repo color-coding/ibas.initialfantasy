@@ -48,7 +48,6 @@ namespace initialfantasy {
                     this.register(new PrivilegeFunc());
                     this.register(new BOFilteringFunc());
                     this.register(new ApplicationConfigFunc());
-                    this.register(new ApplicationElementFunc());
                     this.register(new BOInformationFunc());
                 }
                 // 注册服务应用
