@@ -27,6 +27,7 @@ namespace initialfantasy {
                 this.view.fetchPrivilegesEvent = this.fetchPrivileges;
                 this.view.fetchRolesEvent = this.fetchRoles;
                 this.view.savePrivilegesEvent = this.savePrivileges;
+                this.view.copyPrivilegesEvent = this.copyPrivileges;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -80,6 +81,7 @@ namespace initialfantasy {
                 });
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
             }
+            private privileges: ibas.IList<bo.Privilege>;
             /** 查询数据 */
             private fetchPrivileges(criteria: ibas.ICriteria): void {
                 this.busy(true);
@@ -126,11 +128,11 @@ namespace initialfantasy {
                                     values.add(privilege);
                                 }
                             });
-                            values = ibas.arrays.sort(values, [
+                            that.privileges = ibas.arrays.sort(values, [
                                 new ibas.Sort(bo.Privilege.PROPERTY_MODULEID_NAME, ibas.emSortType.ASCENDING),
                                 new ibas.Sort(bo.Privilege.PROPERTY_TARGET_NAME, ibas.emSortType.ASCENDING)
                             ]);
-                            that.view.showPrivileges(values);
+                            that.view.showPrivileges(that.privileges);
                         } catch (error) {
                             that.messages(error);
                         }
@@ -139,10 +141,13 @@ namespace initialfantasy {
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
             }
             /** 保存数据 */
-            protected savePrivileges(datas: bo.Privilege[]): void {
+            protected savePrivileges(): void {
+                if (!(this.privileges instanceof Array)) {
+                    return;
+                }
                 this.busy(true);
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                ibas.queues.execute(datas,
+                ibas.queues.execute(this.privileges,
                     (data, next) => {
                         // 仅保存修改过的
                         if (!(data.isDirty)) {
@@ -172,6 +177,87 @@ namespace initialfantasy {
                 );
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
+            /** 复制权限  */
+            copyPrivileges(): void {
+                if (!(this.privileges instanceof Array)) {
+                    return;
+                }
+                // 选择复制的平台
+                let that: this = this;
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.ApplicationPlatform.PROPERTY_PLATFORMCODE_NAME;
+                condition.value = ibas.enums.toString(ibas.emPlantform, ibas.emPlantform.COMBINATION);
+                condition.relationship = ibas.emConditionRelationship.OR;
+                condition = criteria.conditions.create();
+                condition.alias = bo.ApplicationPlatform.PROPERTY_PLATFORMCODE_NAME;
+                condition.value = ibas.enums.toString(ibas.emPlantform, ibas.emPlantform.PHONE);
+                condition.relationship = ibas.emConditionRelationship.OR;
+                ibas.servicesManager.runChooseService<bo.ApplicationPlatform>({
+                    title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_privilege_platformid")),
+                    boCode: bo.BO_CODE_APPLICATIONPLATFORM,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    criteria: criteria,
+                    viewMode: ibas.emViewMode.VIEW,
+                    onCompleted(selecteds: ibas.IList<bo.ApplicationPlatform>): void {
+                        let platform: bo.ApplicationPlatform = selecteds.firstOrDefault();
+                        criteria = new ibas.Criteria();
+                        condition = criteria.conditions.create();
+                        condition.alias = "Code";
+                        condition.operation = ibas.emConditionOperation.NOT_NULL;
+                        ibas.servicesManager.runChooseService<bo.IRole>({
+                            title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_privilege_rolecode")),
+                            boCode: bo.BO_CODE_ROLE,
+                            chooseType: ibas.emChooseType.SINGLE,
+                            criteria: criteria,
+                            viewMode: ibas.emViewMode.VIEW,
+                            onCompleted(selecteds: ibas.IList<bo.IRole>): void {
+                                let role: bo.IRole = selecteds.firstOrDefault();
+                                // 查询复制的权限
+                                criteria = new ibas.Criteria();
+                                condition = criteria.conditions.create();
+                                condition.alias = bo.Privilege.PROPERTY_PLATFORMID_NAME;
+                                condition.value = platform.platformCode;
+                                condition = criteria.conditions.create();
+                                condition.alias = bo.Privilege.PROPERTY_ROLECODE_NAME;
+                                condition.value = role.code;
+                                that.busy(true);
+                                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                                boRepository.fetchPrivilege({
+                                    criteria: criteria,
+                                    onCompleted(opRslt: ibas.IOperationResult<bo.Privilege>): void {
+                                        try {
+                                            that.busy(false);
+                                            if (opRslt.resultCode !== 0) {
+                                                throw new Error(opRslt.message);
+                                            }
+                                            for (let item of that.privileges) {
+                                                let data: bo.IPrivilege = opRslt.resultObjects.firstOrDefault(
+                                                    c => ibas.strings.equals(c.moduleId, item.moduleId)
+                                                        && ibas.strings.equals(c.target, item.target)
+                                                );
+                                                if (ibas.objects.isNull(data)) {
+                                                    continue;
+                                                }
+                                                item.isLoading = true;
+                                                item.authoriseValue = data.authoriseValue;
+                                                item.activated = data.activated;
+                                                item.automatic = data.automatic;
+                                                item.isLoading = false;
+                                            }
+                                            that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                                            that.view.showPrivileges(that.privileges);
+                                        } catch (error) {
+                                            that.messages(error);
+                                        }
+                                    }
+                                });
+                                that.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_copying_privilege"));
+                            }
+                        });
+                    }
+                });
+            }
         }
         /** 视图-系统权限 */
         export interface IPrivilegeConfigView extends ibas.IView {
@@ -181,6 +267,8 @@ namespace initialfantasy {
             fetchPrivilegesEvent: Function;
             /** 保存权限 */
             savePrivilegesEvent: Function;
+            /** 复制权限  */
+            copyPrivilegesEvent: Function;
             /** 显示角色 */
             showRoles(datas: bo.IRole[]): void;
             /** 显示权限 */

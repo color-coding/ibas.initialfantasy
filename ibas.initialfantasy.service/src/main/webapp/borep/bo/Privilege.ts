@@ -237,13 +237,12 @@ namespace initialfantasy {
                 this.setProperty(Privilege.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
-
-
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(Privilege.BUSINESS_OBJECT_CODE);
                 this.activated = ibas.emYesNo.YES;
                 this.automatic = ibas.emYesNo.NO;
+                this.authoriseValue = ibas.emAuthoriseType.NONE;
             }
         }
     }

@@ -28,6 +28,8 @@ namespace initialfantasy {
                 fetchPrivilegesEvent: Function;
                 /** 保存权限 */
                 savePrivilegesEvent: Function;
+                /** 复制权限  */
+                copyPrivilegesEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -158,6 +160,14 @@ namespace initialfantasy {
                         showHeader: true,
                         customHeader: new sap.m.Toolbar("", {
                             content: [
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_copy_from"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://copy",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.copyPrivilegesEvent);
+                                    },
+                                }),
                                 new sap.m.ToolbarSpacer(""),
                                 this.selectPlatforms = new sap.m.Select("", {
                                     width: "auto",
@@ -171,7 +181,7 @@ namespace initialfantasy {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://save",
                                     press: function (): void {
-                                        that.fireViewEvents(that.savePrivilegesEvent,that.tablePrivileges.getModel().getObject("/rows"));
+                                        that.fireViewEvents(that.savePrivilegesEvent);
                                     }
                                 }),
                             ]

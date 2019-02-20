@@ -27,14 +27,6 @@ namespace initialfantasy {
                         rows: "{/rows}",
                         columns: [
                             new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_applicationplatform_objectkey"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "objectKey"
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationplatform_platformcode"),
                                 template: new sap.m.Text("", {
                                     wrapping: false
@@ -62,14 +54,6 @@ namespace initialfantasy {
                                     formatter(data: any): any {
                                         return ibas.enums.describe(ibas.emYesNo, data);
                                     }
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_applicationplatform_platformid"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "platformId"
                                 })
                             }),
                         ]
