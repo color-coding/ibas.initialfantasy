@@ -30,6 +30,13 @@ namespace initialfantasy {
                 savePrivilegesEvent: Function;
                 /** 复制权限  */
                 copyPrivilegesEvent: Function;
+                private facetFilter: sap.m.FacetFilter;
+                private check: sap.m.CheckBox;
+                private pageRoles: sap.m.Page;
+                private tableRoles: sap.m.List;
+                private pagePrivileges: sap.m.Page;
+                private tablePrivileges: sap.ui.table.Table;
+                private selectPlatforms: sap.m.Select;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -102,7 +109,10 @@ namespace initialfantasy {
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_moduleid"),
                                 template: new sap.m.Text("", {
-                                    wrapping: false
+                                    wrapping: false,
+                                    tooltip: {
+                                        path: "moduleId"
+                                    }
                                 }).bindProperty("text", {
                                     path: "moduleId",
                                     formatter(data: any): any {
@@ -113,7 +123,10 @@ namespace initialfantasy {
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_target"),
                                 template: new sap.m.Text("", {
-                                    wrapping: false
+                                    wrapping: false,
+                                    tooltip: {
+                                        path: "target"
+                                    }
                                 }).bindProperty("text", {
                                     path: "target",
                                     formatter(data: any): any {
@@ -127,7 +140,7 @@ namespace initialfantasy {
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationelement_elementtype"),
                                 template: new sap.m.Text("", {
-                                    wrapping: false
+                                    wrapping: false,
                                 }).bindProperty("text", {
                                     path: "type",
                                     formatter(data: any): any {
@@ -171,12 +184,36 @@ namespace initialfantasy {
                         showHeader: true,
                         customHeader: new sap.m.Toolbar("", {
                             content: [
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("initialfantasy_copy_from"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://copy",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.copyPrivilegesEvent);
+                                this.facetFilter = new sap.m.FacetFilter("", {
+                                    visible: false,
+                                    type: sap.m.FacetFilterType.Simple,
+                                    showPersonalization: true,
+                                    showReset: true,
+                                    reset: function (oEvent: any): void {
+                                        for (let item of that.facetFilter.getLists()) {
+                                            item.removeSelectedKeys();
+                                        }
+                                        that.filterPrivileges(null);
+                                    },
+                                    confirm: function (oEvent: sap.ui.base.Event): void {
+                                        let oFacetFilter: any = oEvent.getSource();
+                                        if (!ibas.objects.isNull(oFacetFilter) && !ibas.objects.isNull(oFacetFilter.getLists())) {
+                                            let mFacetFilterLists: ibas.ArrayList<sap.m.FacetFilterList> = oFacetFilter.getLists().filter(function (oList) {
+                                                return oList.getSelectedItems().length;
+                                            });
+                                            if (mFacetFilterLists.length) {
+                                                var oFilter = new sap.ui.model.Filter(mFacetFilterLists.map(function (oList: sap.m.FacetFilterList) {
+                                                    return new sap.ui.model.Filter(oList.getSelectedItems().map(function (oItem: sap.m.FacetFilterItem) {
+                                                        return new sap.ui.model.Filter(oList.getKey(), sap.ui.model.FilterOperator.EQ, oItem.getKey());
+                                                    }), false);
+                                                }), true);
+                                                that.filterPrivileges(oFilter);
+                                            } else {
+                                                that.filterPrivileges(null);
+                                            }
+                                        } else {
+                                            that.filterPrivileges(null);
+                                        }
                                     },
                                 }),
                                 new sap.m.ToolbarSpacer(""),
@@ -185,6 +222,15 @@ namespace initialfantasy {
                                     change(): void {
                                         that.fireFetchPrivilegesEvent();
                                     }
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_copy_from"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://copy",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.copyPrivilegesEvent);
+                                    },
                                 }),
                                 new sap.m.ToolbarSeparator(""),
                                 new sap.m.Button("", {
@@ -318,8 +364,6 @@ namespace initialfantasy {
                     this.pageRoles.addHeaderContent(view);
                     this.pageRoles.setShowHeader(true);
                 }
-                private pageRoles: sap.m.Page;
-                private tableRoles: sap.m.List;
                 showRoles(datas: bo.IRole[]): void {
                     let done: boolean = false;
                     let model: sap.ui.model.Model = this.tableRoles.getModel(undefined);
@@ -349,15 +393,79 @@ namespace initialfantasy {
                         this.tableRoles.setModel(null);
                     }
                 }
-                private pagePrivileges: sap.m.Page;
-                private tablePrivileges: sap.ui.table.Table;
                 /** 显示数据 */
                 showPrivileges(datas: app.Privilege[]): void {
                     this.tablePrivileges.setFirstVisibleRow(0);
                     this.tablePrivileges.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                     openui5.utils.refreshModelChanged(this.tablePrivileges, datas);
+                    this.refPrivilegeFilter(datas);
                 }
-                private selectPlatforms: sap.m.Select;
+                /** 刷新过滤器 */
+                refPrivilegeFilter(datas: app.Privilege[]): void {
+                    this.facetFilter.removeAllLists();
+                    if (datas.length === 0) {
+                        this.facetFilter.setVisible(false);
+                        return;
+                    }
+                    let moduleIdFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_privilege_moduleid"),
+                        key: "moduleId",
+                    });
+                    for (let item of datas.filter(c => { return ibas.strings.isEmpty(c.target); })) {
+                        moduleIdFacetFilterList.addItem(new sap.m.FacetFilterItem("", {
+                            text: ibas.i18n.prop(item.moduleId),
+                            key: item.moduleId
+                        }));
+                    }
+                    this.facetFilter.addList(moduleIdFacetFilterList);
+                    let targetFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_applicationelement_elementtype"),
+                        key: "type",
+                        items: [
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.FUNCTION),
+                                key: bo.emElementType.FUNCTION
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.APPLICATION),
+                                key: bo.emElementType.APPLICATION
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.MODULE),
+                                key: bo.emElementType.MODULE
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.SERVICE),
+                                key: bo.emElementType.SERVICE
+                            }),
+                        ]
+                    });
+                    this.facetFilter.addList(targetFacetFilterList);
+                    let authoriseTypeFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_privilege_authorisevalue"),
+                        key: "authoriseValue",
+                        items: [
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
+                                key: ibas.emAuthoriseType.ALL
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
+                                key: ibas.emAuthoriseType.NONE
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
+                                key: ibas.emAuthoriseType.READ
+                            }),
+                        ]
+                    });
+                    this.facetFilter.addList(authoriseTypeFacetFilterList);
+                    this.facetFilter.setVisible(true);
+                }
+                filterPrivileges(filter: sap.ui.model.Filter): void {
+                    let dataBinding: any = this.tablePrivileges.getBinding("");
+                    dataBinding.filter(filter);
+                }
                 /** 显示平台 */
                 showPlatforms(datas: bo.ApplicationPlatform[]): void {
                     for (let item of datas) {
@@ -371,7 +479,6 @@ namespace initialfantasy {
                         }
                     }
                 }
-                private check: sap.m.CheckBox;
             }
         }
     }
