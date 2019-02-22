@@ -303,6 +303,15 @@ namespace initialfantasy {
             }
             data: bo.Privilege;
             type: bo.emElementType;
+            get isNew(): boolean {
+                return this.data.isNew;
+            }
+            get moduleName(): string {
+                return ibas.i18n.prop(this.data.moduleId);
+            }
+            get typeName(): string {
+                return ibas.enums.describe(bo.emElementType, this.type);
+            }
             get roleCode(): string {
                 return this.data.roleCode;
             }

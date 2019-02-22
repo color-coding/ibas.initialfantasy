@@ -98,16 +98,26 @@ namespace initialfantasy {
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15) - 1,
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         rows: "{/rows}",
+                        rowSettingsTemplate: new sap.ui.table.RowSettings("", {
+                        }).bindProperty("highlight", {
+                            path: "isNew",
+                            formatter(value: boolean): string {
+                                if (!!value) {
+                                    return "Information";
+                                } else {
+                                    return "None";
+                                }
+                            }
+                        }),
                         columns: [
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_moduleid"),
+                                filterProperty: "moduleName",
+                                filterOperator: "Contains",
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "moduleId",
-                                    formatter(data: any): any {
-                                        return ibas.i18n.prop(data);
-                                    }
+                                    path: "moduleName"
                                 }),
                             }),
                             new sap.ui.table.Column("", {
@@ -126,13 +136,12 @@ namespace initialfantasy {
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationelement_elementtype"),
+                                filterProperty: "typeName",
+                                filterOperator: "Contains",
                                 template: new sap.m.Text("", {
                                     wrapping: false
                                 }).bindProperty("text", {
-                                    path: "type",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(bo.emElementType, data);
-                                    }
+                                    path: "typeName"
                                 })
                             }),
                             new sap.ui.table.Column("", {
