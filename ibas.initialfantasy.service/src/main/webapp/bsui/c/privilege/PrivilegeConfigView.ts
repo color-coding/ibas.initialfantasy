@@ -125,6 +125,17 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.ui.table.Column("", {
+                                label: ibas.i18n.prop("bo_applicationelement_elementtype"),
+                                template: new sap.m.Text("", {
+                                    wrapping: false
+                                }).bindProperty("text", {
+                                    path: "type",
+                                    formatter(data: any): any {
+                                        return ibas.enums.describe(bo.emElementType, data);
+                                    }
+                                })
+                            }),
+                            new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_activated"),
                                 template: new sap.m.Select("", {
                                     width: "100%",
@@ -341,7 +352,7 @@ namespace initialfantasy {
                 private pagePrivileges: sap.m.Page;
                 private tablePrivileges: sap.ui.table.Table;
                 /** 显示数据 */
-                showPrivileges(datas: bo.Privilege[]): void {
+                showPrivileges(datas: app.Privilege[]): void {
                     this.tablePrivileges.setFirstVisibleRow(0);
                     this.tablePrivileges.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
                     openui5.utils.refreshModelChanged(this.tablePrivileges, datas);

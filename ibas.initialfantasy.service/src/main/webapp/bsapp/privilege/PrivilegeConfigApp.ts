@@ -81,7 +81,7 @@ namespace initialfantasy {
                 });
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_fetching_data"));
             }
-            private privileges: ibas.IList<bo.Privilege>;
+            private privileges: ibas.IList<Privilege>;
             /** 查询数据 */
             private fetchPrivileges(criteria: ibas.ICriteria): void {
                 this.busy(true);
@@ -105,7 +105,7 @@ namespace initialfantasy {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            let values: ibas.IList<bo.Privilege> = new ibas.ArrayList<bo.Privilege>();
+                            let values: ibas.IList<Privilege> = new ibas.ArrayList<Privilege>();
                             shell.app.modules.forEach((module) => {
                                 let privilege: bo.Privilege =
                                     opRslt.resultObjects.firstOrDefault(c => c.moduleId === module.id && c.platformId === platform && ibas.strings.isEmpty(c.target));
@@ -114,8 +114,9 @@ namespace initialfantasy {
                                     privilege.roleCode = role;
                                     privilege.platformId = platform;
                                     privilege.moduleId = module.id;
+                                    privilege.authoriseValue = ibas.emAuthoriseType.NONE;
                                 }
-                                values.add(privilege);
+                                values.add(new Privilege(privilege, bo.emElementType.MODULE));
                                 for (let item of module.elements()) {
                                     privilege = opRslt.resultObjects.firstOrDefault(c => c.moduleId === module.id && c.platformId === platform && c.target === item.id);
                                     if (ibas.objects.isNull(privilege)) {
@@ -124,8 +125,17 @@ namespace initialfantasy {
                                         privilege.platformId = platform;
                                         privilege.moduleId = module.id;
                                         privilege.target = item.id;
+                                        privilege.authoriseValue = ibas.emAuthoriseType.ALL;
                                     }
-                                    values.add(privilege);
+                                    if (item instanceof ibas.ModuleFunction) {
+                                        values.add(new Privilege(privilege, bo.emElementType.FUNCTION));
+                                    } else if (item instanceof ibas.Application) {
+                                        values.add(new Privilege(privilege, bo.emElementType.APPLICATION));
+                                    } else if (item instanceof ibas.ServiceMapping) {
+                                        values.add(new Privilege(privilege, bo.emElementType.SERVICE));
+                                    } else {
+                                        values.add(new Privilege(privilege, bo.emElementType.OTHER));
+                                    }
                                 }
                             });
                             that.privileges = ibas.arrays.sort(values, [
@@ -150,16 +160,16 @@ namespace initialfantasy {
                 ibas.queues.execute(this.privileges,
                     (data, next) => {
                         // 仅保存修改过的
-                        if (!(data.isDirty)) {
+                        if (!(data.data.isDirty)) {
                             next();
                         } else {
                             boRepository.savePrivilege({
-                                beSaved: data,
+                                beSaved: data.data,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.Privilege>): void {
                                     if (opRslt.resultCode !== 0) {
                                         next(new Error(opRslt.message));
                                     } else {
-                                        data.markOld(true);
+                                        data.data.markOld(true);
                                         next();
                                     }
                                 }
@@ -239,11 +249,11 @@ namespace initialfantasy {
                                                 if (ibas.objects.isNull(data)) {
                                                     continue;
                                                 }
-                                                item.isLoading = true;
+                                                item.data.isLoading = true;
                                                 item.authoriseValue = data.authoriseValue;
                                                 item.activated = data.activated;
                                                 item.automatic = data.automatic;
-                                                item.isLoading = false;
+                                                item.data.isLoading = false;
                                             }
                                             that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
                                             that.view.showPrivileges(that.privileges);
@@ -272,9 +282,69 @@ namespace initialfantasy {
             /** 显示角色 */
             showRoles(datas: bo.IRole[]): void;
             /** 显示权限 */
-            showPrivileges(datas: bo.Privilege[]): void;
+            showPrivileges(datas: Privilege[]): void;
             /** 显示平台 */
             showPlatforms(datas: bo.ApplicationPlatform[]): void;
+        }
+
+        /** 系统权限 */
+        export class Privilege implements ibas.IBindable {
+            constructor(data: bo.Privilege, type: bo.emElementType) {
+                this.data = data;
+                this.type = type;
+            }
+            registerListener(listener: ibas.IPropertyChangedListener): void {
+                this.data.registerListener.apply(this.data, arguments);
+            }
+            removeListener(listener: ibas.IPropertyChangedListener): void;
+            removeListener(recursive: boolean): void;
+            removeListener(): void {
+                this.data.removeListener.apply(this.data, arguments);
+            }
+            data: bo.Privilege;
+            type: bo.emElementType;
+            get roleCode(): string {
+                return this.data.roleCode;
+            }
+            set roleCode(value: string) {
+                this.data.roleCode = value;
+            }
+            get platformId(): string {
+                return this.data.platformId;
+            }
+            set platformId(value: string) {
+                this.data.platformId = value;
+            }
+            get moduleId(): string {
+                return this.data.moduleId;
+            }
+            set moduleId(value: string) {
+                this.data.moduleId = value;
+            }
+            get target(): string {
+                return this.data.target;
+            }
+            set target(value: string) {
+                this.data.target = value;
+            }
+            get activated(): ibas.emYesNo {
+                return this.data.activated;
+            }
+            set activated(value: ibas.emYesNo) {
+                this.data.activated = value;
+            }
+            get authoriseValue(): ibas.emAuthoriseType {
+                return this.data.authoriseValue;
+            }
+            set authoriseValue(value: ibas.emAuthoriseType) {
+                this.data.authoriseValue = value;
+            }
+            get automatic(): ibas.emYesNo {
+                return this.data.automatic;
+            }
+            set automatic(value: ibas.emYesNo) {
+                this.data.automatic = value;
+            }
         }
     }
 }
