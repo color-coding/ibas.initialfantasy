@@ -77,9 +77,48 @@ namespace initialfantasy {
                     this.tableBOPropertyInformation = new sap.ui.table.Table("", {
                         toolbar: new sap.m.Toolbar("", {
                             content: [
+                                new sap.m.ToolbarSpacer(""),
+                                new sap.m.MenuButton("", {
+                                    text: ibas.i18n.prop("bo_bopropertyinformation_authorised"),
+                                    icon: "sap-icon://bullet-text",
+                                    type: sap.m.ButtonType.Transparent,
+                                    menu: new sap.m.Menu("", {
+                                        items: [
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
+                                                icon: "sap-icon://multiselect-all",
+                                                press: function (): void {
+                                                    for (let item of openui5.utils.getSelecteds<bo.IBOPropertyInformation>(that.tableBOPropertyInformation)) {
+                                                        item.authorised = ibas.emAuthoriseType.ALL;
+                                                    }
+                                                }
+                                            }),
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
+                                                icon: "sap-icon://multi-select",
+                                                press: function (): void {
+                                                    for (let item of openui5.utils.getSelecteds<bo.IBOPropertyInformation>(that.tableBOPropertyInformation)) {
+                                                        item.authorised = ibas.emAuthoriseType.READ;
+                                                    }
+                                                }
+                                            }),
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
+                                                icon: "sap-icon://multiselect-none",
+                                                press: function (): void {
+                                                    for (let item of openui5.utils.getSelecteds<bo.IBOPropertyInformation>(that.tableBOPropertyInformation)) {
+                                                        item.authorised = ibas.emAuthoriseType.NONE;
+                                                    }
+                                                }
+                                            }),
+                                        ],
+                                    })
+                                }),
                             ]
                         }),
-                        selectionMode: sap.ui.table.SelectionMode.None,
+                        enableSelectAll: true,
+                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
+                        selectionMode: openui5.utils.toSelectionMode(ibas.emChooseType.MULTIPLE),
                         visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
                         rows: "{/rows}",
                         rowActionCount: 1,
@@ -103,7 +142,8 @@ namespace initialfantasy {
                                 }).bindProperty("text", {
                                     path: "property"
                                 }),
-                                sortProperty: "property"
+                                sortProperty: "property",
+                                filterProperty: "property"
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
@@ -112,7 +152,8 @@ namespace initialfantasy {
                                 }).bindProperty("text", {
                                     path: "description"
                                 }),
-                                sortProperty: "description"
+                                sortProperty: "description",
+                                filterProperty: "description"
                             }),
                             new sap.ui.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_searched"),

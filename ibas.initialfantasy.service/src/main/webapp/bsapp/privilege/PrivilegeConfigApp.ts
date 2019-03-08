@@ -256,6 +256,9 @@ namespace initialfantasy {
                                                 item.activated = data.activated;
                                                 item.automatic = data.automatic;
                                                 item.data.isLoading = false;
+                                                if (item.data.isDirty === false) {
+                                                    item.data.markDirty();
+                                                }
                                             }
                                             that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
                                             that.view.showPrivileges(that.privileges);
