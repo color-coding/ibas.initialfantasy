@@ -12,43 +12,42 @@ namespace initialfantasy {
              * 编辑视图-业务对象编号方式
              */
             export class BONumberingEditView extends ibas.View implements app.IBONumberingEditView {
-
                 /** 保存系列编号方式 */
                 saveBOSeriesNumberingEvent: Function;
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
-                        editable: true, // 编辑模式影响行高
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bonumbering") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_objectcode") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.BusinessObjectInput("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/objectCode",
+                            }).bindProperty("bindingValue", {
+                                path: "objectCode",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_documentsubtype") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/documentSubType"
+                            }).bindProperty("bindingValue", {
+                                path: "documentSubType",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_autokey") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/autoKey"
+                            }).bindProperty("bindingValue", {
+                                path: "autoKey",
+                                type: new sap.extension.data.Numeric()
                             }),
+                            new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.form.addContent(new sap.ui.core.Title("", {}));
-                    this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_boseriesnumbering") }));
-                    this.table = new sap.ui.table.Table("", {
-                        selectionMode: sap.ui.table.SelectionMode.None,
+                    this.table = new sap.extension.table.Table("", {
+                        enableSelectAll: false,
+                        visibleRowCount: sap.extension.table.visibleRowCount(5),
                         toolbar: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.ToolbarSpacer(""),
@@ -68,10 +67,6 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: 5,
-                        rows: "{/rows}",
                         rowActionCount: 2,
                         rowActionTemplate: new sap.ui.table.RowAction("", {
                             items: [
@@ -93,69 +88,76 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
+                        rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_boseriesnumbering_series"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "series"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "series",
+                                    type: new sap.extension.data.Numeric()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_boseriesnumbering_seriesname"),
-                                template: new sap.m.Input("", {
-                                    width: "100%",
-                                }).bindProperty("value", {
-                                    path: "seriesName"
+                                template: new sap.extension.m.Input("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "seriesName",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_boseriesnumbering_template") + " [format()]",
-                                template: new sap.m.Input("", {
-                                    width: "100%",
-                                }).bindProperty("value", {
-                                    path: "template"
+                                template: new sap.extension.m.Input("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "template",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_boseriesnumbering_locked"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emYesNo)
-                                }).bindProperty("selectedKey", {
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: ibas.emYesNo
+                                }).bindProperty("bindingValue", {
                                     path: "locked",
-                                    type: "sap.ui.model.type.Integer"
+                                    type: new sap.extension.data.YesNo()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_boseriesnumbering_nextnumber"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "nextNumber"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "nextNumber",
+                                    type: new sap.extension.data.Numeric()
                                 })
                             }),
                         ]
                     });
-                    this.form.addContent(this.table);
-                    this.page = new sap.m.Page("", {
-                        showHeader: false,
-                        content: [this.form]
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_boseriesnumbering") }),
+                            this.table,
+                        ]
                     });
-                    this.id = this.page.getId();
-                    return this.page;
+                    return this.page = new sap.extension.m.DataPage("", {
+                        showHeader: false,
+                        content: [
+                            formTop,
+                            formMiddle,
+                        ]
+                    });
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
-                private table: sap.ui.table.Table;
+                private page: sap.extension.m.Page;
+                private table: sap.extension.table.Table;
+
                 /** 显示数据 */
                 showBONumbering(data: bo.BONumbering): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
                 }
                 /** 显示数据 */
                 showBOSeriesNumbering(datas: bo.BOSeriesNumbering[]): void {
-                    this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

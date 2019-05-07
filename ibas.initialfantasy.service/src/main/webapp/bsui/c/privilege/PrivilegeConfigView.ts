@@ -36,11 +36,9 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.tableRoles = new sap.m.List("", {
-                        inset: false,
-                        growing: true,
-                        growingThreshold: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
-                        growingScrollToLoad: true,
+                    this.tableRoles = new sap.extension.m.List("", {
+                        chooseType: ibas.emChooseType.SINGLE,
+                        growingThreshold: sap.extension.table.visibleRowCount(15),
                         mode: sap.m.ListMode.SingleSelectMaster,
                         items: {
                             path: "/rows",
@@ -72,12 +70,13 @@ namespace initialfantasy {
                         },
                         selectionChange(): void {
                             that.fireFetchPrivilegesEvent();
-                        }
-                    });
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.tableRoles,
-                        next(data: any): void {
+                        },
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -95,10 +94,9 @@ namespace initialfantasy {
                             this.tableRoles
                         ]
                     });
-                    this.tablePrivileges = new sap.ui.table.Table("", {
+                    this.tablePrivileges = new sap.extension.table.Table("", {
                         enableSelectAll: true,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15) - 1,
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
                         rows: "{/rows}",
                         rowSettingsTemplate: new sap.ui.table.RowSettings("", {
@@ -113,28 +111,27 @@ namespace initialfantasy {
                             }
                         }),
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_moduleid"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false,
+                                template: new sap.extension.m.Text("", {
                                     tooltip: {
                                         path: "moduleId"
                                     }
-                                }).bindProperty("text", {
+                                }).bindProperty("bindingValue", {
                                     path: "moduleId",
                                     formatter(data: any): any {
                                         return ibas.i18n.prop(data);
                                     }
                                 }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_target"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false,
+                                width: "16rem",
+                                template: new sap.extension.m.Text("", {
                                     tooltip: {
                                         path: "target"
                                     }
-                                }).bindProperty("text", {
+                                }).bindProperty("bindingValue", {
                                     path: "target",
                                     formatter(data: any): any {
                                         if (ibas.strings.isEmpty(data)) {
@@ -144,45 +141,44 @@ namespace initialfantasy {
                                     }
                                 }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationelement_elementtype"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false,
-                                }).bindProperty("text", {
+                                width: "8rem",
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "type",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(bo.emElementType, data);
-                                    }
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emElementType,
+                                        describe: true,
+                                    }),
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_activated"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emYesNo),
-                                }).bindProperty("selectedKey", {
+                                width: "6rem",
+                                template: new sap.extension.m.CheckBox("", {
+                                }).bindProperty("bindingValue", {
                                     path: "activated",
-                                    type: "sap.ui.model.type.Integer",
+                                    type: new sap.extension.data.YesNo()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_authorisevalue"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emAuthoriseType),
-                                }).bindProperty("selectedKey", {
+                                width: "8rem",
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: ibas.emAuthoriseType,
+                                }).bindProperty("bindingValue", {
                                     path: "authoriseValue",
-                                    type: "sap.ui.model.type.Integer",
+                                    type: new sap.extension.data.AuthoriseType()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_automatic"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emYesNo),
-                                }).bindProperty("selectedKey", {
+                                width: "6rem",
+                                template: new sap.extension.m.CheckBox("", {
+                                }).bindProperty("bindingValue", {
                                     path: "automatic",
-                                    type: "sap.ui.model.type.Integer",
+                                    type: new sap.extension.data.YesNo()
                                 })
                             }),
                         ]
@@ -258,7 +254,7 @@ namespace initialfantasy {
                                                 text: ibas.i18n.prop("shell_data_delete"),
                                                 icon: "sap-icon://delete",
                                                 press: function (): void {
-                                                    let role: bo.IRole = openui5.utils.getSelecteds<bo.IRole>(that.tableRoles).firstOrDefault();
+                                                    let role: bo.IRole = that.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
                                                     if (!ibas.objects.isNull(role)) {
                                                         let criteria: ibas.ICriteria = new ibas.Criteria();
                                                         let condition: ibas.ICondition = criteria.conditions.create();
@@ -301,8 +297,8 @@ namespace initialfantasy {
                                                 icon: "sap-icon://accept",
                                                 press: function (): void {
                                                     for (let item of that.check.getSelected() ?
-                                                        openui5.utils.getUnSelecteds<bo.IPrivilege>(that.tablePrivileges) :
-                                                        openui5.utils.getSelecteds<bo.IPrivilege>(that.tablePrivileges)) {
+                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
+                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.activated = ibas.emYesNo.YES;
                                                     }
                                                 }
@@ -312,8 +308,8 @@ namespace initialfantasy {
                                                 icon: "sap-icon://decline",
                                                 press: function (): void {
                                                     for (let item of that.check.getSelected() ?
-                                                        openui5.utils.getUnSelecteds<bo.IPrivilege>(that.tablePrivileges) :
-                                                        openui5.utils.getSelecteds<bo.IPrivilege>(that.tablePrivileges)) {
+                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
+                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.activated = ibas.emYesNo.NO;
                                                     }
                                                 }
@@ -332,8 +328,8 @@ namespace initialfantasy {
                                                 icon: "sap-icon://multiselect-all",
                                                 press: function (): void {
                                                     for (let item of that.check.getSelected() ?
-                                                        openui5.utils.getUnSelecteds<bo.IPrivilege>(that.tablePrivileges) :
-                                                        openui5.utils.getSelecteds<bo.IPrivilege>(that.tablePrivileges)) {
+                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
+                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.authoriseValue = ibas.emAuthoriseType.ALL;
                                                     }
                                                 }
@@ -343,8 +339,8 @@ namespace initialfantasy {
                                                 icon: "sap-icon://multi-select",
                                                 press: function (): void {
                                                     for (let item of that.check.getSelected() ?
-                                                        openui5.utils.getUnSelecteds<bo.IPrivilege>(that.tablePrivileges) :
-                                                        openui5.utils.getSelecteds<bo.IPrivilege>(that.tablePrivileges)) {
+                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
+                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.authoriseValue = ibas.emAuthoriseType.READ;
                                                     }
                                                 }
@@ -354,8 +350,8 @@ namespace initialfantasy {
                                                 icon: "sap-icon://multiselect-none",
                                                 press: function (): void {
                                                     for (let item of that.check.getSelected() ?
-                                                        openui5.utils.getUnSelecteds<bo.IPrivilege>(that.tablePrivileges) :
-                                                        openui5.utils.getSelecteds<bo.IPrivilege>(that.tablePrivileges)) {
+                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
+                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.authoriseValue = ibas.emAuthoriseType.NONE;
                                                     }
                                                 }
@@ -378,12 +374,12 @@ namespace initialfantasy {
                 private facetFilter: sap.m.FacetFilter;
                 private check: sap.m.CheckBox;
                 private pageRoles: sap.m.Page;
-                private tableRoles: sap.m.List;
+                private tableRoles: sap.extension.m.List;
                 private pagePrivileges: sap.m.Page;
-                private tablePrivileges: sap.ui.table.Table;
+                private tablePrivileges: sap.extension.table.Table;
                 private selectPlatforms: sap.m.Select;
                 private fireFetchPrivilegesEvent(): void {
-                    let role: bo.IRole = openui5.utils.getSelecteds<bo.IRole>(this.tableRoles).firstOrDefault();
+                    let role: bo.IRole = this.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
                     if (!ibas.objects.isNull(role)) {
                         let criteria: ibas.ICriteria = new ibas.Criteria();
                         let condition: ibas.ICondition = criteria.conditions.create();
@@ -405,22 +401,13 @@ namespace initialfantasy {
                     this.pageRoles.setShowHeader(true);
                 }
                 showRoles(datas: bo.IRole[]): void {
-                    let done: boolean = false;
-                    let model: sap.ui.model.Model = this.tableRoles.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.tableRoles.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    let model: sap.ui.model.Model = this.tableRoles.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.tableRoles.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                     this.tableRoles.setBusy(false);
                 }
@@ -436,8 +423,7 @@ namespace initialfantasy {
                 /** 显示数据 */
                 showPrivileges(datas: app.Privilege[]): void {
                     this.tablePrivileges.setFirstVisibleRow(0);
-                    this.tablePrivileges.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                    openui5.utils.refreshModelChanged(this.tablePrivileges, datas);
+                    this.tablePrivileges.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     this.refreshPrivilegeFilter(datas);
                 }
                 /** 刷新过滤器 */

@@ -6,6 +6,8 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="../../index.d.ts" />
+/// <reference path="../Component.d.ts" />
+/// <reference path="../Component.ts" />
 /// <reference path="./applicationconfig/index.ts" />
 /// <reference path="./applicationelement/index.ts" />
 /// <reference path="./applicationmodule/index.ts" />
@@ -44,9 +46,6 @@ namespace initialfantasy {
                         break;
                     case app.ApplicationElementChooseApp.APPLICATION_ID:
                         view = new c.ApplicationElementChooseView();
-                        break;
-                    case app.ApplicationElementEditApp.APPLICATION_ID:
-                        view = new c.ApplicationElementEditView();
                         break;
                     case app.ApplicationModuleListApp.APPLICATION_ID:
                         view = new c.ApplicationModuleListView();

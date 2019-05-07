@@ -25,168 +25,169 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_name") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/name"
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "name",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 30
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_rolecode") }),
-                            new sap.m.Input("", {
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                repository: bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: bo.Organization,
+                                    key: "Code",
+                                    text: "Name"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseRoleEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "/roleCode"
+                            }).bindProperty("bindingValue", {
+                                path: "roleCode",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 8
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_bocode") }),
-                            new sap.m.Input("", {
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                repository: bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: bo.BOInformation,
+                                    key: "Code",
+                                    text: "Description"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseBusinessObjectEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "/boCode"
+                            }).bindProperty("bindingValue", {
+                                path: "boCode",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 30
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_activated") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(ibas.emYesNo)
-                            }).bindProperty("selectedKey", {
-                                path: "/activated",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
+                            }).bindProperty("bindingValue", {
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_filteringtype") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(bo.emFilteringType)
-                            }).bindProperty("selectedKey", {
-                                path: "/filteringType",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: bo.emFilteringType
+                            }).bindProperty("bindingValue", {
+                                path: "filteringType",
+                                type: new sap.extension.data.Enum({
+                                    enumType: bo.emFilteringType
+                                })
                             }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectkey") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectKey"
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectcode") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectCode"
-                            }),
+                            new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.form.addContent(new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bofilteringcondition") }));
-                    let columnProperty: sap.ui.table.Column = new sap.ui.table.Column("", {
-                        label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
-                        template: that.propertySelect = new sap.m.ex.BOChildSelect("", {
-                            blank: true,
-                            width: "100%",
-                            boKey: "mapped",
-                            boText: "description",
-                            boCode: ibas.config.applyVariables(bo.BO_CODE_BOINFORMATION),
-                            repositoryName: bo.BO_REPOSITORY_INITIALFANTASY,
-                            childPropertyName: "boPropertyInformations",
-                            bindingValue: {
-                                path: "propertyName"
-                            },
-                            onLoadItemsCompleted: function (oEvent: any): void {
-                                columnProperty.setTemplate(that.propertySelect);
-                            }
-                        })
-                    });
-                    this.tableBOFilteringCondition = new sap.ui.table.Table("", {
-                        toolbar: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_add"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://add",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.addBOFilteringConditionEvent);
-                                    }
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bofilteringcondition") }),
+                            this.tableBOFilteringCondition = new sap.extension.table.DataTable("", {
+                                enableSelectAll: false,
+                                visibleRowCount: sap.extension.table.visibleRowCount(8),
+                                dataInfo: {
+                                    code: bo.BOFiltering.BUSINESS_OBJECT_CODE,
+                                    name: bo.BOFilteringCondition.name
+                                },
+                                toolbar: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("shell_data_add"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://add",
+                                            press: function (): void {
+                                                that.fireViewEvents(that.addBOFilteringConditionEvent);
+                                            }
+                                        }),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("shell_data_remove"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://less",
+                                            press: function (): void {
+                                                that.fireViewEvents(that.removeBOFilteringConditionEvent, that.tableBOFilteringCondition.getSelecteds());
+                                            }
+                                        })
+                                    ]
                                 }),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_remove"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://less",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.removeBOFilteringConditionEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.BOFilteringCondition>(that.tableBOFilteringCondition)
-                                        );
-                                    }
-                                })
-                            ]
-                        }),
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
-                        rows: "{/rows}",
-                        columns: [
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emConditionRelationship)
-                                }).bindProperty("selectedKey", {
-                                    path: "relationship",
-                                    type: "sap.ui.model.type.Integer"
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: this.getCharListItem("(")
-                                }).bindProperty("selectedKey", {
-                                    path: "bracketOpen",
-                                    type: "sap.ui.model.type.Integer"
-                                })
-                            }),
-                            columnProperty,
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emConditionOperation)
-                                }).bindProperty("selectedKey", {
-                                    path: "operation",
-                                    type: "sap.ui.model.type.Integer"
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
-                                template: new sap.m.Input("", {
-                                    width: "100%",
-                                    type: sap.m.InputType.Text
-                                }).bindProperty("value", {
-                                    path: "conditionValue",
-                                })
-                            }),
-                            new sap.ui.table.Column("", {
-                                label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: this.getCharListItem(")")
-                                }).bindProperty("selectedKey", {
-                                    path: "bracketClose",
-                                    type: "sap.ui.model.type.Integer"
-                                })
+                                rows: "{/rows}",
+                                columns: [
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
+                                        template: new sap.extension.m.EnumSelect("", {
+                                            enumType: ibas.emConditionRelationship
+                                        }).bindProperty("bindingValue", {
+                                            path: "relationship",
+                                            type: new sap.extension.data.ConditionRelationship()
+                                        })
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
+                                        template: new sap.extension.m.Select("", {
+                                            items: this.getCharListItem("(")
+                                        }).bindProperty("bindingValue", {
+                                            path: "bracketOpen",
+                                            type: "sap.ui.model.type.Integer"
+                                        })
+                                    }),
+                                    this.columnProperty = new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
+                                        template: new sap.extension.m.Select("", {
+                                        }).bindProperty("bindingValue", {
+                                            path: "propertyName",
+                                            type: new sap.extension.data.Alphanumeric()
+                                        })
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
+                                        template: new sap.extension.m.EnumSelect("", {
+                                            enumType: ibas.emConditionOperation
+                                        }).bindProperty("bindingValue", {
+                                            path: "operation",
+                                            type: new sap.extension.data.ConditionOperation()
+                                        })
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
+                                        template: new sap.extension.m.Input("", {
+                                        }).bindProperty("bindingValue", {
+                                            path: "conditionValue",
+                                            type: new sap.extension.data.Alphanumeric({
+                                                maxLength: 30
+                                            })
+                                        })
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
+                                        template: new sap.extension.m.Select("", {
+                                            items: this.getCharListItem(")")
+                                        }).bindProperty("bindingValue", {
+                                            path: "bracketClose",
+                                            type: "sap.ui.model.type.Integer"
+                                        })
+                                    }),
+                                ]
                             }),
                         ]
                     });
-                    this.form.addContent(this.tableBOFilteringCondition);
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.BOFiltering.BUSINESS_OBJECT_CODE,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -234,10 +235,11 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        content: [this.form]
+                        content: [
+                            formTop,
+                            formMiddle,
+                        ]
                     });
-                    this.id = this.page.getId();
-                    return this.page;
                 }
                 /** 获取重复的字符 */
                 private getCharListItem(char: string): sap.ui.core.ListItem[] {
@@ -258,39 +260,54 @@ namespace initialfantasy {
                     }
                     return items;
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
-                private propertySelect: sap.m.ex.BOChildSelect;
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.BOFiltering): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                }
-                private tableBOFilteringCondition: sap.ui.table.Table;
+                private page: sap.extension.m.Page;
+                private tableBOFilteringCondition: sap.extension.table.Table;
+                private columnProperty: sap.extension.table.DataColumn;
                 /** 显示数据 */
                 showBOFiltering(data: bo.BOFiltering): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
-                    this.propertySelect.setCriteria([
-                        new ibas.Condition("Code", ibas.emConditionOperation.EQUAL, data.boCode)
-                    ]);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
+                    // 加载可选项
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = "Code";
+                    condition.value = data.boCode;
+                    let boRepository: initialfantasy.bo.BORepositoryInitialFantasy = new initialfantasy.bo.BORepositoryInitialFantasy();
+                    boRepository.fetchBOInformation({
+                        criteria: criteria,
+                        onCompleted: (opRslt) => {
+                            let template: sap.extension.m.Select = new sap.extension.m.Select("", {
+                                items: [
+                                    new sap.ui.core.ListItem("", {
+                                        key: "",
+                                        text: ibas.i18n.prop("shell_please_chooose_data", ""),
+                                    })
+                                ]
+                            }).bindProperty("bindingValue", {
+                                path: "propertyName",
+                                type: new sap.extension.data.Alphanumeric()
+                            });
+                            let boInfo: initialfantasy.bo.IBOInformation = opRslt.resultObjects.firstOrDefault();
+                            if (boInfo && boInfo.boPropertyInformations instanceof Array) {
+                                for (let property of boInfo.boPropertyInformations) {
+                                    if (property.editSize < 0) {
+                                        // 对象类型属性跳过
+                                        continue;
+                                    }
+                                    template.addItem(new sap.ui.core.ListItem("", {
+                                        key: property.mapped,
+                                        text: property.description,
+                                    }));
+                                }
+                            }
+                            this.columnProperty.setTemplate(template);
+                        }
+                    });
                 }
-                /** 显示数据 */
+                /** 显示数据-业务对象筛选-条件 */
                 showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void {
-                    this.tableBOFilteringCondition.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.tableBOFilteringCondition, datas);
+                    this.tableBOFilteringCondition.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

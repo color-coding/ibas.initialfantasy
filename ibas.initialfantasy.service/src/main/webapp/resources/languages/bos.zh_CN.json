@@ -316,16 +316,18 @@
         "bo_variable_closing_delimiter": "----结束----"
     },
     {
-        "em_user": "用户",
-        "em_role": "角色",
-        "em_unavailable": "不可用",
-        "em_available": "可用的"
+        "em_assignedtype_user": "用户",
+        "em_assignedtype_role": "角色"
     },
     {
-        "em_module": "模块",
-        "em_function": "功能",
-        "em_application": "应用",
-        "em_service": "服务",
-        "em_other": "其他"
+        "em_filteringtype_unavailable": "不可用",
+        "em_filteringtype_available": "可用的"
+    },
+    {
+        "em_elementtype_module": "模块",
+        "em_elementtype_function": "功能",
+        "em_elementtype_application": "应用",
+        "em_elementtype_service": "服务",
+        "em_elementtype_other": "其他"
     }
 ]

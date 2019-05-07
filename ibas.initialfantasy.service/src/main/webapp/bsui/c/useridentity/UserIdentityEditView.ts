@@ -27,41 +27,53 @@ namespace initialfantasy {
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_user") }),
-                            new sap.m.Input("", {
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                repository: bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: bo.User,
+                                    key: "Code",
+                                    text: "Name"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseUserEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "user"
+                            }).bindProperty("bindingValue", {
+                                path: "user",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_identity") }),
-                            new sap.m.Input("", {
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                repository: bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: bo.Identity,
+                                    key: "Code",
+                                    text: "Name"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseIdentityEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "identity"
+                            }).bindProperty("bindingValue", {
+                                path: "identity",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_validdate") }),
-                            new sap.m.DatePicker("", {
-                                valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                                displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                            }).bindProperty("dateValue", {
-                                path: "validDate"
+                            new sap.extension.m.DatePicker("", {
+                            }).bindProperty("bindingValue", {
+                                path: "validDate",
+                                type: new sap.extension.data.Date()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_invaliddate") }),
-                            new sap.m.DatePicker("", {
-                                valueFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                                displayFormat: ibas.config.get(ibas.CONFIG_ITEM_FORMAT_DATE),
-                            }).bindProperty("dateValue", {
-                                path: "invalidDate"
+                            new sap.extension.m.DatePicker("", {
+                            }).bindProperty("bindingValue", {
+                                path: "invalidDate",
+                                type: new sap.extension.data.Date()
                             }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("") }),
+                            new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -111,41 +123,15 @@ namespace initialfantasy {
                             ]
                         }),
                         content: [
-                            new sap.ui.layout.VerticalLayout("", {
-                                width: "100%",
-                                content: [
-                                    formTop,
-                                ]
-                            })
+                            formTop,
                         ]
                     });
-                    return this.page;
                 }
-
-                private page: sap.m.Page;
-
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.UserIdentity): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                }
+                private page: sap.extension.m.Page;
 
                 /** 显示数据 */
                 showUserIdentity(data: bo.UserIdentity): void {
-                    this.page.setModel(new sap.ui.model.json.JSONModel(data));
-                    this.page.bindObject("/");
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.page, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
                 }
             }
         }

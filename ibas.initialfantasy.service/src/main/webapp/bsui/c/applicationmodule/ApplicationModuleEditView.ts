@@ -20,54 +20,52 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_moduleid") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/moduleId",
+                            new sap.extension.m.Input("", {
+                                editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "moduleId",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 36
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_platformid") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/platformId",
+                            new sap.extension.m.Input("", {
+                                editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "platformId",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 36
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_modulename") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/moduleName",
+                            new sap.extension.m.Input("", {
+                                editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "moduleName",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 100
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_activated") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(ibas.emYesNo)
-                            }).bindProperty("selectedKey", {
-                                path: "/activated",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
+                            }).bindProperty("bindingValue", {
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
                             }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_objectkey") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectKey",
-                            }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationmodule_objectcode") }),
-                            new sap.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/objectCode",
-                            }),
+                            new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.ApplicationModule.BUSINESS_OBJECT_CODE,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -115,34 +113,18 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        content: [this.form]
+                        content: [
+                            formTop,
+                        ]
                     });
-                    this.id = this.page.getId();
-                    return this.page;
-                }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.ApplicationModule): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
                 }
 
+                private page: sap.extension.m.Page;
                 /** 显示数据 */
                 showApplicationModule(data: bo.ApplicationModule): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
                 }
             }
         }

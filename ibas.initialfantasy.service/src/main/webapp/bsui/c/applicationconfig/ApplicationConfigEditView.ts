@@ -23,46 +23,44 @@ namespace initialfantasy {
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configgroup") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
+                            }).bindProperty("bindingValue", {
                                 path: "configGroup",
                                 formatter(data: any): any {
                                     return ibas.i18n.prop(data);
                                 }
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configkey") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "configKey"
+                            }).bindProperty("bindingValue", {
+                                path: "configKey",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configdescription") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "configDescription"
+                            }).bindProperty("bindingValue", {
+                                path: "configDescription",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_applicationconfig_configvalue") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "configValue"
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "configValue",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 100
+                                })
                             }),
                             new sap.ui.core.Title("", {}),
                         ]
                     });
-                    this.layoutMain = new sap.ui.layout.VerticalLayout("", {
-                        width: "100%",
-                        content: [
-                            formTop,
-                        ]
-                    });
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.ApplicationConfig.BUSINESS_OBJECT_CODE,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -75,36 +73,17 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        content: [this.layoutMain]
+                        content: [
+                            formTop,
+                        ]
                     });
-                    return this.page;
                 }
-
-                private page: sap.m.Page;
-                private layoutMain: sap.ui.layout.VerticalLayout;
-
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.ApplicationConfig): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                }
-
+                private page: sap.extension.m.Page;
                 /** 显示数据 */
                 showApplicationConfig(data: bo.ApplicationConfig): void {
-                    this.layoutMain.setModel(new sap.ui.model.json.JSONModel(data));
-                    this.layoutMain.bindObject("/");
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.layoutMain, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
                 }
             }
         }

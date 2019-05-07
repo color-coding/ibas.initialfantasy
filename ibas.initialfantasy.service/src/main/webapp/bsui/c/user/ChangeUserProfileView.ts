@@ -21,35 +21,36 @@ namespace initialfantasy {
                         editable: true,
                         content: [
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_code") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/code"
+                            }).bindProperty("bindingValue", {
+                                path: "/code",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_name") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/name"
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "/name",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
-                            new sap.m.Input("", {
+                            new sap.extension.m.Input("", {
                                 type: sap.m.InputType.Password
-                            }).bindProperty("value", {
-                                path: "/password"
+                            }).bindProperty("bindingValue", {
+                                path: "/password",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_mail") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/mail"
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "/mail",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_phone") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/phone"
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "/phone",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                         ]
                     });
@@ -60,12 +61,13 @@ namespace initialfantasy {
                         stretchOnPhone: true,
                         horizontalScrolling: true,
                         verticalScrolling: true,
-                        content: [this.form],
+                        content: [
+                            this.form
+                        ],
                         buttons: [
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_save"),
                                 type: sap.m.ButtonType.Transparent,
-                                // icon: "sap-icon://create",
                                 press: function (): void {
                                     that.fireViewEvents(that.saveUserEvent);
                                 }
@@ -73,7 +75,6 @@ namespace initialfantasy {
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_exit"),
                                 type: sap.m.ButtonType.Transparent,
-                                // icon: "sap-icon://inspect-down",
                                 press: function (): void {
                                     that.fireViewEvents(that.closeEvent);
                                 }
@@ -84,9 +85,7 @@ namespace initialfantasy {
                 private form: sap.ui.layout.form.SimpleForm;
                 /** 显示用户信息 */
                 showUser(user: bo.User): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(user));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, user);
+                    this.form.setModel(new sap.extension.model.JSONModel(user));
                 }
             }
         }

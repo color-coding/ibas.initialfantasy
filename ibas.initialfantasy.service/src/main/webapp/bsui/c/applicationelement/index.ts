@@ -7,4 +7,3 @@
  */
 /// <reference path="./ApplicationElementListView.ts" />
 /// <reference path="./ApplicationElementChooseView.ts" />
-/// <reference path="./ApplicationElementEditView.ts" />

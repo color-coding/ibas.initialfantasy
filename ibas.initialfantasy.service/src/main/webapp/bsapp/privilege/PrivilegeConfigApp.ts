@@ -355,8 +355,9 @@ namespace initialfantasy {
         }
 
         /** 系统权限 */
-        export class Privilege implements ibas.IBindable {
+        export class Privilege extends ibas.Bindable {
             constructor(data: bo.Privilege, type: bo.emElementType) {
+                super();
                 this.data = data;
                 this.type = type;
             }
@@ -364,7 +365,8 @@ namespace initialfantasy {
                 this.data.registerListener.apply(this.data, arguments);
             }
             removeListener(listener: ibas.IPropertyChangedListener): void;
-            removeListener(recursive: boolean): void;
+            removeListener(id: string): void;
+            removeListener(): void;
             removeListener(): void {
                 this.data.removeListener.apply(this.data, arguments);
             }

@@ -70,9 +70,9 @@ namespace initialfantasy {
                 if (typeof contract.target === "string") {
                     this.editData.businessObject = contract.target;
                 } else if (typeof contract.target === "object") {
-                    this.editData.businessObject = ibas.objects.getName(ibas.objects.getType(contract.target));
+                    this.editData.businessObject = ibas.objects.nameOf(contract.target);
                 } else if (typeof contract.target === "function") {
-                    this.editData.businessObject = ibas.objects.getName(contract.target);
+                    this.editData.businessObject = ibas.objects.nameOf(contract.target);
                 }
                 // 设置查询条件字段
                 if (this.aliases.length === 0) {

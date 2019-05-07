@@ -21,68 +21,54 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("");
-                    this.table = new sap.ui.table.Table("", {
+                    this.table = new sap.extension.table.DataTable("", {
                         enableSelectAll: false,
-                        selectionMode: sap.ui.table.SelectionMode.MultiToggle,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
+                        dataInfo: this.queryTarget,
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bonumbering_objectcode"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
+                                width: "16rem",
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "objectCode",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_bonumbering_objectcode"),
+                                width: "20rem",
+                                template: new sap.extension.m.BusinessObjectText("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "objectCode",
+                                    type: new sap.extension.data.Alphanumeric()
+                                })
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bonumbering_documentsubtype"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "documentSubType"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "documentSubType",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bonumbering_autokey"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "autoKey"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "autoKey",
+                                    type: new sap.extension.data.Numeric()
                                 })
                             }),
-                        ]
-                    });
-                    openui5.utils.changeSelectionStyle(this.table, ibas.emChooseType.SINGLE);
-                    this.form.addContent(this.table);
-                    this.page = new sap.m.Page("", {
-                        showHeader: false,
-                        subHeader: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_edit"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://edit",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.editDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.BONumbering>(that.table).firstOrDefault()
-                                        );
-                                    }
-                                }),
-                                new sap.m.ToolbarSpacer(""),
-                            ]
-                        }),
-                        content: [this.form]
-                    });
-                    this.id = this.page.getId();
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
+                        ],
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -94,29 +80,36 @@ namespace initialfantasy {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return this.page;
+                    return new sap.extension.m.Page("", {
+                        showHeader: false,
+                        subHeader: new sap.m.Toolbar("", {
+                            content: [
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("shell_data_edit"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://edit",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.editDataEvent, that.table.getSelecteds().firstOrDefault());
+                                    }
+                                }),
+                                new sap.m.ToolbarSpacer(""),
+                            ]
+                        }),
+                        content: [
+                            this.table,
+                        ]
+                    });
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
-                private table: sap.ui.table.Table;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: bo.BONumbering[]): void {
-                    let done: boolean = false;
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    let model: sap.ui.model.Model = this.table.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                     this.table.setBusy(false);
                 }

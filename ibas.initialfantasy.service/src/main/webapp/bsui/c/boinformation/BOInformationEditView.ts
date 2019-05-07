@@ -30,51 +30,51 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_code") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/code"
+                            }).bindProperty("bindingValue", {
+                                path: "code",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_name") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/name"
+                            }).bindProperty("bindingValue", {
+                                path: "name",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_description") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/description"
+                            }).bindProperty("bindingValue", {
+                                path: "description",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_objecttype") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/objectType"
+                            }).bindProperty("bindingValue", {
+                                path: "objectType",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_mapped") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text,
+                            new sap.extension.m.Input("", {
                                 editable: false,
-                            }).bindProperty("value", {
-                                path: "/mapped"
+                            }).bindProperty("bindingValue", {
+                                path: "mapped",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                         ]
                     });
-                    this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bopropertyinformation") });
-                    this.form.addContent(this.tableTitle);
-                    this.tableBOPropertyInformation = new sap.ui.table.Table("", {
+                    this.tableBOPropertyInformation = new sap.extension.table.Table("", {
+                        enableSelectAll: true,
+                        visibleRowCount: sap.extension.table.visibleRowCount(8),
                         toolbar: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.ToolbarSpacer(""),
@@ -88,7 +88,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
                                                 icon: "sap-icon://multiselect-all",
                                                 press: function (): void {
-                                                    for (let item of openui5.utils.getSelecteds<bo.IBOPropertyInformation>(that.tableBOPropertyInformation)) {
+                                                    for (let item of that.tableBOPropertyInformation.getSelecteds<bo.IBOPropertyInformation>()) {
                                                         item.authorised = ibas.emAuthoriseType.ALL;
                                                     }
                                                 }
@@ -97,7 +97,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
                                                 icon: "sap-icon://multi-select",
                                                 press: function (): void {
-                                                    for (let item of openui5.utils.getSelecteds<bo.IBOPropertyInformation>(that.tableBOPropertyInformation)) {
+                                                    for (let item of that.tableBOPropertyInformation.getSelecteds<bo.IBOPropertyInformation>()) {
                                                         item.authorised = ibas.emAuthoriseType.READ;
                                                     }
                                                 }
@@ -106,7 +106,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
                                                 icon: "sap-icon://multiselect-none",
                                                 press: function (): void {
-                                                    for (let item of openui5.utils.getSelecteds<bo.IBOPropertyInformation>(that.tableBOPropertyInformation)) {
+                                                    for (let item of that.tableBOPropertyInformation.getSelecteds<bo.IBOPropertyInformation>()) {
                                                         item.authorised = ibas.emAuthoriseType.NONE;
                                                     }
                                                 }
@@ -116,10 +116,6 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        enableSelectAll: true,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        selectionMode: openui5.utils.toSelectionMode(ibas.emChooseType.MULTIPLE),
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
                         rows: "{/rows}",
                         rowActionCount: 1,
                         rowActionTemplate: new sap.ui.table.RowAction("", {
@@ -135,58 +131,58 @@ namespace initialfantasy {
                             ]
                         }),
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_property"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "property"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "property",
+                                    type: new sap.extension.data.Alphanumeric()
                                 }),
                                 sortProperty: "property",
                                 filterProperty: "property"
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "description"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "description",
+                                    type: new sap.extension.data.Alphanumeric()
                                 }),
                                 sortProperty: "description",
                                 filterProperty: "description"
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_searched"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emYesNo)
-                                }).bindProperty("selectedKey", {
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: ibas.emYesNo
+                                }).bindProperty("bindingValue", {
                                     path: "searched",
-                                    type: "sap.ui.model.type.Integer"
+                                    type: new sap.extension.data.YesNo(),
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_authorised"),
-                                template: new sap.m.Select("", {
-                                    width: "100%",
-                                    items: openui5.utils.createComboBoxItems(ibas.emAuthoriseType)
-                                }).bindProperty("selectedKey", {
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: ibas.emAuthoriseType
+                                }).bindProperty("bindingValue", {
                                     path: "authorised",
-                                    type: "sap.ui.model.type.Integer"
+                                    type: new sap.extension.data.AuthoriseType(),
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_mapped"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "mapped"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "mapped",
+                                    type: new sap.extension.data.Alphanumeric()
                                 }),
                                 sortProperty: "mapped"
                             }),
                         ]
                     });
-                    this.tableBOPropertyValue = new sap.ui.table.Table("", {
+                    this.tableBOPropertyValue = new sap.extension.table.Table("", {
+                        enableSelectAll: false,
+                        visibleRowCount: sap.extension.table.visibleRowCount(8),
                         toolbar: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -202,10 +198,7 @@ namespace initialfantasy {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://less",
                                     press: function (): void {
-                                        that.fireViewEvents(that.removeBOPropertyValueEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.BOPropertyValue>(that.tableBOPropertyValue)
-                                        );
+                                        that.fireViewEvents(that.removeBOPropertyValueEvent, that.tableBOPropertyValue.getSelecteds());
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),
@@ -219,40 +212,42 @@ namespace initialfantasy {
                                 })
                             ]
                         }),
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 10),
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyvalue_value"),
-                                template: new sap.m.Input("", {
-                                    width: "100%",
-                                }).bindProperty("value", {
-                                    path: "value"
+                                template: new sap.extension.m.Input("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "value",
+                                    type: new sap.extension.data.Alphanumeric()
                                 }).bindProperty("editable", {
                                     path: "isNew"
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyvalue_description"),
-                                template: new sap.m.Input("", {
-                                    width: "100%",
-                                }).bindProperty("value", {
-                                    path: "description"
+                                template: new sap.extension.m.Input("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "description",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
                         ]
                     });
-                    this.splitContainer = new sap.m.SplitContainer("", {
-                        mode: sap.m.SplitAppMode.HideMode,
-                        detailPages: [
-                            this.tableBOPropertyInformation,
-                            this.tableBOPropertyValue
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bopropertyinformation") }),
+                            this.splitContainer = new sap.m.SplitContainer("", {
+                                mode: sap.m.SplitAppMode.HideMode,
+                                detailPages: [
+                                    this.tableBOPropertyInformation,
+                                    this.tableBOPropertyValue
+                                ]
+                            }),
                         ]
                     });
-                    this.form.addContent(this.splitContainer);
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -266,55 +261,33 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        content: [this.form]
+                        content: [
+                            formTop,
+                            formMiddle,
+                        ]
                     });
-                    this.id = this.page.getId();
-                    return this.page;
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.BOInformation): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                    // 不可编辑：已批准，
-                }
+                private page: sap.extension.m.Page;
                 private tableTitle: sap.ui.core.Title;
                 private splitContainer: sap.m.SplitContainer;
-                private tableBOPropertyInformation: sap.ui.table.Table;
-                private tableBOPropertyValue: sap.ui.table.Table;
+                private tableBOPropertyInformation: sap.extension.table.Table;
+                private tableBOPropertyValue: sap.extension.table.Table;
 
                 /** 显示数据 */
                 showBOInformation(data: bo.BOInformation): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
                 }
                 /** 显示数据 */
                 showBOPropertyInformations(datas: bo.BOPropertyInformation[]): void {
                     this.tableTitle.setText(ibas.i18n.prop("bo_bopropertyinformation"));
                     this.splitContainer.backToTopDetail(null, null);
-                    this.tableBOPropertyInformation.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.tableBOPropertyInformation, datas);
+                    this.tableBOPropertyInformation.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
                 /** 显示数据 */
                 showBOPropertyValues(datas: bo.BOPropertyValue[]): void {
                     this.tableTitle.setText(ibas.i18n.prop("bo_bopropertyvalue"));
                     this.splitContainer.toDetail(this.tableBOPropertyValue.getId(), null, null, null);
-                    this.tableBOPropertyValue.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.tableBOPropertyValue, datas);
+                    this.tableBOPropertyValue.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

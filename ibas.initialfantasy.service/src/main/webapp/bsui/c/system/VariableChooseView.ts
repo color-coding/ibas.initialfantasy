@@ -19,57 +19,49 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.table = new sap.ui.table.Table("", {
-                        enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        selectionMode: openui5.utils.toSelectionMode(this.chooseType),
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                    this.table = new sap.extension.table.Table("", {
+                        chooseType: this.chooseType,
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_variable_key"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "key"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "key",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_variable_value"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "value"
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "value",
+                                    type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
                         ]
                     });
-                    // 调整选择样式风格
-                    openui5.utils.changeSelectionStyle(this.table, this.chooseType);
                     return new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        stretchOnPhone: true,
                         horizontalScrolling: true,
                         verticalScrolling: true,
-                        content: [this.table],
+                        content: [
+                            this.table
+                        ],
                         buttons: [
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_data_choose"),
                                 type: sap.m.ButtonType.Transparent,
-                                // icon: "sap-icon://accept",
                                 press: function (): void {
-                                    that.fireViewEvents(that.chooseDataEvent,
-                                        // 获取表格选中的对象
-                                        openui5.utils.getSelecteds<ibas.KeyValue>(that.table)
-                                    );
+                                    that.fireViewEvents(that.chooseDataEvent, that.table.getSelecteds());
                                 }
                             }),
                             new sap.m.Button("", {
                                 text: ibas.i18n.prop("shell_exit"),
                                 type: sap.m.ButtonType.Transparent,
-                                // icon: "sap-icon://inspect-down",
                                 press: function (): void {
                                     that.fireViewEvents(that.closeEvent);
                                 }
@@ -77,12 +69,19 @@ namespace initialfantasy {
                         ]
                     });
                 }
-                private table: sap.ui.table.Table;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: ibas.KeyValue[]): void {
-                    this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    let model: sap.ui.model.Model = this.table.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    }
+                    this.table.setBusy(false);
                 }
-
                 /** 记录上次查询条件，表格滚动时自动触发 */
                 query(criteria: ibas.ICriteria): void {
                     super.query(criteria);

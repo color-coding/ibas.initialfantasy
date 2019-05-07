@@ -21,46 +21,44 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.table = new sap.ui.table.Table("", {
+                    this.table = new sap.extension.table.DataTable("", {
                         enableSelectAll: false,
-                        selectionBehavior: sap.ui.table.SelectionBehavior.Row,
-                        visibleRowCount: ibas.config.get(openui5.utils.CONFIG_ITEM_LIST_TABLE_VISIBLE_ROW_COUNT, 15),
+                        visibleRowCount: sap.extension.table.visibleRowCount(15),
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
+                        dataInfo: this.queryTarget,
                         rows: "{/rows}",
                         columns: [
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_identity_code"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "code"
-                                })
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "code",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_identity_name"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
-                                    path: "name"
-                                })
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "name",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
                             }),
-                            new sap.ui.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_identity_activated"),
-                                template: new sap.m.Text("", {
-                                    wrapping: false
-                                }).bindProperty("text", {
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
                                     path: "activated",
-                                    formatter(data: any): any {
-                                        return ibas.enums.describe(ibas.emYesNo, data);
-                                    }
-                                })
+                                    type: new sap.extension.data.YesNo(true)
+                                }),
                             }),
-                        ]
-                    });
-                    // 添加列表自动查询事件
-                    openui5.utils.triggerNextResults({
-                        listener: this.table,
-                        next(data: any): void {
+                        ],
+                        nextDataSet(event: sap.ui.base.Event): void {
+                            // 查询下一个数据集
+                            let data: any = event.getParameter("data");
+                            if (ibas.objects.isNull(data)) {
+                                return;
+                            }
                             if (ibas.objects.isNull(that.lastCriteria)) {
                                 return;
                             }
@@ -72,7 +70,7 @@ namespace initialfantasy {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    return new sap.m.Page("", {
+                    return new sap.extension.m.Page("", {
                         showHeader: false,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
@@ -89,10 +87,7 @@ namespace initialfantasy {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://edit",
                                     press: function (): void {
-                                        that.fireViewEvents(that.editDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.Identity>(that.table).firstOrDefault()
-                                        );
+                                        that.fireViewEvents(that.editDataEvent, that.table.getSelecteds().firstOrDefault());
                                     }
                                 }),
                                 new sap.m.ToolbarSeparator(""),
@@ -101,10 +96,7 @@ namespace initialfantasy {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://delete",
                                     press: function (): void {
-                                        that.fireViewEvents(that.deleteDataEvent,
-                                            // 获取表格选中的对象
-                                            openui5.utils.getSelecteds<bo.Identity>(that.table)
-                                        );
+                                        that.fireViewEvents(that.deleteDataEvent, that.table.getSelecteds());
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),
@@ -114,7 +106,7 @@ namespace initialfantasy {
                                     press: function (event: any): void {
                                         ibas.servicesManager.showServices({
                                             proxy: new ibas.BOServiceProxy({
-                                                data: openui5.utils.getSelecteds(that.table),
+                                                data: that.table.getSelecteds(),
                                                 converter: new bo.DataConverter(),
                                             }),
                                             displayServices(services: ibas.IServiceAgent[]): void {
@@ -136,7 +128,7 @@ namespace initialfantasy {
                                                         }
                                                     }));
                                                 }
-                                                (<any>popover).addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
+                                                popover.addStyleClass("sapMOTAPopover sapTntToolHeaderPopover");
                                                 popover.openBy(event.getSource(), true);
                                             }
                                         });
@@ -145,33 +137,20 @@ namespace initialfantasy {
                             ]
                         }),
                         content: [
-                            new sap.ui.layout.form.SimpleForm("", {
-                                content: [
-                                    this.table,
-                                ]
-                            })
+                            this.table,
                         ]
                     });
                 }
-                private table: sap.ui.table.Table;
+                private table: sap.extension.table.Table;
                 /** 显示数据 */
                 showData(datas: bo.Identity[]): void {
-                    let done: boolean = false;
-                    let model: sap.ui.model.Model = this.table.getModel(undefined);
-                    if (!ibas.objects.isNull(model)) {
-                        // 已存在绑定数据，添加新的
-                        let hDatas: any = (<any>model).getData();
-                        if (!ibas.objects.isNull(hDatas) && hDatas.rows instanceof Array) {
-                            for (let item of datas) {
-                                hDatas.rows.push(item);
-                            }
-                            model.refresh(false);
-                            done = true;
-                        }
-                    }
-                    if (!done) {
-                        // 没有显示数据
-                        this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
+                    let model: sap.ui.model.Model = this.table.getModel();
+                    if (model instanceof sap.extension.model.JSONModel) {
+                        // 已绑定过数据
+                        model.addData(datas);
+                    } else {
+                        // 未绑定过数据
+                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
                     this.table.setBusy(false);
                 }

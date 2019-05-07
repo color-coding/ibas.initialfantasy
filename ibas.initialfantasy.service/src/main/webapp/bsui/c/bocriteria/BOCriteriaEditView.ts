@@ -8,7 +8,6 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
-
             /**
              * 视图-BOCriteria
              */
@@ -29,62 +28,133 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    this.txtBOCode = new sap.m.Input("", {
-                        showValueHelp: true,
-                        valueHelpRequest: function (): void {
-                            that.fireViewEvents(that.chooseBusinessObjectEvent);
-                        }
-                    });
-                    this.form = new sap.ui.layout.form.SimpleForm("", {
+                    let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_applicationid") }),
-                            new sap.m.Input("", {
+                            new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                repository: bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: bo.ApplicationElement,
+                                    key: "elementId",
+                                    text: "elementName"
+                                },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseApplicationEvent);
                                 }
-                            }).bindProperty("value", {
-                                path: "/applicationId"
+                            }).bindProperty("bindingValue", {
+                                path: "applicationId",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 36
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_name") }),
-                            new sap.m.Input("", {
-                                type: sap.m.InputType.Text
-                            }).bindProperty("value", {
-                                path: "/name",
+                            new sap.extension.m.Input("", {
+                            }).bindProperty("bindingValue", {
+                                path: "name",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 60
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_activated") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(ibas.emYesNo)
-                            }).bindProperty("selectedKey", {
-                                path: "/activated",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
+                            }).bindProperty("bindingValue", {
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assignedtype") }),
-                            new sap.m.Select("", {
-                                items: openui5.utils.createComboBoxItems(bo.emAssignedType)
-                            }).bindProperty("selectedKey", {
-                                path: "/assignedType",
-                                type: "sap.ui.model.type.Integer"
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: bo.emAssignedType
+                            }).bindProperty("bindingValue", {
+                                path: "assignedType",
+                                type: new sap.extension.data.Enum({
+                                    enumType: bo.emAssignedType
+                                })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_assigned") }),
-                            new sap.m.Input("", {
-                                showValueHelp: true,
-                                valueHelpRequest: function (): void {
-                                    that.fireViewEvents(that.chooseRoleUserEvent);
-                                }
-                            }).bindProperty("value", {
-                                path: "/assigned",
+                            new sap.m.FlexBox("", {
+                                items: [
+                                    new sap.extension.m.RepositoryInput("", {
+                                        showValueHelp: true,
+                                        width: "100%",
+                                        layoutData: new sap.m.FlexItemData("", {
+                                            growFactor: 1,
+                                        }),
+                                        repository: bo.BORepositoryInitialFantasy,
+                                        dataInfo: {
+                                            type: bo.User,
+                                            key: "Code",
+                                            text: "Name"
+                                        },
+                                        valueHelpRequest: function (): void {
+                                            that.fireViewEvents(that.chooseRoleUserEvent);
+                                        }
+                                    }).bindProperty("visible", {
+                                        path: "assignedType",
+                                        formatter(data: any): any {
+                                            if (data === bo.emAssignedType.USER) {
+                                                return true;
+                                            } else if (data === bo.emAssignedType.ROLE) {
+                                                return false;
+                                            }
+                                            return false;
+                                        }
+                                    }).bindProperty("bindingValue", {
+                                        path: "assigned",
+                                        type: new sap.extension.data.Alphanumeric({
+                                            maxLength: 20
+                                        })
+                                    }),
+                                    new sap.extension.m.RepositoryInput("", {
+                                        showValueHelp: true,
+                                        width: "100%",
+                                        layoutData: new sap.m.FlexItemData("", {
+                                            growFactor: 1,
+                                        }),
+                                        repository: bo.BORepositoryInitialFantasy,
+                                        dataInfo: {
+                                            type: bo.Organization,
+                                            key: "Code",
+                                            text: "Name"
+                                        },
+                                        valueHelpRequest: function (): void {
+                                            that.fireViewEvents(that.chooseRoleUserEvent);
+                                        }
+                                    }).bindProperty("visible", {
+                                        path: "assignedType",
+                                        formatter(data: any): any {
+                                            if (data === bo.emAssignedType.USER) {
+                                                return false;
+                                            } else if (data === bo.emAssignedType.ROLE) {
+                                                return true;
+                                            }
+                                            return false;
+                                        }
+                                    }).bindProperty("bindingValue", {
+                                        path: "assigned",
+                                        type: new sap.extension.data.Alphanumeric({
+                                            maxLength: 20
+                                        })
+                                    }),
+                                ]
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_bocriteria_setting") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("initialfantasy_bocriteria_bocode") }),
-                            this.txtBOCode,
+                            this.txtBOCode = new sap.extension.m.Input("", {
+                                showValueHelp: true,
+                                valueHelpRequest: function (): void {
+                                    that.fireViewEvents(that.chooseBusinessObjectEvent);
+                                }
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_data") }),
-                            new sap.m.TextArea("", {
+                            new sap.extension.m.TextArea("", {
                                 rows: 6,
-                            }).bindProperty("value", {
-                                path: "/data",
+                            }).bindProperty("bindingValue", {
+                                path: "data",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", {}),
                             new sap.m.Button("", {
@@ -95,8 +165,11 @@ namespace initialfantasy {
                             }),
                         ]
                     });
-                    this.page = new sap.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.BOCriteria.BUSINESS_OBJECT_CODE,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {
@@ -144,13 +217,12 @@ namespace initialfantasy {
                                 }),
                             ]
                         }),
-                        content: [this.form]
+                        content: [
+                            formTop,
+                        ]
                     });
-                    this.id = this.page.getId();
-                    return this.page;
                 }
-                private page: sap.m.Page;
-                private form: sap.ui.layout.form.SimpleForm;
+                private page: sap.extension.m.Page;
                 private txtBOCode: sap.m.Input;
                 get target(): string {
                     return this.txtBOCode.getValue();
@@ -158,28 +230,11 @@ namespace initialfantasy {
                 set target(value: string) {
                     this.txtBOCode.setValue(value);
                 }
-
-                /** 改变视图状态 */
-                private changeViewStatus(data: bo.BOCriteria): void {
-                    if (ibas.objects.isNull(data)) {
-                        return;
-                    }
-                    // 新建时：禁用删除，
-                    if (data.isNew) {
-                        if (this.page.getSubHeader() instanceof sap.m.Toolbar) {
-                            openui5.utils.changeToolbarSavable(<sap.m.Toolbar>this.page.getSubHeader(), true);
-                            openui5.utils.changeToolbarDeletable(<sap.m.Toolbar>this.page.getSubHeader(), false);
-                        }
-                    }
-                }
-
                 /** 显示数据 */
                 showBOCriteria(data: bo.BOCriteria): void {
-                    this.form.setModel(new sap.ui.model.json.JSONModel(data));
-                    // 监听属性改变，并更新控件
-                    openui5.utils.refreshModelChanged(this.form, data);
-                    // 改变视图状态
-                    this.changeViewStatus(data);
+                    this.page.setModel(new sap.extension.model.JSONModel(data));
+                    // 改变页面状态
+                    sap.extension.pages.changeStatus(this.page);
                 }
             }
         }
