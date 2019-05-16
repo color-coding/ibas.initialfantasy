@@ -178,7 +178,7 @@
     {
         "bo_bonumbering": "业务对象编号方式",
         "bo_bonumbering_objectcode": "对象编码",
-        "bo_bonumbering_documentsubtype": "子类型",
+        "bo_bonumbering_objectname": "对象名称",
         "bo_bonumbering_autokey": "自动序号",
         "bo_boseriesnumbering": "业务对象序列编号方式",
         "bo_boseriesnumbering_objectcode": "对象编码",

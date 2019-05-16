@@ -26,17 +26,6 @@ namespace initialfantasy {
                 this.setProperty(BONumbering.PROPERTY_OBJECTCODE_NAME, value);
             }
 
-            /** 映射的属性名称-子类型 */
-            static PROPERTY_DOCUMENTSUBTYPE_NAME: string = "DocumentSubType";
-            /** 获取-子类型 */
-            get documentSubType(): string {
-                return this.getProperty<string>(BONumbering.PROPERTY_DOCUMENTSUBTYPE_NAME);
-            }
-            /** 设置-子类型 */
-            set documentSubType(value: string) {
-                this.setProperty(BONumbering.PROPERTY_DOCUMENTSUBTYPE_NAME, value);
-            }
-
             /** 映射的属性名称-自动序号 */
             static PROPERTY_AUTOKEY_NAME: string = "AutoKey";
             /** 获取-自动序号 */
@@ -62,14 +51,6 @@ namespace initialfantasy {
                 builder.append(" ");
                 builder.append(this.objectCode);
                 builder.append("]");
-                builder.append("&");
-                builder.append("[");
-                builder.append(BONumbering.PROPERTY_DOCUMENTSUBTYPE_NAME);
-                builder.append(" ");
-                builder.append("=");
-                builder.append(" ");
-                builder.append(this.documentSubType);
-                builder.append("]");
                 builder.append("}");
                 return builder.toString();
             }
@@ -79,9 +60,6 @@ namespace initialfantasy {
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = BONumbering.PROPERTY_OBJECTCODE_NAME;
                 condition.value = this.objectCode;
-                condition = criteria.conditions.create();
-                condition.alias = BONumbering.PROPERTY_DOCUMENTSUBTYPE_NAME;
-                condition.value = this.documentSubType;
                 return criteria;
             }
 

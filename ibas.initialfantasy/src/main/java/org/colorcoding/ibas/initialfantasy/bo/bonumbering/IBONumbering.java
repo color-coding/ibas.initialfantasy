@@ -18,25 +18,9 @@ public interface IBONumbering extends IBusinessObject {
 	/**
 	 * 设置-对象编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectCode(String value);
-
-	/**
-	 * 获取-子类型
-	 * 
-	 * @return 值
-	 */
-	String getDocumentSubType();
-
-	/**
-	 * 设置-子类型
-	 * 
-	 * @param value
-	 *            值
-	 */
-	void setDocumentSubType(String value);
 
 	/**
 	 * 获取-自动序号
@@ -48,8 +32,7 @@ public interface IBONumbering extends IBusinessObject {
 	/**
 	 * 设置-自动序号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setAutoKey(Integer value);
 

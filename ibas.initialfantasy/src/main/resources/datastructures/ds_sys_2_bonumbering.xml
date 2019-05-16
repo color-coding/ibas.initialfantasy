@@ -3,7 +3,6 @@
 <Domain Name="InitialFantasy" ShortName="IF">
   <Model Name="BONumbering" Description="业务对象编号方式" ModelType="Unspecified" Mapped="${Company}_SYS_ONNM">
     <Property Name="ObjectCode" Description="对象编码" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode" PrimaryKey="Yes"/>
-    <Property Name="DocumentSubType" Description="凭证子类型" DataType="Alphanumeric" DataSubType="Default" EditSize="2" Mapped="DocSubType" PrimaryKey="Yes"/>
     <Property Name="AutoKey" Description="自动序号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="AutoKey"/>
   </Model>
   <Model Name="BOSeriesNumbering" Description="业务对象序列编号方式" ModelType="Unspecified" Mapped="${Company}_SYS_NNM1">

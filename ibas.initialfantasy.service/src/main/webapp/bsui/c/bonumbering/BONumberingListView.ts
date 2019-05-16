@@ -38,19 +38,11 @@ namespace initialfantasy {
                                 })
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_bonumbering_objectcode"),
+                                label: ibas.i18n.prop("bo_bonumbering_objectname"),
                                 width: "20rem",
                                 template: new sap.extension.m.BusinessObjectText("", {
                                 }).bindProperty("bindingValue", {
                                     path: "objectCode",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_bonumbering_documentsubtype"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "documentSubType",
                                     type: new sap.extension.data.Alphanumeric()
                                 })
                             }),

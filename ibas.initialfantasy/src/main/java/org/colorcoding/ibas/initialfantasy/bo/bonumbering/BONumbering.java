@@ -64,43 +64,10 @@ public class BONumbering extends BusinessObject<BONumbering> implements IBONumbe
 	/**
 	 * 设置-对象编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
-	}
-
-	/**
-	 * 属性名称-子类型
-	 */
-	private static final String PROPERTY_DOCUMENTSUBTYPE_NAME = "DocumentSubType";
-
-	/**
-	 * 子类型 属性
-	 */
-	@DbField(name = "DocSubType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
-	public static final IPropertyInfo<String> PROPERTY_DOCUMENTSUBTYPE = registerProperty(PROPERTY_DOCUMENTSUBTYPE_NAME,
-			String.class, MY_CLASS);
-
-	/**
-	 * 获取-子类型
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_DOCUMENTSUBTYPE_NAME)
-	public final String getDocumentSubType() {
-		return this.getProperty(PROPERTY_DOCUMENTSUBTYPE);
-	}
-
-	/**
-	 * 设置-子类型
-	 * 
-	 * @param value
-	 *            值
-	 */
-	public final void setDocumentSubType(String value) {
-		this.setProperty(PROPERTY_DOCUMENTSUBTYPE, value);
 	}
 
 	/**
@@ -128,8 +95,7 @@ public class BONumbering extends BusinessObject<BONumbering> implements IBONumbe
 	/**
 	 * 设置-自动序号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setAutoKey(Integer value) {
 		this.setProperty(PROPERTY_AUTOKEY, value);

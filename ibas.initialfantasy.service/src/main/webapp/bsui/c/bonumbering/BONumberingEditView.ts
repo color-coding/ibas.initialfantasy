@@ -28,13 +28,6 @@ namespace initialfantasy {
                                 path: "objectCode",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_documentsubtype") }),
-                            new sap.extension.m.Input("", {
-                                editable: false,
-                            }).bindProperty("bindingValue", {
-                                path: "documentSubType",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_autokey") }),
                             new sap.extension.m.Input("", {
                                 editable: false,

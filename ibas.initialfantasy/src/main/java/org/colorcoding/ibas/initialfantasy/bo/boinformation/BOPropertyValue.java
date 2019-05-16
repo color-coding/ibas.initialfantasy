@@ -3,11 +3,18 @@ package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
+import org.colorcoding.ibas.bobas.bo.IBOStorageTag;
+import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.ICondition;
+import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.core.fields.IFieldData;
+import org.colorcoding.ibas.bobas.mapping.BOCode;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -18,6 +25,8 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@XmlRootElement(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@BOCode(BOPropertyValue.BUSINESS_OBJECT_CODE)
 public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements IBOPropertyValue, IBOCustomKey {
 
 	/**
@@ -39,6 +48,10 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	 * 业务对象名称
 	 */
 	public static final String BUSINESS_OBJECT_NAME = "BOPropertyValue";
+	/**
+	 * 业务对象编码
+	 */
+	public static final String BUSINESS_OBJECT_CODE = "${Company}_SYS_BOPRTYVALUE";
 
 	/**
 	 * 属性名称-编码
@@ -65,8 +78,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCode(String value) {
 		this.setProperty(PROPERTY_CODE, value);
@@ -97,8 +109,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 设置-属性名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setPropertyName(String value) {
 		this.setProperty(PROPERTY_PROPERTY, value);
@@ -129,8 +140,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 设置-值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setValue(String value) {
 		this.setProperty(PROPERTY_VALUE, value);
@@ -161,11 +171,32 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 设置-描述
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDescription(String value) {
 		this.setProperty(PROPERTY_DESCRIPTION, value);
+	}
+
+	/**
+	 * 重写查询，始终使用主键查询
+	 */
+	@Override
+	public ICriteria getCriteria() {
+		Criteria criteria = new Criteria();
+		if (this instanceof IBOStorageTag) {
+			IBOStorageTag tagBO = (IBOStorageTag) this;
+			criteria.setBusinessObject(tagBO.getObjectCode());
+		}
+		for (IFieldData item : this.getFields(c -> c.isPrimaryKey())) {
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(item.getName());
+			condition.setValue(item.getValue());
+		}
+		if (criteria.getConditions().isEmpty()) {
+			// 没有条件，返回空
+			return null;
+		}
+		return criteria;
 	}
 
 	/**
@@ -174,7 +205,6 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-
 	}
 
 }
