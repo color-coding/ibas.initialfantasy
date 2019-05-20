@@ -10,3 +10,4 @@
 /// <reference path="./PrivilegeFunc.ts" />
 /// <reference path="./PrivilegeListApp.ts" />
 /// <reference path="./PrivilegeConfigApp.ts" />
+/// <reference path="./IdentityPrivilegeConfigApp.ts" />

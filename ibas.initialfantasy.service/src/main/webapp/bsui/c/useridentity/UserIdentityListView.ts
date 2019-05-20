@@ -31,7 +31,15 @@ namespace initialfantasy {
                         rows: "{/rows}",
                         columns: [
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_useridentity_user"),
+                                label: ibas.i18n.prop("bo_useridentity_user") + ibas.i18n.prop("bo_user_code"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "user",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_useridentity_user") + ibas.i18n.prop("bo_user_name"),
                                 template: new sap.extension.m.UserText("", {
                                     dataInfo: {
                                         key: "Code",
@@ -42,7 +50,15 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_useridentity_identity"),
+                                label: ibas.i18n.prop("bo_useridentity_identity") + ibas.i18n.prop("bo_identity_code"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "identity",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_useridentity_identity") + ibas.i18n.prop("bo_identity_name"),
                                 template: new sap.extension.m.RepositoryText("", {
                                     repository: bo.BORepositoryInitialFantasy,
                                     dataInfo: {

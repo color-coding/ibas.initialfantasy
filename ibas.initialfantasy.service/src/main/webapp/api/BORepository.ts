@@ -96,6 +96,11 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveOrganization(saver: ibas.ISaveCaller<bo.IOrganization>): void;
+            /**
+             * 查询 角色
+             * @param fetcher 查询者
+             */
+            fetchRole(fetcher: ibas.IFetchCaller<bo.IRole>): void;
 
             /**
              * 查询 系统权限
@@ -149,6 +154,16 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveUserIdentity(saver: ibas.ISaveCaller<bo.IUserIdentity>): void;
+            /**
+             * 查询 身份权限
+             * @param fetcher 查询者
+             */
+            fetchIdentityPrivilege(fetcher: ibas.IFetchCaller<bo.IIdentityPrivilege>): void;
+            /**
+             * 保存 身份权限
+             * @param saver 保存者
+             */
+            saveIdentityPrivilege(saver: ibas.ISaveCaller<bo.IIdentityPrivilege>): void;
         }
     }
 }

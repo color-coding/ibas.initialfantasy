@@ -50,6 +50,8 @@ namespace initialfantasy {
         export const BO_CODE_IDENTITY: string = "${Company}_SYS_IDENTITY";
         /** 业务对象编码-用户身份 */
         export const BO_CODE_USERIDENTITY: string = "${Company}_SYS_USERIDENTITY";
+        /** 业务对象编码-身份权限 */
+        export const BO_CODE_IDENTITYPRIVILEGE: string = "${Company}_SYS_IDENTPRIVILEGE";
 
         /**
          * 分配类型
@@ -92,6 +94,22 @@ namespace initialfantasy {
             name: string;
             /** 激活 */
             activated: ibas.emYesNo;
+        }
+    }
+
+    export namespace app {
+        /** 身份权限配置契约 */
+        export interface IIdentityPrivilegeConfigContract extends ibas.IServiceContract {
+            /** 平台 */
+            platform: ibas.emPlantform | string | bo.IApplicationPlatform;
+            /** 角色 */
+            role: string | bo.IRole;
+            /** 角色权限 */
+            privileges?: bo.IPrivilege[];
+        }
+        /** 身份权限配置服务代理 */
+        export class IdentityPrivilegeConfigServiceProxy extends ibas.ServiceProxy<IIdentityPrivilegeConfigContract> {
+
         }
     }
 }

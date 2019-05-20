@@ -30,7 +30,9 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.privilege.IIdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 
 /**
@@ -624,5 +626,51 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	public IOperationResult<IUserIdentity> saveUserIdentity(IUserIdentity bo) {
 		return new OperationResult<IUserIdentity>(this.saveUserIdentity((UserIdentity) bo, this.getUserToken()));
 	}
+
 	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-身份权限
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<IdentityPrivilege> fetchIdentityPrivilege(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, IdentityPrivilege.class);
+	}
+
+	/**
+	 * 查询-身份权限（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IIdentityPrivilege> fetchIdentityPrivilege(ICriteria criteria) {
+		return new OperationResult<IIdentityPrivilege>(this.fetchIdentityPrivilege(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-身份权限
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<IdentityPrivilege> saveIdentityPrivilege(IdentityPrivilege bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-身份权限（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IIdentityPrivilege> saveIdentityPrivilege(IIdentityPrivilege bo) {
+		return new OperationResult<IIdentityPrivilege>(
+				this.saveIdentityPrivilege((IdentityPrivilege) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+
 }

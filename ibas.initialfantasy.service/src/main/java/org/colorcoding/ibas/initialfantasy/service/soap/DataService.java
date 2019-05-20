@@ -18,6 +18,7 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
@@ -422,4 +423,31 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	}
 	// --------------------------------------------------------------------------------------------//
 
+	/**
+	 * 查询-身份权限
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<IdentityPrivilege> fetchIdentityPrivilege(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchIdentityPrivilege(criteria, token);
+	}
+
+	/**
+	 * 保存-身份权限
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<IdentityPrivilege> saveIdentityPrivilege(@WebParam(name = "bo") IdentityPrivilege bo,
+			@WebParam(name = "token") String token) {
+		return super.saveIdentityPrivilege(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
 }

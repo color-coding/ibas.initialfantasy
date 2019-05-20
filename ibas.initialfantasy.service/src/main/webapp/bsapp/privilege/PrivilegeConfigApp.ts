@@ -29,6 +29,7 @@ namespace initialfantasy {
                 this.view.savePrivilegesEvent = this.savePrivileges;
                 this.view.copyPrivilegesEvent = this.copyPrivileges;
                 this.view.deletePrivilegesEvent = this.deletePrivileges;
+                this.view.editIdentityPrivilegesEvent = this.editIdentityPrivileges;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -63,7 +64,7 @@ namespace initialfantasy {
                 this.busy(true);
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                boRepository.fetchOrganization({
+                boRepository.fetchRole({
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<bo.Organization>): void {
                         try {
@@ -117,6 +118,7 @@ namespace initialfantasy {
                                     privilege.moduleId = module.id;
                                     privilege.authoriseValue = ibas.emAuthoriseType.NONE;
                                 }
+                                privilege.markOld(); // 权限一样的不保存
                                 values.add(new Privilege(privilege, bo.emElementType.MODULE));
                                 for (let item of module.elements()) {
                                     privilege = opRslt.resultObjects.firstOrDefault(c => c.moduleId === module.id && c.platformId === platform && c.target === item.id);
@@ -128,6 +130,7 @@ namespace initialfantasy {
                                         privilege.target = item.id;
                                         privilege.authoriseValue = ibas.emAuthoriseType.ALL;
                                     }
+                                    privilege.markOld(); // 权限一样的不保存
                                     if (item instanceof ibas.ModuleFunction) {
                                         values.add(new Privilege(privilege, bo.emElementType.FUNCTION));
                                     } else if (item instanceof ibas.Application) {
@@ -164,13 +167,22 @@ namespace initialfantasy {
                         if (!(data.data.isDirty)) {
                             next();
                         } else {
+                            if (!(data.data.objectKey > 0)) {
+                                // 没有主键，则认为是新数据
+                                data.data.markNew();
+                            }
                             boRepository.savePrivilege({
                                 beSaved: data.data,
                                 onCompleted(opRslt: ibas.IOperationResult<bo.Privilege>): void {
                                     if (opRslt.resultCode !== 0) {
                                         next(new Error(opRslt.message));
                                     } else {
-                                        data.data.markOld(true);
+                                        if (opRslt.resultObjects.length > 0) {
+                                            data.data = opRslt.resultObjects.firstOrDefault();
+                                        } else {
+                                            data.data.logInst++;
+                                            data.data.markOld(true);
+                                        }
                                         next();
                                     }
                                 }
@@ -333,6 +345,36 @@ namespace initialfantasy {
                     }
                 });
             }
+            /** 编辑身份权限 */
+            private editIdentityPrivileges(role: string | bo.IRole, platform: string): void {
+                role = typeof role !== "string" && role ? role.code : role;
+                if (ibas.strings.isEmpty(role)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("bo_identityprivilege_rolecode")));
+                    return;
+                }
+                if (ibas.strings.isEmpty(platform)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("bo_identityprivilege_platformid")));
+                    return;
+                }
+                let privileges: ibas.IList<bo.IPrivilege> = new ibas.ArrayList<bo.IPrivilege>();
+                for (let item of this.privileges) {
+                    if (item.data.isDirty) {
+                        this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please") +
+                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("bo_privilege"));
+                        return;
+                    }
+                    privileges.add(item.data);
+                }
+                ibas.servicesManager.runApplicationService<IIdentityPrivilegeConfigContract>({
+                    proxy: new IdentityPrivilegeConfigServiceProxy({
+                        platform: platform,
+                        role: role,
+                        privileges: privileges,
+                    })
+                });
+            }
         }
         /** 视图-系统权限 */
         export interface IPrivilegeConfigView extends ibas.IView {
@@ -352,6 +394,8 @@ namespace initialfantasy {
             showPrivileges(datas: Privilege[]): void;
             /** 显示平台 */
             showPlatforms(datas: bo.ApplicationPlatform[]): void;
+            /** 编辑身份权限  */
+            editIdentityPrivilegesEvent: Function;
         }
 
         /** 系统权限 */
@@ -372,8 +416,8 @@ namespace initialfantasy {
             }
             data: bo.Privilege;
             type: bo.emElementType;
-            get isNew(): boolean {
-                return this.data.isNew;
+            get isDirty(): boolean {
+                return this.data.isDirty;
             }
             get roleCode(): string {
                 return this.data.roleCode;

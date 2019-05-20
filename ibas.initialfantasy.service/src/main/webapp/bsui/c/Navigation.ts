@@ -104,6 +104,9 @@ namespace initialfantasy {
                     case app.PrivilegeConfigApp.APPLICATION_ID:
                         view = new c.PrivilegeConfigView();
                         break;
+                    case app.IdentityPrivilegeConfigApp.APPLICATION_ID:
+                        view = new c.IdentityPrivilegeConfigView();
+                        break;
                     case app.UserListApp.APPLICATION_ID:
                         view = new c.UserListView();
                         break;

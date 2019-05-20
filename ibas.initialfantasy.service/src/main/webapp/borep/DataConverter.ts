@@ -57,6 +57,12 @@ namespace initialfantasy {
                     } else if (property === bo.Privilege.PROPERTY_AUTOMATIC_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
                     }
+                } else if (boName === bo.IdentityPrivilege.name) {
+                    if (property === bo.IdentityPrivilege.PROPERTY_AUTHORISEVALUE_NAME) {
+                        return ibas.enums.toString(ibas.emAuthoriseType, value);
+                    } else if (property === bo.IdentityPrivilege.PROPERTY_AUTOMATIC_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
                 } else if (boName === bo.BOFiltering.name) {
                     if (property === bo.BOFiltering.PROPERTY_FILTERINGTYPE_NAME) {
                         return ibas.enums.toString(bo.emFilteringType, value);
@@ -102,6 +108,12 @@ namespace initialfantasy {
                     if (property === bo.Privilege.PROPERTY_AUTHORISEVALUE_NAME) {
                         return ibas.enums.valueOf(ibas.emAuthoriseType, value);
                     } else if (property === bo.Privilege.PROPERTY_AUTOMATIC_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.IdentityPrivilege.name) {
+                    if (property === bo.IdentityPrivilege.PROPERTY_AUTHORISEVALUE_NAME) {
+                        return ibas.enums.valueOf(ibas.emAuthoriseType, value);
+                    } else if (property === bo.IdentityPrivilege.PROPERTY_AUTOMATIC_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 } else if (boName === bo.BOFiltering.name) {

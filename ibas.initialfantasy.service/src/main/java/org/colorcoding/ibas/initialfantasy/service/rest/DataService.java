@@ -23,6 +23,7 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
@@ -576,6 +577,40 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Path("saveUserIdentity")
 	public OperationResult<UserIdentity> saveUserIdentity(UserIdentity bo, @QueryParam("token") String token) {
 		return super.saveUserIdentity(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+
+	/**
+	 * 查询-身份权限
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchIdentityPrivilege")
+	public OperationResult<IdentityPrivilege> fetchIdentityPrivilege(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchIdentityPrivilege(criteria, token);
+	}
+
+	/**
+	 * 保存-身份权限
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveIdentityPrivilege")
+	public OperationResult<IdentityPrivilege> saveIdentityPrivilege(IdentityPrivilege bo,
+			@QueryParam("token") String token) {
+		return super.saveIdentityPrivilege(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

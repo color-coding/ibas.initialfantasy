@@ -18,4 +18,5 @@
 /// <reference path="./bo/User.ts" />
 /// <reference path="./bo/Identity.ts" />
 /// <reference path="./bo/UserIdentity.ts" />
+/// <reference path="./bo/IdentityPrivilege.ts" />
 /// <reference path="./BORepository.ts" />

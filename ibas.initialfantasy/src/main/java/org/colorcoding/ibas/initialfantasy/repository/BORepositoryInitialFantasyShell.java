@@ -227,22 +227,23 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (opRsltModules.getError() != null) {
 				throw opRsltModules.getError();
 			}
+			// 去重
 			ServiceRouting serviceRouting = ServiceRouting.create();
 			for (Object item : opRsltModules.getResultObjects()) {
 				if (item instanceof ApplicationModule4Shell) {
+					ApplicationModule4Shell shellModule = (ApplicationModule4Shell) item;
 					UserModule userModule = opRslt.getResultObjects()
-							.firstOrDefault(c -> c.getId().equals(((ApplicationModule4Shell) item).getModuleId()));
+							.firstOrDefault(c -> c.getId().equals(shellModule.getModuleId()));
 					if (userModule == null) {
-						userModule = UserModule.create((ApplicationModule4Shell) item);
+						userModule = UserModule.create(shellModule);
+						serviceRouting.routing(userModule);// 设置有效服务
+						opRslt.addResultObjects(userModule);
 					} else {
-						// 保留最大权限设置
-						if (userModule.getAuthorise()
-								.compareTo(((ApplicationModule4Shell) item).getAuthoriseValue()) < 0) {
-							continue;
+						// 保留最小权限设置
+						if (userModule.getAuthorise().compareTo(shellModule.getAuthoriseValue()) > 0) {
+							userModule.setAuthorise(shellModule.getAuthoriseValue());
 						}
 					}
-					serviceRouting.routing(userModule);// 设置有效服务
-					opRslt.addResultObjects(userModule);
 				}
 			}
 		} catch (Exception e) {
@@ -261,14 +262,27 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_PRIVILEGES"));
 			sp.addParameters("Platform", platform);
 			sp.addParameters("UserCode", user);
-			IOperationResult<?> opRsltPrivileges = boRepository.fetch(sp, UserPrivilege.class);
+			IOperationResult<UserPrivilege> opRsltPrivileges = boRepository.fetch(sp, UserPrivilege.class);
 			if (opRsltPrivileges.getError() != null) {
 				throw opRsltPrivileges.getError();
 			}
 			if (opRsltPrivileges.getResultCode() != 0) {
 				throw new Exception(opRsltPrivileges.getMessage());
 			}
-			opRslt.addResultObjects(opRsltPrivileges.getResultObjects());
+			// 去重
+			for (UserPrivilege item : opRsltPrivileges.getResultObjects()) {
+				UserPrivilege privilege = opRslt.getResultObjects()
+						.firstOrDefault(c -> c.getTarget() == item.getTarget());
+				if (privilege != null) {
+					// 保留最小权限
+					if (privilege.getValue().compareTo(item.getValue()) > 0) {
+						privilege.setValue(item.getValue());
+						privilege.setAutomatic(item.getAutomatic());
+					}
+				} else {
+					opRslt.addResultObjects(item);
+				}
+			}
 		} catch (Exception e) {
 			opRslt.setError(e);
 		}

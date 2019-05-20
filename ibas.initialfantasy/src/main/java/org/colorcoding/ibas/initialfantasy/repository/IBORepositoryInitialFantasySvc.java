@@ -16,6 +16,7 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 
 /**
@@ -280,6 +281,26 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 * @return 操作结果
 	 */
 	OperationResult<UserIdentity> saveUserIdentity(UserIdentity bo, String token);
+
+	// --------------------------------------------------------------------------------------------//
+
+	/**
+	 * 查询-身份权限
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<IdentityPrivilege> fetchIdentityPrivilege(ICriteria criteria, String token);
+
+	/**
+	 * 保存-身份权限
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<IdentityPrivilege> saveIdentityPrivilege(IdentityPrivilege bo, String token);
 
 	// --------------------------------------------------------------------------------------------//
 

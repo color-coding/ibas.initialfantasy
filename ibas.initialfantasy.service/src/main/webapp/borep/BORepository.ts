@@ -10,7 +10,6 @@ namespace initialfantasy {
 
         /** <%Domain.Name%> 业务仓库 */
         export class BORepositoryInitialFantasy extends ibas.BORepositoryApplication implements IBORepositoryInitialFantasy {
-
             /** 创建此模块的后端与前端数据的转换者 */
             protected createConverter(): ibas.IDataConverter {
                 return new DataConverter();
@@ -145,6 +144,15 @@ namespace initialfantasy {
             }
 
             /**
+             * 查询 角色
+             * @param fetcher 查询者
+             */
+            fetchRole(fetcher: ibas.IFetchCaller<IRole>): void {
+                super.fetch(bo.Organization.name, fetcher);
+            }
+
+
+            /**
              * 查询 系统权限
              * @param fetcher 查询者
              */
@@ -237,6 +245,20 @@ namespace initialfantasy {
              */
             saveUserIdentity(saver: ibas.ISaveCaller<bo.UserIdentity>): void {
                 super.save(bo.UserIdentity.name, saver);
+            }
+            /**
+             * 查询 身份权限
+             * @param fetcher 查询者
+             */
+            fetchIdentityPrivilege(fetcher: ibas.IFetchCaller<bo.IdentityPrivilege>): void {
+                super.fetch(bo.IdentityPrivilege.name, fetcher);
+            }
+            /**
+             * 保存 身份权限
+             * @param saver 保存者
+             */
+            saveIdentityPrivilege(saver: ibas.ISaveCaller<bo.IdentityPrivilege>): void {
+                super.save(bo.IdentityPrivilege.name, saver);
             }
         }
     }

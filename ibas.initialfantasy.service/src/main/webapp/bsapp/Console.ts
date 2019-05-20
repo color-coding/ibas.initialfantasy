@@ -67,6 +67,7 @@ namespace initialfantasy {
                     // 组织为本模块实现
                     this.register(new RoleChooseServiceMapping());
                 }
+                this.register(new IdentityPrivilegeConfigServiceMapping());
                 // 注册常驻应用
                 this.register(new UserProfileApp());
             }
