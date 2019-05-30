@@ -11,7 +11,7 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.BOCode;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -23,7 +23,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = IdentityPrivilege.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = IdentityPrivilege.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-@BOCode(IdentityPrivilege.BUSINESS_OBJECT_CODE)
+@BusinessObjectUnit(code = IdentityPrivilege.BUSINESS_OBJECT_CODE)
 public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> implements IIdentityPrivilege {
 
 	/**

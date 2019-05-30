@@ -10,7 +10,7 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.BOCode;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -23,7 +23,7 @@ import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BOCriteria.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = BOCriteria.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-@BOCode(BOCriteria.BUSINESS_OBJECT_CODE)
+@BusinessObjectUnit(code = BOCriteria.BUSINESS_OBJECT_CODE)
 public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteria {
 
 	/**

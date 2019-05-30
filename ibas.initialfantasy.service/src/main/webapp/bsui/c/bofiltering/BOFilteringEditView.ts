@@ -37,24 +37,6 @@ namespace initialfantasy {
                                     maxLength: 30
                                 })
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_rolecode") }),
-                            new sap.extension.m.RepositoryInput("", {
-                                showValueHelp: true,
-                                repository: bo.BORepositoryInitialFantasy,
-                                dataInfo: {
-                                    type: bo.Organization,
-                                    key: "Code",
-                                    text: "Name"
-                                },
-                                valueHelpRequest: function (): void {
-                                    that.fireViewEvents(that.chooseRoleEvent);
-                                }
-                            }).bindProperty("bindingValue", {
-                                path: "roleCode",
-                                type: new sap.extension.data.Alphanumeric({
-                                    maxLength: 8
-                                })
-                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_bocode") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
@@ -71,6 +53,24 @@ namespace initialfantasy {
                                 path: "boCode",
                                 type: new sap.extension.data.Alphanumeric({
                                     maxLength: 30
+                                })
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_rolecode") }),
+                            new sap.extension.m.RepositoryInput("", {
+                                showValueHelp: true,
+                                repository: bo.BORepositoryInitialFantasy,
+                                dataInfo: {
+                                    type: bo.Organization,
+                                    key: "Code",
+                                    text: "Name"
+                                },
+                                valueHelpRequest: function (): void {
+                                    that.fireViewEvents(that.chooseRoleEvent);
+                                }
+                            }).bindProperty("bindingValue", {
+                                path: "roleCode",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 8
                                 })
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_activated") }),
@@ -162,7 +162,15 @@ namespace initialfantasy {
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
+                                        width: "12rem",
                                         template: new sap.extension.m.Input("", {
+                                            showSuggestion: true,
+                                            suggestionItems: [
+                                                new sap.ui.core.Item("", {
+                                                }).setText("${USER_ID}"),
+                                                new sap.ui.core.Item("", {
+                                                }).setText("${USER_BELONG}"),
+                                            ]
                                         }).bindProperty("bindingValue", {
                                             path: "conditionValue",
                                             type: new sap.extension.data.Alphanumeric({

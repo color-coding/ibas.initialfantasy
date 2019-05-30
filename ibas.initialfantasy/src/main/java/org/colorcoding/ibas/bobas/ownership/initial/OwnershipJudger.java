@@ -1,5 +1,6 @@
 package org.colorcoding.ibas.bobas.ownership.initial;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,10 +89,8 @@ public class OwnershipJudger implements IOwnershipJudger {
 	 * 
 	 * 注意，配置的条件中，任意一个不满足则不满足
 	 * 
-	 * @param bo
-	 *            数据
-	 * @param role
-	 *            角色
+	 * @param bo   数据
+	 * @param role 角色
 	 * @return true,被过滤；false,未被过滤
 	 * @throws InvalidTokenException
 	 * @throws JudmentOperationException
@@ -102,7 +101,22 @@ public class OwnershipJudger implements IOwnershipJudger {
 		if (bo == null || roles == null || roles.length == 0) {
 			return status;
 		}
-		List<IBOFiltering> filterings = this.getBOFilterings(bo.getObjectCode(), roles);
+		List<IBOFiltering> filterings = this.getFilterings(bo.getObjectCode(), roles);
+		filterings.sort(new Comparator<IBOFiltering>() {
+			@Override
+			public int compare(IBOFiltering o1, IBOFiltering o2) {
+				// 未设置角色的优先
+				if ((o1.getRoleCode() == null || o1.getRoleCode().isEmpty())
+						&& (o2.getRoleCode() != null && !o2.getRoleCode().isEmpty())) {
+					return 1;
+				} else if ((o1.getRoleCode() != null && !o1.getRoleCode().isEmpty())
+						&& (o2.getRoleCode() == null || o2.getRoleCode().isEmpty())) {
+					return -1;
+				}
+				// 新对象优先
+				return Integer.compare(o2.getObjectKey(), o1.getObjectKey());
+			}
+		});
 		for (IBOFiltering filtering : filterings) {
 			if (filtering == null) {
 				continue;
@@ -138,16 +152,16 @@ public class OwnershipJudger implements IOwnershipJudger {
 		return status;
 	}
 
-	private HashMap<String, IBOFiltering> boFilterings = new HashMap<>();
+	private HashMap<String, IBOFiltering> filterings = new HashMap<>();
 	private static String FILTERING_KEY_TEMPLATE = "%s|%s";
 
-	protected List<IBOFiltering> getBOFilterings(String boCode, String[] roles) throws InvalidTokenException {
+	protected List<IBOFiltering> getFilterings(String boCode, String[] roles) throws InvalidTokenException {
 		ArrayList<IBOFiltering> filterings = new ArrayList<>();
 		ArrayList<String> doRoles = new ArrayList<>();
 		for (String role : roles) {
 			String key = String.format(FILTERING_KEY_TEMPLATE, boCode, role);
-			if (this.boFilterings.containsKey(key)) {
-				filterings.add(this.boFilterings.get(key));
+			if (this.filterings.containsKey(key)) {
+				filterings.add(this.filterings.get(key));
 			} else {
 				// 不存在的角色权限
 				doRoles.add(role);
@@ -185,7 +199,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			IOperationResult<IBOFiltering> operationResult = boRepository.fetchBOFiltering(criteria);
 			for (IBOFiltering filtering : operationResult.getResultObjects()) {
-				this.boFilterings.put(
+				this.filterings.put(
 						String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(), filtering.getRoleCode()),
 						filtering);// 缓存数据
 				filterings.add(filtering);// 返回数据
@@ -193,7 +207,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 			// 缓存未配置的
 			for (String role : doRoles) {
 				if (filterings.firstOrDefault(c -> c.getRoleCode().equals(role)) == null) {
-					this.boFilterings.put(String.format(FILTERING_KEY_TEMPLATE, boCode, role), null);// 缓存数据
+					this.filterings.put(String.format(FILTERING_KEY_TEMPLATE, boCode, role), null);// 缓存数据
 				}
 			}
 		}

@@ -254,7 +254,6 @@ namespace initialfantasy {
                     }
                 });
             }
-
         }
         /** 视图-业务对象筛选 */
         export interface IBOFilteringEditView extends ibas.IBOEditView {

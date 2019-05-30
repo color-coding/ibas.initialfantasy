@@ -35,6 +35,7 @@ namespace initialfantasy {
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_applicationid") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                valueHelpOnly: false,
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.ApplicationElement,

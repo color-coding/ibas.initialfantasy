@@ -14,7 +14,7 @@ import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.core.fields.IFieldData;
-import org.colorcoding.ibas.bobas.mapping.BOCode;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -26,7 +26,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-@BOCode(BOPropertyValue.BUSINESS_OBJECT_CODE)
+@BusinessObjectUnit(code = BOPropertyValue.BUSINESS_OBJECT_CODE)
 public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements IBOPropertyValue, IBOCustomKey {
 
 	/**

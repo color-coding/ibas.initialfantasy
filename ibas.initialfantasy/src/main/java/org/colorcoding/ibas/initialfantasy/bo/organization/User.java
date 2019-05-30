@@ -18,7 +18,7 @@ import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
-import org.colorcoding.ibas.bobas.mapping.BOCode;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
@@ -36,7 +36,7 @@ import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = User.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = User.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-@BOCode(User.BUSINESS_OBJECT_CODE)
+@BusinessObjectUnit(code = User.BUSINESS_OBJECT_CODE)
 public class User extends BusinessObject<User>
 		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey, IBusinessLogicsHost {
 

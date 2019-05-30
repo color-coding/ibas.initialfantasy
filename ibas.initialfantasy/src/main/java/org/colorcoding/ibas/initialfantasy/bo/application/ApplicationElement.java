@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.mapping.BOCode;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -22,7 +22,7 @@ import org.colorcoding.ibas.initialfantasy.data.emElementType;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = ApplicationElement.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = ApplicationElement.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-@BOCode(ApplicationElement.BUSINESS_OBJECT_CODE)
+@BusinessObjectUnit(code = ApplicationElement.BUSINESS_OBJECT_CODE)
 public class ApplicationElement extends BusinessObject<ApplicationElement> implements IApplicationElement {
 
 	/**
