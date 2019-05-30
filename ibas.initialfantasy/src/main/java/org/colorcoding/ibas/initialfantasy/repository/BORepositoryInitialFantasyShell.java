@@ -15,6 +15,7 @@ import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
@@ -220,7 +221,8 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_MODULES"));
 			sp.addParameters("Platform", platform);
 			sp.addParameters("UserCode", user);
-			IOperationResult<?> opRsltModules = boRepository.fetch(sp, ApplicationModule4Shell.class);
+			IOperationResult<ApplicationModule4Shell> opRsltModules = boRepository.fetch(sp,
+					ApplicationModule4Shell.class);
 			if (opRsltModules.getResultCode() != 0) {
 				throw new Exception(opRsltModules.getMessage());
 			}
@@ -229,20 +231,20 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			// 去重
 			ServiceRouting serviceRouting = ServiceRouting.create();
-			for (Object item : opRsltModules.getResultObjects()) {
-				if (item instanceof ApplicationModule4Shell) {
-					ApplicationModule4Shell shellModule = (ApplicationModule4Shell) item;
-					UserModule userModule = opRslt.getResultObjects()
-							.firstOrDefault(c -> c.getId().equals(shellModule.getModuleId()));
-					if (userModule == null) {
-						userModule = UserModule.create(shellModule);
-						serviceRouting.routing(userModule);// 设置有效服务
-						opRslt.addResultObjects(userModule);
-					} else {
-						// 保留最小权限设置
-						if (userModule.getAuthorise().compareTo(shellModule.getAuthoriseValue()) > 0) {
-							userModule.setAuthorise(shellModule.getAuthoriseValue());
-						}
+			for (ApplicationModule4Shell item : opRsltModules.getResultObjects()) {
+				if (item.getAuthoriseValue() == emAuthoriseType.NONE) {
+					continue;
+				}
+				UserModule userModule = opRslt.getResultObjects()
+						.firstOrDefault(c -> c.getId().equals(item.getModuleId()));
+				if (userModule == null) {
+					userModule = UserModule.create(item);
+					serviceRouting.routing(userModule);// 设置有效服务
+					opRslt.addResultObjects(userModule);
+				} else {
+					// 保留最小权限设置
+					if (userModule.getAuthorise().compareTo(item.getAuthoriseValue()) < 0) {
+						userModule.setAuthorise(item.getAuthoriseValue());
 					}
 				}
 			}
@@ -271,11 +273,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			// 去重
 			for (UserPrivilege item : opRsltPrivileges.getResultObjects()) {
-				UserPrivilege privilege = opRslt.getResultObjects()
-						.firstOrDefault(c -> c.getTarget() == item.getTarget());
+				if (item == null || item.getTarget() == null) {
+					continue;
+				}
+				UserPrivilege privilege = opRslt.getResultObjects().firstOrDefault(
+						c -> item.getTarget() == c.getTarget() || item.getTarget().equals(c.getTarget()));
 				if (privilege != null) {
 					// 保留最小权限
-					if (privilege.getValue().compareTo(item.getValue()) > 0) {
+					if (privilege.getValue().compareTo(item.getValue()) < 0) {
 						privilege.setValue(item.getValue());
 						privilege.setAutomatic(item.getAutomatic());
 					}

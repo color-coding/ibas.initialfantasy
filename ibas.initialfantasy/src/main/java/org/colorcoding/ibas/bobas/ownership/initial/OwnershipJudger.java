@@ -1,5 +1,6 @@
 package org.colorcoding.ibas.bobas.ownership.initial;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.colorcoding.ibas.bobas.core.fields.IFieldData;
 import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
 import org.colorcoding.ibas.bobas.core.fields.IManagedFields;
 import org.colorcoding.ibas.bobas.data.ArrayList;
+import org.colorcoding.ibas.bobas.data.DataConvert;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.expression.BOJudgmentLink;
@@ -24,6 +26,7 @@ import org.colorcoding.ibas.bobas.expression.JudgmentLinkItem;
 import org.colorcoding.ibas.bobas.expression.JudmentOperation;
 import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
 import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
@@ -34,6 +37,7 @@ import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFilteringCondition;
+import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
@@ -77,6 +81,12 @@ public class OwnershipJudger implements IOwnershipJudger {
 			if (data == null || user == null) {
 				return false;
 			}
+			if (user instanceof User) {
+				User sUser = (User) user;
+				if (sUser.isSuper()) {
+					return true;
+				}
+			}
 			return this.filtering(data, user);
 		} catch (Exception e) {
 			Logger.log(e);
@@ -97,26 +107,16 @@ public class OwnershipJudger implements IOwnershipJudger {
 	 */
 	protected boolean filtering(IDataOwnership bo, IUser user) throws InvalidTokenException, JudmentOperationException {
 		boolean status = MyConfiguration.getConfigValue(CONFIG_ITEM_DATA_READABLE_DEFAULT_VALUE, true);
-		String[] roles = OrganizationFactory.create().createManager().getRoles(user);
-		if (bo == null || roles == null || roles.length == 0) {
+		if (bo == null) {
+			return status;
+		}
+		List<String> roles = new ArrayList<>(
+				Arrays.asList(OrganizationFactory.create().createManager().getRoles(user)));
+		roles.add("");// 增加全局身份
+		if (roles == null || roles.size() == 0) {
 			return status;
 		}
 		List<IBOFiltering> filterings = this.getFilterings(bo.getObjectCode(), roles);
-		filterings.sort(new Comparator<IBOFiltering>() {
-			@Override
-			public int compare(IBOFiltering o1, IBOFiltering o2) {
-				// 未设置角色的优先
-				if ((o1.getRoleCode() == null || o1.getRoleCode().isEmpty())
-						&& (o2.getRoleCode() != null && !o2.getRoleCode().isEmpty())) {
-					return 1;
-				} else if ((o1.getRoleCode() != null && !o1.getRoleCode().isEmpty())
-						&& (o2.getRoleCode() == null || o2.getRoleCode().isEmpty())) {
-					return -1;
-				}
-				// 新对象优先
-				return Integer.compare(o2.getObjectKey(), o1.getObjectKey());
-			}
-		});
 		for (IBOFiltering filtering : filterings) {
 			if (filtering == null) {
 				continue;
@@ -155,13 +155,16 @@ public class OwnershipJudger implements IOwnershipJudger {
 	private HashMap<String, IBOFiltering> filterings = new HashMap<>();
 	private static String FILTERING_KEY_TEMPLATE = "%s|%s";
 
-	protected List<IBOFiltering> getFilterings(String boCode, String[] roles) throws InvalidTokenException {
+	protected List<IBOFiltering> getFilterings(String boCode, Iterable<String> roles) throws InvalidTokenException {
 		ArrayList<IBOFiltering> filterings = new ArrayList<>();
 		ArrayList<String> doRoles = new ArrayList<>();
 		for (String role : roles) {
 			String key = String.format(FILTERING_KEY_TEMPLATE, boCode, role);
 			if (this.filterings.containsKey(key)) {
-				filterings.add(this.filterings.get(key));
+				IBOFiltering filtering = this.filterings.get(key);
+				if (filtering != null) {
+					filterings.add(filtering);
+				}
 			} else {
 				// 不存在的角色权限
 				doRoles.add(role);
@@ -169,7 +172,8 @@ public class OwnershipJudger implements IOwnershipJudger {
 		}
 		// 构建查询条件， (BOCode = 'XXXX' AND Activated = 'Y')
 		// AND (Role = 'A' OR Role = 'B')
-		if (doRoles.size() > 0) {
+		int roleCount = doRoles.size();
+		if (roleCount > 0) {
 			// 存在未缓存的角色权限
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
@@ -180,17 +184,19 @@ public class OwnershipJudger implements IOwnershipJudger {
 			condition.setAlias(BOFiltering.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
 			condition.setBracketClose(1);
-			for (int i = 0; i < doRoles.size(); i++) {
+			for (int i = 0; i < roleCount; i++) {
+				String role = doRoles.get(i);
 				condition = criteria.getConditions().create();
 				condition.setAlias(BOFiltering.PROPERTY_ROLECODE.getName());
-				condition.setValue(doRoles.get(i));
-				condition.setRelationship(ConditionRelationship.OR);
-				if (i == 0) {
+				condition.setValue(role);
+				if (i > 0) {
+					condition.setRelationship(ConditionRelationship.OR);
+				}
+				if (roleCount > 1 && i == 0) {
 					// first.
-					condition.setRelationship(ConditionRelationship.AND);
 					condition.setBracketOpen(1);
 				}
-				if (i == doRoles.size() - 1) {
+				if (roleCount > 1 && i == roleCount - 1) {
 					// last.
 					condition.setBracketClose(1);
 				}
@@ -199,10 +205,10 @@ public class OwnershipJudger implements IOwnershipJudger {
 			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			IOperationResult<IBOFiltering> operationResult = boRepository.fetchBOFiltering(criteria);
 			for (IBOFiltering filtering : operationResult.getResultObjects()) {
-				this.filterings.put(
-						String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(), filtering.getRoleCode()),
-						filtering);// 缓存数据
-				filterings.add(filtering);// 返回数据
+				// 缓存数据并返回数据
+				this.filterings.put(String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(),
+						filtering.getRoleCode() == null ? "" : filtering.getRoleCode()), filtering);
+				filterings.add(filtering);
 			}
 			// 缓存未配置的
 			for (String role : doRoles) {
@@ -211,7 +217,78 @@ public class OwnershipJudger implements IOwnershipJudger {
 				}
 			}
 		}
+		// 过滤排序
+		filterings.sort(new Comparator<IBOFiltering>() {
+			@Override
+			public int compare(IBOFiltering o1, IBOFiltering o2) {
+				// 未设置角色的优先
+				if ((o1.getRoleCode() == null || o1.getRoleCode().isEmpty())
+						&& (o2.getRoleCode() != null && !o2.getRoleCode().isEmpty())) {
+					return 1;
+				} else if ((o1.getRoleCode() != null && !o1.getRoleCode().isEmpty())
+						&& (o2.getRoleCode() == null || o2.getRoleCode().isEmpty())) {
+					return -1;
+				}
+				// 新对象优先
+				return Integer.compare(o2.getObjectKey(), o1.getObjectKey());
+			}
+		});
 		return filterings;
+	}
+
+	@Override
+	public ICriteria filterCriteria(BusinessObjectUnit boUnit, IUser user) {
+		if (user instanceof User) {
+			User sUser = (User) user;
+			if (sUser.isSuper()) {
+				return null;
+			}
+		}
+		try {
+			List<String> roles = new ArrayList<>(
+					Arrays.asList(OrganizationFactory.create().createManager().getRoles(user)));
+			roles.add("");// 增加全局身份
+			if (roles != null && !roles.isEmpty()) {
+				for (IBOFiltering boFiltering : this.getFilterings(MyConfiguration.applyVariables(boUnit.code()),
+						roles)) {
+					if (boFiltering.getFilteringType() == emFilteringType.AVAILABLE) {
+						// 仅支持可用查询
+						if (!boFiltering.getBOFilteringConditions().isEmpty()) {
+							ICriteria criteria = new Criteria();
+							ICondition condition = null;
+							for (IBOFilteringCondition item : boFiltering.getBOFilteringConditions()) {
+								condition = criteria.getConditions().create();
+								condition.setBracketOpen(item.getBracketOpen());
+								condition.setAlias(item.getPropertyName());
+								condition.setOperation(DataConvert.toOperation(item.getOperation()));
+								condition.setValue(item.getConditionValue());
+								condition.setBracketClose(item.getBracketClose());
+								condition.setRelationship(DataConvert.toRelationship(item.getRelationship()));
+								// 替换变量
+								if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_ID.equals(condition.getValue())) {
+									condition.setValue(user.getId());
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
+										.equals(condition.getValue())) {
+									condition.setValue(user.getBelong());
+								}
+							}
+							if (!criteria.getConditions().isEmpty()) {
+								condition = criteria.getConditions().firstOrDefault();
+								if (condition.getRelationship() == ConditionRelationship.NONE) {
+									condition.setRelationship(ConditionRelationship.AND);
+								}
+								if (condition.getRelationship() == ConditionRelationship.AND) {
+									return criteria;
+								}
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			Logger.log(e);
+		}
+		return null;
 	}
 }
 

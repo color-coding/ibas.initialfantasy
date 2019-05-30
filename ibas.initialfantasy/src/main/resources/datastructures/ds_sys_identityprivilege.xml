@@ -2,11 +2,11 @@
 <!DOCTYPE Domain>
 <Domain Name="InitialFantasy" ShortName="IF">
   <Model Name="IdentityPrivilege" Description="身份权限" ModelType="Simple" Mapped="${Company}_SYS_PRIVILEGE1">
-    <Property Name="RoleCode" Description="角色标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="RoleCode"/>
-    <Property Name="PlatformId" Description="平台标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="PlatformId"/>
-    <Property Name="ModuleId" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleId"/>
-    <Property Name="IdentityCode" Description="身份标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="IdentityCode"/>
-    <Property Name="Target" Description="目标标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Target"/>
+    <Property Name="RoleCode" Description="角色标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="RoleCode" UniqueKey="Yes"/>
+    <Property Name="PlatformId" Description="平台标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="PlatformId" UniqueKey="Yes"/>
+    <Property Name="ModuleId" Description="模块标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ModuleId" UniqueKey="Yes"/>
+    <Property Name="IdentityCode" Description="身份标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="IdentityCode" UniqueKey="Yes"/>
+    <Property Name="Target" Description="目标标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Target" UniqueKey="Yes"/>
     <Property Name="Activated" Description="是否可用" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="AuthoriseValue" Description="权限类型" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="AuthValue"/>
     <Property Name="Automatic" Description="自动运行" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Automatic"/>

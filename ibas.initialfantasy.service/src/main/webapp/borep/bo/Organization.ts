@@ -193,6 +193,17 @@ namespace initialfantasy {
                 this.setProperty(Organization.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
+            /** 映射的属性名称-数据所有者 */
+            static PROPERTY_DATAOWNER_NAME: string = "DataOwner";
+            /** 获取-数据所有者 */
+            get dataOwner(): number {
+                return this.getProperty<number>(User.PROPERTY_DATAOWNER_NAME);
+            }
+            /** 设置-数据所有者 */
+            set dataOwner(value: number) {
+                this.setProperty(User.PROPERTY_DATAOWNER_NAME, value);
+            }
+
 
 
             /** 初始化数据 */

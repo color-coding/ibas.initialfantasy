@@ -250,6 +250,9 @@ namespace initialfantasy {
                             that.editData.name =
                                 that.editData.name.substring(0, that.editData.name.indexOf("-")) + "-" + selected.description;
                         }
+                        if (ibas.strings.isEmpty(that.editData.roleCode)) {
+                            that.editData.roleCode = "";
+                        }
                         that.view.showBOFiltering(that.editData);
                     }
                 });

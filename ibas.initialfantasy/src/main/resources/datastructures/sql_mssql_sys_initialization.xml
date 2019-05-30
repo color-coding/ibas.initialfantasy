@@ -41,12 +41,27 @@
                         --非超级用户，角色权限
                         SELECT A.*,C.AuthValue
                         FROM "${Company}_SYS_MODULE" A INNER JOIN (
-                            SELECT DISTINCT B."ModuleId",B."AuthValue"
-                            FROM "${Company}_SYS_PRIVILEGE" B
-                            WHERE (B."PlatformId" = @platform OR B."PlatformId" = @platform2) AND B."Activated" = 'Y' AND B."AuthValue" &lt;&gt; 'N' AND B."RoleCode" IN (
-                                SELECT "OrgCode"
-                                FROM "${Company}_SYS_USER"
-                                WHERE "Code" = @userCode)
+                            SELECT "ModuleId", "AuthValue"
+                            FROM "${Company}_SYS_PRIVILEGE"
+                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
+                                AND "RoleCode" IN (
+                                    SELECT "OrgCode"
+                                    FROM "${Company}_SYS_USER"
+                                    WHERE "Code" = @userCode
+                                )
+                            UNION ALL
+                            SELECT "ModuleId", "AuthValue"
+                            FROM "${Company}_SYS_PRIVILEGE1"
+                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
+                                AND "RoleCode" IN (
+                                    SELECT "OrgCode"
+                                    FROM "${Company}_SYS_USER"
+                                    WHERE "Code" = @userCode
+                                ) AND "IdentityCode" IN (
+                                    SELECT "Identity"
+                                    FROM "${Company}_SYS_USRIDNTY"
+                                    WHERE "User" = @userCode
+                                )
                         ) C ON A."ModuleId" = C."ModuleId"
                         WHERE (A."PlatformId" = @platform OR A."PlatformId" = @platform2) AND A."Activated" = 'Y'
                 END;

@@ -70,8 +70,12 @@ public class OrganizationManager implements IOrganizationManager {
 	@Override
 	public String[] getRoles(IUser user) {
 		for (IUser item : this.getUsers()) {
-			if (item == user) {
-				return new String[] { item.getBelong() };
+			if (item.equals(user)) {
+				if (item.getBelong() != null && !item.getBelong().isEmpty()) {
+					return new String[] { item.getBelong() };
+				} else {
+					break;
+				}
 			}
 		}
 		return new String[] {};

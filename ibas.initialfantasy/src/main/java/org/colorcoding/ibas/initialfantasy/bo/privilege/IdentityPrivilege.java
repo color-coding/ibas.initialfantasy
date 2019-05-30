@@ -59,7 +59,7 @@ public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> impleme
 	/**
 	 * 角色标识 属性
 	 */
-	@DbField(name = "RoleCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "RoleCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_ROLECODE = registerProperty(PROPERTY_ROLECODE_NAME, String.class,
 			MY_CLASS);
 
@@ -90,7 +90,7 @@ public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> impleme
 	/**
 	 * 平台标识 属性
 	 */
-	@DbField(name = "PlatformId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "PlatformId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_PLATFORMID = registerProperty(PROPERTY_PLATFORMID_NAME,
 			String.class, MY_CLASS);
 
@@ -121,7 +121,7 @@ public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> impleme
 	/**
 	 * 模块标识 属性
 	 */
-	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_MODULEID = registerProperty(PROPERTY_MODULEID_NAME, String.class,
 			MY_CLASS);
 
@@ -152,7 +152,7 @@ public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> impleme
 	/**
 	 * 目标标识 属性
 	 */
-	@DbField(name = "Target", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Target", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_TARGET = registerProperty(PROPERTY_TARGET_NAME, String.class,
 			MY_CLASS);
 
@@ -214,7 +214,7 @@ public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> impleme
 	/**
 	 * 身份标识 属性
 	 */
-	@DbField(name = "IdentityCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "IdentityCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_IDENTITYCODE = registerProperty(PROPERTY_IDENTITYCODE_NAME,
 			String.class, MY_CLASS);
 
@@ -710,7 +710,7 @@ public class IdentityPrivilege extends BusinessObject<IdentityPrivilege> impleme
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setActivated(emYesNo.YES);
-
+		this.setTarget("");
 	}
 
 }

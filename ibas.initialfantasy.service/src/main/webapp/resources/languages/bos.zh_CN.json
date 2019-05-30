@@ -213,6 +213,7 @@
         "bo_organization_updateusersign": "修改用户",
         "bo_organization_createactionid": "创建动作标识",
         "bo_organization_updateactionid": "更新动作标识",
+        "bo_organization_dataowner": "数据所有者",
         "bo_organization_closing_delimiter": "----结束----"
     },
     {

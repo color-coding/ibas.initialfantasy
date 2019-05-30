@@ -253,6 +253,7 @@ namespace initialfantasy {
                 this.objectCode = ibas.config.applyVariables(IdentityPrivilege.BUSINESS_OBJECT_CODE);
                 this.activated = ibas.emYesNo.YES;
                 this.automatic = ibas.emYesNo.NO;
+                this.target = "";
                 this.authoriseValue = ibas.emAuthoriseType.NONE;
             }
         }

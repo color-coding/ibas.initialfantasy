@@ -55,6 +55,17 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_bofiltering_filteringtype"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "filteringType",
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emFilteringType,
+                                        describe: true,
+                                    })
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bofiltering_rolecode"),
                                 template: new sap.extension.m.RoleText("", {
                                 }).bindProperty("bindingValue", {

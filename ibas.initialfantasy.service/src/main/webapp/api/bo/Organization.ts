@@ -59,6 +59,8 @@ namespace initialfantasy {
             /** 更新动作标识 */
             updateActionId: string;
 
+            /** 数据所有者 */
+            dataOwner: number;
         }
     }
 }

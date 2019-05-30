@@ -44,10 +44,10 @@ namespace initialfantasy {
                 this.register(new UserFunc());
                 this.register(new OrganizationFunc());
                 this.register(new BOCriteriaFunc());
+                this.register(new PrivilegeFunc());
+                this.register(new BOFilteringFunc());
                 if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true) {
                     // 仅调超级用户，启用以下功能
-                    this.register(new PrivilegeFunc());
-                    this.register(new BOFilteringFunc());
                     this.register(new ApplicationConfigFunc());
                     this.register(new BOInformationFunc());
                 }
