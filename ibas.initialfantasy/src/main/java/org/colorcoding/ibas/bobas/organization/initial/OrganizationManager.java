@@ -1,11 +1,12 @@
 package org.colorcoding.ibas.bobas.organization.initial;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.IUser;
@@ -21,11 +22,7 @@ public class OrganizationManager implements IOrganizationManager {
 			if (token.equals(OrganizationFactory.SYSTEM_USER.getToken())) {
 				return OrganizationFactory.SYSTEM_USER;
 			}
-			for (IUser item : this.getUsers()) {
-				if (token.equals(item.getToken())) {
-					return item;
-				}
-			}
+			return this.getTokenUsers().get(token);
 		}
 		return null;
 	}
@@ -35,10 +32,9 @@ public class OrganizationManager implements IOrganizationManager {
 		if (id == OrganizationFactory.SYSTEM_USER.getId()) {
 			return OrganizationFactory.SYSTEM_USER;
 		}
-		for (IUser item : this.getUsers()) {
-			if (id == item.getId()) {
-				return item;
-			}
+		IUser user = this.getIdUsers().get(id);
+		if (user != null) {
+			return user;
 		}
 		return OrganizationFactory.UNKNOWN_USER;
 	}
@@ -46,7 +42,6 @@ public class OrganizationManager implements IOrganizationManager {
 	@Override
 	public void initialize() {
 		try {
-			ArrayList<IUser> users = new ArrayList<>();
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
@@ -58,40 +53,60 @@ public class OrganizationManager implements IOrganizationManager {
 			if (operationResult.getError() != null) {
 				throw operationResult.getError();
 			}
+			Map<Integer, IUser> idUsers = new HashMap<>(operationResult.getResultObjects().size());
+			Map<String, IUser> tokenUsers = new HashMap<>(operationResult.getResultObjects().size());
 			for (org.colorcoding.ibas.initialfantasy.bo.organization.IUser item : operationResult.getResultObjects()) {
-				users.add(User.create(item));
+				User user = User.create(item);
+				idUsers.put(user.getId(), user);
+				tokenUsers.put(user.getToken(), user);
 			}
-			this.users = users;
+			this.idUsers = idUsers;
+			this.tokenUsers = tokenUsers;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@Override
-	public String[] getRoles(IUser user) {
-		for (IUser item : this.getUsers()) {
-			if (item.equals(user)) {
-				if (item.getBelong() != null && !item.getBelong().isEmpty()) {
-					return new String[] { item.getBelong() };
-				} else {
-					break;
+	private volatile Map<Integer, IUser> idUsers;
+
+	protected final Map<Integer, IUser> getIdUsers() {
+		if (this.idUsers == null) {
+			synchronized (this) {
+				if (this.idUsers == null) {
+					this.idUsers = new HashMap<>();
 				}
 			}
 		}
-		return new String[] {};
+		return this.idUsers;
 	}
 
-	private volatile ArrayList<IUser> users;
+	private volatile Map<String, IUser> tokenUsers;
 
-	public List<IUser> getUsers() {
-		if (this.users == null) {
+	protected final Map<String, IUser> getTokenUsers() {
+		if (this.tokenUsers == null) {
 			synchronized (this) {
-				if (this.users == null) {
-					this.users = new ArrayList<>();
+				if (this.tokenUsers == null) {
+					this.tokenUsers = new HashMap<>();
 				}
 			}
 		}
-		return this.users;
+		return tokenUsers;
+	}
+
+	private static final String[] EMPTY_ROLES = new String[] {};
+
+	@Override
+	public String[] getRoles(IUser user) {
+		if (user == null) {
+			return EMPTY_ROLES;
+		}
+		IUser item = this.getTokenUsers().get(user.getToken());
+		if (item != null) {
+			if (item.getBelong() != null && !item.getBelong().isEmpty()) {
+				return new String[] { item.getBelong() };
+			}
+		}
+		return EMPTY_ROLES;
 	}
 
 	@Override
@@ -99,17 +114,8 @@ public class OrganizationManager implements IOrganizationManager {
 		if (user == null) {
 			return;
 		}
-		for (int i = 0; i < this.getUsers().size(); i++) {
-			IUser item = this.getUsers().get(i);
-			if (item == null) {
-				continue;
-			}
-			if (item.getId() == user.getId()) {
-				this.getUsers().set(i, user);
-				return;
-			}
-		}
-		this.getUsers().add(user);
+		this.getIdUsers().put(user.getId(), user);
+		this.getTokenUsers().put(user.getToken(), user);
 	}
 
 }

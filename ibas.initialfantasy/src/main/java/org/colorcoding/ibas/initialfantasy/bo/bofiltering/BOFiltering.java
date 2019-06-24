@@ -15,6 +15,7 @@ import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.emFilteringCategory;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 
 /**
@@ -77,8 +78,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-角色标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setRoleCode(String value) {
 		this.setProperty(PROPERTY_ROLECODE, value);
@@ -109,11 +109,41 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setBOCode(String value) {
 		this.setProperty(PROPERTY_BOCODE, value);
+	}
+
+	/**
+	 * 属性名称-类别
+	 */
+	private static final String PROPERTY_CATEGORY_NAME = "Category";
+
+	/**
+	 * 类别 属性
+	 */
+	@DbField(name = "Category", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emFilteringCategory> PROPERTY_CATEGORY = registerProperty(PROPERTY_CATEGORY_NAME,
+			emFilteringCategory.class, MY_CLASS);
+
+	/**
+	 * 获取-类别
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CATEGORY_NAME)
+	public final emFilteringCategory getCategory() {
+		return this.getProperty(PROPERTY_CATEGORY);
+	}
+
+	/**
+	 * 设置-类别
+	 * 
+	 * @param value 值
+	 */
+	public final void setCategory(emFilteringCategory value) {
+		this.setProperty(PROPERTY_CATEGORY, value);
 	}
 
 	/**
@@ -141,8 +171,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-激活的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setActivated(emYesNo value) {
 		this.setProperty(PROPERTY_ACTIVATED, value);
@@ -173,8 +202,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-筛选类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setFilteringType(emFilteringType value) {
 		this.setProperty(PROPERTY_FILTERINGTYPE, value);
@@ -205,8 +233,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setName(String value) {
 		this.setProperty(PROPERTY_NAME, value);
@@ -237,8 +264,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectKey(Integer value) {
 		this.setProperty(PROPERTY_OBJECTKEY, value);
@@ -269,8 +295,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -301,8 +326,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLogInst(Integer value) {
 		this.setProperty(PROPERTY_LOGINST, value);
@@ -333,8 +357,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-服务系列
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSeries(Integer value) {
 		this.setProperty(PROPERTY_SERIES, value);
@@ -365,8 +388,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
@@ -397,8 +419,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateDate(DateTime value) {
 		this.setProperty(PROPERTY_CREATEDATE, value);
@@ -429,8 +450,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateTime(Short value) {
 		this.setProperty(PROPERTY_CREATETIME, value);
@@ -461,8 +481,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateDate(DateTime value) {
 		this.setProperty(PROPERTY_UPDATEDATE, value);
@@ -493,8 +512,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateTime(Short value) {
 		this.setProperty(PROPERTY_UPDATETIME, value);
@@ -525,8 +543,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateActionId(String value) {
 		this.setProperty(PROPERTY_CREATEACTIONID, value);
@@ -557,8 +574,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
@@ -589,8 +605,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateUserSign(Integer value) {
 		this.setProperty(PROPERTY_CREATEUSERSIGN, value);
@@ -621,8 +636,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateUserSign(Integer value) {
 		this.setProperty(PROPERTY_UPDATEUSERSIGN, value);
@@ -653,8 +667,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-数据所有者
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataOwner(Integer value) {
 		this.setProperty(PROPERTY_DATAOWNER, value);
@@ -685,8 +698,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-数据所属组织
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setOrganization(String value) {
 		this.setProperty(PROPERTY_ORGANIZATION, value);
@@ -718,8 +730,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 设置-业务对象筛选-条件集合
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setBOFilteringConditions(IBOFilteringConditions value) {
 		this.setProperty(PROPERTY_BOFILTERINGCONDITIONS, value);
@@ -733,6 +744,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 		super.initialize();// 基类初始化，不可去除
 		this.setBOFilteringConditions(new BOFilteringConditions(this));
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setCategory(emFilteringCategory.READ);
 		this.setActivated(emYesNo.YES);
 		this.setFilteringType(emFilteringType.UNAVAILABLE);
 

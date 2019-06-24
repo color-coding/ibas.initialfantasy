@@ -3,6 +3,7 @@ package org.colorcoding.ibas.initialfantasy.bo.bofiltering;
 import org.colorcoding.ibas.bobas.bo.IBOSimple;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.initialfantasy.data.emFilteringCategory;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 
 /**
@@ -21,8 +22,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-角色标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setRoleCode(String value);
 
@@ -36,10 +36,23 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setBOCode(String value);
+
+	/**
+	 * 获取-类别
+	 * 
+	 * @return 值
+	 */
+	emFilteringCategory getCategory();
+
+	/**
+	 * 设置-类别
+	 * 
+	 * @param value 值
+	 */
+	void setCategory(emFilteringCategory value);
 
 	/**
 	 * 获取-激活的
@@ -51,8 +64,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-激活的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setActivated(emYesNo value);
 
@@ -66,8 +78,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-筛选类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setFilteringType(emFilteringType value);
 
@@ -81,8 +92,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setName(String value);
 
@@ -96,8 +106,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectKey(Integer value);
 
@@ -111,8 +120,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectCode(String value);
 
@@ -126,8 +134,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setLogInst(Integer value);
 
@@ -141,8 +148,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-服务系列
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setSeries(Integer value);
 
@@ -156,8 +162,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataSource(String value);
 
@@ -171,8 +176,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateDate(DateTime value);
 
@@ -186,8 +190,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateTime(Short value);
 
@@ -201,8 +204,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateDate(DateTime value);
 
@@ -216,8 +218,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateTime(Short value);
 
@@ -231,8 +232,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateActionId(String value);
 
@@ -246,8 +246,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateActionId(String value);
 
@@ -261,8 +260,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateUserSign(Integer value);
 
@@ -276,8 +274,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateUserSign(Integer value);
 
@@ -291,8 +288,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-数据所有者
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataOwner(Integer value);
 
@@ -306,8 +302,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-数据所属组织
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setOrganization(String value);
 
@@ -321,8 +316,7 @@ public interface IBOFiltering extends IBOSimple {
 	/**
 	 * 设置-业务对象筛选-条件集合
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setBOFilteringConditions(IBOFilteringConditions value);
 

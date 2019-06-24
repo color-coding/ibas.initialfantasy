@@ -37,6 +37,14 @@ namespace initialfantasy {
                                     maxLength: 30
                                 })
                             }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: bo.emFilteringCategory
+                            }).bindProperty("bindingValue", {
+                                path: "category",
+                                type: new sap.extension.data.Enum({
+                                    enumType: bo.emFilteringCategory
+                                })
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_bocode") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,

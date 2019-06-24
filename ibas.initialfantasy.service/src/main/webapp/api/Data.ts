@@ -86,6 +86,15 @@ namespace initialfantasy {
             /** 其他 */
             OTHER
         }
+        /**
+         * 筛选种类
+         */
+        export enum emFilteringCategory {
+            /** 读取 */
+            READ,
+            /** 写入 */
+            SAVE
+        }
         /** 分配-角色 */
         export interface IRole {
             /** 编码 */
@@ -95,6 +104,7 @@ namespace initialfantasy {
             /** 激活 */
             activated: ibas.emYesNo;
         }
+
     }
 
     export namespace app {

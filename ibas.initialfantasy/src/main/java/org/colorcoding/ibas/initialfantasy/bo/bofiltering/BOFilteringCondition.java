@@ -12,6 +12,8 @@ import org.colorcoding.ibas.bobas.data.emConditionOperation;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.rule.IBusinessRule;
+import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -72,8 +74,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectKey(Integer value) {
 		this.setProperty(PROPERTY_OBJECTKEY, value);
@@ -104,8 +105,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -136,8 +136,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-行号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLineId(Integer value) {
 		this.setProperty(PROPERTY_LINEID, value);
@@ -168,8 +167,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLogInst(Integer value) {
 		this.setProperty(PROPERTY_LOGINST, value);
@@ -200,8 +198,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
@@ -232,8 +229,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateDate(DateTime value) {
 		this.setProperty(PROPERTY_CREATEDATE, value);
@@ -264,8 +260,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateTime(Short value) {
 		this.setProperty(PROPERTY_CREATETIME, value);
@@ -296,8 +291,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateDate(DateTime value) {
 		this.setProperty(PROPERTY_UPDATEDATE, value);
@@ -328,8 +322,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateTime(Short value) {
 		this.setProperty(PROPERTY_UPDATETIME, value);
@@ -360,8 +353,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateUserSign(Integer value) {
 		this.setProperty(PROPERTY_CREATEUSERSIGN, value);
@@ -392,8 +384,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateUserSign(Integer value) {
 		this.setProperty(PROPERTY_UPDATEUSERSIGN, value);
@@ -424,8 +415,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateActionId(String value) {
 		this.setProperty(PROPERTY_CREATEACTIONID, value);
@@ -456,8 +446,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
@@ -488,8 +477,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-取值属性
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setPropertyName(String value) {
 		this.setProperty(PROPERTY_PROPERTYNAME, value);
@@ -520,8 +508,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-比较的值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setConditionValue(String value) {
 		this.setProperty(PROPERTY_CONDITIONVALUE, value);
@@ -552,8 +539,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-比较的方法
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setOperation(emConditionOperation value) {
 		this.setProperty(PROPERTY_OPERATION, value);
@@ -584,8 +570,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-与上一个条件的关系
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setRelationship(emConditionRelationship value) {
 		this.setProperty(PROPERTY_RELATIONSHIP, value);
@@ -616,8 +601,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-开括号数
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setBracketOpen(Integer value) {
 		this.setProperty(PROPERTY_BRACKETOPEN, value);
@@ -648,8 +632,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 设置-闭括号数
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setBracketClose(Integer value) {
 		this.setProperty(PROPERTY_BRACKETCLOSE, value);
@@ -662,7 +645,12 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-
 	}
 
+	@Override
+	protected IBusinessRule[] registerRules() {
+		return new IBusinessRule[] { // 注册的业务规则
+				new BusinessRuleRequired(PROPERTY_PROPERTYNAME), // 要求有值
+		};
+	}
 }

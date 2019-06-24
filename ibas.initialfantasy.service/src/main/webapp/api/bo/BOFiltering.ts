@@ -17,6 +17,9 @@ namespace initialfantasy {
             /** 对象类型 */
             boCode: string;
 
+            /** 类别 */
+            category: emFilteringCategory;
+
             /** 激活的 */
             activated: ibas.emYesNo;
 

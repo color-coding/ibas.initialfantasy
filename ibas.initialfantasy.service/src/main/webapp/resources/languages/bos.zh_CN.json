@@ -110,6 +110,7 @@
         "bo_bofiltering": "业务对象筛选",
         "bo_bofiltering_rolecode": "角色标识",
         "bo_bofiltering_bocode": "对象类型",
+        "bo_bofiltering_category": "类别",
         "bo_bofiltering_name": "名称",
         "bo_bofiltering_activated": "激活的",
         "bo_bofiltering_filteringtype": "筛选类型",
@@ -355,5 +356,9 @@
         "em_elementtype_application": "应用",
         "em_elementtype_service": "服务",
         "em_elementtype_other": "其他"
+    },
+    {
+        "em_filteringcategory_read": "读取",
+        "em_filteringcategory_save": "保存"
     }
 ]

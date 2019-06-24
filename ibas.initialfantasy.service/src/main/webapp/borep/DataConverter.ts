@@ -66,6 +66,8 @@ namespace initialfantasy {
                 } else if (boName === bo.BOFiltering.name) {
                     if (property === bo.BOFiltering.PROPERTY_FILTERINGTYPE_NAME) {
                         return ibas.enums.toString(bo.emFilteringType, value);
+                    } else if (property === bo.BOFiltering.PROPERTY_CATEGORY_NAME) {
+                        return ibas.enums.toString(bo.emFilteringCategory, value);
                     }
                 } else if (boName === bo.BOPropertyInformation.name) {
                     if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
@@ -119,6 +121,8 @@ namespace initialfantasy {
                 } else if (boName === bo.BOFiltering.name) {
                     if (property === bo.BOFiltering.PROPERTY_FILTERINGTYPE_NAME) {
                         return ibas.enums.valueOf(bo.emFilteringType, value);
+                    } else if (property === bo.BOFiltering.PROPERTY_CATEGORY_NAME) {
+                        return ibas.enums.valueOf(bo.emFilteringCategory, value);
                     }
                 } else if (boName === bo.BOPropertyInformation.name) {
                     if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||

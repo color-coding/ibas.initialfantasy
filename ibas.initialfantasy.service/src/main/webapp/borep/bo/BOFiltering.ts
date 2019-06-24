@@ -39,6 +39,17 @@ namespace initialfantasy {
                 this.setProperty(BOFiltering.PROPERTY_BOCODE_NAME, value);
             }
 
+            /** 映射的属性名称-类别 */
+            static PROPERTY_CATEGORY_NAME: string = "Category";
+            /** 获取-类别 */
+            get category(): emFilteringCategory {
+                return this.getProperty<emFilteringCategory>(BOFiltering.PROPERTY_CATEGORY_NAME);
+            }
+            /** 设置-类别 */
+            set category(value: emFilteringCategory) {
+                this.setProperty(BOFiltering.PROPERTY_CATEGORY_NAME, value);
+            }
+
             /** 映射的属性名称-激活的 */
             static PROPERTY_ACTIVATED_NAME: string = "Activated";
             /** 获取-激活的 */
@@ -254,6 +265,7 @@ namespace initialfantasy {
             protected init(): void {
                 this.boFilteringConditions = new BOFilteringConditions(this);
                 this.objectCode = ibas.config.applyVariables(BOFiltering.BUSINESS_OBJECT_CODE);
+                this.category = emFilteringCategory.READ;
                 this.activated = ibas.emYesNo.YES;
             }
         }

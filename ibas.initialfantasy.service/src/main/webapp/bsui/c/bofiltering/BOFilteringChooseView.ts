@@ -34,6 +34,17 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_bofiltering_category"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "category",
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emFilteringCategory,
+                                        describe: true,
+                                    })
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bofiltering_name"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
