@@ -207,8 +207,9 @@ namespace initialfantasy {
                             content: [
                                 this.facetFilter = new sap.m.FacetFilter("", {
                                     type: sap.m.FacetFilterType.Simple,
-                                    showPersonalization: true,
                                     showReset: true,
+                                    showPopoverOKButton: true,
+                                    showPersonalization: false,
                                     visible: false,
                                     reset: function (oEvent: sap.ui.base.Event): void {
                                         let oFacetFilter: any = oEvent.getSource();
@@ -445,7 +446,7 @@ namespace initialfantasy {
                     this.refreshPrivilegeFilter(datas);
                 }
                 /** 刷新过滤器 */
-                refreshPrivilegeFilter(datas: app.Privilege[]): void {
+                private refreshPrivilegeFilter(datas: app.Privilege[]): void {
                     this.facetFilter.removeAllLists();
                     if (datas.length === 0) {
                         this.facetFilter.setVisible(false);
@@ -506,7 +507,7 @@ namespace initialfantasy {
                     this.facetFilter.addList(authoriseTypeFacetFilterList);
                     this.facetFilter.setVisible(true);
                 }
-                filterPrivileges(filter: sap.ui.model.Filter): void {
+                private filterPrivileges(filter: sap.ui.model.Filter): void {
                     let dataBinding: any = this.tablePrivileges.getBinding("");
                     dataBinding.filter(filter);
                 }

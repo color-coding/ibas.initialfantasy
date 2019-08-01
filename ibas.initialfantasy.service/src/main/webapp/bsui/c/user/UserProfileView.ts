@@ -12,8 +12,6 @@ namespace initialfantasy {
              * 视图-用户配置
              */
             export class UserProfileView extends ibas.ResidentView implements app.IUserProfileView {
-                /** 保存用户事件 */
-                saveUserEvent: Function;
                 /** 绘制工具条视图 */
                 drawBar(): any {
                     let that: this = this;
@@ -41,10 +39,10 @@ namespace initialfantasy {
                 /** 显示用户信息 */
                 showUser(user: bo.User): void {
                     if (!ibas.objects.isNull(this.form)) {
-                        let page: sap.m.QuickViewPage = new sap.m.QuickViewPage("", {
+                        this.form.addPage(new sap.m.QuickViewPage("", {
                             header: this.application.description,
-                            title: ibas.strings.format("#{0}", "{/docEntry}"),
-                            description: "{/code}",
+                            title: ibas.strings.format("# {0}", user.docEntry),
+                            description: user.code,
                             icon: "sap-icon://business-card",
                             groups: [
                                 new sap.m.QuickViewGroup("", {
@@ -52,25 +50,23 @@ namespace initialfantasy {
                                         new sap.m.QuickViewGroupElement("", {
                                             target: "_self",
                                             label: ibas.i18n.prop("bo_user_name"),
-                                            value: "{/name}",
+                                            value: user.name,
                                             url: ibas.URL_HASH_SIGN_SERVICES + app.ChangeUserProfileApp.APPLICATION_ID
-                                                + ibas.strings.format("/user/{0}", "{/code}"),
+                                                + ibas.strings.format("/user/{0}", user.code),
                                             type: sap.m.QuickViewGroupElementType.link
                                         }),
                                         new sap.m.QuickViewGroupElement("", {
                                             target: "_self",
                                             label: ibas.i18n.prop("bo_user_mail"),
-                                            value: "{/mail}",
+                                            value: user.mail,
                                             url: ibas.URL_HASH_SIGN_SERVICES + app.ChangeUserProfileApp.APPLICATION_ID
-                                                + ibas.strings.format("/user/{0}", "{/code}"),
+                                                + ibas.strings.format("/user/{0}", user.code),
                                             type: sap.m.QuickViewGroupElementType.link
                                         })
                                     ]
                                 })
                             ]
-                        });
-                        this.form.addPage(page);
-                        this.form.setModel(new sap.ui.model.json.JSONModel(user));
+                        }));
                     }
                 }
             }

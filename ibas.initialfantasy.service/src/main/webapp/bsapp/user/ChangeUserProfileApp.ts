@@ -41,7 +41,6 @@ namespace initialfantasy {
             run(caller: ibas.IServiceCaller<ibas.IServiceContract>): void;
             /** 运行 */
             run(): void {
-                super.run.apply(this, arguments);
                 if (arguments.length === 1) {
                     let caller: ibas.IServiceCaller<ibas.IServiceContract> = arguments[0];
                     let criteria: ibas.ICriteria = new ibas.Criteria();
@@ -66,11 +65,13 @@ namespace initialfantasy {
                     onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
                         that.user = opRslt.resultObjects.firstOrDefault();
                         if (ibas.objects.isNull(that.user)) {
-                            that.user = new bo.User();
-                            that.user.code = "UNKNOWN";
-                            that.user.name = ibas.i18n.prop("shell_unknown_user");
+                            that.messages(ibas.emMessageType.ERROR, ibas.i18n.prop("initialfantasy_unknown_user"));
+                        } else {
+                            if (!that.isViewShowed()) {
+                                that.show();
+                                that.view.showUser(that.user);
+                            }
                         }
-                        that.view.showUser(that.user);
                     }
                 });
             }
@@ -92,7 +93,7 @@ namespace initialfantasy {
                             if (ibas.objects.isNull(that.user)) {
                                 that.user = new bo.User();
                                 that.user.code = "UNKNOWN";
-                                that.user.name = ibas.i18n.prop("shell_unknown_user");
+                                that.user.name = ibas.i18n.prop("initialfantasy_unknown_user");
                             }
                             that.view.showUser(that.user);
                         } catch (error) {

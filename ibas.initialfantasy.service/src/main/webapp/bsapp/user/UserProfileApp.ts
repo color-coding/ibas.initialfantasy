@@ -26,7 +26,6 @@ namespace initialfantasy {
             protected registerView(): void {
                 super.registerView();
                 // 其他事件
-                this.view.saveUserEvent = this.saveUser;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -47,24 +46,9 @@ namespace initialfantasy {
                         that.user = opRslt.resultObjects.firstOrDefault();
                         if (ibas.objects.isNull(that.user)) {
                             that.user = new bo.User();
-                            that.user.code = "UNKNOWN";
-                            that.user.name = ibas.i18n.prop("shell_unknown_user");
-                        }
-                        that.view.showUser(that.user);
-                    }
-                });
-            }
-            private saveUser(): void {
-                let that: this = this;
-                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                boRepository.saveUser({
-                    beSaved: this.user,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
-                        that.user = opRslt.resultObjects.firstOrDefault();
-                        if (ibas.objects.isNull(that.user)) {
-                            that.user = new bo.User();
-                            that.user.code = "UNKNOWN";
-                            that.user.name = ibas.i18n.prop("shell_unknown_user");
+                            that.user.docEntry = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_ID);
+                            that.user.code = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
+                            that.user.name = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_NAME);
                         }
                         that.view.showUser(that.user);
                     }
@@ -75,8 +59,6 @@ namespace initialfantasy {
         export interface IUserProfileView extends ibas.IResidentView {
             /** 显示用户信息 */
             showUser(user: bo.User): void;
-            /** 保存用户事件 */
-            saveUserEvent: Function;
         }
     }
 }

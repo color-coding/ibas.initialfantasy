@@ -187,7 +187,41 @@ namespace initialfantasy {
                         showHeader: true,
                         customHeader: new sap.m.Toolbar("", {
                             content: [
-                                this.titleRole = new sap.m.Title("", {
+                                this.facetFilter = new sap.m.FacetFilter("", {
+                                    type: sap.m.FacetFilterType.Simple,
+                                    showReset: true,
+                                    showPopoverOKButton: true,
+                                    showPersonalization: false,
+                                    visible: false,
+                                    reset: function (oEvent: sap.ui.base.Event): void {
+                                        let oFacetFilter: any = oEvent.getSource();
+                                        if (oFacetFilter instanceof sap.m.FacetFilter) {
+                                            for (let item of oFacetFilter.getLists()) {
+                                                item.removeSelectedKeys();
+                                            }
+                                            that.filterPrivileges(null);
+                                        }
+                                    },
+                                    confirm: function (oEvent: sap.ui.base.Event): void {
+                                        let oFacetFilter: any = oEvent.getSource();
+                                        if (oFacetFilter instanceof sap.m.FacetFilter && oFacetFilter.getLists() instanceof Array) {
+                                            let mFacetFilterLists: Array<sap.m.FacetFilterList> = oFacetFilter.getLists().filter((oList) => {
+                                                return oList.getSelectedItems().length;
+                                            });
+                                            if (mFacetFilterLists.length) {
+                                                let oFilter: sap.ui.model.Filter = new sap.ui.model.Filter(mFacetFilterLists.map(function (oList: sap.m.FacetFilterList): any {
+                                                    return new sap.ui.model.Filter(oList.getSelectedItems().map(function (oItem: sap.m.FacetFilterItem): any {
+                                                        return new sap.ui.model.Filter(oList.getKey(), sap.ui.model.FilterOperator.EQ, oItem.getKey());
+                                                    }), false);
+                                                }), true);
+                                                that.filterPrivileges(oFilter);
+                                            } else {
+                                                that.filterPrivileges(null);
+                                            }
+                                        } else {
+                                            that.filterPrivileges(null);
+                                        }
+                                    },
                                 }),
                                 new sap.m.ToolbarSpacer(""),
                                 this.titlePlatform = new sap.m.Title("", {
@@ -327,13 +361,13 @@ namespace initialfantasy {
                         ],
                     });
                 }
+                private facetFilter: sap.m.FacetFilter;
                 private check: sap.m.CheckBox;
                 private pageIdentities: sap.m.Page;
                 private tableIdentities: sap.extension.m.List;
                 private pageIdentityPrivileges: sap.m.Page;
                 private tableIdentityPrivileges: sap.extension.table.Table;
                 private titlePlatform: sap.m.Title;
-                private titleRole: sap.m.Title;
                 private fireFetchIdentityPrivilegesEvent(): void {
                     let identity: bo.IIdentity = this.tableIdentities.getSelecteds<bo.IIdentity>().firstOrDefault();
                     if (!ibas.objects.isNull(identity)) {
@@ -353,7 +387,6 @@ namespace initialfantasy {
                     this.titlePlatform.setText(data.platformDescription);
                 }
                 showRole(data: bo.IIdentity): void {
-                    this.titleRole.setText(data.name);
                 }
                 showIdentities(datas: bo.IIdentity[]): void {
                     let model: sap.ui.model.Model = this.tableIdentities.getModel();
@@ -379,6 +412,72 @@ namespace initialfantasy {
                 showIdentityPrivileges(datas: app.IdentityPrivilege[]): void {
                     this.tableIdentityPrivileges.setFirstVisibleRow(0);
                     this.tableIdentityPrivileges.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    this.refreshPrivilegeFilter(datas);
+                }
+                private filterPrivileges(filter: sap.ui.model.Filter): void {
+                    let dataBinding: any = this.tableIdentityPrivileges.getBinding("");
+                    dataBinding.filter(filter);
+                }
+                private refreshPrivilegeFilter(datas: app.IdentityPrivilege[]): void {
+                    this.facetFilter.removeAllLists();
+                    if (datas.length === 0) {
+                        this.facetFilter.setVisible(false);
+                        return;
+                    }
+                    let moduleIdFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_privilege_moduleid"),
+                        key: "moduleId",
+                    });
+                    for (let item of datas.filter(c => { return ibas.strings.isEmpty(c.target); })) {
+                        moduleIdFacetFilterList.addItem(new sap.m.FacetFilterItem("", {
+                            text: ibas.i18n.prop(item.moduleId),
+                            key: item.moduleId
+                        }));
+                    }
+                    this.facetFilter.addList(moduleIdFacetFilterList);
+                    let targetFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_applicationelement_elementtype"),
+                        key: "type",
+                        items: [
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.FUNCTION),
+                                key: bo.emElementType.FUNCTION
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.APPLICATION),
+                                key: bo.emElementType.APPLICATION
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.MODULE),
+                                key: bo.emElementType.MODULE
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.SERVICE),
+                                key: bo.emElementType.SERVICE
+                            }),
+                        ]
+                    });
+                    this.facetFilter.addList(targetFacetFilterList);
+                    let authoriseTypeFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_privilege_authorisevalue"),
+                        key: "authoriseValue",
+                        items: [
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
+                                key: ibas.emAuthoriseType.ALL
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
+                                key: ibas.emAuthoriseType.NONE
+                            }),
+                            new sap.m.FacetFilterItem("", {
+                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
+                                key: ibas.emAuthoriseType.READ
+                            }),
+                        ]
+                    });
+                    this.facetFilter.addList(authoriseTypeFacetFilterList);
+                    this.facetFilter.setVisible(true);
                 }
             }
         }
