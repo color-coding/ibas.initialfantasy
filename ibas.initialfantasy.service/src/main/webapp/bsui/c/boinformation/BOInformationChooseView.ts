@@ -27,6 +27,7 @@ namespace initialfantasy {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_boinformation_name"),
+                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "name",
@@ -35,6 +36,7 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_boinformation_description"),
+                                width: "20rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "description",
@@ -43,6 +45,7 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_boinformation_code"),
+                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "code",

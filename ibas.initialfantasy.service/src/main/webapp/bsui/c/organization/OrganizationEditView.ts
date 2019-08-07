@@ -38,7 +38,7 @@ namespace initialfantasy {
                                 }
                             }),
                             new sap.extension.m.SeriesSelect("", {
-                                objectCode: ibas.config.applyVariables(bo.BO_CODE_ORGANIZATION),
+                                objectCode: bo.BO_CODE_ORGANIZATION,
                             }).bindProperty("bindingValue", {
                                 path: "series",
                                 type: new sap.extension.data.Numeric()

@@ -40,7 +40,7 @@ namespace initialfantasy {
                                 }
                             }),
                             new sap.extension.m.SeriesSelect("", {
-                                objectCode: ibas.config.applyVariables(bo.BO_CODE_USER),
+                                objectCode: bo.BO_CODE_USER,
                             }).bindProperty("bindingValue", {
                                 path: "series",
                                 type: new sap.extension.data.Numeric()

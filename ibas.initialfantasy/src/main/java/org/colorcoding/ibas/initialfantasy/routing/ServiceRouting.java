@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -116,7 +118,9 @@ public class ServiceRouting {
 			file.delete();
 		}
 		ISerializer<?> serializer = SerializerFactory.create().createManager().create("xml");
-		serializer.serialize(routing, new FileOutputStream(file));
+		try (OutputStream stream = new FileOutputStream(file)) {
+			serializer.serialize(routing, stream);
+		}
 	}
 
 	public void load() throws JAXBException, SerializationException, FileNotFoundException {
@@ -125,17 +129,21 @@ public class ServiceRouting {
 			return;
 		}
 		ISerializer<?> serializer = SerializerFactory.create().createManager().create("xml");
-		Object object = serializer.deserialize(new FileInputStream(file), ServiceRouting.class);
-		if (object instanceof ServiceRouting) {
-			ServiceRouting routing = (ServiceRouting) object;
-			for (ServiceInformation item : routing.getServices()) {
-				if (item.getRuntime() == null || item.getRuntime().isEmpty()) {
-					item.setRuntime(this.getRuntime());
+		try (InputStream stream = new FileInputStream(file)) {
+			Object object = serializer.deserialize(stream, ServiceRouting.class);
+			if (object instanceof ServiceRouting) {
+				ServiceRouting routing = (ServiceRouting) object;
+				for (ServiceInformation item : routing.getServices()) {
+					if (item.getRuntime() == null || item.getRuntime().isEmpty()) {
+						item.setRuntime(this.getRuntime());
+					}
+					this.getServices().add(item);
 				}
-				this.getServices().add(item);
+				this.services = routing.getServices();
+				Logger.log(MSG_SERVICE_ROUTING_LOAD_CONFIG, file.getPath());
 			}
-			this.services = routing.getServices();
-			Logger.log(MSG_SERVICE_ROUTING_LOAD_CONFIG, file.getPath());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -166,8 +174,7 @@ public class ServiceRouting {
 	/**
 	 * 路由服务
 	 * 
-	 * @param module
-	 *            模块
+	 * @param module 模块
 	 * @return 是否成功路由
 	 */
 	public boolean routing(UserModule module) {
