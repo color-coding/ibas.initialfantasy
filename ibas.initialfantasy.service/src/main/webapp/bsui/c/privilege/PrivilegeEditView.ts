@@ -38,8 +38,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.Organization,
-                                    key: "Code",
-                                    text: "Name"
+                                    key: bo.Organization.PROPERTY_CODE_NAME,
+                                    text: bo.Organization.PROPERTY_NAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseRoleEvent);
@@ -54,8 +54,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.ApplicationPlatform,
-                                    key: "platformCode",
-                                    text: "platformDescription"
+                                    key: bo.ApplicationPlatform.PROPERTY_PLATFORMCODE_NAME,
+                                    text: bo.ApplicationPlatform.PROPERTY_PLATFORMDESCRIPTION_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.choosePlatformEvent);
@@ -70,8 +70,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.ApplicationModule,
-                                    key: "ModuleId",
-                                    text: "ModuleName"
+                                    key: bo.ApplicationModule.PROPERTY_MODULEID_NAME,
+                                    text: bo.ApplicationModule.PROPERTY_MODULENAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseModuleEvent);
@@ -88,8 +88,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.ApplicationElement,
-                                    key: "ElementId",
-                                    text: "ElementName"
+                                    key: bo.ApplicationElement.PROPERTY_ELEMENTID_NAME,
+                                    text: bo.ApplicationElement.PROPERTY_ELEMENTNAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseTargetEvent);

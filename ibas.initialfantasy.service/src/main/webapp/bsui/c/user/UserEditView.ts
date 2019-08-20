@@ -110,8 +110,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.Organization,
-                                    key: "Code",
-                                    text: "Name"
+                                    key: bo.Organization.PROPERTY_CODE_NAME,
+                                    text: bo.Organization.PROPERTY_NAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseOrganizationEvent);

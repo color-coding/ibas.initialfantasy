@@ -32,8 +32,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.User,
-                                    key: "Code",
-                                    text: "Name"
+                                    key: bo.User.PROPERTY_CODE_NAME,
+                                    text: bo.User.PROPERTY_NAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseUserEvent);
@@ -48,8 +48,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.Identity,
-                                    key: "Code",
-                                    text: "Name"
+                                    key: bo.Identity.PROPERTY_CODE_NAME,
+                                    text: bo.Identity.PROPERTY_NAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseIdentityEvent);

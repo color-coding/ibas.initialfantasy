@@ -39,8 +39,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.ApplicationElement,
-                                    key: "elementId",
-                                    text: "elementName"
+                                    key: bo.ApplicationElement.PROPERTY_ELEMENTID_NAME,
+                                    text: bo.ApplicationElement.PROPERTY_ELEMENTNAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseApplicationEvent);
@@ -87,8 +87,8 @@ namespace initialfantasy {
                                         repository: bo.BORepositoryInitialFantasy,
                                         dataInfo: {
                                             type: bo.User,
-                                            key: "Code",
-                                            text: "Name"
+                                            key: bo.User.PROPERTY_CODE_NAME,
+                                            text: bo.User.PROPERTY_NAME_NAME
                                         },
                                         valueHelpRequest: function (): void {
                                             that.fireViewEvents(that.chooseRoleUserEvent);
@@ -118,8 +118,8 @@ namespace initialfantasy {
                                         repository: bo.BORepositoryInitialFantasy,
                                         dataInfo: {
                                             type: bo.Organization,
-                                            key: "Code",
-                                            text: "Name"
+                                            key: bo.Organization.PROPERTY_CODE_NAME,
+                                            text: bo.Organization.PROPERTY_NAME_NAME
                                         },
                                         valueHelpRequest: function (): void {
                                             that.fireViewEvents(that.chooseRoleUserEvent);

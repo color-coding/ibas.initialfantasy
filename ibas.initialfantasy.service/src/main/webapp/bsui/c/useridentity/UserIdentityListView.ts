@@ -63,8 +63,8 @@ namespace initialfantasy {
                                     repository: bo.BORepositoryInitialFantasy,
                                     dataInfo: {
                                         type: bo.Identity,
-                                        key: "Code",
-                                        text: "Name"
+                                        key: bo.Identity.PROPERTY_CODE_NAME,
+                                        text:bo.Identity.PROPERTY_NAME_NAME
                                     },
                                 }).bindProperty("bindingValue", {
                                     path: "identity",

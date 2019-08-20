@@ -51,8 +51,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.BOInformation,
-                                    key: "Code",
-                                    text: "Description"
+                                    key: bo.BOInformation.PROPERTY_CODE_NAME,
+                                    text: bo.BOInformation.PROPERTY_DESCRIPTION_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseBusinessObjectEvent);
@@ -69,8 +69,8 @@ namespace initialfantasy {
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.Organization,
-                                    key: "Code",
-                                    text: "Name"
+                                    key: bo.Organization.PROPERTY_CODE_NAME,
+                                    text: bo.Organization.PROPERTY_NAME_NAME
                                 },
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseRoleEvent);

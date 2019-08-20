@@ -79,6 +79,38 @@
                         -- 超级用户全部权限
                         SELECT NULL "Source", NULL "Target", NULL "Value", NULL "Automatic"
                     ELSE
+                        -- 非超级用户，身份权限
+                        SELECT "Source", "Target", "Value", "Automatic"
+                        FROM (
+                            -- 模块的权限设置
+                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
+                            FROM "${Company}_SYS_PRIVILEGE1"
+                            WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
+                                AND "RoleCode" IN (
+                                    SELECT "OrgCode"
+                                    FROM "${Company}_SYS_USER"
+                                    WHERE "Code" = userCode
+                                ) AND "IdentityCode" IN (
+                                    SELECT "Identity"
+                                    FROM "${Company}_SYS_USRIDNTY"
+                                    WHERE "User" = userCode
+                                )
+                            UNION ALL
+                            -- 应用的权限设置
+                            SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
+                            FROM "${Company}_SYS_PRIVILEGE1"
+                            WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
+                                AND "RoleCode" IN (
+                                    SELECT "OrgCode"
+                                    FROM "${Company}_SYS_USER"
+                                    WHERE "Code" = userCode
+                                ) AND "IdentityCode" IN (
+                                    SELECT "Identity"
+                                    FROM "${Company}_SYS_USRIDNTY"
+                                    WHERE "User" = userCode
+                                )
+                        ) T0
+                        UNION ALL
                         -- 非超级用户，角色权限
                         SELECT "Source", "Target", "Value", "Automatic"
                         FROM (
@@ -100,38 +132,6 @@
                                     SELECT "OrgCode"
                                     FROM "${Company}_SYS_USER"
                                     WHERE "Code" = userCode
-                                )
-                        ) T0
-                        -- 非超级用户，身份权限
-                        UNION ALL
-                        SELECT "Source", "Target", "Value", "Automatic"
-                        FROM (
-                            -- 模块的权限设置
-                            SELECT 'M' "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
-                            FROM "${Company}_SYS_PRIVILEGE1"
-                            WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') = ''
-                                AND "RoleCode" IN (
-                                    SELECT "OrgCode"
-                                    FROM "${Company}_SYS_USER"
-                                    WHERE "Code" = userCode
-                                ) AND "IdentityCode" IN (
-                                    SELECT "Identity"
-                                    FROM "${Company}_SYS_USRIDNTY"
-                                    WHERE "User" = userCode
-                                )
-                            UNION ALL
-                            -- 应用的权限设置
-                            SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
-                            FROM "${Company}_SYS_PRIVILEGE1"
-                            WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
-                                AND "RoleCode" IN (
-                                    SELECT "OrgCode"
-                                    FROM "${Company}_SYS_USER"
-                                    WHERE "Code" = userCode
-                                ) AND "IdentityCode" IN (
-                                    SELECT "Identity"
-                                    FROM "${Company}_SYS_USRIDNTY"
-                                    WHERE "User" = userCode
                                 )
                         ) T0
                     END IF

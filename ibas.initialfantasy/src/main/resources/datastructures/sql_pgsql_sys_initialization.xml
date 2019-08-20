@@ -129,6 +129,38 @@
                         END LOOP;
                     ELSE
                         FOR result IN
+                            -- 非超级用户，身份权限
+                            SELECT "Source", "Target", "Value", "Automatic"
+                            FROM (
+                                -- 模块的权限设置
+                                SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
+                                FROM "${Company}_SYS_PRIVILEGE1"
+                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') = ''
+                                    AND "RoleCode" IN (
+                                        SELECT "OrgCode"
+                                        FROM "${Company}_SYS_USER"
+                                        WHERE "Code" = userCode
+                                    ) AND "IdentityCode" IN (
+                                        SELECT "Identity"
+                                        FROM "${Company}_SYS_USRIDNTY"
+                                        WHERE "User" = userCode
+                                    )
+                                UNION ALL
+                                -- 应用的权限设置
+                                SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
+                                FROM "${Company}_SYS_PRIVILEGE1"
+                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
+                                    AND "RoleCode" IN (
+                                        SELECT "OrgCode"
+                                        FROM "${Company}_SYS_USER"
+                                        WHERE "Code" = userCode
+                                    ) AND "IdentityCode" IN (
+                                        SELECT "Identity"
+                                        FROM "${Company}_SYS_USRIDNTY"
+                                        WHERE "User" = userCode
+                                    )
+                            ) T0
+                            UNION ALL
                             -- 非超级用户，角色权限
                             SELECT "Source", "Target", "Value", "Automatic"
                             FROM (
@@ -150,38 +182,6 @@
                                         SELECT "OrgCode"
                                         FROM "${Company}_SYS_USER"
                                         WHERE "Code" = userCode
-                                    )
-                            ) T0
-                            -- 非超级用户，身份权限
-                            UNION ALL
-                            SELECT "Source", "Target", "Value", "Automatic"
-                            FROM (
-                                -- 模块的权限设置
-                                SELECT CAST('M' as character varying) "Source", "ModuleId" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
-                                FROM "${Company}_SYS_PRIVILEGE1"
-                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') = ''
-                                    AND "RoleCode" IN (
-                                        SELECT "OrgCode"
-                                        FROM "${Company}_SYS_USER"
-                                        WHERE "Code" = userCode
-                                    ) AND "IdentityCode" IN (
-                                        SELECT "Identity"
-                                        FROM "${Company}_SYS_USRIDNTY"
-                                        WHERE "User" = userCode
-                                    )
-                                UNION ALL
-                                -- 应用的权限设置
-                                SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
-                                FROM "${Company}_SYS_PRIVILEGE1"
-                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
-                                    AND "RoleCode" IN (
-                                        SELECT "OrgCode"
-                                        FROM "${Company}_SYS_USER"
-                                        WHERE "Code" = userCode
-                                    ) AND "IdentityCode" IN (
-                                        SELECT "Identity"
-                                        FROM "${Company}_SYS_USRIDNTY"
-                                        WHERE "User" = userCode
                                     )
                             ) T0
                         LOOP
