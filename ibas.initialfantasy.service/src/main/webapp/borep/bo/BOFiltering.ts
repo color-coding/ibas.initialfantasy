@@ -445,22 +445,22 @@ namespace initialfantasy {
             /** 映射的属性名称-比较的方法 */
             static PROPERTY_OPERATION_NAME: string = "Operation";
             /** 获取-比较的方法 */
-            get operation(): ibas.emConditionOperation {
-                return this.getProperty<ibas.emConditionOperation>(BOFilteringCondition.PROPERTY_OPERATION_NAME);
+            get operation(): emConditionOperation {
+                return this.getProperty<emConditionOperation>(BOFilteringCondition.PROPERTY_OPERATION_NAME);
             }
             /** 设置-比较的方法 */
-            set operation(value: ibas.emConditionOperation) {
+            set operation(value: emConditionOperation) {
                 this.setProperty(BOFilteringCondition.PROPERTY_OPERATION_NAME, value);
             }
 
             /** 映射的属性名称-与上一个条件的关系 */
             static PROPERTY_RELATIONSHIP_NAME: string = "Relationship";
             /** 获取-与上一个条件的关系 */
-            get relationship(): ibas.emConditionRelationship {
-                return this.getProperty<ibas.emConditionRelationship>(BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME);
+            get relationship(): emConditionRelationship {
+                return this.getProperty<emConditionRelationship>(BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME);
             }
             /** 设置-与上一个条件的关系 */
-            set relationship(value: ibas.emConditionRelationship) {
+            set relationship(value: emConditionRelationship) {
                 this.setProperty(BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME, value);
             }
 
@@ -488,8 +488,8 @@ namespace initialfantasy {
 
             /** 初始化数据 */
             protected init(): void {
-                this.operation = ibas.emConditionOperation.EQUAL;
-                this.relationship = ibas.emConditionRelationship.AND;
+                this.operation = emConditionOperation.EQUAL;
+                this.relationship = emConditionRelationship.AND;
             }
         }
 

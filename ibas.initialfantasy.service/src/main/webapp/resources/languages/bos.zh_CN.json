@@ -360,5 +360,11 @@
     {
         "em_filteringcategory_read": "读取",
         "em_filteringcategory_save": "保存"
+    },
+    {
+        "em_conditionoperation_begin_with": "开始于",
+        "em_conditionoperation_not_begin_with": "不是开始于",
+        "em_conditionoperation_end_with": "结束于",
+        "em_conditionoperation_not_end_with": "不是结束于"
     }
 ]

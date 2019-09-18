@@ -136,10 +136,12 @@ namespace initialfantasy {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
                                         template: new sap.extension.m.EnumSelect("", {
-                                            enumType: ibas.emConditionRelationship
+                                            enumType: bo.emConditionRelationship
                                         }).bindProperty("bindingValue", {
                                             path: "relationship",
-                                            type: new sap.extension.data.ConditionRelationship()
+                                            type: new sap.extension.data.Enum({
+                                                enumType: bo.emConditionRelationship,
+                                            })
                                         })
                                     }),
                                     new sap.extension.table.DataColumn("", {
@@ -162,10 +164,12 @@ namespace initialfantasy {
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
                                         template: new sap.extension.m.EnumSelect("", {
-                                            enumType: ibas.emConditionOperation
+                                            enumType: bo.emConditionOperation
                                         }).bindProperty("bindingValue", {
                                             path: "operation",
-                                            type: new sap.extension.data.ConditionOperation()
+                                            type: new sap.extension.data.Enum({
+                                                enumType: bo.emConditionOperation
+                                            })
                                         })
                                     }),
                                     new sap.extension.table.DataColumn("", {

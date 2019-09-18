@@ -83,7 +83,6 @@ namespace initialfantasy {
 
         /** 业务对象筛选-条件 */
         export interface IBOFilteringCondition extends ibas.IBOSimpleLine {
-
             /** 编号 */
             objectKey: number;
             /** 类型 */
@@ -115,13 +114,11 @@ namespace initialfantasy {
             /** 比较的值 */
             conditionValue: string;
             /** 比较的方法 */
-            operation: ibas.emConditionOperation;
+            operation: emConditionOperation;
             /** 与上一个条件的关系 */
-            relationship: ibas.emConditionRelationship;
-
+            relationship: emConditionRelationship;
             /** 开括号数 */
             bracketOpen: number;
-
             /** 闭括号数 */
             bracketClose: number;
         }

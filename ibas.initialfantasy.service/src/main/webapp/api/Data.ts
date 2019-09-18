@@ -104,7 +104,42 @@ namespace initialfantasy {
             /** 激活 */
             activated: ibas.emYesNo;
         }
-
+        /** 比较操作 */
+        export enum emConditionOperation {
+            /** 等于(=) */
+            EQUAL,
+            /** 大于(>) */
+            GRATER_THAN,
+            /** 小于(<) */
+            LESS_THAN,
+            /** 大于等于(>=) */
+            GRATER_EQUAL,
+            /** 小于等于(<=) */
+            LESS_EQUAL,
+            /** 不等于(<>) */
+            NOT_EQUAL,
+            /** 开始于 */
+            BEGIN_WITH,
+            /** 不是开始于 */
+            NOT_BEGIN_WITH,
+            /** 结束于 */
+            END_WITH,
+            /** 不是结束于 */
+            NOT_END_WITH,
+            /** 包括 */
+            CONTAIN,
+            /** 不包含 */
+            NOT_CONTAIN,
+        }
+        /** 比较关系 */
+        export enum emConditionRelationship {
+            /** 无 */
+            NONE,
+            /** 并且 */
+            AND,
+            /** 或者 */
+            OR
+        }
     }
 
     export namespace app {
