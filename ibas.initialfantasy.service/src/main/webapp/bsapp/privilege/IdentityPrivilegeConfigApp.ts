@@ -332,7 +332,7 @@ namespace initialfantasy {
                         let platform: bo.ApplicationPlatform = selecteds.firstOrDefault();
                         criteria = new ibas.Criteria();
                         condition = criteria.conditions.create();
-                        condition.alias = "Code";
+                        condition.alias = bo.Identity.PROPERTY_CODE_NAME;
                         condition.operation = ibas.emConditionOperation.NOT_NULL;
                         ibas.servicesManager.runChooseService<bo.IIdentity>({
                             title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_identityprivilege_identitycode")),

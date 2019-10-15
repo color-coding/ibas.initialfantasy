@@ -188,7 +188,7 @@ namespace initialfantasy {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 criteria.noChilds = true;
                 let condition: ibas.ICondition = criteria.conditions.create();
-                condition.alias = "Code";
+                condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                 condition.value = ".";
                 condition.operation = ibas.emConditionOperation.NOT_CONTAIN;
                 ibas.servicesManager.runChooseService<bo.BOInformation>({
