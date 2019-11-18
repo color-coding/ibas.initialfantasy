@@ -378,6 +378,7 @@ namespace initialfantasy {
                 embedded(view: any): void {
                     if (view instanceof sap.m.Toolbar) {
                         view.setDesign(sap.m.ToolbarDesign.Transparent);
+                        view.setStyle(sap.m.ToolbarStyle.Clear);
                         view.setHeight("100%");
                     }
                     this.pageIdentities.addHeaderContent(view);

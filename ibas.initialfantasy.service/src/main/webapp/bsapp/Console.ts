@@ -20,6 +20,7 @@
 /// <reference path="./user/index.ts" />
 /// <reference path="./identity/index.ts" />
 /// <reference path="./useridentity/index.ts" />
+/// <reference path="./bopropertysetting/index.ts" />
 namespace initialfantasy {
     export namespace app {
         /** 属性-导航 */
@@ -46,10 +47,11 @@ namespace initialfantasy {
                 this.register(new BOCriteriaFunc());
                 this.register(new PrivilegeFunc());
                 this.register(new BOFilteringFunc());
+                this.register(new BOPropertySettingFunc());
                 if (ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true) {
                     // 仅调超级用户，启用以下功能
                     this.register(new ApplicationConfigFunc());
-                    this.register(new BOInformationFunc());
+                    // this.register(new BOInformationFunc());
                 }
                 // 注册服务应用
                 this.register(new ApplicationElementChooseServiceMapping());

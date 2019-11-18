@@ -17,6 +17,7 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
@@ -25,7 +26,7 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -250,17 +251,18 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	/**
 	 * 查询业务对象信息
 	 * 
-	 * @param boName 对象名称
+	 * @param user   用户
+	 * @param boCode 对象编码
 	 * @param token  用户口令
 	 * @return 操作结果
 	 */
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("fetchBOInfos")
-	public OperationResult<BOInfo> fetchBOInfos(@QueryParam("boCode") String boCode,
-			@QueryParam("token") String token) {
-		return super.fetchBOInfos(boCode, token);
+	@Path("fetchBizObjectInfo")
+	public OperationResult<BizObjectInfo> fetchBizObjectInfo(@QueryParam("user") String user,
+			@QueryParam("boCode") String boCode, @QueryParam("token") String token) {
+		return super.fetchBizObjectInfo(user, boCode, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -613,6 +615,38 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.saveIdentityPrivilege(bo, token);
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象属性设置
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBOPropertySetting")
+	public OperationResult<BOPropertySetting> fetchBOPropertySetting(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchBOPropertySetting(criteria, token);
+	}
+
+	/**
+	 * 保存-业务对象属性设置
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveBOPropertySetting")
+	public OperationResult<BOPropertySetting> saveBOPropertySetting(BOPropertySetting bo,
+			@QueryParam("token") String token) {
+		return super.saveBOPropertySetting(bo, token);
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }

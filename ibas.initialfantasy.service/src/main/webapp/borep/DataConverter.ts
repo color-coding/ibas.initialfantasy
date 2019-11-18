@@ -73,8 +73,6 @@ namespace initialfantasy {
                     if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
                         property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
-                    } else if (property === bo.BOPropertyInformation.PROPERTY_AUTHORISED_NAME) {
-                        return ibas.enums.toString(ibas.emAuthoriseType, value);
                     }
                 } else if (boName === bo.BOFilteringCondition.name) {
                     if (property === bo.BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME) {
@@ -85,6 +83,12 @@ namespace initialfantasy {
                 } else if (boName === bo.ApplicationElement.name) {
                     if (property === bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME) {
                         return ibas.enums.toString(emElementType, value);
+                    }
+                } else if (boName === bo.BOPropertySetting.name) {
+                    if (property === bo.BOPropertySetting.PROPERTY_AUTHORISED_NAME) {
+                        return ibas.enums.toString(ibas.emAuthoriseType, value);
+                    } else if (property === bo.BOPropertySetting.PROPERTY_SEARCHED_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
                     }
                 }
                 return super.convertData(boName, property, value);
@@ -128,8 +132,6 @@ namespace initialfantasy {
                     if (property === bo.BOPropertyInformation.PROPERTY_SEARCHED_NAME ||
                         property === bo.BOPropertyInformation.PROPERTY_SYSTEMED_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
-                    } else if (property === bo.BOPropertyInformation.PROPERTY_AUTHORISED_NAME) {
-                        return ibas.enums.valueOf(ibas.emAuthoriseType, value);
                     }
                 } else if (boName === bo.BOFilteringCondition.name) {
                     if (property === bo.BOFilteringCondition.PROPERTY_RELATIONSHIP_NAME) {
@@ -140,6 +142,12 @@ namespace initialfantasy {
                 } else if (boName === bo.ApplicationElement.name) {
                     if (property === bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME) {
                         return ibas.enums.valueOf(emElementType, value);
+                    }
+                } else if (boName === bo.BOPropertySetting.name) {
+                    if (property === bo.BOPropertySetting.PROPERTY_AUTHORISED_NAME) {
+                        return ibas.enums.valueOf(ibas.emAuthoriseType, value);
+                    } else if (property === bo.BOPropertySetting.PROPERTY_SEARCHED_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 }
                 return super.parsingData(boName, property, value);

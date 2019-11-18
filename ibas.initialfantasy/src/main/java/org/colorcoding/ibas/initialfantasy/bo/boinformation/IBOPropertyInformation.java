@@ -1,7 +1,6 @@
 package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
 import org.colorcoding.ibas.bobas.bo.IBusinessObject;
-import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 
 /**
@@ -135,20 +134,6 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	 * @param value 值
 	 */
 	void setSystemed(emYesNo value);
-
-	/**
-	 * 获取-授权的
-	 * 
-	 * @return 值
-	 */
-	emAuthoriseType getAuthorised();
-
-	/**
-	 * 设置-授权的
-	 * 
-	 * @param value 值
-	 */
-	void setAuthorised(emAuthoriseType value);
 
 	/**
 	 * 获取-业务对象属性值集合

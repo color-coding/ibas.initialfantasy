@@ -42,8 +42,6 @@ namespace initialfantasy {
             searched: ibas.emYesNo;
             /** 系统的 */
             systemed: ibas.emYesNo;
-            /** 授权的 */
-            authorised: ibas.emAuthoriseType;
             /** 业务对象属性值集合 */
             boPropertyValues: IBOPropertyValues;
         }

@@ -17,7 +17,9 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
@@ -671,6 +673,49 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 				this.saveIdentityPrivilege((IdentityPrivilege) bo, this.getUserToken()));
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象属性设置
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOPropertySetting> fetchBOPropertySetting(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BOPropertySetting.class);
+	}
+
+	/**
+	 * 查询-业务对象属性设置（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOPropertySetting> fetchBOPropertySetting(ICriteria criteria) {
+		return new OperationResult<IBOPropertySetting>(this.fetchBOPropertySetting(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-业务对象属性设置
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOPropertySetting> saveBOPropertySetting(BOPropertySetting bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-业务对象属性设置（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOPropertySetting> saveBOPropertySetting(IBOPropertySetting bo) {
+		return new OperationResult<IBOPropertySetting>(
+				this.saveBOPropertySetting((BOPropertySetting) bo, this.getUserToken()));
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }

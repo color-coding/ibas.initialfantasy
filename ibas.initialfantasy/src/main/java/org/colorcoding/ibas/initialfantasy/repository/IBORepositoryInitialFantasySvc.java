@@ -10,6 +10,7 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
@@ -302,6 +303,24 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 */
 	OperationResult<IdentityPrivilege> saveIdentityPrivilege(IdentityPrivilege bo, String token);
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象属性设置
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOPropertySetting> fetchBOPropertySetting(ICriteria criteria, String token);
+
+	/**
+	 * 保存-业务对象属性设置
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOPropertySetting> saveBOPropertySetting(BOPropertySetting bo, String token);
 	// --------------------------------------------------------------------------------------------//
 
 }

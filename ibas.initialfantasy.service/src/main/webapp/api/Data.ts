@@ -52,6 +52,8 @@ namespace initialfantasy {
         export const BO_CODE_USERIDENTITY: string = "${Company}_SYS_USERIDENTITY";
         /** 业务对象编码-身份权限 */
         export const BO_CODE_IDENTITYPRIVILEGE: string = "${Company}_SYS_IDENTPRIVILEGE";
+        /** 业务对象编码-业务对象属性设置 */
+        export const BO_CODE_BOPROPERTYSETTING: string = "${Company}_SYS_BOPRTYSETTING";
 
         /**
          * 分配类型

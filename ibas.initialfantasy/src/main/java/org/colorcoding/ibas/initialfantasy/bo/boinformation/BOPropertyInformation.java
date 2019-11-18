@@ -10,7 +10,6 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -326,37 +325,6 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	}
 
 	/**
-	 * 属性名称-授权的
-	 */
-	private static final String PROPERTY_AUTHORISED_NAME = "Authorised";
-
-	/**
-	 * 授权的 属性
-	 */
-	@DbField(name = "Authorised", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emAuthoriseType> PROPERTY_AUTHORISED = registerProperty(PROPERTY_AUTHORISED_NAME,
-			emAuthoriseType.class, MY_CLASS);
-
-	/**
-	 * 获取-授权的
-	 * 
-	 * @return 值
-	 */
-	@XmlElement(name = PROPERTY_AUTHORISED_NAME)
-	public final emAuthoriseType getAuthorised() {
-		return this.getProperty(PROPERTY_AUTHORISED);
-	}
-
-	/**
-	 * 设置-授权的
-	 * 
-	 * @param value 值
-	 */
-	public final void setAuthorised(emAuthoriseType value) {
-		this.setProperty(PROPERTY_AUTHORISED, value);
-	}
-
-	/**
 	 * 属性名称-业务对象属性信息
 	 */
 	private static final String PROPERTY_BOPROPERTYVALUES_NAME = "BOPropertyValues";
@@ -394,7 +362,6 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
-		this.setAuthorised(emAuthoriseType.ALL);
 		this.setBOPropertyValues(new BOPropertyValues(this));
 
 	}

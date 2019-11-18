@@ -36,6 +36,7 @@ namespace initialfantasy {
                 this.view.editBOPropertyInformationEvent = this.editBOPropertyInformation;
                 this.view.addBOPropertyValueEvent = this.addBOPropertyValue;
                 this.view.removeBOPropertyValueEvent = this.removeBOPropertyValue;
+                this.view.boNumberingEvent = this.boNumbering;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -261,6 +262,15 @@ namespace initialfantasy {
                 // 仅显示没有标记删除的
                 this.view.showBOPropertyValues(this.editBOPropertyInformationData.boPropertyValues.filterDeleted());
             }
+            private boNumbering(): void {
+                if (ibas.strings.isEmpty(this.editData.objectType)) {
+                    return;
+                }
+                let app: BONumberingEditApp = new BONumberingEditApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run(this.editData.code);
+            }
         }
         /** 视图-业务对象信息 */
         export interface IBOInformationEditView extends ibas.IBOEditView {
@@ -284,6 +294,8 @@ namespace initialfantasy {
             removeBOPropertyValueEvent: Function;
             /** 显示数据 */
             showBOPropertyValues(datas: bo.BOPropertyValue[]): void;
+            /** 业务对象编号 */
+            boNumberingEvent: Function;
         }
     }
 }

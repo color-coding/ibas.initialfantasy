@@ -11,8 +11,6 @@ import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
-import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
-import org.colorcoding.ibas.initialfantasy.bo.shell.BOPropertyInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
@@ -56,18 +54,6 @@ public class TestRepositoryShell extends TestCase {
 		assertEquals(opRslt.getMessage(), 0, opRslt.getResultCode());
 		for (UserPrivilege item : opRslt.getResultObjects()) {
 			System.out.println(item.toString());
-		}
-	}
-
-	public void testFetchBOInfos() throws Exception {
-		IBORepositoryShell boRepository = new BORepositoryInitialFantasyShell();
-		IOperationResult<BOInfo> opRslt = boRepository.fetchBOInfos("ApplicationModule", this.getToken());
-		assertEquals(opRslt.getMessage(), 0, opRslt.getResultCode());
-		for (BOInfo boInfo : opRslt.getResultObjects()) {
-			System.out.println(boInfo.toString());
-			for (BOPropertyInfo propertyInfo : boInfo.getProperties()) {
-				System.out.println(propertyInfo.toString());
-			}
 		}
 	}
 

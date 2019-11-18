@@ -1,7 +1,5 @@
 package org.colorcoding.ibas.initialfantasy.bo.shell;
 
-import java.util.ArrayList;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,7 +9,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
-import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
 
 /**
  * 业务对象信息
@@ -20,22 +17,22 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformati
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "BOInfo")
-@XmlRootElement(name = "BOInfo")
-public class BOInfo extends Serializable {
+@XmlType(name = "BizObjectInfo")
+@XmlRootElement(name = "BizObjectInfo")
+public class BizObjectInfo extends Serializable {
 
-	private static final long serialVersionUID = -1142157290145455819L;
+	private static final long serialVersionUID = 5211690516678551238L;
 
-	public static BOInfo create(IBOInformation boItem) {
-		BOInfo boInfo = new BOInfo();
+	public static BizObjectInfo create(IBOInformation boItem) {
+		BizObjectInfo boInfo = new BizObjectInfo();
 		boInfo.setCode(boItem.getCode());
 		boInfo.setName(boItem.getName());
 		boInfo.setType(boItem.getObjectType());
-		ArrayList<BOPropertyInfo> propertyInfos = new ArrayList<>();
-		for (IBOPropertyInformation propertyItem : boItem.getBOPropertyInformations()) {
-			propertyInfos.add(BOPropertyInfo.create(propertyItem));
+		BizPropertyInfo[] propertyInfos = new BizPropertyInfo[boItem.getBOPropertyInformations().size()];
+		for (int i = 0; i < propertyInfos.length; i++) {
+			propertyInfos[i] = BizPropertyInfo.create(boItem.getBOPropertyInformations().get(i));
 		}
-		boInfo.setProperties(propertyInfos.toArray(new BOPropertyInfo[] {}));
+		boInfo.setProperties(propertyInfos);
 		return boInfo;
 	}
 
@@ -76,20 +73,20 @@ public class BOInfo extends Serializable {
 	}
 
 	/** 属性集合 */
-	private BOPropertyInfo[] properties;
+	private BizPropertyInfo[] properties;
 
 	@XmlElementWrapper(name = "Properties")
-	@XmlElement(name = "Property", type = BOPropertyInfo.class)
-	public BOPropertyInfo[] getProperties() {
+	@XmlElement(name = "Property", type = BizPropertyInfo.class)
+	public BizPropertyInfo[] getProperties() {
 		return properties;
 	}
 
-	public void setProperties(BOPropertyInfo[] properties) {
+	public void setProperties(BizPropertyInfo[] properties) {
 		this.properties = properties;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("{boinfo: %s %s}", this.getName(), this.getType());
+		return String.format("{objectInfo: %s %s}", this.getName(), this.getType());
 	}
 }

@@ -118,8 +118,9 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketopen"),
-                                template: new sap.extension.m.Select("", {
-                                    items: this.getCharListItem("(")
+                                template: new sap.extension.m.RepeatCharSelect("", {
+                                    repeatText: "(",
+                                    maxCount: 5,
                                 }).bindProperty("bindingValue", {
                                     path: "bracketOpen",
                                     type: "sap.ui.model.type.Integer"
@@ -155,8 +156,9 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketclose"),
-                                template: new sap.extension.m.Select("", {
-                                    items: this.getCharListItem(")")
+                                template: new sap.extension.m.RepeatCharSelect("", {
+                                    repeatText: ")",
+                                    maxCount: 5,
                                 }).bindProperty("bindingValue", {
                                     path: "bracketClose",
                                     type: "sap.ui.model.type.Integer"
@@ -165,24 +167,6 @@ namespace initialfantasy {
                         ]
                     });
                     return table;
-                }
-                private getCharListItem(char: string): sap.ui.core.ListItem[] {
-                    // 获取重复的字符
-                    let count: number = 4;
-                    let items: Array<sap.ui.core.ListItem> = [];
-                    items.push(new sap.ui.core.ListItem("", {
-                        key: 0,
-                        text: "",
-                    }));
-                    let vChar: string = char;
-                    for (let i: number = 1; i < count; i++) {
-                        items.push(new sap.ui.core.ListItem("", {
-                            key: i,
-                            text: vChar,
-                        }));
-                        vChar = vChar + char;
-                    }
-                    return items;
                 }
                 private getPropertyListItem(aliases: ibas.KeyText[]): sap.ui.core.ListItem[] {
                     let items: Array<sap.ui.core.ListItem> = [];

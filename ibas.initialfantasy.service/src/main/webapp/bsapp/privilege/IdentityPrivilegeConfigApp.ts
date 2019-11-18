@@ -341,7 +341,7 @@ namespace initialfantasy {
                             criteria: criteria,
                             viewMode: ibas.emViewMode.VIEW,
                             onCompleted(selecteds: ibas.IList<bo.IIdentity>): void {
-                                let identity: bo.IRole = selecteds.firstOrDefault();
+                                let identity: bo.IIdentity = selecteds.firstOrDefault();
                                 // 查询复制的权限
                                 criteria = new ibas.Criteria();
                                 condition = criteria.conditions.create();

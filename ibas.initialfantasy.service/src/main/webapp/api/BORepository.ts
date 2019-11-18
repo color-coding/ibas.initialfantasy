@@ -164,6 +164,16 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveIdentityPrivilege(saver: ibas.ISaveCaller<bo.IIdentityPrivilege>): void;
+            /**
+             * 查询 业务对象属性设置
+             * @param fetcher 查询者
+             */
+            fetchBOPropertySetting(fetcher: ibas.IFetchCaller<bo.IBOPropertySetting>): void;
+            /**
+             * 保存 业务对象属性设置
+             * @param saver 保存者
+             */
+            saveBOPropertySetting(saver: ibas.ISaveCaller<bo.IBOPropertySetting>): void;
         }
     }
 }

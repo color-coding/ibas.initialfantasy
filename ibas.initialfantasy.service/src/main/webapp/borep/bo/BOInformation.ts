@@ -220,17 +220,6 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyInformation.PROPERTY_SYSTEMED_NAME, value);
             }
 
-            /** 映射的属性名称-授权的 */
-            static PROPERTY_AUTHORISED_NAME: string = "Authorised";
-            /** 获取-授权的 */
-            get authorised(): ibas.emAuthoriseType {
-                return this.getProperty<ibas.emAuthoriseType>(BOPropertyInformation.PROPERTY_AUTHORISED_NAME);
-            }
-            /** 设置-授权的 */
-            set authorised(value: ibas.emAuthoriseType) {
-                this.setProperty(BOPropertyInformation.PROPERTY_AUTHORISED_NAME, value);
-            }
-
             /** 映射的属性名称-业务对象属性值集合 */
             static PROPERTY_BOPROPERTYVALUES_NAME: string = "BOPropertyValues";
             /** 获取-业务对象属性信息集合 */
@@ -281,7 +270,6 @@ namespace initialfantasy {
             /** 初始化数据 */
             protected init(): void {
                 this.boPropertyValues = new BOPropertyValues(this);
-                this.authorised = ibas.emAuthoriseType.NONE;
             }
         }
 

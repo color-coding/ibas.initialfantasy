@@ -16,14 +16,14 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyValue;
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "BOPropertyValue")
-@XmlRootElement(name = "BOPropertyValue")
-public class BOPropertyValue extends Serializable {
+@XmlType(name = "BizPropertyValue")
+@XmlRootElement(name = "BizPropertyValue")
+public class BizPropertyValue extends Serializable {
 
-	private static final long serialVersionUID = 4495333357468284953L;
+	private static final long serialVersionUID = -3148876335057118663L;
 
-	public static BOPropertyValue create(IBOPropertyValue propertyValue) {
-		BOPropertyValue propertyInfo = new BOPropertyValue();
+	public static BizPropertyValue create(IBOPropertyValue propertyValue) {
+		BizPropertyValue propertyInfo = new BizPropertyValue();
 		propertyInfo.setValue(propertyValue.getValue());
 		propertyInfo.setDescription(propertyValue.getDescription());
 		return propertyInfo;
@@ -53,6 +53,6 @@ public class BOPropertyValue extends Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("{propertyvalue: %s}", this.getValue());
+		return String.format("{propertyValue: %s}", this.getValue());
 	}
 }

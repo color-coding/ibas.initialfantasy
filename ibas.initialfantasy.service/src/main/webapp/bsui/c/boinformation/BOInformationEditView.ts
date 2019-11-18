@@ -26,6 +26,8 @@ namespace initialfantasy {
                 addBOPropertyValueEvent: Function;
                 /** 删除业务对象属性值事件 */
                 removeBOPropertyValueEvent: Function;
+                /** 业务对象编号 */
+                boNumberingEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -75,47 +77,6 @@ namespace initialfantasy {
                     this.tableBOPropertyInformation = new sap.extension.table.Table("", {
                         enableSelectAll: true,
                         visibleRowCount: sap.extension.table.visibleRowCount(8),
-                        toolbar: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.ToolbarSpacer(""),
-                                new sap.m.MenuButton("", {
-                                    text: ibas.i18n.prop("bo_bopropertyinformation_authorised"),
-                                    icon: "sap-icon://bullet-text",
-                                    type: sap.m.ButtonType.Transparent,
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
-                                                icon: "sap-icon://multiselect-all",
-                                                press: function (): void {
-                                                    for (let item of that.tableBOPropertyInformation.getSelecteds<bo.IBOPropertyInformation>()) {
-                                                        item.authorised = ibas.emAuthoriseType.ALL;
-                                                    }
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
-                                                icon: "sap-icon://multi-select",
-                                                press: function (): void {
-                                                    for (let item of that.tableBOPropertyInformation.getSelecteds<bo.IBOPropertyInformation>()) {
-                                                        item.authorised = ibas.emAuthoriseType.READ;
-                                                    }
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
-                                                icon: "sap-icon://multiselect-none",
-                                                press: function (): void {
-                                                    for (let item of that.tableBOPropertyInformation.getSelecteds<bo.IBOPropertyInformation>()) {
-                                                        item.authorised = ibas.emAuthoriseType.NONE;
-                                                    }
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                }),
-                            ]
-                        }),
                         rows: "{/rows}",
                         rowActionCount: 1,
                         rowActionTemplate: new sap.ui.table.RowAction("", {
@@ -143,10 +104,17 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
-                                template: new sap.extension.m.Text("", {
+                                template: new sap.extension.m.Input("", {
                                 }).bindProperty("bindingValue", {
                                     path: "description",
-                                    type: new sap.extension.data.Alphanumeric()
+                                    type: new sap.extension.data.Alphanumeric({
+                                        maxLength: 100
+                                    })
+                                }).bindProperty("editable", {
+                                    path: "property",
+                                    formatter(data: string): boolean {
+                                        return ibas.strings.isWith(data, "U_", undefined) ? true : false;
+                                    }
                                 }),
                                 sortProperty: "description",
                                 filterProperty: "description"
@@ -158,15 +126,6 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "searched",
                                     type: new sap.extension.data.YesNo(),
-                                })
-                            }),
-                            new sap.extension.table.Column("", {
-                                label: ibas.i18n.prop("bo_bopropertyinformation_authorised"),
-                                template: new sap.extension.m.EnumSelect("", {
-                                    enumType: ibas.emAuthoriseType
-                                }).bindProperty("bindingValue", {
-                                    path: "authorised",
-                                    type: new sap.extension.data.AuthoriseType(),
                                 })
                             }),
                             new sap.extension.table.Column("", {
@@ -257,6 +216,15 @@ namespace initialfantasy {
                                     icon: "sap-icon://save",
                                     press: function (): void {
                                         that.fireViewEvents(that.saveDataEvent);
+                                    }
+                                }),
+                                new sap.m.ToolbarSeparator(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_func_bonumbering"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://number-sign",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.boNumberingEvent);
                                     }
                                 }),
                             ]

@@ -146,8 +146,9 @@ namespace initialfantasy {
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
-                                        template: new sap.extension.m.Select("", {
-                                            items: this.getCharListItem("(")
+                                        template: new sap.extension.m.RepeatCharSelect("", {
+                                            repeatText: "(",
+                                            maxCount: 5,
                                         }).bindProperty("bindingValue", {
                                             path: "bracketOpen",
                                             type: "sap.ui.model.type.Integer"
@@ -192,8 +193,9 @@ namespace initialfantasy {
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
-                                        template: new sap.extension.m.Select("", {
-                                            items: this.getCharListItem(")")
+                                        template: new sap.extension.m.RepeatCharSelect("", {
+                                            repeatText: ")",
+                                            maxCount: 5,
                                         }).bindProperty("bindingValue", {
                                             path: "bracketClose",
                                             type: "sap.ui.model.type.Integer"
@@ -260,25 +262,6 @@ namespace initialfantasy {
                             formMiddle,
                         ]
                     });
-                }
-                /** 获取重复的字符 */
-                private getCharListItem(char: string): sap.ui.core.ListItem[] {
-                    // 获取重复的字符
-                    let count: number = 4;
-                    let items: Array<sap.ui.core.ListItem> = [];
-                    items.push(new sap.ui.core.ListItem("", {
-                        key: 0,
-                        text: "",
-                    }));
-                    let vChar: string = char;
-                    for (let i: number = 1; i < count; i++) {
-                        items.push(new sap.ui.core.ListItem("", {
-                            key: i,
-                            text: vChar,
-                        }));
-                        vChar = vChar + char;
-                    }
-                    return items;
                 }
                 private page: sap.extension.m.Page;
                 private tableBOFilteringCondition: sap.extension.table.Table;

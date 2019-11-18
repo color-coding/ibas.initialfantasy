@@ -260,6 +260,20 @@ namespace initialfantasy {
             saveIdentityPrivilege(saver: ibas.ISaveCaller<bo.IdentityPrivilege>): void {
                 super.save(bo.IdentityPrivilege.name, saver);
             }
+            /**
+             * 查询 业务对象属性设置
+             * @param fetcher 查询者
+             */
+            fetchBOPropertySetting(fetcher: ibas.IFetchCaller<bo.BOPropertySetting>): void {
+                super.fetch(bo.BOPropertySetting.name, fetcher);
+            }
+            /**
+             * 保存 业务对象属性设置
+             * @param saver 保存者
+             */
+            saveBOPropertySetting(saver: ibas.ISaveCaller<bo.BOPropertySetting>): void {
+                super.save(bo.BOPropertySetting.name, saver);
+            }
         }
     }
 }

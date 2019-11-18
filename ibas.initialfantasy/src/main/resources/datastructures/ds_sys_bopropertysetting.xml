@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Domain>
+<Domain Name="InitialFantasy" ShortName="IF">
+  <Model Name="BOPropertySetting" Description="业务对象属性设置" ModelType="Simple" Mapped="${Company}_SYS_BPTYSET">
+    <Property Name="BOCode" Description="对象" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Object" UniqueKey="Yes"/>
+    <Property Name="PropertyCode" Description="属性" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Property" UniqueKey="Yes"/>
+    <Property Name="IdentityCode" Description="身份" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Identity" UniqueKey="Yes"/>
+    <Property Name="Position" Description="位置" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Position"/>
+    <Property Name="Searched" Description="检索" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Searched"/>
+    <Property Name="Authorised" Description="权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Authorised"/>
+    <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+  </Model>
+  <BusinessObject MappedModel="BOPropertySetting" ShortName="${Company}_SYS_BOPRTYSETTING"/>
+</Domain>

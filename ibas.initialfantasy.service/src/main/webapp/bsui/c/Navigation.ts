@@ -22,6 +22,7 @@
 /// <reference path="./bonumbering/index.ts" />
 /// <reference path="./identity/index.ts" />
 /// <reference path="./useridentity/index.ts" />
+/// <reference path="./bopropertysetting/index.ts" />
 namespace initialfantasy {
     export namespace ui {
         /**
@@ -163,6 +164,9 @@ namespace initialfantasy {
                         break;
                     case app.UserIdentityEditApp.APPLICATION_ID:
                         view = new c.UserIdentityEditView();
+                        break;
+                    case app.BOPropertySettingConfigApp.APPLICATION_ID:
+                        view = new c.BOPropertySettingConfigView();
                         break;
                     default:
                         break;

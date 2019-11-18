@@ -1,5 +1,8 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
@@ -27,11 +30,13 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.identity.IUserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.shell.ApplicationModule4Shell;
-import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BizPropertyInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
@@ -295,38 +300,6 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	}
 
 	@Override
-	public OperationResult<BOInfo> fetchBOInfos(String boCode, String token) {
-		OperationResult<BOInfo> opRslt = new OperationResult<>();
-		try {
-			this.setUserToken(token);
-			// 主对象及子对象一并返回
-			ICriteria criteria = new Criteria();
-			ICondition condition = criteria.getConditions().create();
-			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
-			condition.setOperation(ConditionOperation.EQUAL);
-			condition.setValue(boCode);
-			condition = criteria.getConditions().create();
-			condition.setRelationship(ConditionRelationship.OR);
-			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
-			condition.setOperation(ConditionOperation.START);
-			condition.setValue(boCode + ".");
-			IOperationResult<BOInformation> opRsltFetch = this.fetchBOInformation(criteria, token);
-			if (opRsltFetch.getError() != null) {
-				throw opRsltFetch.getError();
-			}
-			if (opRsltFetch.getResultCode() != 0) {
-				throw new Exception(opRsltFetch.getMessage());
-			}
-			for (BOInformation boItem : opRsltFetch.getResultObjects()) {
-				opRslt.addResultObjects(BOInfo.create(boItem));
-			}
-		} catch (Exception e) {
-			opRslt.setError(e);
-		}
-		return opRslt;
-	}
-
-	@Override
 	public OperationResult<UserQuery> fetchUserQueries(String user, String queryId, String token) {
 		OperationResult<UserQuery> opRslt = new OperationResult<>();
 		try {
@@ -482,6 +455,100 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					Logger.log(e1);
 				}
 			}
+		}
+		return opRslt;
+	}
+
+	@Override
+	public OperationResult<BizObjectInfo> fetchBizObjectInfo(String user, String boCode, String token) {
+		OperationResult<BizObjectInfo> opRslt = new OperationResult<>();
+		try {
+			this.setUserToken(token);
+			// 主对象及子对象一并返回
+			ICriteria criteria = new Criteria();
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
+			condition.setOperation(ConditionOperation.EQUAL);
+			condition.setValue(boCode);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
+			condition.setOperation(ConditionOperation.START);
+			condition.setValue(boCode + ".");
+			IOperationResult<BOInformation> opRsltFetch = this.fetchBOInformation(criteria, token);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			if (opRsltFetch.getResultCode() != 0) {
+				throw new Exception(opRsltFetch.getMessage());
+			}
+			for (BOInformation boItem : opRsltFetch.getResultObjects()) {
+				opRslt.addResultObjects(BizObjectInfo.create(boItem));
+			}
+			String identities = "";
+			if (this.getCurrentUser() instanceof User) {
+				User cUser = (User) this.getCurrentUser();
+				identities = cUser.getIdentities();
+			}
+			for (BizObjectInfo boInfo : opRslt.getResultObjects()) {
+				criteria = new Criteria();
+				condition = criteria.getConditions().create();
+				condition.setAlias(BOPropertySetting.PROPERTY_BOCODE.getName());
+				condition.setValue(boInfo.getCode());
+				condition = criteria.getConditions().create();
+				condition.setAlias(BOPropertySetting.PROPERTY_IDENTITYCODE.getName());
+				condition.setValue("");
+				if (identities != null && !identities.isEmpty()) {
+					condition.setBracketOpen(1);
+					for (String identity : identities.split(",")) {
+						condition = criteria.getConditions().create();
+						condition.setAlias(BOPropertySetting.PROPERTY_IDENTITYCODE.getName());
+						condition.setValue(identity);
+						condition.setRelationship(ConditionRelationship.OR);
+					}
+					condition.setBracketClose(1);
+				}
+				ISort sort = criteria.getSorts().create();
+				sort.setAlias(BOPropertySetting.PROPERTY_BOCODE.getName());
+				sort.setSortType(SortType.ASCENDING);
+				sort = criteria.getSorts().create();
+				sort.setAlias(BOPropertySetting.PROPERTY_IDENTITYCODE.getName());
+				sort.setSortType(SortType.ASCENDING);
+				sort = criteria.getSorts().create();
+				sort.setAlias(BOPropertySetting.PROPERTY_PROPERTYCODE.getName());
+				sort.setSortType(SortType.ASCENDING);
+				OperationResult<BOPropertySetting> opRsltSetting = this.fetchBOPropertySetting(criteria, token);
+				for (BizPropertyInfo ptyInfo : boInfo.getProperties()) {
+					for (BOPropertySetting setting : opRsltSetting.getResultObjects()) {
+						if (!boInfo.getCode().equals(setting.getBOCode())) {
+							continue;
+						}
+						if (!ptyInfo.getName().equals(setting.getPropertyCode())) {
+							continue;
+						}
+						if (ptyInfo.getAuthorised() == null) {
+							ptyInfo.setSearched(setting.getSearched() == emYesNo.YES ? true : false);
+							ptyInfo.setAuthorised(setting.getAuthorised());
+							ptyInfo.setPosition(setting.getPosition());
+						} else {
+							if (ptyInfo.getAuthorised().compareTo(setting.getAuthorised()) < 0) {
+								ptyInfo.setSearched(setting.getSearched() == emYesNo.YES ? true : false);
+								ptyInfo.setAuthorised(setting.getAuthorised());
+								ptyInfo.setPosition(setting.getPosition());
+							}
+						}
+					}
+
+				}
+				Arrays.sort(boInfo.getProperties(), new Comparator<BizPropertyInfo>() {
+					@Override
+					public int compare(BizPropertyInfo o1, BizPropertyInfo o2) {
+						return Integer.compare(o1.getPosition(), o2.getPosition());
+					}
+				});
+			}
+		} catch (Exception e) {
+			opRslt.setError(e);
 		}
 		return opRslt;
 	}

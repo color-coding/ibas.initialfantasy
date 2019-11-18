@@ -37,9 +37,26 @@ namespace initialfantasy {
             /** 运行,覆盖原方法 */
             run(): void;
             run(data: bo.BONumbering): void;
+            run(boCode: string): void;
             run(): void {
-                this.editData = arguments[0];
-                super.run.apply(this, arguments);
+                if (arguments[0] instanceof bo.BONumbering) {
+                    this.editData = arguments[0];
+                    super.run.apply(this, arguments);
+                } else if (typeof arguments[0] === "string") {
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.BONumbering.PROPERTY_OBJECTCODE_NAME;
+                    condition.value = arguments[0];
+                    let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                    boRepository.fetchBONumbering({
+                        criteria: criteria,
+                        onCompleted: (opRslt) => {
+                            this.run(opRslt.resultObjects.firstOrDefault());
+                        }
+                    });
+                } else {
+                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "data"));
+                }
             }
             /** 待编辑的数据 */
             protected editData: bo.BONumbering;

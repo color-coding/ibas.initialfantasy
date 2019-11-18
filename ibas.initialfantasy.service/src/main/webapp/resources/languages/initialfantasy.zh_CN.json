@@ -69,6 +69,8 @@
   "initialfantasy_app_bonumbering_edit": "业务对象编号编辑",
   "initialfantasy_app_variable_choose": "系统变量选择",
   "initialfantasy_app_config_choose": "系统配置选择",
+  "initialfantasy_func_bopropertysetting": "对象属性设置",
+  "initialfantasy_app_bopropertysetting_list": "对象属性设置列表",
   "initialfantasy_title_general": "常规信息",
   "initialfantasy_title_others": "其他信息",
   "initialfantasy_bocriteria_setting": "检索条件设置",
@@ -81,6 +83,8 @@
   "initialfantasy_register_elements": "注册元素",
   "initialfantasy_copy_from": "复制从",
   "initialfantasy_copying_privilege": "复制权限，请稍后",
+  "initialfantasy_default": "默认",
   "initialfantasy_register_module_elements": "正在注册[{0}]应用元素，请稍后",
+  "initialfantasy_all_identities": "全部身份",
   "initialfantasy_closing_delimiter": "----结束----"
 }

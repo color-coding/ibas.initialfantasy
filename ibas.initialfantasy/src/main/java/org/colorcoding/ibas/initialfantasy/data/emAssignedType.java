@@ -3,7 +3,7 @@ package org.colorcoding.ibas.initialfantasy.data;
 import org.colorcoding.ibas.bobas.mapping.Value;
 
 /**
- * 报表分配类型
+ * 分配类型
  * 
  * @author Niuren.Zhu
  *

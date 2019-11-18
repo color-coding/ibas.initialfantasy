@@ -1,7 +1,5 @@
 package org.colorcoding.ibas.initialfantasy.bo.shell;
 
-import java.util.ArrayList;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,7 +11,6 @@ import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
-import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyValue;
 
 /**
  * 业务对象属性信息
@@ -22,39 +19,39 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyValue;
  *
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = "BOPropertyInfo")
-@XmlRootElement(name = "BOPropertyInfo")
-public class BOPropertyInfo extends Serializable {
+@XmlType(name = "BizPropertyInfo")
+@XmlRootElement(name = "BizPropertyInfo")
+public class BizPropertyInfo extends Serializable {
 
-	private static final long serialVersionUID = 4495322357468284953L;
+	private static final long serialVersionUID = 2986192380423488008L;
 
-	public static BOPropertyInfo create(IBOPropertyInformation propertyItem) {
-		BOPropertyInfo propertyInfo = new BOPropertyInfo();
-		propertyInfo.setProperty(propertyItem.getPropertyName());
+	public static BizPropertyInfo create(IBOPropertyInformation propertyItem) {
+		BizPropertyInfo propertyInfo = new BizPropertyInfo();
+		propertyInfo.setName(propertyItem.getPropertyName());
 		propertyInfo.setDescription(propertyItem.getDescription());
+		propertyInfo.setAlias(propertyItem.getMapped());
 		propertyInfo.setDataType(propertyItem.getDataType());
 		propertyInfo.setEditType(propertyItem.getEditType());
 		propertyInfo.setEditSize(propertyItem.getEditSize());
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
 		propertyInfo.setSystemed(propertyItem.getSystemed() == emYesNo.YES ? true : false);
-		propertyInfo.setAuthorised(propertyItem.getAuthorised());
-		ArrayList<BOPropertyValue> propertyValues = new ArrayList<>();
-		for (IBOPropertyValue propertyValue : propertyItem.getBOPropertyValues()) {
-			propertyValues.add(BOPropertyValue.create(propertyValue));
+		BizPropertyValue[] propertyValues = new BizPropertyValue[propertyItem.getBOPropertyValues().size()];
+		for (int i = 0; i < propertyValues.length; i++) {
+			propertyValues[i] = BizPropertyValue.create(propertyItem.getBOPropertyValues().get(i));
 		}
-		propertyInfo.setValues(propertyValues.toArray(new BOPropertyValue[] {}));
+		propertyInfo.setValues(propertyValues);
 		return propertyInfo;
 	}
 
-	private String property;
+	private String name;
 
-	@XmlElement(name = "Property")
-	public String getProperty() {
-		return property;
+	@XmlElement(name = "Name")
+	public String getName() {
+		return name;
 	}
 
-	public void setProperty(String property) {
-		this.property = property;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	private String description;
@@ -135,20 +132,42 @@ public class BOPropertyInfo extends Serializable {
 		this.authorised = authorised;
 	}
 
-	private BOPropertyValue[] values;
+	private String alias;
+
+	@XmlElement(name = "Alias")
+	public final String getAlias() {
+		return alias;
+	}
+
+	public final void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	private int position;
+
+	@XmlElement(name = "Position")
+	public final int getPosition() {
+		return position;
+	}
+
+	public final void setPosition(int position) {
+		this.position = position;
+	}
+
+	private BizPropertyValue[] values;
 
 	@XmlElementWrapper(name = "Values")
-	@XmlElement(name = "Value", type = BOPropertyValue.class)
-	public BOPropertyValue[] getValues() {
+	@XmlElement(name = "Value", type = BizPropertyValue.class)
+	public BizPropertyValue[] getValues() {
 		return values;
 	}
 
-	public void setValues(BOPropertyValue[] values) {
+	public void setValues(BizPropertyValue[] values) {
 		this.values = values;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("{propertyinfo: %s}", this.getProperty());
+		return String.format("{propertyInfo: %s}", this.getName());
 	}
 }

@@ -14,13 +14,13 @@ import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
-import org.colorcoding.ibas.initialfantasy.bo.shell.BOInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -31,7 +31,33 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
  */
 @WebService
 @WebServicePath("data")
-public class DataService extends BORepositoryInitialFantasyShell {
+public class DataService extends BORepositoryInitialFantasyShell { // --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象属性设置
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<BOPropertySetting> fetchBOPropertySetting(@WebParam(name = "criteria") Criteria criteria,
+			@WebParam(name = "token") String token) {
+		return super.fetchBOPropertySetting(criteria, token);
+	}
+
+	/**
+	 * 保存-业务对象属性设置
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<BOPropertySetting> saveBOPropertySetting(@WebParam(name = "bo") BOPropertySetting bo,
+			@WebParam(name = "token") String token) {
+		return super.saveBOPropertySetting(bo, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-应用程序配置
@@ -165,19 +191,6 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	public OperationMessage saveUserQuery(@WebParam(name = "query") UserQuery query,
 			@WebParam(name = "token") String token) {
 		return super.saveUserQuery(query, token);
-	}
-
-	/**
-	 * 查询业务对象信息
-	 * 
-	 * @param boName 对象名称
-	 * @param token  用户口令
-	 * @return 操作结果
-	 */
-	@WebMethod
-	public OperationResult<BOInfo> fetchBOInfos(@WebParam(name = "boCode") String boCode,
-			@WebParam(name = "token") String token) {
-		return super.fetchBOInfos(boCode, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//
