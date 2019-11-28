@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyValue;
 
@@ -26,6 +27,9 @@ public class BizPropertyValue extends Serializable {
 		BizPropertyValue propertyInfo = new BizPropertyValue();
 		propertyInfo.setValue(propertyValue.getValue());
 		propertyInfo.setDescription(propertyValue.getDescription());
+		if (propertyValue.getDefault() == emYesNo.YES) {
+			propertyInfo.setDefault(true);
+		}
 		return propertyInfo;
 	}
 
@@ -49,6 +53,17 @@ public class BizPropertyValue extends Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	private boolean _default;
+
+	@XmlElement(name = "Default")
+	public final boolean isDefault() {
+		return _default;
+	}
+
+	public final void setDefault(boolean value) {
+		this._default = value;
 	}
 
 	@Override

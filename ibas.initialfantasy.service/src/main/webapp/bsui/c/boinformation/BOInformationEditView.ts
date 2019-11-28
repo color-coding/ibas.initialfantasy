@@ -191,6 +191,14 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Alphanumeric()
                                 })
                             }),
+                            new sap.extension.table.Column("", {
+                                label: ibas.i18n.prop("bo_bopropertyvalue_default"),
+                                template: new sap.extension.m.CheckBox("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "default",
+                                    type: new sap.extension.data.YesNo(),
+                                })
+                            }),
                         ]
                     });
                     let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {

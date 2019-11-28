@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
 import org.colorcoding.ibas.bobas.bo.IBusinessObject;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 
 /**
  * 业务对象属性值 接口
@@ -18,8 +19,7 @@ public interface IBOPropertyValue extends IBusinessObject {
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCode(String value);
 
@@ -33,8 +33,7 @@ public interface IBOPropertyValue extends IBusinessObject {
 	/**
 	 * 设置-属性名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setPropertyName(String value);
 
@@ -48,8 +47,7 @@ public interface IBOPropertyValue extends IBusinessObject {
 	/**
 	 * 设置-值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setValue(String value);
 
@@ -63,9 +61,21 @@ public interface IBOPropertyValue extends IBusinessObject {
 	/**
 	 * 设置-描述
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDescription(String value);
 
+	/**
+	 * 获取-默认值
+	 * 
+	 * @return 值
+	 */
+	emYesNo getDefault();
+
+	/**
+	 * 设置-默认值
+	 * 
+	 * @param value 值
+	 */
+	void setDefault(emYesNo value);
 }

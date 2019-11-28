@@ -62,6 +62,8 @@ namespace initialfantasy {
             value: string;
             /** 描述 */
             description: string;
+            /** 默认值 */
+            default: ibas.emYesNo;
         }
         /** 业务对象属性信息 集合 */
         export interface IBOPropertyValues extends ibas.IBusinessObjects<IBOPropertyValue> {

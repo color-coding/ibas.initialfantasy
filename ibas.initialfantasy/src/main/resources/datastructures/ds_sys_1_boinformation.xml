@@ -24,6 +24,7 @@
     <Property Name="PropertyName" Description="属性名称" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Property" PrimaryKey="Yes"/>
     <Property Name="Value" Description="值" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Value" PrimaryKey="Yes"/>
     <Property Name="Description" Description="描述" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Descrp"/>
+    <Property Name="Default" Description="默认值" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Default"/>
   </Model>
   <BusinessObject MappedModel="BOPropertyValue" ShortName="${Company}_SYS_BOPRTYVALUE"/>
 </Domain>

@@ -335,6 +335,18 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyValue.PROPERTY_DESCRIPTION_NAME, value);
             }
 
+            /** 映射的属性名称-默认值 */
+            static PROPERTY_DEFAULT_NAME: string = "Default";
+            /** 获取-默认值 */
+            get default(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(BOPropertyValue.PROPERTY_DEFAULT_NAME);
+            }
+            /** 设置-默认值 */
+            set default(value: ibas.emYesNo) {
+                this.setProperty(BOPropertyValue.PROPERTY_DEFAULT_NAME, value);
+            }
+
+
             /** 字符串 */
             toString(): string {
                 let builder: ibas.StringBuilder = new ibas.StringBuilder();
@@ -385,7 +397,7 @@ namespace initialfantasy {
 
             /** 初始化数据 */
             protected init(): void {
-                //
+                this.default = ibas.emYesNo.NO;
             }
         }
 
@@ -396,6 +408,25 @@ namespace initialfantasy {
                 let item: BOPropertyValue = new BOPropertyValue();
                 this.add(item);
                 return item;
+            }
+            /** 子项属性改变时 */
+            protected onItemPropertyChanged(item: BOPropertyValue, name: string): void {
+                if (ibas.strings.equalsIgnoreCase(BOPropertyValue.PROPERTY_DEFAULT_NAME, name)) {
+                    if (item.default === ibas.emYesNo.YES) {
+                        for (let data of this) {
+                            if (data === item) {
+                                continue;
+                            }
+                            // 保证只有一个默认值
+                            if (data.default !== ibas.emYesNo.YES) {
+                                continue;
+                            }
+                            data.isLoading = true;
+                            data.default = ibas.emYesNo.NO;
+                            data.isLoading = false;
+                        }
+                    }
+                }
             }
         }
     }

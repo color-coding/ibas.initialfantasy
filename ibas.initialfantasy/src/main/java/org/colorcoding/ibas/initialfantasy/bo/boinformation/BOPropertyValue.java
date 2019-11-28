@@ -14,6 +14,7 @@ import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.core.fields.IFieldData;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -175,6 +176,37 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	 */
 	public final void setDescription(String value) {
 		this.setProperty(PROPERTY_DESCRIPTION, value);
+	}
+
+	/**
+	 * 属性名称-默认值
+	 */
+	private static final String PROPERTY_DEFAULT_NAME = "Default";
+
+	/**
+	 * 默认值 属性
+	 */
+	@DbField(name = "Default", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_DEFAULT = registerProperty(PROPERTY_DEFAULT_NAME, emYesNo.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-默认值
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_DEFAULT_NAME)
+	public final emYesNo getDefault() {
+		return this.getProperty(PROPERTY_DEFAULT);
+	}
+
+	/**
+	 * 设置-默认值
+	 * 
+	 * @param value 值
+	 */
+	public final void setDefault(emYesNo value) {
+		this.setProperty(PROPERTY_DEFAULT, value);
 	}
 
 	/**
