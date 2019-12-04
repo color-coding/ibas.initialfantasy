@@ -8,6 +8,14 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
+            /** 变量-用户ID */
+            const VARIABLE_NAME_USER_ID: string = "${USER_ID}";
+            /** 变量-用户归属 */
+            const VARIABLE_NAME_USER_BELONG: string = "${USER_BELONG}";
+            /** 变量-用户编码 */
+            const VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
+            /** 变量-用户身份 */
+            const VARIABLE_NAME_USER_IDENTITIES: string = "${USER_IDENTITIES}";
             /** 视图-BOFiltering */
             export class BOFilteringEditView extends ibas.BOEditView implements app.IBOFilteringEditView {
                 /** 删除数据事件 */
@@ -160,7 +168,8 @@ namespace initialfantasy {
                                         }).bindProperty("bindingValue", {
                                             path: "propertyName",
                                             type: new sap.extension.data.Alphanumeric()
-                                        })
+                                        }),
+                                        width: "12rem",
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
@@ -175,21 +184,23 @@ namespace initialfantasy {
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
-                                        width: "12rem",
                                         template: new sap.extension.m.Input("", {
                                             showSuggestion: true,
                                             suggestionItems: [
                                                 new sap.ui.core.Item("", {
-                                                }).setText("${USER_ID}"),
+                                                }).setText(VARIABLE_NAME_USER_ID),
                                                 new sap.ui.core.Item("", {
-                                                }).setText("${USER_BELONG}"),
+                                                }).setText(VARIABLE_NAME_USER_CODE),
+                                                new sap.ui.core.Item("", {
+                                                }).setText(VARIABLE_NAME_USER_BELONG),
                                             ]
                                         }).bindProperty("bindingValue", {
                                             path: "conditionValue",
                                             type: new sap.extension.data.Alphanumeric({
                                                 maxLength: 30
                                             })
-                                        })
+                                        }),
+                                        width: "10rem",
                                     }),
                                     new sap.extension.table.DataColumn("", {
                                         label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
@@ -304,6 +315,23 @@ namespace initialfantasy {
                                     }));
                                 }
                             }
+                            // 系统变量
+                            template.addItem(new sap.ui.core.ListItem("", {})
+                                .setKey(VARIABLE_NAME_USER_ID)
+                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id"))
+                            );
+                            template.addItem(new sap.ui.core.ListItem("", {})
+                                .setKey(VARIABLE_NAME_USER_CODE)
+                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code"))
+                            );
+                            template.addItem(new sap.ui.core.ListItem("", {})
+                                .setKey(VARIABLE_NAME_USER_BELONG)
+                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong"))
+                            );
+                            template.addItem(new sap.ui.core.ListItem("", {})
+                                .setKey(VARIABLE_NAME_USER_IDENTITIES)
+                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities"))
+                            );
                             this.columnProperty.setTemplate(template);
                         }
                     });

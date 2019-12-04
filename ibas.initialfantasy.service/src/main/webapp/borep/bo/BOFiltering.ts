@@ -267,6 +267,7 @@ namespace initialfantasy {
                 this.objectCode = ibas.config.applyVariables(BOFiltering.BUSINESS_OBJECT_CODE);
                 this.category = emFilteringCategory.READ;
                 this.activated = ibas.emYesNo.YES;
+                this.filteringType = emFilteringType.AVAILABLE;
             }
         }
 

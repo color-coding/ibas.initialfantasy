@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.colorcoding.ibas.bobas.MyConfiguration;
+import org.colorcoding.ibas.bobas.common.ConditionAliasDataType;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -103,11 +104,19 @@ public class OwnershipJudger implements IOwnershipJudger {
 
 	@Override
 	public ICriteria filterCriteria(BusinessObjectUnit boUnit, IUser user) {
+		User sUser;
 		if (user instanceof User) {
-			User sUser = (User) user;
+			sUser = (User) user;
 			if (sUser.isSuper()) {
 				return null;
 			}
+		} else {
+			sUser = new User();
+			sUser.setId(user.getId());
+			sUser.setBelong(user.getBelong());
+			sUser.setCode("");
+			sUser.setIdentities("");
+			sUser.setName("");
 		}
 		try {
 			List<String> roles = new ArrayList<>(
@@ -129,12 +138,35 @@ public class OwnershipJudger implements IOwnershipJudger {
 								condition.setValue(item.getConditionValue());
 								condition.setBracketClose(item.getBracketClose());
 								condition.setRelationship(DataConvert.toRelationship(item.getRelationship()));
-								// 替换变量
+								// 替换属性变量
+								if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_ID.equals(condition.getAlias())) {
+									condition.setAlias(String.valueOf(sUser.getId()));
+									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
+										.equals(condition.getAlias())) {
+									condition.setAlias(sUser.getCode());
+									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
+										.equals(condition.getAlias())) {
+									condition.setAlias(sUser.getBelong());
+									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_IDENTITIES
+										.equals(condition.getAlias())) {
+									condition.setAlias(sUser.getIdentities());
+									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
+								}
+								// 替换值变量
 								if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_ID.equals(condition.getValue())) {
-									condition.setValue(user.getId());
+									condition.setValue(sUser.getId());
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
+										.equals(condition.getValue())) {
+									condition.setValue(sUser.getCode());
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
 										.equals(condition.getValue())) {
-									condition.setValue(user.getBelong());
+									condition.setValue(sUser.getBelong());
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_IDENTITIES
+										.equals(condition.getValue())) {
+									condition.setValue(sUser.getIdentities());
 								}
 							}
 							if (!criteria.getConditions().isEmpty()) {

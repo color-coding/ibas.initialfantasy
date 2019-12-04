@@ -21,6 +21,7 @@ import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
+import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringCategory;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
@@ -148,7 +149,17 @@ abstract class BOFilter {
 				continue;
 			}
 			BOFilteringJudgmentLink judgmentLink = new BOFilteringJudgmentLink();
-			judgmentLink.setCurrentUser(user);
+			if (user instanceof User) {
+				judgmentLink.setCurrentUser((User) user);
+			} else {
+				User sUser = new User();
+				sUser.setId(user.getId());
+				sUser.setBelong(user.getBelong());
+				sUser.setCode("");
+				sUser.setIdentities("");
+				sUser.setName("");
+				judgmentLink.setCurrentUser(sUser);
+			}
 			judgmentLink.parsingConditions(filtering.getBOFilteringConditions());
 			boolean matching = judgmentLink.judge(bo);
 			if (filtering.getFilteringType() == emFilteringType.AVAILABLE) {

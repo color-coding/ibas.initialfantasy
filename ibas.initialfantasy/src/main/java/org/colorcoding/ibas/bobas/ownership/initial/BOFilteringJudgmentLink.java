@@ -15,27 +15,31 @@ import org.colorcoding.ibas.bobas.expression.JudgmentLinkException;
 import org.colorcoding.ibas.bobas.expression.JudgmentLinkItem;
 import org.colorcoding.ibas.bobas.expression.JudmentOperation;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFilteringCondition;
+import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 
 class BOFilteringJudgmentLink extends BOJudgmentLink {
 	/** 变量-用户ID */
 	public static final String VARIABLE_NAME_USER_ID = "${USER_ID}";
 	/** 变量-用户归属 */
 	public static final String VARIABLE_NAME_USER_BELONG = "${USER_BELONG}";
+	/** 变量-用户编码 */
+	public static final String VARIABLE_NAME_USER_CODE = "${USER_CODE}";
+	/** 变量-用户身份 */
+	public static final String VARIABLE_NAME_USER_IDENTITIES = "${USER_IDENTITIES}";
 	/** 属性-用户 */
 	public static final String PROPERTY_NAME_DATAOWNER = "DataOwner";
 	/** 属性-用户归属 */
 	public static final String PROPERTY_NAME_ORGANIZATION = "Organization";
 
-	private IUser currentUser;
+	private User currentUser;
 
-	public final IUser getCurrentUser() {
+	public final User getCurrentUser() {
 		return currentUser;
 	}
 
-	public final void setCurrentUser(IUser currentUser) {
+	public final void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
 
@@ -56,9 +60,27 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			}
 			jItem.setOperation(JudmentOperation.valueOf(item.getOperation()));
 			// 左边取值
-			IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
-			propertyValueOperator.setPropertyName(item.getPropertyName());
-			jItem.setLeftOperter(propertyValueOperator);
+			if (VARIABLE_NAME_USER_ID.equals(item.getPropertyName())) {
+				IValueOperator valueOperator = this.createValueOperator();
+				valueOperator.setValue(this.getCurrentUser().getId());
+				jItem.setLeftOperter(valueOperator);
+			} else if (VARIABLE_NAME_USER_BELONG.equals(item.getPropertyName())) {
+				IValueOperator valueOperator = this.createValueOperator();
+				valueOperator.setValue(this.getCurrentUser().getBelong());
+				jItem.setLeftOperter(valueOperator);
+			} else if (VARIABLE_NAME_USER_CODE.equals(item.getPropertyName())) {
+				IValueOperator valueOperator = this.createValueOperator();
+				valueOperator.setValue(this.getCurrentUser().getCode());
+				jItem.setLeftOperter(valueOperator);
+			} else if (VARIABLE_NAME_USER_IDENTITIES.equals(item.getPropertyName())) {
+				IValueOperator valueOperator = this.createValueOperator();
+				valueOperator.setValue(this.getCurrentUser().getIdentities());
+				jItem.setLeftOperter(valueOperator);
+			} else {
+				IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
+				propertyValueOperator.setPropertyName(item.getPropertyName());
+				jItem.setLeftOperter(propertyValueOperator);
+			}
 			// 右边取值
 			// 与值比较
 			IValueOperator valueOperator = this.createValueOperator();
@@ -66,6 +88,10 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 				valueOperator.setValue(this.getCurrentUser().getId());
 			} else if (VARIABLE_NAME_USER_BELONG.equals(item.getConditionValue())) {
 				valueOperator.setValue(this.getCurrentUser().getBelong());
+			} else if (VARIABLE_NAME_USER_CODE.equals(item.getConditionValue())) {
+				valueOperator.setValue(this.getCurrentUser().getCode());
+			} else if (VARIABLE_NAME_USER_IDENTITIES.equals(item.getConditionValue())) {
+				valueOperator.setValue(this.getCurrentUser().getIdentities());
 			} else {
 				valueOperator.setValue(item.getConditionValue());
 			}
