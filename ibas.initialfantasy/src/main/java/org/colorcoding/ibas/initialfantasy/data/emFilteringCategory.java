@@ -15,8 +15,23 @@ public enum emFilteringCategory {
 	@Value(value = "R")
 	READ,
 	/**
-	 * 写入
+	 * 保存
 	 */
 	@Value(value = "S")
-	SAVE
+	SAVE,
+	/**
+	 * 新建
+	 */
+	@Value(value = "N")
+	CREATE,
+	/**
+	 * 更新
+	 */
+	@Value(value = "U")
+	UPDATE,
+	/**
+	 * 删除
+	 */
+	@Value(value = "D")
+	DELETE
 }

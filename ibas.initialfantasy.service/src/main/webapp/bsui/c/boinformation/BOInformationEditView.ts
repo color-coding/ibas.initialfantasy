@@ -88,6 +88,11 @@ namespace initialfantasy {
                                             , this.getBindingContext().getObject()
                                         );
                                     },
+                                }).bindProperty("visible", {
+                                    path: "dataType",
+                                    formatter(data: string): boolean {
+                                        return ibas.strings.equalsIgnoreCase("Alphanumeric", data) ? true : false;
+                                    }
                                 }),
                             ]
                         }),
@@ -120,13 +125,42 @@ namespace initialfantasy {
                                 filterProperty: "description"
                             }),
                             new sap.extension.table.Column("", {
+                                label: ibas.i18n.prop("bo_bopropertyinformation_datatype"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "dataType",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                            }),
+                            new sap.extension.table.Column("", {
+                                label: ibas.i18n.prop("bo_bopropertyinformation_edittype"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "editType",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                            }),
+                            new sap.extension.table.Column("", {
+                                label: ibas.i18n.prop("bo_bopropertyinformation_editsize"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "editSize",
+                                    type: new sap.extension.data.Numeric()
+                                }),
+                            }),
+                            new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_searched"),
                                 template: new sap.extension.m.EnumSelect("", {
                                     enumType: ibas.emYesNo
                                 }).bindProperty("bindingValue", {
                                     path: "searched",
                                     type: new sap.extension.data.YesNo(),
-                                })
+                                }).bindProperty("editable", {
+                                    path: "editSize",
+                                    formatter(data: number): boolean {
+                                        return data > 0 ? true : false;
+                                    }
+                                }),
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_mapped"),

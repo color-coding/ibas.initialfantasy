@@ -94,8 +94,14 @@ namespace initialfantasy {
         export enum emFilteringCategory {
             /** 读取 */
             READ,
-            /** 写入 */
-            SAVE
+            /** 保存 */
+            SAVE,
+            /** 新建 */
+            CREATE,
+            /** 更新 */
+            UPDATE,
+            /** 删除 */
+            DELETE
         }
         /** 分配-角色 */
         export interface IRole {

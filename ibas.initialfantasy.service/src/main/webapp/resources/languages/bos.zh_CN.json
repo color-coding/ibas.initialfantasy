@@ -386,7 +386,10 @@
     },
     {
         "em_filteringcategory_read": "读取",
-        "em_filteringcategory_save": "保存"
+        "em_filteringcategory_save": "保存",
+        "em_filteringcategory_create": "新建",
+        "em_filteringcategory_update": "更新",
+        "em_filteringcategory_delete": "删除"
     },
     {
         "em_conditionoperation_begin_with": "开始于",

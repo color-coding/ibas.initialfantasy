@@ -9,6 +9,7 @@ import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
+import org.colorcoding.ibas.bobas.core.ITrackStatus;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DataConvert;
 import org.colorcoding.ibas.bobas.i18n.I18N;
@@ -58,7 +59,18 @@ public class OwnershipJudger implements IOwnershipJudger {
 					return true;
 				}
 			}
-			return this.getSaveFilter().filtering(data, user);
+			boolean filtered = this.getSaveFilter().filtering(data, user);
+			if (filtered && data instanceof ITrackStatus) {
+				ITrackStatus trackStatus = (ITrackStatus) data;
+				if (trackStatus.isDeleted()) {
+					return this.getDeleteFilter().filtering(data, user);
+				} else if (trackStatus.isNew()) {
+					return this.getCreateFilter().filtering(data, user);
+				} else if (trackStatus.isDirty()) {
+					return this.getUpdateFilter().filtering(data, user);
+				}
+			}
+			return filtered;
 		} catch (Exception e) {
 			Logger.log(e);
 			throw new RuntimeException(e);
@@ -72,6 +84,33 @@ public class OwnershipJudger implements IOwnershipJudger {
 			saveFilter = new BOFilterSave();
 		}
 		return saveFilter;
+	}
+
+	private BOFilter createFilter;
+
+	public final BOFilter getCreateFilter() {
+		if (this.createFilter == null) {
+			this.createFilter = new BOFilterCreate();
+		}
+		return createFilter;
+	}
+
+	private BOFilter updateFilter;
+
+	public final BOFilter getUpdateFilter() {
+		if (this.updateFilter == null) {
+			this.updateFilter = new BOFilterUpdate();
+		}
+		return updateFilter;
+	}
+
+	private BOFilter deleteFilter;
+
+	public final BOFilter getDeleteFilter() {
+		if (this.deleteFilter == null) {
+			this.deleteFilter = new BOFilterDelete();
+		}
+		return deleteFilter;
 	}
 
 	@Override

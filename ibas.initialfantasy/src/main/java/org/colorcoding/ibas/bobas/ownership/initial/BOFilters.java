@@ -227,3 +227,24 @@ class BOFilterSave extends BOFilter {
 		return emFilteringCategory.SAVE;
 	}
 }
+
+class BOFilterCreate extends BOFilterSave {
+	@Override
+	protected emFilteringCategory getCategory() {
+		return emFilteringCategory.CREATE;
+	}
+}
+
+class BOFilterUpdate extends BOFilterSave {
+	@Override
+	protected emFilteringCategory getCategory() {
+		return emFilteringCategory.UPDATE;
+	}
+}
+
+class BOFilterDelete extends BOFilterSave {
+	@Override
+	protected emFilteringCategory getCategory() {
+		return emFilteringCategory.DELETE;
+	}
+}
