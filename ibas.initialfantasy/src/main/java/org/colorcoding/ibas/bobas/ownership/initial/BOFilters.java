@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.bobas.ownership.initial;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -137,9 +136,12 @@ abstract class BOFilter {
 		if (bo == null) {
 			return status;
 		}
-		List<String> roles = new ArrayList<>(
-				Arrays.asList(OrganizationFactory.create().createManager().getRoles(user)));
-		roles.add("");// 增加全局身份
+		List<String> roles = new ArrayList<>(2);
+		if (user.getBelong() != null && !user.getBelong().isEmpty()) {
+			roles.add(user.getBelong());
+		}
+		// 增加全局角色
+		roles.add("");
 		if (roles == null || roles.size() == 0) {
 			return status;
 		}

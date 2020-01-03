@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.bobas.ownership.initial;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.colorcoding.ibas.bobas.MyConfiguration;
@@ -16,7 +15,6 @@ import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
-import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.ownership.IOwnershipJudger;
 import org.colorcoding.ibas.bobas.ownership.UnauthorizedException;
@@ -158,9 +156,12 @@ public class OwnershipJudger implements IOwnershipJudger {
 			sUser.setName("");
 		}
 		try {
-			List<String> roles = new ArrayList<>(
-					Arrays.asList(OrganizationFactory.create().createManager().getRoles(user)));
-			roles.add("");// 增加全局身份
+			List<String> roles = new ArrayList<>();
+			if (user.getBelong() != null && !user.getBelong().isEmpty()) {
+				roles.add(user.getBelong());
+			}
+			// 增加全局角色
+			roles.add("");
 			if (roles != null && !roles.isEmpty()) {
 				for (IBOFiltering boFiltering : this.getReadFilter()
 						.getFilterings(MyConfiguration.applyVariables(boUnit.code()), roles)) {
