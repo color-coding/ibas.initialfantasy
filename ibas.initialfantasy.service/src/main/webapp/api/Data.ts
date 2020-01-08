@@ -148,6 +148,24 @@ namespace initialfantasy {
             /** 或者 */
             OR
         }
+        export enum emSearchedValue {
+            /** 默认值 */
+            DEFAULT,
+            /** 否 */
+            NO,
+            /** 是 */
+            YES,
+        }
+        export enum emAuthorisedValue {
+            /** 默认值 */
+            DEFAULT,
+            /** 完全 */
+            ALL,
+            /** 只读 */
+            READ,
+            /** 没有 */
+            NONE,
+        }
     }
 
     export namespace app {

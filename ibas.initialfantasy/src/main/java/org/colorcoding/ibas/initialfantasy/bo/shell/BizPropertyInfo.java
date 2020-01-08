@@ -46,11 +46,11 @@ public class BizPropertyInfo extends Serializable {
 	private String name;
 
 	@XmlElement(name = "Name")
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public final void setName(String name) {
 		this.name = name;
 	}
 
@@ -99,25 +99,25 @@ public class BizPropertyInfo extends Serializable {
 	}
 
 	/** 查询 */
-	private boolean searched;
+	private Boolean searched;
 
 	@XmlElement(name = "Searched")
-	public boolean isSearched() {
+	public final Boolean isSearched() {
 		return searched;
 	}
 
-	public void setSearched(boolean searched) {
+	public final void setSearched(Boolean searched) {
 		this.searched = searched;
 	}
 
-	private boolean systemed;
+	private Boolean systemed;
 
 	@XmlElement(name = "Systemed")
-	public final boolean isSystemed() {
+	public final Boolean isSystemed() {
 		return systemed;
 	}
 
-	public final void setSystemed(boolean systemed) {
+	public final void setSystemed(Boolean systemed) {
 		this.systemed = systemed;
 	}
 
@@ -143,14 +143,14 @@ public class BizPropertyInfo extends Serializable {
 		this.alias = alias;
 	}
 
-	private int position;
+	private Integer position;
 
 	@XmlElement(name = "Position")
-	public final int getPosition() {
+	public final Integer getPosition() {
 		return position;
 	}
 
-	public final void setPosition(int position) {
+	public final void setPosition(Integer position) {
 		this.position = position;
 	}
 
@@ -158,16 +158,16 @@ public class BizPropertyInfo extends Serializable {
 
 	@XmlElementWrapper(name = "Values")
 	@XmlElement(name = "Value", type = BizPropertyValue.class)
-	public BizPropertyValue[] getValues() {
+	public final BizPropertyValue[] getValues() {
 		return values;
 	}
 
-	public void setValues(BizPropertyValue[] values) {
+	public final void setValues(BizPropertyValue[] values) {
 		this.values = values;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.format("{propertyInfo: %s}", this.getName());
 	}
 }

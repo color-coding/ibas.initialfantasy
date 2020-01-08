@@ -139,8 +139,8 @@ namespace initialfantasy {
                                                 setting.boCode = property.code;
                                                 setting.propertyCode = property.property;
                                                 setting.identityCode = identity;
-                                                setting.authorised = undefined;
-                                                setting.searched = undefined;
+                                                setting.authorised = bo.emAuthorisedValue.DEFAULT;
+                                                setting.searched = bo.emSearchedValue.DEFAULT;
                                                 setting.position = undefined;
                                             }
                                             datas.add(new PropertySetting(property, setting));
@@ -179,8 +179,6 @@ namespace initialfantasy {
                 ibas.queues.execute(this.propertySettings,
                     (data, next) => {
                         if (data.isDirty !== true) {
-                            next();
-                        } else if (ibas.objects.isNull(data.authorised) && data.setting.isDeleted !== true) {
                             next();
                         } else if (data.setting.isNew === true && data.setting.isDeleted === true) {
                             next();
@@ -318,32 +316,18 @@ namespace initialfantasy {
             get systemed(): ibas.emYesNo {
                 return this.property.systemed;
             }
-            get searched(): ibas.emYesNo {
+            get searched(): bo.emSearchedValue {
                 return this.setting.searched;
             }
-            set searched(value: ibas.emYesNo) {
+            set searched(value: bo.emSearchedValue) {
                 this.setting.searched = value;
-                if (ibas.objects.isNull(this.setting.authorised)) {
-                    this.setting.authorised = ibas.emAuthoriseType.ALL;
-                }
                 this.firePropertyChanged("searched");
             }
-            get authorised(): ibas.emAuthoriseType {
+            get authorised(): bo.emAuthorisedValue {
                 return this.setting.authorised;
             }
-            set authorised(value: ibas.emAuthoriseType) {
+            set authorised(value: bo.emAuthorisedValue) {
                 this.setting.authorised = value;
-                if (this.setting.authorised === undefined) {
-                    this.setting.searched = undefined;
-                    this.setting.position = undefined;
-                    if (this.setting.isNew === false) {
-                        this.setting.delete();
-                    }
-                } else {
-                    if (this.setting.isNew === false && this.setting.isDeleted === true) {
-                        this.setting.clearDeleted();
-                    }
-                }
                 this.firePropertyChanged("authorised");
             }
             get position(): number {
@@ -351,22 +335,24 @@ namespace initialfantasy {
             }
             set position(value: number) {
                 this.setting.position = value;
-                if (ibas.objects.isNull(this.setting.searched)) {
-                    this.setting.searched = ibas.emYesNo.NO;
-                }
-                if (ibas.objects.isNull(this.setting.authorised)) {
-                    this.setting.authorised = ibas.emAuthoriseType.ALL;
-                }
                 this.firePropertyChanged("position");
             }
             protected firePropertyChanged(property: string): void {
                 super.firePropertyChanged(property);
                 this.isDirty = true;
+                // 都是默认值，则标记删除
+                if (this.authorised === bo.emAuthorisedValue.DEFAULT
+                    && this.searched === bo.emSearchedValue.DEFAULT
+                    && !(this.position > 0)) {
+                    this.delete();
+                }
             }
             delete(): void {
                 if (this.setting.isNew === false) {
                     this.setting.delete();
                     this.isDirty = true;
+                } else {
+                    this.isDirty = false;
                 }
             }
             reset(setting: bo.BOPropertySetting = undefined): void {
@@ -374,8 +360,8 @@ namespace initialfantasy {
                     this.setting = setting;
                     this.setting.markOld();
                 } else {
-                    this.setting.searched = undefined;
-                    this.setting.authorised = undefined;
+                    this.setting.authorised = bo.emAuthorisedValue.DEFAULT;
+                    this.setting.searched = bo.emSearchedValue.DEFAULT;
                     this.setting.position = undefined;
                     this.setting.markNew();
                 }

@@ -126,20 +126,24 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_searched"),
-                                template: new sap.extension.m.Select("", {
-                                    items: this.enumItems(ibas.emYesNo)
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: bo.emSearchedValue,
                                 }).bindProperty("bindingValue", {
                                     path: "searched",
-                                    type: new sap.extension.data.YesNo(),
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emSearchedValue,
+                                    }),
                                 })
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_authorised"),
                                 template: new sap.extension.m.EnumSelect("", {
-                                    items: this.enumItems(ibas.emAuthoriseType)
+                                    enumType: bo.emAuthorisedValue,
                                 }).bindProperty("bindingValue", {
                                     path: "authorised",
-                                    type: new sap.extension.data.AuthoriseType(),
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emAuthorisedValue,
+                                    }),
                                 })
                             }),
                         ]
@@ -278,6 +282,16 @@ namespace initialfantasy {
                                             })
                                         }),
                                         new sap.m.ToolbarSpacer(""),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("initialfantasy_reset_position"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://reset",
+                                            press: function (): void {
+                                                for (let item of that.table.getSelecteds<app.PropertySetting>()) {
+                                                    item.position = undefined;
+                                                }
+                                            }
+                                        }),
                                         new sap.m.MenuButton("", {
                                             text: ibas.i18n.prop("bo_bopropertysetting_authorised"),
                                             icon: "sap-icon://bullet-text",
@@ -285,29 +299,29 @@ namespace initialfantasy {
                                             menu: new sap.m.Menu("", {
                                                 items: [
                                                     new sap.m.MenuItem("", {
-                                                        text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
+                                                        text: ibas.enums.describe(bo.emAuthorisedValue, bo.emAuthorisedValue.ALL),
                                                         icon: "sap-icon://multiselect-all",
                                                         press: function (): void {
                                                             for (let item of that.table.getSelecteds<app.PropertySetting>()) {
-                                                                item.authorised = ibas.emAuthoriseType.ALL;
+                                                                item.authorised = bo.emAuthorisedValue.ALL;
                                                             }
                                                         }
                                                     }),
                                                     new sap.m.MenuItem("", {
-                                                        text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
+                                                        text: ibas.enums.describe(bo.emAuthorisedValue, bo.emAuthorisedValue.READ),
                                                         icon: "sap-icon://multi-select",
                                                         press: function (): void {
                                                             for (let item of that.table.getSelecteds<app.PropertySetting>()) {
-                                                                item.authorised = ibas.emAuthoriseType.READ;
+                                                                item.authorised = bo.emAuthorisedValue.READ;
                                                             }
                                                         }
                                                     }),
                                                     new sap.m.MenuItem("", {
-                                                        text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
+                                                        text: ibas.enums.describe(bo.emAuthorisedValue, bo.emAuthorisedValue.NONE),
                                                         icon: "sap-icon://multiselect-none",
                                                         press: function (): void {
                                                             for (let item of that.table.getSelecteds<app.PropertySetting>()) {
-                                                                item.authorised = ibas.emAuthoriseType.NONE;
+                                                                item.authorised = bo.emAuthorisedValue.NONE;
                                                             }
                                                         }
                                                     }),
@@ -316,7 +330,7 @@ namespace initialfantasy {
                                                         icon: "sap-icon://horizontal-bar-chart",
                                                         press: function (): void {
                                                             for (let item of that.table.getSelecteds<app.PropertySetting>()) {
-                                                                item.authorised = undefined;
+                                                                item.authorised = bo.emAuthorisedValue.DEFAULT;
                                                             }
                                                         }
                                                     }),
@@ -351,31 +365,6 @@ namespace initialfantasy {
                         this.list.setBusy(true);
                         this.list.setModel(null);
                     }
-                }
-                private enumItems(enumType: any): sap.ui.core.ListItem[] {
-                    let items: sap.ui.core.ListItem[] = [];
-                    items.push(new sap.ui.core.ListItem("", {
-                        key: undefined,
-                        text: ibas.i18n.prop("initialfantasy_default")
-                    }));
-                    for (let item in enumType) {
-                        if (ibas.objects.isNull(item)) {
-                            continue;
-                        }
-                        let key: any = item;
-                        let text: any = enumType[key];
-                        if (typeof key !== "string" || typeof text !== "string") {
-                            continue;
-                        }
-                        if (!isNaN(Number(key))) {
-                            key = Number(key);
-                        }
-                        items.push(new sap.ui.core.ListItem("", {
-                            key: key,
-                            text: ibas.enums.describe(enumType, key),
-                        }));
-                    }
-                    return items;
                 }
                 /** 身份 */
                 get identity(): string {

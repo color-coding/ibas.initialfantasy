@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!DOCTYPE ApplicationModule>
+<!DOCTYPE ApplicationPlatform>
 <ns:ApplicationPlatform xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
 	<Activated>YES</Activated>
 	<PlatformId>764b6530-be08-47b0-85b7-6240ee4f0031</PlatformId>

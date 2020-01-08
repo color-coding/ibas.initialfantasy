@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE BOInformation>
 <ns2:BOInformation
 	xmlns:ns2="http://colorcoding.org/ibas/initialfantasy/bo">
-	<Code>CC_SYS_BOINFO</Code>
+	<Code>${Company}_SYS_BOINFO</Code>
 	<Description>业务对象信息</Description>
-	<Mapped>CC_SYS_OBOI</Mapped>
+	<Mapped>${Company}_SYS_OBOI</Mapped>
 	<Name>BOInformation</Name>
 	<BOPropertyInformations>
 		<BOPropertyInformation>

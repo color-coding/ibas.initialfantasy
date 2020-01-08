@@ -84,6 +84,7 @@
   "initialfantasy_copy_from": "复制从",
   "initialfantasy_copying_privilege": "复制权限，请稍后",
   "initialfantasy_default": "默认",
+  "initialfantasy_reset_position": "重置位置",
   "initialfantasy_register_module_elements": "正在注册[{0}]应用元素，请稍后",
   "initialfantasy_all_identities": "全部身份",
   "initialfantasy_closing_delimiter": "----结束----"

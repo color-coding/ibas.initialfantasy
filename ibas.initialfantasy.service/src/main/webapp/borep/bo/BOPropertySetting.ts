@@ -62,22 +62,22 @@ namespace initialfantasy {
             /** 映射的属性名称-检索的 */
             static PROPERTY_SEARCHED_NAME: string = "Searched";
             /** 获取-检索的 */
-            get searched(): ibas.emYesNo {
-                return this.getProperty<ibas.emYesNo>(BOPropertySetting.PROPERTY_SEARCHED_NAME);
+            get searched(): emSearchedValue {
+                return this.getProperty<emSearchedValue>(BOPropertySetting.PROPERTY_SEARCHED_NAME);
             }
             /** 设置-检索的 */
-            set searched(value: ibas.emYesNo) {
+            set searched(value: emSearchedValue) {
                 this.setProperty(BOPropertySetting.PROPERTY_SEARCHED_NAME, value);
             }
 
             /** 映射的属性名称-权限 */
             static PROPERTY_AUTHORISED_NAME: string = "Authorised";
             /** 获取-权限 */
-            get authorised(): ibas.emAuthoriseType {
-                return this.getProperty<ibas.emAuthoriseType>(BOPropertySetting.PROPERTY_AUTHORISED_NAME);
+            get authorised(): emAuthorisedValue {
+                return this.getProperty<emAuthorisedValue>(BOPropertySetting.PROPERTY_AUTHORISED_NAME);
             }
             /** 设置-权限 */
-            set authorised(value: ibas.emAuthoriseType) {
+            set authorised(value: emAuthorisedValue) {
                 this.setProperty(BOPropertySetting.PROPERTY_AUTHORISED_NAME, value);
             }
 

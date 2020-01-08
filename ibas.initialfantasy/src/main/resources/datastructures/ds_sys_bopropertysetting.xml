@@ -6,8 +6,8 @@
     <Property Name="PropertyCode" Description="属性" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Property" UniqueKey="Yes"/>
     <Property Name="IdentityCode" Description="身份" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Identity" UniqueKey="Yes"/>
     <Property Name="Position" Description="位置" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Position"/>
-    <Property Name="Searched" Description="检索" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Searched"/>
-    <Property Name="Authorised" Description="权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthoriseType" Mapped="Authorised"/>
+    <Property Name="Searched" Description="检索" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emSearchedValue" Mapped="Searched"/>
+    <Property Name="Authorised" Description="权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthorisedValue" Mapped="Authorised"/>
     <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>

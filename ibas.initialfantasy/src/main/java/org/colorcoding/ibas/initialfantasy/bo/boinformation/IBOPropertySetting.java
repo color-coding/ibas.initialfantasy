@@ -2,8 +2,8 @@ package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
 import org.colorcoding.ibas.bobas.bo.IBOSimple;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.emAuthoriseType;
-import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
+import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 
 /**
  * 业务对象属性设置 接口
@@ -72,28 +72,28 @@ public interface IBOPropertySetting extends IBOSimple {
 	 * 
 	 * @return 值
 	 */
-	emYesNo getSearched();
+	emSearchedValue getSearched();
 
 	/**
 	 * 设置-检索的
 	 * 
 	 * @param value 值
 	 */
-	void setSearched(emYesNo value);
+	void setSearched(emSearchedValue value);
 
 	/**
 	 * 获取-权限
 	 * 
 	 * @return 值
 	 */
-	emAuthoriseType getAuthorised();
+	emAuthorisedValue getAuthorised();
 
 	/**
 	 * 设置-权限
 	 * 
 	 * @param value 值
 	 */
-	void setAuthorised(emAuthoriseType value);
+	void setAuthorised(emAuthorisedValue value);
 
 	/**
 	 * 获取-对象编号

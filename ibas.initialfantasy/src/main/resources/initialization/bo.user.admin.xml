@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<!DOCTYPE ApplicationModule>
+<!DOCTYPE User>
 <ns:User xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
 	<Activated>YES</Activated>
 	<Code>admin</Code>

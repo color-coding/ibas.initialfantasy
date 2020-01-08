@@ -78,7 +78,7 @@ public class BOPropertyValues extends BusinessObjects<IBOPropertyValue, IBOPrope
 	}
 
 	@Override
-	public void onParentPropertyChanged(PropertyChangeEvent evt) {
+	protected void onParentPropertyChanged(PropertyChangeEvent evt) {
 		super.onParentPropertyChanged(evt);
 		if (evt.getPropertyName().equals(BOPropertyInformation.PROPERTY_CODE.getName())) {
 			for (IBOPropertyValue item : this) {

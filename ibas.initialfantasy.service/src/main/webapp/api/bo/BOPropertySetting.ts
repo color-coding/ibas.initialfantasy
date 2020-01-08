@@ -18,9 +18,9 @@ namespace initialfantasy {
             /** 位置 */
             position: number;
             /** 检索的 */
-            searched: ibas.emYesNo;
+            searched: emSearchedValue;
             /** 权限 */
-            authorised: ibas.emAuthoriseType;
+            authorised: emAuthorisedValue;
             /** 对象编号 */
             objectKey: number;
             /** 对象类型 */

@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.data.emAuthoriseType;
-import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
+import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 
 /**
  * 业务对象属性设置
@@ -184,8 +184,8 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 * 检索的 属性
 	 */
 	@DbField(name = "Searched", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emYesNo> PROPERTY_SEARCHED = registerProperty(PROPERTY_SEARCHED_NAME,
-			emYesNo.class, MY_CLASS);
+	public static final IPropertyInfo<emSearchedValue> PROPERTY_SEARCHED = registerProperty(PROPERTY_SEARCHED_NAME,
+			emSearchedValue.class, MY_CLASS);
 
 	/**
 	 * 获取-检索的
@@ -193,7 +193,7 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_SEARCHED_NAME)
-	public final emYesNo getSearched() {
+	public final emSearchedValue getSearched() {
 		return this.getProperty(PROPERTY_SEARCHED);
 	}
 
@@ -202,7 +202,7 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 * 
 	 * @param value 值
 	 */
-	public final void setSearched(emYesNo value) {
+	public final void setSearched(emSearchedValue value) {
 		this.setProperty(PROPERTY_SEARCHED, value);
 	}
 
@@ -215,8 +215,8 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 * 权限 属性
 	 */
 	@DbField(name = "Authorised", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
-	public static final IPropertyInfo<emAuthoriseType> PROPERTY_AUTHORISED = registerProperty(PROPERTY_AUTHORISED_NAME,
-			emAuthoriseType.class, MY_CLASS);
+	public static final IPropertyInfo<emAuthorisedValue> PROPERTY_AUTHORISED = registerProperty(
+			PROPERTY_AUTHORISED_NAME, emAuthorisedValue.class, MY_CLASS);
 
 	/**
 	 * 获取-权限
@@ -224,7 +224,7 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_AUTHORISED_NAME)
-	public final emAuthoriseType getAuthorised() {
+	public final emAuthorisedValue getAuthorised() {
 		return this.getProperty(PROPERTY_AUTHORISED);
 	}
 
@@ -233,7 +233,7 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 * 
 	 * @param value 值
 	 */
-	public final void setAuthorised(emAuthoriseType value) {
+	public final void setAuthorised(emAuthorisedValue value) {
 		this.setProperty(PROPERTY_AUTHORISED, value);
 	}
 
@@ -647,8 +647,8 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-		this.setAuthorised(emAuthoriseType.NONE);
-		this.setSearched(emYesNo.NO);
+		this.setAuthorised(emAuthorisedValue.DEFAULT);
+		this.setSearched(emSearchedValue.DEFAULT);
 	}
 
 }

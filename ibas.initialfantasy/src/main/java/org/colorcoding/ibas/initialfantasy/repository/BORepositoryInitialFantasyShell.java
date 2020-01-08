@@ -38,6 +38,8 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
+import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
+import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
 /**
@@ -75,7 +77,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			return this.connectResult(boUser);
 		} catch (Exception e) {
-			return new OperationResult<User>(e);
+			return new OperationResult<>(e);
 		}
 	}
 
@@ -127,7 +129,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			return this.connectResult(boUser);
 		} catch (Exception e) {
-			return new OperationResult<User>(e);
+			return new OperationResult<>(e);
 		}
 	}
 
@@ -165,7 +167,6 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 
 	@Override
 	public OperationResult<UserModule> fetchUserModules(String user, String platform, String token) {
-		OperationResult<UserModule> opRslt = new OperationResult<UserModule>();
 		try {
 			this.setUserToken(token);
 			IBORepository4DbReadonly boRepository = new BORepository4DbReadonly("Master");
@@ -182,6 +183,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				throw opRsltModules.getError();
 			}
 			// 去重
+			OperationResult<UserModule> opRslt = new OperationResult<UserModule>();
 			ServiceRouting serviceRouting = ServiceRouting.create();
 			for (ApplicationModule4Shell item : opRsltModules.getResultObjects()) {
 				if (item.getAuthoriseValue() == emAuthoriseType.NONE) {
@@ -200,15 +202,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					}
 				}
 			}
+			return opRslt;
 		} catch (Exception e) {
-			opRslt.setError(e);
+			return new OperationResult<>(e);
 		}
-		return opRslt;
 	}
 
 	@Override
 	public OperationResult<UserPrivilege> fetchUserPrivileges(String user, String platform, String token) {
-		OperationResult<UserPrivilege> opRslt = new OperationResult<>();
 		try {
 			this.setUserToken(token);
 			IBORepository4DbReadonly boRepository = new BORepository4DbReadonly("Master");
@@ -224,6 +225,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				throw new Exception(opRsltPrivileges.getMessage());
 			}
 			// 去重
+			OperationResult<UserPrivilege> opRslt = new OperationResult<>();
 			for (UserPrivilege item : opRsltPrivileges.getResultObjects()) {
 				if (item == null || item.getTarget() == null) {
 					continue;
@@ -240,15 +242,14 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					opRslt.addResultObjects(item);
 				}
 			}
+			return opRslt;
 		} catch (Exception e) {
-			opRslt.setError(e);
+			return new OperationResult<>(e);
 		}
-		return opRslt;
 	}
 
 	@Override
 	public OperationResult<UserQuery> fetchUserQueries(String user, String queryId, String token) {
-		OperationResult<UserQuery> opRslt = new OperationResult<>();
 		try {
 			this.setUserToken(token);
 			ICriteria criteria = new Criteria();
@@ -293,19 +294,18 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (opRsltFetch.getResultCode() != 0) {
 				throw new Exception(opRsltFetch.getMessage());
 			}
+			OperationResult<UserQuery> opRslt = new OperationResult<>();
 			for (BOCriteria boItem : opRsltFetch.getResultObjects()) {
 				opRslt.addResultObjects(UserQuery.create(boItem));
 			}
+			return opRslt;
 		} catch (Exception e) {
-			opRslt.setError(e);
+			return new OperationResult<>(e);
 		}
-		return opRslt;
 	}
 
 	@Override
 	public OperationMessage saveUserQuery(UserQuery query, String token) {
-		OperationMessage opRslt = new OperationMessage();
-		boolean myTrans = false;
 		try {
 			this.setUserToken(token);
 			// 补全信息
@@ -350,64 +350,67 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(BOCriteria.PROPERTY_ASSIGNED.getName());
 			condition.setValue(
 					query.getUser() != null ? query.getUser() : String.valueOf(this.getCurrentUser().getId()));
-
-			myTrans = this.beginTransaction();
-			// 查询已经存在的并删除
-			IOperationResult<IBOCriteria> opRsltFetch = this.fetchBOCriteria(criteria);
-			if (opRsltFetch.getError() != null) {
-				throw opRsltFetch.getError();
-			}
-			if (opRsltFetch.getResultCode() != 0) {
-				throw new Exception(opRsltFetch.getMessage());
-			}
-			for (IBOCriteria boItem : opRsltFetch.getResultObjects()) {
-				boItem.delete();
-				IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boItem);
-				if (opRsltSave.getError() != null) {
-					throw opRsltSave.getError();
+			boolean myTrans = false;
+			try {
+				myTrans = this.beginTransaction();
+				// 查询已经存在的并删除
+				IOperationResult<IBOCriteria> opRsltFetch = this.fetchBOCriteria(criteria);
+				if (opRsltFetch.getError() != null) {
+					throw opRsltFetch.getError();
 				}
-				if (opRsltSave.getResultCode() != 0) {
-					throw new Exception(opRsltSave.getMessage());
+				if (opRsltFetch.getResultCode() != 0) {
+					throw new Exception(opRsltFetch.getMessage());
 				}
+				for (IBOCriteria boItem : opRsltFetch.getResultObjects()) {
+					boItem.delete();
+					IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boItem);
+					if (opRsltSave.getError() != null) {
+						throw opRsltSave.getError();
+					}
+					if (opRsltSave.getResultCode() != 0) {
+						throw new Exception(opRsltSave.getMessage());
+					}
+				}
+				// 保存新的
+				if (query.getCriteria() != null && !query.getCriteria().isEmpty()) {
+					// 被保存的查询要求有数据，可用此机制删除数据
+					BOCriteria boCriteria = new BOCriteria();
+					boCriteria.setApplicationId(query.getId());
+					boCriteria.setActivated(emYesNo.YES);
+					boCriteria.setAssignedType(emAssignedType.USER);
+					boCriteria.setAssigned(
+							query.getUser() != null ? query.getUser() : String.valueOf(this.getCurrentUser().getId()));
+					boCriteria.setName(query.getName());
+					boCriteria.setOrder(query.getOrder());
+					boCriteria.setData(query.getCriteria());
+					IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boCriteria);
+					if (opRsltSave.getError() != null) {
+						throw opRsltSave.getError();
+					}
+					if (opRsltSave.getResultCode() != 0) {
+						throw new Exception(opRsltSave.getMessage());
+					}
+				}
+				if (myTrans)
+					this.commitTransaction();
+				return new OperationMessage();
+			} catch (Exception e) {
+				if (myTrans) {
+					try {
+						this.rollbackTransaction();
+					} catch (RepositoryException e1) {
+						Logger.log(e1);
+					}
+				}
+				return new OperationMessage(e);
 			}
-			// 保存新的
-			if (query.getCriteria() != null && !query.getCriteria().isEmpty()) {
-				// 被保存的查询要求有数据，可用此机制删除数据
-				BOCriteria boCriteria = new BOCriteria();
-				boCriteria.setApplicationId(query.getId());
-				boCriteria.setActivated(emYesNo.YES);
-				boCriteria.setAssignedType(emAssignedType.USER);
-				boCriteria.setAssigned(
-						query.getUser() != null ? query.getUser() : String.valueOf(this.getCurrentUser().getId()));
-				boCriteria.setName(query.getName());
-				boCriteria.setOrder(query.getOrder());
-				boCriteria.setData(query.getCriteria());
-				IOperationResult<IBOCriteria> opRsltSave = this.saveBOCriteria(boCriteria);
-				if (opRsltSave.getError() != null) {
-					throw opRsltSave.getError();
-				}
-				if (opRsltSave.getResultCode() != 0) {
-					throw new Exception(opRsltSave.getMessage());
-				}
-			}
-			if (myTrans)
-				this.commitTransaction();
 		} catch (Exception e) {
-			opRslt.setError(e);
-			if (myTrans) {
-				try {
-					this.rollbackTransaction();
-				} catch (RepositoryException e1) {
-					Logger.log(e1);
-				}
-			}
+			return new OperationMessage(e);
 		}
-		return opRslt;
 	}
 
 	@Override
 	public OperationResult<BizObjectInfo> fetchBizObjectInfo(String user, String boCode, String token) {
-		OperationResult<BizObjectInfo> opRslt = new OperationResult<>();
 		try {
 			this.setUserToken(token);
 			// 主对象及子对象一并返回
@@ -428,6 +431,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (opRsltFetch.getResultCode() != 0) {
 				throw new Exception(opRsltFetch.getMessage());
 			}
+			OperationResult<BizObjectInfo> opRslt = new OperationResult<>();
 			for (BOInformation boItem : opRsltFetch.getResultObjects()) {
 				opRslt.addResultObjects(BizObjectInfo.create(boItem));
 			}
@@ -472,16 +476,27 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 						if (!ptyInfo.getName().equals(setting.getPropertyCode())) {
 							continue;
 						}
-						if (ptyInfo.getAuthorised() == null) {
-							ptyInfo.setSearched(setting.getSearched() == emYesNo.YES ? true : false);
-							ptyInfo.setAuthorised(setting.getAuthorised());
-							ptyInfo.setPosition(setting.getPosition());
-						} else {
-							if (ptyInfo.getAuthorised().compareTo(setting.getAuthorised()) < 0) {
-								ptyInfo.setSearched(setting.getSearched() == emYesNo.YES ? true : false);
-								ptyInfo.setAuthorised(setting.getAuthorised());
-								ptyInfo.setPosition(setting.getPosition());
+						if (ptyInfo.getAuthorised() != null) {
+							int ptyValue = ptyInfo.getAuthorised().ordinal();
+							int setValue = setting.getAuthorised() == null ? 0 : setting.getAuthorised().ordinal();
+							if (ptyValue > (setValue - 1)) {
+								continue;
 							}
+						}
+						if (setting.getSearched() == emSearchedValue.YES) {
+							ptyInfo.setSearched(true);
+						} else if (setting.getSearched() == emSearchedValue.NO) {
+							ptyInfo.setSearched(false);
+						}
+						if (setting.getAuthorised() == emAuthorisedValue.ALL) {
+							ptyInfo.setAuthorised(emAuthoriseType.ALL);
+						} else if (setting.getAuthorised() == emAuthorisedValue.READ) {
+							ptyInfo.setAuthorised(emAuthoriseType.READ);
+						} else if (setting.getAuthorised() == emAuthorisedValue.NONE) {
+							ptyInfo.setAuthorised(emAuthoriseType.NONE);
+						}
+						if (setting.getPosition() != null && Integer.compare(setting.getPosition(), 0) > 0) {
+							ptyInfo.setPosition(setting.getPosition());
 						}
 					}
 
@@ -489,14 +504,15 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				Arrays.sort(boInfo.getProperties(), new Comparator<BizPropertyInfo>() {
 					@Override
 					public int compare(BizPropertyInfo o1, BizPropertyInfo o2) {
-						return Integer.compare(o1.getPosition(), o2.getPosition());
+						return Integer.compare(o1.getPosition() == null ? -1 : o1.getPosition(),
+								o2.getPosition() == null ? -1 : o2.getPosition());
 					}
 				});
 			}
+			return opRslt;
 		} catch (Exception e) {
-			opRslt.setError(e);
+			return new OperationResult<>(e);
 		}
-		return opRslt;
 	}
 
 }
