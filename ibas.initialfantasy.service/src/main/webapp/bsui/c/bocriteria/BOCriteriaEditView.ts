@@ -33,15 +33,17 @@ namespace initialfantasy {
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_applicationid") }),
-                            new sap.extension.m.RepositoryInput("", {
+                            new sap.extension.m.Input("", {
                                 showValueHelp: true,
                                 valueHelpOnly: false,
+                                /* 目前无法解决RepositoryInput手工赋值
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.ApplicationElement,
                                     key: bo.ApplicationElement.PROPERTY_ELEMENTID_NAME,
                                     text: bo.ApplicationElement.PROPERTY_ELEMENTNAME_NAME
                                 },
+                                */
                                 valueHelpRequest: function (): void {
                                     that.fireViewEvents(that.chooseApplicationEvent);
                                 }

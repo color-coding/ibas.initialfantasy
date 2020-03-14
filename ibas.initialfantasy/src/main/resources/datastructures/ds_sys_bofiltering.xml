@@ -7,7 +7,7 @@
     <Property Name="Category" Description="类别" DataType="Alphanumeric" DataSubType="Default" EditSize="1" Mapped="Category" DeclaredType="emFilteringCategory" UniqueKey="Yes" DefaultValue="R" />
     <Property Name="Name" Description="名称" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Name"/>
     <Property Name="Activated" Description="激活的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
-    <Property Name="FilteringType" Description="筛选类型" DataType="Alphanumeric" DataSubType="Default" EditSize="3" DeclaredType="emFilteringType" Mapped="FilteringType"/>
+    <Property Name="FilteringType" Description="筛选类型" DataType="Alphanumeric" DataSubType="Default" EditSize="3" DeclaredType="emFilteringType" Mapped="FilteringType" UniqueKey="Yes"/>
     <Property Name="ObjectKey" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
     <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>

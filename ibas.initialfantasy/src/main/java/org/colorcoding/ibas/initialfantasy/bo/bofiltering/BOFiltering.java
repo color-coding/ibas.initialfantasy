@@ -123,7 +123,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 类别 属性
 	 */
-	@DbField(name = "Category", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Category", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<emFilteringCategory> PROPERTY_CATEGORY = registerProperty(PROPERTY_CATEGORY_NAME,
 			emFilteringCategory.class, MY_CLASS);
 
@@ -185,7 +185,7 @@ public class BOFiltering extends BusinessObject<BOFiltering> implements IBOFilte
 	/**
 	 * 筛选类型 属性
 	 */
-	@DbField(name = "FilteringType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "FilteringType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<emFilteringType> PROPERTY_FILTERINGTYPE = registerProperty(
 			PROPERTY_FILTERINGTYPE_NAME, emFilteringType.class, MY_CLASS);
 
