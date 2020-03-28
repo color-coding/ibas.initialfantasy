@@ -61,6 +61,7 @@ namespace initialfantasy {
                 this.register(new UserChooseServiceMapping());
                 this.register(new ChangeUserProfileMapping());
                 this.register(new BOInformationChooseServiceMapping());
+                this.register(new BOPropertyChooseServiceMapping());
                 this.register(new VariableChooseServiceMapping());
                 this.register(new ConfigChooseServiceMapping());
                 this.register(new IdentityChooseServiceMapping());

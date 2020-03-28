@@ -40,6 +40,8 @@ namespace initialfantasy {
         export const BO_CODE_USER: string = "${Company}_SYS_USER";
         /** 业务对象编码-业务对象信息 */
         export const BO_CODE_BOINFORMATION: string = "${Company}_SYS_BOINFO";
+        /** 业务对象编码-业务对象属性 */
+        export const BO_CODE_BOPROPERTY: string = "${Company}_SYS_BOPRTY";
         /** 业务对象编码-系统变量 */
         export const BO_CODE_SYSTEM_VARIABLE: string = "${Company}_SYS_VARIABLE";
         /** 业务对象编码-系统配置 */

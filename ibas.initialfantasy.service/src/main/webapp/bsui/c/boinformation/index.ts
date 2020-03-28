@@ -8,3 +8,4 @@
 /// <reference path="./BOInformationChooseView.ts" />
 /// <reference path="./BOInformationEditView.ts" />
 /// <reference path="./BOInformationListView.ts" />
+/// <reference path="./BOPropertyChooseView.ts" />

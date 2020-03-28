@@ -132,6 +132,9 @@ namespace initialfantasy {
                     case app.BOInformationEditApp.APPLICATION_ID:
                         view = new c.BOInformationEditView();
                         break;
+                    case app.BOPropertyChooseApp.APPLICATION_ID:
+                        view = new c.BOPropertyChooseView();
+                        break;
                     case app.VariableChooseApp.APPLICATION_ID:
                         view = new c.VariableChooseView();
                         break;
