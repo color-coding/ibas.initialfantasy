@@ -7,6 +7,7 @@
  */
 /// <reference path="./Data.ts" />
 /// <reference path="./bo/ApplicationConfig.ts" />
+/// <reference path="./bo/ApplicationConfigIdentity.ts" />
 /// <reference path="./bo/ApplicationElement.ts" />
 /// <reference path="./bo/ApplicationModule.ts" />
 /// <reference path="./bo/ApplicationPlatform.ts" />

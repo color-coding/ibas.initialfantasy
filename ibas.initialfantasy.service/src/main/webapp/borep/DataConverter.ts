@@ -84,6 +84,10 @@ namespace initialfantasy {
                     if (property === bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME) {
                         return ibas.enums.toString(emElementType, value);
                     }
+                } else if (boName === bo.ApplicationConfig.name) {
+                    if (property === bo.ApplicationConfig.PROPERTY_CATEGORY_NAME) {
+                        return ibas.enums.toString(emConfigCategory, value);
+                    }
                 } else if (boName === bo.BOPropertySetting.name) {
                     if (property === bo.BOPropertySetting.PROPERTY_AUTHORISED_NAME) {
                         return ibas.enums.toString(emAuthorisedValue, value);
@@ -146,6 +150,10 @@ namespace initialfantasy {
                 } else if (boName === bo.ApplicationElement.name) {
                     if (property === bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME) {
                         return ibas.enums.valueOf(emElementType, value);
+                    }
+                } else if (boName === bo.ApplicationConfig.name) {
+                    if (property === bo.ApplicationConfig.PROPERTY_CATEGORY_NAME) {
+                        return ibas.enums.valueOf(emConfigCategory, value);
                     }
                 } else if (boName === bo.BOPropertySetting.name) {
                     if (property === bo.BOPropertySetting.PROPERTY_AUTHORISED_NAME) {

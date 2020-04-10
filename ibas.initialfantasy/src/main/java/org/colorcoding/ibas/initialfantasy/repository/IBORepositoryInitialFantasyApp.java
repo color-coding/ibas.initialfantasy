@@ -4,6 +4,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.repository.IBORepositoryApplication;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationPlatform;
@@ -288,6 +289,23 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IBOPropertySetting> saveBOPropertySetting(IBOPropertySetting bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置-身份
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IApplicationConfigIdentity> fetchApplicationConfigIdentity(ICriteria criteria);
+
+	/**
+	 * 保存-应用程序配置-身份
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IApplicationConfigIdentity> saveApplicationConfigIdentity(IApplicationConfigIdentity bo);
 
 	// --------------------------------------------------------------------------------------------//
 }

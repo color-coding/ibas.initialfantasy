@@ -17,6 +17,12 @@ namespace initialfantasy {
     /** 配置值-数据权限方式 */
     export const CONFIG_VALUE_OWNERSHIP_WAY: string = "initial";
 
+    export namespace config {
+        export function get<T>(key: string, defalut?: T): T {
+            return ibas.config.get(ibas.strings.format("{0}|{1}", CONSOLE_ID, key), defalut);
+        }
+    }
+
     export namespace bo {
         /** 业务仓库名称 */
         export const BO_REPOSITORY_INITIALFANTASY: string = ibas.strings.format(ibas.MODULE_REPOSITORY_NAME_TEMPLATE, CONSOLE_NAME);
@@ -56,6 +62,8 @@ namespace initialfantasy {
         export const BO_CODE_IDENTITYPRIVILEGE: string = "${Company}_SYS_IDENTPRIVILEGE";
         /** 业务对象编码-业务对象属性设置 */
         export const BO_CODE_BOPROPERTYSETTING: string = "${Company}_SYS_BOPRTYSETTING";
+        /** 业务对象编码-应用程序配置-身份 */
+        export const BO_CODE_APPLICATIONCONFIGIDENTITY: string = "${Company}_SYS_CONFIDENTITY";
 
         /**
          * 分配类型
@@ -167,6 +175,18 @@ namespace initialfantasy {
             READ,
             /** 没有 */
             NONE,
+        }
+        /**
+         * 配置种类
+         * 
+         * @author Niuren.Zhu
+         *
+         */
+        export enum emConfigCategory {
+            /** 服务端 */
+            SERVER,
+            /** 客户端 */
+            CLIENT,
         }
     }
 

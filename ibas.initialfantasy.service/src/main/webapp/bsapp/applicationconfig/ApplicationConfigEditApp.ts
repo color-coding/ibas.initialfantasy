@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
- namespace initialfantasy {
+namespace initialfantasy {
     export namespace app {
         /** 编辑应用-应用程序配置 */
         export class ApplicationConfigEditApp extends ibas.BOEditApplication<IApplicationConfigEditView, bo.ApplicationConfig> {
@@ -28,8 +28,6 @@
             protected registerView(): void {
                 super.registerView();
                 // 其他事件
-                this.view.deleteDataEvent = this.deleteData;
-                this.view.createDataEvent = this.createData;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -122,63 +120,11 @@
                 });
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
-            /** 删除数据 */
-            protected deleteData(): void {
-                let that: this = this;
-                this.messages({
-                    type: ibas.emMessageType.QUESTION,
-                    title: ibas.i18n.prop(this.name),
-                    message: ibas.i18n.prop("shell_delete_continue"),
-                    actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
-                    onCompleted(action: ibas.emMessageAction): void {
-                        if (action === ibas.emMessageAction.YES) {
-                            that.editData.delete();
-                            that.saveData();
-                        }
-                    }
-                });
-            }
-            /** 新建数据，参数1：是否克隆 */
-            protected createData(clone: boolean): void {
-                let that: this = this;
-                let createData: Function = function (): void {
-                    if (clone) {
-                        // 克隆对象
-                        that.editData = that.editData.clone();
-                        that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_cloned_new"));
-                        that.viewShowed();
-                    } else {
-                        // 新建对象
-                        that.editData = new bo.ApplicationConfig();
-                        that.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
-                        that.viewShowed();
-                    }
-                };
-                if (that.editData.isDirty) {
-                    this.messages({
-                        type: ibas.emMessageType.QUESTION,
-                        title: ibas.i18n.prop(this.name),
-                        message: ibas.i18n.prop("shell_data_not_saved_continue"),
-                        actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
-                        onCompleted(action: ibas.emMessageAction): void {
-                            if (action === ibas.emMessageAction.YES) {
-                                createData();
-                            }
-                        }
-                    });
-                } else {
-                    createData();
-                }
-            }
         }
         /** 视图-应用程序配置 */
         export interface IApplicationConfigEditView extends ibas.IBOEditView {
             /** 显示数据 */
             showApplicationConfig(data: bo.ApplicationConfig): void;
-            /** 删除数据事件 */
-            deleteDataEvent: Function;
-            /** 新建数据事件，参数1：是否克隆 */
-            createDataEvent: Function;
         }
     }
 }

@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBException;
 
 import org.colorcoding.ibas.bobas.bo.UserFieldProxy;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationFunction;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
@@ -36,7 +38,7 @@ public class Resolver implements ContextResolver<JAXBContext> {
 				jaxbContext = JAXBContext.newInstance(Criteria.class, UserFieldProxy.class, ApplicationFunction.class,
 						ApplicationModule.class, ApplicationPlatform.class, ApplicationElement.class, BOCriteria.class,
 						BOFiltering.class, BOInformation.class, BONumbering.class, Organization.class, Privilege.class,
-						User.class, BOPropertySetting.class);
+						User.class, BOPropertySetting.class, ApplicationConfig.class, ApplicationConfigIdentity.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();

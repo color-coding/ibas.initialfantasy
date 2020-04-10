@@ -7,6 +7,7 @@
  */
 /// <reference path="../api/index.ts" />
 /// <reference path="./bo/ApplicationConfig.ts" />
+/// <reference path="./bo/ApplicationConfigIdentity.ts" />
 /// <reference path="./bo/ApplicationElement.ts" />
 /// <reference path="./bo/ApplicationModule.ts" />
 /// <reference path="./bo/ApplicationPlatform.ts" />
@@ -45,6 +46,7 @@ namespace initialfantasy {
         boFactory.register(BOInformation.BUSINESS_OBJECT_CODE, BOInformation);
         boFactory.register(IdentityPrivilege.BUSINESS_OBJECT_CODE, IdentityPrivilege);
         boFactory.register(BOPropertySetting.BUSINESS_OBJECT_CODE, BOPropertySetting);
+        boFactory.register(ApplicationConfigIdentity.BUSINESS_OBJECT_CODE, ApplicationConfigIdentity);
         boFactory.register(BO_CODE_BOPROPERTY, BOPropertyInformation);
     }
 }

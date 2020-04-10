@@ -17,6 +17,12 @@ namespace initialfantasy {
             configDescription: string;
             /** 配置值 */
             configValue: string;
+            /** 种类 */
+            category: emConfigCategory;
+            /** 设置 */
+            settings: string;
+            /** 激活 */
+            activated: ibas.emYesNo;
             /** 对象键值 */
             objectKey: number;
             /** 对象类型 */

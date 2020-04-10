@@ -6,6 +6,9 @@
     <Property Name="ConfigKey" Description="配置项" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="ConfigKey" UniqueKey="Yes"/>
     <Property Name="ConfigDescription" Description="配置说明" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ConfigDescrp"/>
     <Property Name="ConfigValue" Description="配置值" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ConfigValue"/>
+    <Property Name="Category" Description="种类" DataType="Alphanumeric" DataSubType="Default" EditSize="1" Mapped="Category"  DeclaredType="emConfigCategory"/>
+    <Property Name="Settings" Description="设置" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Settings"/>
+    <Property Name="Activated" Description="激活" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Activated"/>
     <Property Name="ObjectKey" Description="对象键值" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
@@ -20,4 +23,24 @@
     <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
   </Model>
   <BusinessObject MappedModel="ApplicationConfig" ShortName="${Company}_SYS_CONFIG"/>
+  <Model Name="ApplicationConfigIdentity" Description="应用程序配置-身份" ModelType="Simple" Mapped="${Company}_SYS_CONFIG1">
+    <Property Name="RoleCode" Description="角色标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="RoleCode" UniqueKey="Yes"/>
+    <Property Name="IdentityCode" Description="身份标识" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="IdentityCode" UniqueKey="Yes"/>
+    <Property Name="ConfigGroup" Description="配置组" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="ConfigGroup" UniqueKey="Yes"/>
+    <Property Name="ConfigKey" Description="配置项" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="ConfigKey" UniqueKey="Yes"/>
+    <Property Name="ConfigValue" Description="配置值" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="ConfigValue"/>
+    <Property Name="ObjectKey" Description="对象键值" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="修改时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="LogInst" Description="实例号（版本）" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+  </Model>
+  <BusinessObject MappedModel="ApplicationConfigIdentity" ShortName="${Company}_SYS_CONFIDENTITY"/>
 </Domain>

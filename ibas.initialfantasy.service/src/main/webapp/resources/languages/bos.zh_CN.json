@@ -5,6 +5,9 @@
         "bo_applicationconfig_configkey": "配置项",
         "bo_applicationconfig_configdescription": "配置说明",
         "bo_applicationconfig_configvalue": "配置值",
+        "bo_applicationconfig_category": "种类",
+        "bo_applicationconfig_settings": "设置",
+        "bo_applicationconfig_activated": "激活",
         "bo_applicationconfig_objectkey": "对象键值",
         "bo_applicationconfig_objectcode": "对象类型",
         "bo_applicationconfig_datasource": "数据源",
@@ -18,6 +21,27 @@
         "bo_applicationconfig_createusersign": "创建用户",
         "bo_applicationconfig_updateusersign": "修改用户",
         "bo_applicationconfig_closing_delimiter": "----结束----"
+    },
+    {
+        "bo_applicationconfigidentity": "应用程序配置-身份",
+        "bo_applicationconfigidentity_rolecode": "角色标识",
+        "bo_applicationconfigidentity_identitycode": "身份标识",
+        "bo_applicationconfigidentity_configgroup": "配置组",
+        "bo_applicationconfigidentity_configkey": "配置项",
+        "bo_applicationconfigidentity_configvalue": "配置值",
+        "bo_applicationconfigidentity_objectkey": "对象键值",
+        "bo_applicationconfigidentity_objectcode": "对象类型",
+        "bo_applicationconfigidentity_datasource": "数据源",
+        "bo_applicationconfigidentity_createdate": "创建日期",
+        "bo_applicationconfigidentity_createtime": "创建时间",
+        "bo_applicationconfigidentity_updatedate": "修改日期",
+        "bo_applicationconfigidentity_updatetime": "修改时间",
+        "bo_applicationconfigidentity_createactionid": "创建动作标识",
+        "bo_applicationconfigidentity_updateactionid": "更新动作标识",
+        "bo_applicationconfigidentity_loginst": "实例号（版本）",
+        "bo_applicationconfigidentity_createusersign": "创建用户",
+        "bo_applicationconfigidentity_updateusersign": "修改用户",
+        "bo_applicationconfigidentity_closing_delimiter": "----结束----"
     },
     {
         "bo_applicationelement": "应用程序元素",
@@ -407,5 +431,9 @@
         "em_searchedvalue_default": "默认",
         "em_searchedvalue_no": "否",
         "em_searchedvalue_yes": "是"
+    },
+    {
+        "em_configcategory_server": "服务端",
+        "em_configcategory_client": "客户端"
     }
 ]

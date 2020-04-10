@@ -2,6 +2,8 @@ package org.colorcoding.ibas.initialfantasy.bo.application;
 
 import org.colorcoding.ibas.bobas.bo.IBOSimple;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
 
 /**
  * 应用程序配置 接口
@@ -19,8 +21,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-配置组
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setConfigGroup(String value);
 
@@ -34,8 +35,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-配置项
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setConfigKey(String value);
 
@@ -49,8 +49,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-配置说明
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setConfigDescription(String value);
 
@@ -64,10 +63,51 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-配置值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setConfigValue(String value);
+
+	/**
+	 * 获取-种类
+	 * 
+	 * @return 值
+	 */
+	emConfigCategory getCategory();
+
+	/**
+	 * 设置-种类
+	 * 
+	 * @param value 值
+	 */
+	void setCategory(emConfigCategory value);
+
+	/**
+	 * 获取-设置
+	 * 
+	 * @return 值
+	 */
+	String getSettings();
+
+	/**
+	 * 设置-设置
+	 * 
+	 * @param value 值
+	 */
+	void setSettings(String value);
+
+	/**
+	 * 获取-激活
+	 * 
+	 * @return 值
+	 */
+	emYesNo getActivated();
+
+	/**
+	 * 设置-激活
+	 * 
+	 * @param value 值
+	 */
+	void setActivated(emYesNo value);
 
 	/**
 	 * 获取-对象键值
@@ -79,8 +119,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-对象键值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectKey(Integer value);
 
@@ -94,8 +133,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectCode(String value);
 
@@ -109,8 +147,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataSource(String value);
 
@@ -124,8 +161,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateDate(DateTime value);
 
@@ -139,8 +175,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateTime(Short value);
 
@@ -154,8 +189,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateDate(DateTime value);
 
@@ -169,8 +203,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateTime(Short value);
 
@@ -184,8 +217,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateActionId(String value);
 
@@ -199,8 +231,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateActionId(String value);
 
@@ -214,8 +245,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setLogInst(Integer value);
 
@@ -229,8 +259,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateUserSign(Integer value);
 
@@ -244,8 +273,7 @@ public interface IApplicationConfig extends IBOSimple {
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateUserSign(Integer value);
 

@@ -17,6 +17,7 @@ import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
+import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
@@ -25,6 +26,10 @@ import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
 import org.colorcoding.ibas.bobas.repository.IBORepository4DbReadonly;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
@@ -34,11 +39,13 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.ApplicationModule4Shell;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizPropertyInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
+import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
 import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
@@ -513,6 +520,92 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		} catch (Exception e) {
 			return new OperationResult<>(e);
 		}
+	}
+
+	@Override
+	public OperationResult<UserConfig> fetchUserConfigs(String user, String platform, String token) {
+		OperationResult<UserConfig> operationResult = new OperationResult<UserConfig>();
+		try {
+			this.setUserToken(token);
+			ICriteria criteria = new Criteria();
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
+			condition.setValue(emConfigCategory.CLIENT);
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			ISort sort = criteria.getSorts().create();
+			sort.setAlias(ApplicationConfig.PROPERTY_CONFIGGROUP.getName());
+			sort.setSortType(SortType.ASCENDING);
+			sort = criteria.getSorts().create();
+			sort.setAlias(ApplicationConfig.PROPERTY_CONFIGKEY.getName());
+			sort.setSortType(SortType.ASCENDING);
+			ArrayList<UserConfig> userConfigs = new ArrayList<UserConfig>();
+			// 获取通用配置
+			for (IApplicationConfig item : this.fetchApplicationConfig(criteria).getResultObjects()) {
+				if (item.getConfigGroup() == null) {
+					continue;
+				}
+				if (item.getConfigKey() == null) {
+					continue;
+				}
+				userConfigs.add(UserConfig.create(item));
+			}
+			// 获取身份配置
+			if (this.getCurrentUser() instanceof User) {
+				User cUser = (User) this.getCurrentUser();
+				if (cUser.getBelong() != null && !cUser.getBelong().isEmpty()) {
+					// 用户有组织则
+					criteria = new Criteria();
+					condition = criteria.getConditions().create();
+					condition.setAlias(ApplicationConfigIdentity.PROPERTY_ROLECODE.getName());
+					condition.setValue(cUser.getBelong());
+					condition = criteria.getConditions().create();
+					condition.setAlias(ApplicationConfigIdentity.PROPERTY_IDENTITYCODE.getName());
+					condition.setValue("");
+					if (cUser.getIdentities() != null && !cUser.getIdentities().isEmpty()) {
+						// 用户有身份
+						condition.setBracketOpen(1);
+						for (String item : cUser.getIdentities().split(",")) {
+							condition = criteria.getConditions().create();
+							condition.setAlias(ApplicationConfigIdentity.PROPERTY_IDENTITYCODE.getName());
+							condition.setValue(item);
+							condition.setRelationship(ConditionRelationship.OR);
+						}
+						condition.setBracketClose(1);
+					}
+					sort = criteria.getSorts().create();
+					sort.setAlias(ApplicationConfig.PROPERTY_CONFIGGROUP.getName());
+					sort.setSortType(SortType.ASCENDING);
+					sort = criteria.getSorts().create();
+					sort.setAlias(ApplicationConfig.PROPERTY_CONFIGKEY.getName());
+					sort.setSortType(SortType.ASCENDING);
+					sort = criteria.getSorts().create();
+					sort.setAlias(ApplicationConfigIdentity.PROPERTY_ROLECODE.getName());
+					sort.setSortType(SortType.ASCENDING);
+					sort = criteria.getSorts().create();
+					sort.setAlias(ApplicationConfigIdentity.PROPERTY_IDENTITYCODE.getName());
+					sort.setSortType(SortType.ASCENDING);
+
+					for (IApplicationConfigIdentity item : this.fetchApplicationConfigIdentity(criteria)
+							.getResultObjects()) {
+						UserConfig userConfig = userConfigs
+								.firstOrDefault(c -> c.getGroup().equalsIgnoreCase(item.getConfigGroup())
+										&& c.getKey().equalsIgnoreCase(item.getConfigKey()));
+						// 父项不存在，则子项不返回
+						if (userConfig != null) {
+							userConfig.setValue(item.getConfigValue());
+						}
+					}
+				}
+			}
+			// 仅返回配置内容的数据
+			operationResult.addResultObjects(
+					userConfigs.stream().filter(c -> c.getValue() != null && !c.getValue().isEmpty()).toArray());
+		} catch (Exception e) {
+			operationResult.setError(e);
+		}
+		return operationResult;
 	}
 
 }

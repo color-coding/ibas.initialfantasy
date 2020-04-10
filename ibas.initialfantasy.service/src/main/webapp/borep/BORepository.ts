@@ -274,6 +274,21 @@ namespace initialfantasy {
             saveBOPropertySetting(saver: ibas.ISaveCaller<bo.BOPropertySetting>): void {
                 super.save(bo.BOPropertySetting.name, saver);
             }
+
+            /**
+             * 查询 应用程序配置-身份
+             * @param fetcher 查询者
+             */
+            fetchApplicationConfigIdentity(fetcher: ibas.IFetchCaller<bo.ApplicationConfigIdentity>): void {
+                super.fetch(bo.ApplicationConfigIdentity.name, fetcher);
+            }
+            /**
+             * 保存 应用程序配置-身份
+             * @param saver 保存者
+             */
+            saveApplicationConfigIdentity(saver: ibas.ISaveCaller<bo.ApplicationConfigIdentity>): void {
+                super.save(bo.ApplicationConfigIdentity.name, saver);
+            }
         }
     }
 }

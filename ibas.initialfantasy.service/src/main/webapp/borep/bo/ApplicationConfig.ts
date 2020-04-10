@@ -59,6 +59,38 @@ namespace initialfantasy {
                 this.setProperty(ApplicationConfig.PROPERTY_CONFIGVALUE_NAME, value);
             }
 
+            /** 映射的属性名称-种类 */
+            static PROPERTY_CATEGORY_NAME: string = "Category";
+            /** 获取-种类 */
+            get category(): emConfigCategory {
+                return this.getProperty<emConfigCategory>(ApplicationConfig.PROPERTY_CATEGORY_NAME);
+            }
+            /** 设置-种类 */
+            set category(value: emConfigCategory) {
+                this.setProperty(ApplicationConfig.PROPERTY_CATEGORY_NAME, value);
+            }
+
+            /** 映射的属性名称-设置 */
+            static PROPERTY_SETTINGS_NAME: string = "Settings";
+            /** 获取-设置 */
+            get settings(): string {
+                return this.getProperty<string>(ApplicationConfig.PROPERTY_SETTINGS_NAME);
+            }
+            /** 设置-设置 */
+            set settings(value: string) {
+                this.setProperty(ApplicationConfig.PROPERTY_SETTINGS_NAME, value);
+            }
+            /** 映射的属性名称-激活 */
+            static PROPERTY_ACTIVATED_NAME: string = "Activated";
+            /** 获取-激活 */
+            get activated(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(ApplicationConfig.PROPERTY_ACTIVATED_NAME);
+            }
+            /** 设置-激活 */
+            set activated(value: ibas.emYesNo) {
+                this.setProperty(ApplicationConfig.PROPERTY_ACTIVATED_NAME, value);
+            }
+
             /** 映射的属性名称-对象键值 */
             static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
             /** 获取-对象键值 */
@@ -194,6 +226,7 @@ namespace initialfantasy {
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(ApplicationConfig.BUSINESS_OBJECT_CODE);
+                this.activated = ibas.emYesNo.YES;
             }
         }
 

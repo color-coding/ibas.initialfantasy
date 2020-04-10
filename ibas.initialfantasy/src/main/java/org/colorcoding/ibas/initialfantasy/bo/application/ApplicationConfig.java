@@ -9,10 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
 
 /**
  * 应用程序配置
@@ -74,8 +76,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-配置组
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setConfigGroup(String value) {
 		this.setProperty(PROPERTY_CONFIGGROUP, value);
@@ -106,8 +107,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-配置项
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setConfigKey(String value) {
 		this.setProperty(PROPERTY_CONFIGKEY, value);
@@ -138,8 +138,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-配置说明
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setConfigDescription(String value) {
 		this.setProperty(PROPERTY_CONFIGDESCRIPTION, value);
@@ -170,11 +169,103 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-配置值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setConfigValue(String value) {
 		this.setProperty(PROPERTY_CONFIGVALUE, value);
+	}
+
+	/**
+	 * 属性名称-种类
+	 */
+	private static final String PROPERTY_CATEGORY_NAME = "Category";
+
+	/**
+	 * 种类 属性
+	 */
+	@DbField(name = "Category", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emConfigCategory> PROPERTY_CATEGORY = registerProperty(PROPERTY_CATEGORY_NAME,
+			emConfigCategory.class, MY_CLASS);
+
+	/**
+	 * 获取-种类
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CATEGORY_NAME)
+	public final emConfigCategory getCategory() {
+		return this.getProperty(PROPERTY_CATEGORY);
+	}
+
+	/**
+	 * 设置-种类
+	 * 
+	 * @param value 值
+	 */
+	public final void setCategory(emConfigCategory value) {
+		this.setProperty(PROPERTY_CATEGORY, value);
+	}
+
+	/**
+	 * 属性名称-设置
+	 */
+	private static final String PROPERTY_SETTINGS_NAME = "Settings";
+
+	/**
+	 * 设置 属性
+	 */
+	@DbField(name = "Settings", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_SETTINGS = registerProperty(PROPERTY_SETTINGS_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-设置
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_SETTINGS_NAME)
+	public final String getSettings() {
+		return this.getProperty(PROPERTY_SETTINGS);
+	}
+
+	/**
+	 * 设置-设置
+	 * 
+	 * @param value 值
+	 */
+	public final void setSettings(String value) {
+		this.setProperty(PROPERTY_SETTINGS, value);
+	}
+
+	/**
+	 * 属性名称-激活
+	 */
+	private static final String PROPERTY_ACTIVATED_NAME = "Activated";
+
+	/**
+	 * 是否启用 属性
+	 */
+	@DbField(name = "Activated", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_ACTIVATED = registerProperty(PROPERTY_ACTIVATED_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-激活
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_ACTIVATED_NAME)
+	public final emYesNo getActivated() {
+		return this.getProperty(PROPERTY_ACTIVATED);
+	}
+
+	/**
+	 * 设置-激活
+	 * 
+	 * @param value 值
+	 */
+	public final void setActivated(emYesNo value) {
+		this.setProperty(PROPERTY_ACTIVATED, value);
 	}
 
 	/**
@@ -202,8 +293,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-对象键值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectKey(Integer value) {
 		this.setProperty(PROPERTY_OBJECTKEY, value);
@@ -234,8 +324,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -266,8 +355,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
@@ -298,8 +386,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateDate(DateTime value) {
 		this.setProperty(PROPERTY_CREATEDATE, value);
@@ -330,8 +417,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateTime(Short value) {
 		this.setProperty(PROPERTY_CREATETIME, value);
@@ -362,8 +448,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateDate(DateTime value) {
 		this.setProperty(PROPERTY_UPDATEDATE, value);
@@ -394,8 +479,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateTime(Short value) {
 		this.setProperty(PROPERTY_UPDATETIME, value);
@@ -426,8 +510,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateActionId(String value) {
 		this.setProperty(PROPERTY_CREATEACTIONID, value);
@@ -458,8 +541,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
@@ -490,8 +572,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLogInst(Integer value) {
 		this.setProperty(PROPERTY_LOGINST, value);
@@ -522,8 +603,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateUserSign(Integer value) {
 		this.setProperty(PROPERTY_CREATEUSERSIGN, value);
@@ -554,8 +634,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateUserSign(Integer value) {
 		this.setProperty(PROPERTY_UPDATEUSERSIGN, value);
@@ -568,7 +647,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-
+		this.setActivated(emYesNo.YES);
 	}
 
 }

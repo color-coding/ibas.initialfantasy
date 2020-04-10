@@ -11,6 +11,7 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
@@ -27,6 +28,7 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -217,7 +219,23 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	}
 
 	/**
-	 * 查询用户查询
+	 * 查询用户配置
+	 * 
+	 * @param user     用户
+	 * @param platform 平台
+	 * @param token    用户口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchUserConfigs")
+	public OperationResult<UserConfig> fetchUserConfigs(@QueryParam("user") String user,
+			@QueryParam("platform") String platform, @QueryParam("token") String token) {
+		return super.fetchUserConfigs(user, platform, token);
+	}
+
+	/**
 	 * 
 	 * @param user    用户
 	 * @param queryId 查询标识
@@ -646,6 +664,39 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	public OperationResult<BOPropertySetting> saveBOPropertySetting(BOPropertySetting bo,
 			@QueryParam("token") String token) {
 		return super.saveBOPropertySetting(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置-身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchApplicationConfigIdentity")
+	public OperationResult<ApplicationConfigIdentity> fetchApplicationConfigIdentity(Criteria criteria,
+			@QueryParam("token") String token) {
+		return super.fetchApplicationConfigIdentity(criteria, token);
+	}
+
+	/**
+	 * 保存-应用程序配置-身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveApplicationConfigIdentity")
+	public OperationResult<ApplicationConfigIdentity> saveApplicationConfigIdentity(ApplicationConfigIdentity bo,
+			@QueryParam("token") String token) {
+		return super.saveApplicationConfigIdentity(bo, token);
 	}
 	// --------------------------------------------------------------------------------------------//
 

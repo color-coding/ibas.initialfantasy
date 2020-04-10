@@ -9,6 +9,7 @@ import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.cxf.WebServicePath;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationPlatform;
@@ -21,6 +22,7 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -164,6 +166,20 @@ public class DataService extends BORepositoryInitialFantasyShell { // ----------
 	public OperationResult<UserPrivilege> fetchUserPrivileges(@WebParam(name = "user") String user,
 			@WebParam(name = "platform") String platform, @WebParam(name = "token") String token) {
 		return super.fetchUserPrivileges(user, platform, token);
+	}
+
+	/**
+	 * 查询用户配置
+	 * 
+	 * @param user     用户
+	 * @param platform 平台
+	 * @param token    用户口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<UserConfig> fetchUserConfigs(@WebParam(name = "user") String user,
+			@WebParam(name = "platform") String platform, @WebParam(name = "token") String token) {
+		return super.fetchUserConfigs(user, platform, token);
 	}
 
 	/**
@@ -460,6 +476,33 @@ public class DataService extends BORepositoryInitialFantasyShell { // ----------
 	public OperationResult<IdentityPrivilege> saveIdentityPrivilege(@WebParam(name = "bo") IdentityPrivilege bo,
 			@WebParam(name = "token") String token) {
 		return super.saveIdentityPrivilege(bo, token);
+	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-应用程序配置-身份
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<ApplicationConfigIdentity> fetchApplicationConfigIdentity(
+			@WebParam(name = "criteria") Criteria criteria, @WebParam(name = "token") String token) {
+		return super.fetchApplicationConfigIdentity(criteria, token);
+	}
+
+	/**
+	 * 保存-应用程序配置-身份
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@WebMethod
+	public OperationResult<ApplicationConfigIdentity> saveApplicationConfigIdentity(
+			@WebParam(name = "bo") ApplicationConfigIdentity bo, @WebParam(name = "token") String token) {
+		return super.saveApplicationConfigIdentity(bo, token);
 	}
 
 	// --------------------------------------------------------------------------------------------//

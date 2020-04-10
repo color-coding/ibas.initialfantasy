@@ -1,15 +1,19 @@
 package org.colorcoding.ibas.bobas.configuration.initial;
 
 import org.colorcoding.ibas.bobas.MyConfiguration;
+import org.colorcoding.ibas.bobas.common.ConditionOperation;
+import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.core.Daemon;
 import org.colorcoding.ibas.bobas.core.IDaemonTask;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
+import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
 public class ConfigurationManager extends org.colorcoding.ibas.bobas.configuration.ConfigurationManager {
@@ -41,6 +45,25 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(ApplicationConfig.PROPERTY_CONFIGGROUP.getName());
 			condition.setValue(this.getConfigSign());
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition.setBracketOpen(1);
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
+			condition.setValue(emConfigCategory.SERVER);
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketClose(1);
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_ACTIVATED.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition.setBracketOpen(1);
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketClose(1);
+
 			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
 			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			IOperationResult<IApplicationConfig> operationResult = boRepository.fetchApplicationConfig(criteria);
