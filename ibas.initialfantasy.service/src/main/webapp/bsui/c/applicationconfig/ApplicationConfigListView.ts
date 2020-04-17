@@ -309,124 +309,44 @@ namespace initialfantasy {
                 showConfigValues(values: app.ConfigItem[]): void {
                     this.itemList.destroyItems();
                     for (let vItem of values) {
-                        let item: sap.m.InputListItem = new sap.m.InputListItem("", {
-                            label: "{/description} - {/key}",
+                        this.itemList.addItem(new sap.m.InputListItem("", {
+                            label: ibas.strings.format("{0} - {1} ({2})", vItem.description, vItem.key, vItem.category
+                                ? ibas.enums.describe(bo.emConfigCategory, vItem.category) : ibas.enums.describe(bo.emConfigCategory, bo.emConfigCategory.SERVER)
+                            ),
                             type: sap.m.ListType.Inactive,
-                        });
-                        if (ibas.strings.isWith(vItem.settings, "[", "]")) {
-                            try {
-                                let vObject: any = JSON.parse(vItem.settings);
-                                if (vObject instanceof Array) {
-                                    let select: sap.extension.m.Select = new sap.extension.m.Select("", {
-                                        width: "100%",
-                                        textAlign: sap.ui.core.TextAlign.Right,
-                                    }).bindProperty("bindingValue", {
-                                        path: "/value",
-                                        type: new sap.extension.data.Alphanumeric()
-                                    });
-                                    for (let item of vObject) {
-                                        if (item instanceof Object) {
-                                            let properties: string[] = [];
-                                            for (let pItem in item) {
-                                                properties.push(pItem);
-                                            }
-                                            if (properties.length > 1) {
-                                                select.addItem(new sap.ui.core.Item("", {
-                                                    key: item[properties[0]],
-                                                    text: item[properties[1]],
-                                                }));
-                                            } else if (properties.length > 0) {
-                                                select.addItem(new sap.ui.core.Item("", {
-                                                    key: item[properties[0]],
-                                                    text: item[properties[0]],
-                                                }));
+                            content: [
+                                sap.extension.factories.newInput(
+                                    vItem.settings,
+                                    function (event: sap.ui.base.Event): void {
+                                        // 仅值改变时执行
+                                        if (!ibas.strings.isWith(event.getId(), "change", undefined)) {
+                                            return;
+                                        }
+                                        // 控件值改变时，赋值到对象
+                                        let source: any = event.getSource();
+                                        if (source instanceof sap.m.Input) {
+                                            if (!ibas.strings.isEmpty(source.getSelectedKey())) {
+                                                vItem.value = source.getSelectedKey();
+                                            } else if (!ibas.strings.isEmpty(source.getValue())) {
+                                                vItem.value = source.getValue();
                                             } else {
-                                                select.addItem(new sap.ui.core.Item("", {
-                                                    key: item,
-                                                    text: item,
-                                                }));
+                                                vItem.value = source.getPlaceholder();
                                             }
-                                        } else {
-                                            select.addItem(new sap.ui.core.Item("", {
-                                                key: item,
-                                                text: item,
-                                            }));
                                         }
-                                    }
-                                    item.addContent(select);
-                                }
-                            } catch (error) {
-                                this.application.viewShower.messages({
-                                    title: this.title,
-                                    message: error,
-                                    type: ibas.emMessageType.ERROR,
-                                });
-                            }
-                        } else {
-                            let criteria: ibas.ICriteria = null;
-                            let property: string;
-                            if (ibas.strings.isWith(vItem.settings, "#{", "}")) {
-                                // #{CC_SYS_USER}.{Code}
-                                // 替换变量
-                                let value: string = ibas.config.applyVariables(vItem.settings);
-                                let values: string[] = value.split(".");
-                                if (values.length > 1) {
-                                    criteria = new ibas.Criteria();
-                                    if (!ibas.strings.isEmpty(values[0])) {
-                                        criteria.businessObject = ibas.strings.remove(values[0], "#", "{", "}");
-                                    }
-                                    if (!ibas.strings.isEmpty(values[1])) {
-                                        property = ibas.strings.remove(values[1], "#", "{", "}");
-                                    }
-                                }
-                            } else if (ibas.strings.isWith(vItem.settings, "{", "}")) {
-                                // {"businessObject":"CC_SYS_USER", "conditions":[]}
-                                criteria = ibas.criterias.valueOf(vItem.settings);
-                                if (ibas.strings.isEmpty(criteria.businessObject)) {
-                                    criteria = null;
-                                } else {
-                                    criteria.businessObject = ibas.config.applyVariables(criteria.businessObject);
-                                }
-                                if (criteria.businessObject.indexOf(".") > 0) {
-                                    property = criteria.businessObject.split(".")[1];
-                                    criteria.businessObject = criteria.businessObject.split(".")[0];
-                                }
-                            }
-                            let input: sap.m.Input = new sap.extension.m.Input("", {
-                                showValueHelp: ibas.objects.isNull(criteria) ? false : true,
-                                valueHelpRequest: function (event: sap.ui.base.Event): void {
-                                    if (ibas.objects.isNull(criteria) || ibas.strings.isEmpty(criteria.businessObject)) {
-                                        return;
-                                    }
-                                    let source: any = event.getSource();
-                                    ibas.servicesManager.runChooseService<any>({
-                                        boCode: criteria.businessObject,
-                                        criteria: criteria,
-                                        chooseType: ibas.emChooseType.MULTIPLE,
-                                        onCompleted(selecteds: ibas.IList<any>): void {
-                                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                            for (let item of selecteds) {
-                                                if (builder.length > 0) {
-                                                    builder.append(ibas.DATA_SEPARATOR);
-                                                }
-                                                if (ibas.strings.isEmpty(property)) {
-                                                    builder.append(item);
-                                                } else {
-                                                    builder.append(item[property]);
-                                                }
-                                            }
-                                            source.setValue(builder.toString());
-                                        }
-                                    });
-                                },
-                            }).bindProperty("bindingValue", {
-                                path: "/value",
-                                type: new sap.extension.data.Alphanumeric()
-                            });
-                            item.addContent(input);
-                        }
-                        item.setModel(new sap.extension.model.JSONModel(vItem));
-                        this.itemList.addItem(item);
+                                    }).setTextAlign(
+                                        sap.ui.core.TextAlign.Right
+                                    ).setValue(
+                                        vItem.value
+                                    )
+                            ],
+                            customData: [
+                                new sap.ui.core.CustomData("", {
+                                    key: "DATA",
+                                    value: vItem,
+                                    writeToDom: false,
+                                })
+                            ]
+                        }));
                     }
                 }
                 getConfigValues(list: sap.extension.m.List, isSelected?: boolean): ibas.IList<app.ConfigItem> {
@@ -441,9 +361,10 @@ namespace initialfantasy {
                                 continue;
                             }
                         }
-                        let model: any = item.getModel();
-                        if (model instanceof sap.extension.model.JSONModel) {
-                            values.add(model.getData());
+                        for (let cItem of item.getCustomData()) {
+                            if (cItem.getKey() === "DATA") {
+                                values.add(cItem.getValue());
+                            }
                         }
                     }
                     return values;

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
- namespace initialfantasy {
+namespace initialfantasy {
     export namespace app {
         /** 编辑应用-身份 */
         export class IdentityEditApp extends ibas.BOEditApplication<IIdentityEditView, bo.Identity> {
@@ -86,8 +86,6 @@
                 }
                 super.run.apply(this, arguments);
             }
-            /** 待编辑的数据 */
-            protected editData: bo.Identity;
             /** 保存数据 */
             protected saveData(): void {
                 this.busy(true);

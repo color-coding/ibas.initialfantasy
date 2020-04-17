@@ -18,6 +18,11 @@ namespace initialfantasy {
     export const CONFIG_VALUE_OWNERSHIP_WAY: string = "initial";
 
     export namespace config {
+        /**
+         * 获取此模块配置
+         * @param key 配置项
+         * @param defalut 默认值
+         */
         export function get<T>(key: string, defalut?: T): T {
             return ibas.config.get(ibas.strings.format("{0}|{1}", CONSOLE_ID, key), defalut);
         }

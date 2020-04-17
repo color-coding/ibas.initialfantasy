@@ -285,6 +285,7 @@ namespace initialfantasy {
                                             throw new Error(opRslt.message);
                                         }
                                         data.data.markOld();
+                                        data.data.logInst++;
                                         next();
                                     } catch (error) {
                                         next(error);
@@ -312,6 +313,7 @@ namespace initialfantasy {
                                             throw new Error(opRslt.message);
                                         }
                                         data.extra.markOld();
+                                        data.extra.logInst++;
                                         next();
                                     } catch (error) {
                                         next(error);
