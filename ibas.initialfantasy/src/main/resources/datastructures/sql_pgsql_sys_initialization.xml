@@ -10,22 +10,22 @@
     <DbPassword>${DbPassword}</DbPassword>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
         <Step Name="check and drop exists stored procedures">
-            <Script>
+            <Script><![CDATA[
                 DROP FUNCTION IF EXISTS "${Company}_SYS_SP_GET_USER_MODULES"(character varying, character varying);
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="check and drop exists return type">
-            <Script>
+            <Script><![CDATA[
                 DROP TYPE IF EXISTS "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES";
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="create return type">
-            <Script>
+            <Script><![CDATA[
                 CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_MODULES" AS ("ModuleId" character varying,"ModuleName" character varying,"ModuleCategory" character varying,"ModuleEntry" character varying,"AuthValue" character varying);
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="create stored procedures">
-            <Script>
+            <Script><![CDATA[
                 CREATE OR REPLACE FUNCTION "${Company}_SYS_SP_GET_USER_MODULES" (
                     platform character varying,        /*平台代码*/
                     userCode character varying         /*用户编码*/
@@ -83,27 +83,27 @@
                     END IF;
                 END;
                 $_$ LANGUAGE plpgsql;
-            </Script>
+            ]]></Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
         <Step Name="check and drop exists stored procedures">
-            <Script>
+            <Script><![CDATA[
                 DROP FUNCTION IF EXISTS "${Company}_SYS_SP_GET_USER_PRIVILEGES"(character varying, character varying);
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="check and drop exists return type">
-            <Script>
+            <Script><![CDATA[
                 DROP TYPE IF EXISTS "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES";
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="create return type">
-            <Script>
+            <Script><![CDATA[
                 CREATE TYPE "RESULT_TYPE_${Company}_SYS_SP_GET_USER_PRIVILEGES" AS ("Source" character varying, "Target" character varying, "Value" character varying, "Automatic" character varying);
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="create stored procedures">
-            <Script>
+            <Script><![CDATA[
                 CREATE OR REPLACE FUNCTION "${Company}_SYS_SP_GET_USER_PRIVILEGES" (
                     platform character varying,        /*平台代码*/
                     userCode character varying         /*用户编码*/
@@ -149,7 +149,7 @@
                                 -- 应用的权限设置
                                 SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
                                 FROM "${Company}_SYS_PRIVILEGE1"
-                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
+                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') <> ''
                                     AND "RoleCode" IN (
                                         SELECT "OrgCode"
                                         FROM "${Company}_SYS_USER"
@@ -177,7 +177,7 @@
                                 -- 应用的权限设置
                                 SELECT CAST('A' as character varying) "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
                                 FROM "${Company}_SYS_PRIVILEGE"
-                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') &lt;&gt; ''
+                                WHERE ("PlatformId" = platform OR "PlatformId" = platform2) AND "Activated" = 'Y' AND COALESCE("Target",'') <> ''
                                     AND "RoleCode" IN (
                                         SELECT "OrgCode"
                                         FROM "${Company}_SYS_USER"
@@ -190,7 +190,7 @@
                     END IF;
                 END;
                 $_$ LANGUAGE plpgsql;
-            </Script>
+            ]]></Script>
         </Step>
     </Action>
 </ns2:DataStructureOrchestration>

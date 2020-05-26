@@ -10,17 +10,17 @@
     <DbPassword>${DbPassword}</DbPassword>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
         <Step Name="check stored procedures exists">
-            <Script>
+            <Script><![CDATA[
                 SELECT COUNT(0) FROM "sys"."sysobjects" WHERE "name" = '${Company}_SYS_SP_GET_USER_MODULES' AND "type" = 'P';
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="drop stored procedures" RunOnValue="1">
-            <Script>
+            <Script><![CDATA[
                 DROP PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES;
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="create stored procedures">
-            <Script>
+            <Script><![CDATA[
                 CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_MODULES
                     @platform nvarchar(36),           /*平台代码*/
                     @userCode nvarchar(8)             /*用户编码*/
@@ -65,22 +65,22 @@
                         ) C ON A."ModuleId" = C."ModuleId"
                         WHERE (A."PlatformId" = @platform OR A."PlatformId" = @platform2) AND A."Activated" = 'Y'
                 END;
-            </Script>
+            ]]></Script>
         </Step>
     </Action>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
         <Step Name="check stored procedures exists">
-            <Script>
+            <Script><![CDATA[
                 SELECT COUNT(0) FROM "sys"."sysobjects" WHERE "name" = '${Company}_SYS_SP_GET_USER_PRIVILEGES' AND "type" = 'P';
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="drop stored procedures" RunOnValue="1">
-            <Script>
+            <Script><![CDATA[
                 DROP PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES;
-            </Script>
+            ]]></Script>
         </Step>
         <Step Name="create stored procedures">
-            <Script>
+            <Script><![CDATA[
                 CREATE PROCEDURE ${Company}_SYS_SP_GET_USER_PRIVILEGES
                     @platform nvarchar(36),           /*平台代码*/
                     @userCode nvarchar(8)             /*用户编码*/
@@ -117,7 +117,7 @@
                             -- 应用的权限设置
                             SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
                             FROM "${Company}_SYS_PRIVILEGE1"
-                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
+                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') <> ''
                                 AND "RoleCode" IN (
                                     SELECT "OrgCode"
                                     FROM "${Company}_SYS_USER"
@@ -145,7 +145,7 @@
                             -- 应用的权限设置
                             SELECT 'A' "Source", "Target" "Target", "AuthValue" "Value", "RoleCode", "Automatic"
                             FROM "${Company}_SYS_PRIVILEGE"
-                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') &lt;&gt; ''
+                            WHERE ("PlatformId" = @platform OR "PlatformId" = @platform2) AND "Activated" = 'Y' AND ISNULL("Target",'') <> ''
                                 AND "RoleCode" IN (
                                     SELECT "OrgCode"
                                     FROM "${Company}_SYS_USER"
@@ -153,7 +153,7 @@
                                 )
                         ) T0
                 END;
-            </Script>
+            ]]></Script>
         </Step>
     </Action>
 </ns2:DataStructureOrchestration>
