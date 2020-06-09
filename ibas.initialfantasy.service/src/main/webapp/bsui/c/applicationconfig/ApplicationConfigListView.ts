@@ -24,7 +24,7 @@ namespace initialfantasy {
                 saveEvent: Function;
                 /** 删除 */
                 deleteEvent: Function;
-                draw() {
+                draw(): any {
                     let that: this = this;
                     this.groupList = new sap.extension.m.List("", {
                         chooseType: ibas.emChooseType.SINGLE,

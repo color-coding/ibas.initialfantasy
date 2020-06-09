@@ -118,7 +118,7 @@ namespace initialfantasy {
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_boseriesnumbering_nextnumber"),
-                                template: new sap.extension.m.Text("", {
+                                template: new sap.extension.m.Input("", {
                                 }).bindProperty("bindingValue", {
                                     path: "nextNumber",
                                     type: new sap.extension.data.Numeric()

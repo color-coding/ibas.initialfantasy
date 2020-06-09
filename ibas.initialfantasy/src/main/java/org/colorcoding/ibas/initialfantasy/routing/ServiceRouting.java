@@ -149,7 +149,6 @@ public class ServiceRouting {
 
 	protected void initialize() {
 		try {
-			this.setRuntime(Long.toString(DateTime.getNow().getTime()));
 			File file = new File(this.getServiceFilePath());
 			if (!file.exists()) {
 				ServiceRouting routing = new ServiceRouting();
@@ -165,6 +164,8 @@ public class ServiceRouting {
 				routing.getServices().add(information);
 				this.save(routing);
 			}
+			this.setRuntime(String
+					.valueOf((DateTime.getNow().getTime() - (file.exists() ? file.lastModified() : 0)) / 1000 / 60));
 			this.load();
 		} catch (Exception e) {
 			Logger.log(e);
@@ -210,8 +211,10 @@ public class ServiceRouting {
 		if ((module.getRepository() != null && !module.getRepository().isEmpty())
 				&& (module.getAddress() != null && !module.getAddress().isEmpty())) {
 			done = true;
-			Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
-					module.getAddress());
+			if (MyConfiguration.isDebugMode()) {
+				Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
+						module.getAddress());
+			}
 		}
 		return done;
 	}
