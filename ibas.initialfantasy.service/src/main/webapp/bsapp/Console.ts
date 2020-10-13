@@ -114,15 +114,11 @@ namespace initialfantasy {
             /** 初始化 */
             protected registers(): void {
                 // 注册服务应用
-                this.register(new ApplicationElementChooseServiceMapping());
-                this.register(new ApplicationModuleChooseServiceMapping());
-                this.register(new ApplicationPlatformChooseServiceMapping());
-                this.register(new OrganizationChooseServiceMapping());
                 this.register(new UserChooseServiceMapping());
-                this.register(new BOInformationChooseServiceMapping());
+                this.register(new IdentityChooseServiceMapping());
                 this.register(new VariableChooseServiceMapping());
-                this.register(new ConfigChooseServiceMapping());
-                this.register(new CriteriaEditorServiceMapping());
+                this.register(new OrganizationChooseServiceMapping());
+                this.register(new BOInformationChooseServiceMapping());
             }
         }
     }
