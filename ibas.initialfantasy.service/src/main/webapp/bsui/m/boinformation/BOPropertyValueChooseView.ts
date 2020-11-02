@@ -9,12 +9,12 @@ namespace initialfantasy {
     export namespace ui {
         export namespace m {
             /**
-             * 视图-Organization
+             * 视图-BOPropertyValue
              */
-            export class OrganizationChooseView extends ibas.BOChooseView implements app.IOrganizationChooseView {
+            export class BOPropertyValueChooseView extends ibas.BOChooseView implements app.IBOPropertyValueChooseView {
                 /** 返回查询的对象 */
                 get queryTarget(): any {
-                    return bo.Organization;
+                    return undefined;
                 }
                 /** 绘制视图 */
                 draw(): any {
@@ -27,14 +27,14 @@ namespace initialfantasy {
                             path: "/rows",
                             template: new sap.m.ObjectListItem("", {
                                 title: {
-                                    path: "name",
+                                    path: "description",
                                     type: new sap.extension.data.Alphanumeric(),
                                 },
                                 attributes: [
                                     new sap.extension.m.ObjectAttribute("", {
-                                        title: ibas.i18n.prop("bo_organization_code"),
+                                        title: ibas.i18n.prop("bo_bopropertyvalue_value"),
                                         bindingValue: {
-                                            path: "code",
+                                            path: "value",
                                             type: new sap.extension.data.Alphanumeric(),
                                         },
                                     }),
@@ -45,22 +45,6 @@ namespace initialfantasy {
                                 },
                             })
                         },
-                        nextDataSet(event: sap.ui.base.Event): void {
-                            // 查询下一个数据集
-                            let data: any = event.getParameter("data");
-                            if (ibas.objects.isNull(data)) {
-                                return;
-                            }
-                            if (ibas.objects.isNull(that.lastCriteria)) {
-                                return;
-                            }
-                            let criteria: ibas.ICriteria = that.lastCriteria.next(data);
-                            if (ibas.objects.isNull(criteria)) {
-                                return;
-                            }
-                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
-                            that.fireViewEvents(that.fetchDataEvent, criteria);
-                        }
                     });
                     return new sap.extension.m.Dialog("", {
                         title: this.title,
@@ -114,7 +98,7 @@ namespace initialfantasy {
                     }
                 }
                 /** 显示数据 */
-                showData(datas: bo.Organization[]): void {
+                showData(datas: bo.BOPropertyValue[]): void {
                     if (!ibas.objects.isNull(this.pullToRefresh)) {
                         this.pullToRefresh.hide();
                     }

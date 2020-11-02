@@ -20,17 +20,34 @@ namespace initialfantasy {
                     this.list = new sap.extension.m.List("", {
                         chooseType: this.chooseType,
                         growingThreshold: sap.extension.table.visibleRowCount(15),
-                        mode: sap.m.ListMode.SingleSelectMaster,
+                        mode: sap.m.ListMode.None,
                         items: {
                             path: "/rows",
                             template: new sap.m.ObjectListItem("", {
-                                title: "{name} ({code})",
+                                title: {
+                                    path: "name",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                },
                                 attributes: [
                                     new sap.extension.m.ObjectAttribute("", {
-                                        title: ibas.i18n.prop("bo_identity_remarks"),
-                                        text: "{remarks}",
+                                        title: ibas.i18n.prop("bo_identity_code"),
+                                        bindingValue: {
+                                            path: "code",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
                                     }),
-                                ]
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        title: ibas.i18n.prop("bo_identity_remarks"),
+                                        bindingValue: {
+                                            path: "remarks",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
+                                    }),
+                                ],
+                                type: sap.m.ListType.Active,
+                                press: function (oEvent: sap.ui.base.Event): void {
+                                    that.fireViewEvents(that.chooseDataEvent, this.getBindingContext().getObject());
+                                },
                             })
                         },
                         nextDataSet(event: sap.ui.base.Event): void {
@@ -54,32 +71,58 @@ namespace initialfantasy {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
+                        stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
                         horizontalScrolling: true,
                         verticalScrolling: true,
                         content: [
-                            this.list
+                            this.page = new sap.m.Page("", {
+                                showHeader: false,
+                                showSubHeader: false,
+                                floatingFooter: true,
+                                content: [
+                                    this.list
+                                ],
+                                footer: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.Button("", {
+                                            width: "50%",
+                                            text: ibas.i18n.prop("shell_data_choose"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            press: function (): void {
+                                                that.fireViewEvents(that.chooseDataEvent, that.list.getSelecteds());
+                                            }
+                                        }),
+                                        new sap.m.Button("", {
+                                            width: "50%",
+                                            text: ibas.i18n.prop("shell_exit"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            press: function (): void {
+                                                that.fireViewEvents(that.closeEvent);
+                                            }
+                                        }),
+                                    ]
+                                })
+                            })
                         ],
-                        buttons: [
-                            new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_data_choose"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.chooseDataEvent, that.list.getSelecteds());
-                                }
-                            }),
-                            new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_exit"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.closeEvent);
-                                }
-                            }),
-                        ]
                     });
                 }
+                private page: sap.m.Page;
                 private list: sap.extension.m.List;
+                private pullToRefresh: sap.m.PullToRefresh;
+                /** 嵌入下拉条 */
+                embeddedPuller(view: any): void {
+                    if (view instanceof sap.m.PullToRefresh) {
+                        if (!ibas.objects.isNull(this.page)) {
+                            this.page.insertContent(view, 0);
+                            this.pullToRefresh = view;
+                        }
+                    }
+                }
                 /** 显示数据 */
                 showData(datas: bo.Identity[]): void {
+                    if (!ibas.objects.isNull(this.pullToRefresh)) {
+                        this.pullToRefresh.hide();
+                    }
                     let model: sap.ui.model.Model = this.list.getModel();
                     if (model instanceof sap.extension.model.JSONModel) {
                         // 已绑定过数据

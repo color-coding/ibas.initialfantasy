@@ -39,11 +39,17 @@ namespace initialfantasy {
                                     text: "{objectType}"
                                 }),
                                 attributes: [
-                                    new sap.m.ObjectAttribute("", {
-                                        text: "{name}"
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "name",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
                                     }),
-                                    new sap.m.ObjectAttribute("", {
-                                        text: "{code}"
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "code",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
                                     }),
                                 ]
                             })

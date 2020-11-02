@@ -62,6 +62,7 @@ namespace initialfantasy {
                 this.register(new ChangeUserProfileMapping());
                 this.register(new BOInformationChooseServiceMapping());
                 this.register(new BOPropertyChooseServiceMapping());
+                this.register(new BOPropertyValueChooseServiceMapping());
                 this.register(new VariableChooseServiceMapping());
                 this.register(new ConfigChooseServiceMapping());
                 this.register(new IdentityChooseServiceMapping());
@@ -119,6 +120,8 @@ namespace initialfantasy {
                 this.register(new VariableChooseServiceMapping());
                 this.register(new OrganizationChooseServiceMapping());
                 this.register(new BOInformationChooseServiceMapping());
+                this.register(new BOPropertyChooseServiceMapping());
+                this.register(new BOPropertyValueChooseServiceMapping());
             }
         }
     }

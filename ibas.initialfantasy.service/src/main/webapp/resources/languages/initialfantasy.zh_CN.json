@@ -65,6 +65,7 @@
   "initialfantasy_app_boinformation_view": "业务对象信息查看",
   "initialfantasy_app_boinformation_edit": "业务对象信息编辑",
   "initialfantasy_app_boproperty_choose": "业务对象属性选择",
+  "initialfantasy_app_bopropertyvalue_choose": "业务对象属性可选值选择",
   "initialfantasy_func_bonumbering": "业务对象编号",
   "initialfantasy_app_bonumbering_list": "业务对象编号列表",
   "initialfantasy_app_bonumbering_edit": "业务对象编号编辑",

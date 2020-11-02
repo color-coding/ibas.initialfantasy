@@ -10,3 +10,4 @@
 /// <reference path="./BOInformationFunc.ts" />
 /// <reference path="./BOInformationListApp.ts" />
 /// <reference path="./BOPropertyChooseApp.ts" />
+/// <reference path="./BOPropertyValueChooseApp.ts" />

@@ -62,8 +62,11 @@ namespace initialfantasy {
                                     },
                                 }),
                                 attributes: [
-                                    new sap.m.ObjectAttribute("", {
-                                        text: "{code}"
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "code",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        },
                                     }),
                                 ]
                             })

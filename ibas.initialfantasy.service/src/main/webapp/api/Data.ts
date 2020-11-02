@@ -69,6 +69,8 @@ namespace initialfantasy {
         export const BO_CODE_BOPROPERTYSETTING: string = "${Company}_SYS_BOPRTYSETTING";
         /** 业务对象编码-应用程序配置-身份 */
         export const BO_CODE_APPLICATIONCONFIGIDENTITY: string = "${Company}_SYS_CONFIDENTITY";
+        /** 业务对象编码-业务对象属性值 */
+        export const BO_CODE_BOPROPERTY_VALUE: string = "${Company}_SYS_BOPRTYVALUE";
 
         /**
          * 分配类型

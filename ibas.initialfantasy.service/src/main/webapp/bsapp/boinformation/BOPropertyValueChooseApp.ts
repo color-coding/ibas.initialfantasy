@@ -8,19 +8,19 @@
 namespace initialfantasy {
     export namespace app {
         /** 应用-业务对象信息 */
-        export class BOPropertyChooseApp extends ibas.BOChooseService<IBOPropertyChooseView, bo.IBOPropertyInformation> {
+        export class BOPropertyValueChooseApp extends ibas.BOChooseService<IBOPropertyValueChooseView, bo.IBOPropertyValue> {
             /** 应用标识 */
-            static APPLICATION_ID: string = "f4c91c58-5422-4bc1-b240-57f353350252";
+            static APPLICATION_ID: string = "5c1583a6-cfcd-4af1-b5a1-30157ce316df";
             /** 应用名称 */
-            static APPLICATION_NAME: string = "initialfantasy_app_boproperty_choose";
+            static APPLICATION_NAME: string = "initialfantasy_app_bopropertyvalue_choose";
             /** 业务对象编码 */
-            static BUSINESS_OBJECT_CODE: string = bo.BO_CODE_BOPROPERTY;
+            static BUSINESS_OBJECT_CODE: string = bo.BO_CODE_BOPROPERTY_VALUE;
             /** 构造函数 */
             constructor() {
                 super();
-                this.id = BOPropertyChooseApp.APPLICATION_ID;
-                this.name = BOPropertyChooseApp.APPLICATION_NAME;
-                this.boCode = BOPropertyChooseApp.BUSINESS_OBJECT_CODE;
+                this.id = BOPropertyValueChooseApp.APPLICATION_ID;
+                this.name = BOPropertyValueChooseApp.APPLICATION_NAME;
+                this.boCode = BOPropertyValueChooseApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
             /** 注册视图 */
@@ -53,6 +53,7 @@ namespace initialfantasy {
                 let sort: ibas.ISort = nCriteria.sorts.create();
                 sort.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                 sort.sortType = ibas.emSortType.DESCENDING;
+
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                 boRepository.fetchBOInformation({
@@ -63,10 +64,12 @@ namespace initialfantasy {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            let datas: ibas.IList<bo.IBOPropertyInformation> = new ibas.ArrayList<bo.IBOPropertyInformation>();
+                            let datas: ibas.IList<bo.IBOPropertyValue> = new ibas.ArrayList<bo.IBOPropertyValue>();
                             for (let boItem of opRslt.resultObjects) {
                                 for (let ptyItem of boItem.boPropertyInformations) {
-                                    datas.add(ptyItem);
+                                    for (let vItem of ptyItem.boPropertyValues) {
+                                        datas.add(vItem);
+                                    }
                                 }
                             }
                             if (datas.length === 1
@@ -95,23 +98,23 @@ namespace initialfantasy {
             }
         }
         /** 视图-业务对象信息 */
-        export interface IBOPropertyChooseView extends ibas.IBOChooseView {
+        export interface IBOPropertyValueChooseView extends ibas.IBOChooseView {
             /** 显示数据 */
-            showData(datas: bo.IBOPropertyInformation[]): void;
+            showData(datas: bo.IBOPropertyValue[]): void;
         }
         /** 业务对象信息选择服务映射 */
-        export class BOPropertyChooseServiceMapping extends ibas.BOChooseServiceMapping {
+        export class BOPropertyValueChooseServiceMapping extends ibas.BOChooseServiceMapping {
             /** 构造函数 */
             constructor() {
                 super();
-                this.id = BOPropertyChooseApp.APPLICATION_ID;
-                this.name = BOPropertyChooseApp.APPLICATION_NAME;
-                this.boCode = BOPropertyChooseApp.BUSINESS_OBJECT_CODE;
+                this.id = BOPropertyValueChooseApp.APPLICATION_ID;
+                this.name = BOPropertyValueChooseApp.APPLICATION_NAME;
+                this.boCode = BOPropertyValueChooseApp.BUSINESS_OBJECT_CODE;
                 this.description = ibas.i18n.prop(this.name);
             }
             /** 创建服务实例 */
-            create(): ibas.IService<ibas.IBOChooseServiceCaller<bo.IBOPropertyInformation>> {
-                return new BOPropertyChooseApp();
+            create(): ibas.IService<ibas.IBOChooseServiceCaller<bo.IBOPropertyValue>> {
+                return new BOPropertyValueChooseApp();
             }
         }
     }
