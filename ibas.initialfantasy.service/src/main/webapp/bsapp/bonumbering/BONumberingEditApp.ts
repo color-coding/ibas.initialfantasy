@@ -61,42 +61,45 @@ namespace initialfantasy {
             /** 待编辑的数据 */
             protected editData: bo.BONumbering;
             /** 保存数据 */
-            protected saveBOSeriesNumbering(data: bo.BOSeriesNumbering): void {
+            protected saveBOSeriesNumbering(data: bo.BOSeriesNumbering | bo.BOSeriesNumbering[]): void {
+                let datas: ibas.IList<bo.BOSeriesNumbering> = ibas.arrays.create(data);
+                for (let data of datas) {
+                    if (ibas.strings.isEmpty(data.objectCode)) {
+                        data.objectCode = this.editData.objectCode;
+                    }
+                    if (ibas.strings.isEmpty(data.template)) {
+                        // 默认编码，八位流水，不足补零
+                        data.template = "I%06d";
+                    }
+                }
                 this.busy(true);
-                let that: this = this;
-                if (ibas.strings.isEmpty(data.objectCode)) {
-                    data.objectCode = this.editData.objectCode;
-                }
-                if (ibas.strings.isEmpty(data.template)) {
-                    // 默认编码，八位流水，不足补零
-                    data.template = "%08d";
-                }
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                boRepository.saveBOSeriesNumbering({
-                    beSaved: data,
-                    onCompleted(opRslt: ibas.IOperationResult<bo.BOSeriesNumbering>): void {
-                        try {
-                            that.busy(false);
-                            if (opRslt.resultCode !== 0) {
-                                throw new Error(opRslt.message);
+                ibas.queues.execute(datas.filter(c => c.isDirty === true),
+                    (data, next) => {
+                        boRepository.saveBOSeriesNumbering({
+                            beSaved: data,
+                            onCompleted(opRslt: ibas.IOperationResult<bo.BOSeriesNumbering>): void {
+                                try {
+                                    if (opRslt.resultCode !== 0) {
+                                        throw new Error(opRslt.message);
+                                    }
+                                    next();
+                                } catch (error) {
+                                    next(error);
+                                }
                             }
-                            if (opRslt.resultObjects.length === 0) {
-                                // 删除成功，释放当前对象
-                                that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
-                            } else {
-                                // 从新查询所有
-                                that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
-                                that.fetchBOSeriesNumbering();
-                            }
-                            // 刷新当前视图
-                            that.viewShowed();
-                        } catch (error) {
-                            that.messages(error);
+                        });
+                    },
+                    (error) => {
+                        if (error instanceof Error) {
+                            this.messages(error);
+                        } else {
+                            this.fetchBOSeriesNumbering();
+                            this.messages(ibas.emMessageType.SUCCESS,
+                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
                         }
                     }
-                });
+                );
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 查询数据 */

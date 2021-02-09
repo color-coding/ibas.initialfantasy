@@ -239,9 +239,9 @@ namespace initialfantasy {
                         editable: true,
                         content: [
                             this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bopropertyinformation") }),
-                            this.splitContainer = new sap.m.SplitContainer("", {
-                                mode: sap.m.SplitAppMode.HideMode,
-                                detailPages: [
+                            this.container = new sap.m.NavContainer("", {
+                                height: "22rem",
+                                pages: [
                                     this.tableBOPropertyInformation,
                                     this.tableBOPropertyValue
                                 ]
@@ -279,7 +279,7 @@ namespace initialfantasy {
                 }
                 private page: sap.extension.m.Page;
                 private tableTitle: sap.ui.core.Title;
-                private splitContainer: sap.m.SplitContainer;
+                private container: sap.m.NavContainer;
                 private tableBOPropertyInformation: sap.extension.table.Table;
                 private tableBOPropertyValue: sap.extension.table.Table;
 
@@ -290,13 +290,13 @@ namespace initialfantasy {
                 /** 显示数据 */
                 showBOPropertyInformations(datas: bo.BOPropertyInformation[]): void {
                     this.tableTitle.setText(ibas.i18n.prop("bo_bopropertyinformation"));
-                    this.splitContainer.backToTopDetail(null, null);
+                    this.container.backToTop();
                     this.tableBOPropertyInformation.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
                 /** 显示数据 */
                 showBOPropertyValues(datas: bo.BOPropertyValue[]): void {
                     this.tableTitle.setText(ibas.i18n.prop("bo_bopropertyvalue"));
-                    this.splitContainer.toDetail(this.tableBOPropertyValue.getId(), null, null, null);
+                    this.container.to(this.tableBOPropertyValue.getId());
                     this.tableBOPropertyValue.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }

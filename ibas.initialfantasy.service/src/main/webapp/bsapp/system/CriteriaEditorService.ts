@@ -126,8 +126,10 @@ namespace initialfantasy {
                 this.editData.conditions.create();
                 this.view.showConditions(this.editData.conditions);
             }
-            private removeCondition(condition: ibas.ICondition): void {
-                this.editData.conditions.remove(condition);
+            private removeCondition(condition: ibas.ICondition | ibas.ICondition[]): void {
+                for (let item of ibas.arrays.create(condition)) {
+                    this.editData.conditions.remove(item);
+                }
                 this.view.showConditions(this.editData.conditions);
             }
             private confirm(): void {

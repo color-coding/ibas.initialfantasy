@@ -45,7 +45,7 @@ namespace initialfantasy {
                             }),
                         ],
                     });
-                    return new sap.extension.m.Dialog("", {
+                    return new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
@@ -70,7 +70,7 @@ namespace initialfantasy {
                                 }
                             }),
                         ]
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                 }
                 private table: sap.extension.table.Table;
                 /** 显示数据 */

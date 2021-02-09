@@ -21,7 +21,7 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
-                    return this.form = new sap.extension.m.Dialog("", {
+                    return this.form = new sap.m.Dialog("", {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
@@ -29,14 +29,12 @@ namespace initialfantasy {
                         verticalScrolling: true,
                         subHeader: new sap.m.Toolbar("", {
                             content: [
-                                new sap.m.ToolbarSpacer("", { width: "5px" }),
                                 new sap.m.Label("", {
                                     text: ibas.i18n.prop("initialfantasy_edit_target"),
-                                }),
+                                }).addStyleClass("sapUiSmallMarginBegin"),
                                 this.txtTarget = new sap.extension.m.Input("", {
                                     editable: false
-                                }),
-                                new sap.m.ToolbarSpacer("", { width: "5px" }),
+                                }).addStyleClass("sapUiSmallMarginBegin"),
                             ]
                         }),
                         buttons: [
@@ -55,7 +53,7 @@ namespace initialfantasy {
                                 }
                             }),
                         ]
-                    });
+                    }).addStyleClass("sapUiNoContentPadding");
                 }
                 private form: sap.m.Dialog;
                 private table: sap.extension.table.Table;
@@ -69,15 +67,7 @@ namespace initialfantasy {
                 }
                 /** 显示查询条件 */
                 showConditions(datas: ibas.ICondition[]): void {
-                    let model: sap.ui.model.Model = this.table.getModel();
-                    if (model instanceof sap.extension.model.JSONModel) {
-                        // 已绑定过数据
-                        model.addData(datas);
-                    } else {
-                        // 未绑定过数据
-                        this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
-                    }
-                    this.table.setBusy(false);
+                    this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
                 private createTable(aliases: ibas.KeyText[]): sap.extension.table.Table {
                     let that: this = this;
@@ -99,8 +89,7 @@ namespace initialfantasy {
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://less",
                                     press: function (): void {
-                                        let selected: any = that.table.getSelecteds().firstOrDefault();
-                                        that.fireViewEvents(that.removeConditionEvent, selected);
+                                        that.fireViewEvents(that.removeConditionEvent, that.table.getSelecteds());
                                     }
                                 })
                             ]

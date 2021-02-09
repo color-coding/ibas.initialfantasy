@@ -45,7 +45,7 @@ namespace initialfantasy {
                             }
                         }
                     });
-                    this.itemList = <any>new sap.extension.m.List("", {
+                    this.itemList = new sap.extension.m.List("", {
                         chooseType: ibas.emChooseType.MULTIPLE,
                         mode: sap.m.ListMode.MultiSelect,
                         growing: false,

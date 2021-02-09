@@ -22,6 +22,13 @@ namespace initialfantasy {
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bonumbering") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_objectcode") }),
+                            new sap.extension.m.Input("", {
+                                editable: false,
+                            }).bindProperty("bindingValue", {
+                                path: "objectCode",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bonumbering_objectname") }),
                             new sap.extension.m.BusinessObjectInput("", {
                                 editable: false,
                             }).bindProperty("bindingValue", {
@@ -35,114 +42,134 @@ namespace initialfantasy {
                                 path: "autoKey",
                                 type: new sap.extension.data.Numeric()
                             }),
-                            new sap.ui.core.Title("", {}),
-                        ]
-                    });
-                    this.table = new sap.extension.table.Table("", {
-                        enableSelectAll: false,
-                        visibleRowCount: sap.extension.table.visibleRowCount(5),
-                        toolbar: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.ToolbarSpacer(""),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("shell_data_add"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://add",
-                                    press: function (): void {
-                                        let model: sap.ui.model.Model = that.table.getModel(undefined);
-                                        if (!ibas.objects.isNull(model)) {
-                                            // 已存在绑定数据，添加新的
-                                            let hDatas: any = (<any>model).getData();
-                                            hDatas.rows.push(new bo.BOSeriesNumbering());
-                                            model.refresh(false);
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_boseriesnumbering") }),
+                            this.list = new sap.extension.m.List("", {
+                                chooseType: ibas.emChooseType.NONE,
+                                mode: sap.m.ListMode.Delete,
+                                growing: false,
+                                headerToolbar: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.ToolbarSpacer(""),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("shell_data_save"),
+                                            // type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://save",
+                                            press: function (): void {
+                                                let model: any = that.list.getModel();
+                                                if (model instanceof sap.extension.model.JSONModel) {
+                                                    let rows: any = model.getData("rows");
+                                                    if (rows instanceof Array) {
+                                                        let datas: any = [];
+                                                        for (let row of rows) {
+                                                            if (row instanceof bo.BOSeriesNumbering) {
+                                                                if (row.isNew && row.isDeleted) {
+                                                                    continue;
+                                                                }
+                                                                datas.push(row);
+                                                            }
+                                                        }
+                                                        that.fireViewEvents(that.saveBOSeriesNumberingEvent, datas);
+                                                    }
+                                                }
+                                            }
+                                        }),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("shell_data_add"),
+                                            // type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://add",
+                                            press: function (): void {
+                                                let model: sap.ui.model.Model = that.list.getModel(undefined);
+                                                if (!ibas.objects.isNull(model)) {
+                                                    // 已存在绑定数据，添加新的
+                                                    let hDatas: any = (<any>model).getData();
+                                                    hDatas.rows.push(new bo.BOSeriesNumbering());
+                                                    model.refresh(false);
+                                                }
+                                            }
+                                        }),
+                                    ]
+                                }),
+                                items: {
+                                    path: "/rows",
+                                    template: new sap.m.CustomListItem("", {
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_series") }),
+                                                    new sap.extension.m.Input("", {
+                                                        editable: true
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "seriesName",
+                                                        type: new sap.extension.data.Alphanumeric
+                                                    }),
+                                                    new sap.extension.m.Input("", {
+                                                        editable: false,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "series",
+                                                        type: new sap.extension.data.Numeric
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_template") }),
+                                                    new sap.extension.m.Input("", {
+                                                        editable: true,
+                                                        placeholder: "I%06d"
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "template",
+                                                        type: new sap.extension.data.Alphanumeric
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_nextnumber") }),
+                                                    new sap.extension.m.Input("", {
+                                                        editable: false,
+                                                        type: sap.m.InputType.Number
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "nextNumber",
+                                                        type: new sap.extension.data.Numeric()
+                                                    }),
+                                                    new sap.extension.m.CheckBox("", {
+                                                        text: ibas.i18n.prop("bo_boseriesnumbering_locked")
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "locked",
+                                                        type: new sap.extension.data.YesNo()
+                                                    }),
+
+                                                ]
+                                            }),
+                                        ],
+                                        visible: {
+                                            path: "isDeleted",
+                                            formatter(data: boolean): boolean {
+                                                return data === true ? false : true;
+                                            }
+                                        },
+                                        type: sap.m.ListType.Inactive
+                                    })
+                                },
+                                delete(event: sap.ui.base.Event): void {
+                                    let listItem: any = event.getParameter("listItem");
+                                    if (listItem instanceof sap.m.CustomListItem) {
+                                        let data: any = listItem.getBindingContext().getObject();
+                                        if (data instanceof bo.BOSeriesNumbering) {
+                                            if (data.isNew) {
+                                                data.markDeleted();
+                                                listItem.getModel().refresh(false);
+                                            } else {
+                                                data.delete();
+                                            }
                                         }
                                     }
-                                }),
-                            ]
-                        }),
-                        rowActionCount: 2,
-                        rowActionTemplate: new sap.ui.table.RowAction("", {
-                            items: [
-                                new sap.ui.table.RowActionItem("", {
-                                    icon: "sap-icon://save",
-                                    press: function (oEvent: any): void {
-                                        that.fireViewEvents(that.saveBOSeriesNumberingEvent, this.getBindingContext().getObject());
-                                    },
-                                }),
-                                new sap.ui.table.RowActionItem("", {
-                                    icon: "sap-icon://delete",
-                                    press: function (oEvent: any): void {
-                                        let bo: bo.BOSeriesNumbering = this.getBindingContext().getObject();
-                                        if (!ibas.objects.isNull(bo)) {
-                                            bo.delete();
-                                            that.fireViewEvents(that.saveBOSeriesNumberingEvent, bo);
-                                        }
-                                    },
-                                }),
-                            ]
-                        }),
-                        rows: "{/rows}",
-                        columns: [
-                            new sap.extension.table.Column("", {
-                                label: ibas.i18n.prop("bo_boseriesnumbering_series"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "series",
-                                    type: new sap.extension.data.Numeric()
-                                })
-                            }),
-                            new sap.extension.table.Column("", {
-                                label: ibas.i18n.prop("bo_boseriesnumbering_seriesname"),
-                                template: new sap.extension.m.Input("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "seriesName",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
-                            }),
-                            new sap.extension.table.Column("", {
-                                label: ibas.i18n.prop("bo_boseriesnumbering_template") + " [format()]",
-                                template: new sap.extension.m.Input("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "template",
-                                    type: new sap.extension.data.Alphanumeric()
-                                })
-                            }),
-                            new sap.extension.table.Column("", {
-                                label: ibas.i18n.prop("bo_boseriesnumbering_locked"),
-                                template: new sap.extension.m.EnumSelect("", {
-                                    enumType: ibas.emYesNo
-                                }).bindProperty("bindingValue", {
-                                    path: "locked",
-                                    type: new sap.extension.data.YesNo()
-                                })
-                            }),
-                            new sap.extension.table.Column("", {
-                                label: ibas.i18n.prop("bo_boseriesnumbering_nextnumber"),
-                                template: new sap.extension.m.Input("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "nextNumber",
-                                    type: new sap.extension.data.Numeric()
-                                })
-                            }),
-                        ]
-                    });
-                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
-                        editable: true,
-                        content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_boseriesnumbering") }),
-                            this.table,
+                                },
+                            })
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
                         content: [
                             formTop,
-                            formMiddle,
                         ]
                     });
                 }
                 private page: sap.extension.m.Page;
-                private table: sap.extension.table.Table;
+                private list: sap.extension.m.List;
 
                 /** 显示数据 */
                 showBONumbering(data: bo.BONumbering): void {
@@ -150,7 +177,7 @@ namespace initialfantasy {
                 }
                 /** 显示数据 */
                 showBOSeriesNumbering(datas: bo.BOSeriesNumbering[]): void {
-                    this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    this.list.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

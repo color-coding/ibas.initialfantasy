@@ -293,7 +293,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			// 按使用频率排序
 			ISort sort = criteria.getSorts().create();
 			sort.setAlias(BOCriteria.PROPERTY_ORDER.getName());
-			sort.setSortType(SortType.ASCENDING);
+			sort.setSortType(SortType.DESCENDING);
 			IOperationResult<BOCriteria> opRsltFetch = this.fetchBOCriteria(criteria, token);
 			if (opRsltFetch.getError() != null) {
 				throw opRsltFetch.getError();
