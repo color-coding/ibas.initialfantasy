@@ -176,6 +176,7 @@
         "bo_bofilteringcondition_bracketclose": "闭括号数",
         "bo_bofilteringcondition_propertyname_user_id": "变量：用户标识",
         "bo_bofilteringcondition_propertyname_user_code": "变量：用户编码",
+        "bo_bofilteringcondition_propertyname_user_name": "变量：用户名称",
         "bo_bofilteringcondition_propertyname_user_belong": "变量：用户归属",
         "bo_bofilteringcondition_propertyname_user_identities": "变量：用户身份",
         "bo_bofiltering_closing_delimiter": "----结束----"

@@ -60,5 +60,17 @@ namespace initialfantasy {
             /** 显示用户信息 */
             showUser(user: bo.User): void;
         }
+        export class UserProfileApplicationMapping extends ibas.ResidentApplicationMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = UserProfileApp.APPLICATION_ID;
+                this.name = UserProfileApp.APPLICATION_NAME;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            create(): ibas.ResidentApplication<ibas.IResidentView> {
+                return new UserProfileApp();
+            }
+        }
     }
 }

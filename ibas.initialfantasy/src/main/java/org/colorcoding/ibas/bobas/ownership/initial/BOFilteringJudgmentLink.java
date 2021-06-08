@@ -26,6 +26,8 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 	public static final String VARIABLE_NAME_USER_BELONG = "${USER_BELONG}";
 	/** 变量-用户编码 */
 	public static final String VARIABLE_NAME_USER_CODE = "${USER_CODE}";
+	/** 变量-用户名称 */
+	public static final String VARIABLE_NAME_USER_NAME = "${USER_NAME}";
 	/** 变量-用户身份 */
 	public static final String VARIABLE_NAME_USER_IDENTITIES = "${USER_IDENTITIES}";
 	/** 属性-用户 */
@@ -72,6 +74,10 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 				IValueOperator valueOperator = this.createValueOperator();
 				valueOperator.setValue(this.getCurrentUser().getCode());
 				jItem.setLeftOperter(valueOperator);
+			} else if (VARIABLE_NAME_USER_NAME.equals(item.getPropertyName())) {
+				IValueOperator valueOperator = this.createValueOperator();
+				valueOperator.setValue(this.getCurrentUser().getName());
+				jItem.setLeftOperter(valueOperator);
 			} else if (VARIABLE_NAME_USER_IDENTITIES.equals(item.getPropertyName())) {
 				IValueOperator valueOperator = this.createValueOperator();
 				valueOperator.setValue(this.getCurrentUser().getIdentities());
@@ -90,6 +96,8 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 				valueOperator.setValue(this.getCurrentUser().getBelong());
 			} else if (VARIABLE_NAME_USER_CODE.equals(item.getConditionValue())) {
 				valueOperator.setValue(this.getCurrentUser().getCode());
+			} else if (VARIABLE_NAME_USER_NAME.equals(item.getConditionValue())) {
+				valueOperator.setValue(this.getCurrentUser().getName());
 			} else if (VARIABLE_NAME_USER_IDENTITIES.equals(item.getConditionValue())) {
 				valueOperator.setValue(this.getCurrentUser().getIdentities());
 			} else {

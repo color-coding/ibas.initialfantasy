@@ -185,6 +185,9 @@ public class OwnershipJudger implements IOwnershipJudger {
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
 										.equals(condition.getAlias())) {
 									condition.setAlias(sUser.getCode());
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_NAME
+										.equals(condition.getAlias())) {
+									condition.setAlias(sUser.getName());
 									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
 										.equals(condition.getAlias())) {
@@ -201,6 +204,9 @@ public class OwnershipJudger implements IOwnershipJudger {
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
 										.equals(condition.getValue())) {
 									condition.setValue(sUser.getCode());
+								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_NAME
+										.equals(condition.getValue())) {
+									condition.setValue(sUser.getName());
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
 										.equals(condition.getValue())) {
 									condition.setValue(sUser.getBelong());
