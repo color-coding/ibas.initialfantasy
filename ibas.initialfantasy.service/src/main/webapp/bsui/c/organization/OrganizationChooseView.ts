@@ -49,6 +49,14 @@ namespace initialfantasy {
                                     type: new sap.extension.data.YesNo(true)
                                 }),
                             }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_organization_dataowner"),
+                                template: new sap.extension.m.UserText("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "dataOwner",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                            }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {
                             // 查询下一个数据集

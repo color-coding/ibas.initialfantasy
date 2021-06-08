@@ -63,6 +63,13 @@ namespace initialfantasy {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_dataowner") }),
+                            new sap.extension.m.DataOwnerInput("", {
+                                showValueHelp: true,
+                            }).bindProperty("bindingValue", {
+                                path: "dataOwner",
+                                type: new sap.extension.data.Numeric()
+                            }),
                             new sap.ui.core.Title("", {}),
                         ]
                     });

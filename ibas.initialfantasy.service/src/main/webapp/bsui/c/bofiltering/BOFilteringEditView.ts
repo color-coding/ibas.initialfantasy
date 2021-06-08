@@ -14,6 +14,8 @@ namespace initialfantasy {
             const VARIABLE_NAME_USER_BELONG: string = "${USER_BELONG}";
             /** 变量-用户编码 */
             const VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
+            /** 变量-用户名称 */
+            const VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
             /** 变量-用户身份 */
             const VARIABLE_NAME_USER_IDENTITIES: string = "${USER_IDENTITIES}";
             /** 视图-BOFiltering */
@@ -192,6 +194,8 @@ namespace initialfantasy {
                                                 new sap.ui.core.Item("", {
                                                 }).setText(VARIABLE_NAME_USER_CODE),
                                                 new sap.ui.core.Item("", {
+                                                }).setText(VARIABLE_NAME_USER_NAME),
+                                                new sap.ui.core.Item("", {
                                                 }).setText(VARIABLE_NAME_USER_BELONG),
                                             ]
                                         }).bindProperty("bindingValue", {
@@ -323,6 +327,10 @@ namespace initialfantasy {
                             template.addItem(new sap.ui.core.ListItem("", {})
                                 .setKey(VARIABLE_NAME_USER_CODE)
                                 .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code"))
+                            );
+                            template.addItem(new sap.ui.core.ListItem("", {})
+                                .setKey(VARIABLE_NAME_USER_NAME)
+                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name"))
                             );
                             template.addItem(new sap.ui.core.ListItem("", {})
                                 .setKey(VARIABLE_NAME_USER_BELONG)

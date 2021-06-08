@@ -73,7 +73,7 @@ namespace initialfantasy {
                 }
                 this.register(new IdentityPrivilegeConfigServiceMapping());
                 // 注册常驻应用
-                this.register(new UserProfileApp());
+                this.register(new UserProfileApplicationMapping());
             }
             /** 运行 */
             run(): void {
