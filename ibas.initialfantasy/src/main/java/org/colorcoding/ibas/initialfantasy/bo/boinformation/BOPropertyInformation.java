@@ -325,6 +325,37 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	}
 
 	/**
+	 * 属性名称-链接的对象
+	 */
+	private static final String PROPERTY_LINKEDOBJECT_NAME = "LinkedObject";
+
+	/**
+	 * 链接的对象 属性
+	 */
+	@DbField(name = "LinkedObject", type = DbFieldType.MEMO, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_LINKEDOBJECT = registerProperty(PROPERTY_LINKEDOBJECT_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	 * 获取-链接的对象
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_LINKEDOBJECT_NAME)
+	public final String getLinkedObject() {
+		return this.getProperty(PROPERTY_LINKEDOBJECT);
+	}
+
+	/**
+	 * 设置-链接的对象
+	 * 
+	 * @param value 值
+	 */
+	public final void setLinkedObject(String value) {
+		this.setProperty(PROPERTY_LINKEDOBJECT, value);
+	}
+
+	/**
 	 * 属性名称-业务对象属性信息
 	 */
 	private static final String PROPERTY_BOPROPERTYVALUES_NAME = "BOPropertyValues";

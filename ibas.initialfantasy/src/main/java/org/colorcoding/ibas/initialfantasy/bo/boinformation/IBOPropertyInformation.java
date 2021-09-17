@@ -136,6 +136,20 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	void setSystemed(emYesNo value);
 
 	/**
+	 * 获取-链接的对象
+	 * 
+	 * @return 值
+	 */
+	String getLinkedObject();
+
+	/**
+	 * 设置-链接的对象
+	 * 
+	 * @param value 值
+	 */
+	void setLinkedObject(String value);
+
+	/**
 	 * 获取-业务对象属性值集合
 	 * 
 	 * @return 值

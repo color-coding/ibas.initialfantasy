@@ -220,6 +220,17 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyInformation.PROPERTY_SYSTEMED_NAME, value);
             }
 
+            /** 映射的属性名称-链接的对象 */
+            static PROPERTY_LINKEDOBJECT_NAME: string = "LinkedObject";
+            /** 获取-链接的对象 */
+            get linkedObject(): string {
+                return this.getProperty<string>(BOPropertyInformation.PROPERTY_LINKEDOBJECT_NAME);
+            }
+            /** 设置-链接的对象 */
+            set linkedObject(value: string) {
+                this.setProperty(BOPropertyInformation.PROPERTY_LINKEDOBJECT_NAME, value);
+            }
+
             /** 映射的属性名称-业务对象属性值集合 */
             static PROPERTY_BOPROPERTYVALUES_NAME: string = "BOPropertyValues";
             /** 获取-业务对象属性信息集合 */

@@ -199,6 +199,7 @@
         "bo_bopropertyinformation_editsize": "编辑大小",
         "bo_bopropertyinformation_searched": "检索",
         "bo_bopropertyinformation_systemed": "系统",
+        "bo_bopropertyinformation_linkedobject": "链接的对象",
         "bo_bopropertyvalue": "业务对象属性可选值",
         "bo_bopropertyvalue_value": "值",
         "bo_bopropertyvalue_description": "描述",

@@ -35,6 +35,7 @@ public class BizPropertyInfo extends Serializable {
 		propertyInfo.setEditSize(propertyItem.getEditSize());
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
 		propertyInfo.setSystemed(propertyItem.getSystemed() == emYesNo.YES ? true : false);
+		propertyInfo.setLinkedObject(propertyItem.getLinkedObject());
 		BizPropertyValue[] propertyValues = new BizPropertyValue[propertyItem.getBOPropertyValues().size()];
 		for (int i = 0; i < propertyValues.length; i++) {
 			propertyValues[i] = BizPropertyValue.create(propertyItem.getBOPropertyValues().get(i));
@@ -152,6 +153,17 @@ public class BizPropertyInfo extends Serializable {
 
 	public final void setPosition(Integer position) {
 		this.position = position;
+	}
+
+	private String linkedObject;
+
+	@XmlElement(name = "LinkedObject")
+	public final String getLinkedObject() {
+		return linkedObject;
+	}
+
+	public final void setLinkedObject(String linkedObject) {
+		this.linkedObject = linkedObject;
 	}
 
 	private BizPropertyValue[] values;

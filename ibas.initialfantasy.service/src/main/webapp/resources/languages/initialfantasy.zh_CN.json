@@ -92,5 +92,7 @@
   "initialfantasy_register_module_elements": "正在注册[{0}]应用元素，请稍后",
   "initialfantasy_all_identities": "全部身份",
   "initialfantasy_all_roles": "全部角色",
+  "initialfantasy_user_vaildvalues": "用户定义值",
+  "initialfantasy_bo_choose_list": "对象选择列表",
   "initialfantasy_closing_delimiter": "----结束----"
 }

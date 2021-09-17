@@ -37,6 +37,7 @@ namespace initialfantasy {
                 this.view.addBOPropertyValueEvent = this.addBOPropertyValue;
                 this.view.removeBOPropertyValueEvent = this.removeBOPropertyValue;
                 this.view.boNumberingEvent = this.boNumbering;
+                this.view.chooseLinkedObjectEvent = this.chooseLinkedObject;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -269,6 +270,48 @@ namespace initialfantasy {
                 app.viewShower = this.viewShower;
                 app.run(this.editData.code);
             }
+            private chooseLinkedObject(property: bo.BOPropertyInformation): void {
+                if (ibas.objects.isNull(property)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("shell_data_edit")
+                    ));
+                    return;
+                }
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                criteria.noChilds = true;
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
+                condition.value = ".";
+                condition.operation = ibas.emConditionOperation.NOT_CONTAIN;
+                ibas.servicesManager.runChooseService<bo.BOInformation>({
+                    boCode: bo.BO_CODE_BOINFORMATION,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    criteria: criteria,
+                    onCompleted(selecteds: ibas.IList<bo.BOInformation>): void {
+                        let selected: bo.BOInformation = selecteds.firstOrDefault();
+                        criteria = new ibas.Criteria();
+                        ibas.servicesManager.runApplicationService<ibas.ICriteriaEditorServiceContract, ibas.ICriteria>({
+                            proxy: new ibas.CriteriaEditorServiceProxy({
+                                target: selected.code,
+                                criteria: criteria
+                            }),
+                            onCompleted(result: ibas.ICriteria): void {
+                                // 设置选择属性
+                                if (selected.objectType === "MasterData") {
+                                    result.businessObject = ibas.strings.format("{0}.Code", result.businessObject);
+                                } else if (selected.objectType === "Simple") {
+                                    result.businessObject = ibas.strings.format("{0}.ObjectKey", result.businessObject);
+                                } else if (selected.objectType === "Document") {
+                                    result.businessObject = ibas.strings.format("{0}.DocEntry", result.businessObject);
+                                }
+                                let converter: bo.DataConverter = new bo.DataConverter();
+                                let tmp: any = converter.convert(result, "");
+                                property.linkedObject = JSON.stringify(tmp);
+                            }
+                        });
+                    }
+                });
+            }
         }
         /** 视图-业务对象信息 */
         export interface IBOInformationEditView extends ibas.IBOEditView {
@@ -294,6 +337,8 @@ namespace initialfantasy {
             showBOPropertyValues(datas: bo.BOPropertyValue[]): void;
             /** 业务对象编号 */
             boNumberingEvent: Function;
+            /** 选择链接的对象事件 */
+            chooseLinkedObjectEvent: Function;
         }
     }
 }
