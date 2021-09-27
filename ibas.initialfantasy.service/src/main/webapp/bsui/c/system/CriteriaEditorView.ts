@@ -32,27 +32,32 @@ namespace initialfantasy {
                                 new sap.m.Label("", {
                                     text: ibas.i18n.prop("initialfantasy_edit_target"),
                                 }).addStyleClass("sapUiSmallMarginBegin"),
-                                this.txtTarget = new sap.extension.m.Input("", {
-                                    editable: false
+                                this.txtTarget = new sap.extension.m.RepositoryInput("", {
+                                    editable: false,
+                                    textFormatMode: sap.m.InputTextFormatMode.ValueKey,
+                                    repository: bo.BORepositoryInitialFantasy,
+                                    dataInfo: {
+                                        type: bo.BOInformation,
+                                        key: bo.BOInformation.PROPERTY_CODE_NAME,
+                                        text: bo.BOInformation.PROPERTY_DESCRIPTION_NAME
+                                    },
                                 }).addStyleClass("sapUiSmallMarginBegin"),
                             ]
                         }),
-                        buttons: [
-                            new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_confirm"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.confirmEvent);
-                                }
-                            }),
-                            new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_exit"),
-                                type: sap.m.ButtonType.Transparent,
-                                press: function (): void {
-                                    that.fireViewEvents(that.closeEvent);
-                                }
-                            }),
-                        ]
+                        beginButton: new sap.m.Button("", {
+                            text: ibas.i18n.prop("shell_confirm"),
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (): void {
+                                that.fireViewEvents(that.confirmEvent);
+                            }
+                        }),
+                        endButton: new sap.m.Button("", {
+                            text: ibas.i18n.prop("shell_exit"),
+                            type: sap.m.ButtonType.Transparent,
+                            press: function (): void {
+                                that.fireViewEvents(that.closeEvent);
+                            }
+                        }),
                     }).addStyleClass("sapUiNoContentPadding");
                 }
                 private form: sap.m.Dialog;
@@ -61,7 +66,8 @@ namespace initialfantasy {
 
                 /** 显示目标 */
                 showTarget(target: string, aliases: ibas.KeyText[]): void {
-                    this.txtTarget.setValue(target);
+                    this.form.setInitialFocus(this.form.getBeginButton());
+                    this.txtTarget.setBindingValue(target);
                     this.table = this.createTable(aliases);
                     this.form.addContent(this.table);
                 }

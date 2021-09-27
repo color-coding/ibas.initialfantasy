@@ -197,6 +197,26 @@ namespace initialfantasy {
                                 label: ibas.i18n.prop("bo_privilege_automatic"),
                                 width: "6rem",
                                 template: new sap.extension.m.CheckBox("", {
+                                    select(event: sap.ui.base.Event): void {
+                                        let source: any = event.getSource();
+                                        if (source instanceof sap.m.CheckBox) {
+                                            if (source.getSelected() === true) {
+                                                // 如果选择，则其他选中的取消选中
+                                                let select: any = source.getBindingContext().getObject();
+                                                let datas: app.Privilege[] = that.tablePrivileges.getModel().getData<app.Privilege[]>("rows");
+                                                if (datas instanceof Array) {
+                                                    for (let item of datas) {
+                                                        if (item === select) {
+                                                            continue;
+                                                        }
+                                                        if (item.automatic === ibas.emYesNo.YES) {
+                                                            item.automatic = ibas.emYesNo.NO;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }).bindProperty("bindingValue", {
                                     path: "automatic",
                                     type: new sap.extension.data.YesNo()
