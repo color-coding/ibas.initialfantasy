@@ -96,7 +96,8 @@ namespace initialfantasy {
                                 }).bindProperty("visible", {
                                     path: "dataType",
                                     formatter(data: string): boolean {
-                                        return ibas.strings.equalsIgnoreCase("Alphanumeric", data) ? true : false;
+                                        return ibas.strings.equalsIgnoreCase("Alphanumeric", data) ||
+                                            ibas.strings.equalsIgnoreCase("Memo", data) ? true : false;
                                     }
                                 }),
                             ]

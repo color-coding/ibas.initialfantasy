@@ -300,6 +300,20 @@ public interface IBOFiltering extends IBOSimple {
 	String getOrganization();
 
 	/**
+	 * 获取-备注
+	 * 
+	 * @return 值
+	 */
+	String getRemarks();
+
+	/**
+	 * 设置-备注
+	 * 
+	 * @param value 值
+	 */
+	void setRemarks(String value);
+
+	/**
 	 * 设置-数据所属组织
 	 * 
 	 * @param value 值

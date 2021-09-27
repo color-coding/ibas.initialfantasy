@@ -128,6 +128,8 @@
         "bo_bocriteria_createactionid": "创建动作标识",
         "bo_bocriteria_updateactionid": "更新动作标识",
         "bo_bocriteria_organization": "数据所属组织",
+        "bo_bocriteria_remarks": "备注",
+        "bo_bocriteria_object": "检索对象",
         "bo_bocriteria_closing_delimiter": "----结束----"
     },
     {
@@ -153,6 +155,7 @@
         "bo_bofiltering_updateusersign": "修改用户",
         "bo_bofiltering_dataowner": "数据所有者",
         "bo_bofiltering_organization": "数据所属组织",
+        "bo_bofiltering_remarks": "备注",
         "bo_bofiltering_bofilteringconditions": "业务对象筛选-条件",
         "bo_bofilteringcondition": "业务对象筛选-条件",
         "bo_bofilteringcondition_objectkey": "编号",
@@ -174,6 +177,7 @@
         "bo_bofilteringcondition_relationship": "与上一个条件的关系",
         "bo_bofilteringcondition_bracketopen": "开括号数",
         "bo_bofilteringcondition_bracketclose": "闭括号数",
+        "bo_bofilteringcondition_remarks": "备注",
         "bo_bofilteringcondition_propertyname_user_id": "变量：用户标识",
         "bo_bofilteringcondition_propertyname_user_code": "变量：用户编码",
         "bo_bofilteringcondition_propertyname_user_name": "变量：用户名称",
@@ -245,6 +249,7 @@
         "bo_organization_createactionid": "创建动作标识",
         "bo_organization_updateactionid": "更新动作标识",
         "bo_organization_dataowner": "数据所有者",
+        "bo_organization_remarks": "备注",
         "bo_organization_closing_delimiter": "----结束----"
     },
     {
@@ -296,6 +301,7 @@
         "bo_user_approvalstatus": "审批状态",
         "bo_user_dataowner": "数据所有者",
         "bo_user_organization": "数据所属组织",
+        "bo_user_remarks": "备注",
         "bo_user_closing_delimiter": "----结束----"
     },
     {
@@ -397,7 +403,7 @@
     },
     {
         "em_assignedtype_user": "用户",
-        "em_assignedtype_role": "角色"
+        "em_assignedtype_role": "角色（组织）"
     },
     {
         "em_filteringtype_unavailable": "不可用",

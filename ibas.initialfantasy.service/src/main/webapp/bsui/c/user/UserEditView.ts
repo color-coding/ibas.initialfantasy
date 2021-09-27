@@ -120,6 +120,13 @@ namespace initialfantasy {
                                 path: "organization",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {

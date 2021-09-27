@@ -107,7 +107,22 @@ namespace initialfantasy {
                                     enumType: bo.emFilteringType
                                 })
                             }),
-                            new sap.ui.core.Title("", {}),
+                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectkey") }),
+                            new sap.extension.m.Input("", {
+                                enabled: false,
+                                type: sap.m.InputType.Number
+                            }).bindProperty("bindingValue", {
+                                path: "objectKey",
+                                type: new sap.extension.data.Numeric()
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_identity_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
                         ]
                     });
                     let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
@@ -215,6 +230,15 @@ namespace initialfantasy {
                                             path: "bracketClose",
                                             type: "sap.ui.model.type.Integer"
                                         })
+                                    }),
+                                    new sap.extension.table.DataColumn("", {
+                                        label: ibas.i18n.prop("bo_bofilteringcondition_remarks"),
+                                        template: new sap.extension.m.Input("", {
+                                        }).bindProperty("bindingValue", {
+                                            path: "remarks",
+                                            type: new sap.extension.data.Alphanumeric()
+                                        }),
+                                        width: "16rem",
                                     }),
                                 ]
                             }),

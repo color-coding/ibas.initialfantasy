@@ -31,7 +31,6 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.createDataEvent = this.createData;
-                this.view.chooseApplicationEvent = this.chooseApplication;
                 this.view.chooseBusinessObjectEvent = this.chooseBusinessObject;
                 this.view.chooseRoleUserEvent = this.chooseRoleUser;
                 this.view.editCriteriaEvent = this.editCriteria;
@@ -175,11 +174,6 @@ namespace initialfantasy {
                     createData();
                 }
             }
-            /** 选择应用 */
-            private chooseApplication(): void {
-                // 未提供选择方法
-
-            }
             /** 选择业务对象编码 */
             private chooseBusinessObject(): void {
                 let that: this = this;
@@ -265,8 +259,6 @@ namespace initialfantasy {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
-            /** 选择应用 */
-            chooseApplicationEvent: Function;
             /** 选择查询目标 */
             chooseBusinessObjectEvent: Function;
             /** 选择用户或角色 */

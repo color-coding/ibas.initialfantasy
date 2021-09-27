@@ -61,6 +61,9 @@ namespace initialfantasy {
 
             /** 数据所有者 */
             dataOwner: number;
+
+            /** 备注 */
+            remarks: string;
         }
     }
 }

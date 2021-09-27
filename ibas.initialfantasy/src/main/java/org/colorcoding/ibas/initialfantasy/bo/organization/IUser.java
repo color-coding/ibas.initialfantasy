@@ -28,8 +28,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCode(String value);
 
@@ -43,8 +42,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setName(String value);
 
@@ -58,8 +56,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-用户密码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setPassword(String value);
 
@@ -73,8 +70,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-激活
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setActivated(emYesNo value);
 
@@ -88,8 +84,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-超级用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setSuper(emYesNo value);
 
@@ -103,8 +98,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-电子邮件地址
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setMail(String value);
 
@@ -118,8 +112,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-电话号码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setPhone(String value);
 
@@ -133,8 +126,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-对象编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDocEntry(Integer value);
 
@@ -148,8 +140,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectCode(String value);
 
@@ -163,8 +154,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateDate(DateTime value);
 
@@ -178,8 +168,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateTime(Short value);
 
@@ -193,8 +182,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateDate(DateTime value);
 
@@ -208,8 +196,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateTime(Short value);
 
@@ -223,8 +210,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataSource(String value);
 
@@ -238,8 +224,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setLogInst(Integer value);
 
@@ -253,8 +238,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-服务系列
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setSeries(Integer value);
 
@@ -268,8 +252,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateUserSign(Integer value);
 
@@ -283,8 +266,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateUserSign(Integer value);
 
@@ -298,8 +280,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateActionId(String value);
 
@@ -313,8 +294,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateActionId(String value);
 
@@ -328,8 +308,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-审批状态
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setApprovalStatus(emApprovalStatus value);
 
@@ -343,8 +322,7 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-数据所有者
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataOwner(Integer value);
 
@@ -358,9 +336,21 @@ public interface IUser extends IBOMasterData {
 	/**
 	 * 设置-数据所属组织
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setOrganization(String value);
 
+	/**
+	 * 获取-备注
+	 * 
+	 * @return 值
+	 */
+	String getRemarks();
+
+	/**
+	 * 设置-备注
+	 * 
+	 * @param value 值
+	 */
+	void setRemarks(String value);
 }

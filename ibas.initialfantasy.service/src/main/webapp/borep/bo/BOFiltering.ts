@@ -248,6 +248,16 @@ namespace initialfantasy {
                 this.setProperty(BOFiltering.PROPERTY_ORGANIZATION_NAME, value);
             }
 
+            /** 映射的属性名称-备注 */
+            static PROPERTY_REMARKS_NAME: string = "Remarks";
+            /** 获取-备注 */
+            get remarks(): string {
+                return this.getProperty<string>(BOFiltering.PROPERTY_REMARKS_NAME);
+            }
+            /** 设置-备注 */
+            set remarks(value: string) {
+                this.setProperty(BOFiltering.PROPERTY_REMARKS_NAME, value);
+            }
 
             /** 映射的属性名称-业务对象筛选-条件集合 */
             static PROPERTY_BOFILTERINGCONDITIONS_NAME: string = "BOFilteringConditions";
@@ -485,6 +495,17 @@ namespace initialfantasy {
             /** 设置-闭括号数 */
             set bracketClose(value: number) {
                 this.setProperty(BOFilteringCondition.PROPERTY_BRACKETCLOSE_NAME, value);
+            }
+
+            /** 映射的属性名称-备注 */
+            static PROPERTY_REMARKS_NAME: string = "Remarks";
+            /** 获取-备注 */
+            get remarks(): string {
+                return this.getProperty<string>(BOFilteringCondition.PROPERTY_REMARKS_NAME);
+            }
+            /** 设置-备注 */
+            set remarks(value: string) {
+                this.setProperty(BOFilteringCondition.PROPERTY_REMARKS_NAME, value);
             }
 
             /** 初始化数据 */

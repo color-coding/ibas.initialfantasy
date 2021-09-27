@@ -74,6 +74,8 @@ namespace initialfantasy {
             /** 数据所属组织 */
             organization: string;
 
+            /** 备注 */
+            remarks: string;
 
             /** 业务对象筛选-条件集合 */
             boFilteringConditions: IBOFilteringConditions;
@@ -121,6 +123,8 @@ namespace initialfantasy {
             bracketOpen: number;
             /** 闭括号数 */
             bracketClose: number;
+            /** 备注 */
+            remarks: string;
         }
 
         /** 业务对象筛选-条件 集合 */

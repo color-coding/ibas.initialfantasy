@@ -70,6 +70,13 @@ namespace initialfantasy {
                                 path: "dataOwner",
                                 type: new sap.extension.data.Numeric()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
                             new sap.ui.core.Title("", {}),
                         ]
                     });

@@ -34,6 +34,25 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_bocriteria_object"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "data",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                    formatter(data: string): string {
+                                        if (!ibas.strings.isEmpty(data)) {
+                                            try {
+                                                let bo: ibas.ICriteria = JSON.parse(data);
+                                                return ibas.businessobjects.resource(ibas.businessobjects.name(bo.businessObject));
+                                            } catch (error) {
+                                                return ibas.i18n.prop("initialfantasy_unknown_object");
+                                            }
+                                        }
+                                        return undefined;
+                                    }
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bocriteria_name"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
@@ -76,6 +95,15 @@ namespace initialfantasy {
                                     path: "assigned",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_bofiltering_remarks"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "remarks",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                                width: "16rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

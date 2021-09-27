@@ -76,8 +76,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-应用标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setApplicationId(String value) {
 		this.setProperty(PROPERTY_APPLICATIONID, value);
@@ -108,8 +107,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-检索名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setName(String value) {
 		this.setProperty(PROPERTY_NAME, value);
@@ -140,8 +138,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-指派类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setAssignedType(emAssignedType value) {
 		this.setProperty(PROPERTY_ASSIGNEDTYPE, value);
@@ -172,8 +169,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-指派目标
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setAssigned(String value) {
 		this.setProperty(PROPERTY_ASSIGNED, value);
@@ -204,8 +200,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-激活的
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setActivated(emYesNo value) {
 		this.setProperty(PROPERTY_ACTIVATED, value);
@@ -236,8 +231,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-查询数据
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setData(String value) {
 		this.setProperty(PROPERTY_DATA, value);
@@ -268,8 +262,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-顺序
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setOrder(Integer value) {
 		this.setProperty(PROPERTY_ORDER, value);
@@ -300,8 +293,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectKey(Integer value) {
 		this.setProperty(PROPERTY_OBJECTKEY, value);
@@ -332,8 +324,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -364,8 +355,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLogInst(Integer value) {
 		this.setProperty(PROPERTY_LOGINST, value);
@@ -396,8 +386,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-编号系列
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSeries(Integer value) {
 		this.setProperty(PROPERTY_SERIES, value);
@@ -428,8 +417,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
@@ -460,8 +448,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateDate(DateTime value) {
 		this.setProperty(PROPERTY_CREATEDATE, value);
@@ -492,8 +479,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateTime(Short value) {
 		this.setProperty(PROPERTY_CREATETIME, value);
@@ -524,8 +510,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateDate(DateTime value) {
 		this.setProperty(PROPERTY_UPDATEDATE, value);
@@ -556,8 +541,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateTime(Short value) {
 		this.setProperty(PROPERTY_UPDATETIME, value);
@@ -588,8 +572,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateUserSign(Integer value) {
 		this.setProperty(PROPERTY_CREATEUSERSIGN, value);
@@ -620,8 +603,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateUserSign(Integer value) {
 		this.setProperty(PROPERTY_UPDATEUSERSIGN, value);
@@ -652,8 +634,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateActionId(String value) {
 		this.setProperty(PROPERTY_CREATEACTIONID, value);
@@ -684,8 +665,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
@@ -716,11 +696,41 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 设置-数据所属组织
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setOrganization(String value) {
 		this.setProperty(PROPERTY_ORGANIZATION, value);
+	}
+
+	/**
+	 * 属性名称-备注
+	 */
+	private static final String PROPERTY_REMARKS_NAME = "Remarks";
+
+	/**
+	 * 备注 属性
+	 */
+	@DbField(name = "Remarks", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_REMARKS = registerProperty(PROPERTY_REMARKS_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-备注
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_REMARKS_NAME)
+	public final String getRemarks() {
+		return this.getProperty(PROPERTY_REMARKS);
+	}
+
+	/**
+	 * 设置-备注
+	 * 
+	 * @param value 值
+	 */
+	public final void setRemarks(String value) {
+		this.setProperty(PROPERTY_REMARKS, value);
 	}
 
 	/**

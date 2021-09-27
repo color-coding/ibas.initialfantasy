@@ -248,4 +248,17 @@ public interface IOrganization extends IBOMasterData {
 	 */
 	void setDataOwner(Integer value);
 
+	/**
+	 * 获取-备注
+	 * 
+	 * @return 值
+	 */
+	String getRemarks();
+
+	/**
+	 * 设置-备注
+	 * 
+	 * @param value 值
+	 */
+	void setRemarks(String value);
 }

@@ -21,8 +21,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-编号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectKey(Integer value);
 
@@ -36,8 +35,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectCode(String value);
 
@@ -51,8 +49,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-行号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setLineId(Integer value);
 
@@ -66,8 +63,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setLogInst(Integer value);
 
@@ -81,8 +77,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDataSource(String value);
 
@@ -96,8 +91,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateDate(DateTime value);
 
@@ -111,8 +105,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateTime(Short value);
 
@@ -126,8 +119,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateDate(DateTime value);
 
@@ -141,8 +133,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateTime(Short value);
 
@@ -156,8 +147,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateUserSign(Integer value);
 
@@ -171,8 +161,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateUserSign(Integer value);
 
@@ -186,8 +175,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCreateActionId(String value);
 
@@ -201,8 +189,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setUpdateActionId(String value);
 
@@ -216,8 +203,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-取值属性
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setPropertyName(String value);
 
@@ -231,8 +217,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-比较的值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setConditionValue(String value);
 
@@ -246,8 +231,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-比较的方法
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setOperation(emConditionOperation value);
 
@@ -261,8 +245,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-与上一个条件的关系
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setRelationship(emConditionRelationship value);
 
@@ -276,8 +259,7 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-开括号数
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setBracketOpen(Integer value);
 
@@ -291,9 +273,21 @@ public interface IBOFilteringCondition extends IBOSimpleLine {
 	/**
 	 * 设置-闭括号数
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setBracketClose(Integer value);
 
+	/**
+	 * 获取-备注
+	 * 
+	 * @return 值
+	 */
+	String getRemarks();
+
+	/**
+	 * 设置-备注
+	 * 
+	 * @param value 值
+	 */
+	void setRemarks(String value);
 }

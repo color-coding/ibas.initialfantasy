@@ -50,6 +50,9 @@ namespace initialfantasy {
                         pCriteria.conditions.add(codition);
                     }
                 }
+                if (criteria.childCriterias.length > 0) {
+                    nCriteria.childCriterias.add(criteria.childCriterias);
+                }
                 let sort: ibas.ISort = nCriteria.sorts.create();
                 sort.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                 sort.sortType = ibas.emSortType.DESCENDING;

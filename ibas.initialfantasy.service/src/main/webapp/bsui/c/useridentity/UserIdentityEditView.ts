@@ -70,6 +70,13 @@ namespace initialfantasy {
                                 path: "invalidDate",
                                 type: new sap.extension.data.Date()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
                             new sap.ui.core.Title("", {}),
                         ]
                     });

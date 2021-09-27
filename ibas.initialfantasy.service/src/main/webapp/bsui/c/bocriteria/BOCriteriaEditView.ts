@@ -33,20 +33,22 @@ namespace initialfantasy {
                         content: [
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_applicationid") }),
-                            new sap.extension.m.Input("", {
+                            new sap.extension.m.SelectionInput("", {
                                 showValueHelp: true,
                                 valueHelpOnly: false,
-                                /* 目前无法解决RepositoryInput手工赋值
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
-                                    type: bo.ApplicationElement,
+                                    type: initialfantasy.bo.ApplicationElement,
                                     key: bo.ApplicationElement.PROPERTY_ELEMENTID_NAME,
                                     text: bo.ApplicationElement.PROPERTY_ELEMENTNAME_NAME
                                 },
-                                */
-                                valueHelpRequest: function (): void {
-                                    that.fireViewEvents(that.chooseApplicationEvent);
-                                }
+                                criteria: [
+                                    new ibas.Condition(
+                                        bo.ApplicationElement.PROPERTY_ELEMENTTYPE_NAME,
+                                        ibas.emConditionOperation.NOT_EQUAL,
+                                        bo.emElementType.MODULE
+                                    )
+                                ],
                             }).bindProperty("bindingValue", {
                                 path: "applicationId",
                                 type: new sap.extension.data.Alphanumeric({
@@ -143,6 +145,13 @@ namespace initialfantasy {
                                         })
                                     }),
                                 ]
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bocriteria_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_bocriteria_setting") }),
                             new sap.m.Label("", { text: ibas.i18n.prop("initialfantasy_bocriteria_bocode") }),

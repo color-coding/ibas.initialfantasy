@@ -197,14 +197,23 @@ namespace initialfantasy {
             static PROPERTY_DATAOWNER_NAME: string = "DataOwner";
             /** 获取-数据所有者 */
             get dataOwner(): number {
-                return this.getProperty<number>(User.PROPERTY_DATAOWNER_NAME);
+                return this.getProperty<number>(Organization.PROPERTY_DATAOWNER_NAME);
             }
             /** 设置-数据所有者 */
             set dataOwner(value: number) {
-                this.setProperty(User.PROPERTY_DATAOWNER_NAME, value);
+                this.setProperty(Organization.PROPERTY_DATAOWNER_NAME, value);
             }
 
-
+            /** 映射的属性名称-备注 */
+            static PROPERTY_REMARKS_NAME: string = "Remarks";
+            /** 获取-备注 */
+            get remarks(): string {
+                return this.getProperty<string>(Organization.PROPERTY_REMARKS_NAME);
+            }
+            /** 设置-备注 */
+            set remarks(value: string) {
+                this.setProperty(Organization.PROPERTY_REMARKS_NAME, value);
+            }
 
             /** 初始化数据 */
             protected init(): void {
