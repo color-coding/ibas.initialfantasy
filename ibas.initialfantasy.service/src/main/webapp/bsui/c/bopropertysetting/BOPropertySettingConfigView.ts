@@ -139,7 +139,8 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Enum({
                                         enumType: bo.emSearchedValue,
                                     }),
-                                })
+                                }),
+                                sortProperty: "searched"
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_authorised"),
@@ -150,9 +151,47 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Enum({
                                         enumType: bo.emAuthorisedValue,
                                     }),
-                                })
+                                }),
+                                sortProperty: "authorised",
                             }),
                         ]
+                    });
+                    this.facetFilter = new sap.m.FacetFilter("", {
+                        type: sap.m.FacetFilterType.Simple,
+                        showReset: true,
+                        showPopoverOKButton: true,
+                        showPersonalization: false,
+                        visible: false,
+                        reset: function (oEvent: sap.ui.base.Event): void {
+                            let oFacetFilter: any = oEvent.getSource();
+                            if (oFacetFilter instanceof sap.m.FacetFilter) {
+                                for (let item of oFacetFilter.getLists()) {
+                                    item.removeSelectedKeys();
+                                }
+                                that.filterPrivileges(null);
+                            }
+                        },
+                        confirm: function (oEvent: sap.ui.base.Event): void {
+                            let oFacetFilter: any = oEvent.getSource();
+                            if (oFacetFilter instanceof sap.m.FacetFilter && oFacetFilter.getLists() instanceof Array) {
+                                let mFacetFilterLists: Array<sap.m.FacetFilterList> = oFacetFilter.getLists().filter((oList) => {
+                                    return oList.getSelectedItems().length;
+                                });
+                                if (mFacetFilterLists.length) {
+                                    let oFilter: sap.ui.model.Filter = new sap.ui.model.Filter(
+                                        mFacetFilterLists.map(function (oList: sap.m.FacetFilterList): any {
+                                            return new sap.ui.model.Filter(oList.getSelectedItems().map(function (oItem: sap.m.FacetFilterItem): any {
+                                                return new sap.ui.model.Filter(oList.getKey(), sap.ui.model.FilterOperator.EQ, oItem.getKey());
+                                            }), false);
+                                        }), true);
+                                    that.filterPrivileges(oFilter);
+                                } else {
+                                    that.filterPrivileges(null);
+                                }
+                            } else {
+                                that.filterPrivileges(null);
+                            }
+                        },
                     });
                     return new sap.m.SplitContainer("", {
                         masterPages: [
@@ -209,6 +248,8 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }),
+                                        new sap.m.ToolbarSeparator(),
+                                        this.facetFilter,
                                         new sap.m.ToolbarSpacer(""),
                                         new sap.m.Button("", {
                                             text: ibas.i18n.prop("initialfantasy_copy_from"),
@@ -349,6 +390,7 @@ namespace initialfantasy {
                         ],
                     });
                 }
+                private facetFilter: sap.m.FacetFilter;
                 private pageList: sap.extension.m.Page;
                 private list: sap.extension.m.List;
                 private table: sap.extension.table.Table;
@@ -393,6 +435,60 @@ namespace initialfantasy {
                 }
                 showPropertySettings(datas: app.PropertySetting[]): void {
                     this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    this.refreshFilter();
+                }
+                private filterPrivileges(filter: sap.ui.model.Filter): void {
+                    let dataBinding: any = this.table.getBinding("");
+                    dataBinding.filter(filter);
+                }
+                /** 刷新过滤器 */
+                private refreshFilter(): void {
+                    this.facetFilter.removeAllLists();
+                    this.facetFilter.setVisible(true);
+                    let searchFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_bopropertysetting_searched"),
+                        key: "searched",
+                    });
+                    for (let item in bo.emSearchedValue) {
+                        if (ibas.objects.isNull(item)) {
+                            continue;
+                        }
+                        let key: any = item;
+                        let text: any = bo.emSearchedValue[key];
+                        if (typeof key !== "string" || typeof text !== "string") {
+                            continue;
+                        }
+                        if (!isNaN(Number(key))) {
+                            key = Number(key);
+                        }
+                        searchFacetFilterList.addItem(new sap.m.FacetFilterItem("", {
+                            text: ibas.enums.describe(bo.emSearchedValue, key),
+                            key: key
+                        }));
+                    }
+                    this.facetFilter.addList(searchFacetFilterList);
+                    let authorisedFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
+                        title: ibas.i18n.prop("bo_bopropertysetting_authorised"),
+                        key: "authorised",
+                    });
+                    for (let item in bo.emAuthorisedValue) {
+                        if (ibas.objects.isNull(item)) {
+                            continue;
+                        }
+                        let key: any = item;
+                        let text: any = bo.emAuthorisedValue[key];
+                        if (typeof key !== "string" || typeof text !== "string") {
+                            continue;
+                        }
+                        if (!isNaN(Number(key))) {
+                            key = Number(key);
+                        }
+                        authorisedFacetFilterList.addItem(new sap.m.FacetFilterItem("", {
+                            text: ibas.enums.describe(bo.emAuthorisedValue, key),
+                            key: key
+                        }));
+                    }
+                    this.facetFilter.addList(authorisedFacetFilterList);
                 }
             }
         }
