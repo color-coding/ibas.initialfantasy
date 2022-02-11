@@ -14,6 +14,7 @@ import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 
 /**
@@ -740,6 +741,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setAssigned(DataConvert.STRING_VALUE_EMPTY);
 
 	}
 

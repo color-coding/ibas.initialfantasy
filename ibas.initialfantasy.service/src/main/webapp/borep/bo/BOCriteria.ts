@@ -259,6 +259,13 @@ namespace initialfantasy {
                 this.setProperty(BOCriteria.PROPERTY_REMARKS_NAME, value);
             }
 
+            protected onPropertyChanged(name: string): void {
+                if (ibas.strings.equalsIgnoreCase(BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME, name)) {
+                    if (this.assignedType === emAssignedType.ALL) {
+                        this.assigned = "";
+                    }
+                }
+            }
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(BOCriteria.BUSINESS_OBJECT_CODE);

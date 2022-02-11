@@ -80,6 +80,8 @@ namespace initialfantasy {
             USER,
             /** 角色 */
             ROLE,
+            /** 全部 */
+            ALL,
         }
         /**
          * 筛选类型

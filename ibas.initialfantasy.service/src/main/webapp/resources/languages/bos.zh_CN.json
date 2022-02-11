@@ -403,7 +403,8 @@
     },
     {
         "em_assignedtype_user": "用户",
-        "em_assignedtype_role": "角色（组织）"
+        "em_assignedtype_role": "角色（组织）",
+        "em_assignedtype_all": "全部"
     },
     {
         "em_filteringtype_unavailable": "不可用",

@@ -19,4 +19,9 @@ public enum emAssignedType {
 	 */
 	@Value("R")
 	ROLE,
+	/**
+	 * 全部
+	 */
+	@Value("A")
+	ALL,
 }

@@ -269,14 +269,19 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setValue(queryId);
 			condition.setBracketClose(1);
 			// 自己的查询
-			condition = criteria.getConditions().create();
-			condition.setBracketOpen(2);
+			ICondition firstCondition = condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
 			condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
 			condition.setValue(emAssignedType.USER);
 			condition = criteria.getConditions().create();
 			condition.setAlias(BOCriteria.PROPERTY_ASSIGNED.getName());
 			condition.setValue(user);
 			condition.setBracketClose(1);
+			// 全局的查询
+			ICondition lastCondition = condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
+			condition.setValue(emAssignedType.ALL);
 			// 所属角色的查询
 			if (this.getCurrentUser().getBelong() != null && !this.getCurrentUser().getBelong().isEmpty()) {
 				condition = criteria.getConditions().create();
@@ -284,12 +289,13 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				condition.setBracketOpen(1);
 				condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
 				condition.setValue(emAssignedType.ROLE);
-				condition = criteria.getConditions().create();
+				lastCondition = condition = criteria.getConditions().create();
 				condition.setAlias(BOCriteria.PROPERTY_ASSIGNED.getName());
 				condition.setValue(this.getCurrentUser().getBelong());
 				condition.setBracketClose(1);
 			}
-			condition.setBracketClose(2);
+			firstCondition.setBracketOpen(firstCondition.getBracketOpen() + 1);
+			lastCondition.setBracketClose(lastCondition.getBracketClose() + 1);
 			// 按使用频率排序
 			ISort sort = criteria.getSorts().create();
 			sort.setAlias(BOCriteria.PROPERTY_ORDER.getName());
