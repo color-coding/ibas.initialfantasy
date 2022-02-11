@@ -201,6 +201,21 @@ namespace initialfantasy {
                                         if (oFacetFilter instanceof sap.m.FacetFilter) {
                                             for (let item of oFacetFilter.getLists()) {
                                                 item.removeSelectedKeys();
+                                                if (item.isBound("items")) {
+                                                    if (item.getKey() === "moduleId") {
+                                                        (<any>item.getBinding("items")).filter(
+                                                            new sap.ui.model.Filter("moduleName", sap.ui.model.FilterOperator.Contains, ""),
+                                                            sap.ui.model.FilterType.Application);
+                                                    } else if (item.getKey() === "type") {
+                                                        (<any>item.getBinding("items")).filter(
+                                                            new sap.ui.model.Filter("type", sap.ui.model.FilterOperator.Contains, ""),
+                                                            sap.ui.model.FilterType.Application);
+                                                    } else {
+                                                        (<any>item.getBinding("items")).filter(
+                                                            new sap.ui.model.Filter("authoriseValue", sap.ui.model.FilterOperator.Contains, ""),
+                                                            sap.ui.model.FilterType.Application);
+                                                    }
+                                                }
                                             }
                                             that.filterPrivileges(null);
                                         }
@@ -428,59 +443,130 @@ namespace initialfantasy {
                         this.facetFilter.setVisible(false);
                         return;
                     }
+                    //#region 模块标识过滤
                     let moduleIdFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
                         title: ibas.i18n.prop("bo_privilege_moduleid"),
+                        growingThreshold: 1000,
                         key: "moduleId",
+                        search: function (oEvent: any): void {
+                            let oFacetFilterList: any = oEvent.getSource();
+                            let searchString: string = oEvent.getParameter("term");
+                            let bClearButtonPressed: any = oEvent.getParameter("clearButtonPressed");
+                            let oFilter: any = bClearButtonPressed ? new sap.ui.model.Filter("moduleName", sap.ui.model.FilterOperator.Contains, "")
+                                : new sap.ui.model.Filter("moduleName", sap.ui.model.FilterOperator.Contains, searchString.toLowerCase());
+                            oEvent.preventDefault();
+                            if (oFacetFilterList.isBound("items")) {
+                                oFacetFilterList.getBinding("items").filter(oFilter);
+                            }
+                        },
+                        items: {
+                            path: "/rows",
+                            template: new sap.m.FacetFilterItem("", {
+                                text: {
+                                    path: "moduleName",
+                                },
+                                key: "{moduleId}"
+                            })
+                        }
                     });
-                    for (let item of datas.filter(c => { return ibas.strings.isEmpty(c.target); })) {
-                        moduleIdFacetFilterList.addItem(new sap.m.FacetFilterItem("", {
-                            text: ibas.i18n.prop(item.moduleId),
-                            key: item.moduleId
-                        }));
+                    let modules: any = datas.filter(c => {
+                        return ibas.strings.isEmpty(c.target);
+                    });
+                    // 模块名称赋值
+                    for (let item of modules) {
+                        (<any>item).moduleName = ibas.i18n.prop(item.moduleId);
                     }
+                    moduleIdFacetFilterList.setModel(new sap.extension.model.JSONModel({ rows: modules }));
                     this.facetFilter.addList(moduleIdFacetFilterList);
+                    //#endregion
+
+                    //#region 元素类型过滤
+                    let targetFacetList: ibas.ArrayList<{ type: string; typeKey: number; }> = new ibas.ArrayList<{ type: string; typeKey: number; }>();
+                    targetFacetList.add({
+                        type: ibas.enums.describe(initialfantasy.bo.emElementType, initialfantasy.bo.emElementType.FUNCTION),
+                        typeKey: initialfantasy.bo.emElementType.FUNCTION
+                    });
+                    targetFacetList.add({
+                        type: ibas.enums.describe(initialfantasy.bo.emElementType, initialfantasy.bo.emElementType.APPLICATION),
+                        typeKey: initialfantasy.bo.emElementType.APPLICATION
+                    });
+                    targetFacetList.add({
+                        type: ibas.enums.describe(initialfantasy.bo.emElementType, initialfantasy.bo.emElementType.MODULE),
+                        typeKey: initialfantasy.bo.emElementType.MODULE
+                    });
+                    targetFacetList.add({
+                        type: ibas.enums.describe(initialfantasy.bo.emElementType, initialfantasy.bo.emElementType.SERVICE),
+                        typeKey: initialfantasy.bo.emElementType.SERVICE
+                    });
                     let targetFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
                         title: ibas.i18n.prop("bo_applicationelement_elementtype"),
                         key: "type",
-                        items: [
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.FUNCTION),
-                                key: bo.emElementType.FUNCTION
-                            }),
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.APPLICATION),
-                                key: bo.emElementType.APPLICATION
-                            }),
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.MODULE),
-                                key: bo.emElementType.MODULE
-                            }),
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(bo.emElementType, bo.emElementType.SERVICE),
-                                key: bo.emElementType.SERVICE
-                            }),
-                        ]
+                        search: function (oEvent: any): void {
+                            let oFacetFilterList: any = oEvent.getSource();
+                            let searchString: string = oEvent.getParameter("term");
+                            let bClearButtonPressed: any = oEvent.getParameter("clearButtonPressed");
+                            let oFilter: any = bClearButtonPressed ? new sap.ui.model.Filter("type", sap.ui.model.FilterOperator.Contains, "")
+                                : new sap.ui.model.Filter("type", sap.ui.model.FilterOperator.Contains, searchString.toLowerCase());
+                            oEvent.preventDefault();
+                            if (oFacetFilterList.isBound("items")) {
+                                oFacetFilterList.getBinding("items").filter(oFilter);
+                            }
+                        },
+                        items: {
+                            path: "/rows",
+                            template: new sap.m.FacetFilterItem("", {
+                                text: {
+                                    path: "type",
+                                },
+                                key: "{typeKey}"
+                            })
+                        }
                     });
+                    targetFacetFilterList.setModel(new sap.extension.model.JSONModel({ rows: targetFacetList }));
                     this.facetFilter.addList(targetFacetFilterList);
+                    //#endregion
+                    //#region 权限类型过滤
+                    let authoriseTypeList: ibas.ArrayList<{ authoriseValue: string; authoriseValueKey: number; }> =
+                        new ibas.ArrayList<{ authoriseValue: string; authoriseValueKey: number; }>();
+                    authoriseTypeList.add({
+                        authoriseValue: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
+                        authoriseValueKey: ibas.emAuthoriseType.ALL
+                    });
+                    authoriseTypeList.add({
+                        authoriseValue: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
+                        authoriseValueKey: ibas.emAuthoriseType.NONE
+                    });
+                    authoriseTypeList.add({
+                        authoriseValue: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
+                        authoriseValueKey: ibas.emAuthoriseType.READ
+                    });
                     let authoriseTypeFacetFilterList: sap.m.FacetFilterList = new sap.m.FacetFilterList("", {
                         title: ibas.i18n.prop("bo_privilege_authorisevalue"),
                         key: "authoriseValue",
-                        items: [
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
-                                key: ibas.emAuthoriseType.ALL
-                            }),
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
-                                key: ibas.emAuthoriseType.NONE
-                            }),
-                            new sap.m.FacetFilterItem("", {
-                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
-                                key: ibas.emAuthoriseType.READ
-                            }),
-                        ]
+                        search: function (oEvent: any): void {
+                            let oFacetFilterList: any = oEvent.getSource();
+                            let searchString: string = oEvent.getParameter("term");
+                            let bClearButtonPressed: any = oEvent.getParameter("clearButtonPressed");
+                            let oFilter: any = bClearButtonPressed ? new sap.ui.model.Filter("authoriseValue", sap.ui.model.FilterOperator.Contains, "")
+                                : new sap.ui.model.Filter("authoriseValue", sap.ui.model.FilterOperator.Contains, searchString.toLowerCase());
+                            oEvent.preventDefault();
+                            if (oFacetFilterList.isBound("items")) {
+                                oFacetFilterList.getBinding("items").filter(oFilter);
+                            }
+                        },
+                        items: {
+                            path: "/rows",
+                            template: new sap.m.FacetFilterItem("", {
+                                text: {
+                                    path: "authoriseValue",
+                                },
+                                key: "{authoriseValueKey}"
+                            })
+                        }
                     });
+                    authoriseTypeFacetFilterList.setModel(new sap.extension.model.JSONModel({ rows: authoriseTypeList }));
                     this.facetFilter.addList(authoriseTypeFacetFilterList);
+                    //#endregion
                     this.facetFilter.setVisible(true);
                 }
             }
