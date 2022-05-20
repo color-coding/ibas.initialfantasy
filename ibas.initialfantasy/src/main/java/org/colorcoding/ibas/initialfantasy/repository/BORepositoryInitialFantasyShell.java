@@ -46,6 +46,7 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
 import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
+import org.colorcoding.ibas.initialfantasy.data.emRequiredValue;
 import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 
@@ -510,6 +511,11 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 						}
 						if (setting.getPosition() != null && Integer.compare(setting.getPosition(), 0) > 0) {
 							ptyInfo.setPosition(setting.getPosition());
+						}
+						if (setting.getRequired() == emRequiredValue.YES) {
+							ptyInfo.setRequired(true);
+						} else if (setting.getRequired() == emRequiredValue.NO) {
+							ptyInfo.setRequired(false);
 						}
 					}
 

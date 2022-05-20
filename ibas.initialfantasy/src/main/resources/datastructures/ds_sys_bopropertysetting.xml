@@ -8,6 +8,7 @@
     <Property Name="Position" Description="位置" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Position"/>
     <Property Name="Searched" Description="检索" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emSearchedValue" Mapped="Searched"/>
     <Property Name="Authorised" Description="权限" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emAuthorisedValue" Mapped="Authorised"/>
+    <Property Name="Required" Description="必填" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emRequiredValue" Mapped="Required"/>
     <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>

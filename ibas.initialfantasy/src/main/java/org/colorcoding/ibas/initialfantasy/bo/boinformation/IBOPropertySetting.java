@@ -3,6 +3,7 @@ package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 import org.colorcoding.ibas.bobas.bo.IBOSimple;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
+import org.colorcoding.ibas.initialfantasy.data.emRequiredValue;
 import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 
 /**
@@ -94,6 +95,20 @@ public interface IBOPropertySetting extends IBOSimple {
 	 * @param value 值
 	 */
 	void setAuthorised(emAuthorisedValue value);
+
+	/**
+	 * 获取-必填
+	 * 
+	 * @return 值
+	 */
+	emRequiredValue getRequired();
+
+	/**
+	 * 设置-必填
+	 * 
+	 * @param value 值
+	 */
+	void setRequired(emRequiredValue value);
 
 	/**
 	 * 获取-对象编号

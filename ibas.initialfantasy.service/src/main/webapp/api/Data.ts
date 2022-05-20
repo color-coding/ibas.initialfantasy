@@ -185,17 +185,20 @@ namespace initialfantasy {
             /** 没有 */
             NONE,
         }
-        /**
-         * 配置种类
-         * 
-         * @author Niuren.Zhu
-         *
-         */
+        /** 配置种类 */
         export enum emConfigCategory {
             /** 服务端 */
             SERVER,
             /** 客户端 */
             CLIENT,
+        }
+        export enum emRequiredValue {
+            /** 默认值 */
+            DEFAULT,
+            /** 否 */
+            NO,
+            /** 是 */
+            YES,
         }
     }
 

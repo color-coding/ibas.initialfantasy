@@ -141,6 +141,7 @@ namespace initialfantasy {
                                                 setting.identityCode = identity;
                                                 setting.authorised = bo.emAuthorisedValue.DEFAULT;
                                                 setting.searched = bo.emSearchedValue.DEFAULT;
+                                                setting.required = bo.emRequiredValue.DEFAULT;
                                                 setting.position = undefined;
                                             }
                                             datas.add(new PropertySetting(property, setting));
@@ -257,6 +258,7 @@ namespace initialfantasy {
                                             setting.searched = item.searched;
                                             setting.authorised = item.authorised;
                                             setting.position = item.position;
+                                            setting.required = item.required;
                                         }
                                     }
                                 }
@@ -337,12 +339,20 @@ namespace initialfantasy {
                 this.setting.position = value;
                 this.firePropertyChanged("position");
             }
+            get required(): bo.emRequiredValue {
+                return this.setting.required;
+            }
+            set required(value: bo.emRequiredValue) {
+                this.setting.required = value;
+                this.firePropertyChanged("required");
+            }
             protected firePropertyChanged(property: string): void {
                 super.firePropertyChanged(property);
                 this.isDirty = true;
                 // 都是默认值，则标记删除
                 if (this.authorised === bo.emAuthorisedValue.DEFAULT
                     && this.searched === bo.emSearchedValue.DEFAULT
+                    && this.required === bo.emRequiredValue.DEFAULT
                     && !(this.position > 0)) {
                     this.delete();
                 }
@@ -362,6 +372,7 @@ namespace initialfantasy {
                 } else {
                     this.setting.authorised = bo.emAuthorisedValue.DEFAULT;
                     this.setting.searched = bo.emSearchedValue.DEFAULT;
+                    this.setting.required = bo.emRequiredValue.DEFAULT;
                     this.setting.position = undefined;
                     this.setting.markNew();
                 }

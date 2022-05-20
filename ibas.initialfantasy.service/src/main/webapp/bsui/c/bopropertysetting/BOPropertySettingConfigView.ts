@@ -152,6 +152,17 @@ namespace initialfantasy {
                                     }),
                                 })
                             }),
+                            new sap.extension.table.Column("", {
+                                label: ibas.i18n.prop("bo_bopropertysetting_required"),
+                                template: new sap.extension.m.EnumSelect("", {
+                                    enumType: bo.emRequiredValue,
+                                }).bindProperty("bindingValue", {
+                                    path: "required",
+                                    type: new sap.extension.data.Enum({
+                                        enumType: bo.emRequiredValue,
+                                    }),
+                                })
+                            }),
                         ]
                     });
                     return new sap.m.SplitContainer("", {

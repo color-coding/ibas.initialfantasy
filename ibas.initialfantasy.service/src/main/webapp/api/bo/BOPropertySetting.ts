@@ -21,6 +21,8 @@ namespace initialfantasy {
             searched: emSearchedValue;
             /** 权限 */
             authorised: emAuthorisedValue;
+            /** 必填的 */
+            required: emRequiredValue;
             /** 对象编号 */
             objectKey: number;
             /** 对象类型 */

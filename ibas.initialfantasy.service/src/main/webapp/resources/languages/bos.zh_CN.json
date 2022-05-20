@@ -380,6 +380,7 @@
         "bo_bopropertysetting_position": "位置",
         "bo_bopropertysetting_searched": "检索",
         "bo_bopropertysetting_authorised": "权限",
+        "bo_bopropertysetting_required": "必填",
         "bo_bopropertysetting_objectkey": "对象编号",
         "bo_bopropertysetting_objectcode": "对象类型",
         "bo_bopropertysetting_createdate": "创建日期",
@@ -444,5 +445,10 @@
     {
         "em_configcategory_server": "服务端",
         "em_configcategory_client": "客户端"
+    },
+    {
+        "em_requiredvalue_default": "默认",
+        "em_requiredvalue_no": "否",
+        "em_requiredvalue_yes": "是"
     }
 ]

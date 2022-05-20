@@ -81,6 +81,17 @@ namespace initialfantasy {
                 this.setProperty(BOPropertySetting.PROPERTY_AUTHORISED_NAME, value);
             }
 
+            /** 映射的属性名称-必填 */
+            static PROPERTY_REQUIRED_NAME: string = "Required";
+            /** 获取-必填 */
+            get required(): emRequiredValue {
+                return this.getProperty<emRequiredValue>(BOPropertySetting.PROPERTY_REQUIRED_NAME);
+            }
+            /** 设置-必填 */
+            set required(value: emRequiredValue) {
+                this.setProperty(BOPropertySetting.PROPERTY_REQUIRED_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_OBJECTKEY_NAME: string = "ObjectKey";
             /** 获取-对象编号 */

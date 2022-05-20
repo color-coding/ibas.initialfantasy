@@ -14,6 +14,7 @@ import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
+import org.colorcoding.ibas.initialfantasy.data.emRequiredValue;
 import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
 
 /**
@@ -235,6 +236,37 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	 */
 	public final void setAuthorised(emAuthorisedValue value) {
 		this.setProperty(PROPERTY_AUTHORISED, value);
+	}
+
+	/**
+	 * 属性名称-必填
+	 */
+	private static final String PROPERTY_REQUIRED_NAME = "Required";
+
+	/**
+	 * 必填 属性
+	 */
+	@DbField(name = "Required", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<emRequiredValue> PROPERTY_REQUIRED = registerProperty(PROPERTY_REQUIRED_NAME,
+			emRequiredValue.class, MY_CLASS);
+
+	/**
+	 * 获取-必填
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_REQUIRED_NAME)
+	public final emRequiredValue getRequired() {
+		return this.getProperty(PROPERTY_REQUIRED);
+	}
+
+	/**
+	 * 设置-必填
+	 * 
+	 * @param value 值
+	 */
+	public final void setRequired(emRequiredValue value) {
+		this.setProperty(PROPERTY_REQUIRED, value);
 	}
 
 	/**
@@ -649,6 +681,7 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setAuthorised(emAuthorisedValue.DEFAULT);
 		this.setSearched(emSearchedValue.DEFAULT);
+		this.setRequired(emRequiredValue.DEFAULT);
 	}
 
 }

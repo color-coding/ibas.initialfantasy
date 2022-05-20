@@ -166,6 +166,18 @@ public class BizPropertyInfo extends Serializable {
 		this.linkedObject = linkedObject;
 	}
 
+	/** 必填 */
+	private Boolean required;
+
+	@XmlElement(name = "Required")
+	public final Boolean getRequired() {
+		return required;
+	}
+
+	public final void setRequired(Boolean required) {
+		this.required = required;
+	}
+
 	private BizPropertyValue[] values;
 
 	@XmlElementWrapper(name = "Values")
