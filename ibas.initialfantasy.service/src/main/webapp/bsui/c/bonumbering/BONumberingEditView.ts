@@ -98,16 +98,18 @@ namespace initialfantasy {
                                                 content: [
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_series") }),
                                                     new sap.extension.m.Input("", {
-                                                        editable: true
+                                                        editable: true,
+                                                        placeholder: ibas.i18n.prop("bo_variable_key"),
                                                     }).bindProperty("bindingValue", {
                                                         path: "seriesName",
-                                                        type: new sap.extension.data.Alphanumeric
+                                                        type: new sap.extension.data.Alphanumeric()
                                                     }),
                                                     new sap.extension.m.Input("", {
                                                         editable: false,
+                                                        type: sap.m.InputType.Number,
                                                     }).bindProperty("bindingValue", {
                                                         path: "series",
-                                                        type: new sap.extension.data.Numeric
+                                                        type: new sap.extension.data.Numeric()
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_template") }),
                                                     new sap.extension.m.Input("", {
@@ -115,7 +117,7 @@ namespace initialfantasy {
                                                         placeholder: "I%06d"
                                                     }).bindProperty("bindingValue", {
                                                         path: "template",
-                                                        type: new sap.extension.data.Alphanumeric
+                                                        type: new sap.extension.data.Alphanumeric()
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_nextnumber") }),
                                                     new sap.extension.m.Input("", {

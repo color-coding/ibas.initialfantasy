@@ -74,8 +74,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 设置-对象编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -106,8 +105,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 设置-序列
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSeries(Integer value) {
 		this.setProperty(PROPERTY_SERIES, value);
@@ -121,7 +119,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 序列名称 属性
 	 */
-	@DbField(name = "SeriesName", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "SeriesName", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_SERIESNAME = registerProperty(PROPERTY_SERIESNAME_NAME,
 			String.class, MY_CLASS);
 
@@ -138,8 +136,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 设置-序列名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setSeriesName(String value) {
 		this.setProperty(PROPERTY_SERIESNAME, value);
@@ -170,8 +167,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 设置-下一个序号
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setNextNumber(Integer value) {
 		this.setProperty(PROPERTY_NEXTNUMBER, value);
@@ -202,8 +198,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 设置-已锁定
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLocked(emYesNo value) {
 		this.setProperty(PROPERTY_LOCKED, value);
@@ -217,7 +212,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 模板 属性
 	 */
-	@DbField(name = "Template", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
+	@DbField(name = "Template", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
 	public static final IPropertyInfo<String> PROPERTY_TEMPLATE = registerProperty(PROPERTY_TEMPLATE_NAME, String.class,
 			MY_CLASS);
 
@@ -234,8 +229,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 设置-模板
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setTemplate(String value) {
 		this.setProperty(PROPERTY_TEMPLATE, value);

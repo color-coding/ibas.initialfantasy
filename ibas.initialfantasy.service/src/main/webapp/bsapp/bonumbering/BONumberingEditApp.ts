@@ -92,6 +92,7 @@ namespace initialfantasy {
                     },
                     (error) => {
                         if (error instanceof Error) {
+                            this.busy(false);
                             this.messages(error);
                         } else {
                             this.fetchBOSeriesNumbering();
@@ -118,11 +119,11 @@ namespace initialfantasy {
                     criteria: criteria,
                     onCompleted(opRslt: ibas.IOperationResult<bo.BOSeriesNumbering>): void {
                         try {
+                            that.busy(false);
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
                             that.view.showBOSeriesNumbering(opRslt.resultObjects);
-                            that.busy(false);
                         } catch (error) {
                             that.messages(error);
                         }
