@@ -43,6 +43,7 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
 import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
@@ -92,6 +93,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	@Override
 	public OperationResult<User> userConnect(String user, String password) {
 		try {
+			// 无效用户密码，直接报错
+			if (DataConvert.isNullOrEmpty(user) || DataConvert.isNullOrEmpty(password)) {
+				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+			}
 			// 设置用户口令，系统用户
 			this.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			ICriteria criteria = new Criteria();
@@ -620,4 +625,29 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		return operationResult;
 	}
 
+	/**
+	 * 保存-用户
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@Override
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> saveUser(
+			org.colorcoding.ibas.initialfantasy.bo.organization.User bo, String token) {
+		// 更新时，恢复密码
+		if (!bo.isDeleted()) {
+			if (!bo.isNew() && org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK
+					.equals(bo.getPassword())) {
+				for (org.colorcoding.ibas.initialfantasy.bo.organization.User item : this
+						.fetchUser(bo.getCriteria(), token).getResultObjects()) {
+					bo.setOriginalPassword(item.getPassword());
+				}
+			}
+			if (org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK.equals(bo.getPassword())) {
+				return new OperationResult<>(new Exception(I18N.prop("msg_if_not_meet_password_rules")));
+			}
+		}
+		return super.saveUser(bo, token);
+	}
 }

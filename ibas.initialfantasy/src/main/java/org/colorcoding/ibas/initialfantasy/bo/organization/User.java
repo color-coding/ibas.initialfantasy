@@ -1,7 +1,5 @@
 package org.colorcoding.ibas.initialfantasy.bo.organization;
 
-import java.util.UUID;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,7 +20,9 @@ import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
+import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
+import org.colorcoding.ibas.bobas.rule.ICheckRules;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -38,15 +38,9 @@ import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 @XmlRootElement(name = User.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = User.BUSINESS_OBJECT_CODE)
 public class User extends BusinessObject<User>
-		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey, IBusinessLogicsHost {
+		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey, IBusinessLogicsHost, ICheckRules {
 
-	public static String encrypt(String value) {
-		if (value != null && !value.isEmpty() && (!value.endsWith(ENCRYPTED_CHARACTER_MARK) && value.length() != 32)) {
-			// 没有加密的秘密，结尾不是 = 且长度不是32
-			return EncryptMD5.md5(value) + ENCRYPTED_CHARACTER_MARK;
-		}
-		return value;
-	}
+	public static final String PASSWORD_MASK = "********";
 
 	/**
 	 * 检查密码
@@ -58,19 +52,31 @@ public class User extends BusinessObject<User>
 		if (this.getPassword() == null) {
 			return false;
 		}
-		if (password == null) {
-			password = "";
-		}
-		if (!password.endsWith("=")) {
+		if (this.getPassword().endsWith(ENCRYPTED_CHARACTER_MARK)) {
+			if (password == null) {
+				password = "";
+			}
+			if (password.endsWith("=")) {
+				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
+					return true;
+				}
+			}
 			if (password.length() == 32) {
 				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
 					return true;
 				}
 			}
-		}
-		password = encrypt(password);
-		if (this.getPassword().equals(password)) {
-			return true;
+			password = EncryptMD5.md5(password) + ENCRYPTED_CHARACTER_MARK;
+			if (this.getPassword().equals(password)) {
+				return true;
+			}
+		} else {
+			try {
+				if (PasswordStorage.verifyPassword(password, this.getPassword())) {
+					return true;
+				}
+			} catch (Exception e) {
+			}
 		}
 		return false;
 	}
@@ -195,7 +201,21 @@ public class User extends BusinessObject<User>
 	 * @param value 值
 	 */
 	public final void setPassword(String value) {
-		this.setProperty(PROPERTY_PASSWORD, encrypt(value));
+		if (this.isLoading()) {
+			this.setProperty(PROPERTY_PASSWORD, value);
+			this.setValid(false);
+		} else {
+			try {
+				this.setProperty(PROPERTY_PASSWORD, PasswordStorage.createHash(value));
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	public final void setOriginalPassword(String value) {
+		this.setProperty(PROPERTY_PASSWORD, value);
+		this.setValid(true);
 	}
 
 	/**
@@ -862,7 +882,6 @@ public class User extends BusinessObject<User>
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setActivated(emYesNo.YES);
-		this.setPassword(EncryptMD5.shortText(UUID.randomUUID().toString()));
 	}
 
 	@Override
@@ -914,4 +933,14 @@ public class User extends BusinessObject<User>
 
 		};
 	}
+
+	@Override
+	public void check() throws BusinessRuleException {
+		if (!this.isValid()) {
+			this.setPassword(this.getPassword());
+			this.setValid(true);
+		}
+
+	}
+
 }
