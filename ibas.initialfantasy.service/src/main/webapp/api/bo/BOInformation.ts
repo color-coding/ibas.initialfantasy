@@ -19,6 +19,8 @@ namespace initialfantasy {
             mapped: string;
             /** 对象类型 */
             objectType: string;
+            /** 开启修改日志 */
+            modified: ibas.emYesNo;
             /** 业务对象属性信息集合 */
             boPropertyInformations: IBOPropertyInformations;
         }

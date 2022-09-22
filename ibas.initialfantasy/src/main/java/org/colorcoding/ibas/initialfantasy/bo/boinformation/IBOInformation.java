@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
 import org.colorcoding.ibas.bobas.bo.IBusinessObject;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 
 /**
  * 业务对象信息 接口
@@ -18,8 +19,7 @@ public interface IBOInformation extends IBusinessObject {
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setCode(String value);
 
@@ -33,8 +33,7 @@ public interface IBOInformation extends IBusinessObject {
 	/**
 	 * 设置-名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setName(String value);
 
@@ -48,8 +47,7 @@ public interface IBOInformation extends IBusinessObject {
 	/**
 	 * 设置-描述
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setDescription(String value);
 
@@ -63,8 +61,7 @@ public interface IBOInformation extends IBusinessObject {
 	/**
 	 * 设置-映射（表）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setMapped(String value);
 
@@ -78,10 +75,23 @@ public interface IBOInformation extends IBusinessObject {
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setObjectType(String value);
+
+	/**
+	 * 获取-开启修改日志
+	 * 
+	 * @return 值
+	 */
+	emYesNo getModified();
+
+	/**
+	 * 设置-开启修改日志
+	 * 
+	 * @param value 值
+	 */
+	void setModified(emYesNo value);
 
 	/**
 	 * 获取-业务对象属性信息集合
@@ -93,8 +103,7 @@ public interface IBOInformation extends IBusinessObject {
 	/**
 	 * 设置-业务对象属性信息集合
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	void setBOPropertyInformations(IBOPropertyInformations value);
 

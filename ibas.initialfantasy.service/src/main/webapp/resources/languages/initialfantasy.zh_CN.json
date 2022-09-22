@@ -73,6 +73,10 @@
   "initialfantasy_app_config_choose": "系统配置选择",
   "initialfantasy_func_bopropertysetting": "对象属性设置",
   "initialfantasy_app_bopropertysetting_list": "对象属性设置列表",
+  "initialfantasy_app_bologst_list": "数据日志列表",
+  "initialfantasy_app_bologst_view": "数据日志查看",
+  "initialfantasy_app_bologst_viewex": "{0} 日志查看",
+  "initialfantasy_app_bologst_service": "数据日志",
   "initialfantasy_title_general": "常规信息",
   "initialfantasy_title_others": "其他信息",
   "initialfantasy_bocriteria_setting": "检索条件设置",
@@ -95,5 +99,9 @@
   "initialfantasy_user_vaildvalues": "用户定义值",
   "initialfantasy_bo_choose_list": "对象选择列表",
   "initialfantasy_unknown_object": "未知对象",
+  "initialfantasy_bologst_icon": "sap-icon://past",
+  "initialfantasy_modify_content": "更改内容",
+  "initialfantasy_fetch_bo_information": "正在查询对象信息，请稍候",
+  "initialfantasy_display_bo_datas": "正在显示对象数据，请稍候",
   "initialfantasy_closing_delimiter": "----结束----"
 }

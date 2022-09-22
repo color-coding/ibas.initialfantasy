@@ -100,6 +100,18 @@ namespace initialfantasy {
                     if (property === bo.BOPropertyValue.PROPERTY_DEFAULT_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
                     }
+                } else if (boName === bo.BOInformation.name) {
+                    if (property === bo.BOInformation.PROPERTY_MODIFIED_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.BOLogst.name) {
+                    if (property === bo.BOLogst.PROPERTY_CONTENT_NAME) {
+                        if (typeof value === "object") {
+                            return JSON.stringify(value);
+                        } else {
+                            return value;
+                        }
+                    }
                 }
                 return super.convertData(boName, property, value);
             }
@@ -168,6 +180,22 @@ namespace initialfantasy {
                 } else if (boName === bo.BOPropertyValue.name) {
                     if (property === bo.BOPropertyValue.PROPERTY_DEFAULT_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.BOInformation.name) {
+                    if (property === bo.BOInformation.PROPERTY_MODIFIED_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.BOLogst.name) {
+                    if (property === bo.BOLogst.PROPERTY_CONTENT_NAME) {
+                        if (typeof value === "string" && value.length > 0) {
+                            try {
+                                return JSON.parse(value);
+                            } catch (error) {
+                                return value;
+                            }
+                        } else {
+                            return value;
+                        }
                     }
                 }
                 return super.parsingData(boName, property, value);

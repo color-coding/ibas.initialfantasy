@@ -22,6 +22,8 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertySetting;
+import org.colorcoding.ibas.initialfantasy.bo.bologst.BOLogst;
+import org.colorcoding.ibas.initialfantasy.bo.bologst.IBOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
@@ -764,6 +766,50 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 		return new OperationResult<IApplicationConfigIdentity>(
 				this.saveApplicationConfigIdentity((ApplicationConfigIdentity) bo, this.getUserToken()));
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象日志
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOLogst> fetchBOLogst(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BOLogst.class);
+	}
+
+	/**
+	 * 查询-业务对象日志（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOLogst> fetchBOLogst(ICriteria criteria) {
+		return new OperationResult<IBOLogst>(this.fetchBOLogst(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-业务对象日志
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOLogst> saveBOLogst(BOLogst bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-业务对象日志（提前设置用户口令）
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOLogst> saveBOLogst(IBOLogst bo) {
+		return new OperationResult<IBOLogst>(this.saveBOLogst((BOLogst) bo, this.getUserToken()));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -68,8 +69,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 设置-编码
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCode(String value) {
 		this.setProperty(PROPERTY_CODE, value);
@@ -100,8 +100,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 设置-名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setName(String value) {
 		this.setProperty(PROPERTY_NAME, value);
@@ -132,8 +131,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 设置-描述
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDescription(String value) {
 		this.setProperty(PROPERTY_DESCRIPTION, value);
@@ -164,8 +162,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 设置-映射（表）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setMapped(String value) {
 		this.setProperty(PROPERTY_MAPPED, value);
@@ -196,11 +193,41 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectType(String value) {
 		this.setProperty(PROPERTY_OBJECTTYPE, value);
+	}
+
+	/**
+	 * 属性名称-开启修改日志
+	 */
+	private static final String PROPERTY_MODIFIED_NAME = "Modified";
+
+	/**
+	 * 开启修改日志 属性
+	 */
+	@DbField(name = "Modified", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emYesNo> PROPERTY_MODIFIED = registerProperty(PROPERTY_MODIFIED_NAME,
+			emYesNo.class, MY_CLASS);
+
+	/**
+	 * 获取-开启修改日志
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_MODIFIED_NAME)
+	public final emYesNo getModified() {
+		return this.getProperty(PROPERTY_MODIFIED);
+	}
+
+	/**
+	 * 设置-开启修改日志
+	 * 
+	 * @param value 值
+	 */
+	public final void setModified(emYesNo value) {
+		this.setProperty(PROPERTY_MODIFIED, value);
 	}
 
 	/**
@@ -229,8 +256,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 设置-业务对象属性信息集合
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setBOPropertyInformations(IBOPropertyInformations value) {
 		this.setProperty(PROPERTY_BOPROPERTYINFORMATIONS, value);

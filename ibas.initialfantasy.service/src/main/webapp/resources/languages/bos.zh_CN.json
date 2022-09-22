@@ -192,6 +192,7 @@
         "bo_boinformation_description": "描述",
         "bo_boinformation_mapped": "映射（表）",
         "bo_boinformation_objecttype": "对象类型",
+        "bo_boinformation_modified": "开启修改日志",
         "bo_boinformation_bopropertyinformations": "业务对象属性信息",
         "bo_bopropertyinformation": "业务对象属性信息",
         "bo_bopropertyinformation_name": "名称",
@@ -223,6 +224,23 @@
         "bo_boseriesnumbering_locked": "已锁定",
         "bo_boseriesnumbering_template": "模板",
         "bo_bonumbering_closing_delimiter": "----结束----"
+    },
+    {
+        "bo_bologst": "业务对象日志",
+        "bo_bologst_bocode": "类型",
+        "bo_bologst_bokeys": "主键值",
+        "bo_bologst_loginst": "实例号",
+        "bo_bologst_modifyuser": "修改用户",
+        "bo_bologst_modifydate": "修改日期",
+        "bo_bologst_modifytime": "修改时间",
+        "bo_bologst_transationid": "事务标识",
+        "bo_bologst_cause": "动机",
+        "bo_bologst_content": "内容",
+        "bo_bologst_lineid": "行号",
+        "bo_bologst_objectkey": "序号",
+        "bo_bologst_code": "编号",
+        "bo_bologst_docentry": "单据号",
+        "bo_bologst_closing_delimiter": "----结束----"
     },
     {
         "bo_config": "系统配置",

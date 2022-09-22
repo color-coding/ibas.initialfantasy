@@ -21,4 +21,5 @@
 /// <reference path="./bo/UserIdentity.ts" />
 /// <reference path="./bo/IdentityPrivilege.ts" />
 /// <reference path="./bo/BOPropertySetting.ts" />
+/// <reference path="./bo/BOLogst.ts" />
 /// <reference path="./BORepository.ts" />

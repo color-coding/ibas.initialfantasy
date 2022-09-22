@@ -12,6 +12,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertySetting;
+import org.colorcoding.ibas.initialfantasy.bo.bologst.IBOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.IBOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.identity.IIdentity;
@@ -306,6 +307,15 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IApplicationConfigIdentity> saveApplicationConfigIdentity(IApplicationConfigIdentity bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象日志
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IBOLogst> fetchBOLogst(ICriteria criteria);
 
 	// --------------------------------------------------------------------------------------------//
 }

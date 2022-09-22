@@ -22,6 +22,7 @@
 /// <reference path="./bo/UserIdentity.ts" />
 /// <reference path="./bo/IdentityPrivilege.ts" />
 /// <reference path="./bo/BOPropertySetting.ts" />
+/// <reference path="./bo/BOLogst.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 
@@ -32,6 +33,7 @@ namespace initialfantasy {
         // 注册业务对象到工厂
         boFactory.register(BONumbering);
         boFactory.register(BOSeriesNumbering);
+        boFactory.register(BOLogst);
         boFactory.register(ApplicationConfig.BUSINESS_OBJECT_CODE, ApplicationConfig);
         boFactory.register(ApplicationElement.BUSINESS_OBJECT_CODE, ApplicationElement);
         boFactory.register(ApplicationModule.BUSINESS_OBJECT_CODE, ApplicationModule);

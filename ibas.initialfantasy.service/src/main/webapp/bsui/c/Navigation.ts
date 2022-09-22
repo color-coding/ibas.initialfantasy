@@ -23,6 +23,7 @@
 /// <reference path="./identity/index.ts" />
 /// <reference path="./useridentity/index.ts" />
 /// <reference path="./bopropertysetting/index.ts" />
+/// <reference path="./bologst/index.ts" />
 namespace initialfantasy {
     export namespace ui {
         /**
@@ -173,6 +174,15 @@ namespace initialfantasy {
                         break;
                     case app.BOPropertySettingConfigApp.APPLICATION_ID:
                         view = new c.BOPropertySettingConfigView();
+                        break;
+                    case app.BOLogstViewApp.APPLICATION_ID:
+                        view = new c.BOLogstViewView();
+                        break;
+                    case app.BOLogstListApp.APPLICATION_ID:
+                        view = new c.BOLogstListView();
+                        break;
+                    case app.BOLogstService.APPLICATION_ID:
+                        view = new c.BOLogstServiceView();
                         break;
                     default:
                         break;

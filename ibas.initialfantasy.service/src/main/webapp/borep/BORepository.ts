@@ -289,6 +289,27 @@ namespace initialfantasy {
             saveApplicationConfigIdentity(saver: ibas.ISaveCaller<bo.ApplicationConfigIdentity>): void {
                 super.save(bo.ApplicationConfigIdentity.name, saver);
             }
+            /**
+             * 查询 业务对象日志
+             * @param fetcher 查询者
+             */
+            fetchBOLogst(fetcher: ibas.IFetchCaller<bo.BOLogst>): void {
+                // 日志保存不完美，此处修正更新信息
+                let onCompleted: Function = fetcher.onCompleted;
+                fetcher.onCompleted = (opRslt) => {
+                    for (let item of opRslt.resultObjects) {
+                        if (typeof item.content === "object") {
+                            (<any>item.content).UpdateDate = item.modifyDate;
+                            (<any>item.content).UpdateTime = item.modifyTime;
+                            (<any>item.content).UpdateUserSign = item.modifyUser;
+                        }
+                    }
+                    if (onCompleted instanceof Function) {
+                        onCompleted(opRslt);
+                    }
+                };
+                super.fetch(bo.BOLogst.name, fetcher);
+            }
         }
     }
 }

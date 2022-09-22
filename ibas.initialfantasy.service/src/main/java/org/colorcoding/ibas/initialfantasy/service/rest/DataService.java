@@ -19,6 +19,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
+import org.colorcoding.ibas.initialfantasy.bo.bologst.BOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
 import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
@@ -668,6 +669,23 @@ public class DataService extends BORepositoryInitialFantasyShell {
 			@QueryParam("token") String token) {
 		return super.saveApplicationConfigIdentity(bo, token);
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象日志
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchBOLogst")
+	public OperationResult<BOLogst> fetchBOLogst(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchBOLogst(criteria, token);
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

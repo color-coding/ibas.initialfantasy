@@ -75,6 +75,13 @@ namespace initialfantasy {
                                 path: "mapped",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_boinformation_modified") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo,
+                            }).bindProperty("bindingValue", {
+                                path: "modified",
+                                type: new sap.extension.data.YesNo()
+                            }),
                         ]
                     });
                     this.tableBOPropertyInformation = new sap.extension.table.Table("", {

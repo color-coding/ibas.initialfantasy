@@ -73,6 +73,17 @@ namespace initialfantasy {
             }
 
 
+            /** 映射的属性名称-开启修改日志 */
+            static PROPERTY_MODIFIED_NAME: string = "Modified";
+            /** 获取-开启修改日志 */
+            get modified(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(BOInformation.PROPERTY_MODIFIED_NAME);
+            }
+            /** 设置-开启修改日志 */
+            set modified(value: ibas.emYesNo) {
+                this.setProperty(BOInformation.PROPERTY_MODIFIED_NAME, value);
+            }
+
             /** 映射的属性名称-业务对象属性信息集合 */
             static PROPERTY_BOPROPERTYINFORMATIONS_NAME: string = "BOPropertyInformations";
             /** 获取-业务对象属性信息集合 */

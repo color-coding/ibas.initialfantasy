@@ -20,6 +20,7 @@
 /// <reference path="./user/index.ts" />
 /// <reference path="./identity/index.ts" />
 /// <reference path="./useridentity/index.ts" />
+/// <reference path="./bologst/index.ts" />
 /// <reference path="./bopropertysetting/index.ts" />
 namespace initialfantasy {
     export namespace app {
@@ -72,6 +73,7 @@ namespace initialfantasy {
                     this.register(new RoleChooseServiceMapping());
                 }
                 this.register(new IdentityPrivilegeConfigServiceMapping());
+                this.register(new BOLogstServiceMapping());
                 // 注册常驻应用
                 this.register(new UserProfileApplicationMapping());
             }

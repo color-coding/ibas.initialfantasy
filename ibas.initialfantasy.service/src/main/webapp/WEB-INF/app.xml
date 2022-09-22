@@ -38,5 +38,7 @@
         <add key="LoginMail" value="true" />
         <!-- 配置项目-允许手机登录 -->
         <add key="LoginPhone" value="true" />
+        <!-- 配置项目-开启对象日志 -->
+        <add key="EnableBOLogst" value="true" />
     </appSettings>
 </ns2:configuration>
