@@ -11,3 +11,4 @@
 /// <reference path="./UserFunc.ts" />
 /// <reference path="./UserListApp.ts" />
 /// <reference path="./UserProfileApp.ts" />
+/// <reference path="./UserViewApp.ts" />

@@ -8,3 +8,4 @@
 /// <reference path="./OrganizationChooseView.ts" />
 /// <reference path="./OrganizationEditView.ts" />
 /// <reference path="./OrganizationListView.ts" />
+/// <reference path="./OrganizationViewView.ts" />

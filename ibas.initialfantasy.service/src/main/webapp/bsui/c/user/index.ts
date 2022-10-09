@@ -10,3 +10,4 @@
 /// <reference path="./UserEditView.ts" />
 /// <reference path="./UserListView.ts" />
 /// <reference path="./UserProfileView.ts" />
+/// <reference path="./UserViewView.ts" />

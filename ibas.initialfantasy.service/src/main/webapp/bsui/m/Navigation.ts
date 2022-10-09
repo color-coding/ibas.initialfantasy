@@ -26,8 +26,14 @@ namespace initialfantasy {
                     case app.UserChooseApp.APPLICATION_ID:
                         view = new m.UserChooseView();
                         break;
+                    case app.UserViewApp.APPLICATION_ID:
+                        view = new m.UserViewView();
+                        break;
                     case app.OrganizationChooseApp.APPLICATION_ID:
                         view = new m.OrganizationChooseView();
+                        break;
+                    case app.OrganizationViewApp.APPLICATION_ID:
+                        view = new m.OrganizationViewView();
                         break;
                     case app.BOInformationChooseApp.APPLICATION_ID:
                         view = new m.BOInformationChooseView();

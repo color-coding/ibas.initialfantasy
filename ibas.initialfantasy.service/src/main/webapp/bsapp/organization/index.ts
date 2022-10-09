@@ -9,3 +9,4 @@
 /// <reference path="./OrganizationEditApp.ts" />
 /// <reference path="./OrganizationFunc.ts" />
 /// <reference path="./OrganizationListApp.ts" />
+/// <reference path="./OrganizationViewApp.ts" />

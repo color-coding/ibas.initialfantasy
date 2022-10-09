@@ -94,6 +94,9 @@ namespace initialfantasy {
                     case app.OrganizationEditApp.APPLICATION_ID:
                         view = new c.OrganizationEditView();
                         break;
+                    case app.OrganizationViewApp.APPLICATION_ID:
+                        view = new c.OrganizationViewView();
+                        break;
                     case app.PrivilegeListApp.APPLICATION_ID:
                         view = new c.PrivilegeListView();
                         break;
@@ -120,6 +123,9 @@ namespace initialfantasy {
                         break;
                     case app.UserProfileApp.APPLICATION_ID:
                         view = new c.UserProfileView();
+                        break;
+                    case app.UserViewApp.APPLICATION_ID:
+                        view = new c.UserViewView();
                         break;
                     case app.ChangeUserProfileApp.APPLICATION_ID:
                         view = new c.ChangeUserProfileView();

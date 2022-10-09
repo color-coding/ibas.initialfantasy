@@ -74,6 +74,8 @@ namespace initialfantasy {
                 }
                 this.register(new IdentityPrivilegeConfigServiceMapping());
                 this.register(new BOLogstServiceMapping());
+                this.register(new UserLinkServiceMapping());
+                this.register(new OrganizationLinkServiceMapping());
                 // 注册常驻应用
                 this.register(new UserProfileApplicationMapping());
             }
@@ -124,6 +126,8 @@ namespace initialfantasy {
                 this.register(new BOInformationChooseServiceMapping());
                 this.register(new BOPropertyChooseServiceMapping());
                 this.register(new BOPropertyValueChooseServiceMapping());
+                this.register(new UserLinkServiceMapping());
+                this.register(new OrganizationLinkServiceMapping());
             }
         }
     }
