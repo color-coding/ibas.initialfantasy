@@ -38,6 +38,7 @@ namespace initialfantasy {
                 this.view.removeBOPropertyValueEvent = this.removeBOPropertyValue;
                 this.view.boNumberingEvent = this.boNumbering;
                 this.view.chooseLinkedObjectEvent = this.chooseLinkedObject;
+                this.view.showBORelationshipEvent = this.showBORelationship;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -312,6 +313,26 @@ namespace initialfantasy {
                     }
                 });
             }
+            private showBORelationship(): void {
+                let criteria: ibas.Criteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.BORelationship.PROPERTY_CODE_NAME;
+                condition.value = this.editData.code;
+                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                boRepository.fetchBORelationship({
+                    criteria: criteria,
+                    onCompleted: (opRslt) => {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            this.view.showBORelationships(opRslt.resultObjects);
+                        } catch (error) {
+                            this.messages(error);
+                        }
+                    }
+                });
+            }
         }
         /** 视图-业务对象信息 */
         export interface IBOInformationEditView extends ibas.IBOEditView {
@@ -339,6 +360,10 @@ namespace initialfantasy {
             boNumberingEvent: Function;
             /** 选择链接的对象事件 */
             chooseLinkedObjectEvent: Function;
+            /** 显示对象关系事件 */
+            showBORelationshipEvent: Function;
+            /** 显示对象关系 */
+            showBORelationships(datas: bo.BORelationship[]): void;
         }
     }
 }

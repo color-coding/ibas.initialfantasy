@@ -76,6 +76,7 @@ namespace initialfantasy {
                 this.register(new BOLogstServiceMapping());
                 this.register(new UserLinkServiceMapping());
                 this.register(new OrganizationLinkServiceMapping());
+                this.register(new DocumentProcessServiceMapping());
                 // 注册常驻应用
                 this.register(new UserProfileApplicationMapping());
             }
@@ -128,6 +129,7 @@ namespace initialfantasy {
                 this.register(new BOPropertyValueChooseServiceMapping());
                 this.register(new UserLinkServiceMapping());
                 this.register(new OrganizationLinkServiceMapping());
+                this.register(new DocumentProcessServiceMapping());
             }
         }
     }

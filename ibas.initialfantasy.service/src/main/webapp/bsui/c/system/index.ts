@@ -8,3 +8,4 @@
 /// <reference path="./ConfigChooseView.ts" />
 /// <reference path="./CriteriaEditorView.ts" />
 /// <reference path="./VariableChooseView.ts" />
+/// <reference path="./DocumentProcessServiceView.ts" />

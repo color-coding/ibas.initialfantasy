@@ -9,3 +9,4 @@
 /// <reference path="./CriteriaEditorService.ts" />
 /// <reference path="./RoleChooseApp.ts" />
 /// <reference path="./VariableChooseApp.ts" />
+/// <reference path="./DocumentProcessService.ts" />

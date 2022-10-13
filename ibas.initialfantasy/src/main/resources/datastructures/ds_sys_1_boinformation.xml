@@ -29,4 +29,12 @@
     <Property Name="Default" Description="默认值" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Default"/>
   </Model>
   <BusinessObject MappedModel="BOPropertyValue" ShortName="${Company}_SYS_BOPRTYVALUE"/>
+  <Model Name="BORelationship" Description="业务对象关系" ModelType="Unspecified" Mapped="${Company}_SYS_BOI3">
+    <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Code" PrimaryKey="Yes"/>
+    <Property Name="Target" Description="目标对象" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Target" PrimaryKey="Yes"/>
+    <Property Name="Relation" Description="关系" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Relation" PrimaryKey="Yes"/>
+    <Property Name="AssociatedProperty" Description="关联的属性" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Associated"/>
+    <Property Name="Description" Description="描述" DataType="Alphanumeric" DataSubType="Default" EditSize="200" Mapped="Descrp"/>
+  </Model>
+  <BusinessObject MappedModel="BORelationship" ShortName="${Company}_SYS_BORELATIONSHIP"/>
 </Domain>

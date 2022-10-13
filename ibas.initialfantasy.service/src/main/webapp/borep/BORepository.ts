@@ -310,6 +310,13 @@ namespace initialfantasy {
                 };
                 super.fetch(bo.BOLogst.name, fetcher);
             }
+            /**
+             * 查询 业务对象关系
+             * @param fetcher 查询者
+             */
+            fetchBORelationship(fetcher: ibas.IFetchCaller<bo.BORelationship>): void {
+                super.fetch(bo.BORelationship.name, fetcher);
+            }
         }
     }
 }

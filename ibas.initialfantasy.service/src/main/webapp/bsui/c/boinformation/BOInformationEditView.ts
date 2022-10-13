@@ -30,6 +30,8 @@ namespace initialfantasy {
                 boNumberingEvent: Function;
                 /** 选择链接的对象事件 */
                 chooseLinkedObjectEvent: Function;
+                /** 显示对象关系事件 */
+                showBORelationshipEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -338,6 +340,15 @@ namespace initialfantasy {
                                         that.fireViewEvents(that.boNumberingEvent);
                                     }
                                 }),
+                                new sap.m.ToolbarSpacer(""),
+                                this.butRelation = new sap.m.Button("", {
+                                    text: ibas.i18n.prop("bo_borelationship"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://broken-link",
+                                    press: function (): void {
+                                        that.fireViewEvents(that.showBORelationshipEvent);
+                                    }
+                                }),
                             ]
                         }),
                         content: [
@@ -353,6 +364,7 @@ namespace initialfantasy {
                 private vboxBOPropertyValue: sap.m.VBox;
                 private tableBOPropertyValue: sap.extension.table.Table;
                 private textLinkedObject: sap.ui.codeeditor.CodeEditor;
+                private butRelation: sap.m.Button;
 
                 /** 显示数据 */
                 showBOInformation(data: bo.BOInformation): void {
@@ -390,6 +402,76 @@ namespace initialfantasy {
                         }
                     }
                     this.container.to(this.vboxBOPropertyValue.getId());
+                }
+                /** 显示对象关系 */
+                showBORelationships(datas: bo.BORelationship[]): void {
+                    let popover: sap.m.ResponsivePopover = new sap.m.ResponsivePopover("", {
+                        contentWidth: "36rem",
+                        showCloseButton: false,
+                        showHeader: false,
+                        placement: sap.m.PlacementType.Bottom,
+                        content: [
+                            new sap.extension.m.Table("", {
+                                showNoData: true,
+                                autoPopinMode: true,
+                                chooseType: ibas.emChooseType.NONE,
+                                columns: [
+                                    new sap.m.Column("", {
+                                        header: new sap.m.Text("", {
+                                            text: ibas.i18n.prop("bo_borelationship_relation"),
+                                        }),
+                                        width: "12rem",
+                                    }),
+                                    new sap.m.Column("", {
+                                        header: new sap.m.Text("", {
+                                            text: ibas.i18n.prop("bo_borelationship_target"),
+                                        }),
+                                        width: "12rem",
+                                    }),
+                                    new sap.m.Column("", {
+                                        header: new sap.m.Text("", {
+                                            text: ibas.i18n.prop("bo_borelationship_description"),
+                                        }),
+                                        width: "100%",
+                                    }),
+                                ],
+                                items: {
+                                    path: "/",
+                                    templateShareable: false,
+                                    template: new sap.m.ColumnListItem("", {
+                                        cells: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                bindingValue: {
+                                                    path: "relation",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                },
+                                            }),
+                                            new sap.extension.m.RepositoryObjectAttribute("", {
+                                                repository: bo.BORepositoryInitialFantasy,
+                                                dataInfo: {
+                                                    type: bo.BOInformation,
+                                                    key: bo.BOInformation.PROPERTY_CODE_NAME,
+                                                    text: bo.BOInformation.PROPERTY_DESCRIPTION_NAME
+                                                },
+                                                bindingValue: {
+                                                    path: "target",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                },
+                                            }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                bindingValue: {
+                                                    path: "description",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                },
+                                            }),
+                                        ],
+                                    })
+                                },
+                            })
+                        ],
+                    });
+                    popover.setModel(new sap.extension.model.JSONModel(datas));
+                    popover.openBy(this.butRelation);
                 }
             }
         }

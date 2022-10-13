@@ -49,6 +49,7 @@ namespace initialfantasy {
         boFactory.register(IdentityPrivilege.BUSINESS_OBJECT_CODE, IdentityPrivilege);
         boFactory.register(BOPropertySetting.BUSINESS_OBJECT_CODE, BOPropertySetting);
         boFactory.register(ApplicationConfigIdentity.BUSINESS_OBJECT_CODE, ApplicationConfigIdentity);
+        boFactory.register(BORelationship.BUSINESS_OBJECT_CODE, BORelationship);
         boFactory.register(BO_CODE_BOPROPERTY, BOPropertyInformation);
     }
 }

@@ -12,6 +12,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BORelationship;
 import org.colorcoding.ibas.initialfantasy.bo.bologst.BOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BOSeriesNumbering;
@@ -353,6 +354,16 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 * @return 操作结果
 	 */
 	OperationResult<BOLogst> fetchBOLogst(ICriteria criteria, String token);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-业务对象关系
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<BORelationship> fetchBORelationship(ICriteria criteria, String token);
 
 	// --------------------------------------------------------------------------------------------//
 

@@ -415,6 +415,15 @@
         "bo_bopropertysetting_closing_delimiter": "----结束----"
     },
     {
+        "bo_borelationship": "业务对象关系",
+        "bo_borelationship_code": "编码",
+        "bo_borelationship_target": "目标对象",
+        "bo_borelationship_relation": "关系",
+        "bo_borelationship_associatedproperty": "关联的属性",
+        "bo_borelationship_description": "描述",
+        "bo_borelationship_closing_delimiter": "----结束----"
+    },
+    {
         "bo_variable": "系统变量",
         "bo_variable_key": "名称",
         "bo_variable_value": "值",

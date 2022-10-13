@@ -103,5 +103,13 @@
   "initialfantasy_modify_content": "更改内容",
   "initialfantasy_fetch_bo_information": "正在查询对象信息，请稍候",
   "initialfantasy_display_bo_datas": "正在显示对象数据，请稍候",
+  "initialfantasy_app_documentprocess": "单据流程",
+  "initialfantasy_document_process_icon": "sap-icon://process",
+  "initialfantasy_not_document_data": "数据不是单据类型，不支持此操作",
+  "initialfantasy_document_source": "基于单据",
+  "initialfantasy_document_origin": "当前单据",
+  "initialfantasy_document_target": "目标单据",
+  "initialfantasy_document_status": "状态",
+  "initialfantasy_document_date": "单据日期",
   "initialfantasy_closing_delimiter": "----结束----"
 }

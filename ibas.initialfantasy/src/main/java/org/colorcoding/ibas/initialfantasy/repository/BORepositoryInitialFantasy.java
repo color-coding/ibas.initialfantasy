@@ -20,8 +20,10 @@ import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BORelationship;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertySetting;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBORelationship;
 import org.colorcoding.ibas.initialfantasy.bo.bologst.BOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bologst.IBOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
@@ -808,6 +810,29 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<IBOLogst> saveBOLogst(IBOLogst bo) {
 		return new OperationResult<IBOLogst>(this.saveBOLogst((BOLogst) bo, this.getUserToken()));
+	}
+
+	// --------------------------------------------------------------------------------------------//
+
+	/**
+	 * 查询-业务对象关系
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BORelationship> fetchBORelationship(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, BORelationship.class);
+	}
+
+	/**
+	 * 查询-业务对象关系（提前设置用户口令）
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBORelationship> fetchBORelationship(ICriteria criteria) {
+		return new OperationResult<IBORelationship>(this.fetchBORelationship(criteria, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//

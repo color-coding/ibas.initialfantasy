@@ -368,7 +368,6 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyValue.PROPERTY_DEFAULT_NAME, value);
             }
 
-
             /** 字符串 */
             toString(): string {
                 let builder: ibas.StringBuilder = new ibas.StringBuilder();
@@ -449,6 +448,122 @@ namespace initialfantasy {
                         }
                     }
                 }
+            }
+        }
+
+        /** 业务对象关系 */
+        export class BORelationship extends ibas.BusinessObject<BORelationship> implements IBORelationship {
+            /** 业务对象编码 */
+            static BUSINESS_OBJECT_CODE: string = BO_CODE_BORELATIONSHIP;
+            /** 构造函数 */
+            constructor() {
+                super();
+            }
+            /** 映射的属性名称-编码 */
+            static PROPERTY_CODE_NAME: string = "Code";
+            /** 获取-编码 */
+            get code(): string {
+                return this.getProperty<string>(BORelationship.PROPERTY_CODE_NAME);
+            }
+            /** 设置-编码 */
+            set code(value: string) {
+                this.setProperty(BORelationship.PROPERTY_CODE_NAME, value);
+            }
+
+            /** 映射的属性名称-目标对象 */
+            static PROPERTY_TARGET_NAME: string = "Target";
+            /** 获取-目标对象 */
+            get target(): string {
+                return this.getProperty<string>(BORelationship.PROPERTY_TARGET_NAME);
+            }
+            /** 设置-目标对象 */
+            set target(value: string) {
+                this.setProperty(BORelationship.PROPERTY_TARGET_NAME, value);
+            }
+
+            /** 映射的属性名称-关系 */
+            static PROPERTY_RELATION_NAME: string = "Relation";
+            /** 获取-关系 */
+            get relation(): string {
+                return this.getProperty<string>(BORelationship.PROPERTY_RELATION_NAME);
+            }
+            /** 设置-关系 */
+            set relation(value: string) {
+                this.setProperty(BORelationship.PROPERTY_RELATION_NAME, value);
+            }
+
+            /** 映射的属性名称-关联的属性 */
+            static PROPERTY_ASSOCIATEDPROPERTY_NAME: string = "AssociatedProperty";
+            /** 获取-关联的属性 */
+            get associatedProperty(): string {
+                return this.getProperty<string>(BORelationship.PROPERTY_ASSOCIATEDPROPERTY_NAME);
+            }
+            /** 设置-关联的属性 */
+            set associatedProperty(value: string) {
+                this.setProperty(BORelationship.PROPERTY_ASSOCIATEDPROPERTY_NAME, value);
+            }
+
+            /** 映射的属性名称-描述 */
+            static PROPERTY_DESCRIPTION_NAME: string = "Description";
+            /** 获取-描述 */
+            get description(): string {
+                return this.getProperty<string>(BORelationship.PROPERTY_DESCRIPTION_NAME);
+            }
+            /** 设置-描述 */
+            set description(value: string) {
+                this.setProperty(BORelationship.PROPERTY_DESCRIPTION_NAME, value);
+            }
+            /** 初始化数据 */
+            protected init(): void {
+            }
+
+
+            /** 字符串 */
+            toString(): string {
+                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                builder.append("{");
+                builder.append("[");
+                builder.append(BORelationship.BUSINESS_OBJECT_CODE);
+                builder.append("].");
+                builder.append("[");
+                builder.append(BORelationship.PROPERTY_CODE_NAME);
+                builder.append(" ");
+                builder.append("=");
+                builder.append(" ");
+                builder.append(this.code);
+                builder.append("]");
+                builder.append("&");
+                builder.append("[");
+                builder.append(BORelationship.PROPERTY_TARGET_NAME);
+                builder.append(" ");
+                builder.append("=");
+                builder.append(" ");
+                builder.append(this.target);
+                builder.append("]");
+                builder.append("&");
+                builder.append("[");
+                builder.append(BORelationship.PROPERTY_RELATION_NAME);
+                builder.append(" ");
+                builder.append("=");
+                builder.append(" ");
+                builder.append(this.relation);
+                builder.append("]");
+                builder.append("}");
+                return builder.toString();
+            }
+            /** 获取查询 */
+            criteria(): ibas.ICriteria {
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = BORelationship.PROPERTY_CODE_NAME;
+                condition.value = this.code;
+                condition = criteria.conditions.create();
+                condition.alias = BORelationship.PROPERTY_TARGET_NAME;
+                condition.value = this.target;
+                condition = criteria.conditions.create();
+                condition.alias = BORelationship.PROPERTY_RELATION_NAME;
+                condition.value = this.relation;
+                return criteria;
             }
         }
     }

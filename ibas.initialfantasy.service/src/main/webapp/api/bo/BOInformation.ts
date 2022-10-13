@@ -74,5 +74,18 @@ namespace initialfantasy {
             /** 创建并添加子项 */
             create(): IBOPropertyValue;
         }
+        /** 业务对象关系 */
+        export interface IBORelationship extends ibas.IBusinessObject {
+            /** 编码 */
+            code: string;
+            /** 目标对象 */
+            target: string;
+            /** 关系 */
+            relation: string;
+            /** 关联的属性 */
+            associatedProperty: string;
+            /** 描述 */
+            description: string;
+        }
     }
 }

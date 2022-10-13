@@ -190,6 +190,9 @@ namespace initialfantasy {
                     case app.BOLogstService.APPLICATION_ID:
                         view = new c.BOLogstServiceView();
                         break;
+                    case app.DocumentProcessService.APPLICATION_ID:
+                        view = new c.DocumentProcessServiceView();
+                        break;
                     default:
                         break;
                 }
