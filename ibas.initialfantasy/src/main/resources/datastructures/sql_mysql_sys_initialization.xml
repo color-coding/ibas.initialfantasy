@@ -58,7 +58,7 @@
                                     FROM `${Company}_SYS_USRIDNTY`
                                     WHERE `User` = userCode
                                 )
-                        ) C ON A.`ModuleId` = C.`ModuleID`
+                        ) C ON A.`ModuleId` = C.`ModuleId`
                         WHERE (A.`PlatformId` = platform OR A.`PlatformId` = platform2) AND A.`Activated` = 'Y';
                     END IF;
                 END;

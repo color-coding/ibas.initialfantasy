@@ -8,7 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
+import org.colorcoding.ibas.bobas.bo.IBOStorageTag;
+import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.ICondition;
+import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.core.fields.IFieldData;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
@@ -210,6 +215,25 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
+	}
+
+	@Override
+	public ICriteria getCriteria() {
+		Criteria criteria = new Criteria();
+		if (this instanceof IBOStorageTag) {
+			IBOStorageTag tagBO = (IBOStorageTag) this;
+			criteria.setBusinessObject(tagBO.getObjectCode());
+		}
+		for (IFieldData item : this.getFields(c -> c.isPrimaryKey())) {
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(item.getName());
+			condition.setValue(item.getValue());
+		}
+		if (criteria.getConditions().isEmpty()) {
+			// 没有条件，返回空
+			return null;
+		}
+		return criteria;
 	}
 
 }
