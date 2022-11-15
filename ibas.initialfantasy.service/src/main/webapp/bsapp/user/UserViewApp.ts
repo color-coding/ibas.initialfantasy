@@ -68,7 +68,11 @@ namespace initialfantasy {
                     criteria = new ibas.Criteria();
                     criteria.result = 1;
                     condition = criteria.conditions.create();
-                    condition.alias = bo.User.PROPERTY_DOCENTRY_NAME;
+                    if (ibas.numbers.isNumber(value)) {
+                        condition.alias = bo.User.PROPERTY_DOCENTRY_NAME;
+                    } else {
+                        condition.alias = bo.User.PROPERTY_CODE_NAME;
+                    }
                     condition.value = value;
                 }
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();

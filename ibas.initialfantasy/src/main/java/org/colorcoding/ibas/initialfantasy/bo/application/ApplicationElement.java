@@ -58,7 +58,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 模块标识 属性
 	 */
-	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "ModuleId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_MODULEID = registerProperty(PROPERTY_MODULEID_NAME, String.class,
 			MY_CLASS);
 
@@ -75,8 +75,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-模块标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setModuleId(String value) {
 		this.setProperty(PROPERTY_MODULEID, value);
@@ -90,7 +89,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 元素标识 属性
 	 */
-	@DbField(name = "ElementId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "ElementId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_ELEMENTID = registerProperty(PROPERTY_ELEMENTID_NAME,
 			String.class, MY_CLASS);
 
@@ -107,8 +106,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-元素标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setElementId(String value) {
 		this.setProperty(PROPERTY_ELEMENTID, value);
@@ -139,8 +137,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-元素名称
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setElementName(String value) {
 		this.setProperty(PROPERTY_ELEMENTNAME, value);
@@ -171,8 +168,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-元素类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setElementType(emElementType value) {
 		this.setProperty(PROPERTY_ELEMENTTYPE, value);
@@ -203,8 +199,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-对象键值
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectKey(Integer value) {
 		this.setProperty(PROPERTY_OBJECTKEY, value);
@@ -235,8 +230,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-对象类型
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setObjectCode(String value) {
 		this.setProperty(PROPERTY_OBJECTCODE, value);
@@ -267,8 +261,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-数据源
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setDataSource(String value) {
 		this.setProperty(PROPERTY_DATASOURCE, value);
@@ -299,8 +292,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-创建日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateDate(DateTime value) {
 		this.setProperty(PROPERTY_CREATEDATE, value);
@@ -331,8 +323,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-创建时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateTime(Short value) {
 		this.setProperty(PROPERTY_CREATETIME, value);
@@ -363,8 +354,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-修改日期
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateDate(DateTime value) {
 		this.setProperty(PROPERTY_UPDATEDATE, value);
@@ -395,8 +385,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-修改时间
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateTime(Short value) {
 		this.setProperty(PROPERTY_UPDATETIME, value);
@@ -427,8 +416,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-创建动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateActionId(String value) {
 		this.setProperty(PROPERTY_CREATEACTIONID, value);
@@ -459,8 +447,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-更新动作标识
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateActionId(String value) {
 		this.setProperty(PROPERTY_UPDATEACTIONID, value);
@@ -491,8 +478,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-实例号（版本）
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setLogInst(Integer value) {
 		this.setProperty(PROPERTY_LOGINST, value);
@@ -523,8 +509,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-创建用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setCreateUserSign(Integer value) {
 		this.setProperty(PROPERTY_CREATEUSERSIGN, value);
@@ -555,8 +540,7 @@ public class ApplicationElement extends BusinessObject<ApplicationElement> imple
 	/**
 	 * 设置-修改用户
 	 * 
-	 * @param value
-	 *            值
+	 * @param value 值
 	 */
 	public final void setUpdateUserSign(Integer value) {
 		this.setProperty(PROPERTY_UPDATEUSERSIGN, value);

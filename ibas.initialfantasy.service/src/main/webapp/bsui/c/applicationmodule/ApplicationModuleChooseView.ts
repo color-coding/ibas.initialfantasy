@@ -37,9 +37,20 @@ namespace initialfantasy {
                                 label: ibas.i18n.prop("bo_applicationmodule_modulename"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "moduleId",
-                                    formatter(data: any): any {
-                                        return ibas.i18n.prop(data);
+                                    parts: [
+                                        {
+                                            path: "moduleId"
+                                        },
+                                        {
+                                            path: "moduleName"
+                                        },
+                                    ],
+                                    formatter(id: any, name: string): any {
+                                        let value: string = ibas.i18n.prop(id);
+                                        if (!ibas.strings.isWith(value, "[", "]")) {
+                                            return value;
+                                        }
+                                        return name;
                                     }
                                 }),
                             }),

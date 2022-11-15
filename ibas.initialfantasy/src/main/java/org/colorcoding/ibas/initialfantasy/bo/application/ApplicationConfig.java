@@ -59,7 +59,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 配置组 属性
 	 */
-	@DbField(name = "ConfigGroup", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false, uniqueKey = true)
+	@DbField(name = "ConfigGroup", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CONFIGGROUP = registerProperty(PROPERTY_CONFIGGROUP_NAME,
 			String.class, MY_CLASS);
 
@@ -90,7 +90,7 @@ public class ApplicationConfig extends BusinessObject<ApplicationConfig> impleme
 	/**
 	 * 配置项 属性
 	 */
-	@DbField(name = "ConfigKey", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false, uniqueKey = true)
+	@DbField(name = "ConfigKey", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CONFIGKEY = registerProperty(PROPERTY_CONFIGKEY_NAME,
 			String.class, MY_CLASS);
 

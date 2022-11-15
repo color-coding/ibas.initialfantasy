@@ -76,6 +76,7 @@ namespace initialfantasy {
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_rolecode") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
+                                showValueLink: false,
                                 repository: bo.BORepositoryInitialFantasy,
                                 dataInfo: {
                                     type: bo.Organization,
