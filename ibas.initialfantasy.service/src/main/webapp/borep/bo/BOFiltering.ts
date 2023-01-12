@@ -321,6 +321,17 @@ namespace initialfantasy {
                 this.setProperty(BOFilteringCondition.PROPERTY_LINEID_NAME, value);
             }
 
+            /** 映射的属性名称-显示顺序 */
+            static PROPERTY_VISORDER_NAME: string = "VisOrder";
+            /** 获取-显示顺序 */
+            get visOrder(): number {
+                return this.getProperty<number>(BOFilteringCondition.PROPERTY_VISORDER_NAME);
+            }
+            /** 设置-显示顺序 */
+            set visOrder(value: number) {
+                this.setProperty(BOFilteringCondition.PROPERTY_VISORDER_NAME, value);
+            }
+
             /** 映射的属性名称-实例号（版本） */
             static PROPERTY_LOGINST_NAME: string = "LogInst";
             /** 获取-实例号（版本） */

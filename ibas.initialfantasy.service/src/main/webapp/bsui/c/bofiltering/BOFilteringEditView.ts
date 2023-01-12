@@ -241,7 +241,8 @@ namespace initialfantasy {
                                         }),
                                         width: "16rem",
                                     }),
-                                ]
+                                ],
+                                sortProperty: "visOrder",
                             }),
                         ]
                     });

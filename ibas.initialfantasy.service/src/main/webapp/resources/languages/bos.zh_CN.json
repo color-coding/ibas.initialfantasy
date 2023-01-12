@@ -161,6 +161,7 @@
         "bo_bofilteringcondition_objectkey": "编号",
         "bo_bofilteringcondition_objectcode": "类型",
         "bo_bofilteringcondition_lineid": "行号",
+        "bo_bofilteringcondition_visorder": "显示顺序",
         "bo_bofilteringcondition_loginst": "实例号（版本）",
         "bo_bofilteringcondition_datasource": "数据源",
         "bo_bofilteringcondition_createdate": "创建日期",

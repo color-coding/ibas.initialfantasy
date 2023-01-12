@@ -91,6 +91,8 @@ namespace initialfantasy {
             objectCode: string;
             /** 行号 */
             lineId: number;
+            /** 显示顺序 */
+            visOrder: number;
             /** 实例号（版本） */
             logInst: number;
             /** 数据源 */
