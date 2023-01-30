@@ -27,21 +27,21 @@ namespace initialfantasy {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyvalue_value"),
-                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "value",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "16rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyvalue_description"),
-                                width: "20rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "description",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "100%",
                             }),
                         ],
                     });

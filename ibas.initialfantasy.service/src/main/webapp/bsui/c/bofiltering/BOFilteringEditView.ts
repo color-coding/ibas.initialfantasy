@@ -38,7 +38,7 @@ namespace initialfantasy {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_name") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -92,6 +92,15 @@ namespace initialfantasy {
                                     maxLength: 8
                                 })
                             }),
+                            new sap.m.Toolbar("", { visible: false }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectkey") }),
+                            new sap.extension.m.Input("", {
+                                enabled: false,
+                                type: sap.m.InputType.Number
+                            }).bindProperty("bindingValue", {
+                                path: "objectKey",
+                                type: new sap.extension.data.Numeric()
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_activated") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
@@ -108,15 +117,153 @@ namespace initialfantasy {
                                     enumType: bo.emFilteringType
                                 })
                             }),
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_others") }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_bofiltering_objectkey") }),
-                            new sap.extension.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Number
-                            }).bindProperty("bindingValue", {
-                                path: "objectKey",
-                                type: new sap.extension.data.Numeric()
+                        ],
+                    });
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.IconTabBar("", {
+                                headerBackgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                backgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                expandable: false,
+                                items: [
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("bo_bofilteringcondition"),
+                                        content: [
+                                            this.tableBOFilteringCondition = new sap.extension.table.DataTable("", {
+                                                enableSelectAll: false,
+                                                visibleRowCount: sap.extension.table.visibleRowCount(8),
+                                                dataInfo: {
+                                                    code: bo.BOFiltering.BUSINESS_OBJECT_CODE,
+                                                    name: bo.BOFilteringCondition.name
+                                                },
+                                                toolbar: new sap.m.Toolbar("", {
+                                                    content: [
+                                                        new sap.m.Button("", {
+                                                            text: ibas.i18n.prop("shell_data_add"),
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            icon: "sap-icon://add",
+                                                            press: function (): void {
+                                                                that.fireViewEvents(that.addBOFilteringConditionEvent);
+                                                            }
+                                                        }),
+                                                        new sap.m.Button("", {
+                                                            text: ibas.i18n.prop("shell_data_remove"),
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            icon: "sap-icon://less",
+                                                            press: function (): void {
+                                                                that.fireViewEvents(that.removeBOFilteringConditionEvent, that.tableBOFilteringCondition.getSelecteds());
+                                                            }
+                                                        }),
+                                                        new sap.m.ToolbarSeparator(),
+                                                        new sap.m.Button("", {
+                                                            text: ibas.i18n.prop("initialfantasy_preview_conditions"),
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            icon: "sap-icon://detail-view",
+                                                            press: function (): void {
+                                                                that.previewConditions();
+                                                            }
+                                                        }),
+                                                        new sap.m.ToolbarSeparator(),
+                                                    ]
+                                                }),
+                                                rows: "{/rows}",
+                                                columns: [
+                                                    new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
+                                                        template: new sap.extension.m.EnumSelect("", {
+                                                            enumType: bo.emConditionRelationship
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "relationship",
+                                                            type: new sap.extension.data.Enum({
+                                                                enumType: bo.emConditionRelationship,
+                                                            })
+                                                        })
+                                                    }),
+                                                    new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
+                                                        template: new sap.extension.m.RepeatCharSelect("", {
+                                                            repeatText: "(",
+                                                            maxCount: 5,
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "bracketOpen",
+                                                            type: "sap.ui.model.type.Integer"
+                                                        })
+                                                    }),
+                                                    this.columnProperty = new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
+                                                        template: new sap.extension.m.Select("", {
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "propertyName",
+                                                            type: new sap.extension.data.Alphanumeric()
+                                                        }),
+                                                        width: "12rem",
+                                                    }),
+                                                    new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
+                                                        template: new sap.extension.m.EnumSelect("", {
+                                                            enumType: bo.emConditionOperation
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "operation",
+                                                            type: new sap.extension.data.Enum({
+                                                                enumType: bo.emConditionOperation
+                                                            })
+                                                        })
+                                                    }),
+                                                    new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
+                                                        template: new sap.extension.m.Input("", {
+                                                            showSuggestion: true,
+                                                            suggestionItems: [
+                                                                new sap.ui.core.Item("", {
+                                                                }).setText(VARIABLE_NAME_USER_ID),
+                                                                new sap.ui.core.Item("", {
+                                                                }).setText(VARIABLE_NAME_USER_CODE),
+                                                                new sap.ui.core.Item("", {
+                                                                }).setText(VARIABLE_NAME_USER_NAME),
+                                                                new sap.ui.core.Item("", {
+                                                                }).setText(VARIABLE_NAME_USER_BELONG),
+                                                            ]
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "conditionValue",
+                                                            type: new sap.extension.data.Alphanumeric({
+                                                                maxLength: 30
+                                                            })
+                                                        }),
+                                                        width: "10rem",
+                                                    }),
+                                                    new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
+                                                        template: new sap.extension.m.RepeatCharSelect("", {
+                                                            repeatText: ")",
+                                                            maxCount: 5,
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "bracketClose",
+                                                            type: "sap.ui.model.type.Integer"
+                                                        })
+                                                    }),
+                                                    new sap.extension.table.DataColumn("", {
+                                                        label: ibas.i18n.prop("bo_bofilteringcondition_remarks"),
+                                                        template: new sap.extension.m.Input("", {
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "remarks",
+                                                            type: new sap.extension.data.Alphanumeric()
+                                                        }),
+                                                        width: "16rem",
+                                                    }),
+                                                ],
+                                                sortProperty: "visOrder",
+                                            }),
+                                        ]
+                                    }),
+                                ]
                             }),
+                        ]
+                    });
+                    let formBottom: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_identity_remarks") }),
                             new sap.extension.m.TextArea("", {
                                 rows: 3,
@@ -124,126 +271,7 @@ namespace initialfantasy {
                                 path: "remarks",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
-                        ]
-                    });
-                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
-                        editable: true,
-                        content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bofilteringcondition") }),
-                            this.tableBOFilteringCondition = new sap.extension.table.DataTable("", {
-                                enableSelectAll: false,
-                                visibleRowCount: sap.extension.table.visibleRowCount(8),
-                                dataInfo: {
-                                    code: bo.BOFiltering.BUSINESS_OBJECT_CODE,
-                                    name: bo.BOFilteringCondition.name
-                                },
-                                toolbar: new sap.m.Toolbar("", {
-                                    content: [
-                                        new sap.m.Button("", {
-                                            text: ibas.i18n.prop("shell_data_add"),
-                                            type: sap.m.ButtonType.Transparent,
-                                            icon: "sap-icon://add",
-                                            press: function (): void {
-                                                that.fireViewEvents(that.addBOFilteringConditionEvent);
-                                            }
-                                        }),
-                                        new sap.m.Button("", {
-                                            text: ibas.i18n.prop("shell_data_remove"),
-                                            type: sap.m.ButtonType.Transparent,
-                                            icon: "sap-icon://less",
-                                            press: function (): void {
-                                                that.fireViewEvents(that.removeBOFilteringConditionEvent, that.tableBOFilteringCondition.getSelecteds());
-                                            }
-                                        })
-                                    ]
-                                }),
-                                rows: "{/rows}",
-                                columns: [
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_relationship"),
-                                        template: new sap.extension.m.EnumSelect("", {
-                                            enumType: bo.emConditionRelationship
-                                        }).bindProperty("bindingValue", {
-                                            path: "relationship",
-                                            type: new sap.extension.data.Enum({
-                                                enumType: bo.emConditionRelationship,
-                                            })
-                                        })
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_bracketopen"),
-                                        template: new sap.extension.m.RepeatCharSelect("", {
-                                            repeatText: "(",
-                                            maxCount: 5,
-                                        }).bindProperty("bindingValue", {
-                                            path: "bracketOpen",
-                                            type: "sap.ui.model.type.Integer"
-                                        })
-                                    }),
-                                    this.columnProperty = new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_propertyname"),
-                                        template: new sap.extension.m.Select("", {
-                                        }).bindProperty("bindingValue", {
-                                            path: "propertyName",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        }),
-                                        width: "12rem",
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_operation"),
-                                        template: new sap.extension.m.EnumSelect("", {
-                                            enumType: bo.emConditionOperation
-                                        }).bindProperty("bindingValue", {
-                                            path: "operation",
-                                            type: new sap.extension.data.Enum({
-                                                enumType: bo.emConditionOperation
-                                            })
-                                        })
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_conditionvalue"),
-                                        template: new sap.extension.m.Input("", {
-                                            showSuggestion: true,
-                                            suggestionItems: [
-                                                new sap.ui.core.Item("", {
-                                                }).setText(VARIABLE_NAME_USER_ID),
-                                                new sap.ui.core.Item("", {
-                                                }).setText(VARIABLE_NAME_USER_CODE),
-                                                new sap.ui.core.Item("", {
-                                                }).setText(VARIABLE_NAME_USER_NAME),
-                                                new sap.ui.core.Item("", {
-                                                }).setText(VARIABLE_NAME_USER_BELONG),
-                                            ]
-                                        }).bindProperty("bindingValue", {
-                                            path: "conditionValue",
-                                            type: new sap.extension.data.Alphanumeric({
-                                                maxLength: 30
-                                            })
-                                        }),
-                                        width: "10rem",
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_bracketclose"),
-                                        template: new sap.extension.m.RepeatCharSelect("", {
-                                            repeatText: ")",
-                                            maxCount: 5,
-                                        }).bindProperty("bindingValue", {
-                                            path: "bracketClose",
-                                            type: "sap.ui.model.type.Integer"
-                                        })
-                                    }),
-                                    new sap.extension.table.DataColumn("", {
-                                        label: ibas.i18n.prop("bo_bofilteringcondition_remarks"),
-                                        template: new sap.extension.m.Input("", {
-                                        }).bindProperty("bindingValue", {
-                                            path: "remarks",
-                                            type: new sap.extension.data.Alphanumeric()
-                                        }),
-                                        width: "16rem",
-                                    }),
-                                ],
-                                sortProperty: "visOrder",
-                            }),
+                            new sap.m.Toolbar("", { visible: false }),
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {
@@ -301,23 +329,26 @@ namespace initialfantasy {
                         content: [
                             formTop,
                             formMiddle,
+                            formBottom,
                         ]
                     });
                 }
                 private page: sap.extension.m.Page;
                 private tableBOFilteringCondition: sap.extension.table.Table;
                 private columnProperty: sap.extension.table.DataColumn;
+                private tableName: string;
                 /** 显示数据 */
                 showBOFiltering(data: bo.BOFiltering): void {
+                    let that: this = this;
                     this.page.setModel(new sap.extension.model.JSONModel(data));
                     // 改变页面状态
                     sap.extension.pages.changeStatus(this.page);
                     // 加载可选项
                     let criteria: ibas.ICriteria = new ibas.Criteria();
                     let condition: ibas.ICondition = criteria.conditions.create();
-                    condition.alias = initialfantasy.bo.BOInformation.PROPERTY_CODE_NAME;
+                    condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                     condition.value = data.boCode;
-                    let boRepository: initialfantasy.bo.BORepositoryInitialFantasy = new initialfantasy.bo.BORepositoryInitialFantasy();
+                    let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                     boRepository.fetchBOInformation({
                         criteria: criteria,
                         onCompleted: (opRslt) => {
@@ -332,17 +363,20 @@ namespace initialfantasy {
                                 path: "propertyName",
                                 type: new sap.extension.data.Alphanumeric()
                             });
-                            let boInfo: initialfantasy.bo.IBOInformation = opRslt.resultObjects.firstOrDefault();
-                            if (boInfo && boInfo.boPropertyInformations instanceof Array) {
-                                for (let property of boInfo.boPropertyInformations) {
-                                    if (property.editSize < 0) {
-                                        // 对象类型属性跳过
-                                        continue;
+                            let boInfo: bo.IBOInformation = opRslt.resultObjects.firstOrDefault();
+                            if (boInfo) {
+                                that.tableName = boInfo.mapped;
+                                if (boInfo.boPropertyInformations instanceof Array) {
+                                    for (let property of boInfo.boPropertyInformations) {
+                                        if (property.editSize < 0) {
+                                            // 对象类型属性跳过
+                                            continue;
+                                        }
+                                        template.addItem(new sap.ui.core.ListItem("", {
+                                            key: property.mapped,
+                                            text: property.description,
+                                        }));
                                     }
-                                    template.addItem(new sap.ui.core.ListItem("", {
-                                        key: property.mapped,
-                                        text: property.description,
-                                    }));
                                 }
                             }
                             // 系统变量
@@ -373,6 +407,183 @@ namespace initialfantasy {
                 /** 显示数据-业务对象筛选-条件 */
                 showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void {
                     this.tableBOFilteringCondition.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                }
+                previewConditions(): void {
+                    jQuery.sap.require("sap.ui.codeeditor.CodeEditor");
+                    let conditions: bo.BOFilteringCondition[] = this.tableBOFilteringCondition.getModel().getData("rows");
+                    let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                    builder.map(undefined, "");
+                    builder.map(null, "");
+                    builder.append(ibas.strings.format("select * from \"{0}\"", this.tableName));
+                    for (let condition of conditions.sort((a: bo.BOFilteringCondition, b: bo.BOFilteringCondition) => { return a.visOrder - b.visOrder; })) {
+                        if (builder.length === 1) {
+                            builder.append("\n");
+                            builder.append("where");
+                        }
+                        // 关系
+                        if (builder.length > 0 && (builder.length !== 1 && builder.length !== 3)) {
+                            builder.append(" ");
+                            builder.append(this.describeRelationship(condition.relationship));
+                        }
+                        // 属性
+                        builder.append(" ");
+                        builder.append("\n");
+                        builder.append(ibas.strings.fill("", condition.bracketOpen > 0 ? condition.bracketOpen : 0, "("));
+                        builder.append("\"");
+                        builder.append(this.describeProperty(condition.propertyName));
+                        builder.append("\"");
+                        builder.append(" ");
+                        builder.append(this.describeOperation(condition.operation));
+                        builder.append(" ");
+                        builder.append("'");
+                        builder.append(this.describeValue(condition.conditionValue));
+                        builder.append("'");
+                        builder.append(ibas.strings.fill("", condition.bracketClose > 0 ? condition.bracketClose : 0, ")"));
+                    }
+                    let dialog: sap.m.Dialog = new sap.m.Dialog("", {
+                        customHeader: new sap.m.Toolbar("", {
+                            content: [
+                                new sap.m.ToolbarSpacer(),
+                                new sap.m.Title("", {
+                                    text: ibas.i18n.prop("initialfantasy_preview_conditions")
+                                }),
+                                new sap.m.ToolbarSpacer(),
+                                new sap.m.Button("", {
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://decline",
+                                    press: function (): void {
+                                        dialog.close();
+                                    }
+                                })
+                            ]
+                        }),
+                        type: sap.m.DialogType.Standard,
+                        state: sap.ui.core.ValueState.None,
+                        contentHeight: "60%",
+                        contentWidth: "60%",
+                        verticalScrolling: false,
+                        horizontalScrolling: false,
+                        content: [
+                            new sap.ui.codeeditor.CodeEditor("", {
+                                height: "100%",
+                                width: "100%",
+                                type: "sql",
+                                colorTheme: "eclipse",
+                                valueSelection: true,
+                                syntaxHints: true,
+                                lineNumbers: true,
+                            }).setValue(builder.toString())
+                        ],
+                        buttons: [
+                            new sap.m.Button("", {
+                                text: ibas.i18n.prop("reportanalysis_sql_code_pretty"),
+                                type: sap.m.ButtonType.Transparent,
+                                icon: "sap-icon://text-formatting",
+                                press: function (): void {
+                                    let codeEditor: any = this.getContent()[0];
+                                    if (codeEditor instanceof sap.ui.codeeditor.CodeEditor) {
+                                        codeEditor.prettyPrint();
+                                    }
+                                }
+                            }),
+                            new sap.m.Button("", {
+                                text: ibas.i18n.prop("shell_exit"),
+                                type: sap.m.ButtonType.Transparent,
+                                icon: "sap-icon://inspect-down",
+                                press: function (): void {
+                                    dialog.close();
+                                    dialog = null;
+                                }
+                            }),
+                        ],
+                        afterOpen(this: sap.m.Dialog): void {
+                            setTimeout(() => {
+                                let codeEditor: any = this.getContent()[0];
+                                if (codeEditor instanceof sap.ui.codeeditor.CodeEditor) {
+                                    codeEditor.prettyPrint();
+                                }
+                            }, 150);
+                        }
+                    }).addStyleClass("sapUiNoContentPadding").open();
+                }
+                /** 获取条件关系 */
+                describeRelationship(data: ibas.emConditionRelationship): string {
+                    switch (data) {
+                        case ibas.emConditionRelationship.AND:
+                            return "and";
+                        case ibas.emConditionRelationship.OR:
+                            return "or";
+                        default:
+                            return "";
+                    }
+                }
+
+                /** 获取比较操作 */
+                describeOperation(data: bo.emConditionOperation): string {
+                    switch (data) {
+                        case bo.emConditionOperation.EQUAL:
+                            return "=";
+                        case bo.emConditionOperation.GRATER_THAN:
+                            return ">";
+                        case bo.emConditionOperation.LESS_THAN:
+                            return "<";
+                        case bo.emConditionOperation.GRATER_EQUAL:
+                            return ">=";
+                        case bo.emConditionOperation.LESS_EQUAL:
+                            return "<=";
+                        case bo.emConditionOperation.NOT_EQUAL:
+                            return "<>";
+                        case bo.emConditionOperation.CONTAIN:
+                            return "like";
+                        case bo.emConditionOperation.NOT_CONTAIN:
+                            return "not like";
+                        case bo.emConditionOperation.BEGIN_WITH:
+                            return "like";
+                        case bo.emConditionOperation.END_WITH:
+                            return "like";
+                        case bo.emConditionOperation.NOT_BEGIN_WITH:
+                            return "not like";
+                        case bo.emConditionOperation.NOT_END_WITH:
+                            return "not like";
+                        default:
+                            return "?";
+                    }
+                }
+                /** 获取属性描述 */
+                describeProperty(data: string): string {
+                    switch (data) {
+                        case VARIABLE_NAME_USER_ID:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id");
+                        case VARIABLE_NAME_USER_CODE:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code");
+                        case VARIABLE_NAME_USER_NAME:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name");
+                        case VARIABLE_NAME_USER_BELONG:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong");
+                        case VARIABLE_NAME_USER_IDENTITIES:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities");
+                        default:
+                            break;
+                    }
+                    return data;
+                }
+                /** 获取值描述 */
+                describeValue(data: string): string {
+                    switch (data) {
+                        case VARIABLE_NAME_USER_ID:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id");
+                        case VARIABLE_NAME_USER_CODE:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code");
+                        case VARIABLE_NAME_USER_NAME:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name");
+                        case VARIABLE_NAME_USER_BELONG:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong");
+                        case VARIABLE_NAME_USER_IDENTITIES:
+                            return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities");
+                        default:
+                            break;
+                    }
+                    return data;
                 }
             }
         }

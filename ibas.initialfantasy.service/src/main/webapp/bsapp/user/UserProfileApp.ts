@@ -26,6 +26,7 @@ namespace initialfantasy {
             protected registerView(): void {
                 super.registerView();
                 // 其他事件
+                this.view.editUserEvent = this.editUser;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -54,11 +55,19 @@ namespace initialfantasy {
                     }
                 });
             }
+            private editUser(): void {
+                let app: ChangeUserProfileApp = new ChangeUserProfileApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run(this.user);
+            }
         }
         /** 视图-用户配置 */
         export interface IUserProfileView extends ibas.IResidentView {
             /** 显示用户信息 */
             showUser(user: bo.User): void;
+            /** 编辑用户 */
+            editUserEvent: Function;
         }
         export class UserProfileApplicationMapping extends ibas.ResidentApplicationMapping {
             /** 构造函数 */

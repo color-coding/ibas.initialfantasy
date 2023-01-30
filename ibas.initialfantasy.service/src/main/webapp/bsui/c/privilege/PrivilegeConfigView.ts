@@ -117,8 +117,7 @@ namespace initialfantasy {
                     });
                     this.tablePrivileges = new sap.extension.table.Table("", {
                         enableSelectAll: true,
-                        visibleRowCount: sap.extension.table.visibleRowCount(12),
-                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
+                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
                         rows: "{/rows}",
                         rowSettingsTemplate: new sap.ui.table.RowSettings("", {
                         }).bindProperty("highlight", {
@@ -618,7 +617,7 @@ namespace initialfantasy {
                     this.facetFilter.setVisible(true);
                 }
                 private filterPrivileges(filter: sap.ui.model.Filter): void {
-                    let dataBinding: any = this.tablePrivileges.getBinding("");
+                    let dataBinding: any = this.tablePrivileges.getBinding("rows");
                     dataBinding.filter(filter);
                 }
                 /** 显示平台 */

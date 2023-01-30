@@ -49,6 +49,7 @@ namespace initialfantasy {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_user_activated"),
@@ -57,14 +58,16 @@ namespace initialfantasy {
                                     path: "activated",
                                     type: new sap.extension.data.YesNo(true)
                                 }),
+                                width: "8rem",
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_user_organization"),
+                                label: ibas.i18n.prop("bo_user_belongs"),
                                 template: new sap.extension.m.OrganizationText("", {
                                 }).bindProperty("bindingValue", {
                                     path: "organization",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "14rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_user_mail"),
@@ -73,6 +76,7 @@ namespace initialfantasy {
                                     path: "mail",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "16rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_user_remarks"),
@@ -81,7 +85,7 @@ namespace initialfantasy {
                                     path: "remarks",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "16rem",
+                                width: "20rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

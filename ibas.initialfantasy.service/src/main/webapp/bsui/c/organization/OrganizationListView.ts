@@ -45,6 +45,7 @@ namespace initialfantasy {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "16rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_organization_activated"),
@@ -69,7 +70,7 @@ namespace initialfantasy {
                                     path: "remarks",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "16rem",
+                                width: "24rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

@@ -7,10 +7,8 @@
  */
 namespace initialfantasy {
     export namespace app {
-
         /** 应用-更改用户配置 */
-        export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView> implements ibas.IService<ibas.IServiceCaller<ibas.IServiceContract>> {
-
+        export class ChangeUserProfileApp extends ibas.Application<IChangeUserProfileView>  {
             /** 应用标识 */
             static APPLICATION_ID: string = "2868c3e7-52e3-409d-acba-a62ad0a668bb";
             /** 应用名称 */
@@ -33,27 +31,25 @@ namespace initialfantasy {
                 // 视图加载完成
             }
             /** 运行 */
-            run(): void;
-            /**
-             * 运行
-             * @param caller 服务调用者
-             */
-            run(caller: ibas.IServiceCaller<ibas.IServiceContract>): void;
-            /** 运行 */
-            run(): void {
-                if (arguments.length === 1) {
-                    let caller: ibas.IServiceCaller<ibas.IServiceContract> = arguments[0];
-                    let criteria: ibas.ICriteria = new ibas.Criteria();
+            run(user?: bo.User | string | number): void {
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                if (user instanceof bo.User) {
                     let condition: ibas.ICondition = criteria.conditions.create();
                     condition.alias = bo.User.PROPERTY_CODE_NAME;
-                    if (!ibas.strings.isEmpty(caller.category)) {
-                        condition.value = caller.category.substring(caller.category.lastIndexOf("/") + 1);
-                        ibas.urls.changeHash("");
-                    }
-                    if (ibas.objects.isNull(condition.value)) {
-                        condition.value = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
-                    }
+                    condition.value = user.code;
+                } else if (typeof user === "string") {
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.User.PROPERTY_CODE_NAME;
+                    condition.value = user;
+                } else if (typeof user === "number") {
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.User.PROPERTY_DOCENTRY_NAME;
+                    condition.value = String(user);
+                }
+                if (criteria.conditions.length > 0) {
                     this.fetchUser(criteria);
+                } else {
+                    this.messages(ibas.emMessageType.ERROR, ibas.i18n.prop("initialfantasy_unknown_user"));
                 }
             }
             private user: bo.User;
@@ -110,20 +106,6 @@ namespace initialfantasy {
             showUser(user: bo.User): void;
             /** 保存用户事件 */
             saveUserEvent: Function;
-        }
-        /** 用户选择服务映射 */
-        export class ChangeUserProfileMapping extends ibas.ServiceMapping {
-            /** 构造函数 */
-            constructor() {
-                super();
-                this.id = ChangeUserProfileApp.APPLICATION_ID;
-                this.name = ChangeUserProfileApp.APPLICATION_NAME;
-                this.description = ibas.i18n.prop(this.name);
-            }
-            /** 创建服务实例 */
-            create(): ibas.IService<ibas.IServiceContract> {
-                return new ChangeUserProfileApp();
-            }
         }
     }
 }

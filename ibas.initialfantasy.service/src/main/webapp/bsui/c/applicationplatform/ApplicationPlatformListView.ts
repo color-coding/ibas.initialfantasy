@@ -39,6 +39,14 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_applicationplatform_activated"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "activated",
+                                    type: new sap.extension.data.YesNo(true)
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_applicationplatform_platformdescription"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
@@ -46,15 +54,8 @@ namespace initialfantasy {
                                     formatter(data: any): any {
                                         return ibas.enums.describe(ibas.emPlantform, data);
                                     }
-                                })
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_applicationplatform_activated"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "activated",
-                                    type: new sap.extension.data.YesNo(true)
                                 }),
+                                width: "100%",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

@@ -30,7 +30,8 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "key",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "40%",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_variable_value"),
@@ -38,7 +39,8 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "value",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "60%",
                             }),
                         ]
                     });

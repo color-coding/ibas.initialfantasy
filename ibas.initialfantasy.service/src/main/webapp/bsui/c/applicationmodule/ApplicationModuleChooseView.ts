@@ -32,6 +32,7 @@ namespace initialfantasy {
                                     path: "moduleId",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "14rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_applicationmodule_modulename"),
@@ -53,6 +54,7 @@ namespace initialfantasy {
                                         return name;
                                     }
                                 }),
+                                width: "20rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_applicationmodule_activated"),
@@ -70,7 +72,8 @@ namespace initialfantasy {
                                     formatter(data: any): any {
                                         return ibas.enums.describe(ibas.emPlantform, data);
                                     }
-                                })
+                                }),
+                                width: "12rem",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

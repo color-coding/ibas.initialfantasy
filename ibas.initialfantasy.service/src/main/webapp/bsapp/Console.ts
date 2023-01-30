@@ -60,7 +60,6 @@ namespace initialfantasy {
                 this.register(new ApplicationPlatformChooseServiceMapping());
                 this.register(new OrganizationChooseServiceMapping());
                 this.register(new UserChooseServiceMapping());
-                this.register(new ChangeUserProfileMapping());
                 this.register(new BOInformationChooseServiceMapping());
                 this.register(new BOPropertyChooseServiceMapping());
                 this.register(new BOPropertyValueChooseServiceMapping());

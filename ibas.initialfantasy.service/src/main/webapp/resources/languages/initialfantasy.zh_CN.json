@@ -57,8 +57,8 @@
   "initialfantasy_app_user_choose": "用户选择",
   "initialfantasy_app_user_view": "用户查看",
   "initialfantasy_app_user_edit": "用户编辑",
-  "initialfantasy_app_user_profile": "用户配置",
-  "initialfantasy_app_change_user_profile": "更改用户配置",
+  "initialfantasy_app_user_profile": "用户信息",
+  "initialfantasy_app_change_user_profile": "更改用户信息",
   "initialfantasy_func_boinformation": "业务对象信息",
   "initialfantasy_app_boinformation_list": "业务对象信息列表",
   "initialfantasy_app_boinformation_choose": "业务对象信息选择",
@@ -111,5 +111,6 @@
   "initialfantasy_document_target": "目标单据",
   "initialfantasy_document_status": "状态",
   "initialfantasy_document_date": "单据日期",
+  "initialfantasy_preview_conditions": "预览条件",
   "initialfantasy_closing_delimiter": "----结束----"
 }

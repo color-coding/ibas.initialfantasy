@@ -31,7 +31,8 @@ namespace initialfantasy {
                                     formatter(data: any): any {
                                         return ibas.i18n.prop(data);
                                     }
-                                })
+                                }),
+                                width: "14rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_applicationelement_elementtype"),
@@ -62,7 +63,8 @@ namespace initialfantasy {
                                         }
                                         return name;
                                     }
-                                })
+                                }),
+                                width: "100%",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

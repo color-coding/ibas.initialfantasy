@@ -253,7 +253,7 @@
         "bo_organization": "组织",
         "bo_organization_code": "编码",
         "bo_organization_name": "名称",
-        "bo_organization_activated": "是否启用",
+        "bo_organization_activated": "激活的",
         "bo_organization_docentry": "对象编号",
         "bo_organization_objectcode": "对象类型",
         "bo_organization_createdate": "创建日期",
@@ -320,6 +320,7 @@
         "bo_user_approvalstatus": "审批状态",
         "bo_user_dataowner": "数据所有者",
         "bo_user_organization": "数据所属组织",
+        "bo_user_belongs": "所属组织",
         "bo_user_remarks": "备注",
         "bo_user_closing_delimiter": "----结束----"
     },

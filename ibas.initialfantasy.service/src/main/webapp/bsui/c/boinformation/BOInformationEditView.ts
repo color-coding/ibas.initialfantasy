@@ -106,7 +106,8 @@ namespace initialfantasy {
                                     path: "dataType",
                                     formatter(data: string): boolean {
                                         return ibas.strings.equalsIgnoreCase("Alphanumeric", data) ||
-                                            ibas.strings.equalsIgnoreCase("Memo", data) ? true : false;
+                                            ibas.strings.equalsIgnoreCase("Memo", data) ||
+                                            ibas.strings.equalsIgnoreCase("Numeric", data) ? true : false;
                                     }
                                 }),
                             ]

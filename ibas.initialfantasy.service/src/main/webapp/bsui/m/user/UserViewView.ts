@@ -28,16 +28,16 @@ namespace initialfantasy {
                             },
                             actions: [
                                 new sap.extension.m.ObjectYesNoStatus("", {
-                                    title: ibas.i18n.prop("bo_user_activated"),
+                                    title: ibas.i18n.prop("bo_user_super"),
                                     enumValue: {
-                                        path: "activated",
+                                        path: "super",
                                         type: new sap.extension.data.YesNo(),
                                     }
                                 }),
                                 new sap.extension.m.ObjectYesNoStatus("", {
-                                    title: ibas.i18n.prop("bo_user_super"),
+                                    title: ibas.i18n.prop("bo_user_activated"),
                                     enumValue: {
-                                        path: "super",
+                                        path: "activated",
                                         type: new sap.extension.data.YesNo(),
                                     }
                                 }),

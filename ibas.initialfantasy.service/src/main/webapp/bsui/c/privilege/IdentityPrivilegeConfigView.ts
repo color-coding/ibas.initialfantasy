@@ -99,8 +99,7 @@ namespace initialfantasy {
                     });
                     this.tableIdentityPrivileges = new sap.extension.table.Table("", {
                         enableSelectAll: true,
-                        visibleRowCount: sap.extension.table.visibleRowCount(12),
-                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
+                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
                         rows: "{/rows}",
                         rowSettingsTemplate: new sap.ui.table.RowSettings("", {
                         }).bindProperty("highlight", {
@@ -434,7 +433,7 @@ namespace initialfantasy {
                     this.refreshPrivilegeFilter(datas);
                 }
                 private filterPrivileges(filter: sap.ui.model.Filter): void {
-                    let dataBinding: any = this.tableIdentityPrivileges.getBinding("");
+                    let dataBinding: any = this.tableIdentityPrivileges.getBinding("rows");
                     dataBinding.filter(filter);
                 }
                 private refreshPrivilegeFilter(datas: app.IdentityPrivilege[]): void {

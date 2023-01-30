@@ -76,8 +76,7 @@ namespace initialfantasy {
                     });
                     this.table = new sap.extension.table.Table("", {
                         enableSelectAll: false,
-                        visibleRowCount: sap.extension.table.visibleRowCount(14),
-                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
+                        visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
                         rows: "{/rows}",
                         rowSettingsTemplate: new sap.ui.table.RowSettings("", {
                         }).bindProperty("highlight", {

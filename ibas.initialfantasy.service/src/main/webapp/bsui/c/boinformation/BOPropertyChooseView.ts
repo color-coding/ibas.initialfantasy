@@ -27,30 +27,30 @@ namespace initialfantasy {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_name"),
-                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "code",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "16rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_property"),
-                                width: "20rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "property",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "20rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
-                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "description",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "26rem",
                             }),
                         ],
                     });
