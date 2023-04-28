@@ -16,6 +16,8 @@ namespace initialfantasy {
                 deleteDataEvent: Function;
                 /** 新建数据事件，参数1：是否克隆 */
                 createDataEvent: Function;
+                /** 选择父项资源事件 */
+                chooseParentEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -23,7 +25,7 @@ namespace initialfantasy {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_code") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -56,6 +58,19 @@ namespace initialfantasy {
                                     maxLength: 100
                                 })
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_category") }),
+                            new sap.extension.m.PropertySelect("", {
+                                dataInfo: {
+                                    code: bo.Organization.BUSINESS_OBJECT_CODE,
+                                },
+                                propertyName: "category",
+                            }).bindProperty("bindingValue", {
+                                path: "category",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 30
+                                }),
+                            }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_activated") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
@@ -63,21 +78,88 @@ namespace initialfantasy {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo()
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_dataowner") }),
-                            new sap.extension.m.DataOwnerInput("", {
-                                showValueHelp: true,
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_validdate") }),
+                            new sap.extension.m.DatePicker("", {
                             }).bindProperty("bindingValue", {
-                                path: "dataOwner",
-                                type: new sap.extension.data.Numeric()
+                                path: "validDate",
+                                type: new sap.extension.data.Date(),
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_remarks") }),
-                            new sap.extension.m.TextArea("", {
-                                rows: 3,
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_invaliddate") }),
+                            new sap.extension.m.DatePicker("", {
                             }).bindProperty("bindingValue", {
-                                path: "remarks",
-                                type: new sap.extension.data.Alphanumeric()
+                                path: "invalidDate",
+                                type: new sap.extension.data.Date(),
                             }),
-                            new sap.ui.core.Title("", {}),
+                        ]
+                    });
+                    let formMiddle: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
+                        editable: true,
+                        content: [
+                            new sap.m.IconTabBar("", {
+                                headerBackgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                backgroundDesign: sap.m.BackgroundDesign.Transparent,
+                                expandable: false,
+                                items: [
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("initialfantasy_title_general"),
+                                        content: [
+                                            new sap.ui.layout.form.SimpleForm("", {
+                                                editable: true,
+                                                content: [
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_dataowner") }),
+                                                    new sap.extension.m.DataOwnerInput("", {
+                                                        showValueHelp: true,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "dataOwner",
+                                                        type: new sap.extension.data.Numeric()
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_remarks") }),
+                                                    new sap.extension.m.TextArea("", {
+                                                        rows: 3,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "remarks",
+                                                        type: new sap.extension.data.Alphanumeric()
+                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_grouped") }),
+                                                    new sap.extension.m.EnumSelect("", {
+                                                        enumType: ibas.emYesNo
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "grouped",
+                                                        type: new sap.extension.data.YesNo(),
+                                                    }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_organization_parent") }),
+                                                    new sap.extension.m.RepositoryInput("", {
+                                                        showValueHelp: true,
+                                                        repository: bo.BORepositoryInitialFantasy,
+                                                        dataInfo: {
+                                                            type: bo.Organization,
+                                                            key: bo.Organization.PROPERTY_CODE_NAME,
+                                                            text: bo.Organization.PROPERTY_NAME_NAME
+                                                        },
+                                                        editable: {
+                                                            path: "grouped",
+                                                            type: new sap.extension.data.YesNo(),
+                                                            formatter(data: any): boolean {
+                                                                return !data;
+                                                            }
+                                                        },
+                                                        valueHelpRequest: function (): void {
+                                                            that.fireViewEvents(that.chooseParentEvent);
+                                                        }
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "parent",
+                                                        type: new sap.extension.data.Alphanumeric({
+                                                            maxLength: 30
+                                                        }),
+                                                    }),
+                                                ]
+                                            })
+                                        ]
+                                    }),
+                                ]
+                            }),
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {
@@ -134,6 +216,7 @@ namespace initialfantasy {
                         }),
                         content: [
                             formTop,
+                            formMiddle,
                         ]
                     });
                 }

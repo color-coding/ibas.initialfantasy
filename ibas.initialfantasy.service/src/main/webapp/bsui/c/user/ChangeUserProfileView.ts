@@ -35,6 +35,7 @@ namespace initialfantasy {
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
                             new sap.extension.m.Input("", {
+                                autocomplete: false,
                                 type: sap.m.InputType.Password
                             }).bindProperty("bindingValue", {
                                 path: "/password",

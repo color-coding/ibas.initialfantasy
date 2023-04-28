@@ -25,7 +25,7 @@ namespace initialfantasy {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_user") }),
                             new sap.extension.m.RepositoryInput("", {
                                 showValueHelp: true,
@@ -58,6 +58,14 @@ namespace initialfantasy {
                                 path: "identity",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_remarks") }),
+                            new sap.extension.m.TextArea("", {
+                                rows: 3,
+                            }).bindProperty("bindingValue", {
+                                path: "remarks",
+                                type: new sap.extension.data.Alphanumeric()
+                            }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_validdate") }),
                             new sap.extension.m.DatePicker("", {
                             }).bindProperty("bindingValue", {
@@ -70,14 +78,6 @@ namespace initialfantasy {
                                 path: "invalidDate",
                                 type: new sap.extension.data.Date()
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_useridentity_remarks") }),
-                            new sap.extension.m.TextArea("", {
-                                rows: 3,
-                            }).bindProperty("bindingValue", {
-                                path: "remarks",
-                                type: new sap.extension.data.Alphanumeric()
-                            }),
-                            new sap.ui.core.Title("", {}),
                         ]
                     });
                     return this.page = new sap.extension.m.Page("", {

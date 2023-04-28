@@ -26,13 +26,22 @@ namespace initialfantasy {
                         rows: "{/rows}",
                         columns: [
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_boinformation_code"),
+                                template: new sap.extension.m.Text("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "code",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                                width: "20%",
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_boinformation_name"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "name",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "18rem",
+                                width: "35%",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_boinformation_description"),
@@ -41,16 +50,7 @@ namespace initialfantasy {
                                     path: "description",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "22rem",
-                            }),
-                            new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_boinformation_code"),
-                                template: new sap.extension.m.Text("", {
-                                }).bindProperty("bindingValue", {
-                                    path: "code",
-                                    type: new sap.extension.data.Alphanumeric()
-                                }),
-                                width: "16rem",
+                                width: "45%",
                             }),
                         ],
                         nextDataSet(event: sap.ui.base.Event): void {

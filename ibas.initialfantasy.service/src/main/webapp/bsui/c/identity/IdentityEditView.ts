@@ -21,7 +21,7 @@ namespace initialfantasy {
                     let formTop: sap.ui.layout.form.SimpleForm = new sap.ui.layout.form.SimpleForm("", {
                         editable: true,
                         content: [
-                            new sap.ui.core.Title("", { text: ibas.i18n.prop("initialfantasy_title_general") }),
+                            new sap.m.Toolbar("", { visible: false }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_identity_code") }),
                             new sap.extension.m.Input("", {
                             }).bindProperty("bindingValue", {
@@ -54,13 +54,6 @@ namespace initialfantasy {
                                     maxLength: 100
                                 })
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_identity_activated") }),
-                            new sap.extension.m.EnumSelect("", {
-                                enumType: ibas.emYesNo
-                            }).bindProperty("bindingValue", {
-                                path: "activated",
-                                type: new sap.extension.data.YesNo()
-                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_identity_remarks") }),
                             new sap.extension.m.TextArea("", {
                                 rows: 3,
@@ -68,7 +61,14 @@ namespace initialfantasy {
                                 path: "remarks",
                                 type: new sap.extension.data.Alphanumeric()
                             }),
-                            new sap.ui.core.Title("", {}),
+                            new sap.m.Toolbar("", { visible: false }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_identity_activated") }),
+                            new sap.extension.m.EnumSelect("", {
+                                enumType: ibas.emYesNo
+                            }).bindProperty("bindingValue", {
+                                path: "activated",
+                                type: new sap.extension.data.YesNo()
+                            }),
                         ]
                     });
                     return this.page = new sap.extension.m.DataPage("", {

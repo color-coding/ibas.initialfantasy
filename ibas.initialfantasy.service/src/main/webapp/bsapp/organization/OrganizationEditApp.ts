@@ -31,6 +31,7 @@ namespace initialfantasy {
                 // 其他事件
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.createDataEvent = this.createData;
+                this.view.chooseParentEvent = this.chooseParent;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -171,6 +172,32 @@ namespace initialfantasy {
                     createData();
                 }
             }
+            private chooseParent(): void {
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.Organization.PROPERTY_ACTIVATED_NAME;
+                condition.value = ibas.emYesNo.YES.toString();
+                condition.operation = ibas.emConditionOperation.EQUAL;
+                condition = criteria.conditions.create();
+                condition.alias = bo.Organization.PROPERTY_CODE_NAME;
+                condition.value = this.editData.code;
+                condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                condition = criteria.conditions.create();
+                condition.alias = bo.Organization.PROPERTY_GROUPED_NAME;
+                condition.value = ibas.emYesNo.YES.toString();
+                condition.operation = ibas.emConditionOperation.EQUAL;
+                // 调用选择服务
+                ibas.servicesManager.runChooseService<bo.Organization>({
+                    boCode: bo.Organization.BUSINESS_OBJECT_CODE,
+                    criteria: criteria,
+                    chooseType: ibas.emChooseType.SINGLE,
+                    onCompleted: (selecteds) => {
+                        for (let selected of selecteds) {
+                            this.editData.parent = selected.code;
+                        }
+                    }
+                });
+            }
         }
         /** 视图-组织 */
         export interface IOrganizationEditView extends ibas.IBOEditView {
@@ -180,6 +207,8 @@ namespace initialfantasy {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+            /** 选择父项资源事件 */
+            chooseParentEvent: Function;
         }
     }
 }

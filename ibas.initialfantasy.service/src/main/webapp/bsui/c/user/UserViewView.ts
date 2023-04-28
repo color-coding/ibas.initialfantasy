@@ -108,6 +108,31 @@ namespace initialfantasy {
                             ]
                         }),
                         headerContent: [
+                            new sap.extension.m.PropertyObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_user_category"),
+                                bindingValue: {
+                                    path: "category",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                },
+                                dataInfo: {
+                                    code: bo.User.BUSINESS_OBJECT_CODE,
+                                },
+                                propertyName: "category",
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_user_validdate"),
+                                bindingValue: {
+                                    path: "validDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_user_invaliddate"),
+                                bindingValue: {
+                                    path: "invalidDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {

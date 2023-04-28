@@ -31,6 +31,15 @@ namespace initialfantasy {
             /** 电话号码 */
             phone: string;
 
+            /** 类别 */
+            category: string;
+
+            /** 生效日期 */
+            validDate: Date;
+
+            /** 失效日期 */
+            invalidDate: Date;
+
             /** 对象编号 */
             docEntry: number;
 

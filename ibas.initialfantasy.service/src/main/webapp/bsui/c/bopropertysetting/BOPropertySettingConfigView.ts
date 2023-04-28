@@ -98,7 +98,8 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
                                 sortProperty: "propertyCode",
-                                filterProperty: "propertyCode"
+                                filterProperty: "propertyCode",
+                                width: "25%",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
@@ -108,7 +109,8 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
                                 sortProperty: "propertyName",
-                                filterProperty: "propertyName"
+                                filterProperty: "propertyName",
+                                width: "30%",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_mapped"),
@@ -117,7 +119,8 @@ namespace initialfantasy {
                                     path: "propertyAlias",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                sortProperty: "propertyAlias"
+                                sortProperty: "propertyAlias",
+                                width: "20%",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_position"),
@@ -127,7 +130,8 @@ namespace initialfantasy {
                                     path: "position",
                                     type: new sap.extension.data.Numeric()
                                 }),
-                                sortProperty: "position"
+                                sortProperty: "position",
+                                width: "8rem",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_searched"),
@@ -138,7 +142,8 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Enum({
                                         enumType: bo.emSearchedValue,
                                     }),
-                                })
+                                }),
+                                width: "8rem",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_authorised"),
@@ -149,7 +154,8 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Enum({
                                         enumType: bo.emAuthorisedValue,
                                     }),
-                                })
+                                }),
+                                width: "8rem",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_required"),
@@ -160,7 +166,8 @@ namespace initialfantasy {
                                     type: new sap.extension.data.Enum({
                                         enumType: bo.emRequiredValue,
                                     }),
-                                })
+                                }),
+                                width: "8rem",
                             }),
                         ]
                     });

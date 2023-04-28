@@ -343,6 +343,99 @@ public class User extends BusinessObject<User>
 	}
 
 	/**
+	 * 属性名称-类别
+	 */
+	private static final String PROPERTY_CATEGORY_NAME = "Category";
+
+	/**
+	 * 类别 属性
+	 */
+	@DbField(name = "Category", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_CATEGORY = registerProperty(PROPERTY_CATEGORY_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-类别
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_CATEGORY_NAME)
+	public final String getCategory() {
+		return this.getProperty(PROPERTY_CATEGORY);
+	}
+
+	/**
+	 * 设置-类别
+	 * 
+	 * @param value 值
+	 */
+	public final void setCategory(String value) {
+		this.setProperty(PROPERTY_CATEGORY, value);
+	}
+
+	/**
+	 * 属性名称-生效日期
+	 */
+	private static final String PROPERTY_VALIDDATE_NAME = "ValidDate";
+
+	/**
+	 * 生效日期 属性
+	 */
+	@DbField(name = "ValidDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<DateTime> PROPERTY_VALIDDATE = registerProperty(PROPERTY_VALIDDATE_NAME,
+			DateTime.class, MY_CLASS);
+
+	/**
+	 * 获取-生效日期
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_VALIDDATE_NAME)
+	public final DateTime getValidDate() {
+		return this.getProperty(PROPERTY_VALIDDATE);
+	}
+
+	/**
+	 * 设置-生效日期
+	 * 
+	 * @param value 值
+	 */
+	public final void setValidDate(DateTime value) {
+		this.setProperty(PROPERTY_VALIDDATE, value);
+	}
+
+	/**
+	 * 属性名称-失效日期
+	 */
+	private static final String PROPERTY_INVALIDDATE_NAME = "InvalidDate";
+
+	/**
+	 * 失效日期 属性
+	 */
+	@DbField(name = "InvalidDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<DateTime> PROPERTY_INVALIDDATE = registerProperty(PROPERTY_INVALIDDATE_NAME,
+			DateTime.class, MY_CLASS);
+
+	/**
+	 * 获取-失效日期
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_INVALIDDATE_NAME)
+	public final DateTime getInvalidDate() {
+		return this.getProperty(PROPERTY_INVALIDDATE);
+	}
+
+	/**
+	 * 设置-失效日期
+	 * 
+	 * @param value 值
+	 */
+	public final void setInvalidDate(DateTime value) {
+		this.setProperty(PROPERTY_INVALIDDATE, value);
+	}
+
+	/**
 	 * 属性名称-对象编号
 	 */
 	private static final String PROPERTY_DOCENTRY_NAME = "DocEntry";

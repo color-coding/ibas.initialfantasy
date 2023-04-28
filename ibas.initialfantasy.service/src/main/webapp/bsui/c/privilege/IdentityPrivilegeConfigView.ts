@@ -125,10 +125,10 @@ namespace initialfantasy {
                                         return ibas.i18n.prop(data);
                                     }
                                 }),
+                                width: "40%",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_target"),
-                                width: "16rem",
                                 template: new sap.extension.m.Text("", {
                                     tooltip: {
                                         path: "target"
@@ -142,10 +142,10 @@ namespace initialfantasy {
                                         return ibas.i18n.prop(data);
                                     }
                                 }),
+                                width: "60%",
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_applicationelement_elementtype"),
-                                width: "8rem",
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
                                     path: "type",
@@ -153,35 +153,36 @@ namespace initialfantasy {
                                         enumType: bo.emElementType,
                                         describe: true,
                                     }),
-                                })
+                                }),
+                                width: "8rem"
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_activated"),
-                                width: "6rem",
                                 template: new sap.extension.m.CheckBox("", {
                                 }).bindProperty("bindingValue", {
                                     path: "activated",
                                     type: new sap.extension.data.YesNo()
-                                })
+                                }),
+                                width: "8rem"
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_authorisevalue"),
-                                width: "8rem",
                                 template: new sap.extension.m.EnumSelect("", {
                                     enumType: ibas.emAuthoriseType,
                                 }).bindProperty("bindingValue", {
                                     path: "authoriseValue",
                                     type: new sap.extension.data.AuthoriseType()
-                                })
+                                }),
+                                width: "8rem"
                             }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_automatic"),
-                                width: "6rem",
                                 template: new sap.extension.m.CheckBox("", {
                                 }).bindProperty("bindingValue", {
                                     path: "automatic",
                                     type: new sap.extension.data.YesNo()
-                                })
+                                }),
+                                width: "8rem"
                             }),
                         ]
                     });

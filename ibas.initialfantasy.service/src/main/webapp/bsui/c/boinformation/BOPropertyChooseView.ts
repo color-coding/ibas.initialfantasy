@@ -32,7 +32,7 @@ namespace initialfantasy {
                                     path: "code",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "16rem",
+                                width: "20%",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_property"),
@@ -41,7 +41,7 @@ namespace initialfantasy {
                                     path: "property",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "20rem",
+                                width: "35%",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
@@ -50,7 +50,7 @@ namespace initialfantasy {
                                     path: "description",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
-                                width: "26rem",
+                                width: "45%",
                             }),
                         ],
                     });

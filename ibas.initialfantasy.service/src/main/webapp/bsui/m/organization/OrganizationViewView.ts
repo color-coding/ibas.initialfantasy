@@ -10,7 +10,6 @@ namespace initialfantasy {
         export namespace m {
             /** 查看视图-组织 */
             export class OrganizationViewView extends ibas.BOViewView implements app.IOrganizationViewView {
-
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
@@ -85,8 +84,7 @@ namespace initialfantasy {
                     // 改变页面状态
                     sap.extension.pages.changeStatus(this.page);
                 }
-                protected onClosed(): void {
-                    super.onClosed();
+                showChildOrganizations(datas: bo.Organization[]): void {
                 }
             }
         }

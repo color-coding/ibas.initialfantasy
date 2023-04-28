@@ -81,6 +81,37 @@ public class UserIdentity extends BusinessObject<UserIdentity> implements IUserI
 	}
 
 	/**
+	 * 属性名称-位置
+	 */
+	private static final String PROPERTY_POSITION_NAME = "Position";
+
+	/**
+	 * 位置 属性
+	 */
+	@DbField(name = "Position", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<Integer> PROPERTY_POSITION = registerProperty(PROPERTY_POSITION_NAME,
+			Integer.class, MY_CLASS);
+
+	/**
+	 * 获取-位置
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_POSITION_NAME)
+	public final Integer getPosition() {
+		return this.getProperty(PROPERTY_POSITION);
+	}
+
+	/**
+	 * 设置-位置
+	 * 
+	 * @param value 值
+	 */
+	public final void setPosition(Integer value) {
+		this.setProperty(PROPERTY_POSITION, value);
+	}
+
+	/**
 	 * 属性名称-身份
 	 */
 	private static final String PROPERTY_IDENTITY_NAME = "Identity";

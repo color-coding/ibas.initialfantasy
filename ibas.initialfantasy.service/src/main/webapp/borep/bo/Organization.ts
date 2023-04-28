@@ -50,6 +50,61 @@ namespace initialfantasy {
                 this.setProperty(Organization.PROPERTY_ACTIVATED_NAME, value);
             }
 
+            /** 映射的属性名称-类别 */
+            static PROPERTY_CATEGORY_NAME: string = "Category";
+            /** 获取-类别 */
+            get category(): string {
+                return this.getProperty<string>(Organization.PROPERTY_CATEGORY_NAME);
+            }
+            /** 设置-类别 */
+            set category(value: string) {
+                this.setProperty(Organization.PROPERTY_CATEGORY_NAME, value);
+            }
+
+            /** 映射的属性名称-组 */
+            static PROPERTY_GROUPED_NAME: string = "Grouped";
+            /** 获取-组 */
+            get grouped(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(Organization.PROPERTY_GROUPED_NAME);
+            }
+            /** 设置-组 */
+            set grouped(value: ibas.emYesNo) {
+                this.setProperty(Organization.PROPERTY_GROUPED_NAME, value);
+            }
+
+            /** 映射的属性名称-父项 */
+            static PROPERTY_PARENT_NAME: string = "Parent";
+            /** 获取-父项 */
+            get parent(): string {
+                return this.getProperty<string>(Organization.PROPERTY_PARENT_NAME);
+            }
+            /** 设置-父项 */
+            set parent(value: string) {
+                this.setProperty(Organization.PROPERTY_PARENT_NAME, value);
+            }
+
+            /** 映射的属性名称-生效日期 */
+            static PROPERTY_VALIDDATE_NAME: string = "ValidDate";
+            /** 获取-生效日期 */
+            get validDate(): Date {
+                return this.getProperty<Date>(Organization.PROPERTY_VALIDDATE_NAME);
+            }
+            /** 设置-生效日期 */
+            set validDate(value: Date) {
+                this.setProperty(Organization.PROPERTY_VALIDDATE_NAME, value);
+            }
+
+            /** 映射的属性名称-失效日期 */
+            static PROPERTY_INVALIDDATE_NAME: string = "InvalidDate";
+            /** 获取-失效日期 */
+            get invalidDate(): Date {
+                return this.getProperty<Date>(Organization.PROPERTY_INVALIDDATE_NAME);
+            }
+            /** 设置-失效日期 */
+            set invalidDate(value: Date) {
+                this.setProperty(Organization.PROPERTY_INVALIDDATE_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
             /** 获取-对象编号 */

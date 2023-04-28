@@ -103,10 +103,12 @@ public class UserMessageBodyWriter implements MessageBodyWriter<OperationResult<
 			} else if (fieldData.getValueType() == Short.class) {
 				jsonGenerator.writeNumberField(fieldData.getName(), (Short) fieldData.getValue());
 			} else if (fieldData.getValueType() == DateTime.class) {
-				jsonGenerator.writeStringField(fieldData.getName(),
-						fieldData.getValue() instanceof DateTime
-								? ((DateTime) fieldData.getValue()).toString(DateTime.FORMAT_DATETIME)
-								: "");
+				if (fieldData.getValue() != DateTime.MIN_VALUE) {
+					jsonGenerator.writeStringField(fieldData.getName(),
+							fieldData.getValue() instanceof DateTime
+									? ((DateTime) fieldData.getValue()).toString(DateTime.FORMAT_DATETIME)
+									: "");
+				}
 			} else if (fieldData.getValueType().isEnum()) {
 				jsonGenerator.writeStringField(fieldData.getName(), fieldData.getValue().toString());
 			} else {

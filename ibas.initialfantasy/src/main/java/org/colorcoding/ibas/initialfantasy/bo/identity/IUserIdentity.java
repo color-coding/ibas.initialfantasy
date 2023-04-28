@@ -24,6 +24,20 @@ public interface IUserIdentity extends IBOSimple {
 	void setUser(String value);
 
 	/**
+	 * 获取-位置
+	 * 
+	 * @return 值
+	 */
+	Integer getPosition();
+
+	/**
+	 * 设置-位置
+	 * 
+	 * @param value 值
+	 */
+	void setPosition(Integer value);
+
+	/**
 	 * 获取-身份
 	 * 
 	 * @return 值

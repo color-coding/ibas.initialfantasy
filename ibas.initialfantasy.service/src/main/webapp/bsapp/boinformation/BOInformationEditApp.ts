@@ -39,6 +39,7 @@ namespace initialfantasy {
                 this.view.boNumberingEvent = this.boNumbering;
                 this.view.chooseLinkedObjectEvent = this.chooseLinkedObject;
                 this.view.showBORelationshipEvent = this.showBORelationship;
+                this.view.editBOInformationEvent = this.editBOInformation;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -55,49 +56,53 @@ namespace initialfantasy {
             /** 运行,覆盖原方法 */
             run(): void;
             run(data: bo.BOInformation): void;
+            run(data: ibas.ICriteria): void;
             run(): void {
-                let that: this = this;
-                if (ibas.objects.instanceOf(arguments[0], bo.BOInformation)) {
+                if (arguments[0] instanceof bo.BOInformation) {
                     let data: bo.BOInformation = arguments[0];
                     // 新对象直接编辑
                     if (data.isNew) {
-                        that.editData = data;
-                        that.show();
-                        return;
+                        this.editData = data;
+                        this.show();
+                    } else {
+                        // 尝试重新查询编辑对象
+                        let criteria: ibas.ICriteria = data.criteria();
+                        if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
+                            this.run(criteria);
+                        } else {
+                            super.run();
+                        }
                     }
-                    // 尝试重新查询编辑对象
-                    let criteria: ibas.ICriteria = data.criteria();
-                    if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
-                        // 有效的查询对象查询
-                        let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
-                        boRepository.fetchBOInformation({
-                            criteria: criteria,
-                            onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
-                                let data: bo.BOInformation;
-                                if (opRslt.resultCode === 0) {
-                                    data = opRslt.resultObjects.firstOrDefault();
-                                }
-                                if (ibas.objects.instanceOf(data, bo.BOInformation)) {
-                                    // 查询到了有效数据
-                                    that.editData = data;
-                                    that.show();
-                                } else {
-                                    // 数据重新检索无效
-                                    that.messages({
-                                        type: ibas.emMessageType.WARNING,
-                                        message: ibas.i18n.prop("shell_data_deleted_and_created"),
-                                        onCompleted(): void {
-                                            that.show();
-                                        }
-                                    });
-                                }
+                } else if (arguments[0] instanceof ibas.Criteria) {
+                    let that: this = this;
+                    let criteria: ibas.ICriteria = arguments[0];
+                    let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                    boRepository.fetchBOInformation({
+                        criteria: criteria,
+                        onCompleted(opRslt: ibas.IOperationResult<bo.BOInformation>): void {
+                            let data: bo.BOInformation;
+                            if (opRslt.resultCode === 0) {
+                                data = opRslt.resultObjects.firstOrDefault();
                             }
-                        });
-                        // 开始查询数据
-                        return;
-                    }
+                            if (ibas.objects.instanceOf(data, bo.BOInformation)) {
+                                // 查询到了有效数据
+                                that.editData = data;
+                                that.show();
+                            } else {
+                                // 数据重新检索无效
+                                that.messages({
+                                    type: ibas.emMessageType.WARNING,
+                                    message: ibas.i18n.prop("shell_data_deleted_and_created"),
+                                    onCompleted(): void {
+                                        that.show();
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    super.run.apply(this, arguments);
                 }
-                super.run.apply(this, arguments);
             }
             /** 保存数据 */
             protected saveData(): void {
@@ -333,6 +338,26 @@ namespace initialfantasy {
                     }
                 });
             }
+            protected editBOInformation(data: bo.BOPropertyInformation): void {
+                // 检查目标数据
+                if (ibas.objects.isNull(data)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("shell_data_edit")
+                    ));
+                    return;
+                }
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
+                condition.value = data.mapped;
+                condition = criteria.conditions.create();
+                condition.alias = bo.BOInformation.PROPERTY_NAME_NAME;
+                condition.value = data.dataType;
+                let app: BOInformationEditApp = new BOInformationEditApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run(criteria);
+            }
         }
         /** 视图-业务对象信息 */
         export interface IBOInformationEditView extends ibas.IBOEditView {
@@ -364,6 +389,8 @@ namespace initialfantasy {
             showBORelationshipEvent: Function;
             /** 显示对象关系 */
             showBORelationships(datas: bo.BORelationship[]): void;
+            /** 编辑业务对象信息 */
+            editBOInformationEvent: Function;
         }
     }
 }

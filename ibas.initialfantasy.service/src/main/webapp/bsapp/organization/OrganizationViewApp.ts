@@ -39,6 +39,32 @@ namespace initialfantasy {
                     this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
                 }
                 this.view.showOrganization(this.viewData);
+                if (this.viewData.isNew === false && this.viewData.grouped === ibas.emYesNo.YES) {
+                    this.busy(true);
+                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.Organization.PROPERTY_PARENT_NAME;
+                    condition.value = this.viewData.code;
+                    condition = criteria.conditions.create();
+                    condition.alias = bo.Organization.PROPERTY_ACTIVATED_NAME;
+                    condition.value = ibas.emYesNo.YES.toString();
+                    let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                    boRepository.fetchOrganization({
+                        criteria: criteria,
+                        onCompleted: (opRslt) => {
+                            try {
+                                this.busy(false);
+                                if (opRslt.resultCode !== 0) {
+                                    throw new Error(opRslt.message);
+                                }
+                                this.view.showChildOrganizations(opRslt.resultObjects);
+                            } catch (error) {
+                                this.messages(error);
+                            }
+
+                        }
+                    });
+                }
             }
             /** 编辑数据，参数：目标数据 */
             protected editData(): void {
@@ -99,7 +125,8 @@ namespace initialfantasy {
         export interface IOrganizationViewView extends ibas.IBOViewView {
             /** 显示数据 */
             showOrganization(data: bo.Organization): void;
-
+            /** 显示数据子项 */
+            showChildOrganizations(datas: bo.Organization[]): void;
         }
         /** 组织连接服务映射 */
         export class OrganizationLinkServiceMapping extends ibas.BOLinkServiceMapping {

@@ -3,6 +3,7 @@
 <Domain Name="InitialFantasy" ShortName="IF">
   <Model Name="UserIdentity" Description="用户身份" ModelType="Simple" Mapped="${Company}_SYS_USRIDNTY">
     <Property Name="User" Description="用户" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="User"/>
+    <Property Name="Position" Description="位置" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Position"/>
     <Property Name="Identity" Description="身份" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Identity"/>
     <Property Name="ValidDate" Description="生效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="ValidDate"/>
     <Property Name="InvalidDate" Description="失效日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="InvalidDate"/>

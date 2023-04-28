@@ -32,7 +32,8 @@ namespace initialfantasy {
                         columns: [
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_organization_code"),
-                                template: new sap.extension.m.Text("", {
+                                template: new sap.extension.m.DataLink("", {
+                                    objectCode: bo.Organization.BUSINESS_OBJECT_CODE
                                 }).bindProperty("bindingValue", {
                                     path: "code",
                                     type: new sap.extension.data.Alphanumeric()
@@ -53,6 +54,18 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "activated",
                                     type: new sap.extension.data.YesNo(true)
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_organization_category"),
+                                template: new sap.extension.m.PropertyText("", {
+                                    dataInfo: {
+                                        code: bo.Organization.BUSINESS_OBJECT_CODE,
+                                    },
+                                    propertyName: "category",
+                                }).bindProperty("bindingValue", {
+                                    path: "category",
+                                    type: new sap.extension.data.Alphanumeric(),
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {

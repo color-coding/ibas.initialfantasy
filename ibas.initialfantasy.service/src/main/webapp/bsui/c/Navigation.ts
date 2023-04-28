@@ -178,6 +178,9 @@ namespace initialfantasy {
                     case app.UserIdentityEditApp.APPLICATION_ID:
                         view = new c.UserIdentityEditView();
                         break;
+                    case app.UserIdentityApp.APPLICATION_ID:
+                        view = new c.UserIdentityView();
+                        break;
                     case app.BOPropertySettingConfigApp.APPLICATION_ID:
                         view = new c.BOPropertySettingConfigView();
                         break;

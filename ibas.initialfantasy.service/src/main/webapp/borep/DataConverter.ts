@@ -47,6 +47,10 @@ namespace initialfantasy {
                     if (property === bo.User.PROPERTY_SUPER_NAME) {
                         return ibas.enums.toString(ibas.emYesNo, value);
                     }
+                } else if (boName === bo.Organization.name) {
+                    if (property === bo.Organization.PROPERTY_GROUPED_NAME) {
+                        return ibas.enums.toString(ibas.emYesNo, value);
+                    }
                 } else if (boName === bo.BOCriteria.name) {
                     if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
                         return ibas.enums.toString(bo.emAssignedType, value);
@@ -126,6 +130,10 @@ namespace initialfantasy {
             protected parsingData(boName: string, property: string, value: any): any {
                 if (boName === bo.User.name) {
                     if (property === bo.User.PROPERTY_SUPER_NAME) {
+                        return ibas.enums.valueOf(ibas.emYesNo, value);
+                    }
+                } else if (boName === bo.Organization.name) {
+                    if (property === bo.Organization.PROPERTY_GROUPED_NAME) {
                         return ibas.enums.valueOf(ibas.emYesNo, value);
                     }
                 } else if (boName === bo.BOCriteria.name) {

@@ -94,6 +94,39 @@ namespace initialfantasy {
                 this.setProperty(User.PROPERTY_PHONE_NAME, value);
             }
 
+            /** 映射的属性名称-类别 */
+            static PROPERTY_CATEGORY_NAME: string = "Category";
+            /** 获取-类别 */
+            get category(): string {
+                return this.getProperty<string>(User.PROPERTY_CATEGORY_NAME);
+            }
+            /** 设置-类别 */
+            set category(value: string) {
+                this.setProperty(User.PROPERTY_CATEGORY_NAME, value);
+            }
+
+            /** 映射的属性名称-生效日期 */
+            static PROPERTY_VALIDDATE_NAME: string = "ValidDate";
+            /** 获取-生效日期 */
+            get validDate(): Date {
+                return this.getProperty<Date>(User.PROPERTY_VALIDDATE_NAME);
+            }
+            /** 设置-生效日期 */
+            set validDate(value: Date) {
+                this.setProperty(User.PROPERTY_VALIDDATE_NAME, value);
+            }
+
+            /** 映射的属性名称-失效日期 */
+            static PROPERTY_INVALIDDATE_NAME: string = "InvalidDate";
+            /** 获取-失效日期 */
+            get invalidDate(): Date {
+                return this.getProperty<Date>(User.PROPERTY_INVALIDDATE_NAME);
+            }
+            /** 设置-失效日期 */
+            set invalidDate(value: Date) {
+                this.setProperty(User.PROPERTY_INVALIDDATE_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
             /** 获取-对象编号 */

@@ -68,6 +68,18 @@ namespace initialfantasy {
                                 width: "8rem",
                             }),
                             new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_user_category"),
+                                template: new sap.extension.m.PropertyText("", {
+                                    dataInfo: {
+                                        code: bo.User.BUSINESS_OBJECT_CODE,
+                                    },
+                                    propertyName: "category",
+                                }).bindProperty("bindingValue", {
+                                    path: "category",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
+                            }),
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_user_belongs"),
                                 template: new sap.extension.m.OrganizationText("", {
                                 }).bindProperty("bindingValue", {

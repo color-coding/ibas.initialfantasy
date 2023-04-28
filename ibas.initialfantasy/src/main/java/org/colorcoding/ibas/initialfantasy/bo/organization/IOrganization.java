@@ -53,6 +53,76 @@ public interface IOrganization extends IBOMasterData {
 	void setActivated(emYesNo value);
 
 	/**
+	 * 获取-类别
+	 * 
+	 * @return 值
+	 */
+	String getCategory();
+
+	/**
+	 * 设置-类别
+	 * 
+	 * @param value 值
+	 */
+	void setCategory(String value);
+
+	/**
+	 * 获取-组
+	 * 
+	 * @return 值
+	 */
+	emYesNo getGrouped();
+
+	/**
+	 * 设置-组
+	 * 
+	 * @param value 值
+	 */
+	void setGrouped(emYesNo value);
+
+	/**
+	 * 获取-父项
+	 * 
+	 * @return 值
+	 */
+	String getParent();
+
+	/**
+	 * 设置-父项
+	 * 
+	 * @param value 值
+	 */
+	void setParent(String value);
+
+	/**
+	 * 获取-生效日期
+	 * 
+	 * @return 值
+	 */
+	DateTime getValidDate();
+
+	/**
+	 * 设置-生效日期
+	 * 
+	 * @param value 值
+	 */
+	void setValidDate(DateTime value);
+
+	/**
+	 * 获取-失效日期
+	 * 
+	 * @return 值
+	 */
+	DateTime getInvalidDate();
+
+	/**
+	 * 设置-失效日期
+	 * 
+	 * @param value 值
+	 */
+	void setInvalidDate(DateTime value);
+
+	/**
 	 * 获取-对象编号
 	 * 
 	 * @return 值

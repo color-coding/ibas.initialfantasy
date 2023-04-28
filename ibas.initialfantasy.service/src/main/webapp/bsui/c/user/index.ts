@@ -11,3 +11,4 @@
 /// <reference path="./UserListView.ts" />
 /// <reference path="./UserProfileView.ts" />
 /// <reference path="./UserViewView.ts" />
+/// <reference path="./UserIdentityView.ts" />

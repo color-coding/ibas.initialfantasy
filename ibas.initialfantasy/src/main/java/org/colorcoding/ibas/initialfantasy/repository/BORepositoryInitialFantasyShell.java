@@ -18,6 +18,7 @@ import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.ArrayList;
+import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
@@ -65,11 +66,43 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			// 当前口令被失败，判断用户状态
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
-			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
-			condition.setValue(emYesNo.YES);
-			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
 			condition.setValue(this.getCurrentUser().getId());
+			condition = criteria.getConditions().create();
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			// 当前日期
+			String date = DateTime.getToday().toString();
+			// 有效日期
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.NOT_NULL);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(2);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.LESS_EQUAL);
+			condition.setValue(date);
+			// 失效日期
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.NOT_NULL);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(2);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setValue(date);
 			// 新仓库查询用户，避免权限问题
 			BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell();
 			boRepository.setCurrentUser(OrganizationFactory.SYSTEM_USER.getToken());
@@ -101,31 +134,62 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			this.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
-			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
-			condition.setValue(emYesNo.YES);
-			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_CODE.getName());
 			condition.setValue(user);
-			if (user != null && !user.isEmpty()) {
-				// 邮箱登录
-				condition.setBracketOpen(1);
-				if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_MAIL_LOGIN, false)) {
-					condition = criteria.getConditions().create();
-					condition
-							.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_MAIL.getName());
-					condition.setValue(user);
-					condition.setRelationship(ConditionRelationship.OR);
-				}
-				// 手机登录
-				if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_PHONE_LOGIN, false)) {
-					condition = criteria.getConditions().create();
-					condition.setAlias(
-							org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_PHONE.getName());
-					condition.setValue(user);
-					condition.setRelationship(ConditionRelationship.OR);
-				}
-				condition.setBracketClose(1);
+			// 邮箱登录
+			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_MAIL_LOGIN, false)) {
+				condition = criteria.getConditions().create();
+				condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_MAIL.getName());
+				condition.setValue(user);
+				condition.setRelationship(ConditionRelationship.OR);
 			}
+			// 手机登录
+			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_PHONE_LOGIN, false)) {
+				condition = criteria.getConditions().create();
+				condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_PHONE.getName());
+				condition.setValue(user);
+				condition.setRelationship(ConditionRelationship.OR);
+			}
+			if (criteria.getConditions().size() > 1) {
+				criteria.getConditions().firstOrDefault().setBracketOpen(1);
+				criteria.getConditions().lastOrDefault().setBracketClose(1);
+			}
+			// 是否激活
+			condition = criteria.getConditions().create();
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			// 当前日期
+			String date = DateTime.getToday().toString();
+			// 有效日期
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.NOT_NULL);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(2);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.LESS_EQUAL);
+			condition.setValue(date);
+			// 失效日期
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketOpen(1);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.NOT_NULL);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(2);
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setValue(date);
 			IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
 			if (opRsltUser.getError() != null) {
 				throw opRsltUser.getError();

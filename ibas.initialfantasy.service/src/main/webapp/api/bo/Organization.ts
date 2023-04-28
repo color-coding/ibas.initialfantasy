@@ -20,6 +20,21 @@ namespace initialfantasy {
             /** 激活 */
             activated: ibas.emYesNo;
 
+            /** 类别 */
+            category: string;
+
+            /** 组 */
+            grouped: ibas.emYesNo;
+
+            /** 父项 */
+            parent: string;
+
+            /** 生效日期 */
+            validDate: Date;
+
+            /** 失效日期 */
+            invalidDate: Date;
+
             /** 对象编号 */
             docEntry: number;
 

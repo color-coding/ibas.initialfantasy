@@ -32,6 +32,7 @@ namespace initialfantasy {
                 this.view.deleteDataEvent = this.deleteData;
                 this.view.createDataEvent = this.createData;
                 this.view.chooseOrganizationEvent = this.chooseOrganization;
+                this.view.editUserIdentityEvent = this.editUserIdentity;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -185,6 +186,12 @@ namespace initialfantasy {
                     }
                 });
             }
+            protected editUserIdentity(): void {
+                let app: UserIdentityApp = new UserIdentityApp();
+                app.navigation = this.navigation;
+                app.viewShower = this.viewShower;
+                app.run(this.editData);
+            }
         }
         /** 视图-用户 */
         export interface IUserEditView extends ibas.IBOEditView {
@@ -196,6 +203,8 @@ namespace initialfantasy {
             createDataEvent: Function;
             /** 选择组织 */
             chooseOrganizationEvent: Function;
+            /** 编辑用户身份 */
+            editUserIdentityEvent: Function;
         }
     }
 }

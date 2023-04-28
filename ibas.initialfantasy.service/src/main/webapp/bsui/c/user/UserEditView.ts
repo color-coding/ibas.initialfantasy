@@ -18,6 +18,8 @@ namespace initialfantasy {
                 createDataEvent: Function;
                 /** 选择组织 */
                 chooseOrganizationEvent: Function;
+                /** 编辑用户身份 */
+                editUserIdentityEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -58,28 +60,37 @@ namespace initialfantasy {
                                     maxLength: 100
                                 })
                             }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
-                            new sap.extension.m.Input("", {
-                                type: sap.m.InputType.Password
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_category") }),
+                            new sap.extension.m.PropertySelect("", {
+                                dataInfo: {
+                                    code: bo.User.BUSINESS_OBJECT_CODE,
+                                },
+                                propertyName: "category",
                             }).bindProperty("bindingValue", {
-                                path: "password",
-                                type: new sap.extension.data.Alphanumeric()
+                                path: "category",
+                                type: new sap.extension.data.Alphanumeric({
+                                    maxLength: 30
+                                }),
                             }),
                             new sap.m.Toolbar("", { visible: false }),
-                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
-                            new sap.extension.m.Input("", {
-                                enabled: false,
-                                type: sap.m.InputType.Number
-                            }).bindProperty("bindingValue", {
-                                path: "docEntry",
-                                type: new sap.extension.data.Numeric()
-                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_activated") }),
                             new sap.extension.m.EnumSelect("", {
                                 enumType: ibas.emYesNo
                             }).bindProperty("bindingValue", {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo()
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_validdate") }),
+                            new sap.extension.m.DatePicker("", {
+                            }).bindProperty("bindingValue", {
+                                path: "validDate",
+                                type: new sap.extension.data.Date(),
+                            }),
+                            new sap.m.Label("", { text: ibas.i18n.prop("bo_user_invaliddate") }),
+                            new sap.extension.m.DatePicker("", {
+                            }).bindProperty("bindingValue", {
+                                path: "invalidDate",
+                                type: new sap.extension.data.Date(),
                             }),
                         ],
                     });
@@ -98,6 +109,14 @@ namespace initialfantasy {
                                                 editable: true,
                                                 content: [
                                                     new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
+                                                    new sap.extension.m.Input("", {
+                                                        autocomplete: false,
+                                                        type: sap.m.InputType.Password
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "password",
+                                                        type: new sap.extension.data.Alphanumeric()
+                                                    }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_mail") }),
                                                     new sap.extension.m.Input("", {
                                                     }).bindProperty("bindingValue", {
@@ -115,6 +134,14 @@ namespace initialfantasy {
                                                         })
                                                     }),
                                                     new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
+                                                    new sap.extension.m.Input("", {
+                                                        enabled: false,
+                                                        type: sap.m.InputType.Number
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "docEntry",
+                                                        type: new sap.extension.data.Numeric()
+                                                    }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_super") }),
                                                     new sap.extension.m.EnumSelect("", {
                                                         enumType: ibas.emYesNo
@@ -210,6 +237,23 @@ namespace initialfantasy {
                                         ],
                                     })
                                 }),
+                                new sap.m.ToolbarSeparator(),
+                                this.quickButton = new sap.m.MenuButton("", {
+                                    text: ibas.i18n.prop("shell_quick_to"),
+                                    icon: "sap-icon://generate-shortcut",
+                                    type: sap.m.ButtonType.Transparent,
+                                    menu: new sap.m.Menu("", {
+                                        items: [
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.i18n.prop("initialfantasy_app_user_identity"),
+                                                icon: "sap-icon://account",
+                                                press: function (): void {
+                                                    that.fireViewEvents(that.editUserIdentityEvent);
+                                                }
+                                            }),
+                                        ],
+                                    })
+                                }),
                             ]
                         }),
                         content: [
@@ -220,11 +264,13 @@ namespace initialfantasy {
                     });
                 }
                 private page: sap.extension.m.Page;
+                private quickButton: sap.m.MenuButton;
                 /** 显示数据 */
                 showUser(data: bo.User): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
                     // 改变页面状态
                     sap.extension.pages.changeStatus(this.page);
+                    this.quickButton.setVisible(!data.isNew);
                 }
             }
         }

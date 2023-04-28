@@ -14,6 +14,76 @@ namespace initialfantasy {
                 /** 绘制视图 */
                 draw(): any {
                     let that: this = this;
+                    this.tableOrganizations = new sap.extension.m.DataTable("", {
+                        autoPopinMode: true,
+                        dataInfo: {
+                            code: bo.Organization.BUSINESS_OBJECT_CODE,
+                        },
+                        columns: [
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_organization_code"),
+                                width: "10rem",
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_organization_name"),
+                                width: "16rem",
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_organization_category"),
+                                width: "10rem",
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_organization_remarks"),
+                            }),
+                        ],
+                        items: {
+                            path: "/rows",
+                            template: new sap.extension.m.ColumnListItem("", {
+                                cells: [
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "code",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "name",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.PropertyObjectAttribute("", {
+                                        dataInfo: {
+                                            code: bo.Organization.BUSINESS_OBJECT_CODE,
+                                        },
+                                        propertyName: "category",
+                                    }).bindProperty("bindingValue", {
+                                        path: "category",
+                                        type: new sap.extension.data.Alphanumeric({
+                                            maxLength: 30
+                                        }),
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "remarks",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                ],
+                                type: sap.m.ListType.Detail,
+                                detailIcon: "sap-icon://shortcut",
+                                detailPress(this: sap.m.ColumnListItem): void {
+                                    let data: any = this.getBindingContext().getObject();
+                                    if (data instanceof bo.Organization) {
+                                        ibas.servicesManager.runLinkService({
+                                            boCode: bo.Organization.BUSINESS_OBJECT_CODE,
+                                            linkValue: data.code,
+                                        });
+                                    }
+                                },
+                            }),
+                        }
+                    });
                     return this.page = new sap.extension.uxap.DataObjectPageLayout("", {
                         dataInfo: {
                             code: bo.Organization.BUSINESS_OBJECT_CODE,
@@ -101,8 +171,44 @@ namespace initialfantasy {
                             ]
                         }),
                         headerContent: [
+                            new sap.extension.m.PropertyObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_organization_category"),
+                                bindingValue: {
+                                    path: "category",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                },
+                                dataInfo: {
+                                    code: bo.Organization.BUSINESS_OBJECT_CODE,
+                                },
+                                propertyName: "category",
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_organization_validdate"),
+                                bindingValue: {
+                                    path: "validDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_organization_invaliddate"),
+                                bindingValue: {
+                                    path: "invalidDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
                         ],
                         sections: [
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("initialfantasy_title_organization"),
+                                subSections: [
+                                    new sap.uxap.ObjectPageSubSection("", {
+                                        blocks: [
+                                            this.tableOrganizations
+                                        ],
+                                    })
+                                ],
+                                visible: false,
+                            }),
                             new sap.uxap.ObjectPageSection("", {
                                 showTitle: false,
                                 subSections: [
@@ -141,10 +247,19 @@ namespace initialfantasy {
                 }
 
                 private page: sap.extension.uxap.ObjectPageLayout;
+                private tableOrganizations: sap.extension.m.Table;
 
                 /** 显示数据 */
                 showOrganization(data: bo.Organization): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
+                }
+                /** 显示数据-子项资源 */
+                showChildOrganizations(datas: bo.Organization[]): void {
+                    if (datas.length > 0) {
+                        (<any>this.tableOrganizations.getParent().getParent()).setVisible(false);
+                        (<any>this.tableOrganizations.getParent().getParent()).setVisible(true);
+                    }
+                    this.tableOrganizations.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
             }
         }

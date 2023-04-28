@@ -11,6 +11,8 @@ namespace initialfantasy {
         export interface IUserIdentity extends ibas.IBOSimple {
             /** 用户 */
             user: string;
+            /** 位置 */
+            position: number;
             /** 身份 */
             identity: string;
             /** 生效日期 */

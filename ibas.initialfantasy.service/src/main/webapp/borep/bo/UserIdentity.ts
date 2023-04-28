@@ -26,6 +26,17 @@ namespace initialfantasy {
                 this.setProperty(UserIdentity.PROPERTY_USER_NAME, value);
             }
 
+            /** 映射的属性名称-位置 */
+            static PROPERTY_POSITION_NAME: string = "Position";
+            /** 获取-位置 */
+            get position(): number {
+                return this.getProperty<number>(UserIdentity.PROPERTY_POSITION_NAME);
+            }
+            /** 设置-位置 */
+            set position(value: number) {
+                this.setProperty(UserIdentity.PROPERTY_POSITION_NAME, value);
+            }
+
             /** 映射的属性名称-身份 */
             static PROPERTY_IDENTITY_NAME: string = "Identity";
             /** 获取-身份 */
@@ -218,6 +229,35 @@ namespace initialfantasy {
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(UserIdentity.BUSINESS_OBJECT_CODE);
+            }
+        }
+        /** 用户身份 集合 */
+        export class UserIdentities extends ibas.BusinessObjectsBase<UserIdentity>  {
+            /** 创建并添加子项 */
+            create(): UserIdentity {
+                let item: UserIdentity = new UserIdentity();
+                this.add(item);
+                return item;
+            }
+            /**
+             * 添加项目后
+             * @param item 项目
+             */
+            protected afterAdd(item: UserIdentity): void {
+                super.afterAdd(item);
+                let max: number = 0;
+                for (let element of this) {
+                    if (item === element) {
+                        continue;
+                    }
+                    if (element.position > max) {
+                        max = element.position;
+                    }
+                }
+                item.position = (Math.round((max / 10)) + 1) * 10;
+                if (item.position <= 0) {
+                    item.position = 10;
+                }
             }
         }
 
