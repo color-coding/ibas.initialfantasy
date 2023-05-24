@@ -19,6 +19,7 @@ import org.colorcoding.ibas.bobas.serialization.Serializable;
 @XmlType(name = "UserModule")
 @XmlRootElement(name = "UserModule")
 public class UserModule extends Serializable {
+
 	private static final long serialVersionUID = 3831331968318582560L;
 
 	public static UserModule create(ApplicationModule4Shell applicationModule) {
@@ -30,6 +31,17 @@ public class UserModule extends Serializable {
 		userModule.setRepository("");
 		userModule.setAddress("");
 		return userModule;
+	}
+
+	private int order;
+
+	/** 加载顺序 */
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 	/** 唯一标识 */

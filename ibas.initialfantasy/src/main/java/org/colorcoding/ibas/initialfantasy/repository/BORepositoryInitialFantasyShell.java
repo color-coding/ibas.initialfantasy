@@ -259,19 +259,20 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (opRsltModules.getError() != null) {
 				throw opRsltModules.getError();
 			}
-			// 去重
-			OperationResult<UserModule> opRslt = new OperationResult<UserModule>();
+			// 模块去重，获取有效地址
 			ServiceRouting serviceRouting = ServiceRouting.create();
+			ArrayList<UserModule> userModules = new ArrayList<UserModule>();
 			for (ApplicationModule4Shell item : opRsltModules.getResultObjects()) {
 				if (item.getAuthoriseValue() == emAuthoriseType.NONE) {
 					continue;
 				}
-				UserModule userModule = opRslt.getResultObjects()
-						.firstOrDefault(c -> c.getId().equals(item.getModuleId()));
+				UserModule userModule = userModules.firstOrDefault(c -> c.getId().equals(item.getModuleId()));
 				if (userModule == null) {
 					userModule = UserModule.create(item);
-					serviceRouting.routing(userModule);// 设置有效服务
-					opRslt.addResultObjects(userModule);
+					// 设置有效服务
+					if (serviceRouting.routing(userModule)) {
+						userModules.add(userModule);
+					}
 				} else {
 					// 保留最小权限设置
 					if (userModule.getAuthorise().compareTo(item.getAuthoriseValue()) < 0) {
@@ -279,7 +280,11 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					}
 				}
 			}
-			return opRslt;
+			// 模块排序
+			userModules.sort((a, b) -> {
+				return a.getOrder() - b.getOrder();
+			});
+			return new OperationResult<UserModule>().addResultObjects(userModules);
 		} catch (Exception e) {
 			return new OperationResult<>(e);
 		}
@@ -689,13 +694,6 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		return operationResult;
 	}
 
-	/**
-	 * 保存-用户
-	 * 
-	 * @param bo    对象实例
-	 * @param token 口令
-	 * @return 操作结果
-	 */
 	@Override
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> saveUser(
 			org.colorcoding.ibas.initialfantasy.bo.organization.User bo, String token) {

@@ -25,6 +25,7 @@ import org.colorcoding.ibas.bobas.serialization.SerializationException;
 import org.colorcoding.ibas.bobas.serialization.SerializerFactory;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 
 /**
  * 分配有效的服务
@@ -39,6 +40,7 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 public class ServiceRouting {
 	public static final String MSG_SERVICE_ROUTING_LOAD_CONFIG = "routing: load config [%s].";
 	public static final String MSG_SERVICE_ROUTING_ADDRESS = "routing: module [%s - %s].\n  data: [%s].\n  view: [%s].";
+	public static final String MSG_SERVICE_FAILD_ROUTING_ADDRESS = "routing: not found module [%s - %s] service.";
 
 	private ServiceRouting() {
 		this.services = new ArrayList<>();
@@ -180,14 +182,19 @@ public class ServiceRouting {
 	 */
 	public boolean routing(UserModule module) {
 		boolean done = false;
-		if (module == null || module.getId() == null) {
+		if (module == null) {
 			return done;
 		}
-		for (ServiceInformation service : this.getServices()) {
+		if (DataConvert.isNullOrEmpty(module.getId())) {
+			return done;
+		}
+		for (int i = 0; i < this.getServices().size(); i++) {
+			ServiceInformation service = this.getServices().get(i);
 			if (!module.getId().equals(service.getId())) {
 				// 相同的模块ID
 				continue;
 			}
+			module.setOrder(i);
 			module.setRuntime(service.getRuntime());
 			for (ServiceProvider provider : service.getProviders()) {
 				if (!provider.check()) {
@@ -208,12 +215,16 @@ public class ServiceRouting {
 			}
 		}
 		// 判断模块是否可用
-		if ((module.getRepository() != null && !module.getRepository().isEmpty())
-				&& (module.getAddress() != null && !module.getAddress().isEmpty())) {
+		if (!DataConvert.isNullOrEmpty(module.getRepository()) && !DataConvert.isNullOrEmpty(module.getAddress())) {
 			done = true;
 			if (MyConfiguration.isDebugMode()) {
 				Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
 						module.getAddress());
+			}
+		} else {
+			done = false;
+			if (MyConfiguration.isDebugMode()) {
+				Logger.log(MSG_SERVICE_FAILD_ROUTING_ADDRESS, module.getId(), module.getName());
 			}
 		}
 		return done;
