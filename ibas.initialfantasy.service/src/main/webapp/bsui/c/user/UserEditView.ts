@@ -119,6 +119,7 @@ namespace initialfantasy {
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_mail") }),
                                                     new sap.extension.m.Input("", {
+                                                        autocomplete: false,
                                                     }).bindProperty("bindingValue", {
                                                         path: "mail",
                                                         type: new sap.extension.data.Alphanumeric({
@@ -127,6 +128,7 @@ namespace initialfantasy {
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_phone") }),
                                                     new sap.extension.m.Input("", {
+                                                        autocomplete: false,
                                                     }).bindProperty("bindingValue", {
                                                         path: "phone",
                                                         type: new sap.extension.data.Alphanumeric({
