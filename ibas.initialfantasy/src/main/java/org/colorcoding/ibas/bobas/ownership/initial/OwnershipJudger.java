@@ -220,6 +220,7 @@ public class OwnershipJudger implements IOwnershipJudger {
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
 										.equals(condition.getAlias())) {
 									condition.setAlias(sUser.getCode());
+									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
 								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_NAME
 										.equals(condition.getAlias())) {
 									condition.setAlias(sUser.getName());
