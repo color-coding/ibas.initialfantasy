@@ -315,6 +315,7 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }),
+                                        new sap.m.ToolbarSeparator(),
                                         new sap.m.MenuButton("", {
                                             text: ibas.i18n.prop("bo_bopropertysetting_authorised"),
                                             icon: "sap-icon://bullet-text",

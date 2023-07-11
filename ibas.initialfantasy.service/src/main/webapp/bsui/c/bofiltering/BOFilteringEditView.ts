@@ -8,16 +8,6 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
-            /** 变量-用户ID */
-            const VARIABLE_NAME_USER_ID: string = "${USER_ID}";
-            /** 变量-用户归属 */
-            const VARIABLE_NAME_USER_BELONG: string = "${USER_BELONG}";
-            /** 变量-用户编码 */
-            const VARIABLE_NAME_USER_CODE: string = "${USER_CODE}";
-            /** 变量-用户名称 */
-            const VARIABLE_NAME_USER_NAME: string = "${USER_NAME}";
-            /** 变量-用户身份 */
-            const VARIABLE_NAME_USER_IDENTITIES: string = "${USER_IDENTITIES}";
             /** 视图-BOFiltering */
             export class BOFilteringEditView extends ibas.BOEditView implements app.IBOFilteringEditView {
                 /** 删除数据事件 */
@@ -216,13 +206,13 @@ namespace initialfantasy {
                                                             showSuggestion: true,
                                                             suggestionItems: [
                                                                 new sap.ui.core.Item("", {
-                                                                }).setText(VARIABLE_NAME_USER_ID),
+                                                                }).setText(ibas.VARIABLE_NAME_USER_ID),
                                                                 new sap.ui.core.Item("", {
-                                                                }).setText(VARIABLE_NAME_USER_CODE),
+                                                                }).setText(ibas.VARIABLE_NAME_USER_CODE),
                                                                 new sap.ui.core.Item("", {
-                                                                }).setText(VARIABLE_NAME_USER_NAME),
+                                                                }).setText(ibas.VARIABLE_NAME_USER_NAME),
                                                                 new sap.ui.core.Item("", {
-                                                                }).setText(VARIABLE_NAME_USER_BELONG),
+                                                                }).setText(ibas.VARIABLE_NAME_USER_BELONG),
                                                             ]
                                                         }).bindProperty("bindingValue", {
                                                             path: "conditionValue",
@@ -381,23 +371,23 @@ namespace initialfantasy {
                             }
                             // 系统变量
                             template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(VARIABLE_NAME_USER_ID)
+                                .setKey(ibas.VARIABLE_NAME_USER_ID)
                                 .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id"))
                             );
                             template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(VARIABLE_NAME_USER_CODE)
+                                .setKey(ibas.VARIABLE_NAME_USER_CODE)
                                 .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code"))
                             );
                             template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(VARIABLE_NAME_USER_NAME)
+                                .setKey(ibas.VARIABLE_NAME_USER_NAME)
                                 .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name"))
                             );
                             template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(VARIABLE_NAME_USER_BELONG)
+                                .setKey(ibas.VARIABLE_NAME_USER_BELONG)
                                 .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong"))
                             );
                             template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(VARIABLE_NAME_USER_IDENTITIES)
+                                .setKey(ibas.VARIABLE_NAME_USER_IDENTITIES)
                                 .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities"))
                             );
                             this.columnProperty.setTemplate(template);
@@ -552,15 +542,15 @@ namespace initialfantasy {
                 /** 获取属性描述 */
                 describeProperty(data: string): string {
                     switch (data) {
-                        case VARIABLE_NAME_USER_ID:
+                        case ibas.VARIABLE_NAME_USER_ID:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id");
-                        case VARIABLE_NAME_USER_CODE:
+                        case ibas.VARIABLE_NAME_USER_CODE:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code");
-                        case VARIABLE_NAME_USER_NAME:
+                        case ibas.VARIABLE_NAME_USER_NAME:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name");
-                        case VARIABLE_NAME_USER_BELONG:
+                        case ibas.VARIABLE_NAME_USER_BELONG:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong");
-                        case VARIABLE_NAME_USER_IDENTITIES:
+                        case ibas.VARIABLE_NAME_USER_IDENTITIES:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities");
                         default:
                             break;
@@ -570,15 +560,15 @@ namespace initialfantasy {
                 /** 获取值描述 */
                 describeValue(data: string): string {
                     switch (data) {
-                        case VARIABLE_NAME_USER_ID:
+                        case ibas.VARIABLE_NAME_USER_ID:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id");
-                        case VARIABLE_NAME_USER_CODE:
+                        case ibas.VARIABLE_NAME_USER_CODE:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code");
-                        case VARIABLE_NAME_USER_NAME:
+                        case ibas.VARIABLE_NAME_USER_NAME:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name");
-                        case VARIABLE_NAME_USER_BELONG:
+                        case ibas.VARIABLE_NAME_USER_BELONG:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong");
-                        case VARIABLE_NAME_USER_IDENTITIES:
+                        case ibas.VARIABLE_NAME_USER_IDENTITIES:
                             return ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities");
                         default:
                             break;

@@ -240,7 +240,8 @@ namespace initialfantasy {
                                     })
                                 }),
                                 new sap.m.ToolbarSeparator(),
-                                this.quickButton = new sap.m.MenuButton("", {
+                                new sap.extension.m.MenuButton("", {
+                                    autoHide: true,
                                     text: ibas.i18n.prop("shell_quick_to"),
                                     icon: "sap-icon://generate-shortcut",
                                     type: sap.m.ButtonType.Transparent,
@@ -251,7 +252,11 @@ namespace initialfantasy {
                                                 icon: "sap-icon://account",
                                                 press: function (): void {
                                                     that.fireViewEvents(that.editUserIdentityEvent);
-                                                }
+                                                },
+                                                visible: shell.app.privileges.canRun({
+                                                    id: app.UserIdentityFunc.FUNCTION_ID,
+                                                    name: app.UserIdentityFunc.FUNCTION_NAME,
+                                                })
                                             }),
                                         ],
                                     })
@@ -266,13 +271,11 @@ namespace initialfantasy {
                     });
                 }
                 private page: sap.extension.m.Page;
-                private quickButton: sap.m.MenuButton;
                 /** 显示数据 */
                 showUser(data: bo.User): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
                     // 改变页面状态
                     sap.extension.pages.changeStatus(this.page);
-                    this.quickButton.setVisible(!data.isNew);
                 }
             }
         }

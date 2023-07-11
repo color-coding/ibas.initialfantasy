@@ -70,6 +70,8 @@ namespace initialfantasy {
                                             type: new sap.extension.data.Alphanumeric(),
                                         },
                                     }),
+                                ],
+                                markers: [
                                 ]
                             })
                         },
@@ -335,14 +337,46 @@ namespace initialfantasy {
                         floatingFooter: true,
                         footer: new sap.m.Toolbar("", {
                             content: [
-                                this.check = new sap.m.CheckBox("", {
-                                    text: ibas.i18n.prop("shell_reverse"),
+                                new sap.m.MenuButton("", {
+                                    text: ibas.i18n.prop("shell_data_choose"),
+                                    icon: "sap-icon://bullet-text",
+                                    type: sap.m.ButtonType.Transparent,
+                                    menu: new sap.m.Menu("", {
+                                        items: [
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.i18n.prop("shell_all"),
+                                                icon: "sap-icon://multiselect-all",
+                                                press: function (): void {
+                                                    let model: any = that.tablePrivileges.getModel();
+                                                    if (model instanceof sap.extension.model.JSONModel) {
+                                                        for (let index: number = 0; index < model.size(); index++) {
+                                                            if (!that.tablePrivileges.isIndexSelected(index)) {
+                                                                that.tablePrivileges.addSelectionInterval(index, index);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }),
+                                            new sap.m.MenuItem("", {
+                                                text: ibas.i18n.prop("shell_reverse"),
+                                                icon: "sap-icon://multi-select",
+                                                press: function (): void {
+                                                    let model: any = that.tablePrivileges.getModel();
+                                                    if (model instanceof sap.extension.model.JSONModel) {
+                                                        let selects: ibas.IList<number> = ibas.arrays.create(that.tablePrivileges.getSelectedIndices());
+                                                        that.tablePrivileges.clearSelection();
+                                                        for (let index: number = 0; index < model.size(); index++) {
+                                                            if (!selects.contain(index)) {
+                                                                that.tablePrivileges.addSelectionInterval(index, index);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }),
+                                        ],
+                                    })
                                 }),
                                 new sap.m.ToolbarSpacer(""),
-                                new sap.m.Text("", {
-                                    text: ibas.i18n.prop("shell_batch"),
-                                }),
-                                new sap.m.ToolbarSeparator(""),
                                 new sap.m.MenuButton("", {
                                     text: ibas.i18n.prop("bo_privilege_activated"),
                                     icon: "sap-icon://validate",
@@ -353,9 +387,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emYesNo, ibas.emYesNo.YES),
                                                 icon: "sap-icon://accept",
                                                 press: function (): void {
-                                                    for (let item of that.check.getSelected() ?
-                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
-                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.activated = ibas.emYesNo.YES;
                                                     }
                                                 }
@@ -364,9 +396,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emYesNo, ibas.emYesNo.NO),
                                                 icon: "sap-icon://decline",
                                                 press: function (): void {
-                                                    for (let item of that.check.getSelected() ?
-                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
-                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.activated = ibas.emYesNo.NO;
                                                     }
                                                 }
@@ -374,6 +404,7 @@ namespace initialfantasy {
                                         ],
                                     })
                                 }),
+                                new sap.m.ToolbarSeparator(),
                                 new sap.m.MenuButton("", {
                                     text: ibas.i18n.prop("bo_privilege_authorisevalue"),
                                     icon: "sap-icon://bullet-text",
@@ -384,9 +415,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
                                                 icon: "sap-icon://multiselect-all",
                                                 press: function (): void {
-                                                    for (let item of that.check.getSelected() ?
-                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
-                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.authoriseValue = ibas.emAuthoriseType.ALL;
                                                     }
                                                 }
@@ -395,9 +424,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
                                                 icon: "sap-icon://multi-select",
                                                 press: function (): void {
-                                                    for (let item of that.check.getSelected() ?
-                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
-                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.authoriseValue = ibas.emAuthoriseType.READ;
                                                     }
                                                 }
@@ -406,9 +433,7 @@ namespace initialfantasy {
                                                 text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
                                                 icon: "sap-icon://multiselect-none",
                                                 press: function (): void {
-                                                    for (let item of that.check.getSelected() ?
-                                                        that.tablePrivileges.getUnSelecteds<bo.IPrivilege>() :
-                                                        that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
                                                         item.authoriseValue = ibas.emAuthoriseType.NONE;
                                                     }
                                                 }
@@ -429,7 +454,6 @@ namespace initialfantasy {
                     });
                 }
                 private facetFilter: sap.m.FacetFilter;
-                private check: sap.m.CheckBox;
                 private pageRoles: sap.m.Page;
                 private tableRoles: sap.extension.m.List;
                 private pagePrivileges: sap.m.Page;
