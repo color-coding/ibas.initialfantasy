@@ -10,3 +10,4 @@
 /// <reference path="./PrivilegeListView.ts" />
 /// <reference path="./PrivilegeConfigView.ts" />
 /// <reference path="./IdentityPrivilegeConfigView.ts" />
+/// <reference path="./RefunctionEditView.ts" />

@@ -23,6 +23,7 @@
 /// <reference path="./bo/IdentityPrivilege.ts" />
 /// <reference path="./bo/BOPropertySetting.ts" />
 /// <reference path="./bo/BOLogst.ts" />
+/// <reference path="./bo/Refunction.ts" />
 /// <reference path="./DataConverter.ts" />
 /// <reference path="./BORepository.ts" />
 
@@ -50,6 +51,7 @@ namespace initialfantasy {
         boFactory.register(BOPropertySetting.BUSINESS_OBJECT_CODE, BOPropertySetting);
         boFactory.register(ApplicationConfigIdentity.BUSINESS_OBJECT_CODE, ApplicationConfigIdentity);
         boFactory.register(BORelationship.BUSINESS_OBJECT_CODE, BORelationship);
+        boFactory.register(Refunction.BUSINESS_OBJECT_CODE, Refunction);
         boFactory.register(BO_CODE_BOPROPERTY, BOPropertyInformation);
     }
 }

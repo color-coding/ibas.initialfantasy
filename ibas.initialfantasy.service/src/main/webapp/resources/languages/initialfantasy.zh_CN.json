@@ -78,6 +78,11 @@
   "initialfantasy_app_bologst_view": "数据日志查看",
   "initialfantasy_app_bologst_viewex": "{0} 日志查看",
   "initialfantasy_app_bologst_service": "数据日志",
+  "initialfantasy_func_refunction": "重组功能",
+  "initialfantasy_app_refunction_list": "重组功能列表",
+  "initialfantasy_app_refunction_choose": "重组功能选择",
+  "initialfantasy_app_refunction_view": "重组功能查看",
+  "initialfantasy_app_refunction_edit": "重组功能编辑",
   "initialfantasy_title_general": "常规信息",
   "initialfantasy_title_others": "其他信息",
   "initialfantasy_title_organization": "组织信息",
@@ -114,5 +119,9 @@
   "initialfantasy_document_status": "状态",
   "initialfantasy_document_date": "单据日期",
   "initialfantasy_preview_conditions": "预览条件",
+  "initialfantasy_edit_function_menus": "组织菜单",
+  "initialfantasy_assigned": "已分配",
+  "initialfantasy_to_be_assigned": "待分配",
+  "initialfantasy_node_not_support_operation": "节点不支持此操作",
   "initialfantasy_closing_delimiter": "----结束----"
 }

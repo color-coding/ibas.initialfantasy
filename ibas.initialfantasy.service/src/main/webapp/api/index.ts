@@ -22,4 +22,5 @@
 /// <reference path="./bo/IdentityPrivilege.ts" />
 /// <reference path="./bo/BOPropertySetting.ts" />
 /// <reference path="./bo/BOLogst.ts" />
+/// <reference path="./bo/Refunction.ts" />
 /// <reference path="./BORepository.ts" />

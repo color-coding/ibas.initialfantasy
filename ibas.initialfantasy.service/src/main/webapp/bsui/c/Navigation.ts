@@ -196,6 +196,9 @@ namespace initialfantasy {
                     case app.DocumentProcessService.APPLICATION_ID:
                         view = new c.DocumentProcessServiceView();
                         break;
+                    case app.RefunctionEditApp.APPLICATION_ID:
+                        view = new c.RefunctionEditView();
+                        break;
                     default:
                         break;
                 }

@@ -5,6 +5,7 @@ import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserFunction;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -92,4 +93,12 @@ public interface IBORepositoryShell {
 	 */
 	OperationResult<BizObjectInfo> fetchBizObjectInfo(String user, String boCode, String token);
 
+	/**
+	 * 查询用户功能
+	 * 
+	 * @param user  用户
+	 * @param token 用户口令
+	 * @return 操作结果
+	 */
+	OperationResult<UserFunction> fetchUserFunctions(String user, String token);
 }

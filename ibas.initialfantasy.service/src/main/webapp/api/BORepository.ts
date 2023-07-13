@@ -184,6 +184,16 @@ namespace initialfantasy {
              * @param saver 保存者
              */
             saveApplicationConfigIdentity(saver: ibas.ISaveCaller<bo.IApplicationConfigIdentity>): void;
+            /**
+             * 查询 重组功能
+             * @param fetcher 查询者
+             */
+            fetchRefunction(fetcher: ibas.IFetchCaller<bo.IRefunction>): void;
+            /**
+             * 保存 重组功能
+             * @param saver 保存者
+             */
+            saveRefunction(saver: ibas.ISaveCaller<bo.IRefunction>): void;
         }
     }
 }

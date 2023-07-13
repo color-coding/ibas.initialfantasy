@@ -73,6 +73,8 @@ namespace initialfantasy {
         export const BO_CODE_BOPROPERTY_VALUE: string = "${Company}_SYS_BOPRTYVALUE";
         /** 业务对象编码-业务对象关系 */
         export const BO_CODE_BORELATIONSHIP: string = "${Company}_SYS_BORELATIONSHIP";
+        /** 业务对象编码-重组功能 */
+        export const BO_CODE_REFUNCTION: string = "${Company}_SYS_REFUNCTION";
 
         /**
          * 分配类型

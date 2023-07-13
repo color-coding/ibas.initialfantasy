@@ -76,6 +76,7 @@ namespace initialfantasy {
                 this.register(new UserLinkServiceMapping());
                 this.register(new OrganizationLinkServiceMapping());
                 this.register(new DocumentProcessServiceMapping());
+                this.register(new ChangeUserProfileMapping());
                 // 注册常驻应用
                 this.register(new UserProfileApplicationMapping());
             }

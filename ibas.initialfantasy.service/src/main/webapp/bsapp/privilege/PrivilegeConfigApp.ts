@@ -30,6 +30,7 @@ namespace initialfantasy {
                 this.view.copyPrivilegesEvent = this.copyPrivileges;
                 this.view.deletePrivilegesEvent = this.deletePrivileges;
                 this.view.editIdentityPrivilegesEvent = this.editIdentityPrivileges;
+                this.view.editRefunctionsEvent = this.editRefunctions;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -375,6 +376,84 @@ namespace initialfantasy {
                     })
                 });
             }
+            private editRefunctions(role: string | bo.IRole): void {
+                let name: string = typeof role !== "string" && role ? role.name : role.toString();
+                role = typeof role !== "string" && role ? role.code : role;
+                if (ibas.strings.isEmpty(role)) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
+                        ibas.i18n.prop("bo_identityprivilege_rolecode")));
+                    return;
+                }
+                let modules: ibas.ArrayList<ModuleProxy> = new ibas.ArrayList<ModuleProxy>();
+                shell.app.modules.forEach((module) => {
+                    let pModule: ModuleProxy = new ModuleProxy();
+                    pModule.id = module.id;
+                    pModule.description = module.description;
+                    pModule.icon = module.icon;
+                    for (let item of module.elements()) {
+                        if (!(item instanceof ibas.ModuleFunction)) {
+                            continue;
+                        }
+                        let pFunction: FunctionProxy = new FunctionProxy();
+                        pFunction.id = item.id;
+                        pFunction.name = item.name;
+                        pFunction.description = item.description;
+
+                        if (this.privileges.firstOrDefault(c => c.moduleId === pModule.id
+                            && c.target === pFunction.id
+                            && c.authoriseValue === ibas.emAuthoriseType.NONE
+                        ) !== null) {
+                            continue;
+                        }
+                        pModule.elements.push(pFunction);
+                    }
+                    if (this.privileges.firstOrDefault(c => c.moduleId === pModule.id
+                        && ibas.strings.isEmpty(c.target)
+                        && c.authoriseValue === ibas.emAuthoriseType.ALL
+                    ) === null) {
+                        return;
+                    }
+                    if (pModule.elements.length <= 0) {
+                        return;
+                    }
+                    modules.add(pModule);
+                });
+                if (modules.length <= 0) {
+                    this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_fetched_none"));
+                    return;
+                }
+                let criteria: ibas.ICriteria = new ibas.Criteria();
+                let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = bo.Refunction.PROPERTY_ASSIGNEDTYPE_NAME;
+                condition.value = bo.emAssignedType.ROLE.toString();
+                condition = criteria.conditions.create();
+                condition.alias = bo.Refunction.PROPERTY_ASSIGNED_NAME;
+                condition.value = role.toString();
+                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                boRepository.fetchRefunction({
+                    criteria: criteria,
+                    onCompleted: (opRslt) => {
+                        try {
+                            if (opRslt.resultCode !== 0) {
+                                throw new Error(opRslt.message);
+                            }
+                            let data: bo.Refunction = opRslt.resultObjects.firstOrDefault();
+                            if (ibas.objects.isNull(data)) {
+                                data = new bo.Refunction();
+                                data.assignedType = bo.emAssignedType.ROLE;
+                                data.assigned = role.toString();
+                                data.name = name;
+                            }
+                            let app: RefunctionEditApp = new RefunctionEditApp();
+                            app.navigation = this.navigation;
+                            app.viewShower = this.viewShower;
+                            app.run(data, modules);
+                        } catch (error) {
+                            this.messages(error);
+                        }
+                    }
+                });
+            }
         }
         /** 视图-系统权限 */
         export interface IPrivilegeConfigView extends ibas.IView {
@@ -396,6 +475,8 @@ namespace initialfantasy {
             showPlatforms(datas: bo.ApplicationPlatform[]): void;
             /** 编辑身份权限  */
             editIdentityPrivilegesEvent: Function;
+            /** 编辑重组功能 */
+            editRefunctionsEvent: Function;
         }
 
         /** 系统权限 */

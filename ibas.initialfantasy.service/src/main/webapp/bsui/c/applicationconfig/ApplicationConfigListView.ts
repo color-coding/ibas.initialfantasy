@@ -324,10 +324,16 @@ namespace initialfantasy {
                                         }
                                         // 控件值改变时，赋值到对象
                                         let source: any = event.getSource();
-                                        if (source instanceof sap.m.Input) {
+                                        if (source instanceof sap.m.Input || source instanceof sap.m.ComboBox) {
                                             if (!ibas.strings.isEmpty(source.getSelectedKey())) {
                                                 vItem.value = source.getSelectedKey();
                                             } else if (!ibas.strings.isEmpty(source.getValue())) {
+                                                vItem.value = source.getValue();
+                                            } else {
+                                                vItem.value = source.getPlaceholder();
+                                            }
+                                        } else if (source instanceof sap.m.InputBase) {
+                                            if (!ibas.strings.isEmpty(source.getValue())) {
                                                 vItem.value = source.getValue();
                                             } else {
                                                 vItem.value = source.getPlaceholder();

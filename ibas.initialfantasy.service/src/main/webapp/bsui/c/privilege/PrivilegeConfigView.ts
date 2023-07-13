@@ -34,6 +34,8 @@ namespace initialfantasy {
                 deletePrivilegesEvent: Function;
                 /** 编辑身份权限  */
                 editIdentityPrivilegesEvent: Function;
+                /** 编辑重组功能 */
+                editRefunctionsEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -94,28 +96,6 @@ namespace initialfantasy {
                             ibas.logger.log(ibas.emMessageLevel.DEBUG, "result: {0}", criteria.toString());
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         },
-                    });
-                    this.pageRoles = new sap.m.Page("", {
-                        showHeader: false,
-                        content: [
-                            this.tableRoles
-                        ],
-                        floatingFooter: true,
-                        footer: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.ToolbarSpacer(""),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("bo_identityprivilege"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://edit",
-                                    press: function (): void {
-                                        let role: bo.IRole = that.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
-                                        let platform: string = that.selectPlatforms.getSelectedKey();
-                                        that.fireViewEvents(that.editIdentityPrivilegesEvent, role, platform);
-                                    }
-                                }),
-                            ]
-                        }),
                     });
                     this.tablePrivileges = new sap.extension.table.Table("", {
                         enableSelectAll: true,
@@ -226,237 +206,267 @@ namespace initialfantasy {
                             }),
                         ]
                     });
-                    this.pagePrivileges = new sap.m.Page("", {
-                        showHeader: true,
-                        customHeader: new sap.m.Toolbar("", {
-                            content: [
-                                this.facetFilter = new sap.m.FacetFilter("", {
-                                    type: sap.m.FacetFilterType.Simple,
-                                    showReset: true,
-                                    showPopoverOKButton: true,
-                                    showPersonalization: false,
-                                    visible: false,
-                                    reset: function (oEvent: sap.ui.base.Event): void {
-                                        let oFacetFilter: any = oEvent.getSource();
-                                        if (oFacetFilter instanceof sap.m.FacetFilter) {
-                                            for (let item of oFacetFilter.getLists()) {
-                                                item.removeSelectedKeys();
-                                                if (item.isBound("items")) {
-                                                    if (item.getKey() === "moduleId") {
-                                                        (<any>item.getBinding("items")).filter(
-                                                            new sap.ui.model.Filter("moduleName", sap.ui.model.FilterOperator.Contains, ""),
-                                                            sap.ui.model.FilterType.Application);
-                                                    } else if (item.getKey() === "type") {
-                                                        (<any>item.getBinding("items")).filter(
-                                                            new sap.ui.model.Filter("type", sap.ui.model.FilterOperator.Contains, ""),
-                                                            sap.ui.model.FilterType.Application);
-                                                    } else {
-                                                        (<any>item.getBinding("items")).filter(
-                                                            new sap.ui.model.Filter("authoriseValue", sap.ui.model.FilterOperator.Contains, ""),
-                                                            sap.ui.model.FilterType.Application);
-                                                    }
-                                                }
-                                            }
-                                            that.filterPrivileges(null);
-                                        }
-                                    },
-                                    confirm: function (oEvent: sap.ui.base.Event): void {
-                                        let oFacetFilter: any = oEvent.getSource();
-                                        if (oFacetFilter instanceof sap.m.FacetFilter && oFacetFilter.getLists() instanceof Array) {
-                                            let mFacetFilterLists: Array<sap.m.FacetFilterList> = oFacetFilter.getLists().filter((oList) => {
-                                                return oList.getSelectedItems().length;
-                                            });
-                                            if (mFacetFilterLists.length) {
-                                                let oFilter: sap.ui.model.Filter = new sap.ui.model.Filter(mFacetFilterLists.map(function (oList: sap.m.FacetFilterList): any {
-                                                    return new sap.ui.model.Filter(oList.getSelectedItems().map(function (oItem: sap.m.FacetFilterItem): any {
-                                                        return new sap.ui.model.Filter(oList.getKey(), sap.ui.model.FilterOperator.EQ, oItem.getKey());
-                                                    }), false);
-                                                }), true);
-                                                that.filterPrivileges(oFilter);
-                                            } else {
-                                                that.filterPrivileges(null);
-                                            }
-                                        } else {
-                                            that.filterPrivileges(null);
-                                        }
-                                    },
-                                }),
-                                new sap.m.ToolbarSpacer(""),
-                                this.selectPlatforms = new sap.m.Select("", {
-                                    width: "auto",
-                                    change(): void {
-                                        that.fireFetchPrivilegesEvent();
-                                    }
-                                }),
-                                new sap.m.ToolbarSeparator(""),
-                                new sap.m.Button("", {
-                                    text: ibas.i18n.prop("initialfantasy_copy_from"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://copy",
-                                    press: function (): void {
-                                        that.fireViewEvents(that.copyPrivilegesEvent);
-                                    },
-                                }),
-                                new sap.m.ToolbarSeparator(""),
-                                new sap.m.MenuButton("", {
-                                    text: ibas.i18n.prop("shell_data_save"),
-                                    type: sap.m.ButtonType.Transparent,
-                                    icon: "sap-icon://save",
-                                    buttonMode: sap.m.MenuButtonMode.Split,
-                                    useDefaultActionOnly: true,
-                                    defaultAction(): void {
-                                        that.fireViewEvents(that.savePrivilegesEvent);
-                                    },
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_data_delete"),
-                                                icon: "sap-icon://delete",
-                                                press: function (): void {
-                                                    let role: bo.IRole = that.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
-                                                    if (!ibas.objects.isNull(role)) {
-                                                        let criteria: ibas.ICriteria = new ibas.Criteria();
-                                                        let condition: ibas.ICondition = criteria.conditions.create();
-                                                        condition.alias = bo.Privilege.PROPERTY_PLATFORMID_NAME;
-                                                        condition.value = that.selectPlatforms.getSelectedKey();
-                                                        condition = criteria.conditions.create();
-                                                        condition.alias = bo.Privilege.PROPERTY_ROLECODE_NAME;
-                                                        condition.value = role.code;
-                                                        that.fireViewEvents(that.deletePrivilegesEvent, criteria);
-                                                    }
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                }),
-                            ]
-                        }),
-                        content: [
-                            this.tablePrivileges
-                        ],
-                        floatingFooter: true,
-                        footer: new sap.m.Toolbar("", {
-                            content: [
-                                new sap.m.MenuButton("", {
-                                    text: ibas.i18n.prop("shell_data_choose"),
-                                    icon: "sap-icon://bullet-text",
-                                    type: sap.m.ButtonType.Transparent,
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_all"),
-                                                icon: "sap-icon://multiselect-all",
-                                                press: function (): void {
-                                                    let model: any = that.tablePrivileges.getModel();
-                                                    if (model instanceof sap.extension.model.JSONModel) {
-                                                        for (let index: number = 0; index < model.size(); index++) {
-                                                            if (!that.tablePrivileges.isIndexSelected(index)) {
-                                                                that.tablePrivileges.addSelectionInterval(index, index);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.i18n.prop("shell_reverse"),
-                                                icon: "sap-icon://multi-select",
-                                                press: function (): void {
-                                                    let model: any = that.tablePrivileges.getModel();
-                                                    if (model instanceof sap.extension.model.JSONModel) {
-                                                        let selects: ibas.IList<number> = ibas.arrays.create(that.tablePrivileges.getSelectedIndices());
-                                                        that.tablePrivileges.clearSelection();
-                                                        for (let index: number = 0; index < model.size(); index++) {
-                                                            if (!selects.contain(index)) {
-                                                                that.tablePrivileges.addSelectionInterval(index, index);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                }),
-                                new sap.m.ToolbarSpacer(""),
-                                new sap.m.MenuButton("", {
-                                    text: ibas.i18n.prop("bo_privilege_activated"),
-                                    icon: "sap-icon://validate",
-                                    type: sap.m.ButtonType.Transparent,
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emYesNo, ibas.emYesNo.YES),
-                                                icon: "sap-icon://accept",
-                                                press: function (): void {
-                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
-                                                        item.activated = ibas.emYesNo.YES;
-                                                    }
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emYesNo, ibas.emYesNo.NO),
-                                                icon: "sap-icon://decline",
-                                                press: function (): void {
-                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
-                                                        item.activated = ibas.emYesNo.NO;
-                                                    }
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                }),
-                                new sap.m.ToolbarSeparator(),
-                                new sap.m.MenuButton("", {
-                                    text: ibas.i18n.prop("bo_privilege_authorisevalue"),
-                                    icon: "sap-icon://bullet-text",
-                                    type: sap.m.ButtonType.Transparent,
-                                    menu: new sap.m.Menu("", {
-                                        items: [
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
-                                                icon: "sap-icon://multiselect-all",
-                                                press: function (): void {
-                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
-                                                        item.authoriseValue = ibas.emAuthoriseType.ALL;
-                                                    }
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
-                                                icon: "sap-icon://multi-select",
-                                                press: function (): void {
-                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
-                                                        item.authoriseValue = ibas.emAuthoriseType.READ;
-                                                    }
-                                                }
-                                            }),
-                                            new sap.m.MenuItem("", {
-                                                text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
-                                                icon: "sap-icon://multiselect-none",
-                                                press: function (): void {
-                                                    for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
-                                                        item.authoriseValue = ibas.emAuthoriseType.NONE;
-                                                    }
-                                                }
-                                            }),
-                                        ],
-                                    })
-                                }),
-                            ]
-                        }),
-                    });
                     return new sap.m.SplitContainer("", {
                         masterPages: [
-                            this.pageRoles,
+                            this.pageRoles = new sap.m.Page("", {
+                                showHeader: false,
+                                content: [
+                                    this.tableRoles
+                                ],
+                                floatingFooter: true,
+                                footer: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.ToolbarSpacer(""),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("bo_identityprivilege"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://edit",
+                                            press: function (): void {
+                                                let role: bo.IRole = that.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
+                                                let platform: string = that.selectPlatforms.getSelectedKey();
+                                                that.fireViewEvents(that.editIdentityPrivilegesEvent, role, platform);
+                                            }
+                                        }),
+                                    ]
+                                }),
+                            })
                         ],
                         detailPages: [
-                            this.pagePrivileges
+                            new sap.m.Page("", {
+                                showHeader: true,
+                                customHeader: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.Button("", {
+                                            icon: "sap-icon://personnel-view",
+                                            text: ibas.i18n.prop("initialfantasy_edit_function_menus"),
+                                            press(): void {
+                                                let role: bo.IRole = that.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
+                                                if (!ibas.objects.isNull(role)) {
+                                                    that.fireViewEvents(that.editRefunctionsEvent, role);
+                                                }
+                                            }
+                                        }),
+                                        new sap.m.ToolbarSeparator(),
+                                        this.facetFilter = new sap.m.FacetFilter("", {
+                                            type: sap.m.FacetFilterType.Simple,
+                                            showReset: true,
+                                            showPopoverOKButton: true,
+                                            showPersonalization: false,
+                                            visible: false,
+                                            reset: function (oEvent: sap.ui.base.Event): void {
+                                                let oFacetFilter: any = oEvent.getSource();
+                                                if (oFacetFilter instanceof sap.m.FacetFilter) {
+                                                    for (let item of oFacetFilter.getLists()) {
+                                                        item.removeSelectedKeys();
+                                                        if (item.isBound("items")) {
+                                                            if (item.getKey() === "moduleId") {
+                                                                (<any>item.getBinding("items")).filter(
+                                                                    new sap.ui.model.Filter("moduleName", sap.ui.model.FilterOperator.Contains, ""),
+                                                                    sap.ui.model.FilterType.Application);
+                                                            } else if (item.getKey() === "type") {
+                                                                (<any>item.getBinding("items")).filter(
+                                                                    new sap.ui.model.Filter("type", sap.ui.model.FilterOperator.Contains, ""),
+                                                                    sap.ui.model.FilterType.Application);
+                                                            } else {
+                                                                (<any>item.getBinding("items")).filter(
+                                                                    new sap.ui.model.Filter("authoriseValue", sap.ui.model.FilterOperator.Contains, ""),
+                                                                    sap.ui.model.FilterType.Application);
+                                                            }
+                                                        }
+                                                    }
+                                                    that.filterPrivileges(null);
+                                                }
+                                            },
+                                            confirm: function (oEvent: sap.ui.base.Event): void {
+                                                let oFacetFilter: any = oEvent.getSource();
+                                                if (oFacetFilter instanceof sap.m.FacetFilter && oFacetFilter.getLists() instanceof Array) {
+                                                    let mFacetFilterLists: Array<sap.m.FacetFilterList> = oFacetFilter.getLists().filter((oList) => {
+                                                        return oList.getSelectedItems().length;
+                                                    });
+                                                    if (mFacetFilterLists.length) {
+                                                        let oFilter: sap.ui.model.Filter = new sap.ui.model.Filter(mFacetFilterLists.map(function (oList: sap.m.FacetFilterList): any {
+                                                            return new sap.ui.model.Filter(oList.getSelectedItems().map(function (oItem: sap.m.FacetFilterItem): any {
+                                                                return new sap.ui.model.Filter(oList.getKey(), sap.ui.model.FilterOperator.EQ, oItem.getKey());
+                                                            }), false);
+                                                        }), true);
+                                                        that.filterPrivileges(oFilter);
+                                                    } else {
+                                                        that.filterPrivileges(null);
+                                                    }
+                                                } else {
+                                                    that.filterPrivileges(null);
+                                                }
+                                            },
+                                        }),
+                                        new sap.m.ToolbarSpacer(""),
+                                        this.selectPlatforms = new sap.m.Select("", {
+                                            width: "auto",
+                                            change(): void {
+                                                that.fireFetchPrivilegesEvent();
+                                            }
+                                        }),
+                                        new sap.m.ToolbarSeparator(""),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("initialfantasy_copy_from"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://copy",
+                                            press: function (): void {
+                                                that.fireViewEvents(that.copyPrivilegesEvent);
+                                            },
+                                        }),
+                                        new sap.m.ToolbarSeparator(""),
+                                        new sap.m.MenuButton("", {
+                                            text: ibas.i18n.prop("shell_data_save"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://save",
+                                            buttonMode: sap.m.MenuButtonMode.Split,
+                                            useDefaultActionOnly: true,
+                                            defaultAction(): void {
+                                                that.fireViewEvents(that.savePrivilegesEvent);
+                                            },
+                                            menu: new sap.m.Menu("", {
+                                                items: [
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.i18n.prop("shell_data_delete"),
+                                                        icon: "sap-icon://delete",
+                                                        press: function (): void {
+                                                            let role: bo.IRole = that.tableRoles.getSelecteds<bo.IRole>().firstOrDefault();
+                                                            if (!ibas.objects.isNull(role)) {
+                                                                let criteria: ibas.ICriteria = new ibas.Criteria();
+                                                                let condition: ibas.ICondition = criteria.conditions.create();
+                                                                condition.alias = bo.Privilege.PROPERTY_PLATFORMID_NAME;
+                                                                condition.value = that.selectPlatforms.getSelectedKey();
+                                                                condition = criteria.conditions.create();
+                                                                condition.alias = bo.Privilege.PROPERTY_ROLECODE_NAME;
+                                                                condition.value = role.code;
+                                                                that.fireViewEvents(that.deletePrivilegesEvent, criteria);
+                                                            }
+                                                        }
+                                                    }),
+                                                ],
+                                            })
+                                        }),
+                                    ]
+                                }),
+                                content: [
+                                    this.tablePrivileges
+                                ],
+                                floatingFooter: true,
+                                footer: new sap.m.Toolbar("", {
+                                    content: [
+                                        new sap.m.MenuButton("", {
+                                            text: ibas.i18n.prop("shell_data_choose"),
+                                            icon: "sap-icon://bullet-text",
+                                            type: sap.m.ButtonType.Transparent,
+                                            menu: new sap.m.Menu("", {
+                                                items: [
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.i18n.prop("shell_all"),
+                                                        icon: "sap-icon://multiselect-all",
+                                                        press: function (): void {
+                                                            let model: any = that.tablePrivileges.getModel();
+                                                            if (model instanceof sap.extension.model.JSONModel) {
+                                                                for (let index: number = 0; index < model.size(); index++) {
+                                                                    if (!that.tablePrivileges.isIndexSelected(index)) {
+                                                                        that.tablePrivileges.addSelectionInterval(index, index);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }),
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.i18n.prop("shell_reverse"),
+                                                        icon: "sap-icon://multi-select",
+                                                        press: function (): void {
+                                                            let model: any = that.tablePrivileges.getModel();
+                                                            if (model instanceof sap.extension.model.JSONModel) {
+                                                                let selects: ibas.IList<number> = ibas.arrays.create(that.tablePrivileges.getSelectedIndices());
+                                                                that.tablePrivileges.clearSelection();
+                                                                for (let index: number = 0; index < model.size(); index++) {
+                                                                    if (!selects.contain(index)) {
+                                                                        that.tablePrivileges.addSelectionInterval(index, index);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }),
+                                                ],
+                                            })
+                                        }),
+                                        new sap.m.ToolbarSpacer(""),
+                                        new sap.m.MenuButton("", {
+                                            text: ibas.i18n.prop("bo_privilege_activated"),
+                                            icon: "sap-icon://validate",
+                                            type: sap.m.ButtonType.Transparent,
+                                            menu: new sap.m.Menu("", {
+                                                items: [
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.enums.describe(ibas.emYesNo, ibas.emYesNo.YES),
+                                                        icon: "sap-icon://accept",
+                                                        press: function (): void {
+                                                            for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                                item.activated = ibas.emYesNo.YES;
+                                                            }
+                                                        }
+                                                    }),
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.enums.describe(ibas.emYesNo, ibas.emYesNo.NO),
+                                                        icon: "sap-icon://decline",
+                                                        press: function (): void {
+                                                            for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                                item.activated = ibas.emYesNo.NO;
+                                                            }
+                                                        }
+                                                    }),
+                                                ],
+                                            })
+                                        }),
+                                        new sap.m.ToolbarSeparator(),
+                                        new sap.m.MenuButton("", {
+                                            text: ibas.i18n.prop("bo_privilege_authorisevalue"),
+                                            icon: "sap-icon://bullet-text",
+                                            type: sap.m.ButtonType.Transparent,
+                                            menu: new sap.m.Menu("", {
+                                                items: [
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.ALL),
+                                                        icon: "sap-icon://multiselect-all",
+                                                        press: function (): void {
+                                                            for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                                item.authoriseValue = ibas.emAuthoriseType.ALL;
+                                                            }
+                                                        }
+                                                    }),
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.READ),
+                                                        icon: "sap-icon://multi-select",
+                                                        press: function (): void {
+                                                            for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                                item.authoriseValue = ibas.emAuthoriseType.READ;
+                                                            }
+                                                        }
+                                                    }),
+                                                    new sap.m.MenuItem("", {
+                                                        text: ibas.enums.describe(ibas.emAuthoriseType, ibas.emAuthoriseType.NONE),
+                                                        icon: "sap-icon://multiselect-none",
+                                                        press: function (): void {
+                                                            for (let item of that.tablePrivileges.getSelecteds<bo.IPrivilege>()) {
+                                                                item.authoriseValue = ibas.emAuthoriseType.NONE;
+                                                            }
+                                                        }
+                                                    }),
+                                                ],
+                                            })
+                                        }),
+                                    ]
+                                }),
+                            })
                         ],
                     });
                 }
                 private facetFilter: sap.m.FacetFilter;
                 private pageRoles: sap.m.Page;
                 private tableRoles: sap.extension.m.List;
-                private pagePrivileges: sap.m.Page;
                 private tablePrivileges: sap.extension.table.Table;
                 private selectPlatforms: sap.m.Select;
                 private fireFetchPrivilegesEvent(): void {

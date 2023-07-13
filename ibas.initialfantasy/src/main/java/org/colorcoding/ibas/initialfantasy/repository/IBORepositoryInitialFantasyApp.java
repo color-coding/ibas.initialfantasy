@@ -22,6 +22,7 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IIdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
+import org.colorcoding.ibas.initialfantasy.bo.refunction.IRefunction;
 
 /**
  * InitialFantasy仓库应用
@@ -326,6 +327,23 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IBORelationship> fetchBORelationship(ICriteria criteria);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-重组功能
+	 * 
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IRefunction> fetchRefunction(ICriteria criteria);
+
+	/**
+	 * 保存-重组功能
+	 * 
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IRefunction> saveRefunction(IRefunction bo);
 
 	// --------------------------------------------------------------------------------------------//
 }

@@ -55,6 +55,10 @@ namespace initialfantasy {
                     if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
                         return ibas.enums.toString(bo.emAssignedType, value);
                     }
+                } else if (boName === bo.Refunction.name) {
+                    if (property === bo.Refunction.PROPERTY_ASSIGNEDTYPE_NAME) {
+                        return ibas.enums.toString(bo.emAssignedType, value);
+                    }
                 } else if (boName === bo.Privilege.name) {
                     if (property === bo.Privilege.PROPERTY_AUTHORISEVALUE_NAME) {
                         return ibas.enums.toString(ibas.emAuthoriseType, value);
@@ -138,6 +142,10 @@ namespace initialfantasy {
                     }
                 } else if (boName === bo.BOCriteria.name) {
                     if (property === bo.BOCriteria.PROPERTY_ASSIGNEDTYPE_NAME) {
+                        return ibas.enums.valueOf(bo.emAssignedType, value);
+                    }
+                } else if (boName === bo.Refunction.name) {
+                    if (property === bo.Refunction.PROPERTY_ASSIGNEDTYPE_NAME) {
                         return ibas.enums.valueOf(bo.emAssignedType, value);
                     }
                 } else if (boName === bo.Privilege.name) {

@@ -317,6 +317,20 @@ namespace initialfantasy {
             fetchBORelationship(fetcher: ibas.IFetchCaller<bo.BORelationship>): void {
                 super.fetch(bo.BORelationship.name, fetcher);
             }
+            /**
+             * 查询 重组功能
+             * @param fetcher 查询者
+             */
+            fetchRefunction(fetcher: ibas.IFetchCaller<bo.Refunction>): void {
+                super.fetch(bo.Refunction.name, fetcher);
+            }
+            /**
+             * 保存 重组功能
+             * @param saver 保存者
+             */
+            saveRefunction(saver: ibas.ISaveCaller<bo.Refunction>): void {
+                super.save(bo.Refunction.name, saver);
+            }
         }
     }
 }

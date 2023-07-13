@@ -29,8 +29,10 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
+import org.colorcoding.ibas.initialfantasy.bo.refunction.Refunction;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserFunction;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -703,6 +705,52 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.fetchBORelationship(criteria, token);
 	}
 
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-重组功能
+	 * 
+	 * @param criteria 查询
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchRefunction")
+	public OperationResult<Refunction> fetchRefunction(Criteria criteria, @QueryParam("token") String token) {
+		return super.fetchRefunction(criteria, token);
+	}
+
+	/**
+	 * 保存-重组功能
+	 * 
+	 * @param bo    对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveRefunction")
+	public OperationResult<Refunction> saveRefunction(Refunction bo, @QueryParam("token") String token) {
+		return super.saveRefunction(bo, token);
+	}
+
+	/**
+	 * 查询用户功能
+	 * 
+	 * @param user  用户
+	 * @param token 用户口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchUserFunctions")
+	public OperationResult<UserFunction> fetchUserFunctions(@QueryParam("user") String user,
+			@QueryParam("token") String token) {
+		return super.fetchUserFunctions(user, token);
+	}
 	// --------------------------------------------------------------------------------------------//
 
 }

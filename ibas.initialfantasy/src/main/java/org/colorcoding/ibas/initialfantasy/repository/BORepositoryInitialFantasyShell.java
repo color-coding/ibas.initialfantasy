@@ -36,11 +36,13 @@ import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.refunction.Refunction;
 import org.colorcoding.ibas.initialfantasy.bo.shell.ApplicationModule4Shell;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.BizPropertyInfo;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserConfig;
+import org.colorcoding.ibas.initialfantasy.bo.shell.UserFunction;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
@@ -711,5 +713,88 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 		}
 		return super.saveUser(bo, token);
+	}
+
+	@Override
+	public OperationResult<UserFunction> fetchUserFunctions(String user, String token) {
+		try {
+			this.setUserToken(token);
+			ICondition condition = null;
+			ICriteria criteria = new Criteria();
+			// 是否激活
+			condition = criteria.getConditions().create();
+			condition.setAlias(Refunction.PROPERTY_ACTIVATED.getName());
+			condition.setValue(emYesNo.YES);
+			// 自己的查询
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(2);
+			condition.setAlias(Refunction.PROPERTY_ASSIGNEDTYPE.getName());
+			condition.setValue(emAssignedType.USER);
+			condition = criteria.getConditions().create();
+			condition.setAlias(Refunction.PROPERTY_ASSIGNED.getName());
+			condition.setValue(user);
+			condition.setBracketClose(1);
+			// 全局的查询
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setAlias(Refunction.PROPERTY_ASSIGNEDTYPE.getName());
+			condition.setValue(emAssignedType.ALL);
+			// 所属角色的查询
+			if (!DataConvert.isNullOrEmpty(this.getCurrentUser().getBelong())) {
+				condition = criteria.getConditions().create();
+				condition.setRelationship(ConditionRelationship.OR);
+				condition.setBracketOpen(1);
+				condition.setAlias(Refunction.PROPERTY_ASSIGNEDTYPE.getName());
+				condition.setValue(emAssignedType.ROLE);
+				condition = criteria.getConditions().create();
+				condition.setAlias(Refunction.PROPERTY_ASSIGNED.getName());
+				condition.setValue(this.getCurrentUser().getBelong());
+				condition.setBracketClose(1);
+			}
+			condition.setBracketClose(condition.getBracketClose() + 1);
+			// 当前日期
+			String date = DateTime.getToday().toString();
+			// 有效日期
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(Refunction.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketOpen(1);
+			condition.setAlias(Refunction.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.NOT_NULL);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(2);
+			condition.setAlias(Refunction.PROPERTY_VALIDDATE.getName());
+			condition.setOperation(ConditionOperation.LESS_EQUAL);
+			condition.setValue(date);
+			// 失效日期
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(Refunction.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.IS_NULL);
+			condition = criteria.getConditions().create();
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketOpen(1);
+			condition.setAlias(Refunction.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.NOT_NULL);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(2);
+			condition.setAlias(Refunction.PROPERTY_INVALIDDATE.getName());
+			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setValue(date);
+			IOperationResult<Refunction> opRsltFetch = this.fetchRefunction(criteria, token);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			OperationResult<UserFunction> opRslt = new OperationResult<>();
+			for (Refunction item : opRsltFetch.getResultObjects()) {
+				opRslt.addResultObjects(UserFunction.create(item));
+			}
+			return opRslt;
+		} catch (Exception e) {
+			return new OperationResult<>(e);
+		}
 	}
 }
