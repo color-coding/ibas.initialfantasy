@@ -218,7 +218,13 @@ namespace initialfantasy {
                                                                                                         },
                                                                                                         confirm(event: sap.ui.base.Event): void {
                                                                                                             let value: string = event.getParameter("selectedItem").getTitle();
-                                                                                                            source.setSrc(value);
+                                                                                                            let data: any = source.getBindingContext().getObject();
+                                                                                                            if (data instanceof bo.RefunctionItem) {
+                                                                                                                data.image = value;
+                                                                                                                source.getBindingContext().getModel().refresh();
+                                                                                                            } else {
+                                                                                                                source.setSrc(value);
+                                                                                                            }
                                                                                                             setTimeout(() => {
                                                                                                                 selectDialog.destroy();
                                                                                                                 selectDialog = undefined;
@@ -290,7 +296,8 @@ namespace initialfantasy {
                                                                                         let index: number = 1;
                                                                                         let tree: sap.m.Tree = (<any>event.getSource())?.getDropTarget();
                                                                                         let dropPosition: string = event.getParameter("dropPosition");
-                                                                                        if (dragged.parent > 0 && (dropPosition === "Before" || dropPosition === "After")) {
+                                                                                        if ((dropPosition === "Before" || dropPosition === "After")) {
+                                                                                            // 功能菜单移动
                                                                                             for (let item of tree.getItems()) {
                                                                                                 let iData: any = item.getBindingContext()?.getObject();
                                                                                                 if (ibas.objects.isNull(iData)) {
@@ -323,6 +330,8 @@ namespace initialfantasy {
                                                                                         if (index > 1) {
                                                                                             tree.getModel().refresh(false);
                                                                                         }
+                                                                                    } else if (dragged instanceof bo.RefunctionItem && dropped instanceof bo.RefunctionItem
+                                                                                        && dragged.parent === dropped.parent) {
                                                                                     }
                                                                                 },
                                                                             }),

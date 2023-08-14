@@ -47,6 +47,12 @@ namespace initialfantasy {
                     case app.IdentityChooseApp.APPLICATION_ID:
                         view = new m.IdentityChooseView();
                         break;
+                    case app.UserProfileApp.APPLICATION_ID:
+                        view = new m.UserProfileView();
+                        break;
+                    case app.ChangeUserProfileApp.APPLICATION_ID:
+                        view = new m.ChangeUserProfileView();
+                        break;
                     default:
                         break;
                 }

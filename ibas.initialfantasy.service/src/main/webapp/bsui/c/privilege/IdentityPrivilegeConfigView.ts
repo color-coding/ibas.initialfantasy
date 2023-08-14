@@ -172,6 +172,32 @@ namespace initialfantasy {
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("bo_privilege_automatic"),
                                 template: new sap.extension.m.CheckBox("", {
+                                    select(event: sap.ui.base.Event): void {
+                                        let source: any = event.getSource();
+                                        if (source instanceof sap.m.CheckBox) {
+                                            if (source.getSelected() === true) {
+                                                // 如果选择，则其他选中的取消选中
+                                                let select: any = source.getBindingContext().getObject();
+                                                let datas: app.Privilege[] = that.tableIdentityPrivileges.getModel().getData<app.Privilege[]>("rows");
+                                                if (datas instanceof Array) {
+                                                    for (let item of datas) {
+                                                        if (item === select) {
+                                                            continue;
+                                                        }
+                                                        if (item.automatic === ibas.emYesNo.YES) {
+                                                            item.automatic = ibas.emYesNo.NO;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    editable: {
+                                        path: "type",
+                                        formatter(data: bo.emElementType): boolean {
+                                            return data === bo.emElementType.FUNCTION ? true : false;
+                                        }
+                                    }
                                 }).bindProperty("bindingValue", {
                                     path: "automatic",
                                     type: new sap.extension.data.YesNo()

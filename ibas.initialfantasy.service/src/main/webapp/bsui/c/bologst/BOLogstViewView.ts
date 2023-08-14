@@ -24,13 +24,23 @@ namespace initialfantasy {
                         content: [
                             this.splitter = new sap.ui.layout.Splitter("", {
                                 orientation: sap.ui.core.Orientation.Horizontal,
-                                layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                    resizable: false,
-                                }),
                                 contentAreas: [
                                 ]
                             }),
-                        ]
+                        ],
+                        floatingFooter: true,
+                        footer: new sap.m.Toolbar("", {
+                            content: [
+                                new sap.m.ToolbarSpacer(""),
+                                this.onlyCheck = new sap.m.CheckBox("", {
+                                    selected: true,
+                                    text: ibas.i18n.prop("initialfantasy_only_modified_content"),
+                                    select: function (): void {
+                                        that.markDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", that.template.getId(), 0)), that.splitter.getContentAreas().length);
+                                    }
+                                }),
+                            ]
+                        }),
                     });
                 }
 
@@ -109,6 +119,7 @@ namespace initialfantasy {
                         }
                     }
                     let panel: sap.m.Panel = new sap.m.Panel("", {
+                        height: "100%",
                         expandable: true,
                         expanded: root ? true : false,
                         backgroundDesign: sap.m.BackgroundDesign.Transparent,
@@ -161,6 +172,7 @@ namespace initialfantasy {
                     this.splitter.destroyContentAreas();
                     for (let data of datas) {
                         let view: sap.ui.layout.Splitter = new sap.ui.layout.Splitter("", {
+                            height: "100%",
                             contentAreas: [
                                 new sap.m.Page("", {
                                     showHeader: false,
@@ -213,6 +225,8 @@ namespace initialfantasy {
                     }
                 }
 
+                private onlyCheck: sap.m.CheckBox;
+
                 private markDifferent(panel: any, count: number): void {
                     if (panel instanceof sap.m.Panel) {
                         for (let pItem of panel.getContent()) {
@@ -261,6 +275,25 @@ namespace initialfantasy {
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
                                                 if (tmpItem instanceof sap.m.StandardListItem) {
                                                     tmpItem.setHighlight(sap.ui.core.MessageType.Error);
+                                                }
+                                            }
+                                        }
+                                        if (this.onlyCheck.getSelected() === true) {
+                                            for (let index: number = 0; index < count; index++) {
+                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                                if (tmpItem instanceof sap.m.StandardListItem) {
+                                                    if (same === false) {
+                                                        tmpItem.setVisible(true);
+                                                    } else {
+                                                        tmpItem.setVisible(false);
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            for (let index: number = 0; index < count; index++) {
+                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                                if (tmpItem instanceof sap.m.StandardListItem) {
+                                                    tmpItem.setVisible(true);
                                                 }
                                             }
                                         }

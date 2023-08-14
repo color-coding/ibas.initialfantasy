@@ -130,6 +130,8 @@ namespace initialfantasy {
                 this.register(new UserLinkServiceMapping());
                 this.register(new OrganizationLinkServiceMapping());
                 this.register(new DocumentProcessServiceMapping());
+                // 注册常驻应用
+                this.register(new UserProfileApplicationMapping());
             }
         }
     }

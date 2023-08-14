@@ -321,4 +321,20 @@
             </Provider>
         </Providers>
     </ServiceInformation>
+    <ServiceInformation>
+        <Id>ac70d488-d8fc-478a-af00-d66d49cd2dc9</Id>
+        <Name>Accounting</Name>
+        <Providers>
+            <Provider>
+                <Address>http://localhost:8080/accounting/services/rest/data</Address>
+                <Enabled>true</Enabled>
+                <Type>DATA</Type>
+            </Provider>
+            <Provider>
+                <Address>.../../test/apps/accounting/</Address>
+                <Enabled>true</Enabled>
+                <Type>VIEW</Type>
+            </Provider>
+        </Providers>
+    </ServiceInformation>
 </ns:ServiceRouting>

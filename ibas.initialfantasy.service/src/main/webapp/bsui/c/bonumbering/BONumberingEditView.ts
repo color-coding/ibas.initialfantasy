@@ -121,7 +121,7 @@ namespace initialfantasy {
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_boseriesnumbering_nextnumber") }),
                                                     new sap.extension.m.Input("", {
-                                                        editable: false,
+                                                        // editable: false,
                                                         type: sap.m.InputType.Number
                                                     }).bindProperty("bindingValue", {
                                                         path: "nextNumber",
@@ -141,6 +141,15 @@ namespace initialfantasy {
                                             path: "isDeleted",
                                             formatter(data: boolean): boolean {
                                                 return data === true ? false : true;
+                                            }
+                                        },
+                                        highlight: {
+                                            path: "isDirty",
+                                            formatter(data: boolean): sap.ui.core.ValueState {
+                                                if (data === true) {
+                                                    return sap.ui.core.ValueState.Warning;
+                                                }
+                                                return sap.ui.core.ValueState.Information;
                                             }
                                         },
                                         type: sap.m.ListType.Inactive

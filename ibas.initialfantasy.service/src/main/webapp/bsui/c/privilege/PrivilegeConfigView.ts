@@ -197,6 +197,12 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }
+                                    },
+                                    editable: {
+                                        path: "type",
+                                        formatter(data: bo.emElementType): boolean {
+                                            return data === bo.emElementType.FUNCTION ? true : false;
+                                        }
                                     }
                                 }).bindProperty("bindingValue", {
                                     path: "automatic",
