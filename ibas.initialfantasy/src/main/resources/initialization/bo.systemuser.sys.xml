@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE User>
+<ns:SystemUser xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
+	<Code>#_SYS_ME</Code>
+	<Name>系统用户</Name>
+	<Activated>NO</Activated>
+	<Super>NO</Super>
+	<DocEntry>-9</DocEntry>
+</ns:SystemUser>

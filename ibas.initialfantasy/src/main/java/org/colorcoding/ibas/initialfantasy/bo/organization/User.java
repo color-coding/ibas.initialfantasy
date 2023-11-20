@@ -462,7 +462,7 @@ public class User extends BusinessObject<User>
 	 * 
 	 * @param value 值
 	 */
-	public final void setDocEntry(Integer value) {
+	public void setDocEntry(Integer value) {
 		this.setProperty(PROPERTY_DOCENTRY, value);
 	}
 
