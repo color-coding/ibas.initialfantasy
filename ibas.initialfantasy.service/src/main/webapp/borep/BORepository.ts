@@ -297,13 +297,6 @@ namespace initialfantasy {
                 // 日志保存不完美，此处修正更新信息
                 let onCompleted: Function = fetcher.onCompleted;
                 fetcher.onCompleted = (opRslt) => {
-                    for (let item of opRslt.resultObjects) {
-                        if (typeof item.content === "object") {
-                            (<any>item.content).UpdateDate = item.modifyDate;
-                            (<any>item.content).UpdateTime = item.modifyTime;
-                            (<any>item.content).UpdateUserSign = item.modifyUser;
-                        }
-                    }
                     if (onCompleted instanceof Function) {
                         onCompleted(opRslt);
                     }

@@ -47,7 +47,6 @@ namespace initialfantasy {
                                                 justifyContent: sap.m.FlexJustifyContent.Start,
                                                 renderType: sap.m.FlexRendertype.Bare,
                                                 fitContainer: true,
-
                                             })
                                         ]
                                     }).addStyleClass("sapUiContentPadding"),
@@ -112,6 +111,34 @@ namespace initialfantasy {
                 }
 
                 private createCard(data: ibas.IBODocument): sap.f.Card {
+                    let list: sap.m.List = new sap.m.List("", {
+                        showNoData: false,
+                    });
+                    if ((<any>data).canceled === ibas.emYesNo.YES) {
+                        list.addItem(new sap.m.StandardListItem("", {
+                            title: ibas.i18n.prop("initialfantasy_document_status"),
+                            info: ibas.i18n.prop("shell_data_cancel"),
+                            infoState: sap.ui.core.ValueState.Error
+                        }));
+                    } else if ((<any>data).approvalStatus === ibas.emApprovalStatus.PROCESSING
+                        || (<any>data).approvalStatus === ibas.emApprovalStatus.REJECTED
+                        || (<any>data).approvalStatus === ibas.emApprovalStatus.RETURNED) {
+                        list.addItem(new sap.m.StandardListItem("", {
+                            title: ibas.i18n.prop("initialfantasy_document_status"),
+                            info: ibas.enums.describe(ibas.emApprovalStatus, (<any>data).approvalStatus),
+                            infoState: sap.ui.core.ValueState.Warning
+                        }));
+                    } else {
+                        list.addItem(new sap.m.StandardListItem("", {
+                            title: ibas.i18n.prop("initialfantasy_document_status"),
+                            info: ibas.enums.describe(ibas.emDocumentStatus, data.documentStatus),
+                            infoState: sap.extension.data.status(data.documentStatus, undefined, undefined)
+                        }));
+                    }
+                    list.addItem(new sap.m.StandardListItem("", {
+                        title: ibas.i18n.prop("initialfantasy_document_date"),
+                        info: ibas.dates.toString(data.documentDate, "yyyy-MM-dd")
+                    }));
                     return new sap.f.Card("", {
                         width: "100%",
                         header: new sap.f.cards.Header("", {
@@ -126,20 +153,7 @@ namespace initialfantasy {
                             }
                         }),
                         content: [
-                            new sap.m.List("", {
-                                showNoData: false,
-                                items: [
-                                    new sap.m.StandardListItem("", {
-                                        title: ibas.i18n.prop("initialfantasy_document_status"),
-                                        info: ibas.enums.describe(ibas.emDocumentStatus, data.documentStatus),
-                                        infoState: sap.extension.data.status(data.documentStatus, undefined, undefined)
-                                    }),
-                                    new sap.m.StandardListItem("", {
-                                        title: ibas.i18n.prop("initialfantasy_document_date"),
-                                        info: ibas.dates.toString(data.documentDate, "yyyy-MM-dd")
-                                    }),
-                                ]
-                            })
+                            list
                         ]
                     }).addStyleClass("sapUiTinyMarginBottom");
                 }

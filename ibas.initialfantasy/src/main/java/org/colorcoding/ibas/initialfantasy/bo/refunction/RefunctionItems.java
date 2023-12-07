@@ -72,7 +72,6 @@ public class RefunctionItems extends BusinessObjects<IRefunctionItem, IBusinessO
 	protected void afterAddItem(IRefunctionItem item) {
 		super.afterAddItem(item);
 		if (this.getParent() instanceof IRefunction) {
-			IRefunction parent = (IRefunction) this.getParent();
 			item.setParent(-1);
 		} else if (this.getParent() instanceof IRefunctionItem) {
 			IRefunctionItem parent = (IRefunctionItem) this.getParent();

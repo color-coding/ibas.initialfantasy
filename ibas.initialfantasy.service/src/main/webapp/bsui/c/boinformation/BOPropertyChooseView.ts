@@ -53,6 +53,9 @@ namespace initialfantasy {
                                 width: "45%",
                             }),
                         ],
+                        rowDoubleClick(event: sap.ui.base.Event): void {
+                            that.fireViewEvents(that.chooseDataEvent, event.getParameter("row")?.getBindingContext()?.getObject());
+                        }
                     });
                     return new sap.m.Dialog("", {
                         title: this.title,

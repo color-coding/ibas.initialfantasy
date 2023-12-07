@@ -12,7 +12,7 @@
   <Model Name="BOPropertyInformation" Description="业务对象属性信息" ModelType="Unspecified" Mapped="${Company}_SYS_BOI1">
     <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Code" PrimaryKey="Yes"/>
     <Property Name="PropertyName" Description="属性名称" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Property" PrimaryKey="Yes"/>
-    <Property Name="Mapped" Description="映射（字段）" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Mapped"/>
+    <Property Name="Mapped" Description="映射（字段）" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="Mapped"/>
     <Property Name="Description" Description="描述" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Descrp"/>
     <Property Name="DataType" Description="数据类型" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="DataType"/>
     <Property Name="EditType" Description="编辑类型" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="EditType"/>

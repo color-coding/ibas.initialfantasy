@@ -348,6 +348,10 @@ public class OwnershipJudger implements IOwnershipJudger {
 				logst.setTransationId(data.getCreateActionId());
 			}
 			if (data instanceof IManagedFields) {
+				// 修正更新信息
+				data.setUpdateDate(logst.getModifyDate());
+				data.setUpdateTime(logst.getModifyTime());
+				data.setUpdateUserSign(logst.getModifyUser());
 				logst.setContent(DataConvert.toString((IManagedFields) data));
 			}
 			opRslt = boRepository.saveBOLogst(logst);

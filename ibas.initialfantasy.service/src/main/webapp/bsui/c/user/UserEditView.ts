@@ -108,7 +108,15 @@ namespace initialfantasy {
                                             new sap.ui.layout.form.SimpleForm("", {
                                                 editable: true,
                                                 content: [
-                                                    new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Toolbar("", {
+                                                        visible: false,
+                                                        items: [
+                                                            new sap.extension.m.Input("", {
+                                                                type: sap.m.InputType.Password,
+                                                                visible: false,
+                                                            }),
+                                                        ]
+                                                    }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
                                                     new sap.extension.m.Input("", {
                                                         autocomplete: false,

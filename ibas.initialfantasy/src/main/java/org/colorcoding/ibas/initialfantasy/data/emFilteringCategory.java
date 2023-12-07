@@ -1,6 +1,9 @@
 package org.colorcoding.ibas.initialfantasy.data;
 
+import javax.xml.bind.annotation.XmlType;
+
 import org.colorcoding.ibas.bobas.mapping.Value;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 筛选的种类
@@ -8,6 +11,7 @@ import org.colorcoding.ibas.bobas.mapping.Value;
  * @author Niuren.Zhu
  *
  */
+@XmlType(namespace = MyConfiguration.NAMESPACE_BO)
 public enum emFilteringCategory {
 	/**
 	 * 读取

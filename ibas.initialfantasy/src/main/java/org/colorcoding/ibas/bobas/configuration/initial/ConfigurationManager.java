@@ -53,6 +53,10 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
 			condition.setValue(emConfigCategory.SERVER);
 			condition.setRelationship(ConditionRelationship.OR);
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
+			condition.setValue(emConfigCategory.ALL);
+			condition.setRelationship(ConditionRelationship.OR);
 			condition.setBracketClose(1);
 			condition = criteria.getConditions().create();
 			condition.setAlias(ApplicationConfig.PROPERTY_ACTIVATED.getName());

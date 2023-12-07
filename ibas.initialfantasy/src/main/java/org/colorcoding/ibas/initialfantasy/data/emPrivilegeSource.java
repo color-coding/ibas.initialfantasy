@@ -1,6 +1,9 @@
 package org.colorcoding.ibas.initialfantasy.data;
 
+import javax.xml.bind.annotation.XmlType;
+
 import org.colorcoding.ibas.bobas.mapping.Value;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 权限来源
@@ -8,6 +11,7 @@ import org.colorcoding.ibas.bobas.mapping.Value;
  * @author Niuren.Zhu
  *
  */
+@XmlType(namespace = MyConfiguration.NAMESPACE_BO)
 public enum emPrivilegeSource {
 	/** 模块设置 */
 	@Value(value = "M")

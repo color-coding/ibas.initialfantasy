@@ -619,6 +619,12 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
 			condition.setValue(emConfigCategory.CLIENT);
+			condition.setBracketOpen(1);
+			condition = criteria.getConditions().create();
+			condition.setAlias(ApplicationConfig.PROPERTY_CATEGORY.getName());
+			condition.setValue(emConfigCategory.ALL);
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setBracketClose(1);
 			condition = criteria.getConditions().create();
 			condition.setAlias(ApplicationConfig.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
