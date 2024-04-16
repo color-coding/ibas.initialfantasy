@@ -46,6 +46,8 @@ namespace initialfantasy {
             systemed: ibas.emYesNo;
             /** 链接的对象 */
             linkedObject: string;
+            /** 值选择方式 */
+            valueChooseType: string;
             /** 业务对象属性值集合 */
             boPropertyValues: IBOPropertyValues;
         }

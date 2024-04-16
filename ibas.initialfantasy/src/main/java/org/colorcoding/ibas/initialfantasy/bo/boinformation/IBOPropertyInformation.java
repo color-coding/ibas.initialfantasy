@@ -150,6 +150,20 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	void setLinkedObject(String value);
 
 	/**
+	 * 获取-值选择方式
+	 * 
+	 * @return 值
+	 */
+	String getValueChooseType();
+
+	/**
+	 * 设置-值选择方式
+	 * 
+	 * @param value 值
+	 */
+	void setValueChooseType(String value);
+
+	/**
 	 * 获取-业务对象属性值集合
 	 * 
 	 * @return 值

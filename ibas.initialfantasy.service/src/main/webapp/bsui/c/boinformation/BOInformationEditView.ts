@@ -286,13 +286,38 @@ namespace initialfantasy {
                                                         press: function (): void {
                                                             that.fireViewEvents(that.removeBOPropertyValueEvent, that.tableBOPropertyValue.getSelecteds());
                                                         }
-                                                    }), new sap.m.Button("", {
+                                                    }),
+                                                    new sap.m.Button("", {
                                                         text: ibas.i18n.prop("bo_bopropertyinformation_linkedobject"),
                                                         icon: "sap-icon://value-help",
                                                         visible: false,
                                                         press: function (): void {
                                                             that.fireViewEvents(that.chooseLinkedObjectEvent,
                                                                 (<sap.extension.model.JSONModel>that.vboxBOPropertyValue.getModel()).getData());
+                                                        }
+                                                    }),
+                                                    new sap.m.ToolbarSeparator(""),
+                                                    new sap.extension.m.Select("", {
+                                                        items: [
+                                                            new sap.extension.m.SelectItem("", {
+                                                                key: "",
+                                                                text: ibas.i18n.prop("em_chooosetype_default"),
+                                                            }),
+                                                            new sap.extension.m.SelectItem("", {
+                                                                key: "SINGLE",
+                                                                text: ibas.i18n.prop("em_chooosetype_single"),
+                                                            }),
+                                                            new sap.extension.m.SelectItem("", {
+                                                                key: "MULTIPLE",
+                                                                text: ibas.i18n.prop("em_chooosetype_multiple"),
+                                                            })
+                                                        ],
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "/valueChooseType",
+                                                    }).bindProperty("visible", {
+                                                        path: "/systemed",
+                                                        formatter(data: any): boolean {
+                                                            return data === ibas.emYesNo.NO ? true : false;
                                                         }
                                                     }),
                                                     new sap.m.ToolbarSpacer(""),

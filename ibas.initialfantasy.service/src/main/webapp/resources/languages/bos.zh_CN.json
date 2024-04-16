@@ -533,5 +533,11 @@
         "em_requiredvalue_default": "默认",
         "em_requiredvalue_no": "否",
         "em_requiredvalue_yes": "是"
+    },
+    {
+        "em_chooosetype_default": "默认",
+        "em_chooosetype_none": "无",
+        "em_chooosetype_single": "单选",
+        "em_chooosetype_multiple": "多选"
     }
 ]

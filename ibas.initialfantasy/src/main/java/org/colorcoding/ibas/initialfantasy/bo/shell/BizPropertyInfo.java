@@ -36,6 +36,7 @@ public class BizPropertyInfo extends Serializable {
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
 		propertyInfo.setSystemed(propertyItem.getSystemed() == emYesNo.YES ? true : false);
 		propertyInfo.setLinkedObject(propertyItem.getLinkedObject());
+		propertyInfo.setValueChooseType(propertyItem.getValueChooseType());
 		BizPropertyValue[] propertyValues = new BizPropertyValue[propertyItem.getBOPropertyValues().size()];
 		for (int i = 0; i < propertyValues.length; i++) {
 			propertyValues[i] = BizPropertyValue.create(propertyItem.getBOPropertyValues().get(i));
@@ -176,6 +177,17 @@ public class BizPropertyInfo extends Serializable {
 
 	public final void setRequired(Boolean required) {
 		this.required = required;
+	}
+
+	@XmlElement(name = "ValueChooseType")
+	private String valueChooseType;
+
+	public final String getValueChooseType() {
+		return valueChooseType;
+	}
+
+	public final void setValueChooseType(String valueChooseType) {
+		this.valueChooseType = valueChooseType;
 	}
 
 	private BizPropertyValue[] values;

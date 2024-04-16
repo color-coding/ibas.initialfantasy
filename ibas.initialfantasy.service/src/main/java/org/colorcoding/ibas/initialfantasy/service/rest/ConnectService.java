@@ -1,5 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.service.rest;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Base64;
 
 import javax.ws.rs.BeanParam;
@@ -52,7 +54,11 @@ public class ConnectService extends BORepositoryInitialFantasyShell {
 	@Path("userConnect")
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shell.User> userConnect(
 			@QueryParam("user") String user, @QueryParam("password") String password) {
-		return super.userConnect(user, this.atob(password));
+		try {
+			return super.userConnect(user, URLDecoder.decode(this.atob(password), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			return new OperationResult<>(e);
+		}
 	}
 
 	@POST

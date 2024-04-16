@@ -242,6 +242,17 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyInformation.PROPERTY_LINKEDOBJECT_NAME, value);
             }
 
+            /** 映射的属性名称-值选择方式 */
+            static PROPERTY_VALUECHOOSETYPE_NAME: string = "ValueChooseType";
+            /** 获取-值选择方式 */
+            get valueChooseType(): string {
+                return this.getProperty<string>(BOPropertyInformation.PROPERTY_VALUECHOOSETYPE_NAME);
+            }
+            /** 设置-值选择方式 */
+            set valueChooseType(value: string) {
+                this.setProperty(BOPropertyInformation.PROPERTY_VALUECHOOSETYPE_NAME, value);
+            }
+
             /** 映射的属性名称-业务对象属性值集合 */
             static PROPERTY_BOPROPERTYVALUES_NAME: string = "BOPropertyValues";
             /** 获取-业务对象属性信息集合 */
