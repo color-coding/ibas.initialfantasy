@@ -243,7 +243,10 @@ namespace initialfantasy {
                     let criteria: ibas.ICriteria;
                     let condition: ibas.ICondition;
                     let criterias: ibas.IList<ibas.ICriteria> = new ibas.ArrayList<ibas.ICriteria>();
-                    for (let ship of this.boShipMap.where(c => ibas.strings.equalsIgnoreCase(c.target, originCode))) {
+                    for (let ship of this.boShipMap.where(
+                        c => ibas.strings.equalsIgnoreCase(c.target, originCode)
+                            || (c.target.indexOf(".") > 0 && ibas.strings.isWith(c.target, originCode, undefined))
+                    )) {
                         let bsType: string = ship.target;
                         let bsEntry: number = fetcher.origin.docEntry;
                         if (!ibas.strings.isEmpty(bsType) && bsEntry > 0) {
