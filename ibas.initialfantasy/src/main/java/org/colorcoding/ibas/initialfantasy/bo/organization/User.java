@@ -1,5 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.organization;
 
+import java.util.regex.Pattern;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,11 +16,13 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
@@ -26,6 +30,7 @@ import org.colorcoding.ibas.bobas.rule.ICheckRules;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.logic.IUserMailCheckContract;
 import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 
@@ -40,46 +45,15 @@ import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 public class User extends BusinessObject<User>
 		implements IUser, IApprovalData, IDataOwnership, IBOUserFields, IBOSeriesKey, IBusinessLogicsHost, ICheckRules {
 
+	/**
+	 * 密码掩饰字符
+	 */
 	public static final String PASSWORD_MASK = "********";
 
-	/**
-	 * 检查密码
-	 * 
-	 * @param password
-	 * @return
+	/*
+	 * 密码验证： 至少包含一个数字、一个小写字母、一个大写字母，并且密码长度至少为8个字符
 	 */
-	public boolean checkPassword(String password) {
-		if (this.getPassword() == null) {
-			return false;
-		}
-		if (this.getPassword().endsWith(ENCRYPTED_CHARACTER_MARK)) {
-			if (password == null) {
-				password = "";
-			}
-			if (password.endsWith("=")) {
-				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
-					return true;
-				}
-			}
-			if (password.length() == 32) {
-				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
-					return true;
-				}
-			}
-			password = EncryptMD5.md5(password) + ENCRYPTED_CHARACTER_MARK;
-			if (this.getPassword().equals(password)) {
-				return true;
-			}
-		} else {
-			try {
-				if (PasswordStorage.verifyPassword(password, this.getPassword())) {
-					return true;
-				}
-			} catch (Exception e) {
-			}
-		}
-		return false;
-	}
+	public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
 
 	/**
 	 * 加密字符标记
@@ -200,14 +174,23 @@ public class User extends BusinessObject<User>
 	 * 
 	 * @param value 值
 	 */
-	public final void setPassword(String value) {
+	public void setPassword(String value) {
 		if (this.isLoading()) {
 			this.setProperty(PROPERTY_PASSWORD, value);
 			this.setValid(false);
 		} else {
 			try {
+				if (!(this.getDocEntry() < 0) && MyConfiguration
+						.getConfigValue(MyConfiguration.CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY, false)) {
+					Pattern pattern = Pattern.compile(PASSWORD_REGEX);
+					if (DataConvert.isNullOrEmpty(value) || !pattern.matcher(value).matches()) {
+						throw new BusinessRuleException(
+								I18N.prop("msg_if_user_password_complexity_check_faild", this.getCode()));
+					}
+				}
 				this.setProperty(PROPERTY_PASSWORD, PasswordStorage.createHash(value));
 			} catch (Exception e) {
+				Logger.log(e);
 				throw new RuntimeException(e);
 			}
 		}
@@ -1033,7 +1016,45 @@ public class User extends BusinessObject<User>
 			this.setPassword(this.getPassword());
 			this.setValid(true);
 		}
+	}
 
+	/**
+	 * 检查密码
+	 * 
+	 * @param password
+	 * @return
+	 */
+	public boolean checkPassword(String password) {
+		if (this.getPassword() == null) {
+			return false;
+		}
+		if (this.getPassword().endsWith(ENCRYPTED_CHARACTER_MARK)) {
+			if (password == null) {
+				password = "";
+			}
+			if (password.endsWith("=")) {
+				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
+					return true;
+				}
+			}
+			if (password.length() == 32) {
+				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
+					return true;
+				}
+			}
+			password = EncryptMD5.md5(password) + ENCRYPTED_CHARACTER_MARK;
+			if (this.getPassword().equals(password)) {
+				return true;
+			}
+		} else {
+			try {
+				if (PasswordStorage.verifyPassword(password, this.getPassword())) {
+					return true;
+				}
+			} catch (Exception e) {
+			}
+		}
+		return false;
 	}
 
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE User>
 <ns:User xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
-	<Activated>YES</Activated>
+	<DocEntry>-1</DocEntry>
 	<Code>admin</Code>
 	<Name>administrator</Name>
 	<Password>1q2w3e</Password>
+	<Activated>YES</Activated>
 	<Super>YES</Super>
 </ns:User>

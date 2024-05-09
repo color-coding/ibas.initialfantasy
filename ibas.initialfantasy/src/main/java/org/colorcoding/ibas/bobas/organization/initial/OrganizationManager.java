@@ -54,6 +54,10 @@ public class OrganizationManager implements IOrganizationManager {
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
+			condition = criteria.getConditions().create();
+			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
+			condition.setOperation(ConditionOperation.GRATER_THAN);
+			condition.setValue(0);
 			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
 			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.IUser> operationResult = boRepository

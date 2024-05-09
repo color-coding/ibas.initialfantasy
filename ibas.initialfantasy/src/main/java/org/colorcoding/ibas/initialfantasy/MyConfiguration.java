@@ -63,5 +63,8 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 * 配置项目-允许手机登录
 	 */
 	public final static String CONFIG_ITEM_ALLOWED_PHONE_LOGIN = "LoginPhone";
-
+	/**
+	 * 配置项目-检查用户密码复杂性
+	 */
+	public final static String CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY = "checkPasswordComplexity";
 }

@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.ICheckRules;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -33,10 +34,18 @@ public class SystemUser extends User implements IBOCustomKey, ICheckRules {
 		}
 	}
 
+	public void setPassword(String value) {
+		this.setProperty(PROPERTY_PASSWORD, value);
+	}
+
 	@Override
 	public void check() throws BusinessRuleException {
 		this.setPassword(UUID.randomUUID().toString());
 		this.setActivated(emYesNo.NO);
 		this.setSuper(emYesNo.NO);
+	}
+
+	public IBusinessLogicContract[] getContracts() {
+		return new IBusinessLogicContract[] {};
 	}
 }
