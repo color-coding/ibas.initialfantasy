@@ -2,6 +2,7 @@ package org.colorcoding.ibas.initialfantasy;
 
 import org.colorcoding.ibas.bobas.configuration.ConfigurationFactory;
 import org.colorcoding.ibas.bobas.configuration.IConfigurationManager;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 
 /**
  * 我的配置项
@@ -64,7 +65,44 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public final static String CONFIG_ITEM_ALLOWED_PHONE_LOGIN = "LoginPhone";
 	/**
+	 * 配置项目-禁用URL Token
+	 */
+	public final static String CONFIG_ITEM_DISABLED_URL_TOKEN = "DisabledUrlToken";
+	/**
 	 * 配置项目-检查用户密码复杂性
 	 */
 	public final static String CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY = "checkPasswordComplexity";
+
+	private static Boolean DISABLED_URL_TOKEN = null;
+
+	private static String AUTHENTICATION_SCHEMES_BEARER = "Bearer";
+
+	/**
+	 * 选择Token
+	 * 
+	 * @param headerToken 消息头Token
+	 * @param urlToken    地址Token
+	 * @return
+	 */
+	public static String optToken(String headerToken, String urlToken) {
+		if (DISABLED_URL_TOKEN == null) {
+			synchronized (MyConfiguration.class) {
+				if (DISABLED_URL_TOKEN == null) {
+					DISABLED_URL_TOKEN = MyConfiguration.getConfigValue(CONFIG_ITEM_DISABLED_URL_TOKEN, false);
+				}
+			}
+		}
+		if (!DataConvert.isNullOrEmpty(headerToken)) {
+			String values[] = headerToken.split(" ");
+			if (values.length > 1) {
+				if (AUTHENTICATION_SCHEMES_BEARER.equalsIgnoreCase(values[0].trim())) {
+					return values[1].trim();
+				}
+			}
+		}
+		if (DISABLED_URL_TOKEN) {
+			return DataConvert.STRING_VALUE_EMPTY;
+		}
+		return urlToken;
+	}
 }

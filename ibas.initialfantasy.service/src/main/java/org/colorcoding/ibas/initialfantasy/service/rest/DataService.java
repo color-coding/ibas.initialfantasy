@@ -1,6 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.service.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -10,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
@@ -56,8 +58,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchApplicationConfig")
 	public OperationResult<ApplicationConfig> fetchApplicationConfig(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchApplicationConfig(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchApplicationConfig(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -72,8 +74,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveApplicationConfig")
 	public OperationResult<ApplicationConfig> saveApplicationConfig(ApplicationConfig bo,
-			@QueryParam("token") String token) {
-		return super.saveApplicationConfig(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveApplicationConfig(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -88,8 +90,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBONumbering")
-	public OperationResult<BONumbering> fetchBONumbering(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchBONumbering(criteria, token);
+	public OperationResult<BONumbering> fetchBONumbering(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBONumbering(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -105,8 +108,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOSeriesNumbering")
 	public OperationResult<BOSeriesNumbering> fetchBOSeriesNumbering(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchBOSeriesNumbering(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBOSeriesNumbering(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -121,8 +124,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveBOSeriesNumbering")
 	public OperationResult<BOSeriesNumbering> saveBOSeriesNumbering(BOSeriesNumbering bo,
-			@QueryParam("token") String token) {
-		return super.saveBOSeriesNumbering(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveBOSeriesNumbering(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -137,8 +140,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchOrganization")
-	public OperationResult<Organization> fetchOrganization(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchOrganization(criteria, token);
+	public OperationResult<Organization> fetchOrganization(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchOrganization(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -152,8 +156,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveOrganization")
-	public OperationResult<Organization> saveOrganization(Organization bo, @QueryParam("token") String token) {
-		return super.saveOrganization(bo, token);
+	public OperationResult<Organization> saveOrganization(Organization bo,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveOrganization(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -171,8 +176,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUserModules")
 	public OperationResult<UserModule> fetchUserModules(@QueryParam("user") String user,
-			@QueryParam("platform") String platform, @QueryParam("token") String token) {
-		return super.fetchUserModules(user, platform, token);
+			@QueryParam("platform") String platform, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchUserModules(user, platform, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -188,8 +194,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUserPrivileges")
 	public OperationResult<UserPrivilege> fetchUserPrivileges(@QueryParam("user") String user,
-			@QueryParam("platform") String platform, @QueryParam("token") String token) {
-		return super.fetchUserPrivileges(user, platform, token);
+			@QueryParam("platform") String platform, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchUserPrivileges(user, platform, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -205,8 +212,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUserConfigs")
 	public OperationResult<UserConfig> fetchUserConfigs(@QueryParam("user") String user,
-			@QueryParam("platform") String platform, @QueryParam("token") String token) {
-		return super.fetchUserConfigs(user, platform, token);
+			@QueryParam("platform") String platform, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchUserConfigs(user, platform, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -221,8 +229,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUserQueries")
 	public OperationResult<UserQuery> fetchUserQueries(@QueryParam("user") String user,
-			@QueryParam("queryId") String queryId, @QueryParam("token") String token) {
-		return super.fetchUserQueries(user, queryId, token);
+			@QueryParam("queryId") String queryId, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchUserQueries(user, queryId, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -236,8 +245,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveUserQuery")
-	public OperationMessage saveUserQuery(UserQuery query, @QueryParam("token") String token) {
-		return super.saveUserQuery(query, token);
+	public OperationMessage saveUserQuery(UserQuery query, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.saveUserQuery(query, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -253,8 +263,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBizObjectInfo")
 	public OperationResult<BizObjectInfo> fetchBizObjectInfo(@QueryParam("user") String user,
-			@QueryParam("boCode") String boCode, @QueryParam("token") String token) {
-		return super.fetchBizObjectInfo(user, boCode, token);
+			@QueryParam("boCode") String boCode, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchBizObjectInfo(user, boCode, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -270,8 +281,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchApplicationElement")
 	public OperationResult<ApplicationElement> fetchApplicationElement(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchApplicationElement(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchApplicationElement(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -286,8 +297,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveApplicationElement")
 	public OperationResult<ApplicationElement> saveApplicationElement(ApplicationElement bo,
-			@QueryParam("token") String token) {
-		return super.saveApplicationElement(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveApplicationElement(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -303,8 +314,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchApplicationModule")
 	public OperationResult<ApplicationModule> fetchApplicationModule(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchApplicationModule(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchApplicationModule(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -319,8 +330,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveApplicationModule")
 	public OperationResult<ApplicationModule> saveApplicationModule(ApplicationModule bo,
-			@QueryParam("token") String token) {
-		return super.saveApplicationModule(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveApplicationModule(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -336,8 +347,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchApplicationPlatform")
 	public OperationResult<ApplicationPlatform> fetchApplicationPlatform(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchApplicationPlatform(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchApplicationPlatform(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -352,8 +363,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveApplicationPlatform")
 	public OperationResult<ApplicationPlatform> saveApplicationPlatform(ApplicationPlatform bo,
-			@QueryParam("token") String token) {
-		return super.saveApplicationPlatform(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveApplicationPlatform(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -368,8 +379,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOCriteria")
-	public OperationResult<BOCriteria> fetchBOCriteria(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchBOCriteria(criteria, token);
+	public OperationResult<BOCriteria> fetchBOCriteria(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBOCriteria(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -383,8 +395,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveBOCriteria")
-	public OperationResult<BOCriteria> saveBOCriteria(BOCriteria bo, @QueryParam("token") String token) {
-		return super.saveBOCriteria(bo, token);
+	public OperationResult<BOCriteria> saveBOCriteria(BOCriteria bo, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.saveBOCriteria(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -399,8 +412,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOFiltering")
-	public OperationResult<BOFiltering> fetchBOFiltering(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchBOFiltering(criteria, token);
+	public OperationResult<BOFiltering> fetchBOFiltering(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBOFiltering(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -414,8 +428,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveBOFiltering")
-	public OperationResult<BOFiltering> saveBOFiltering(BOFiltering bo, @QueryParam("token") String token) {
-		return super.saveBOFiltering(bo, token);
+	public OperationResult<BOFiltering> saveBOFiltering(BOFiltering bo,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveBOFiltering(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -430,8 +445,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchPrivilege")
-	public OperationResult<Privilege> fetchPrivilege(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchPrivilege(criteria, token);
+	public OperationResult<Privilege> fetchPrivilege(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchPrivilege(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -445,8 +461,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("savePrivilege")
-	public OperationResult<Privilege> savePrivilege(Privilege bo, @QueryParam("token") String token) {
-		return super.savePrivilege(bo, token);
+	public OperationResult<Privilege> savePrivilege(Privilege bo, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.savePrivilege(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -461,8 +478,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUser")
-	public OperationResult<User> fetchUser(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchUser(criteria, token);
+	public OperationResult<User> fetchUser(Criteria criteria, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchUser(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -476,8 +494,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveUser")
-	public OperationResult<User> saveUser(User bo, @QueryParam("token") String token) {
-		return super.saveUser(bo, token);
+	public OperationResult<User> saveUser(User bo, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.saveUser(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -492,8 +511,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOInformation")
-	public OperationResult<BOInformation> fetchBOInformation(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchBOInformation(criteria, token);
+	public OperationResult<BOInformation> fetchBOInformation(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBOInformation(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -507,8 +527,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveBOInformation")
-	public OperationResult<BOInformation> saveBOInformation(BOInformation bo, @QueryParam("token") String token) {
-		return super.saveBOInformation(bo, token);
+	public OperationResult<BOInformation> saveBOInformation(BOInformation bo,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveBOInformation(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -523,8 +544,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchIdentity")
-	public OperationResult<Identity> fetchIdentity(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchIdentity(criteria, token);
+	public OperationResult<Identity> fetchIdentity(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchIdentity(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -538,8 +560,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveIdentity")
-	public OperationResult<Identity> saveIdentity(Identity bo, @QueryParam("token") String token) {
-		return super.saveIdentity(bo, token);
+	public OperationResult<Identity> saveIdentity(Identity bo, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.saveIdentity(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -554,8 +577,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUserIdentity")
-	public OperationResult<UserIdentity> fetchUserIdentity(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchUserIdentity(criteria, token);
+	public OperationResult<UserIdentity> fetchUserIdentity(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchUserIdentity(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -569,8 +593,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveUserIdentity")
-	public OperationResult<UserIdentity> saveUserIdentity(UserIdentity bo, @QueryParam("token") String token) {
-		return super.saveUserIdentity(bo, token);
+	public OperationResult<UserIdentity> saveUserIdentity(UserIdentity bo,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveUserIdentity(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -587,8 +612,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchIdentityPrivilege")
 	public OperationResult<IdentityPrivilege> fetchIdentityPrivilege(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchIdentityPrivilege(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchIdentityPrivilege(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -603,8 +628,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveIdentityPrivilege")
 	public OperationResult<IdentityPrivilege> saveIdentityPrivilege(IdentityPrivilege bo,
-			@QueryParam("token") String token) {
-		return super.saveIdentityPrivilege(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveIdentityPrivilege(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -620,8 +645,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOPropertySetting")
 	public OperationResult<BOPropertySetting> fetchBOPropertySetting(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchBOPropertySetting(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBOPropertySetting(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -636,8 +661,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveBOPropertySetting")
 	public OperationResult<BOPropertySetting> saveBOPropertySetting(BOPropertySetting bo,
-			@QueryParam("token") String token) {
-		return super.saveBOPropertySetting(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveBOPropertySetting(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -653,8 +678,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchApplicationConfigIdentity")
 	public OperationResult<ApplicationConfigIdentity> fetchApplicationConfigIdentity(Criteria criteria,
-			@QueryParam("token") String token) {
-		return super.fetchApplicationConfigIdentity(criteria, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchApplicationConfigIdentity(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -669,8 +694,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveApplicationConfigIdentity")
 	public OperationResult<ApplicationConfigIdentity> saveApplicationConfigIdentity(ApplicationConfigIdentity bo,
-			@QueryParam("token") String token) {
-		return super.saveApplicationConfigIdentity(bo, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveApplicationConfigIdentity(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -685,8 +710,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBOLogst")
-	public OperationResult<BOLogst> fetchBOLogst(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchBOLogst(criteria, token);
+	public OperationResult<BOLogst> fetchBOLogst(Criteria criteria, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.fetchBOLogst(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -701,8 +727,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchBORelationship")
-	public OperationResult<BORelationship> fetchBORelationship(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchBORelationship(criteria, token);
+	public OperationResult<BORelationship> fetchBORelationship(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchBORelationship(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	// --------------------------------------------------------------------------------------------//
@@ -717,8 +744,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchRefunction")
-	public OperationResult<Refunction> fetchRefunction(Criteria criteria, @QueryParam("token") String token) {
-		return super.fetchRefunction(criteria, token);
+	public OperationResult<Refunction> fetchRefunction(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchRefunction(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -732,8 +760,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("saveRefunction")
-	public OperationResult<Refunction> saveRefunction(Refunction bo, @QueryParam("token") String token) {
-		return super.saveRefunction(bo, token);
+	public OperationResult<Refunction> saveRefunction(Refunction bo, @HeaderParam("authorization") String authorization,
+			@QueryParam("token") String token) {
+		return super.saveRefunction(bo, MyConfiguration.optToken(authorization, token));
 	}
 
 	/**
@@ -748,8 +777,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("fetchUserFunctions")
 	public OperationResult<UserFunction> fetchUserFunctions(@QueryParam("user") String user,
-			@QueryParam("token") String token) {
-		return super.fetchUserFunctions(user, token);
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchUserFunctions(user, MyConfiguration.optToken(authorization, token));
 	}
 	// --------------------------------------------------------------------------------------------//
 
