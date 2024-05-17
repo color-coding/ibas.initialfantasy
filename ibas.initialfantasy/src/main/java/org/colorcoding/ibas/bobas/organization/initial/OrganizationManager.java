@@ -13,16 +13,19 @@ import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.identity.IUserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
 public class OrganizationManager implements IOrganizationManager {
+	private static int TOKEN_TIMEOUT = 0;
 
 	@Override
 	public IUser getUser(String token) {
@@ -30,7 +33,19 @@ public class OrganizationManager implements IOrganizationManager {
 			if (token.equals(OrganizationFactory.SYSTEM_USER.getToken())) {
 				return OrganizationFactory.SYSTEM_USER;
 			}
-			return checkIdentities(this.getTokenUsers().get(token));
+			IUser user = this.getTokenUsers().get(token);
+			if (TOKEN_TIMEOUT > 0 && user instanceof User) {
+				User oUser = (User) user;
+				if ((DateTime.getNow().getTime() - oUser.getTokenTimeStamp()) / 1000 > TOKEN_TIMEOUT) {
+					// 未操作超时
+					this.getTokenUsers().remove(token);
+					throw new RuntimeException(I18N.prop("msg_if_user_token_has_expired"));
+				} else {
+					// 续期
+					oUser.setTokenTimeStamp();
+				}
+			}
+			return checkIdentities(user);
 		}
 		return null;
 	}
@@ -50,6 +65,7 @@ public class OrganizationManager implements IOrganizationManager {
 	@Override
 	public void initialize() {
 		try {
+			TOKEN_TIMEOUT = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0);
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());

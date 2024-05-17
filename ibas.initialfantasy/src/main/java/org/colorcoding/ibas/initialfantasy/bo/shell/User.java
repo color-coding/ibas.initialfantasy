@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
@@ -32,6 +33,10 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		stringBuilder.append(user.getPassword());
 		stringBuilder.append(user.getCode());
 		stringBuilder.append(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_KEY, "CC"));
+		if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0) {
+			sUser.setTokenTimeStamp();
+			stringBuilder.append(sUser.getTokenTimeStamp());
+		}
 		sUser.setToken(EncryptMD5.md5(stringBuilder.toString()));
 		return sUser;
 	}
@@ -113,6 +118,20 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	private long tokenTimeStamp = 0;
+
+	public final long getTokenTimeStamp() {
+		return tokenTimeStamp;
+	}
+
+	public final void setTokenTimeStamp(long value) {
+		this.tokenTimeStamp = value;
+	}
+
+	public final void setTokenTimeStamp() {
+		this.setTokenTimeStamp(DateTime.getNow().getTime());
 	}
 
 	@Override

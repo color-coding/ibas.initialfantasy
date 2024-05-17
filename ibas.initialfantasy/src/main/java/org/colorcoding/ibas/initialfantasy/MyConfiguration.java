@@ -69,12 +69,15 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public final static String CONFIG_ITEM_DISABLED_URL_TOKEN = "DisabledUrlToken";
 	/**
+	 * 配置项目-用户口令超时时间（秒）
+	 */
+	public final static String CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME = "UserTokenTimeout";
+	/**
 	 * 配置项目-检查用户密码复杂性
 	 */
 	public final static String CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY = "checkPasswordComplexity";
 
 	private static Boolean DISABLED_URL_TOKEN = null;
-
 	private static String AUTHENTICATION_SCHEMES_BEARER = "Bearer";
 
 	/**

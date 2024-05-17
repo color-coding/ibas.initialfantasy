@@ -25,7 +25,6 @@ namespace initialfantasy {
                         */
                         content: [
                             new sap.ui.layout.Splitter("", {
-                                resizable: false,
                                 orientation: sap.ui.core.Orientation.Horizontal,
                                 layoutData: new sap.ui.layout.SplitterLayoutData("", {
                                     resizable: false,
