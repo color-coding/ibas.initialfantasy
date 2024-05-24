@@ -37,13 +37,45 @@ namespace initialfantasy {
                             ]
                         }),
                         headerContent: [
+                            new sap.extension.m.PropertyObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_organization_category"),
+                                bindingValue: {
+                                    path: "category",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                },
+                                dataInfo: {
+                                    code: bo.Organization.BUSINESS_OBJECT_CODE,
+                                },
+                                propertyName: "category",
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_organization_validdate"),
+                                bindingValue: {
+                                    path: "validDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_organization_invaliddate"),
+                                bindingValue: {
+                                    path: "invalidDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
+                                title: ibas.i18n.prop("initialfantasy_title_others"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_organization_remarks"),
+                                                bindingValue: {
+                                                    path: "remarks",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
                                             new sap.extension.m.RepositoryObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_organization_dataowner"),
                                                 repository: bo.BORepositoryInitialFantasy,
@@ -55,17 +87,6 @@ namespace initialfantasy {
                                                 bindingValue: {
                                                     path: "dataOwner",
                                                     type: new sap.extension.data.Numeric(),
-                                                }
-                                            }),
-                                        ],
-                                    }),
-                                    new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_organization_remarks"),
-                                                bindingValue: {
-                                                    path: "remarks",
-                                                    type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),
                                         ],

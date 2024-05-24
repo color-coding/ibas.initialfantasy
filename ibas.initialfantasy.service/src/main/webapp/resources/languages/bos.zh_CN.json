@@ -527,7 +527,8 @@
     },
     {
         "em_configcategory_server": "服务端",
-        "em_configcategory_client": "客户端"
+        "em_configcategory_client": "客户端",
+        "em_configcategory_all": "全部"
     },
     {
         "em_requiredvalue_default": "默认",

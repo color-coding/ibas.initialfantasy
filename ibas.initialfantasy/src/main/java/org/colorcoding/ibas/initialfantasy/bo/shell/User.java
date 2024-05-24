@@ -13,6 +13,7 @@ import org.colorcoding.ibas.bobas.serialization.Serializable;
 import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "User")
@@ -20,6 +21,8 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 public class User extends Serializable implements org.colorcoding.ibas.bobas.organization.IUser {
 
 	private static final long serialVersionUID = 1850586878174104320L;
+
+	private static String TOKEN_NOT_EXPIRED_USERS = null;
 
 	public static User create(IUser user) {
 		User sUser = new User();
@@ -34,8 +37,21 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		stringBuilder.append(user.getCode());
 		stringBuilder.append(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_KEY, "CC"));
 		if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0) {
-			sUser.setTokenTimeStamp();
-			stringBuilder.append(sUser.getTokenTimeStamp());
+			if (TOKEN_NOT_EXPIRED_USERS == null) {
+				synchronized (User.class) {
+					TOKEN_NOT_EXPIRED_USERS = MyConfiguration
+							.getConfigValue(MyConfiguration.CONFIG_ITEM_TOKEN_NOT_EXPIRED_USERS, "");
+					if (!TOKEN_NOT_EXPIRED_USERS.endsWith(";")) {
+						TOKEN_NOT_EXPIRED_USERS = TOKEN_NOT_EXPIRED_USERS + ";";
+					}
+				}
+			}
+			if (!DataConvert.isNullOrEmpty(TOKEN_NOT_EXPIRED_USERS)) {
+				if (!TOKEN_NOT_EXPIRED_USERS.contains(sUser.getCode() + ";")) {
+					sUser.setTokenTimeStamp();
+					stringBuilder.append(sUser.getTokenTimeStamp());
+				}
+			}
 		}
 		sUser.setToken(EncryptMD5.md5(stringBuilder.toString()));
 		return sUser;

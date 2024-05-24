@@ -210,10 +210,17 @@ namespace initialfantasy {
                                 visible: false,
                             }),
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
+                                title: ibas.i18n.prop("initialfantasy_title_others"),
                                 subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_organization_remarks"),
+                                                bindingValue: {
+                                                    path: "remarks",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
                                             new sap.extension.m.RepositoryObjectAttribute("", {
                                                 title: ibas.i18n.prop("bo_organization_dataowner"),
                                                 repository: bo.BORepositoryInitialFantasy,
@@ -225,17 +232,6 @@ namespace initialfantasy {
                                                 bindingValue: {
                                                     path: "dataOwner",
                                                     type: new sap.extension.data.Numeric(),
-                                                }
-                                            }),
-                                        ],
-                                    }),
-                                    new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_organization_remarks"),
-                                                bindingValue: {
-                                                    path: "remarks",
-                                                    type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),
                                         ],

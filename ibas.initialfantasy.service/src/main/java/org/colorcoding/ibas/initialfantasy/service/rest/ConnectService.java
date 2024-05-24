@@ -87,7 +87,7 @@ public class ConnectService extends BORepositoryInitialFantasyShell {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.shell.User> userConnect(@BeanParam UserInfo info) {
-		return super.userConnect(info.user, this.atob(info.password));
+		return this.userConnect(info.user, info.password);
 	}
 
 	protected String atob(String value) {

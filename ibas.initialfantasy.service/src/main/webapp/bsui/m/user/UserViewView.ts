@@ -28,13 +28,6 @@ namespace initialfantasy {
                             },
                             actions: [
                                 new sap.extension.m.ObjectYesNoStatus("", {
-                                    title: ibas.i18n.prop("bo_user_super"),
-                                    enumValue: {
-                                        path: "super",
-                                        type: new sap.extension.data.YesNo(),
-                                    }
-                                }),
-                                new sap.extension.m.ObjectYesNoStatus("", {
                                     title: ibas.i18n.prop("bo_user_activated"),
                                     enumValue: {
                                         path: "activated",
@@ -44,22 +37,36 @@ namespace initialfantasy {
                             ]
                         }),
                         headerContent: [
+                            new sap.extension.m.PropertyObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_user_category"),
+                                bindingValue: {
+                                    path: "category",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                },
+                                dataInfo: {
+                                    code: bo.User.BUSINESS_OBJECT_CODE,
+                                },
+                                propertyName: "category",
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_user_validdate"),
+                                bindingValue: {
+                                    path: "validDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
+                            new sap.extension.m.ObjectAttribute("", {
+                                title: ibas.i18n.prop("bo_user_invaliddate"),
+                                bindingValue: {
+                                    path: "invalidDate",
+                                    type: new sap.extension.data.Date(),
+                                }
+                            }),
                         ],
                         sections: [
                             new sap.uxap.ObjectPageSection("", {
-                                showTitle: false,
+                                title: ibas.i18n.prop("initialfantasy_title_general"),
                                 subSections: [
-                                    new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_user_phone"),
-                                                bindingValue: {
-                                                    path: "phone",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                        ],
-                                    }),
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
                                             new sap.extension.m.ObjectAttribute("", {
@@ -69,12 +76,38 @@ namespace initialfantasy {
                                                     type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_user_phone"),
+                                                bindingValue: {
+                                                    path: "phone",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
+                                            new sap.extension.m.ObjectYesNoStatus("", {
+                                                title: ibas.i18n.prop("bo_user_super"),
+                                                enumValue: {
+                                                    path: "super",
+                                                    type: new sap.extension.data.YesNo(),
+                                                }
+                                            }),
                                         ],
-                                    }),
+                                    })
+                                ]
+                            }),
+                            new sap.uxap.ObjectPageSection("", {
+                                title: ibas.i18n.prop("initialfantasy_title_others"),
+                                subSections: [
                                     new sap.uxap.ObjectPageSubSection("", {
                                         blocks: [
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_user_remarks"),
+                                                bindingValue: {
+                                                    path: "remarks",
+                                                    type: new sap.extension.data.Alphanumeric(),
+                                                }
+                                            }),
                                             new sap.extension.m.RepositoryObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_user_organization"),
+                                                title: ibas.i18n.prop("bo_user_belongs"),
                                                 repository: bo.BORepositoryInitialFantasy,
                                                 dataInfo: {
                                                     type: bo.Organization,
@@ -83,17 +116,6 @@ namespace initialfantasy {
                                                 },
                                                 bindingValue: {
                                                     path: "organization",
-                                                    type: new sap.extension.data.Alphanumeric(),
-                                                }
-                                            }),
-                                        ],
-                                    }),
-                                    new sap.uxap.ObjectPageSubSection("", {
-                                        blocks: [
-                                            new sap.extension.m.ObjectAttribute("", {
-                                                title: ibas.i18n.prop("bo_user_remarks"),
-                                                bindingValue: {
-                                                    path: "remarks",
                                                     type: new sap.extension.data.Alphanumeric(),
                                                 }
                                             }),
