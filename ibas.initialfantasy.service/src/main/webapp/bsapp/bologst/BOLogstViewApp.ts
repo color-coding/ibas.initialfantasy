@@ -39,7 +39,7 @@ namespace initialfantasy {
             run(data?: bo.BOLogst | bo.BOLogst[]): void {
                 this.datas = new ibas.ArrayList<object>();
                 for (let item of ibas.arrays.create(data)) {
-                    this.datas.add(typeof item.content === "string" ? JSON.parse(item.content) : item.content);
+                    this.datas.add(typeof item.content === "string" ? JSON.parse(item.content.replace(/[\u0000-\u001F\u007F]/g, "")) : item.content);
                 }
                 if (this.datas.length > 0) {
                     let criteria: ibas.ICriteria = new ibas.Criteria();

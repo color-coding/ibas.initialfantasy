@@ -79,7 +79,8 @@ public class DataConvert extends org.colorcoding.ibas.bobas.data.DataConvert {
 			} else if (field.getValueType().isEnum()) {
 				writer.append(String.format(TEMPLATE_STRING_VALUE, DataConvert.toString(field.getValue())));
 			} else {
-				writer.append(String.format(TEMPLATE_STRING_VALUE, DataConvert.toString(field.getValue())));
+				writer.append(String.format(TEMPLATE_STRING_VALUE, DataConvert.toString(field.getValue())
+						.replaceAll("/r", "").replaceAll("/n", " ").replaceAll("/t", " ")));
 			}
 		}
 		writer.append("}");

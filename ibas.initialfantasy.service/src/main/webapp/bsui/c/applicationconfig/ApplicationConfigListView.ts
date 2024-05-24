@@ -103,9 +103,11 @@ namespace initialfantasy {
                         detailPages: [
                             new sap.extension.m.Page("", {
                                 showHeader: false,
-                                subHeader: new sap.m.Toolbar("", {
-                                    content: [
+                                subHeader: new sap.m.Bar("", {
+                                    contentLeft: [
                                         new sap.m.Label("", {
+                                            width: "auto",
+                                            showColon: true,
                                             text: ibas.i18n.prop("bo_applicationconfigidentity_rolecode"),
                                         }),
                                         this.roleInput = new sap.extension.m.SelectionInput("", {
@@ -131,10 +133,11 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }),
-                                        new sap.m.ToolbarSeparator(""),
                                         new sap.m.Label("", {
+                                            width: "auto",
+                                            showColon: true,
                                             text: ibas.i18n.prop("bo_applicationconfigidentity_identitycode"),
-                                        }),
+                                        }).addStyleClass("sapUiTinyMarginBegin"),
                                         this.identityInput = new sap.extension.m.SelectionInput("", {
                                             width: "auto",
                                             placeholder: ibas.i18n.prop("initialfantasy_all_identities"),
@@ -158,9 +161,11 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }),
-                                        new sap.m.ToolbarSpacer(""),
+                                    ],
+                                    contentMiddle: [
+                                        new sap.m.ToolbarSeparator(""),
                                         new sap.m.SearchField("", {
-                                            width: "20rem",
+                                            width: "100%",
                                             search(event: sap.ui.base.Event): void {
                                                 let source: any = event.getSource();
                                                 if (source instanceof sap.m.SearchField) {
@@ -186,6 +191,8 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }),
+                                    ],
+                                    contentRight: [
                                         new sap.m.ToolbarSeparator(""),
                                         new sap.m.Button("", {
                                             text: ibas.i18n.prop("initialfantasy_copy_from"),

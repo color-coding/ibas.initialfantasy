@@ -195,6 +195,8 @@ namespace initialfantasy {
             SERVER,
             /** 客户端 */
             CLIENT,
+            /** 全部 */
+            ALL,
         }
         export enum emRequiredValue {
             /** 默认值 */

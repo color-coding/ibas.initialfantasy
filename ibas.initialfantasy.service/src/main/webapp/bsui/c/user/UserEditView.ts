@@ -110,7 +110,7 @@ namespace initialfantasy {
                                                 content: [
                                                     new sap.m.Toolbar("", {
                                                         visible: false,
-                                                        items: [
+                                                        content: [
                                                             new sap.extension.m.Input("", {
                                                                 type: sap.m.InputType.Password,
                                                                 visible: false,

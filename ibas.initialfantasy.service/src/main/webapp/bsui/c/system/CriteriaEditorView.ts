@@ -30,6 +30,7 @@ namespace initialfantasy {
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Label("", {
+                                    showColon: true,
                                     text: ibas.i18n.prop("initialfantasy_edit_target"),
                                 }).addStyleClass("sapUiSmallMarginBegin"),
                                 this.txtTarget = new sap.extension.m.RepositoryInput("", {

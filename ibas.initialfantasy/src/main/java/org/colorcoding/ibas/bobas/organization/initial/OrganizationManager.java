@@ -36,13 +36,16 @@ public class OrganizationManager implements IOrganizationManager {
 			IUser user = this.getTokenUsers().get(token);
 			if (TOKEN_TIMEOUT > 0 && user instanceof User) {
 				User oUser = (User) user;
-				if ((DateTime.getNow().getTime() - oUser.getTokenTimeStamp()) / 1000 > TOKEN_TIMEOUT) {
-					// 未操作超时
-					this.getTokenUsers().remove(token);
-					throw new RuntimeException(I18N.prop("msg_if_user_token_has_expired"));
-				} else {
-					// 续期
-					oUser.setTokenTimeStamp();
+				if (oUser.getTokenTimeStamp() > 0) {
+					if ((DateTime.getNow().getTime() - oUser.getTokenTimeStamp()) / 1000 > TOKEN_TIMEOUT) {
+						// 未操作超时
+						this.getIdUsers().remove(user.getId());
+						this.getTokenUsers().remove(token);
+						throw new RuntimeException(I18N.prop("msg_if_user_token_has_expired"));
+					} else {
+						// 续期
+						oUser.setTokenTimeStamp();
+					}
 				}
 			}
 			return checkIdentities(user);

@@ -63,20 +63,6 @@ public class OwnershipJudger implements IOwnershipJudger {
 			throw new UnauthorizedException(
 					I18N.prop("msg_if_to_save_bo_unauthorized", data.getClass().getSimpleName()));
 		}
-		if (status) {
-
-			if (MyConfiguration.getConfigValue(CONFIG_ITEM_ENABLE_BO_LOGST, false)) {
-				if (data instanceof ITrackStatus && !((ITrackStatus) data).isNew()) {
-					if (data instanceof IBOStorageTag) {
-						try {
-							this.writeLogst((IBOStorageTag) data, user);
-						} catch (Exception e) {
-							Logger.log(new Exception("Write logst faild.", e));
-						}
-					}
-				}
-			}
-		}
 		return status;
 	}
 
@@ -270,93 +256,96 @@ public class OwnershipJudger implements IOwnershipJudger {
 		return null;
 	}
 
-	protected void writeLogst(IBOStorageTag data, IUser user) throws Exception {
-		Criteria criteria = new Criteria();
-		criteria.setNoChilds(true);
-		ICondition condition = criteria.getConditions().create();
-		condition.setAlias(BOInformation.PROPERTY_CODE.getName());
-		condition.setValue(data.getObjectCode());
-		condition = criteria.getConditions().create();
-		condition.setAlias(BOInformation.PROPERTY_MODIFIED.getName());
-		condition.setValue(emYesNo.YES);
-		IOperationResult<?> opRslt = null;
-		BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
-		boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-		opRslt = boRepository.fetchBOInformation(criteria);
-		if (!opRslt.getResultObjects().isEmpty()) {
-			BOLogst logst = new BOLogst();
-			logst.setBOCode(data.getObjectCode());
-			StringBuilder builder = new StringBuilder();
-			if (data instanceof IBOMasterData) {
-				builder.append(IBOMasterData.MASTER_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBOMasterData) data).getCode()));
-			} else if (data instanceof IBOMasterDataLine) {
-				builder.append(IBOMasterDataLine.MASTER_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBOMasterDataLine) data).getCode()));
-				builder.append(" & ");
-				builder.append(IBOMasterDataLine.SECONDARY_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBOMasterDataLine) data).getLineId()));
-			} else if (data instanceof IBODocument) {
-				builder.append(IBODocument.MASTER_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBODocument) data).getDocEntry()));
-			} else if (data instanceof IBODocumentLine) {
-				builder.append(IBODocumentLine.MASTER_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBODocumentLine) data).getDocEntry()));
-				builder.append(" & ");
-				builder.append(IBODocumentLine.SECONDARY_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBODocumentLine) data).getLineId()));
-			} else if (data instanceof IBOSimple) {
-				builder.append(IBOSimple.MASTER_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBOSimple) data).getObjectKey()));
-			} else if (data instanceof IBOSimpleLine) {
-				builder.append(IBOSimpleLine.MASTER_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBOSimpleLine) data).getObjectKey()));
-				builder.append(" & ");
-				builder.append(IBOSimpleLine.SECONDARY_PRIMARY_KEY_NAME);
-				builder.append(" = ");
-				builder.append(DataConvert.toString(((IBOSimpleLine) data).getLineId()));
-			} else if (data instanceof IManagedFields) {
-				for (IFieldData item : ((IManagedFields) data).getFields(c -> c.isPrimaryKey())) {
-					if (builder.length() > 0) {
-						builder.append(" & ");
-					}
-					builder.append(item.getName());
+	public void logging(IBOStorageTag data, IUser user) throws Exception {
+		if (MyConfiguration.getConfigValue(CONFIG_ITEM_ENABLE_BO_LOGST, false)) {
+			Criteria criteria = new Criteria();
+			criteria.setNoChilds(true);
+			ICondition condition = criteria.getConditions().create();
+			condition.setAlias(BOInformation.PROPERTY_CODE.getName());
+			condition.setValue(data.getObjectCode());
+			condition = criteria.getConditions().create();
+			condition.setAlias(BOInformation.PROPERTY_MODIFIED.getName());
+			condition.setValue(emYesNo.YES);
+			IOperationResult<?> opRslt = null;
+			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
+			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+			opRslt = boRepository.fetchBOInformation(criteria);
+			if (!opRslt.getResultObjects().isEmpty()) {
+				BOLogst logst = new BOLogst();
+				logst.setBOCode(data.getObjectCode());
+				StringBuilder builder = new StringBuilder();
+				if (data instanceof IBOMasterData) {
+					builder.append(IBOMasterData.MASTER_PRIMARY_KEY_NAME);
 					builder.append(" = ");
-					builder.append(DataConvert.toString(item.getValue()));
-				}
-				if (builder.length() == 0) {
+					builder.append(DataConvert.toString(((IBOMasterData) data).getCode()));
+				} else if (data instanceof IBOMasterDataLine) {
+					builder.append(IBOMasterDataLine.MASTER_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBOMasterDataLine) data).getCode()));
+					builder.append(" & ");
+					builder.append(IBOMasterDataLine.SECONDARY_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBOMasterDataLine) data).getLineId()));
+				} else if (data instanceof IBODocument) {
+					builder.append(IBODocument.MASTER_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBODocument) data).getDocEntry()));
+				} else if (data instanceof IBODocumentLine) {
+					builder.append(IBODocumentLine.MASTER_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBODocumentLine) data).getDocEntry()));
+					builder.append(" & ");
+					builder.append(IBODocumentLine.SECONDARY_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBODocumentLine) data).getLineId()));
+				} else if (data instanceof IBOSimple) {
+					builder.append(IBOSimple.MASTER_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBOSimple) data).getObjectKey()));
+				} else if (data instanceof IBOSimpleLine) {
+					builder.append(IBOSimpleLine.MASTER_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBOSimpleLine) data).getObjectKey()));
+					builder.append(" & ");
+					builder.append(IBOSimpleLine.SECONDARY_PRIMARY_KEY_NAME);
+					builder.append(" = ");
+					builder.append(DataConvert.toString(((IBOSimpleLine) data).getLineId()));
+				} else if (data instanceof IManagedFields) {
+					for (IFieldData item : ((IManagedFields) data).getFields(c -> c.isPrimaryKey())) {
+						if (builder.length() > 0) {
+							builder.append(" & ");
+						}
+						builder.append(item.getName());
+						builder.append(" = ");
+						builder.append(DataConvert.toString(item.getValue()));
+					}
+					if (builder.length() == 0) {
+						builder.append(data.toString());
+					}
+				} else {
 					builder.append(data.toString());
 				}
-			} else {
-				builder.append(data.toString());
-			}
-			logst.setBOKeys(builder.toString());
-			logst.setLogInst(data.getLogInst());
-			logst.setModifyUser(user.getId());
-			logst.setModifyDate(DateTime.getToday());
-			logst.setModifyTime(Short.valueOf(DateTime.getNow().toString("HHmm")));
-			logst.setTransationId(data.getUpdateActionId());
-			if (DataConvert.isNullOrEmpty(logst.getTransationId())) {
-				logst.setTransationId(data.getCreateActionId());
-			}
-			if (data instanceof IManagedFields) {
-				// 修正更新信息
-				data.setUpdateDate(logst.getModifyDate());
-				data.setUpdateTime(logst.getModifyTime());
-				data.setUpdateUserSign(logst.getModifyUser());
-				logst.setContent(DataConvert.toString((IManagedFields) data));
-			}
-			opRslt = boRepository.saveBOLogst(logst);
-			if (opRslt.getError() != null) {
-				throw opRslt.getError();
+				logst.setBOKeys(builder.toString());
+				logst.setLogInst(data.getLogInst());
+				if (data instanceof ITrackStatus) {
+					if (((ITrackStatus) data).isDeleted()) {
+						logst.setLogInst(-1);
+					}
+				}
+				logst.setModifyUser(user.getId());
+				logst.setModifyDate(DateTime.getToday());
+				logst.setModifyTime(Short.valueOf(DateTime.getNow().toString("HHmm")));
+				logst.setTransationId(data.getUpdateActionId());
+				if (DataConvert.isNullOrEmpty(logst.getTransationId())) {
+					logst.setTransationId(data.getCreateActionId());
+				}
+				if (data instanceof IManagedFields) {
+					logst.setContent(DataConvert.toString((IManagedFields) data));
+				}
+				opRslt = boRepository.saveBOLogst(logst);
+				if (opRslt.getError() != null) {
+					Logger.log(opRslt.getError());
+				}
 			}
 		}
 	}
