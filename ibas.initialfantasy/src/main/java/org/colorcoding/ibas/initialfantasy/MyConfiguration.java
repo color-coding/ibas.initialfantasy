@@ -77,6 +77,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public final static String CONFIG_ITEM_TOKEN_NOT_EXPIRED_USERS = "TokenNotExpiredUsers";
 	/**
+	 * 配置项目-用户密码检查正则
+	 */
+	public final static String CONFIG_ITEM_PASSWORD_REGEX = "PasswordRegex";
+	/**
 	 * 配置项目-检查用户密码复杂性
 	 */
 	public final static String CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY = "checkPasswordComplexity";

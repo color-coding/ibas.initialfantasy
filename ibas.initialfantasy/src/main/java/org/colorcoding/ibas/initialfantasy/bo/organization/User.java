@@ -50,10 +50,10 @@ public class User extends BusinessObject<User>
 	 */
 	public static final String PASSWORD_MASK = "********";
 
-	/*
+	/**
 	 * 密码验证： 至少包含一个数字、一个小写字母、一个大写字母，并且密码长度至少为8个字符
 	 */
-	public static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
+	public static final String DEFAULT_PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
 
 	/**
 	 * 加密字符标记
@@ -182,7 +182,11 @@ public class User extends BusinessObject<User>
 			try {
 				if (!(this.getDocEntry() < 0) && MyConfiguration
 						.getConfigValue(MyConfiguration.CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY, false)) {
-					Pattern pattern = Pattern.compile(PASSWORD_REGEX);
+					String passwordRegex = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_REGEX);
+					if (DataConvert.isNullOrEmpty(passwordRegex)) {
+						passwordRegex = PASSWORD_MASK;
+					}
+					Pattern pattern = Pattern.compile(passwordRegex);
 					if (DataConvert.isNullOrEmpty(value) || !pattern.matcher(value).matches()) {
 						throw new BusinessRuleException(
 								I18N.prop("msg_if_user_password_complexity_check_faild", this.getCode()));
