@@ -18,6 +18,7 @@ import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
+import org.colorcoding.ibas.bobas.rule.common.BusinessRuleTrim;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -797,7 +798,9 @@ public class Organization extends BusinessObject<Organization>
 
 	@Override
 	protected IBusinessRule[] registerRules() {
-		return new IBusinessRule[] { // 注册的业务规则
+		return new IBusinessRule[] {
+				// 注册的业务规则
+				new BusinessRuleTrim(PROPERTY_CODE), // 去除两边空格
 				new BusinessRuleRequired(PROPERTY_CODE), // 要求有值
 		};
 	}
