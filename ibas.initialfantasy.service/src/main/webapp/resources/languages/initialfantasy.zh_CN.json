@@ -124,5 +124,6 @@
   "initialfantasy_to_be_assigned": "待分配",
   "initialfantasy_node_not_support_operation": "节点不支持此操作",
   "initialfantasy_only_modified_content": "仅显示修改内容",
+  "initialfantasy_trigger_property": "触发属性",
   "initialfantasy_closing_delimiter": "----结束----"
 }

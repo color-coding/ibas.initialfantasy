@@ -124,5 +124,6 @@
     "initialfantasy_to_be_assigned": "To be Assigned",
     "initialfantasy_node_not_support_operation": "Node does not support this operation",
     "initialfantasy_only_modified_content": "Show Only Modified Content",
+    "initialfantasy_trigger_property": "Trigger Property",
     "initialfantasy_closing_delimiter": "----End----"
 }

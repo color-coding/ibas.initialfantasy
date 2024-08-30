@@ -20,7 +20,8 @@
     <Property Name="Searched" Description="检索的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Searched"/>
     <Property Name="Systemed" Description="系统的" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Systemed"/>
     <Property Name="LinkedObject" Description="链接的对象" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="LinkedObject"/>
-    <Property Name="ValueChooseType" Description="值选择方式" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="VChosType"/>
+    <Property Name="ValueChooseType" Description="值选择方式" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="VChosType"/>
+    <Property Name="TriggerByProperty" Description="触发属性" DataType="Alphanumeric" DataSubType="Default" EditSize="60" Mapped="TrigByPty"/>
   </Model>
   <Model Name="BOPropertyValue" Description="业务对象属性值" ModelType="Unspecified" Mapped="${Company}_SYS_BOI2">
     <Property Name="Code" Description="编码" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Code" PrimaryKey="Yes"/>

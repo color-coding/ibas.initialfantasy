@@ -57,36 +57,113 @@ namespace initialfantasy {
             protected originData: DocumentChain;
 
             protected chainData(origin: DocumentChain, onCompleted: () => void): void {
+                let that: this = this;
+                let getChildSourceCompleted: any = function (opRslt: ibas.IOperationResult<ibas.IBODocument>, childOrigin?: DocumentChain): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        if (ibas.objects.isNull(childOrigin)) {
+                            return;
+                        }
+                        for (let item of opRslt.resultObjects) {
+                            // tslint:disable-next-line: no-string-literal
+                            if (!ibas.objects.isNull(childOrigin.sources.find(c => c.data["DocEntry"] === item["DocEntry"] && c.data["ObjectCode"] === item["ObjectCode"]))) {
+                                continue;
+                            }
+                            let chain: DocumentChain = new DocumentChain(item);
+                            childOrigin.sources.add(chain);
+                            that.documentRepository.fetchSources({
+                                origin: chain,
+                                onCompleted: getChildSourceCompleted
+                            });
+                        }
+                        if (onCompleted instanceof Function) {
+                            onCompleted();
+                        }
+                    } catch (error) {
+                        that.messages(error);
+                    }
+                };
+                let getChildTargetCompleted: any = function (opRslt: ibas.IOperationResult<ibas.IBODocument>, childOrigin?: DocumentChain): void {
+                    try {
+                        if (opRslt.resultCode !== 0) {
+                            throw new Error(opRslt.message);
+                        }
+                        for (let item of opRslt.resultObjects) {
+                            // tslint:disable-next-line: no-string-literal
+                            if (!ibas.objects.isNull(childOrigin.targets.find(c => c.data["DocEntry"] === item["DocEntry"] && c.data["ObjectCode"] === item["ObjectCode"]))) {
+                                continue;
+                            }
+                            let chain: DocumentChain = new DocumentChain(item);
+                            childOrigin.targets.add(chain);
+                            that.documentRepository.fetchTargets({
+                                origin: chain,
+                                onCompleted: getChildTargetCompleted
+                            });
+                        }
+                        if (onCompleted instanceof Function) {
+                            onCompleted();
+                        }
+                    } catch (error) {
+                        that.messages(error);
+                    }
+                };
                 this.documentRepository.fetchSources({
-                    origin: origin.data,
-                    onCompleted: (opRslt) => {
+                    origin: origin,
+                    onCompleted: (opRslt: ibas.IOperationResult<ibas.IBODocument>, childOrigin?: DocumentChain) => {
                         try {
                             if (opRslt.resultCode !== 0) {
                                 throw new Error(opRslt.message);
                             }
-                            for (let item of opRslt.resultObjects) {
-                                origin.sources.add(new DocumentChain(item));
+                            if (ibas.objects.isNull(childOrigin)) {
+                                return;
                             }
-                            this.documentRepository.fetchTargets({
-                                origin: origin.data,
-                                onCompleted: (opRslt) => {
+                            for (let item of opRslt.resultObjects) {
+                                // tslint:disable-next-line: no-string-literal
+                                if (!ibas.objects.isNull(childOrigin.sources.find(c => c.data["DocEntry"] === item["DocEntry"] && c.data["ObjectCode"] === item["ObjectCode"]))) {
+                                    continue;
+                                }
+                                let chain: DocumentChain = new DocumentChain(item);
+                                childOrigin.sources.add(chain);
+                                that.documentRepository.fetchSources({
+                                    origin: chain,
+                                    onCompleted: getChildSourceCompleted
+                                });
+                                that.documentRepository.fetchTargets({
+                                    origin: chain,
+                                    onCompleted: getChildTargetCompleted
+                                });
+                            }
+                            that.documentRepository.fetchTargets({
+                                origin: childOrigin,
+                                onCompleted: (opRslt, childOrigin) => {
                                     try {
                                         if (opRslt.resultCode !== 0) {
                                             throw new Error(opRslt.message);
                                         }
                                         for (let item of opRslt.resultObjects) {
-                                            origin.targets.add(new DocumentChain(item));
+                                            // tslint:disable-next-line: no-string-literal
+                                            if (!ibas.objects.isNull(childOrigin.targets.find(c => c.data["DocEntry"] === item["DocEntry"] && c.data["ObjectCode"] === item["ObjectCode"]))) {
+                                                continue;
+                                            }
+                                            let chain: DocumentChain = new DocumentChain(item);
+                                            childOrigin.targets.add(chain);
+                                            that.documentRepository.fetchTargets({
+                                                origin: chain,
+                                                onCompleted: getChildTargetCompleted
+                                            });
                                         }
                                         if (onCompleted instanceof Function) {
                                             onCompleted();
                                         }
                                     } catch (error) {
-                                        this.messages(error);
+                                        that.messages(error);
                                     }
                                 }
                             });
                         } catch (error) {
-                            this.messages(error);
+                            that.messages(error);
                         }
                     }
                 });
@@ -96,10 +173,12 @@ namespace initialfantasy {
             type: any;
         }
         interface IFetchSourceCaller extends ibas.IMethodCaller<ibas.IBODocument> {
-            origin: ibas.IBODocument;
+            origin: DocumentChain;
+            onCompleted(opRslt: ibas.IOperationResult<ibas.IBODocument>, childOrigin?: DocumentChain): void;
         }
         interface IFetchTargetCaller extends ibas.IMethodCaller<ibas.IBODocument> {
-            origin: ibas.IBODocument;
+            origin: DocumentChain;
+            onCompleted(opRslt: ibas.IOperationResult<ibas.IBODocument>, childOrigin?: DocumentChain): void;
         }
         const REPOSITORY_MAP: Map<any, any> = new Map<any, any>();
         class DocumentRepository {
@@ -143,13 +222,15 @@ namespace initialfantasy {
                             if (typeof ns === "object") {
                                 let boNs: any = ibas.objects.propertyValue(ns, "bo");
                                 if (typeof boNs === "object") {
-                                    for (let boItem in boNs) {
-                                        if (ibas.strings.isWith(boItem, "BORepository", undefined)) {
-                                            let repository: any = boNs[boItem];
-                                            if (ibas.objects.isAssignableFrom(repository, ibas.BORepositoryApplication)) {
-                                                if (typeof repository.prototype["fetch" + ibas.objects.nameOf(boType)] === "function") {
-                                                    REPOSITORY_MAP.set(boType, repository);
-                                                    return this.getRepository(boType);
+                                    if (boNs[ibas.objects.nameOf(boType)] === boType) {
+                                        for (let boItem in boNs) {
+                                            if (ibas.strings.isWith(boItem, "BORepository", undefined)) {
+                                                let repository: any = boNs[boItem];
+                                                if (ibas.objects.isAssignableFrom(repository, ibas.BORepositoryApplication)) {
+                                                    if (typeof repository.prototype["fetch" + ibas.objects.nameOf(boType)] === "function") {
+                                                        REPOSITORY_MAP.set(boType, repository);
+                                                        return this.getRepository(boType);
+                                                    }
                                                 }
                                             }
                                         }
@@ -176,38 +257,42 @@ namespace initialfantasy {
             }
             protected boShipMap: ibas.IList<bo.IBORelationship>;
             fetchSources(fetcher: IFetchSourceCaller): void {
-                let originCode: string = ibas.objects.propertyValue(fetcher.origin, ibas.BO_PROPERTY_NAME_OBJECTCODE, true);
+                let originCode: string = ibas.objects.propertyValue(fetcher.origin.data, ibas.BO_PROPERTY_NAME_OBJECTCODE, true);
                 if (ibas.strings.isEmpty(originCode)) {
                     if (fetcher.onCompleted instanceof Function) {
                         fetcher.onCompleted(new ibas.OperationResult(new Error("object can not be fetched.")));
                     }
                 } else {
-                    let docConditions: Map<string, ibas.ICondition[]> = new Map<string, ibas.ICondition[]>();
+                    let docConditions: Map<string, ibas.IList<ibas.ICondition>> = new Map<string, ibas.IList<ibas.ICondition>>();
                     for (let ship of this.boShipMap.where(c => ibas.strings.equalsIgnoreCase(c.code, originCode))) {
                         if (ibas.strings.isEmpty(ship.associatedProperty)) {
-                            let bsType: string = ibas.objects.propertyValue(fetcher.origin, "BaseDocumentType", true);
-                            let bsEntry: number = ibas.objects.propertyValue(fetcher.origin, "BaseDocumentEntry", true);
+                            let bsType: string = ibas.objects.propertyValue(fetcher.origin.data, "BaseDocumentType", true);
+                            let bsEntry: number = ibas.objects.propertyValue(fetcher.origin.data, "BaseDocumentEntry", true);
                             if (!ibas.strings.isEmpty(bsType) && bsEntry > 0) {
-                                let conditions: ibas.ICondition[] = docConditions.get(bsType);
+                                let conditions: ibas.IList<ibas.ICondition> = docConditions.get(bsType);
                                 if (ibas.objects.isNull(conditions)) {
-                                    conditions = [];
+                                    conditions = new ibas.ArrayList<ibas.ICondition>();
                                     docConditions.set(bsType, conditions);
                                 }
-                                conditions.push(new ibas.Condition("DocEntry", ibas.emConditionOperation.EQUAL, bsEntry));
+                                if (!conditions.contain(c => c.alias === "DocEntry" && ibas.strings.equals(c.value, <any>bsEntry))) {
+                                    conditions.push(new ibas.Condition("DocEntry", ibas.emConditionOperation.EQUAL, bsEntry));
+                                }
                             }
                         } else {
-                            let values: any = ibas.objects.propertyValue(fetcher.origin, ship.associatedProperty, true);
+                            let values: any = ibas.objects.propertyValue(fetcher.origin.data, ship.associatedProperty, true);
                             if (values instanceof Array) {
                                 for (let item of values) {
                                     let bsType: string = ibas.objects.propertyValue(item, "BaseDocumentType", true);
                                     let bsEntry: number = ibas.objects.propertyValue(item, "BaseDocumentEntry", true);
                                     if (!ibas.strings.isEmpty(bsType) && bsEntry > 0) {
-                                        let conditions: ibas.ICondition[] = docConditions.get(bsType);
+                                        let conditions: ibas.IList<ibas.ICondition> = docConditions.get(bsType);
                                         if (ibas.objects.isNull(conditions)) {
-                                            conditions = [];
+                                            conditions = new ibas.ArrayList<ibas.ICondition>();
                                             docConditions.set(bsType, conditions);
                                         }
-                                        conditions.push(new ibas.Condition("DocEntry", ibas.emConditionOperation.EQUAL, bsEntry));
+                                        if (!conditions.contain(c => c.alias === "DocEntry" && ibas.strings.equals(c.value, <any>bsEntry))) {
+                                            conditions.push(new ibas.Condition("DocEntry", ibas.emConditionOperation.EQUAL, bsEntry));
+                                        }
                                     }
                                 }
                             }
@@ -230,11 +315,11 @@ namespace initialfantasy {
                             }
                         }
                     }
-                    this.fetchDatas(criterias, fetcher.onCompleted);
+                    this.fetchDatas(criterias, fetcher.onCompleted, fetcher.origin);
                 }
             }
             fetchTargets(fetcher: IFetchTargetCaller): void {
-                let originCode: string = ibas.objects.propertyValue(fetcher.origin, ibas.BO_PROPERTY_NAME_OBJECTCODE, true);
+                let originCode: string = ibas.objects.propertyValue(fetcher.origin.data, ibas.BO_PROPERTY_NAME_OBJECTCODE, true);
                 if (ibas.strings.isEmpty(originCode)) {
                     if (fetcher.onCompleted instanceof Function) {
                         fetcher.onCompleted(new ibas.OperationResult(new Error("object can not be fetched.")));
@@ -248,7 +333,7 @@ namespace initialfantasy {
                             || (c.target.indexOf(".") > 0 && ibas.strings.isWith(c.target, originCode, undefined))
                     )) {
                         let bsType: string = ship.target;
-                        let bsEntry: number = fetcher.origin.docEntry;
+                        let bsEntry: number = fetcher.origin.data.docEntry;
                         if (!ibas.strings.isEmpty(bsType) && bsEntry > 0) {
                             if (ibas.strings.isEmpty(ship.associatedProperty)) {
                                 criteria = new ibas.Criteria();
@@ -276,10 +361,10 @@ namespace initialfantasy {
                             }
                         }
                     }
-                    this.fetchDatas(criterias, fetcher.onCompleted);
+                    this.fetchDatas(criterias, fetcher.onCompleted, fetcher.origin);
                 }
             }
-            protected fetchDatas(criterias: ibas.ICriteria[], onCompleted: (opRslt: ibas.IOperationResult<ibas.IBODocument>) => void): void {
+            protected fetchDatas(criterias: ibas.ICriteria[], onCompleted: (opRslt: ibas.IOperationResult<ibas.IBODocument>, childOrigin?: DocumentChain) => void, origin: DocumentChain): void {
                 if (criterias.length > 0) {
                     let boRepository: DocumentRepository = new DocumentRepository();
                     let results: ibas.IList<ibas.IBODocument> = new ibas.ArrayList<ibas.IBODocument>();
@@ -287,7 +372,10 @@ namespace initialfantasy {
                         criterias,
                         (criteria, next) => {
                             try {
-                                let boType: any = ibas.boFactory.classOf(criteria.businessObject);
+                                let boType: any;
+                                if (!ibas.strings.isEmpty(criteria.businessObject)) {
+                                    boType = ibas.boFactory.classOf(criteria.businessObject.split(".")[0]);
+                                }
                                 if (ibas.objects.isNull(boType)) {
                                     next();
                                 } else {
@@ -313,14 +401,14 @@ namespace initialfantasy {
                                 if (error instanceof Error) {
                                     onCompleted(new ibas.OperationResult<ibas.IBODocument>(error));
                                 } else {
-                                    onCompleted(new ibas.OperationResult<ibas.IBODocument>().addResults(results));
+                                    onCompleted(new ibas.OperationResult<ibas.IBODocument>().addResults(results), origin);
                                 }
                             }
                         }
                     );
                 } else {
                     if (onCompleted instanceof Function) {
-                        onCompleted(new ibas.OperationResult<ibas.IBODocument>());
+                        onCompleted(new ibas.OperationResult<ibas.IBODocument>(), origin);
                     }
                 }
             }

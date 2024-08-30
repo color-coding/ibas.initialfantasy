@@ -230,7 +230,7 @@ namespace initialfantasy {
                         content: [
                             this.tableTitle = new sap.ui.core.Title("", { text: ibas.i18n.prop("bo_bopropertyinformation") }),
                             this.container = new sap.m.NavContainer("", {
-                                height: "24rem",
+                                height: ibas.strings.format("{0}rem", String(sap.extension.table.visibleRowCount(8) * 3)),
                                 pages: [
                                     this.tableBOPropertyInformation,
                                     this.vboxBOPropertyValue = new sap.m.VBox("", {
@@ -310,6 +310,14 @@ namespace initialfantasy {
                                                             new sap.extension.m.SelectItem("", {
                                                                 key: "MULTIPLE",
                                                                 text: ibas.i18n.prop("em_chooosetype_multiple"),
+                                                            }),
+                                                            new sap.extension.m.SelectItem("", {
+                                                                key: "SINGLE+INPUT",
+                                                                text: ibas.i18n.prop("em_chooosetype_single_input"),
+                                                            }),
+                                                            new sap.extension.m.SelectItem("", {
+                                                                key: "MULTIPLE+INPUT",
+                                                                text: ibas.i18n.prop("em_chooosetype_multiple_input"),
                                                             })
                                                         ],
                                                     }).bindProperty("bindingValue", {
@@ -318,6 +326,44 @@ namespace initialfantasy {
                                                         path: "/systemed",
                                                         formatter(data: any): boolean {
                                                             return data === ibas.emYesNo.NO ? true : false;
+                                                        }
+                                                    }),
+                                                    new sap.m.Label("", {
+                                                        showColon: true,
+                                                        text: ibas.i18n.prop("initialfantasy_trigger_property")
+                                                    }).bindProperty("visible", {
+                                                        parts: [
+                                                            {
+                                                                path: "/systemed",
+                                                            }, {
+                                                                path: "/valueChooseType",
+                                                            }
+                                                        ],
+                                                        formatter(systemed: any, chooseType: any): boolean {
+                                                            if (systemed === ibas.emYesNo.NO && ibas.strings.isWith(chooseType, "SINGLE", undefined)) {
+                                                                return true;
+                                                            }
+                                                            return false;
+                                                        }
+                                                    }).addStyleClass("sapUiSmallMarginBegin"),
+                                                    this.selectProperty = new sap.extension.m.Select("", {
+                                                        items: [
+                                                        ],
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "/triggerByProperty",
+                                                    }).bindProperty("visible", {
+                                                        parts: [
+                                                            {
+                                                                path: "/systemed",
+                                                            }, {
+                                                                path: "/valueChooseType",
+                                                            }
+                                                        ],
+                                                        formatter(systemed: any, chooseType: any): boolean {
+                                                            if (systemed === ibas.emYesNo.NO && ibas.strings.isWith(chooseType, "SINGLE", undefined)) {
+                                                                return true;
+                                                            }
+                                                            return false;
                                                         }
                                                     }),
                                                     new sap.m.ToolbarSpacer(""),
@@ -430,6 +476,7 @@ namespace initialfantasy {
                 private tableBOPropertyValue: sap.extension.table.Table;
                 private textLinkedObject: sap.ui.codeeditor.CodeEditor;
                 private butRelation: sap.m.Button;
+                private selectProperty: sap.m.Select;
 
                 /** 显示数据 */
                 showBOInformation(data: bo.BOInformation): void {
@@ -440,6 +487,17 @@ namespace initialfantasy {
                     this.tableTitle.setText(ibas.i18n.prop("bo_bopropertyinformation"));
                     this.container.backToTop();
                     this.tableBOPropertyInformation.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    this.selectProperty.destroyItems();
+                    this.selectProperty.addItem(new sap.ui.core.ListItem("", {
+                        key: "",
+                        text: ibas.i18n.prop("em_chooosetype_none")
+                    }));
+                    for (let item of datas) {
+                        this.selectProperty.addItem(new sap.ui.core.ListItem("", {
+                            key: item.property,
+                            text: item.description ? item.description : item.property
+                        }));
+                    }
                 }
                 /** 显示数据 */
                 showBOPropertyValues(datas: bo.BOPropertyValue[] | bo.BOPropertyInformation): void {

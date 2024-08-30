@@ -25,8 +25,10 @@ namespace initialfantasy {
                         title: this.title,
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
-                        horizontalScrolling: true,
-                        verticalScrolling: true,
+                        horizontalScrolling: false,
+                        verticalScrolling: false,
+                        contentHeight: "auto",
+                        contentWidth: "65%",
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Label("", {
@@ -110,7 +112,8 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "relationship",
                                     type: new sap.extension.data.ConditionRelationship()
-                                })
+                                }),
+                                width: "8rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketopen"),
@@ -120,7 +123,8 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "bracketOpen",
                                     type: "sap.ui.model.type.Integer"
-                                })
+                                }),
+                                width: "8rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_alias"),
@@ -129,7 +133,8 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "alias",
                                     type: new sap.extension.data.Alphanumeric()
-                                })
+                                }),
+                                width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_operation"),
@@ -138,17 +143,17 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "operation",
                                     type: new sap.extension.data.ConditionOperation()
-                                })
+                                }),
+                                width: "10rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_value"),
                                 template: new sap.extension.m.Input("", {
                                 }).bindProperty("bindingValue", {
                                     path: "value",
-                                    type: new sap.extension.data.Alphanumeric({
-                                        maxLength: 30
-                                    })
-                                })
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                                width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketclose"),
@@ -158,7 +163,8 @@ namespace initialfantasy {
                                 }).bindProperty("bindingValue", {
                                     path: "bracketClose",
                                     type: "sap.ui.model.type.Integer"
-                                })
+                                }),
+                                width: "8rem",
                             })
                         ]
                     });

@@ -387,6 +387,37 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	}
 
 	/**
+	* 属性名称-触发属性
+	*/
+	private static final String PROPERTY_TRIGGERBYPROPERTY_NAME = "TriggerByProperty";
+
+	/**
+	* 触发属性 属性
+	*/
+	@DbField(name = "TrigByPty", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_TRIGGERBYPROPERTY = registerProperty(
+			PROPERTY_TRIGGERBYPROPERTY_NAME, String.class, MY_CLASS);
+
+	/**
+	* 获取-触发属性
+	* 
+	* @return 值
+	*/
+	@XmlElement(name = PROPERTY_TRIGGERBYPROPERTY_NAME)
+	public final String getTriggerByProperty() {
+		return this.getProperty(PROPERTY_TRIGGERBYPROPERTY);
+	}
+
+	/**
+	* 设置-触发属性
+	* 
+	* @param value 值
+	*/
+	public final void setTriggerByProperty(String value) {
+		this.setProperty(PROPERTY_TRIGGERBYPROPERTY, value);
+	}
+
+	/**
 	 * 属性名称-业务对象属性信息
 	 */
 	private static final String PROPERTY_BOPROPERTYVALUES_NAME = "BOPropertyValues";

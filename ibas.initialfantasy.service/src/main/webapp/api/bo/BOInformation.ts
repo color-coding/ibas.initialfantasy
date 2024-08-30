@@ -48,6 +48,8 @@ namespace initialfantasy {
             linkedObject: string;
             /** 值选择方式 */
             valueChooseType: string;
+            /** 触发属性 */
+            triggerByProperty: string;
             /** 业务对象属性值集合 */
             boPropertyValues: IBOPropertyValues;
         }

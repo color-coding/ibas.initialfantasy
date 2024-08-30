@@ -206,6 +206,8 @@
         "bo_bopropertyinformation_searched": "检索",
         "bo_bopropertyinformation_systemed": "系统",
         "bo_bopropertyinformation_linkedobject": "链接的对象",
+        "bo_bopropertyinformation_valuechoosetype": "选择类型",
+        "bo_bopropertyinformation_triggerbyproperty": "触发属性",
         "bo_bopropertyvalue": "业务对象属性可选值",
         "bo_bopropertyvalue_value": "值",
         "bo_bopropertyvalue_description": "描述",
@@ -539,6 +541,8 @@
         "em_chooosetype_default": "默认",
         "em_chooosetype_none": "无",
         "em_chooosetype_single": "单选",
-        "em_chooosetype_multiple": "多选"
+        "em_chooosetype_multiple": "多选",
+        "em_chooosetype_single_input": "单选 & 输入",
+        "em_chooosetype_multiple_input": "多选 & 输入"
     }
 ]

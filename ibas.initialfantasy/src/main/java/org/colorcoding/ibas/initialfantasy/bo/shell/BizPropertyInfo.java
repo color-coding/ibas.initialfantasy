@@ -37,6 +37,7 @@ public class BizPropertyInfo extends Serializable {
 		propertyInfo.setSystemed(propertyItem.getSystemed() == emYesNo.YES ? true : false);
 		propertyInfo.setLinkedObject(propertyItem.getLinkedObject());
 		propertyInfo.setValueChooseType(propertyItem.getValueChooseType());
+		propertyInfo.setTriggerByProperty(propertyItem.getTriggerByProperty());
 		BizPropertyValue[] propertyValues = new BizPropertyValue[propertyItem.getBOPropertyValues().size()];
 		for (int i = 0; i < propertyValues.length; i++) {
 			propertyValues[i] = BizPropertyValue.create(propertyItem.getBOPropertyValues().get(i));
@@ -188,6 +189,17 @@ public class BizPropertyInfo extends Serializable {
 
 	public final void setValueChooseType(String valueChooseType) {
 		this.valueChooseType = valueChooseType;
+	}
+
+	@XmlElement(name = "TriggerByProperty")
+	private String triggerByProperty;
+
+	public final String getTriggerByProperty() {
+		return triggerByProperty;
+	}
+
+	public final void setTriggerByProperty(String triggerByProperty) {
+		this.triggerByProperty = triggerByProperty;
 	}
 
 	private BizPropertyValue[] values;
