@@ -206,6 +206,8 @@
         "bo_bopropertyinformation_searched": "Searchable",
         "bo_bopropertyinformation_systemed": "System",
         "bo_bopropertyinformation_linkedobject": "Linked Object",
+        "bo_bopropertyinformation_valuechoosetype": "Choose Type",
+        "bo_bopropertyinformation_triggerbyproperty": "Trigger Property",
         "bo_bopropertyvalue": "Business Object Property Option Value",
         "bo_bopropertyvalue_value": "Value",
         "bo_bopropertyvalue_description": "Description",

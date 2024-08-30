@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * Copyright Color-Coding Studio. All Rights Reserved.
  *
@@ -17,96 +17,116 @@ namespace initialfantasy {
                     let that: this = this;
                     return new sap.extension.m.Page("", {
                         showHeader: false,
-                        /*
-                        subHeader: new sap.m.Toolbar("", {
-                            content: [
-                            ]
-                        }),
-                        */
                         content: [
-                            new sap.ui.layout.Splitter("", {
+                            this.splitter = new sap.ui.layout.Splitter("", {
                                 orientation: sap.ui.core.Orientation.Horizontal,
                                 layoutData: new sap.ui.layout.SplitterLayoutData("", {
                                     resizable: false,
                                 }),
-                                contentAreas: [
-                                    new sap.m.Page("", {
-                                        showHeader: false,
-                                        subHeader: new sap.m.Toolbar("", {
-                                            content: [
-                                                new sap.m.Title("", {
-                                                    text: ibas.i18n.prop("initialfantasy_document_source")
-                                                }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd")
-                                            ]
-                                        }),
-                                        content: [
-                                            this.sourcePage = new sap.m.VBox("", {
-                                                alignContent: sap.m.FlexAlignContent.Center,
-                                                alignItems: sap.m.FlexAlignItems.Center,
-                                                justifyContent: sap.m.FlexJustifyContent.Start,
-                                                renderType: sap.m.FlexRendertype.Bare,
-                                                fitContainer: true,
-                                            })
-                                        ]
-                                    }).addStyleClass("sapUiContentPadding"),
-                                    new sap.m.Page("", {
-                                        showHeader: false,
-                                        subHeader: new sap.m.Toolbar("", {
-                                            content: [
-                                                new sap.m.Title("", {
-                                                    text: ibas.i18n.prop("initialfantasy_document_origin")
-                                                }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd")
-                                            ]
-                                        }),
-                                        content: [
-                                            this.originPage = new sap.m.VBox("", {
-                                                alignContent: sap.m.FlexAlignContent.Center,
-                                                alignItems: sap.m.FlexAlignItems.Center,
-                                                justifyContent: sap.m.FlexJustifyContent.Start,
-                                                renderType: sap.m.FlexRendertype.Bare,
-                                                fitContainer: true,
-
-                                            })
-                                        ]
-                                    }).addStyleClass("sapUiContentPadding"),
-                                    new sap.m.Page("", {
-                                        showHeader: false,
-                                        subHeader: new sap.m.Toolbar("", {
-                                            content: [
-                                                new sap.m.Title("", {
-                                                    text: ibas.i18n.prop("initialfantasy_document_target")
-                                                }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd")
-                                            ]
-                                        }),
-                                        content: [
-                                            this.targetPage = new sap.m.VBox("", {
-                                                alignContent: sap.m.FlexAlignContent.Center,
-                                                alignItems: sap.m.FlexAlignItems.Center,
-                                                justifyContent: sap.m.FlexJustifyContent.Start,
-                                                renderType: sap.m.FlexRendertype.Bare,
-                                                fitContainer: true,
-
-                                            })
-                                        ]
-                                    }).addStyleClass("sapUiContentPadding")
-                                ]
-                            }),
+                            })
                         ]
                     });
                 }
-
-                private sourcePage: sap.m.VBox;
-                private originPage: sap.m.VBox;
-                private targetPage: sap.m.VBox;
+                private splitter: sap.ui.layout.Splitter;
                 /** 显示数据 */
                 showDocumentChain(data: app.DocumentChain): void {
-                    for (let item of data.sources) {
-                        this.sourcePage.addItem(this.createCard(item.data));
+                    this.splitter.removeAllContentAreas();
+                    this.splitter.addContentArea(new sap.m.Page("", {
+                        showHeader: false,
+                        subHeader: new sap.m.Toolbar("", {
+                            content: [
+                                new sap.m.Title("", {
+                                    text: ibas.i18n.prop("initialfantasy_document_origin")
+                                }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd")
+                            ]
+                        }),
+                        content: [
+                            this.createCard(data.data)
+                        ]
+                    }).addStyleClass("sapUiContentPadding"));
+                    let sourceDepth: number = this.getSourceMaxDepth(data);
+                    this.currentDepth = sourceDepth;
+                    let targetDepth: number = this.getTargetsMaxDepth(data);
+                    for (let i: number = 0; i < sourceDepth; i++) {
+                        this.splitter.insertContentArea(new sap.m.Page("", {
+                            showHeader: false,
+                            subHeader: new sap.m.Toolbar("", {
+                                content: [
+                                    new sap.m.Title("", {
+                                        text: ibas.i18n.prop("initialfantasy_document_source")
+                                    }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd")
+                                ]
+                            }),
+                        }).addStyleClass("sapUiContentPadding"), 0);
                     }
-                    this.originPage.addItem(this.createCard(data.data));
-                    for (let item of data.targets) {
-                        this.targetPage.addItem(this.createCard(item.data));
+                    for (let i: number = 0; i < targetDepth; i++) {
+                        this.splitter.addContentArea(new sap.m.Page("", {
+                            showHeader: false,
+                            subHeader: new sap.m.Toolbar("", {
+                                content: [
+                                    new sap.m.Title("", {
+                                        text: ibas.i18n.prop("initialfantasy_document_target")
+                                    }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd")
+                                ]
+                            }),
+                        }).addStyleClass("sapUiContentPadding"));
                     }
+                    this.insertSourceProcess(data);
+                    this.insertTargetsProcess(data);
+                }
+                private currentDepth: number = 0;
+                insertSourceProcess(data: app.DocumentChain, depth: number = 1): void {
+                    if (!data) {
+                        return;
+                    }
+                    if (data.sources.length === 0) {
+                        return;
+                    }
+                    let box: sap.m.Page = <sap.m.Page>this.splitter.getContentAreas()[this.currentDepth - depth];
+                    for (let node of data.sources) {
+                        box.addContent(this.createCard(node.data));
+                    }
+                    depth++;
+                    for (let node of data.sources) {
+                        this.insertSourceProcess(node, depth);
+                    }
+                }
+                insertTargetsProcess(data: app.DocumentChain, depth: number = 1): void {
+                    if (!data) {
+                        return;
+                    }
+                    if (data.targets.length === 0) {
+                        return;
+                    }
+                    let box: sap.m.Page = <sap.m.Page>this.splitter.getContentAreas()[this.currentDepth + depth];
+                    for (let node of data.targets) {
+                        box.addContent(this.createCard(node.data));
+                    }
+                    depth++;
+                    for (let node of data.targets) {
+                        this.insertTargetsProcess(node, depth);
+                    }
+                }
+
+                getSourceMaxDepth(root: app.DocumentChain, currentDepth: number = 0): number {
+                    if (!root) {
+                        return currentDepth;
+                    }
+                    let maxDepth: number = currentDepth;
+                    for (let node of root.sources) {
+                        maxDepth = Math.max(maxDepth, this.getSourceMaxDepth(node, currentDepth + 1));
+                    }
+                    return maxDepth;
+                }
+                getTargetsMaxDepth(root: app.DocumentChain, currentDepth: number = 0): number {
+                    if (!root) {
+                        return currentDepth;
+                    }
+                    let maxDepth: number = currentDepth;
+                    for (let node of root.targets) {
+                        maxDepth = Math.max(maxDepth, this.getTargetsMaxDepth(node, currentDepth + 1));
+                    }
+                    return maxDepth;
                 }
 
                 private createCard(data: ibas.IBODocument): sap.f.Card {

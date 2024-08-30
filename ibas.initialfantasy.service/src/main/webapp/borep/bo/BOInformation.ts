@@ -253,6 +253,17 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyInformation.PROPERTY_VALUECHOOSETYPE_NAME, value);
             }
 
+            /** 映射的属性名称-触发属性 */
+            static PROPERTY_TRIGGERBYPROPERTY_NAME: string = "TriggerByProperty";
+            /** 获取-触发属性 */
+            get triggerByProperty(): string {
+                return this.getProperty<string>(BOPropertyInformation.PROPERTY_TRIGGERBYPROPERTY_NAME);
+            }
+            /** 设置-触发属性 */
+            set triggerByProperty(value: string) {
+                this.setProperty(BOPropertyInformation.PROPERTY_TRIGGERBYPROPERTY_NAME, value);
+            }
+
             /** 映射的属性名称-业务对象属性值集合 */
             static PROPERTY_BOPROPERTYVALUES_NAME: string = "BOPropertyValues";
             /** 获取-业务对象属性信息集合 */

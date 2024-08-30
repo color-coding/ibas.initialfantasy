@@ -164,6 +164,20 @@ public interface IBOPropertyInformation extends IBusinessObject {
 	void setValueChooseType(String value);
 
 	/**
+	* 获取-触发属性
+	* 
+	* @return 值
+	*/
+	String getTriggerByProperty();
+
+	/**
+	* 设置-触发属性
+	* 
+	* @param value 值
+	*/
+	void setTriggerByProperty(String value);
+
+	/**
 	 * 获取-业务对象属性值集合
 	 * 
 	 * @return 值
