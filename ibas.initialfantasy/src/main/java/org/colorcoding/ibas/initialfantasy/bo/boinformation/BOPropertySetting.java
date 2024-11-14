@@ -673,6 +673,37 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	}
 
 	/**
+	* 属性名称-宽度
+	*/
+	private static final String PROPERTY_WIDTH_NAME = "Width";
+
+	/**
+	* 宽度 属性
+	*/
+	@DbField(name = "Width", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_WIDTH = registerProperty(PROPERTY_WIDTH_NAME, String.class,
+			MY_CLASS);
+
+	/**
+	* 获取-宽度
+	* 
+	* @return 值
+	*/
+	@XmlElement(name = PROPERTY_WIDTH_NAME)
+	public final String getWidth() {
+		return this.getProperty(PROPERTY_WIDTH);
+	}
+
+	/**
+	* 设置-宽度
+	* 
+	* @param value 值
+	*/
+	public final void setWidth(String value) {
+		this.setProperty(PROPERTY_WIDTH, value);
+	}
+
+	/**
 	 * 初始化数据
 	 */
 	@Override

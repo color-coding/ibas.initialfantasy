@@ -235,6 +235,18 @@ namespace initialfantasy {
                 this.setProperty(BOPropertySetting.PROPERTY_UPDATEACTIONID_NAME, value);
             }
 
+            /** 映射的属性名称-宽度 */
+            static PROPERTY_WIDTH_NAME: string = "Width";
+            /** 获取-宽度 */
+            get width(): string {
+                return this.getProperty<string>(BOPropertySetting.PROPERTY_WIDTH_NAME);
+            }
+            /** 设置-宽度 */
+            set width(value: string) {
+                this.setProperty(BOPropertySetting.PROPERTY_WIDTH_NAME, value);
+            }
+
+
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(BOPropertySetting.BUSINESS_OBJECT_CODE);

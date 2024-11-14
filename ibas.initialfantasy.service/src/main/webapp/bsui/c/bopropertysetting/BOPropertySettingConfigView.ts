@@ -74,8 +74,9 @@ namespace initialfantasy {
                             that.fireViewEvents(that.fetchDataEvent, criteria);
                         }
                     });
-                    this.table = new sap.extension.table.Table("", {
+                    this.table = new sap.extension.table.DataTable("", {
                         enableSelectAll: false,
+                        dataInfo: bo.BOPropertySetting,
                         visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Auto,
                         rows: "{/rows}",
                         rowSettingsTemplate: new sap.ui.table.RowSettings("", {
@@ -90,7 +91,7 @@ namespace initialfantasy {
                             }
                         }),
                         columns: [
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_property"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
@@ -101,7 +102,7 @@ namespace initialfantasy {
                                 filterProperty: "propertyCode",
                                 width: "25%",
                             }),
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_description"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
@@ -112,7 +113,7 @@ namespace initialfantasy {
                                 filterProperty: "propertyName",
                                 width: "30%",
                             }),
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertyinformation_mapped"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
@@ -122,7 +123,7 @@ namespace initialfantasy {
                                 sortProperty: "propertyAlias",
                                 width: "20%",
                             }),
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_position"),
                                 template: new sap.extension.m.Input("", {
                                     type: sap.m.InputType.Number
@@ -133,7 +134,7 @@ namespace initialfantasy {
                                 sortProperty: "position",
                                 width: "8rem",
                             }),
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_searched"),
                                 template: new sap.extension.m.EnumSelect("", {
                                     enumType: bo.emSearchedValue,
@@ -145,7 +146,7 @@ namespace initialfantasy {
                                 }),
                                 width: "8rem",
                             }),
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_authorised"),
                                 template: new sap.extension.m.EnumSelect("", {
                                     enumType: bo.emAuthorisedValue,
@@ -157,7 +158,7 @@ namespace initialfantasy {
                                 }),
                                 width: "8rem",
                             }),
-                            new sap.extension.table.Column("", {
+                            new sap.extension.table.DataColumn("", {
                                 label: ibas.i18n.prop("bo_bopropertysetting_required"),
                                 template: new sap.extension.m.EnumSelect("", {
                                     enumType: bo.emRequiredValue,
@@ -168,6 +169,15 @@ namespace initialfantasy {
                                     }),
                                 }),
                                 width: "8rem",
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("bo_bopropertysetting_width"),
+                                template: new sap.extension.m.Input("", {
+                                }).bindProperty("bindingValue", {
+                                    path: "width",
+                                    type: new sap.extension.data.Alphanumeric(),
+                                }),
+                                visible: false,
                             }),
                         ]
                     });

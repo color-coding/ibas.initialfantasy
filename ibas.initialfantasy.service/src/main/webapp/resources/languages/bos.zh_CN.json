@@ -425,6 +425,7 @@
         "bo_bopropertysetting_updateusersign": "修改用户",
         "bo_bopropertysetting_createactionid": "创建动作标识",
         "bo_bopropertysetting_updateactionid": "更新动作标识",
+        "bo_bopropertysetting_width": "宽度（仅表格）",
         "bo_bopropertysetting_closing_delimiter": "----结束----"
     },
     {

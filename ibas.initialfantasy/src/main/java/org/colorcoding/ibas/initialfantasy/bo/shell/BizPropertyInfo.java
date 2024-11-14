@@ -214,6 +214,17 @@ public class BizPropertyInfo extends Serializable {
 		this.values = values;
 	}
 
+	@XmlElement(name = "Width")
+	private String width;
+
+	public final String getWidth() {
+		return width;
+	}
+
+	public final void setWidth(String width) {
+		this.width = width;
+	}
+
 	@Override
 	public final String toString() {
 		return String.format("{propertyInfo: %s}", this.getName());

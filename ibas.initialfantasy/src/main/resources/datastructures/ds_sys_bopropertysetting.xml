@@ -22,6 +22,7 @@
     <Property Name="UpdateUserSign" Description="修改用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
     <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
     <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="Width" Description="宽度" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="Width"/>
   </Model>
   <BusinessObject MappedModel="BOPropertySetting" ShortName="${Company}_SYS_BOPRTYSETTING"/>
 </Domain>

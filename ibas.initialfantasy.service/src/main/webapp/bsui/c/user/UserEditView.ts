@@ -108,20 +108,13 @@ namespace initialfantasy {
                                             new sap.ui.layout.form.SimpleForm("", {
                                                 editable: true,
                                                 content: [
-                                                    new sap.m.Toolbar("", {
-                                                        visible: false,
-                                                        content: [
-                                                            new sap.extension.m.Input("", {
-                                                                type: sap.m.InputType.Password,
-                                                                visible: false,
-                                                            }),
-                                                        ]
-                                                    }),
+                                                    new sap.m.Toolbar("", { visible: false }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
-                                                    new sap.extension.m.Input("", {
+                                                    // 封装控件，密码方式有异常
+                                                    new sap.m.Input("", {
                                                         autocomplete: false,
                                                         type: sap.m.InputType.Password
-                                                    }).bindProperty("bindingValue", {
+                                                    }).bindProperty("value", {
                                                         path: "password",
                                                         type: new sap.extension.data.Alphanumeric()
                                                     }),

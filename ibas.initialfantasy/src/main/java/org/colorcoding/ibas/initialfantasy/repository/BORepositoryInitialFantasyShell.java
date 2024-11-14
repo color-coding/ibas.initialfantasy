@@ -593,6 +593,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 						} else if (setting.getRequired() == emRequiredValue.NO) {
 							ptyInfo.setRequired(false);
 						}
+						ptyInfo.setWidth(setting.getWidth());
 					}
 
 				}

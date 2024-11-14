@@ -292,4 +292,17 @@ public interface IBOPropertySetting extends IBOSimple {
 	 */
 	void setUpdateActionId(String value);
 
+	/**
+	* 获取-宽度
+	* 
+	* @return 值
+	*/
+	String getWidth();
+
+	/**
+	* 设置-宽度
+	* 
+	* @param value 值
+	*/
+	void setWidth(String value);
 }

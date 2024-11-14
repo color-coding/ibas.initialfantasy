@@ -425,6 +425,7 @@
         "bo_bopropertysetting_updateusersign": "Update User",
         "bo_bopropertysetting_createactionid": "Create Action ID",
         "bo_bopropertysetting_updateactionid": "Update Action ID",
+        "bo_bopropertysetting_width": "Width (Only Table)",
         "bo_bopropertysetting_closing_delimiter": "----End----"
     },
     {
