@@ -306,7 +306,7 @@
         "bo_user": "用户",
         "bo_user_code": "编码",
         "bo_user_name": "名称",
-        "bo_user_password": "用户密码",
+        "bo_user_password": "密码",
         "bo_user_activated": "激活",
         "bo_user_super": "超级用户",
         "bo_user_mail": "电子邮件地址",

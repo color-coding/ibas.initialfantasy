@@ -306,7 +306,7 @@
         "bo_user": "User",
         "bo_user_code": "Code",
         "bo_user_name": "Name",
-        "bo_user_password": "User Password",
+        "bo_user_password": "Password",
         "bo_user_activated": "Activated",
         "bo_user_super": "Super User",
         "bo_user_mail": "Email Address",

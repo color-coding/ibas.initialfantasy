@@ -34,12 +34,104 @@ namespace initialfantasy {
                                 type: new sap.extension.data.Alphanumeric()
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_password") }),
-                            new sap.extension.m.Input("", {
-                                autocomplete: false,
-                                type: sap.m.InputType.Password
-                            }).bindProperty("bindingValue", {
-                                path: "/password",
-                                type: new sap.extension.data.Alphanumeric()
+                            new sap.m.FlexBox("", {
+                                width: "100%",
+                                justifyContent: sap.m.FlexJustifyContent.Start,
+                                renderType: sap.m.FlexRendertype.Bare,
+                                items: [
+                                    // 封装控件，密码方式有异常
+                                    new sap.m.Input("", {
+                                        editable: false,
+                                        autocomplete: false,
+                                        type: sap.m.InputType.Password,
+                                    }).bindProperty("value", {
+                                        path: "/password",
+                                        type: new sap.extension.data.Alphanumeric()
+                                    }),
+                                    new sap.m.Button("", {
+                                        width: "auto",
+                                        icon: "sap-icon://edit-outside",
+                                        type: sap.m.ButtonType.Transparent,
+                                        press: function (): void {
+                                            let user: bo.User = this.getModel().getData();
+                                            if (!ibas.objects.isNull(user)) {
+                                                let popover: sap.m.Popover = new sap.m.Popover("", {
+                                                    modal: true,
+                                                    showHeader: false,
+                                                    contentWidth: "12rem",
+                                                    titleAlignment: sap.m.TitleAlignment.Start,
+                                                    placement: sap.m.PlacementType.HorizontalPreferredLeft,
+                                                    content: [
+                                                        new sap.m.Input("", {
+                                                            visible: false,
+                                                            type: sap.m.InputType.Password,
+                                                        }),
+                                                        new sap.ui.layout.form.SimpleForm("", {
+                                                            content: [
+                                                                new sap.m.Input("", {
+                                                                    autocomplete: false,
+                                                                    type: sap.m.InputType.Password,
+                                                                    placeholder: ibas.i18n.prop("bo_user_password")
+                                                                }),
+                                                                new sap.m.Input("", {
+                                                                    autocomplete: false,
+                                                                    type: sap.m.InputType.Password,
+                                                                    placeholder: ibas.i18n.prop("bo_user_password")
+                                                                })
+                                                            ]
+                                                        })
+                                                    ],
+                                                    footer: [
+                                                        new sap.m.Toolbar("", {
+                                                            content: [
+                                                                new sap.m.Button("", {
+                                                                    width: "100%",
+                                                                    text: ibas.i18n.prop("shell_confirm"),
+                                                                    press(): void {
+                                                                        let form: any = popover.getContent()[1];
+                                                                        if (form instanceof sap.ui.layout.form.SimpleForm) {
+                                                                            let password: string = null;
+                                                                            for (let item of form.getContent()) {
+                                                                                if (!(item instanceof sap.m.Input)) {
+                                                                                    continue;
+                                                                                }
+                                                                                if (item.getVisible() === false) {
+                                                                                    continue;
+                                                                                }
+                                                                                if (password === null) {
+                                                                                    password = item.getValue();
+                                                                                } else {
+                                                                                    if (password !== item.getValue()) {
+                                                                                        that.application.viewShower.messages({
+                                                                                            title: that.title,
+                                                                                            type: ibas.emMessageType.ERROR,
+                                                                                            message: ibas.i18n.prop("initialfantasy_inconsistent_user_password")
+                                                                                        });
+                                                                                    } else {
+                                                                                        user.password = password;
+                                                                                        popover.close();
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }),
+                                                                new sap.m.Button("", {
+                                                                    width: "100%",
+                                                                    text: ibas.i18n.prop("shell_exit"),
+                                                                    press(): void {
+                                                                        popover.close();
+                                                                    }
+                                                                }),
+                                                            ]
+                                                        })
+                                                    ],
+                                                });
+                                                popover.openBy(this, false);
+                                            }
+                                        }
+                                    }).addStyleClass("sapUiTinyMarginBegin"),
+                                ]
                             }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_mail") }),
                             new sap.extension.m.Input("", {

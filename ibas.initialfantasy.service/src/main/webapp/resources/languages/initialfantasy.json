@@ -125,5 +125,6 @@
     "initialfantasy_node_not_support_operation": "Node does not support this operation",
     "initialfantasy_only_modified_content": "Show Only Modified Content",
     "initialfantasy_trigger_property": "Trigger Property",
+    "initialfantasy_inconsistent_user_password": "Inconsistent user password",
     "initialfantasy_closing_delimiter": "----End----"
 }
