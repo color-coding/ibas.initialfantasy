@@ -16,6 +16,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 			synchronized (MyConfiguration.class) {
 				if (instance == null) {
 					instance = ConfigurationFactory.create().createManager();
+					// 加载系统设置
+					instance.setConfigSign("00000000-ibas-cc01-00000000000000000");
+					instance.update();
+					// 加载模块设置
 					instance.setConfigSign(MODULE_ID);
 					instance.update();
 				}
@@ -116,4 +120,33 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 		}
 		return urlToken;
 	}
+
+	/**
+	 * 配置项目-小数位数
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES = "decimalPlaces";
+	/**
+	 * 配置项目-小数位数-价格
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES_PRICE = "decimalPlaces|Price";
+	/**
+	 * 配置项目-小数位数-数量
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES_QUANTITY = "decimalPlaces|Quantity";
+	/**
+	 * 配置项目-小数位数-总计
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES_SUM = "decimalPlaces|Sum";
+	/**
+	 * 配置项目-小数位数-度量
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT = "decimalPlaces|Measurement";
+	/**
+	 * 配置项目-小数位数-率
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES_RATE = "decimalPlaces|Rate";
+	/**
+	 * 配置项目-小数位数-百分比
+	 */
+	public final static String CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE = "decimalPlaces|Percentage";
 }

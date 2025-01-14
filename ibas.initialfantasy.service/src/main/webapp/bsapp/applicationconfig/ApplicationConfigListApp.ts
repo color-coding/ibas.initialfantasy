@@ -61,12 +61,17 @@ namespace initialfantasy {
                                     group.code = item.configGroup;
                                     group.name = "Unknown";
                                     group.icon = ibas.config.get("defalutModuleIcon");
-                                    shell.app.modules.forEach((module) => {
-                                        if (module.id === group.code) {
-                                            group.name = ibas.strings.format("{0} - {1}", module.description, module.name);
-                                            group.icon = module.icon;
-                                        }
-                                    });
+                                    if (group.code === shell.CONSOLE_ID) {
+                                        group.name = ibas.strings.format("{0} - {1}", ibas.i18n.prop("shell_name"), shell.CONSOLE_NAME);
+                                        group.icon = ibas.i18n.prop("shell_icon");
+                                    } else {
+                                        shell.app.modules.forEach((module) => {
+                                            if (module.id === group.code) {
+                                                group.name = ibas.strings.format("{0} - {1}", module.description, module.name);
+                                                group.icon = module.icon;
+                                            }
+                                        });
+                                    }
                                     this.configGroups.set(group, new ibas.ArrayList<bo.IApplicationConfig>());
                                 }
                                 this.configGroups.get(group).add(item);
@@ -156,7 +161,7 @@ namespace initialfantasy {
                                     idItem = new bo.ApplicationConfigIdentity();
                                     idItem.configGroup = item.configGroup;
                                     idItem.configKey = item.configKey;
-                                    idItem.roleCode = role ? role : "";;
+                                    idItem.roleCode = role ? role : "";
                                     idItem.identityCode = identity ? identity : "";
                                 }
                                 values.add(new ConfigItemIdentity(item, idItem));

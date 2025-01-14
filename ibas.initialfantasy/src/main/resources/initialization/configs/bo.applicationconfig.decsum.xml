@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE ApplicationConfig>
+<ns:ApplicationConfig xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
+	<ConfigKey>decimalPlaces|Sum</ConfigKey>
+	<ConfigDescription>小数位数 - 总计</ConfigDescription>
+	<ConfigGroup>00000000-ibas-cc01-00000000000000000</ConfigGroup>
+	<ConfigValue>4</ConfigValue>
+	<Settings></Settings>
+	<Category>ALL</Category>
+	<Activated>YES</Activated>
+</ns:ApplicationConfig>
