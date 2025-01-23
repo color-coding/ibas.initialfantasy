@@ -159,6 +159,20 @@ public interface IUser extends IBOMasterData {
 	void setInvalidDate(DateTime value);
 
 	/**
+	 * 获取-密码修改日期
+	 * 
+	 * @return 值
+	 */
+	DateTime getLastPwdSetDate();
+
+	/**
+	 * 设置-密码修改日期
+	 * 
+	 * @param value 值
+	 */
+	void setLastPwdSetDate(DateTime value);
+
+	/**
 	 * 获取-对象编号
 	 * 
 	 * @return 值

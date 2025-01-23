@@ -126,5 +126,6 @@
   "initialfantasy_only_modified_content": "仅显示修改内容",
   "initialfantasy_trigger_property": "触发属性",
   "initialfantasy_inconsistent_user_password": "用户密码不一致",
+  "initialfantasy_password_about_to_expire": "您的密码即将过期，是否修改？",
   "initialfantasy_closing_delimiter": "----结束----"
 }

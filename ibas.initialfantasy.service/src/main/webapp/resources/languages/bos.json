@@ -314,6 +314,7 @@
         "bo_user_category": "Category",
         "bo_user_validdate": "Effective Date",
         "bo_user_invaliddate": "Expiration Date",
+        "bo_user_lastpwdsetdate": "Last Pwd Set Date",
         "bo_user_docentry": "Object Number",
         "bo_user_objectcode": "Object Type",
         "bo_user_createdate": "Creation Date",

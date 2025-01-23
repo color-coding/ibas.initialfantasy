@@ -185,7 +185,7 @@ public class User extends BusinessObject<User>
 						.getConfigValue(MyConfiguration.CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY, false)) {
 					String passwordRegex = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_REGEX);
 					if (DataConvert.isNullOrEmpty(passwordRegex)) {
-						passwordRegex = PASSWORD_MASK;
+						passwordRegex = DEFAULT_PASSWORD_REGEX;
 					}
 					Pattern pattern = Pattern.compile(passwordRegex);
 					if (DataConvert.isNullOrEmpty(value) || !pattern.matcher(value).matches()) {
@@ -194,6 +194,7 @@ public class User extends BusinessObject<User>
 					}
 				}
 				this.setProperty(PROPERTY_PASSWORD, PasswordStorage.createHash(value));
+				this.setProperty(PROPERTY_LASTPWDSETDATE, DateTime.getToday());
 			} catch (Exception e) {
 				Logger.log(e);
 				throw new RuntimeException(e);
@@ -421,6 +422,37 @@ public class User extends BusinessObject<User>
 	 */
 	public final void setInvalidDate(DateTime value) {
 		this.setProperty(PROPERTY_INVALIDDATE, value);
+	}
+
+	/**
+	 * 属性名称-密码修改日期
+	 */
+	private static final String PROPERTY_LASTPWDSETDATE_NAME = "LastPwdSetDate";
+
+	/**
+	 * 密码修改日期 属性
+	 */
+	@DbField(name = "LastPwdSet", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<DateTime> PROPERTY_LASTPWDSETDATE = registerProperty(PROPERTY_LASTPWDSETDATE_NAME,
+			DateTime.class, MY_CLASS);
+
+	/**
+	 * 获取-密码修改日期
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_LASTPWDSETDATE_NAME)
+	public final DateTime getLastPwdSetDate() {
+		return this.getProperty(PROPERTY_LASTPWDSETDATE);
+	}
+
+	/**
+	 * 设置-密码修改日期
+	 * 
+	 * @param value 值
+	 */
+	public final void setLastPwdSetDate(DateTime value) {
+		this.setProperty(PROPERTY_LASTPWDSETDATE, value);
 	}
 
 	/**

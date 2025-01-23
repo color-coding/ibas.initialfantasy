@@ -12,7 +12,7 @@
     <Property Name="Category" Description="类别" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Category"/>
     <Property Name="ValidDate" Description="生效日期" DataType="Date" DataSubType="Date" EditSize="8" Mapped="ValidDate"/>
     <Property Name="InvalidDate" Description="失效日期" DataType="Date" DataSubType="Date" EditSize="8" Mapped="InvalidDate"/>
-    <Property Name="TokenExpire" Description="口令过期" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="TokenExpire"/>
+    <Property Name="LastPwdSetDate" Description="密码修改日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="LastPwdSet"/>
     <Property Name="DocEntry" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
     <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>

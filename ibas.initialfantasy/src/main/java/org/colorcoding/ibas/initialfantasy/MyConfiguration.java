@@ -88,6 +88,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 * 配置项目-检查用户密码复杂性
 	 */
 	public final static String CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY = "checkPasswordComplexity";
+	/**
+	 * 配置项目-用户密码过期天数
+	 */
+	public final static String CONFIG_ITEM_PASSWORD_EXPIRATION_DAYS = "passwordExpirationDays";
 
 	private static Boolean DISABLED_URL_TOKEN = null;
 	private static String AUTHENTICATION_SCHEMES_BEARER = "Bearer";

@@ -154,6 +154,13 @@ namespace initialfantasy {
                                                     type: new sap.extension.data.YesNo(),
                                                 }
                                             }),
+                                            new sap.extension.m.ObjectAttribute("", {
+                                                title: ibas.i18n.prop("bo_user_lastpwdsetdate"),
+                                                bindingValue: {
+                                                    path: "lastPwdSetDate",
+                                                    type: new sap.extension.data.Date(),
+                                                }
+                                            }),
                                         ],
                                     })
                                 ]

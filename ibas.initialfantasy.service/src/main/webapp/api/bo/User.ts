@@ -40,6 +40,9 @@ namespace initialfantasy {
             /** 失效日期 */
             invalidDate: Date;
 
+            /** 密码修改日期 */
+            lastPwdSetDate: Date;
+
             /** 对象编号 */
             docEntry: number;
 

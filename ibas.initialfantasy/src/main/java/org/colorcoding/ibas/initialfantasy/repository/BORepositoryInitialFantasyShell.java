@@ -117,7 +117,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", token));
+				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
 			}
 			return this.connectResult(boUser);
 		} catch (Exception e) {
@@ -132,8 +132,6 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (DataConvert.isNullOrEmpty(user) || DataConvert.isNullOrEmpty(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
-			// 设置用户口令，系统用户
-			this.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_CODE.getName());
@@ -192,7 +190,10 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
 			condition.setOperation(ConditionOperation.GRATER_EQUAL);
 			condition.setValue(date);
-			IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
+			// 新仓库查询用户，避免权限问题
+			BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell();
+			boRepository.setCurrentUser(OrganizationFactory.SYSTEM_USER.getToken());
+			IOperationResult<IUser> opRsltUser = boRepository.fetchUser(criteria);
 			if (opRsltUser.getError() != null) {
 				throw opRsltUser.getError();
 			}
@@ -201,10 +202,25 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", user));
+				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
 			if (!boUser.checkPassword(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+			}
+			// 检查密码是否过期
+			int expireDays = Integer
+					.valueOf(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_EXPIRATION_DAYS, 0));
+			if (expireDays > 0) {
+				DateTime lastDate = boUser.getLastPwdSetDate();
+				if (lastDate == null || DateTime.MIN_VALUE == lastDate) {
+					lastDate = boUser.getCreateDate();
+				}
+				if (lastDate != null && DateTime.MIN_VALUE != lastDate) {
+					lastDate = lastDate.addDays(expireDays);
+					if (DateTime.getToday().compareTo(lastDate) > 0) {
+						throw new Exception(I18N.prop("msg_if_user_token_has_expired"));
+					}
+				}
 			}
 			return this.connectResult(boUser);
 		} catch (Exception e) {
@@ -212,7 +228,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		}
 	}
 
-	private OperationResult<User> connectResult(IUser boUser) {
+	private OperationResult<User> connectResult(IUser boUser) throws Exception {
 		OperationResult<User> opRslt = new OperationResult<User>();
 		// 登录此即刷新组织用户
 		User orgUser = User.create(boUser);
@@ -713,6 +729,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				for (org.colorcoding.ibas.initialfantasy.bo.organization.User item : this
 						.fetchUser(bo.getCriteria(), token).getResultObjects()) {
 					bo.setOriginalPassword(item.getPassword());
+					bo.setLastPwdSetDate(item.getLastPwdSetDate());
 				}
 			}
 			if (org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK.equals(bo.getPassword())) {

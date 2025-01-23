@@ -61,6 +61,52 @@ namespace initialfantasy {
                 app.viewShower = this.viewShower;
                 app.run(this.user);
             }
+            protected barShowed(): void {
+                super.barShowed();
+                let expDays: number = config.get(config.CONFIG_VALUE_USER_PASSWORD_EXPIRATION_DAYS, 0);
+                if (expDays > 0) {
+                    setTimeout(() => {
+                        let criteria: ibas.ICriteria = new ibas.Criteria();
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = bo.User.PROPERTY_CODE_NAME;
+                        condition.value = ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE);
+                        let that: this = this;
+                        let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                        boRepository.fetchUser({
+                            criteria: criteria,
+                            onCompleted(opRslt: ibas.IOperationResult<bo.User>): void {
+                                for (let item of opRslt.resultObjects) {
+                                    let date: Date = item.lastPwdSetDate;
+                                    if (ibas.objects.isNull(date)) {
+                                        date = item.createDate;
+                                    }
+                                    if (!ibas.objects.isNull(date)) {
+                                        let warnDays: number = expDays / 5;
+                                        date = ibas.dates.add(ibas.dates.emDifferenceType.DAY, date, expDays);
+                                        if (ibas.dates.difference(ibas.dates.emDifferenceType.DAY, date, ibas.dates.today()) <= warnDays) {
+                                            that.messages({
+                                                type: ibas.emMessageType.QUESTION,
+                                                title: ibas.i18n.prop(that.name),
+                                                message: ibas.i18n.prop("initialfantasy_password_about_to_expire"),
+                                                actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
+                                                onCompleted(action: ibas.emMessageAction): void {
+                                                    if (action !== ibas.emMessageAction.YES) {
+                                                        return;
+                                                    }
+                                                    let app: ChangeUserProfileApp = new ChangeUserProfileApp();
+                                                    app.navigation = that.navigation;
+                                                    app.viewShower = that.viewShower;
+                                                    app.run(item);
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }, 60000);
+                }
+            }
         }
         /** 视图-用户配置 */
         export interface IUserProfileView extends ibas.IResidentView {

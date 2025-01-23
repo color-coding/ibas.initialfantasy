@@ -127,6 +127,17 @@ namespace initialfantasy {
                 this.setProperty(User.PROPERTY_INVALIDDATE_NAME, value);
             }
 
+            /** 映射的属性名称-密码修改日期 */
+            static PROPERTY_LASTPWDSETDATE_NAME: string = "LastPwdSetDate";
+            /** 获取-密码修改日期 */
+            get lastPwdSetDate(): Date {
+                return this.getProperty<Date>(User.PROPERTY_LASTPWDSETDATE_NAME);
+            }
+            /** 设置-密码修改日期 */
+            set lastPwdSetDate(value: Date) {
+                this.setProperty(User.PROPERTY_LASTPWDSETDATE_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
             /** 获取-对象编号 */

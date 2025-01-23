@@ -13,6 +13,7 @@ import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
 import org.colorcoding.ibas.initialfantasy.data.emRequiredValue;
 import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
@@ -710,6 +711,9 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
+		this.setBOCode(DataConvert.STRING_VALUE_EMPTY);
+		this.setPropertyCode(DataConvert.STRING_VALUE_EMPTY);
+		this.setIdentityCode(DataConvert.STRING_VALUE_EMPTY);
 		this.setAuthorised(emAuthorisedValue.DEFAULT);
 		this.setSearched(emSearchedValue.DEFAULT);
 		this.setRequired(emRequiredValue.DEFAULT);

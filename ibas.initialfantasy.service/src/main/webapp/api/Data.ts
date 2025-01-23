@@ -18,6 +18,8 @@ namespace initialfantasy {
     export const CONFIG_VALUE_OWNERSHIP_WAY: string = "initial";
 
     export namespace config {
+        /** 配置值-用户密码过期天数 */
+        export const CONFIG_VALUE_USER_PASSWORD_EXPIRATION_DAYS: string = "passwordExpirationDays";
         /**
          * 获取此模块配置
          * @param key 配置项

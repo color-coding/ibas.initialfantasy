@@ -228,6 +228,13 @@ namespace initialfantasy {
                                                         })
                                                     }),
                                                     new sap.m.Toolbar("", { visible: false }),
+                                                    new sap.m.Label("", { text: ibas.i18n.prop("bo_user_lastpwdsetdate") }),
+                                                    new sap.extension.m.DatePicker("", {
+                                                        enabled: false,
+                                                    }).bindProperty("bindingValue", {
+                                                        path: "lastPwdSetDate",
+                                                        type: new sap.extension.data.Date(),
+                                                    }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
                                                     new sap.extension.m.Input("", {
                                                         enabled: false,

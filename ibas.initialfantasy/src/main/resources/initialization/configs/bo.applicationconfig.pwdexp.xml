@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE ApplicationConfig>
+<ns:ApplicationConfig xmlns:ns="http://colorcoding.org/ibas/initialfantasy/bo">
+	<ConfigKey>passwordExpirationDays</ConfigKey>
+	<ConfigDescription>用户密码过期天数</ConfigDescription>
+	<ConfigGroup>c2b31c06-20d8-44a2-bb34-17f47ed01859</ConfigGroup>
+	<ConfigValue>0</ConfigValue>
+	<Settings></Settings>
+	<Category>ALL</Category>
+	<Activated>YES</Activated>
+</ns:ApplicationConfig>

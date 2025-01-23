@@ -314,6 +314,7 @@
         "bo_user_category": "类别",
         "bo_user_validdate": "生效日期",
         "bo_user_invaliddate": "失效日期",
+        "bo_user_lastpwdsetdate": "密码修改日期",
         "bo_user_docentry": "对象编号",
         "bo_user_objectcode": "对象类型",
         "bo_user_createdate": "创建日期",
