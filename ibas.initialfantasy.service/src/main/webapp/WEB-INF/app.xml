@@ -40,5 +40,7 @@
         <add key="LoginPhone" value="true" />
         <!-- 配置项目-开启对象日志 -->
         <add key="EnableBOLogst" value="true" />
+        <!-- 配置项目-启用登录验证 -->
+        <add key="EnableLoginVerification" value="false" />
     </appSettings>
 </ns2:configuration>
