@@ -390,6 +390,17 @@ namespace initialfantasy {
                 this.setProperty(BOPropertyValue.PROPERTY_DEFAULT_NAME, value);
             }
 
+            /** 映射的属性名称-显示顺序 */
+            static PROPERTY_VISORDER_NAME: string = "VisOrder";
+            /** 获取-显示顺序 */
+            get visOrder(): number {
+                return this.getProperty<number>(BOPropertyValue.PROPERTY_VISORDER_NAME);
+            }
+            /** 设置-显示顺序 */
+            set visOrder(value: number) {
+                this.setProperty(BOPropertyValue.PROPERTY_VISORDER_NAME, value);
+            }
+
             /** 字符串 */
             toString(): string {
                 let builder: ibas.StringBuilder = new ibas.StringBuilder();

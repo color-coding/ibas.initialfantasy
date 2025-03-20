@@ -377,7 +377,7 @@ namespace initialfantasy {
                                                     })
                                                 ]
                                             }).addStyleClass("sapUiTinyMarginBottom"),
-                                            this.tableBOPropertyValue = new sap.extension.table.Table("", {
+                                            this.tableBOPropertyValue = new sap.extension.table.DataTable("", {
                                                 enableSelectAll: false,
                                                 visibleRowCount: sap.extension.table.visibleRowCount(8),
                                                 rows: "{/rows}",
@@ -412,6 +412,7 @@ namespace initialfantasy {
                                                         width: "10rem",
                                                     }),
                                                 ],
+                                                sortProperty: "visOrder",
                                             }),
                                             this.textLinkedObject = new sap.ui.codeeditor.CodeEditor("", {
                                                 height: "20rem",

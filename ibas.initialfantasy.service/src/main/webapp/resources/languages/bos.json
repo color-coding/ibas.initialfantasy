@@ -212,6 +212,7 @@
         "bo_bopropertyvalue_value": "Value",
         "bo_bopropertyvalue_description": "Description",
         "bo_bopropertyvalue_default": "Default Value",
+        "bo_bopropertyvalue_visorder": "Vis Order",
         "bo_boinformation_closing_delimiter": "----End----"
     },
     {

@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObjects;
 import org.colorcoding.ibas.bobas.common.ICriteria;
+import org.colorcoding.ibas.bobas.common.ISort;
+import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -74,6 +76,9 @@ public class BOPropertyValues extends BusinessObjects<IBOPropertyValue, IBOPrope
 	@Override
 	public ICriteria getElementCriteria() {
 		ICriteria criteria = super.getElementCriteria();
+		ISort sort = criteria.getSorts().create();
+		sort.setAlias(BOPropertyValue.PROPERTY_VISORDER.getName());
+		sort.setSortType(SortType.ASCENDING);
 		return criteria;
 	}
 

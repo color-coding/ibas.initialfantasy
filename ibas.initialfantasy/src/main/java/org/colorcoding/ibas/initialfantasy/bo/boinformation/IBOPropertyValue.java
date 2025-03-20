@@ -78,4 +78,18 @@ public interface IBOPropertyValue extends IBusinessObject {
 	 * @param value 值
 	 */
 	void setDefault(emYesNo value);
+
+	/**
+	 * 获取-显示顺序
+	 * 
+	 * @return 值
+	 */
+	Integer getVisOrder();
+
+	/**
+	 * 设置-显示顺序
+	 * 
+	 * @param value 值
+	 */
+	void setVisOrder(Integer value);
 }

@@ -212,6 +212,7 @@
         "bo_bopropertyvalue_value": "值",
         "bo_bopropertyvalue_description": "描述",
         "bo_bopropertyvalue_default": "默认值",
+        "bo_bopropertyvalue_visorder": "显示顺序",
         "bo_boinformation_closing_delimiter": "----结束----"
     },
     {

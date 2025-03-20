@@ -29,6 +29,7 @@
     <Property Name="Value" Description="值" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Value" PrimaryKey="Yes"/>
     <Property Name="Description" Description="描述" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Descrp"/>
     <Property Name="Default" Description="默认值" DataType="Alphanumeric" DataSubType="Default" EditSize="1" DeclaredType="emYesNo" Mapped="Default"/>
+    <Property Name="VisOrder" Description="显示顺序" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="VisOrder"/>
   </Model>
   <BusinessObject MappedModel="BOPropertyValue" ShortName="${Company}_SYS_BOPRTYVALUE"/>
   <Model Name="BORelationship" Description="业务对象关系" ModelType="Unspecified" Mapped="${Company}_SYS_BOI3">
