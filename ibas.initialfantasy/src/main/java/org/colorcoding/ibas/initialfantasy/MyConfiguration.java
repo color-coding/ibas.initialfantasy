@@ -69,6 +69,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public final static String CONFIG_ITEM_ALLOWED_PHONE_LOGIN = "LoginPhone";
 	/**
+	 * 配置项目-允许用户编码登录
+	 */
+	public final static String CONFIG_ITEM_ALLOWED_USER_CODE_LOGIN = "LoginUserCode";
+	/**
 	 * 配置项目-禁用URL Token
 	 */
 	public final static String CONFIG_ITEM_DISABLED_URL_TOKEN = "DisabledUrlToken";
@@ -94,7 +98,20 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	public final static String CONFIG_ITEM_PASSWORD_EXPIRATION_DAYS = "passwordExpirationDays";
 
 	private static Boolean DISABLED_URL_TOKEN = null;
-	private static String AUTHENTICATION_SCHEMES_BEARER = "Bearer";
+	/**
+	 * 授权协议
+	 */
+	public static String AUTHENTICATION_SCHEMES_BEARER = "Bearer";
+
+	/**
+	 * 禁用地址Token方式
+	 */
+	public static boolean isDisabledUrlToken() {
+		if (DISABLED_URL_TOKEN == null) {
+			return false;
+		}
+		return DISABLED_URL_TOKEN;
+	}
 
 	/**
 	 * 选择Token

@@ -132,23 +132,34 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (DataConvert.isNullOrEmpty(user) || DataConvert.isNullOrEmpty(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
+			ICondition condition = null;
 			ICriteria criteria = new Criteria();
-			ICondition condition = criteria.getConditions().create();
-			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_CODE.getName());
-			condition.setValue(user);
+			// 用户编码登录
+			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_USER_CODE_LOGIN, true)) {
+				condition = criteria.getConditions().create();
+				condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_CODE.getName());
+				condition.setValue(user);
+			}
 			// 邮箱登录
 			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_MAIL_LOGIN, false)) {
 				condition = criteria.getConditions().create();
 				condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_MAIL.getName());
 				condition.setValue(user);
-				condition.setRelationship(ConditionRelationship.OR);
+				if (criteria.getConditions().size() > 0) {
+					condition.setRelationship(ConditionRelationship.OR);
+				}
 			}
 			// 手机登录
 			if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ALLOWED_PHONE_LOGIN, false)) {
 				condition = criteria.getConditions().create();
 				condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_PHONE.getName());
 				condition.setValue(user);
-				condition.setRelationship(ConditionRelationship.OR);
+				if (criteria.getConditions().size() > 0) {
+					condition.setRelationship(ConditionRelationship.OR);
+				}
+			}
+			if (criteria.getConditions().isEmpty()) {
+				throw new Exception(I18N.prop("msg_if_no_login_method_available"));
 			}
 			if (criteria.getConditions().size() > 1) {
 				criteria.getConditions().firstOrDefault().setBracketOpen(1);
