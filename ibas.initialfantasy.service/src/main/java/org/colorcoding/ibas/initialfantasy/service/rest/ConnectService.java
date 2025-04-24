@@ -14,9 +14,9 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasyShell;
 import org.glassfish.jersey.media.multipart.BodyPart;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
@@ -62,7 +62,7 @@ public class ConnectService extends BORepositoryInitialFantasyShell {
 			@QueryParam("verification") String verification) {
 		try {
 			if (MyConfiguration.getConfigValue(CONFIG_ITEM_ENABLE_LOGIN_VERIFICATION, false)) {
-				if (!DataConvert.isNullOrEmpty(verification)) {
+				if (!Strings.isNullOrEmpty(verification)) {
 					String[] values = URLDecoder.decode(this.atob(verification), "UTF-8").split("=");
 					if (values.length == 2) {
 						if (!VerificationService.check(values[0], Integer.valueOf(values[1]))) {

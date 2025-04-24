@@ -7,15 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
-import org.colorcoding.ibas.bobas.bo.IBOMaxValueKey;
-import org.colorcoding.ibas.bobas.common.Condition;
-import org.colorcoding.ibas.bobas.common.ConditionOperation;
-import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -27,7 +22,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = BOSeriesNumbering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlType(name = BOSeriesNumbering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> implements IBOSeriesNumbering, IBOMaxValueKey {
+public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> implements IBOSeriesNumbering {
 
 	/**
 	 * 序列化版本标记
@@ -251,17 +246,6 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 				new BusinessRuleRequired(PROPERTY_SERIESNAME), // 要求有值
 				new BusinessRuleRequired(PROPERTY_TEMPLATE), // 要求有值
 		};
-	}
-
-	@Override
-	public IFieldDataDb getMaxValueField() {
-		return (IFieldDataDb) this.getField(PROPERTY_SERIES_NAME);
-	}
-
-	@Override
-	public ICondition[] getMaxValueConditions() {
-		return new ICondition[] {
-				new Condition(PROPERTY_OBJECTCODE_NAME, ConditionOperation.EQUAL, this.getObjectCode()) };
 	}
 
 }
