@@ -4,7 +4,7 @@
 	<ConfigKey>truncateDecimals</ConfigKey>
 	<ConfigDescription>截取小数</ConfigDescription>
 	<ConfigGroup>00000000-ibas-cc01-00000000000000000</ConfigGroup>
-	<ConfigValue>false</ConfigValue>
+	<ConfigValue>true</ConfigValue>
 	<Settings>[{"Key":true,"Text":"是"},{"Key":false,"Text":"否"}]</Settings>
 	<Category>ALL</Category>
 	<Activated>YES</Activated>

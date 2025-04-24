@@ -5,7 +5,7 @@
     <Description>基于MSSQL的结构映射说明</Description>
     <Integrated>true</Integrated>
     <DriverName>com.microsoft.sqlserver.jdbc.SQLServerDriver</DriverName>
-    <DbUrl>jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName}</DbUrl>
+    <DbUrl>jdbc:sqlserver://${DbServer}:${DbPort};DatabaseName=${DbName};encrypt=false</DbUrl>
     <DbUser>${DbUser}</DbUser>
     <DbPassword>${DbPassword}</DbPassword>
     <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">

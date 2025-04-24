@@ -1,21 +1,21 @@
 package org.colorcoding.ibas.initialfantasy;
 
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.configuration.ConfigurationFactory;
-import org.colorcoding.ibas.bobas.configuration.IConfigurationManager;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
+import org.colorcoding.ibas.bobas.configuration.ConfigurationManager;
 
 /**
  * 我的配置项
  */
 public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration {
 
-	private volatile static IConfigurationManager instance;
+	private volatile static ConfigurationManager instance;
 
-	public static IConfigurationManager create() {
+	public static ConfigurationManager create() {
 		if (instance == null) {
 			synchronized (MyConfiguration.class) {
 				if (instance == null) {
-					instance = ConfigurationFactory.create().createManager();
+					instance = ConfigurationFactory.createManager();
 					// 加载系统设置
 					instance.setConfigSign("00000000-ibas-cc01-00000000000000000");
 					instance.update();
@@ -56,6 +56,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 * 服务命名空间
 	 */
 	public static final String NAMESPACE_SERVICE = NAMESPACE_ROOT + "service";
+	/**
+	 * 配置项目-文档文件夹
+	 */
+	public final static String CONFIG_ITEM_DOCUMENT_FOLDER = "DocumentFolder";
 	/**
 	 * 配置项目-用户口令码
 	 */
@@ -128,7 +132,7 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 				}
 			}
 		}
-		if (!DataConvert.isNullOrEmpty(headerToken)) {
+		if (!Strings.isNullOrEmpty(headerToken)) {
 			String values[] = headerToken.split(" ");
 			if (values.length > 1) {
 				if (AUTHENTICATION_SCHEMES_BEARER.equalsIgnoreCase(values[0].trim())) {
@@ -137,7 +141,7 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 			}
 		}
 		if (DISABLED_URL_TOKEN) {
-			return DataConvert.STRING_VALUE_EMPTY;
+			return Strings.VALUE_EMPTY;
 		}
 		return urlToken;
 	}
