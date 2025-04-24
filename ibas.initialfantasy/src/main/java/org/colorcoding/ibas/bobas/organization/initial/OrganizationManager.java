@@ -6,6 +6,7 @@ import java.util.Map;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
@@ -15,7 +16,6 @@ import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
-import org.colorcoding.ibas.bobas.organization.IOrganizationManager;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -24,7 +24,7 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
-public class OrganizationManager implements IOrganizationManager {
+public class OrganizationManager extends org.colorcoding.ibas.bobas.organization.OrganizationManager {
 	private static int TOKEN_TIMEOUT = 0;
 
 	@Override
@@ -37,7 +37,7 @@ public class OrganizationManager implements IOrganizationManager {
 			if (TOKEN_TIMEOUT > 0 && user instanceof User) {
 				User oUser = (User) user;
 				if (oUser.getTokenTimeStamp() > 0) {
-					if ((DateTime.getNow().getTime() - oUser.getTokenTimeStamp()) / 1000 > TOKEN_TIMEOUT) {
+					if ((DateTimes.now().getTime() - oUser.getTokenTimeStamp()) / 1000 > TOKEN_TIMEOUT) {
 						// 未操作超时
 						this.getIdUsers().remove(user.getId());
 						this.getTokenUsers().remove(token);
@@ -77,22 +77,23 @@ public class OrganizationManager implements IOrganizationManager {
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
 			condition.setOperation(ConditionOperation.GRATER_THAN);
 			condition.setValue(0);
-			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
-			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.IUser> operationResult = boRepository
-					.fetchUser(criteria);
-			if (operationResult.getError() != null) {
-				throw operationResult.getError();
+			try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
+				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+				IOperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.IUser> operationResult = boRepository
+						.fetchUser(criteria);
+				if (operationResult.getError() != null) {
+					throw operationResult.getError();
+				}
+				User user;
+				this.idUsers = new HashMap<>(operationResult.getResultObjects().size());
+				this.tokenUsers = new HashMap<>(operationResult.getResultObjects().size());
+				for (org.colorcoding.ibas.initialfantasy.bo.organization.IUser item : operationResult
+						.getResultObjects()) {
+					user = User.create(item);
+					this.idUsers.put(user.getId(), user);
+					this.tokenUsers.put(user.getToken(), user);
+				}
 			}
-			Map<Integer, IUser> idUsers = new HashMap<>(operationResult.getResultObjects().size());
-			Map<String, IUser> tokenUsers = new HashMap<>(operationResult.getResultObjects().size());
-			for (org.colorcoding.ibas.initialfantasy.bo.organization.IUser item : operationResult.getResultObjects()) {
-				User user = User.create(item);
-				idUsers.put(user.getId(), user);
-				tokenUsers.put(user.getToken(), user);
-			}
-			this.idUsers = idUsers;
-			this.tokenUsers = tokenUsers;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -148,7 +149,7 @@ public class OrganizationManager implements IOrganizationManager {
 		condition.setAlias(UserIdentity.PROPERTY_USER.getName());
 		condition.setValue(orgUser.getCode());
 		// 有效日期
-		DateTime today = DateTime.getToday();
+		DateTime today = DateTimes.today();
 		condition = criteria.getConditions().create();
 		condition.setBracketOpen(1);
 		condition.setAlias(UserIdentity.PROPERTY_VALIDDATE.getName());
@@ -182,8 +183,7 @@ public class OrganizationManager implements IOrganizationManager {
 		ISort sort = criteria.getSorts().create();
 		sort.setAlias(UserIdentity.PROPERTY_IDENTITY.getName());
 		sort.setSortType(SortType.ASCENDING);
-		try {
-			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
+		try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
 			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 			IOperationResult<IUserIdentity> opRsltIdentity = boRepository.fetchUserIdentity(criteria);
 			StringBuilder stringBuilder = new StringBuilder();

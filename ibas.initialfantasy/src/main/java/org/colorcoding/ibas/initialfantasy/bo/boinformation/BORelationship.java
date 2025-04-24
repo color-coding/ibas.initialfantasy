@@ -7,16 +7,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.bo.IBOStorageTag;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.core.fields.IFieldData;
-import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -224,10 +223,10 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 			IBOStorageTag tagBO = (IBOStorageTag) this;
 			criteria.setBusinessObject(tagBO.getObjectCode());
 		}
-		for (IFieldData item : this.getFields(c -> c.isPrimaryKey())) {
+		for (IPropertyInfo<?> item : this.properties().where(c -> c.isPrimaryKey())) {
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(item.getName());
-			condition.setValue(item.getValue());
+			condition.setValue(this.getProperty(item));
 		}
 		if (criteria.getConditions().isEmpty()) {
 			// 没有条件，返回空

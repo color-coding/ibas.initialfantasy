@@ -59,7 +59,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationConfig> fetchApplicationConfig(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApplicationConfig.class);
+		return super.fetch(ApplicationConfig.class, criteria, token);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationElement> fetchApplicationElement(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApplicationElement.class);
+		return super.fetch(ApplicationElement.class, criteria, token);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Organization> fetchOrganization(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Organization.class);
+		return super.fetch(Organization.class, criteria, token);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BOInformation> fetchBOInformation(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BOInformation.class);
+		return super.fetch(BOInformation.class, criteria, token);
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationModule> fetchApplicationModule(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApplicationModule.class);
+		return super.fetch(ApplicationModule.class, criteria, token);
 	}
 
 	/**
@@ -277,7 +277,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationPlatform> fetchApplicationPlatform(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApplicationPlatform.class);
+		return super.fetch(ApplicationPlatform.class, criteria, token);
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BOCriteria> fetchBOCriteria(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BOCriteria.class);
+		return super.fetch(BOCriteria.class, criteria, token);
 	}
 
 	/**
@@ -364,7 +364,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BOFiltering> fetchBOFiltering(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BOFiltering.class);
+		return super.fetch(BOFiltering.class, criteria, token);
 	}
 
 	/**
@@ -407,7 +407,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Privilege> fetchPrivilege(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Privilege.class);
+		return super.fetch(Privilege.class, criteria, token);
 	}
 
 	/**
@@ -450,7 +450,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<User> fetchUser(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, User.class);
+		return super.fetch(User.class, criteria, token);
 	}
 
 	/**
@@ -494,7 +494,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BONumbering> fetchBONumbering(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BONumbering.class);
+		return super.fetch(BONumbering.class, criteria, token);
 	}
 
 	/**
@@ -516,7 +516,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BOSeriesNumbering> fetchBOSeriesNumbering(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BOSeriesNumbering.class);
+		return super.fetch(BOSeriesNumbering.class, criteria, token);
 	}
 
 	/**
@@ -560,7 +560,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Identity> fetchIdentity(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Identity.class);
+		return super.fetch(Identity.class, criteria, token);
 	}
 
 	/**
@@ -603,7 +603,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<UserIdentity> fetchUserIdentity(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, UserIdentity.class);
+		return super.fetch(UserIdentity.class, criteria, token);
 	}
 
 	/**
@@ -646,7 +646,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<IdentityPrivilege> fetchIdentityPrivilege(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, IdentityPrivilege.class);
+		return super.fetch(IdentityPrivilege.class, criteria, token);
 	}
 
 	/**
@@ -690,7 +690,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BOPropertySetting> fetchBOPropertySetting(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BOPropertySetting.class);
+		return super.fetch(BOPropertySetting.class, criteria, token);
 	}
 
 	/**
@@ -734,7 +734,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<ApplicationConfigIdentity> fetchApplicationConfigIdentity(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, ApplicationConfigIdentity.class);
+		return super.fetch(ApplicationConfigIdentity.class, criteria, token);
 	}
 
 	/**
@@ -780,7 +780,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BOLogst> fetchBOLogst(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BOLogst.class);
+		return super.fetch(BOLogst.class, criteria, token);
 	}
 
 	/**
@@ -824,7 +824,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<BORelationship> fetchBORelationship(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, BORelationship.class);
+		return super.fetch(BORelationship.class, criteria, token);
 	}
 
 	/**
@@ -846,7 +846,7 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 * @return 操作结果
 	 */
 	public OperationResult<Refunction> fetchRefunction(ICriteria criteria, String token) {
-		return super.fetch(criteria, token, Refunction.class);
+		return super.fetch(Refunction.class, criteria, token);
 	}
 
 	/**

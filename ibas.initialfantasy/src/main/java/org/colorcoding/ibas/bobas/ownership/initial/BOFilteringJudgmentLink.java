@@ -9,9 +9,9 @@ import org.colorcoding.ibas.bobas.core.fields.IManagedFields;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.emConditionRelationship;
 import org.colorcoding.ibas.bobas.expression.BOJudgmentLink;
+import org.colorcoding.ibas.bobas.expression.ExpressionException;
 import org.colorcoding.ibas.bobas.expression.IPropertyValueOperator;
 import org.colorcoding.ibas.bobas.expression.IValueOperator;
-import org.colorcoding.ibas.bobas.expression.JudgmentLinkException;
 import org.colorcoding.ibas.bobas.expression.JudgmentLinkItem;
 import org.colorcoding.ibas.bobas.expression.JudmentOperation;
 import org.colorcoding.ibas.bobas.i18n.I18N;
@@ -132,7 +132,7 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 					}
 				}
 				if (this.field == null) {
-					throw new JudgmentLinkException(I18N.prop("msg_bobas_not_found_bo_field", this.getPropertyName()));
+					throw new ExpressionException(I18N.prop("msg_bobas_not_found_bo_field", this.getPropertyName()));
 				}
 				return this.field;
 			}
@@ -140,7 +140,7 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			@Override
 			public void setValue(Object value) {
 				if (value != null && !(value instanceof IManagedFields)) {
-					throw new JudgmentLinkException(I18N.prop("msg_bobas_invaild_bo_type"));
+					throw new ExpressionException(I18N.prop("msg_bobas_invaild_bo_type"));
 				}
 				this.value = (IManagedFields) value;
 				this.field = null;

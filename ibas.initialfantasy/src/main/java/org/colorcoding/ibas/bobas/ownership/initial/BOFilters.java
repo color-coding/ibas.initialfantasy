@@ -15,16 +15,15 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
+import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
-import org.colorcoding.ibas.bobas.repository.InvalidTokenException;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.BOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFiltering;
 import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringCategory;
 import org.colorcoding.ibas.initialfantasy.data.emFilteringType;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
-import org.colorcoding.ibas.initialfantasy.repository.IBORepositoryInitialFantasyApp;
 
 abstract class BOFilter {
 	public BOFilter() {
@@ -47,7 +46,8 @@ abstract class BOFilter {
 
 	private HashMap<String, IBOFiltering> filterings = new HashMap<>();
 
-	public List<IBOFiltering> getFilterings(String boCode, Iterable<String> roles) throws InvalidTokenException {
+	public List<IBOFiltering> getFilterings(String boCode, Iterable<String> roles)
+			throws InvalidAuthorizationException {
 		ArrayList<IBOFiltering> filterings = new ArrayList<>();
 		ArrayList<String> doRoles = new ArrayList<>();
 		for (String role : roles) {
@@ -96,19 +96,20 @@ abstract class BOFilter {
 					condition.setBracketClose(1);
 				}
 			}
-			IBORepositoryInitialFantasyApp boRepository = new BORepositoryInitialFantasy();
-			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<IBOFiltering> operationResult = boRepository.fetchBOFiltering(criteria);
-			for (IBOFiltering filtering : operationResult.getResultObjects()) {
-				// 缓存数据并返回数据
-				this.filterings.put(String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(),
-						filtering.getRoleCode() == null ? "" : filtering.getRoleCode()), filtering);
-				filterings.add(filtering);
-			}
-			// 缓存未配置的
-			for (String role : doRoles) {
-				if (filterings.firstOrDefault(c -> c.getRoleCode().equals(role)) == null) {
-					this.filterings.put(String.format(FILTERING_KEY_TEMPLATE, boCode, role), null);// 缓存数据
+			try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
+				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+				IOperationResult<IBOFiltering> operationResult = boRepository.fetchBOFiltering(criteria);
+				for (IBOFiltering filtering : operationResult.getResultObjects()) {
+					// 缓存数据并返回数据
+					this.filterings.put(String.format(FILTERING_KEY_TEMPLATE, filtering.getBOCode(),
+							filtering.getRoleCode() == null ? "" : filtering.getRoleCode()), filtering);
+					filterings.add(filtering);
+				}
+				// 缓存未配置的
+				for (String role : doRoles) {
+					if (filterings.firstOrDefault(c -> c.getRoleCode().equals(role)) == null) {
+						this.filterings.put(String.format(FILTERING_KEY_TEMPLATE, boCode, role), null);// 缓存数据
+					}
 				}
 			}
 		}
@@ -131,7 +132,8 @@ abstract class BOFilter {
 		return filterings;
 	}
 
-	public boolean filtering(IDataOwnership bo, IUser user) throws InvalidTokenException, JudmentOperationException {
+	public boolean filtering(IDataOwnership bo, IUser user)
+			throws InvalidAuthorizationException, JudmentOperationException {
 		boolean status = this.getFiltertingDefault();
 		if (bo == null) {
 			return status;

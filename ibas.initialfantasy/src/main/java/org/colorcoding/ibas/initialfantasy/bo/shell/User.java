@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.Strings;
+import org.colorcoding.ibas.bobas.core.Serializable;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
-import org.colorcoding.ibas.bobas.serialization.Serializable;
-import org.colorcoding.ibas.bobas.util.EncryptMD5;
+import org.colorcoding.ibas.bobas.common.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "User")
@@ -46,7 +46,7 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 					}
 				}
 			}
-			if (!DataConvert.isNullOrEmpty(TOKEN_NOT_EXPIRED_USERS)) {
+			if (!Strings.isNullOrEmpty(TOKEN_NOT_EXPIRED_USERS)) {
 				if (!TOKEN_NOT_EXPIRED_USERS.contains(sUser.getCode() + ";")) {
 					sUser.setTokenTimeStamp();
 					stringBuilder.append(sUser.getTokenTimeStamp());
@@ -147,7 +147,7 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 	}
 
 	public final void setTokenTimeStamp() {
-		this.setTokenTimeStamp(DateTime.getNow().getTime());
+		this.setTokenTimeStamp(DateTimes.now().getTime());
 	}
 
 	@Override

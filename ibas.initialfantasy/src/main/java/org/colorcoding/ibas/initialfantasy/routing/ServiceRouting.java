@@ -16,16 +16,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.serialization.ISerializer;
 import org.colorcoding.ibas.bobas.serialization.SerializationException;
-import org.colorcoding.ibas.bobas.serialization.SerializerFactory;
+import org.colorcoding.ibas.bobas.serialization.SerializationFactory;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 
 /**
  * 分配有效的服务
@@ -119,7 +119,7 @@ public class ServiceRouting {
 		if (file.exists()) {
 			file.delete();
 		}
-		ISerializer<?> serializer = SerializerFactory.create().createManager().create("xml");
+		ISerializer serializer = SerializationFactory.createManager().create("xml");
 		try (OutputStream stream = new FileOutputStream(file)) {
 			serializer.serialize(routing, stream);
 		}
@@ -130,7 +130,7 @@ public class ServiceRouting {
 		if (!file.exists()) {
 			return;
 		}
-		ISerializer<?> serializer = SerializerFactory.create().createManager().create("xml");
+		ISerializer serializer = SerializationFactory.createManager().create("xml");
 		try (InputStream stream = new FileInputStream(file)) {
 			Object object = serializer.deserialize(stream, ServiceRouting.class);
 			if (object instanceof ServiceRouting) {
@@ -167,7 +167,7 @@ public class ServiceRouting {
 				this.save(routing);
 			}
 			this.setRuntime(String
-					.valueOf((DateTime.getNow().getTime() - (file.exists() ? file.lastModified() : 0)) / 1000 / 60));
+					.valueOf((DateTimes.now().getTime() - (file.exists() ? file.lastModified() : 0)) / 1000 / 60));
 			this.load();
 		} catch (Exception e) {
 			Logger.log(e);
@@ -185,7 +185,7 @@ public class ServiceRouting {
 		if (module == null) {
 			return done;
 		}
-		if (DataConvert.isNullOrEmpty(module.getId())) {
+		if (Strings.isNullOrEmpty(module.getId())) {
 			return done;
 		}
 		for (int i = 0; i < this.getServices().size(); i++) {
@@ -215,7 +215,7 @@ public class ServiceRouting {
 			}
 		}
 		// 判断模块是否可用
-		if (!DataConvert.isNullOrEmpty(module.getRepository()) && !DataConvert.isNullOrEmpty(module.getAddress())) {
+		if (!Strings.isNullOrEmpty(module.getRepository()) && !Strings.isNullOrEmpty(module.getAddress())) {
 			done = true;
 			if (MyConfiguration.isDebugMode()) {
 				Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),

@@ -8,14 +8,10 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOMaxValueKey;
-import org.colorcoding.ibas.bobas.common.Condition;
-import org.colorcoding.ibas.bobas.common.ConditionOperation;
-import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
@@ -254,14 +250,19 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	}
 
 	@Override
-	public IFieldDataDb getMaxValueField() {
-		return (IFieldDataDb) this.getField(PROPERTY_SERIES_NAME);
+	public IPropertyInfo<?> getMaxValueField() {
+		return PROPERTY_SERIES;
 	}
 
 	@Override
-	public ICondition[] getMaxValueConditions() {
-		return new ICondition[] {
-				new Condition(PROPERTY_OBJECTCODE_NAME, ConditionOperation.EQUAL, this.getObjectCode()) };
+	public IPropertyInfo<?>[] getMaxValueConditions() {
+		return new IPropertyInfo<?>[] { PROPERTY_OBJECTCODE };
+	}
+
+	@Override
+	public boolean setMaxValue(Integer value) {
+		this.setSeries(value);
+		return true;
 	}
 
 }

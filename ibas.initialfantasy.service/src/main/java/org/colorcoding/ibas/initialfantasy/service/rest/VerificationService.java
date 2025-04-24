@@ -24,11 +24,11 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.colorcoding.ibas.bobas.core.Daemon;
-import org.colorcoding.ibas.bobas.core.IDaemonTask;
-import org.colorcoding.ibas.bobas.core.InvalidDaemonTaskException;
-import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.message.Logger;
+import org.colorcoding.ibas.bobas.task.Daemon;
+import org.colorcoding.ibas.bobas.task.IDaemonTask;
+import org.colorcoding.ibas.bobas.task.InvalidDaemonTaskException;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 @Path("verify")
@@ -47,7 +47,7 @@ public class VerificationService {
 				@Override
 				public void run() {
 					Result result;
-					long nowTime = DateTime.getNow().getTime();
+					long nowTime = DateTimes.now().getTime();
 					for (String key : RESULTS.keySet()) {
 						result = RESULTS.get(key);
 						// 大于3分钟的释放
@@ -91,7 +91,7 @@ public class VerificationService {
 			return false;
 		}
 		// 大于三分钟的无效
-		if (Math.abs(DateTime.getNow().getTime() - value.time) / 1000 > 180) {
+		if (Math.abs(DateTimes.now().getTime() - value.time) / 1000 > 180) {
 			// 清除结果
 			RESULTS.remove(key);
 			return false;
@@ -113,7 +113,7 @@ public class VerificationService {
 	@GET
 	@Path("{image}")
 	public void resource(@PathParam("image") @DefaultValue("") String resource, @Context HttpServletResponse response) {
-		long nowTime = DateTime.getNow().getTime();
+		long nowTime = DateTimes.now().getTime();
 		if (RESULTS.containsKey(resource)) {
 			Result result = RESULTS.get(resource);
 			if (Math.abs((nowTime - result.time)) / 1000 > 180) {
@@ -280,7 +280,7 @@ public class VerificationService {
 
 	private class Result {
 		public Result() {
-			this.time = DateTime.getNow().getTime();
+			this.time = DateTimes.now().getTime();
 		}
 
 		public long time;

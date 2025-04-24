@@ -10,28 +10,29 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.approval.IApprovalData;
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.bo.IBOSeriesKey;
 import org.colorcoding.ibas.bobas.bo.IBOUserFields;
+import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.EncryptMD5;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.i18n.I18N;
+import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
-import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
-import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
 import org.colorcoding.ibas.bobas.rule.ICheckRules;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleTrim;
-import org.colorcoding.ibas.bobas.util.EncryptMD5;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.logic.IUserMailCheckContract;
 import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 
@@ -176,7 +177,7 @@ public class User extends BusinessObject<User>
 	 * @param value 值
 	 */
 	public void setPassword(String value) {
-		if (this.isLoading()) {
+		if (this.isLoading() || Strings.equals(PASSWORD_MASK, value)) {
 			this.setProperty(PROPERTY_PASSWORD, value);
 			this.setValid(false);
 		} else {
@@ -184,17 +185,17 @@ public class User extends BusinessObject<User>
 				if (!(this.getDocEntry() < 0) && MyConfiguration
 						.getConfigValue(MyConfiguration.CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY, false)) {
 					String passwordRegex = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_REGEX);
-					if (DataConvert.isNullOrEmpty(passwordRegex)) {
+					if (Strings.isNullOrEmpty(passwordRegex)) {
 						passwordRegex = DEFAULT_PASSWORD_REGEX;
 					}
 					Pattern pattern = Pattern.compile(passwordRegex);
-					if (DataConvert.isNullOrEmpty(value) || !pattern.matcher(value).matches()) {
+					if (Strings.isNullOrEmpty(value) || !pattern.matcher(value).matches()) {
 						throw new BusinessRuleException(
 								I18N.prop("msg_if_user_password_complexity_check_faild", this.getCode()));
 					}
 				}
 				this.setProperty(PROPERTY_PASSWORD, PasswordStorage.createHash(value));
-				this.setProperty(PROPERTY_LASTPWDSETDATE, DateTime.getToday());
+				this.setProperty(PROPERTY_LASTPWDSETDATE, DateTimes.today());
 			} catch (Exception e) {
 				Logger.log(e);
 				throw new RuntimeException(e);
@@ -1053,7 +1054,7 @@ public class User extends BusinessObject<User>
 	public void check() throws BusinessRuleException {
 		if (!this.isValid()) {
 			this.setPassword(this.getPassword());
-			this.setValid(true);
+			this.setBusy(true);
 		}
 	}
 

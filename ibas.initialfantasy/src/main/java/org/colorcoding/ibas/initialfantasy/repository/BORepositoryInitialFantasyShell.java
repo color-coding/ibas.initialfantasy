@@ -6,26 +6,26 @@ import java.util.Comparator;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
+import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
-import org.colorcoding.ibas.bobas.common.ISqlStoredProcedure;
 import org.colorcoding.ibas.bobas.common.OperationInformation;
 import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SortType;
-import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
-import org.colorcoding.ibas.bobas.core.RepositoryException;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.db.DbTransaction;
+import org.colorcoding.ibas.bobas.db.SqlStoredProcedure;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
-import org.colorcoding.ibas.bobas.repository.BORepository4DbReadonly;
-import org.colorcoding.ibas.bobas.repository.IBORepository4DbReadonly;
+import org.colorcoding.ibas.bobas.repository.RepositoryException;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
@@ -46,7 +46,6 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.UserFunction;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserModule;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.shell.UserQuery;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.data.emAssignedType;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
 import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
@@ -74,7 +73,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
 			// 当前日期
-			String date = DateTime.getToday().toString();
+			String date = DateTimes.today().toString();
 			// 有效日期
 			condition = criteria.getConditions().create();
 			condition.setBracketOpen(1);
@@ -106,20 +105,21 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setOperation(ConditionOperation.GRATER_EQUAL);
 			condition.setValue(date);
 			// 新仓库查询用户，避免权限问题
-			BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell();
-			boRepository.setCurrentUser(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<IUser> opRsltUser = boRepository.fetchUser(criteria);
-			if (opRsltUser.getError() != null) {
-				throw opRsltUser.getError();
+			try (BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell()) {
+				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+				IOperationResult<IUser> opRsltUser = boRepository.fetchUser(criteria);
+				if (opRsltUser.getError() != null) {
+					throw opRsltUser.getError();
+				}
+				if (opRsltUser.getResultCode() != 0) {
+					throw new Exception(opRsltUser.getMessage());
+				}
+				IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
+				if (boUser == null) {
+					throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
+				}
+				return this.connectResult(boUser);
 			}
-			if (opRsltUser.getResultCode() != 0) {
-				throw new Exception(opRsltUser.getMessage());
-			}
-			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
-			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
-			}
-			return this.connectResult(boUser);
 		} catch (Exception e) {
 			return new OperationResult<>(e);
 		}
@@ -129,7 +129,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	public OperationResult<User> userConnect(String user, String password) {
 		try {
 			// 无效用户密码，直接报错
-			if (DataConvert.isNullOrEmpty(user) || DataConvert.isNullOrEmpty(password)) {
+			if (Strings.isNullOrEmpty(user) || Strings.isNullOrEmpty(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
 			ICondition condition = null;
@@ -170,7 +170,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
 			// 当前日期
-			String date = DateTime.getToday().toString();
+			String date = DateTimes.today().toString();
 			// 有效日期
 			condition = criteria.getConditions().create();
 			condition.setBracketOpen(1);
@@ -202,38 +202,39 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setOperation(ConditionOperation.GRATER_EQUAL);
 			condition.setValue(date);
 			// 新仓库查询用户，避免权限问题
-			BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell();
-			boRepository.setCurrentUser(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<IUser> opRsltUser = boRepository.fetchUser(criteria);
-			if (opRsltUser.getError() != null) {
-				throw opRsltUser.getError();
-			}
-			if (opRsltUser.getResultCode() != 0) {
-				throw new Exception(opRsltUser.getMessage());
-			}
-			IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
-			if (boUser == null) {
-				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
-			}
-			if (!boUser.checkPassword(password)) {
-				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
-			}
-			// 检查密码是否过期
-			int expireDays = Integer
-					.valueOf(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_EXPIRATION_DAYS, 0));
-			if (expireDays > 0) {
-				DateTime lastDate = boUser.getLastPwdSetDate();
-				if (lastDate == null || DateTime.MIN_VALUE == lastDate) {
-					lastDate = boUser.getCreateDate();
+			try (BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell()) {
+				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+				IOperationResult<IUser> opRsltUser = boRepository.fetchUser(criteria);
+				if (opRsltUser.getError() != null) {
+					throw opRsltUser.getError();
 				}
-				if (lastDate != null && DateTime.MIN_VALUE != lastDate) {
-					lastDate = lastDate.addDays(expireDays);
-					if (DateTime.getToday().compareTo(lastDate) > 0) {
-						throw new Exception(I18N.prop("msg_if_user_token_has_expired"));
+				if (opRsltUser.getResultCode() != 0) {
+					throw new Exception(opRsltUser.getMessage());
+				}
+				IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
+				if (boUser == null) {
+					throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+				}
+				if (!boUser.checkPassword(password)) {
+					throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+				}
+				// 检查密码是否过期
+				int expireDays = Integer.valueOf(
+						MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_EXPIRATION_DAYS, 0));
+				if (expireDays > 0) {
+					DateTime lastDate = boUser.getLastPwdSetDate();
+					if (lastDate == null || DateTimes.VALUE_MIN == lastDate) {
+						lastDate = boUser.getCreateDate();
+					}
+					if (lastDate != null && DateTimes.VALUE_MIN != lastDate) {
+						lastDate = lastDate.addDays(expireDays);
+						if (DateTimes.today().compareTo(lastDate) > 0) {
+							throw new Exception(I18N.prop("msg_if_user_token_has_expired"));
+						}
 					}
 				}
+				return this.connectResult(boUser);
 			}
-			return this.connectResult(boUser);
 		} catch (Exception e) {
 			return new OperationResult<>(e);
 		}
@@ -244,7 +245,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		// 登录此即刷新组织用户
 		User orgUser = User.create(boUser);
 		// 注册用户
-		OrganizationFactory.create().createManager().register(orgUser);
+		OrganizationFactory.createManager().register(orgUser);
 		opRslt.setUserSign(orgUser.getToken());
 		opRslt.addResultObjects(orgUser);
 		String tag = "CONFIG_ITEM", value = null;
@@ -275,45 +276,46 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	public OperationResult<UserModule> fetchUserModules(String user, String platform, String token) {
 		try {
 			this.setUserToken(token);
-			IBORepository4DbReadonly boRepository = new BORepository4DbReadonly("Master");
-			ISqlStoredProcedure sp = new SqlStoredProcedure();
-			sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_MODULES"));
-			sp.addParameters("Platform", platform);
-			sp.addParameters("UserCode", user);
-			IOperationResult<ApplicationModule4Shell> opRsltModules = boRepository.fetch(sp,
-					ApplicationModule4Shell.class);
-			if (opRsltModules.getResultCode() != 0) {
-				throw new Exception(opRsltModules.getMessage());
+			if (this.getTransaction() == null) {
+				this.connect();
 			}
-			if (opRsltModules.getError() != null) {
-				throw opRsltModules.getError();
-			}
-			// 模块去重，获取有效地址
-			ServiceRouting serviceRouting = ServiceRouting.create();
-			ArrayList<UserModule> userModules = new ArrayList<UserModule>();
-			for (ApplicationModule4Shell item : opRsltModules.getResultObjects()) {
-				if (item.getAuthoriseValue() == emAuthoriseType.NONE) {
-					continue;
-				}
-				UserModule userModule = userModules.firstOrDefault(c -> c.getId().equals(item.getModuleId()));
-				if (userModule == null) {
-					userModule = UserModule.create(item);
-					// 设置有效服务
-					if (serviceRouting.routing(userModule)) {
-						userModules.add(userModule);
+			if (this.getTransaction() instanceof DbTransaction) {
+				DbTransaction transaction = (DbTransaction) this.getTransaction();
+				SqlStoredProcedure sp = new SqlStoredProcedure();
+				sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_MODULES"));
+				sp.setObject("Platform", platform);
+				sp.setObject("UserCode", user);
+				ApplicationModule4Shell[] modules = transaction.fetch(ApplicationModule4Shell.class, sp);
+
+				// 模块去重，获取有效地址
+				ServiceRouting serviceRouting = ServiceRouting.create();
+				ArrayList<UserModule> userModules = new ArrayList<UserModule>();
+				for (ApplicationModule4Shell item : modules) {
+					if (item.getAuthoriseValue() == emAuthoriseType.NONE) {
+						continue;
 					}
-				} else {
-					// 保留最小权限设置
-					if (userModule.getAuthorise().compareTo(item.getAuthoriseValue()) < 0) {
-						userModule.setAuthorise(item.getAuthoriseValue());
+					UserModule userModule = userModules.firstOrDefault(c -> c.getId().equals(item.getModuleId()));
+					if (userModule == null) {
+						userModule = UserModule.create(item);
+						// 设置有效服务
+						if (serviceRouting.routing(userModule)) {
+							userModules.add(userModule);
+						}
+					} else {
+						// 保留最小权限设置
+						if (userModule.getAuthorise().compareTo(item.getAuthoriseValue()) < 0) {
+							userModule.setAuthorise(item.getAuthoriseValue());
+						}
 					}
 				}
+				// 模块排序
+				userModules.sort((a, b) -> {
+					return a.getOrder() - b.getOrder();
+				});
+				return new OperationResult<UserModule>().addResultObjects(userModules);
+			} else {
+				throw new Exception(I18N.prop("msg_bobas_invaild_bo_repository"));
 			}
-			// 模块排序
-			userModules.sort((a, b) -> {
-				return a.getOrder() - b.getOrder();
-			});
-			return new OperationResult<UserModule>().addResultObjects(userModules);
 		} catch (Exception e) {
 			return new OperationResult<>(e);
 		}
@@ -323,37 +325,38 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	public OperationResult<UserPrivilege> fetchUserPrivileges(String user, String platform, String token) {
 		try {
 			this.setUserToken(token);
-			IBORepository4DbReadonly boRepository = new BORepository4DbReadonly("Master");
-			ISqlStoredProcedure sp = new SqlStoredProcedure();
-			sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_PRIVILEGES"));
-			sp.addParameters("Platform", platform);
-			sp.addParameters("UserCode", user);
-			IOperationResult<UserPrivilege> opRsltPrivileges = boRepository.fetch(sp, UserPrivilege.class);
-			if (opRsltPrivileges.getError() != null) {
-				throw opRsltPrivileges.getError();
+			if (this.getTransaction() == null) {
+				this.connect();
 			}
-			if (opRsltPrivileges.getResultCode() != 0) {
-				throw new Exception(opRsltPrivileges.getMessage());
-			}
-			// 去重
-			OperationResult<UserPrivilege> opRslt = new OperationResult<>();
-			for (UserPrivilege item : opRsltPrivileges.getResultObjects()) {
-				if (item == null || item.getTarget() == null) {
-					continue;
-				}
-				UserPrivilege privilege = opRslt.getResultObjects().firstOrDefault(
-						c -> item.getTarget() == c.getTarget() || item.getTarget().equals(c.getTarget()));
-				if (privilege != null) {
-					// 保留最小权限
-					if (privilege.getValue().compareTo(item.getValue()) < 0) {
-						privilege.setValue(item.getValue());
-						privilege.setAutomatic(item.getAutomatic());
+			if (this.getTransaction() instanceof DbTransaction) {
+				DbTransaction transaction = (DbTransaction) this.getTransaction();
+				SqlStoredProcedure sp = new SqlStoredProcedure();
+				sp.setName(MyConfiguration.applyVariables("${Company}_SYS_SP_GET_USER_PRIVILEGES"));
+				sp.setObject("Platform", platform);
+				sp.setObject("UserCode", user);
+				UserPrivilege[] privileges = transaction.fetch(UserPrivilege.class, sp);
+				// 去重
+				OperationResult<UserPrivilege> opRslt = new OperationResult<>();
+				for (UserPrivilege item : privileges) {
+					if (item == null || item.getTarget() == null) {
+						continue;
 					}
-				} else {
-					opRslt.addResultObjects(item);
+					UserPrivilege privilege = opRslt.getResultObjects().firstOrDefault(
+							c -> item.getTarget() == c.getTarget() || item.getTarget().equals(c.getTarget()));
+					if (privilege != null) {
+						// 保留最小权限
+						if (privilege.getValue().compareTo(item.getValue()) < 0) {
+							privilege.setValue(item.getValue());
+							privilege.setAutomatic(item.getAutomatic());
+						}
+					} else {
+						opRslt.addResultObjects(item);
+					}
 				}
+				return opRslt;
+			} else {
+				throw new Exception(I18N.prop("msg_bobas_invaild_bo_repository"));
 			}
-			return opRslt;
 		} catch (Exception e) {
 			return new OperationResult<>(e);
 		}
@@ -427,29 +430,31 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			this.setUserToken(token);
 			// 补全信息
 			if (query.getUser() == null || query.getUser().isEmpty()) {
-				BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell();
-				boRepository.setCurrentUser(OrganizationFactory.SYSTEM_USER);
-				ICriteria criteria = new Criteria();
-				ICondition condition = criteria.getConditions().create();
-				condition.setAlias(
-						org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
-				condition.setValue(emYesNo.YES);
-				condition = criteria.getConditions().create();
-				condition
-						.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
-				condition.setValue(this.getCurrentUser().getId());
-				IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
-				if (opRsltUser.getError() != null) {
-					throw opRsltUser.getError();
+				try (BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell()) {
+					boRepository.setUserToken(OrganizationFactory.SYSTEM_USER);
+					ICriteria criteria = new Criteria();
+					ICondition condition = criteria.getConditions().create();
+					condition.setAlias(
+							org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
+					condition.setValue(emYesNo.YES);
+					condition = criteria.getConditions().create();
+					condition.setAlias(
+							org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
+					condition.setValue(this.getCurrentUser().getId());
+					IOperationResult<IUser> opRsltUser = this.fetchUser(criteria);
+					if (opRsltUser.getError() != null) {
+						throw opRsltUser.getError();
+					}
+					if (opRsltUser.getResultCode() != 0) {
+						throw new Exception(opRsltUser.getMessage());
+					}
+					IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
+					if (boUser == null) {
+						throw new Exception(
+								I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
+					}
+					query.setUser(boUser.getCode());
 				}
-				if (opRsltUser.getResultCode() != 0) {
-					throw new Exception(opRsltUser.getMessage());
-				}
-				IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
-				if (boUser == null) {
-					throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
-				}
-				query.setUser(boUser.getCode());
 			}
 			// 查询此用户已存在的数据
 			// 通过对用户的要求，用来处理系统预置查询，不能被使用者修改，使用者修改时只是为自己复制一份。
@@ -775,7 +780,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(Refunction.PROPERTY_ASSIGNEDTYPE.getName());
 			condition.setValue(emAssignedType.ALL);
 			// 所属角色的查询
-			if (!DataConvert.isNullOrEmpty(this.getCurrentUser().getBelong())) {
+			if (!Strings.isNullOrEmpty(this.getCurrentUser().getBelong())) {
 				condition = criteria.getConditions().create();
 				condition.setRelationship(ConditionRelationship.OR);
 				condition.setBracketOpen(1);
@@ -788,7 +793,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			}
 			condition.setBracketClose(condition.getBracketClose() + 1);
 			// 当前日期
-			String date = DateTime.getToday().toString();
+			String date = DateTimes.today().toString();
 			// 有效日期
 			condition = criteria.getConditions().create();
 			condition.setBracketOpen(1);
