@@ -6,10 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
-import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -18,7 +17,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BONumbering.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class BONumbering extends BusinessObject<BONumbering> implements IBONumbering, IBOCustomKey {
+public class BONumbering extends BusinessObject<BONumbering> implements IBONumbering {
 
 	/**
 	 * 序列化版本标记

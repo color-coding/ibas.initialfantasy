@@ -1,5 +1,7 @@
 package org.colorcoding.ibas.initialfantasy.bo.shell;
 
+import java.io.ByteArrayOutputStream;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -7,7 +9,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.common.ICriteria;
-import org.colorcoding.ibas.bobas.serialization.Serializable;
+import org.colorcoding.ibas.bobas.core.Serializable;
+import org.colorcoding.ibas.bobas.serialization.ISerializer;
+import org.colorcoding.ibas.bobas.serialization.SerializationFactory;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 
 /**
@@ -72,7 +76,15 @@ public class UserQuery extends Serializable {
 		if (criteria == null) {
 			return;
 		}
-		this.setCriteria(criteria.toString("json"));
+		try {
+			ISerializer serializer = SerializationFactory.createManager().create("json");
+			try (ByteArrayOutputStream writer = new ByteArrayOutputStream()) {
+				serializer.serialize(criteria, writer);
+				this.setCriteria(writer.toString());
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/** 顺序 */

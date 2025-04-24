@@ -7,13 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
-import org.colorcoding.ibas.bobas.mapping.BusinessObjectUnit;
-import org.colorcoding.ibas.bobas.mapping.DbField;
-import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
-import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 import org.colorcoding.ibas.initialfantasy.data.emAuthorisedValue;
 import org.colorcoding.ibas.initialfantasy.data.emRequiredValue;
 import org.colorcoding.ibas.initialfantasy.data.emSearchedValue;
@@ -674,32 +674,32 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	}
 
 	/**
-	* 属性名称-宽度
-	*/
+	 * 属性名称-宽度
+	 */
 	private static final String PROPERTY_WIDTH_NAME = "Width";
 
 	/**
-	* 宽度 属性
-	*/
+	 * 宽度 属性
+	 */
 	@DbField(name = "Width", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_WIDTH = registerProperty(PROPERTY_WIDTH_NAME, String.class,
 			MY_CLASS);
 
 	/**
-	* 获取-宽度
-	* 
-	* @return 值
-	*/
+	 * 获取-宽度
+	 * 
+	 * @return 值
+	 */
 	@XmlElement(name = PROPERTY_WIDTH_NAME)
 	public final String getWidth() {
 		return this.getProperty(PROPERTY_WIDTH);
 	}
 
 	/**
-	* 设置-宽度
-	* 
-	* @param value 值
-	*/
+	 * 设置-宽度
+	 * 
+	 * @param value 值
+	 */
 	public final void setWidth(String value) {
 		this.setProperty(PROPERTY_WIDTH, value);
 	}
@@ -711,9 +711,9 @@ public class BOPropertySetting extends BusinessObject<BOPropertySetting> impleme
 	protected void initialize() {
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-		this.setBOCode(DataConvert.STRING_VALUE_EMPTY);
-		this.setPropertyCode(DataConvert.STRING_VALUE_EMPTY);
-		this.setIdentityCode(DataConvert.STRING_VALUE_EMPTY);
+		this.setBOCode(Strings.VALUE_EMPTY);
+		this.setPropertyCode(Strings.VALUE_EMPTY);
+		this.setIdentityCode(Strings.VALUE_EMPTY);
 		this.setAuthorised(emAuthorisedValue.DEFAULT);
 		this.setSearched(emSearchedValue.DEFAULT);
 		this.setRequired(emRequiredValue.DEFAULT);

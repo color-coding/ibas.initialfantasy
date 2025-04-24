@@ -7,21 +7,16 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
-import org.colorcoding.ibas.bobas.core.Daemon;
-import org.colorcoding.ibas.bobas.core.IDaemonTask;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
+import org.colorcoding.ibas.bobas.task.Daemon;
+import org.colorcoding.ibas.bobas.task.IDaemonTask;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
 public class ConfigurationManager extends org.colorcoding.ibas.bobas.configuration.ConfigurationManager {
-
-	/**
-	 * 配置项目-配置管理员失效时间
-	 */
-	public final static String CONFIG_ITEM_CONFIGURATION_MANAGER_EXPIRY_VALUE = "ConfigurationManagerExpiry";
 
 	@Override
 	public String getConfigValue(String key) {
@@ -32,11 +27,7 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 		return MyConfiguration.getConfigValue(key);
 	}
 
-	@Override
-	public void save() {
-	}
-
-	private volatile boolean initialized = false;
+	private volatile long taskId = 0;
 
 	@Override
 	public synchronized void update() {
@@ -68,18 +59,18 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 			condition.setRelationship(ConditionRelationship.OR);
 			condition.setBracketClose(1);
 
-			BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy();
-			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
-			IOperationResult<IApplicationConfig> operationResult = boRepository.fetchApplicationConfig(criteria);
-			if (operationResult.getError() != null) {
-				throw operationResult.getError();
+			try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
+				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+				IOperationResult<IApplicationConfig> operationResult = boRepository.fetchApplicationConfig(criteria);
+				if (operationResult.getError() != null) {
+					throw operationResult.getError();
+				}
+				for (IApplicationConfig item : operationResult.getResultObjects()) {
+					this.addConfigValue(item.getConfigKey(), item.getConfigValue());
+				}
 			}
-			for (IApplicationConfig item : operationResult.getResultObjects()) {
-				this.addConfigValue(item.getConfigKey(), item.getConfigValue());
-			}
-			if (!this.initialized) {
-				this.initialized = true;
-				Daemon.register(new IDaemonTask() {
+			if (this.taskId == 0) {
+				this.taskId = Daemon.register(new IDaemonTask() {
 
 					@Override
 					public void run() {
@@ -98,8 +89,7 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 						return this.name;
 					}
 
-					private long interval = MyConfiguration.getConfigValue(
-							CONFIG_ITEM_CONFIGURATION_MANAGER_EXPIRY_VALUE, MyConfiguration.isDebugMode() ? 180 : 600);
+					private long interval = MyConfiguration.isDebugMode() ? 180 : 900;
 
 					@Override
 					public long getInterval() {
@@ -110,6 +100,14 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		if (this.taskId != 0) {
+			Daemon.unRegister(this.taskId);
+		}
+		super.finalize();
 	}
 
 }
