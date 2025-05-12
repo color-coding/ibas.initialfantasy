@@ -36,7 +36,8 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		stringBuilder.append(user.getPassword());
 		stringBuilder.append(user.getCode());
 		stringBuilder.append(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_KEY, "CC"));
-		if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0) {
+		if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0
+				|| MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0) > 0) {
 			if (TOKEN_NOT_EXPIRED_USERS == null) {
 				synchronized (User.class) {
 					TOKEN_NOT_EXPIRED_USERS = MyConfiguration

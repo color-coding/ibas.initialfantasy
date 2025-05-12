@@ -81,6 +81,10 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public final static String CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME = "UserTokenTimeout";
 	/**
+	 * 配置项目-用户口令可用实例
+	 */
+	public final static String CONFIG_ITEM_USER_TOKEN_INSTANCES = "UserTokenInstances";
+	/**
 	 * 配置项目-口令不超时用户（数组，";"分割并结尾）
 	 */
 	public final static String CONFIG_ITEM_TOKEN_NOT_EXPIRED_USERS = "TokenNotExpiredUsers";
