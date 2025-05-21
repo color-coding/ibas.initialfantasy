@@ -2,6 +2,9 @@ package org.colorcoding.ibas.initialfantasy.repository;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -16,6 +19,8 @@ import org.colorcoding.ibas.bobas.common.OperationMessage;
 import org.colorcoding.ibas.bobas.common.OperationResult;
 import org.colorcoding.ibas.bobas.common.SortType;
 import org.colorcoding.ibas.bobas.common.SqlStoredProcedure;
+import org.colorcoding.ibas.bobas.core.Daemon;
+import org.colorcoding.ibas.bobas.core.IDaemonTask;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DateTime;
@@ -60,6 +65,61 @@ import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
  * @author Niuren.Zhu
  */
 public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy implements IBORepositoryShell {
+
+	private static Map<String, long[]> USER_LOGIN_LOG;
+
+	static {
+		USER_LOGIN_LOG = new ConcurrentHashMap<>();
+		try {
+			Daemon.register(new IDaemonTask() {
+
+				long spanTime = 1000 * 60 * 60;
+
+				@Override
+				public void run() {
+					long[] logs;
+					boolean done = false;
+					long now = DateTime.getNow().getTime();
+					for (Entry<String, long[]> item : USER_LOGIN_LOG.entrySet()) {
+						logs = item.getValue();
+						if (logs == null) {
+							USER_LOGIN_LOG.remove(item.getKey());
+						} else {
+							done = true;
+							for (int i = 0; i < logs.length; i++) {
+								if ((now - logs[i]) > spanTime) {
+									logs[i] = 0;
+								}
+								if (logs[i] != 0) {
+									done = false;
+								}
+							}
+							if (done) {
+								USER_LOGIN_LOG.remove(item.getKey());
+							}
+						}
+					}
+				}
+
+				@Override
+				public boolean isActivated() {
+					return true;
+				}
+
+				@Override
+				public String getName() {
+					return "user login log cleaner";
+				}
+
+				@Override
+				public long getInterval() {
+					return 60;
+				}
+			});
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@Override
 	public OperationResult<User> tokenConnect(String token) {
@@ -131,6 +191,22 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			// 无效用户密码，直接报错
 			if (DataConvert.isNullOrEmpty(user) || DataConvert.isNullOrEmpty(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+			}
+			// 判断单位时间内，登录失败次数
+			if (USER_LOGIN_LOG.containsKey(user)) {
+				long[] userLogs = USER_LOGIN_LOG.get(user);
+				if (userLogs != null) {
+					boolean done = true;
+					for (int i = 0; i < userLogs.length; i++) {
+						if (userLogs[i] == 0) {
+							done = false;
+							break;
+						}
+					}
+					if (done == true) {
+						throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", user));
+					}
+				}
 			}
 			ICondition condition = null;
 			ICriteria criteria = new Criteria();
@@ -216,7 +292,24 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 			}
 			if (!boUser.checkPassword(password)) {
+				// 登录失败，记录
+				if (!USER_LOGIN_LOG.containsKey(boUser.getCode())) {
+					USER_LOGIN_LOG.put(boUser.getCode(), new long[5]);
+				}
+				long[] userLogs = USER_LOGIN_LOG.get(boUser.getCode());
+				if (userLogs != null) {
+					for (int i = 0; i < userLogs.length; i++) {
+						if (userLogs[i] == 0) {
+							userLogs[i] = DateTime.getNow().getTime();
+							break;
+						}
+					}
+				}
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+			}
+			// 登录成功，移除记录
+			if (USER_LOGIN_LOG.containsKey(boUser.getCode())) {
+				USER_LOGIN_LOG.remove(boUser.getCode());
 			}
 			// 检查密码是否过期
 			int expireDays = Integer
