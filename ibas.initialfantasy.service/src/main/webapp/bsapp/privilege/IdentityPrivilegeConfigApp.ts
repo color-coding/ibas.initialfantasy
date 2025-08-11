@@ -307,7 +307,7 @@ namespace initialfantasy {
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 复制身份权限  */
-            private copyIdentityPrivileges(): void {
+            private copyIdentityPrivileges(direction: "FROM" | "TO"): void {
                 if (!(this.oIdentityPrivileges instanceof Array)) {
                     return;
                 }
@@ -323,7 +323,9 @@ namespace initialfantasy {
                 condition.value = ibas.enums.toString(ibas.emPlantform, ibas.emPlantform.PHONE);
                 condition.relationship = ibas.emConditionRelationship.OR;
                 ibas.servicesManager.runChooseService<bo.ApplicationPlatform>({
-                    title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_identityprivilege_platformid")),
+                    title: ibas.strings.format("{0}-{1}",
+                        ibas.i18n.prop(direction === "FROM" ? "initialfantasy_copy_from" : "bo_identityprivilege_platformid"),
+                        ibas.i18n.prop("bo_privilege_platformid")),
                     boCode: bo.BO_CODE_APPLICATIONPLATFORM,
                     chooseType: ibas.emChooseType.SINGLE,
                     criteria: criteria,
@@ -334,25 +336,39 @@ namespace initialfantasy {
                         condition = criteria.conditions.create();
                         condition.alias = bo.Identity.PROPERTY_CODE_NAME;
                         condition.operation = ibas.emConditionOperation.NOT_NULL;
+                        if (that.oIdentityPrivileges.firstOrDefault()) {
+                            condition = criteria.conditions.create();
+                            condition.alias = "Code";
+                            condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                            condition.value = that.oIdentityPrivileges.firstOrDefault().identityCode;
+                        }
                         ibas.servicesManager.runChooseService<bo.IIdentity>({
-                            title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_identityprivilege_identitycode")),
+                            title: ibas.strings.format("{0}-{1}",
+                                ibas.i18n.prop(direction === "FROM" ? "initialfantasy_copy_from" : "bo_identityprivilege_identitycode"),
+                                ibas.i18n.prop("bo_privilege_platformid")),
                             boCode: bo.BO_CODE_IDENTITY,
-                            chooseType: ibas.emChooseType.SINGLE,
+                            chooseType: direction === "FROM" ? ibas.emChooseType.SINGLE : ibas.emChooseType.MULTIPLE,
                             criteria: criteria,
                             viewMode: ibas.emViewMode.VIEW,
                             onCompleted(selecteds: ibas.IList<bo.IIdentity>): void {
-                                let identity: bo.IIdentity = selecteds.firstOrDefault();
                                 // 查询复制的权限
                                 criteria = new ibas.Criteria();
-                                condition = criteria.conditions.create();
-                                condition.alias = bo.IdentityPrivilege.PROPERTY_PLATFORMID_NAME;
-                                condition.value = platform.platformCode;
-                                condition = criteria.conditions.create();
-                                condition.alias = bo.IdentityPrivilege.PROPERTY_ROLECODE_NAME;
-                                condition.value = that.oRole.code;
-                                condition = criteria.conditions.create();
-                                condition.alias = bo.IdentityPrivilege.PROPERTY_IDENTITYCODE_NAME;
-                                condition.value = identity.code;
+                                for (let identity of selecteds) {
+                                    condition = criteria.conditions.create();
+                                    if (criteria.conditions.length > 1) {
+                                        condition.relationship = ibas.emConditionRelationship.OR;
+                                    }
+                                    condition.alias = bo.IdentityPrivilege.PROPERTY_PLATFORMID_NAME;
+                                    condition.value = platform.platformCode;
+                                    condition.bracketOpen = 1;
+                                    condition = criteria.conditions.create();
+                                    condition.alias = bo.IdentityPrivilege.PROPERTY_ROLECODE_NAME;
+                                    condition.value = that.oRole.code;
+                                    condition = criteria.conditions.create();
+                                    condition.alias = bo.IdentityPrivilege.PROPERTY_IDENTITYCODE_NAME;
+                                    condition.value = identity.code;
+                                    condition.bracketClose = 1;
+                                }
                                 that.busy(true);
                                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                                 boRepository.fetchIdentityPrivilege({
@@ -363,26 +379,88 @@ namespace initialfantasy {
                                             if (opRslt.resultCode !== 0) {
                                                 throw new Error(opRslt.message);
                                             }
-                                            for (let item of that.oIdentityPrivileges) {
-                                                let data: bo.IPrivilege = opRslt.resultObjects.firstOrDefault(
-                                                    c => ibas.strings.equals(c.moduleId, item.moduleId)
-                                                        && ibas.strings.equals(c.target, item.target)
-                                                        && ibas.strings.equals(c.roleCode, item.roleCode)
-                                                );
-                                                if (ibas.objects.isNull(data)) {
-                                                    continue;
+                                            if (direction === "FROM") {
+                                                for (let item of that.oIdentityPrivileges) {
+                                                    let data: bo.IPrivilege = opRslt.resultObjects.firstOrDefault(
+                                                        c => ibas.strings.equals(c.moduleId, item.moduleId)
+                                                            && ibas.strings.equals(c.target, item.target)
+                                                            && ibas.strings.equals(c.roleCode, item.roleCode)
+                                                    );
+                                                    if (ibas.objects.isNull(data)) {
+                                                        continue;
+                                                    }
+                                                    item.data.isLoading = true;
+                                                    item.authoriseValue = data.authoriseValue;
+                                                    item.activated = data.activated;
+                                                    item.automatic = data.automatic;
+                                                    item.data.isLoading = false;
+                                                    if (item.data.isDirty === false) {
+                                                        item.data.markDirty();
+                                                    }
                                                 }
-                                                item.data.isLoading = true;
-                                                item.authoriseValue = data.authoriseValue;
-                                                item.activated = data.activated;
-                                                item.automatic = data.automatic;
-                                                item.data.isLoading = false;
-                                                if (item.data.isDirty === false) {
-                                                    item.data.markDirty();
+                                                that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                                                that.view.showIdentityPrivileges(that.oIdentityPrivileges.filter((item) => { return !item.data.isDeleted; }));
+                                            } else {
+                                                // 复制到权限
+                                                let newPrivileges: ibas.IList<bo.IdentityPrivilege> = new ibas.ArrayList<bo.IdentityPrivilege>();
+                                                for (let privilege of that.oIdentityPrivileges) {
+                                                    // 默认值则跳过
+                                                    if (!(privilege.data.objectKey > 0)) {
+                                                        continue;
+                                                    }
+                                                    for (let identity of selecteds) {
+                                                        let item: bo.IdentityPrivilege = opRslt.resultObjects.firstOrDefault(
+                                                            c => c.platformId === platform.platformCode
+                                                                && c.moduleId === privilege.moduleId
+                                                                && c.target === privilege.target
+                                                                && c.roleCode === privilege.roleCode
+                                                                && c.identityCode === identity.code
+                                                        );
+                                                        if (ibas.objects.isNull(item)) {
+                                                            item = new bo.IdentityPrivilege();
+                                                            item.platformId = platform.platformCode;
+                                                            item.moduleId = privilege.moduleId;
+                                                            item.target = privilege.target;
+                                                            item.roleCode = privilege.roleCode;
+                                                            item.identityCode = identity.code;
+                                                        }
+                                                        item.authoriseValue = privilege.authoriseValue;
+                                                        item.activated = privilege.activated;
+                                                        item.automatic = privilege.automatic;
+                                                        if (item.isDirty === false) {
+                                                            continue;
+                                                        }
+                                                        newPrivileges.add(item);
+                                                    }
                                                 }
+                                                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                                                ibas.queues.execute(newPrivileges, (data, next) => {
+                                                    // 处理数据
+                                                    if (data.isDirty === true) {
+                                                        boRepository.saveIdentityPrivilege({
+                                                            beSaved: data,
+                                                            onCompleted(opRslt: ibas.IOperationResult<bo.IdentityPrivilege>): void {
+                                                                if (opRslt.resultCode !== 0) {
+                                                                    next(new Error(ibas.i18n.prop("shell_data_save_error", data, opRslt.message)));
+                                                                } else {
+                                                                    next();
+                                                                }
+                                                            }
+                                                        });
+                                                    } else {
+                                                        next();
+                                                    }
+                                                }, (error) => {
+                                                    // 处理完成
+                                                    if (error instanceof Error) {
+                                                        that.messages(ibas.emMessageType.ERROR, error.message);
+                                                    } else {
+                                                        that.messages(ibas.emMessageType.SUCCESS,
+                                                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                                    }
+                                                    that.busy(false);
+                                                });
                                             }
-                                            that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
-                                            that.view.showIdentityPrivileges(that.oIdentityPrivileges.filter((item) => { return !item.data.isDeleted; }));
                                         } catch (error) {
                                             that.messages(error);
                                         }

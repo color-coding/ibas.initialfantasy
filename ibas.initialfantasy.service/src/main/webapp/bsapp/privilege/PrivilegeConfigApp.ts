@@ -203,7 +203,7 @@ namespace initialfantasy {
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("shell_saving_data"));
             }
             /** 复制权限  */
-            private copyPrivileges(): void {
+            private copyPrivileges(direction: "FROM" | "TO"): void {
                 if (!(this.privileges instanceof Array)) {
                     return;
                 }
@@ -219,7 +219,9 @@ namespace initialfantasy {
                 condition.value = ibas.enums.toString(ibas.emPlantform, ibas.emPlantform.PHONE);
                 condition.relationship = ibas.emConditionRelationship.OR;
                 ibas.servicesManager.runChooseService<bo.ApplicationPlatform>({
-                    title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_privilege_platformid")),
+                    title: ibas.strings.format("{0}-{1}",
+                        ibas.i18n.prop(direction === "FROM" ? "initialfantasy_copy_from" : "initialfantasy_copy_to"),
+                        ibas.i18n.prop("bo_privilege_platformid")),
                     boCode: bo.BO_CODE_APPLICATIONPLATFORM,
                     chooseType: ibas.emChooseType.SINGLE,
                     criteria: criteria,
@@ -230,51 +232,126 @@ namespace initialfantasy {
                         condition = criteria.conditions.create();
                         condition.alias = "Code";
                         condition.operation = ibas.emConditionOperation.NOT_NULL;
+                        if (that.privileges.firstOrDefault()) {
+                            condition = criteria.conditions.create();
+                            condition.alias = "Code";
+                            condition.operation = ibas.emConditionOperation.NOT_EQUAL;
+                            condition.value = that.privileges.firstOrDefault().roleCode;
+                        }
                         ibas.servicesManager.runChooseService<bo.IRole>({
-                            title: ibas.strings.format("{0}-{1}", ibas.i18n.prop("initialfantasy_copy_from"), ibas.i18n.prop("bo_privilege_rolecode")),
+                            title: ibas.strings.format("{0}-{1}",
+                                ibas.i18n.prop(direction === "FROM" ? "initialfantasy_copy_from" : "bo_privilege_rolecode"),
+                                ibas.i18n.prop("bo_privilege_platformid")),
                             boCode: bo.BO_CODE_ROLE,
-                            chooseType: ibas.emChooseType.SINGLE,
+                            chooseType: direction === "FROM" ? ibas.emChooseType.SINGLE : ibas.emChooseType.MULTIPLE,
                             criteria: criteria,
                             viewMode: ibas.emViewMode.VIEW,
                             onCompleted(selecteds: ibas.IList<bo.IRole>): void {
-                                let role: bo.IRole = selecteds.firstOrDefault();
                                 // 查询复制的权限
                                 criteria = new ibas.Criteria();
-                                condition = criteria.conditions.create();
-                                condition.alias = bo.Privilege.PROPERTY_PLATFORMID_NAME;
-                                condition.value = platform.platformCode;
-                                condition = criteria.conditions.create();
-                                condition.alias = bo.Privilege.PROPERTY_ROLECODE_NAME;
-                                condition.value = role.code;
+                                for (let role of selecteds) {
+                                    condition = criteria.conditions.create();
+                                    condition.alias = bo.Privilege.PROPERTY_PLATFORMID_NAME;
+                                    condition.value = platform.platformCode;
+                                    if (criteria.conditions.length > 1) {
+                                        condition.relationship = ibas.emConditionRelationship.OR;
+                                    }
+                                    condition.bracketOpen = 1;
+                                    condition = criteria.conditions.create();
+                                    condition.alias = bo.Privilege.PROPERTY_ROLECODE_NAME;
+                                    condition.value = role.code;
+                                    condition.bracketClose = 1;
+                                }
                                 that.busy(true);
                                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                                 boRepository.fetchPrivilege({
                                     criteria: criteria,
                                     onCompleted(opRslt: ibas.IOperationResult<bo.Privilege>): void {
                                         try {
-                                            that.busy(false);
-                                            if (opRslt.resultCode !== 0) {
-                                                throw new Error(opRslt.message);
-                                            }
-                                            for (let item of that.privileges) {
-                                                let data: bo.IPrivilege = opRslt.resultObjects.firstOrDefault(
-                                                    c => ibas.strings.equals(c.moduleId, item.moduleId)
-                                                        && ibas.strings.equals(c.target, item.target)
-                                                );
-                                                if (ibas.objects.isNull(data)) {
-                                                    continue;
+                                            if (direction === "FROM") {
+                                                // 复制从权限
+                                                that.busy(false);
+                                                if (opRslt.resultCode !== 0) {
+                                                    throw new Error(opRslt.message);
                                                 }
-                                                item.data.isLoading = true;
-                                                item.authoriseValue = data.authoriseValue;
-                                                item.activated = data.activated;
-                                                item.automatic = data.automatic;
-                                                item.data.isLoading = false;
-                                                if (item.data.isDirty === false) {
-                                                    item.data.markDirty();
+                                                for (let item of that.privileges) {
+                                                    let data: bo.IPrivilege = opRslt.resultObjects.firstOrDefault(
+                                                        c => ibas.strings.equals(c.moduleId, item.moduleId)
+                                                            && ibas.strings.equals(c.target, item.target)
+                                                    );
+                                                    if (ibas.objects.isNull(data)) {
+                                                        continue;
+                                                    }
+                                                    item.data.isLoading = true;
+                                                    item.authoriseValue = data.authoriseValue;
+                                                    item.activated = data.activated;
+                                                    item.automatic = data.automatic;
+                                                    item.data.isLoading = false;
+                                                    if (item.data.isDirty === false) {
+                                                        item.data.markDirty();
+                                                    }
                                                 }
+                                                that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                                                that.view.showPrivileges(that.privileges);
+                                            } else {
+                                                // 复制到权限
+                                                let newPrivileges: ibas.IList<bo.Privilege> = new ibas.ArrayList<bo.Privilege>();
+                                                for (let privilege of that.privileges) {
+                                                    // 默认值则跳过
+                                                    if (!(privilege.data.objectKey > 0)) {
+                                                        continue;
+                                                    }
+                                                    for (let role of selecteds) {
+                                                        let item: bo.Privilege = opRslt.resultObjects.firstOrDefault(
+                                                            c => c.platformId === platform.platformCode
+                                                                && c.moduleId === privilege.moduleId
+                                                                && c.target === privilege.target
+                                                                && c.roleCode === role.code
+                                                        );
+                                                        if (ibas.objects.isNull(item)) {
+                                                            item = new bo.Privilege();
+                                                            item.platformId = platform.platformCode;
+                                                            item.moduleId = privilege.moduleId;
+                                                            item.target = privilege.target;
+                                                            item.roleCode = role.code;
+                                                        }
+                                                        item.authoriseValue = privilege.authoriseValue;
+                                                        item.activated = privilege.activated;
+                                                        item.automatic = privilege.automatic;
+                                                        if (item.isDirty === false) {
+                                                            continue;
+                                                        }
+                                                        newPrivileges.add(item);
+                                                    }
+                                                }
+                                                let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                                                ibas.queues.execute(newPrivileges, (data, next) => {
+                                                    // 处理数据
+                                                    if (data.isDirty === true) {
+                                                        boRepository.savePrivilege({
+                                                            beSaved: data,
+                                                            onCompleted(opRslt: ibas.IOperationResult<bo.Privilege>): void {
+                                                                if (opRslt.resultCode !== 0) {
+                                                                    next(new Error(ibas.i18n.prop("shell_data_save_error", data, opRslt.message)));
+                                                                } else {
+                                                                    next();
+                                                                }
+                                                            }
+                                                        });
+                                                    } else {
+                                                        next();
+                                                    }
+                                                }, (error) => {
+                                                    // 处理完成
+                                                    if (error instanceof Error) {
+                                                        that.messages(ibas.emMessageType.ERROR, error.message);
+                                                    } else {
+                                                        that.messages(ibas.emMessageType.SUCCESS,
+                                                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                                    }
+                                                    that.busy(false);
+                                                });
                                             }
-                                            that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
-                                            that.view.showPrivileges(that.privileges);
                                         } catch (error) {
                                             that.messages(error);
                                         }
