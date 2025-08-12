@@ -95,7 +95,7 @@ namespace initialfantasy {
             /** 关联的数据 */
             private bo: ibas.IBusinessObject;
 
-            private viewData(data: bo.BOLogst | bo.BOLogst[]): void {
+            private viewData(data: bo.BOLogst | bo.BOLogst[], mode?: "SUMMARY" | "COMPARISON"): void {
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
                         ibas.i18n.prop("shell_data_view")
@@ -110,6 +110,7 @@ namespace initialfantasy {
                     app.onViewShowed = () => {
                         this.close();
                     };
+                    app.showSummary = mode === "SUMMARY" ? true : false;
                     app.run(data);
                 } catch (error) {
                     this.messages(error);

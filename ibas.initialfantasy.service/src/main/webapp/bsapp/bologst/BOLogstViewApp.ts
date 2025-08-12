@@ -33,7 +33,7 @@ namespace initialfantasy {
                 }
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_display_bo_datas"));
                 this.view.drawView(this.template);
-                this.view.showData(this.datas);
+                this.view.showData(this.datas, this.showSummary);
             }
             private datas: ibas.IList<object>;
             run(data?: bo.BOLogst | bo.BOLogst[]): void {
@@ -101,13 +101,14 @@ namespace initialfantasy {
             }
             onViewShowed: () => void;
             private template: outs.BOType;
+            public showSummary: boolean;
         }
         /** 视图-业务对象日志 */
         export interface IBOLogstViewView extends ibas.IBOViewView {
             /** 绘制窗体 */
             drawView(template: outs.BOType): void;
             /** 显示数据 */
-            showData(datas: object[]): void;
+            showData(datas: object[], summary?: boolean): void;
         }
         export namespace outs {
             export function template(datas: object[], boInfos: ibas.IList<bo.BOInformation>): BOType {

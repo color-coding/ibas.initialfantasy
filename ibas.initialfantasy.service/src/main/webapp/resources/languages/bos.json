@@ -244,6 +244,9 @@
         "bo_bologst_objectkey": "Sequence",
         "bo_bologst_code": "Code",
         "bo_bologst_docentry": "Document Number",
+        "bo_bologst_modify_content": "Modify Content",
+        "bo_bologst_before_modified": "Before Modified",
+        "bo_bologst_after_modified": "After Modified",
         "bo_bologst_closing_delimiter": "----End----"
     },
     {

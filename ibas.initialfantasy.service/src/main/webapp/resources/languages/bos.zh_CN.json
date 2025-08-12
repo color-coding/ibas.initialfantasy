@@ -244,6 +244,9 @@
         "bo_bologst_objectkey": "序号",
         "bo_bologst_code": "编号",
         "bo_bologst_docentry": "单据号",
+        "bo_bologst_modify_content": "修改内容",
+        "bo_bologst_before_modified": "修改前",
+        "bo_bologst_after_modified": "修改后",
         "bo_bologst_closing_delimiter": "----结束----"
     },
     {

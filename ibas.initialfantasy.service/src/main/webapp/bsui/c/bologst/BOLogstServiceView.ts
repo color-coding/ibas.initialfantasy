@@ -113,10 +113,17 @@ namespace initialfantasy {
                         ],
                         buttons: [
                             new sap.m.Button("", {
-                                text: ibas.i18n.prop("shell_show"),
+                                text: ibas.i18n.prop("initialfantasy_display_comparison"),
                                 type: sap.m.ButtonType.Transparent,
                                 press: function (): void {
-                                    that.fireViewEvents(that.viewDataEvent, that.list.getSelecteds());
+                                    that.fireViewEvents(that.viewDataEvent, that.list.getSelecteds(), "COMPARISON");
+                                }
+                            }),
+                            new sap.m.Button("", {
+                                text: ibas.i18n.prop("initialfantasy_display_summary"),
+                                type: sap.m.ButtonType.Transparent,
+                                press: function (): void {
+                                    that.fireViewEvents(that.viewDataEvent, that.list.getSelecteds(), "SUMMARY");
                                 }
                             }),
                             new sap.m.Button("", {
