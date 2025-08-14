@@ -36,8 +36,10 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.organization.IUserActionLog;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.organization.UserActionLog;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IIdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
@@ -879,6 +881,46 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	public IOperationResult<IRefunction> saveRefunction(IRefunction bo) {
 		return new OperationResult<IRefunction>(this.saveRefunction((Refunction) bo, this.getUserToken()));
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户动作日志
+	 * @param criteria 查询
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<UserActionLog> fetchUserActionLog(ICriteria criteria, String token) {
+		return super.fetch(criteria, token, UserActionLog.class);
+	}
+
+	/**
+	 * 查询-用户动作日志（提前设置用户口令）
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	public IOperationResult<IUserActionLog> fetchUserActionLog(ICriteria criteria) {
+		return new OperationResult<IUserActionLog>(this.fetchUserActionLog(criteria, this.getUserToken()));
+	}
+
+	/**
+	 * 保存-用户动作日志
+	 * @param bo 对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	public OperationResult<UserActionLog> saveUserActionLog(UserActionLog bo, String token) {
+		return super.save(bo, token);
+	}
+
+	/**
+	 * 保存-用户动作日志（提前设置用户口令）
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	public IOperationResult<IUserActionLog> saveUserActionLog(IUserActionLog bo) {
+		return new OperationResult<IUserActionLog>(this.saveUserActionLog((UserActionLog) bo, this.getUserToken()));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

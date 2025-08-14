@@ -146,7 +146,7 @@ namespace initialfantasy {
                 showBusinessObject(bo: ibas.IBusinessObject): void {
                     let title: any = this.headerBar.getContentLeft()[0];
                     if (title instanceof sap.m.Title) {
-                        title.setText(ibas.i18n.prop("documents_bo_title", ibas.businessobjects.describe(bo.toString())));
+                        title.setText(ibas.businessobjects.describe(bo.toString()));
                     }
                 }
 

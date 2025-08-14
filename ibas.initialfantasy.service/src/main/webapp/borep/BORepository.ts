@@ -324,6 +324,20 @@ namespace initialfantasy {
             saveRefunction(saver: ibas.ISaveCaller<bo.Refunction>): void {
                 super.save(bo.Refunction.name, saver);
             }
+            /**
+             * 查询 用户动作日志
+             * @param fetcher 查询者
+             */
+            fetchUserActionLog(fetcher: ibas.IFetchCaller<bo.UserActionLog>): void {
+                super.fetch(bo.UserActionLog.name, fetcher);
+            }
+            /**
+             * 保存 用户动作日志
+             * @param saver 保存者
+             */
+            saveUserActionLog(saver: ibas.ISaveCaller<bo.UserActionLog>): void {
+                super.save(bo.UserActionLog.name, saver);
+            }
         }
     }
 }

@@ -494,6 +494,33 @@
         "bo_refunction_closing_delimiter": "----End----"
     },
     {
+        "bo_useractionlog": "User Action Log",
+        "bo_useractionlog_objectkey": "Object Key",
+        "bo_useractionlog_objectcode": "Object Type",
+        "bo_useractionlog_createdate": "Create Date",
+        "bo_useractionlog_createtime": "Create Time",
+        "bo_useractionlog_updatedate": "Update Date",
+        "bo_useractionlog_updatetime": "Update Time",
+        "bo_useractionlog_loginst": "Instance Number (Version)",
+        "bo_useractionlog_series": "Service Series",
+        "bo_useractionlog_datasource": "Data Source",
+        "bo_useractionlog_createusersign": "Create User",
+        "bo_useractionlog_updateusersign": "Update User",
+        "bo_useractionlog_createactionid": "Create Action ID",
+        "bo_useractionlog_updateactionid": "Update Action ID",
+        "bo_useractionlog_remarks": "Remarks",
+        "bo_useractionlog_dataowner": "Data Owner",
+        "bo_useractionlog_action": "Action",
+        "bo_useractionlog_userid": "User Id",
+        "bo_useractionlog_username": "User Name",
+        "bo_useractionlog_startdate": "Start Date",
+        "bo_useractionlog_starttime": "Start Time",
+        "bo_useractionlog_enddate": "End Date",
+        "bo_useractionlog_endtime": "End Time",
+        "bo_useractionlog_content": "Content",
+        "bo_useractionlog_closing_delimiter": "----End----"
+    },
+    {
         "em_assignedtype_user": "User",
         "em_assignedtype_role": "Role (Organization)",
         "em_assignedtype_all": "All"

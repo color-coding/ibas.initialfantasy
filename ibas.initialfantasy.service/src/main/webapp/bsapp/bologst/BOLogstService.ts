@@ -53,6 +53,9 @@ namespace initialfantasy {
                     sort = criteria.sorts.create();
                     sort.alias = bo.BOLogst.PROPERTY_MODIFYTIME_NAME;
                     sort.sortType = ibas.emSortType.DESCENDING;
+                    sort = criteria.sorts.create();
+                    sort.alias = bo.BOLogst.PROPERTY_LOGINST_NAME;
+                    sort.sortType = ibas.emSortType.DESCENDING;
                     let that: this = this;
                     let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                     boRepository.fetchBOLogst({

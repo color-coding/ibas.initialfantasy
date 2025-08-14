@@ -8,6 +8,11 @@
 namespace initialfantasy {
     export namespace ui {
         export namespace c {
+            class DataConverter extends ibas.DataConverter4j {
+                createConverter(): ibas.IBOConverter<ibas.IBusinessObject, any> {
+                    return null;
+                }
+            }
             /**
              * 视图-用户配置
              */
@@ -60,7 +65,7 @@ namespace initialfantasy {
                                         alignContent: sap.m.FlexAlignContent.Stretch,
                                         alignItems: sap.m.FlexAlignItems.Start,
                                         items: [
-                                            new sap.m.Avatar("", {
+                                            this.avatar = new sap.m.Avatar("", {
                                                 displayShape: sap.m.AvatarShape.Square,
                                                 src: {
                                                     path: "/image",
@@ -143,10 +148,33 @@ namespace initialfantasy {
                     }).addStyleClass("sapUiNoContentPadding");
                 }
                 private form: sap.m.ResponsivePopover;
+                private avatar: sap.m.Avatar;
                 /** 显示用户信息 */
                 showUser(user: bo.User): void {
                     if (!ibas.objects.isNull(this.form)) {
                         this.form.setModel(new sap.extension.model.JSONModel(user));
+                        if (user.super === ibas.emYesNo.YES) {
+                            let that: this = this;
+                            this.avatar.attachPress(undefined, function (): void {
+                                let boRepository: ibas.BORepositoryAjax = new ibas.BORepositoryAjax();
+                                boRepository.converter = new DataConverter();
+                                boRepository.address = new bo.BORepositoryInitialFantasy().address;
+                                if (!ibas.strings.isWith(boRepository.address, undefined, "/")) {
+                                    boRepository.address = boRepository.address + "/";
+                                }
+                                boRepository.address = boRepository.address.replace("/services/rest/data/", "/services/rest/monitor/");
+                                boRepository.token = new bo.BORepositoryInitialFantasy().token;
+                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+
+                                boRepository.callRemoteMethod("diagnose", undefined, (opRslt) => {
+                                    if (opRslt.resultCode === 0) {
+                                        that.application.viewShower.proceeding(this, ibas.emMessageType.SUCCESS, opRslt.message);
+                                    } else {
+                                        that.application.viewShower.proceeding(this, ibas.emMessageType.ERROR, opRslt.message);
+                                    }
+                                });
+                            });
+                        }
                     }
                 }
             }

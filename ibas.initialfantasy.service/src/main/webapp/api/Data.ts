@@ -77,6 +77,8 @@ namespace initialfantasy {
         export const BO_CODE_BORELATIONSHIP: string = "${Company}_SYS_BORELATIONSHIP";
         /** 业务对象编码-重组功能 */
         export const BO_CODE_REFUNCTION: string = "${Company}_SYS_REFUNCTION";
+        /** 业务对象编码-用户动作日志 */
+        export const BO_CODE_USERACTIONLOG: string = "${Company}_SYS_USERACTLOG";
 
         /**
          * 分配类型
@@ -172,6 +174,54 @@ namespace initialfantasy {
             AND,
             /** 或者 */
             OR
+        }
+        export namespace emums {
+            export namespace conditions {
+                export namespace operation {
+                    export function valueOf(value: ibas.emConditionOperation): emConditionOperation {
+                        switch (value) {
+                            case ibas.emConditionOperation.EQUAL:
+                                return emConditionOperation.EQUAL;
+                            case ibas.emConditionOperation.GRATER_THAN:
+                                return emConditionOperation.GRATER_THAN;
+                            case ibas.emConditionOperation.LESS_THAN:
+                                return emConditionOperation.LESS_THAN;
+                            case ibas.emConditionOperation.GRATER_EQUAL:
+                                return emConditionOperation.GRATER_EQUAL;
+                            case ibas.emConditionOperation.LESS_EQUAL:
+                                return emConditionOperation.LESS_EQUAL;
+                            case ibas.emConditionOperation.NOT_EQUAL:
+                                return emConditionOperation.NOT_EQUAL;
+                            case ibas.emConditionOperation.CONTAIN:
+                                return emConditionOperation.CONTAIN;
+                            case ibas.emConditionOperation.NOT_CONTAIN:
+                                return emConditionOperation.NOT_CONTAIN;
+                            case ibas.emConditionOperation.START:
+                                return emConditionOperation.BEGIN_WITH;
+                            case ibas.emConditionOperation.END:
+                                return emConditionOperation.END_WITH;
+                            case ibas.emConditionOperation.IS_NULL:
+                                return emConditionOperation.EQUAL;
+                            case ibas.emConditionOperation.NOT_NULL:
+                                return emConditionOperation.NOT_EQUAL;
+                            default:
+                                return emConditionOperation.EQUAL;
+                        }
+                    }
+                }
+                export namespace relationship {
+                    export function valueOf(value: ibas.emConditionRelationship): emConditionRelationship {
+                        switch (value) {
+                            case ibas.emConditionRelationship.AND:
+                                return emConditionRelationship.AND;
+                            case ibas.emConditionRelationship.OR:
+                                return emConditionRelationship.OR;
+                            default:
+                                return emConditionRelationship.NONE;
+                        }
+                    }
+                }
+            }
         }
         export enum emSearchedValue {
             /** 默认值 */

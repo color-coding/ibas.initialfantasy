@@ -32,4 +32,29 @@
     <Property Name="Remarks" Description="备注" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Remarks"/>
   </Model>
   <BusinessObject MappedModel="User" ShortName="${Company}_SYS_USER"/>
+  <Model Name="UserActionLog" Description="用户动作日志" ModelType="Simple" Mapped="${Company}_SYS_USERACTLOG">
+    <Property Name="ObjectKey" Description="对象编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="ObjectKey" PrimaryKey="Yes"/>
+    <Property Name="ObjectCode" Description="对象类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="ObjectCode"/>
+    <Property Name="LogInst" Description="实例号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="LogInst"/>
+    <Property Name="Series" Description="服务系列" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Series"/>
+    <Property Name="DataSource" Description="数据源" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="DataSource"/>
+    <Property Name="CreateDate" Description="创建日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="CreateDate"/>
+    <Property Name="CreateTime" Description="创建时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="CreateTime"/>
+    <Property Name="UpdateDate" Description="更新日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="UpdateDate"/>
+    <Property Name="UpdateTime" Description="更新时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="UpdateTime"/>
+    <Property Name="CreateUserSign" Description="创建用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Creator"/>
+    <Property Name="UpdateUserSign" Description="更新用户" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="Updator"/>
+    <Property Name="CreateActionId" Description="创建动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="CreateActId"/>
+    <Property Name="UpdateActionId" Description="更新动作标识" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="UpdateActId"/>
+    <Property Name="DataOwner" Description="数据所有者" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DataOwner"/>
+    <Property Name="Action" Description="动作" DataType="Alphanumeric" DataSubType="Default" EditSize="36" Mapped="Action"/>
+    <Property Name="UserId" Description="用户编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="UserId"/>
+    <Property Name="UserName" Description="用户名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="UserName"/>
+    <Property Name="StartDate" Description="开始日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="StartDate"/>
+    <Property Name="StartTime" Description="开始时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="StartTime"/>
+    <Property Name="EndDate" Description="结束日期" DataType="Date" DataSubType="Default" EditSize="8" Mapped="EndDate"/>
+    <Property Name="EndTime" Description="结束时间" DataType="Date" DataSubType="Time" EditSize="8" Mapped="EndTime"/>
+    <Property Name="Content" Description="内容" DataType="Memo" DataSubType="Default" EditSize="8" Mapped="Content"/>
+  </Model>
+  <BusinessObject MappedModel="UserActionLog" ShortName="${Company}_SYS_USERACTLOG"/>
 </Domain>

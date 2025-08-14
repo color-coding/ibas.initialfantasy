@@ -494,6 +494,32 @@
         "bo_refunction_closing_delimiter": "----结束----"
     },
     {
+        "bo_useractionlog": "用户动作日志",
+        "bo_useractionlog_objectkey": "对象编号",
+        "bo_useractionlog_objectcode": "对象类型",
+        "bo_useractionlog_loginst": "实例号",
+        "bo_useractionlog_series": "服务系列",
+        "bo_useractionlog_datasource": "数据源",
+        "bo_useractionlog_createdate": "创建日期",
+        "bo_useractionlog_createtime": "创建时间",
+        "bo_useractionlog_updatedate": "更新日期",
+        "bo_useractionlog_updatetime": "更新时间",
+        "bo_useractionlog_createusersign": "创建用户",
+        "bo_useractionlog_updateusersign": "更新用户",
+        "bo_useractionlog_createactionid": "创建动作标识",
+        "bo_useractionlog_updateactionid": "更新动作标识",
+        "bo_useractionlog_dataowner": "数据所有者",
+        "bo_useractionlog_action": "动作",
+        "bo_useractionlog_userid": "用户编号",
+        "bo_useractionlog_username": "用户名称",
+        "bo_useractionlog_startdate": "开始日期",
+        "bo_useractionlog_starttime": "开始时间",
+        "bo_useractionlog_enddate": "结束日期",
+        "bo_useractionlog_endtime": "结束时间",
+        "bo_useractionlog_content": "内容",
+        "bo_useractionlog_closing_delimiter": "----结束----"
+    },
+    {
         "em_assignedtype_user": "用户",
         "em_assignedtype_role": "角色（组织）",
         "em_assignedtype_all": "全部"

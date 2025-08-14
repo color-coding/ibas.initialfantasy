@@ -826,6 +826,21 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	@Override
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> saveUser(
 			org.colorcoding.ibas.initialfantasy.bo.organization.User bo, String token) {
+		// 仅超级用户才可以修改超级用户
+		if (bo.getSuper() == emYesNo.YES) {
+			Object opUser = OrganizationFactory.create().createManager().getUser(token);
+			if (opUser instanceof User) {
+				User user = (User) opUser;
+				if (user.isSuper() == false) {
+					opUser = null;
+				}
+			} else {
+				opUser = null;
+			}
+			if (opUser == null) {
+				return new OperationResult<>(new Exception(I18N.prop("msg_if_not_allowed_modify_this_user")));
+			}
+		}
 		// 更新时，恢复密码
 		if (!bo.isDeleted()) {
 			if (!bo.isNew() && org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK

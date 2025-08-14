@@ -271,7 +271,7 @@ namespace initialfantasy {
 
                 private onlyCheck: sap.m.CheckBox;
                 private ignoreSystem: sap.m.CheckBox;
-                private systemProperties: string = "LogInst,ObjectCode,Series,DataSource,CreateActionId,UpdateActionId,Referenced,VisOrder,UpdateDate,UpdateTime,";
+                private systemProperties: string = "LogInst,ObjectCode,Series,DataSource,CreateActionId,UpdateActionId,Referenced,VisOrder,UpdateDate,UpdateTime,UpdateUserSign,CreateDate,CreateTime,CreateUserSign,";
 
                 private markDifferent(panel: any, count: number): void {
                     let ignoreSystem: boolean = this.ignoreSystem.getSelected();
@@ -279,11 +279,12 @@ namespace initialfantasy {
                     if (panel instanceof sap.m.Panel) {
                         for (let pItem of panel.getContent()) {
                             if (pItem instanceof sap.m.List) {
+                                let group: string;
                                 for (let lItem of pItem.getItems()) {
                                     if (lItem instanceof sap.m.StandardListItem) {
                                         let same: boolean = true;
                                         let value: any = lItem.getInfo();
-                                        let group: string = lItem.getId();
+                                        group = lItem.getId();
                                         if (group.lastIndexOf("__item") > 0) {
                                             // __item245-0-__item297-0-1; __item192-0
                                             // __item245-1-__item297-1-1; __item192-1
@@ -316,6 +317,8 @@ namespace initialfantasy {
                                                 if (tmpItem.getInfo() !== value) {
                                                     same = false;
                                                 }
+                                            } else if (ibas.objects.isNull(tmpItem)) {
+                                                same = false;
                                             }
                                         }
                                         if (same === false) {
@@ -359,22 +362,25 @@ namespace initialfantasy {
                                         }
                                     }
                                 }
-                                /*
-                                let group: string = pItem.getId();
-                                if (group.indexOf("__list") >= 0) {
-                                    group = group.substring(0, group.indexOf("-")) + "-{0}";
-                                    for (let index: number = 1; index < count; index++) {
+                                if (!ibas.strings.isEmpty(group)) {
+                                    for (let index: number = 0; index < count; index++) {
                                         let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                        if (tmpItem instanceof sap.m.List) {
-                                            if (tmpItem.getItems().find(c => c.getVisible() === true)) {
-                                                tmpItem.setVisible(true);
-                                            } else {
-                                                tmpItem.setVisible(false);
+                                        // 没有显示的项目，则隐藏
+                                        if (tmpItem instanceof sap.m.StandardListItem) {
+                                            let parent: any = tmpItem.getParent();
+                                            if (parent instanceof sap.m.List) {
+                                                if (parent.getItems().find(
+                                                    c => c.getVisible()
+                                                        && (c instanceof sap.m.StandardListItem || (c instanceof sap.m.CustomListItem && c.getContent()?.length > 0))
+                                                ) === undefined) {
+                                                    (<sap.m.Panel>parent.getParent()).setVisible(false);
+                                                } else {
+                                                    (<sap.m.Panel>parent.getParent()).setVisible(true);
+                                                }
                                             }
                                         }
                                     }
                                 }
-                                */
                             }
                         }
                     }
@@ -392,28 +398,28 @@ namespace initialfantasy {
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_bologst_modify_content"),
-                                width: "10rem",
-                                hAlign: sap.ui.core.TextAlign.Center,
+                                width: "30%",
+                                hAlign: sap.ui.core.TextAlign.Left,
                             }),
                             new sap.extension.m.Column("", {
+                                width: "30%",
                                 header: ibas.i18n.prop("bo_bologst_before_modified"),
-                                width: "100%",
                                 hAlign: sap.ui.core.TextAlign.Center,
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_bologst_after_modified"),
-                                width: "100%",
+                                width: "40%",
                                 hAlign: sap.ui.core.TextAlign.Center,
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_bologst_modifyuser"),
                                 width: "8rem",
-                                hAlign: sap.ui.core.TextAlign.Center,
+                                hAlign: sap.ui.core.TextAlign.Left,
                             }),
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_bologst_modifytime"),
                                 width: "8rem",
-                                hAlign: sap.ui.core.TextAlign.Center,
+                                hAlign: sap.ui.core.TextAlign.Left,
                             }),
                         ],
                         items: {
@@ -516,9 +522,30 @@ namespace initialfantasy {
                                                 if (tmpItem.getInfo() !== value) {
                                                     same = false;
                                                 }
+                                            } else if (ibas.objects.isNull(tmpItem)) {
+                                                same = false;
                                             }
                                         }
                                         if (same === false) {
+                                            let modifyContent: (tmpItem: sap.m.StandardListItem) => string = (tmpItem) => {
+                                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                let parent: any = tmpItem.getParent()?.getParent();
+                                                if (parent instanceof sap.m.Panel) {
+                                                    for (let item of panel.getHeaderToolbar().getContent()) {
+                                                        if (item instanceof sap.m.Label) {
+                                                            if (builder.length > 0) {
+                                                                builder.append(" - ");
+                                                            }
+                                                            builder.append(item.getText());
+                                                        }
+                                                    }
+                                                }
+                                                if (builder.length > 0) {
+                                                    builder.append(" - ");
+                                                }
+                                                builder.append(tmpItem.getTitle());
+                                                return builder.toString();
+                                            };
                                             let summary: LogInstSummary = null;
                                             for (let index: number = 0; index < count; index++) {
                                                 let data: any = (<any>this.splitter.getContentAreas()[index].getModel()).getData();
@@ -534,7 +561,7 @@ namespace initialfantasy {
                                                         summary.modifyDate = data.UpdateDate;
                                                         summary.modifyTime = data.UpdateTime;
                                                         summary.modifyUser = data.UpdateUserSign;
-                                                        summary.modifyContent = tmpItem.getTitle();
+                                                        summary.modifyContent = modifyContent(tmpItem);
                                                         summary.afterModified = tmpItem.getInfo();
 
                                                         summaries.add(summary);
@@ -549,7 +576,7 @@ namespace initialfantasy {
                                                             nSummary.modifyDate = data.UpdateDate;
                                                             nSummary.modifyTime = data.UpdateTime;
                                                             nSummary.modifyUser = data.UpdateUserSign;
-                                                            nSummary.modifyContent = tmpItem.getTitle();
+                                                            nSummary.modifyContent = modifyContent(tmpItem);
                                                             nSummary.afterModified = tmpItem.getInfo();
 
                                                             summaries.add(nSummary);
