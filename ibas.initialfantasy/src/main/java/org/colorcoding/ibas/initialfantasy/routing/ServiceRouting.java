@@ -166,8 +166,7 @@ public class ServiceRouting {
 				routing.getServices().add(information);
 				this.save(routing);
 			}
-			this.setRuntime(String
-					.valueOf((DateTime.getNow().getTime() - (file.exists() ? file.lastModified() : 0)) / 1000 / 60));
+			this.setRuntime(String.valueOf(DateTime.getNow().getTime() / 1000));
 			this.load();
 		} catch (Exception e) {
 			Logger.log(e);
