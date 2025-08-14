@@ -243,6 +243,7 @@ namespace initialfantasy {
                                                     }),
                                                 ],
                                                 sortProperty: "visOrder",
+                                                sortIntervalStep: 1,
                                             }),
                                         ]
                                     }),

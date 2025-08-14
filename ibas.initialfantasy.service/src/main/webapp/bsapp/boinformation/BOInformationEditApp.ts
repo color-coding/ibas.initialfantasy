@@ -304,7 +304,7 @@ namespace initialfantasy {
                             onCompleted(result: ibas.ICriteria): void {
                                 // 设置选择属性
                                 if (selected.objectType === "MasterData") {
-                                    result.businessObject = ibas.strings.format("{0}.Code", result.businessObject);
+                                    result.businessObject = ibas.strings.format("{0}.Code:Name", result.businessObject);
                                 } else if (selected.objectType === "Simple") {
                                     result.businessObject = ibas.strings.format("{0}.ObjectKey", result.businessObject);
                                 } else if (selected.objectType === "Document") {
