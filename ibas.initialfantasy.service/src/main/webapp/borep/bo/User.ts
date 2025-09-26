@@ -138,6 +138,17 @@ namespace initialfantasy {
                 this.setProperty(User.PROPERTY_LASTPWDSETDATE_NAME, value);
             }
 
+            /** 映射的属性名称-已锁定 */
+            static PROPERTY_LOCKED_NAME: string = "Locked";
+            /** 获取-已锁定 */
+            get locked(): ibas.emYesNo {
+                return this.getProperty<ibas.emYesNo>(User.PROPERTY_LOCKED_NAME);
+            }
+            /** 设置-已锁定 */
+            set locked(value: ibas.emYesNo) {
+                this.setProperty(User.PROPERTY_LOCKED_NAME, value);
+            }
+
             /** 映射的属性名称-对象编号 */
             static PROPERTY_DOCENTRY_NAME: string = "DocEntry";
             /** 获取-对象编号 */

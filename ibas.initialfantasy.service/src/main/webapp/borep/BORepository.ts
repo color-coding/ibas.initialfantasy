@@ -189,6 +189,32 @@ namespace initialfantasy {
                 super.fetch(bo.BOInformation.name, fetcher);
             }
             /**
+             * 查询 业务对象信息
+             * @param fetcher 查询者
+             */
+            fetchBOPropertyInformation(fetcher: ibas.IFetchCaller<bo.BOPropertyInformation>): void {
+                let criteria: ibas.Criteria = new ibas.Criteria();
+                let cCriteria: ibas.IChildCriteria = criteria.childCriterias.create();
+                cCriteria.propertyPath = bo.BOInformation.PROPERTY_BOPROPERTYINFORMATIONS_NAME;
+                cCriteria.onlyHasChilds = true;
+                cCriteria.conditions.add(fetcher.criteria instanceof Array ? fetcher.criteria : fetcher.criteria.conditions);
+
+                super.fetch<bo.BOInformation>(bo.BOInformation.name, {
+                    criteria: criteria,
+                    onCompleted: (opRslt) => {
+                        if (opRslt.resultCode !== 0) {
+                            fetcher.onCompleted(<any>opRslt);
+                        } else {
+                            let results: ibas.ArrayList<any> = new ibas.ArrayList<any>();
+                            for (let item of opRslt.resultObjects) {
+                                results.add(item.boPropertyInformations);
+                            }
+                            fetcher.onCompleted(new ibas.OperationResult<any>().addResults(results));
+                        }
+                    }
+                });
+            }
+            /**
              * 保存 业务对象信息
              * @param saver 保存者
              */

@@ -80,6 +80,21 @@ namespace initialfantasy {
                                 path: "activated",
                                 type: new sap.extension.data.YesNo()
                             }),
+                            new sap.extension.m.CheckBox("", {
+                                text: ibas.i18n.prop("bo_user_locked"),
+                                editable: {
+                                    path: "locked",
+                                    formatter(data: any): boolean {
+                                        if (data === ibas.emYesNo.YES) {
+                                            return ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_SUPER) === true ? true : false;
+                                        }
+                                        return false;
+                                    }
+                                }
+                            }).bindProperty("bindingValue", {
+                                path: "locked",
+                                type: new sap.extension.data.YesNo()
+                            }),
                             new sap.m.Label("", { text: ibas.i18n.prop("bo_user_validdate") }),
                             new sap.extension.m.DatePicker("", {
                             }).bindProperty("bindingValue", {

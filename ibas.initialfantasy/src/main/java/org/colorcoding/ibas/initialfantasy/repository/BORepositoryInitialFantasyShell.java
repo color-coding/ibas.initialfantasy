@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -67,6 +66,47 @@ import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
 public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy implements IBORepositoryShell {
 
 	private static Map<String, long[]> USER_LOGIN_LOG;
+
+	private static class ConcurrentHashMap<K, V> extends java.util.concurrent.ConcurrentHashMap<K, V> {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public boolean containsKey(Object key) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.containsKey(key);
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public V get(Object key) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.get(key);
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public V put(K key, V value) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.put(key, value);
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public V remove(Object key) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.remove(key);
+		}
+	}
 
 	static {
 		USER_LOGIN_LOG = new ConcurrentHashMap<>();
@@ -204,7 +244,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 						}
 					}
 					if (done == true) {
-						throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", user));
+						throw new Exception(I18N.prop("msg_if_user_was_locked", user));
 					}
 				}
 			}
@@ -824,21 +864,55 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	}
 
 	@Override
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> fetchUser(ICriteria criteria,
+			String token) {
+		OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> operationResult = super.fetchUser(
+				criteria, token);
+		boolean done;
+		long[] timeTags;
+		for (org.colorcoding.ibas.initialfantasy.bo.organization.User item : operationResult.getResultObjects()) {
+			if (!USER_LOGIN_LOG.containsKey(item.getCode())) {
+				continue;
+			}
+			timeTags = USER_LOGIN_LOG.get(item.getCode());
+			if (timeTags == null) {
+				continue;
+			}
+			done = true;
+			for (long l : timeTags) {
+				if (l == 0) {
+					done = false;
+					break;
+				}
+			}
+			item.setLocked(done ? emYesNo.YES : emYesNo.NO);
+		}
+		return operationResult;
+	}
+
+	@Override
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> saveUser(
 			org.colorcoding.ibas.initialfantasy.bo.organization.User bo, String token) {
-		// 仅超级用户才可以修改超级用户
-		if (bo.getSuper() == emYesNo.YES) {
-			Object opUser = OrganizationFactory.create().createManager().getUser(token);
-			if (opUser instanceof User) {
-				User user = (User) opUser;
-				if (user.isSuper() == false) {
-					opUser = null;
-				}
-			} else {
+		// 当前用户是否为超级用户
+		Object opUser = OrganizationFactory.create().createManager().getUser(token);
+		if (opUser instanceof User) {
+			User user = (User) opUser;
+			if (user.isSuper() == false) {
 				opUser = null;
 			}
+		} else {
+			opUser = null;
+		}
+		// 仅超级用户才可以修改超级用户
+		if (bo.getSuper() == emYesNo.YES) {
 			if (opUser == null) {
 				return new OperationResult<>(new Exception(I18N.prop("msg_if_not_allowed_modify_this_user")));
+			}
+		}
+		// 仅超级用户可以解除锁定
+		if (bo.getLocked() != emYesNo.YES && USER_LOGIN_LOG.containsKey(bo.getCode())) {
+			if (opUser != null) {
+				USER_LOGIN_LOG.remove(bo.getCode());
 			}
 		}
 		// 更新时，恢复密码

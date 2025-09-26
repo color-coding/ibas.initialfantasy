@@ -98,6 +98,14 @@ namespace initialfantasy {
                                         type: new sap.extension.data.YesNo(),
                                     }
                                 }),
+                                new sap.extension.m.ObjectYesNoStatus("", {
+                                    title: ibas.i18n.prop("bo_user_locked"),
+                                    enumValue: {
+                                        path: "locked",
+                                        type: new sap.extension.data.YesNo(),
+                                    },
+                                    negative: true,
+                                }),
                             ]
                         }),
                         headerContent: [
