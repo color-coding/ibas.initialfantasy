@@ -128,6 +128,9 @@ namespace initialfantasy {
         /** 业务对象属性信息 */
         export class BOPropertyInformation extends ibas.BusinessObject<BOPropertyInformation> implements IBOPropertyInformation {
 
+            /** 业务对象编码 */
+            static BUSINESS_OBJECT_CODE: string = BO_CODE_BOPROPERTY;
+
             /** 构造函数 */
             constructor() {
                 super();

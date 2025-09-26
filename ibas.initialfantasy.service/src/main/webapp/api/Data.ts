@@ -208,6 +208,36 @@ namespace initialfantasy {
                                 return emConditionOperation.EQUAL;
                         }
                     }
+                    export function toValue(value: emConditionOperation): ibas.emConditionOperation {
+                        switch (value) {
+                            case emConditionOperation.EQUAL:
+                                return ibas.emConditionOperation.EQUAL;
+                            case emConditionOperation.GRATER_THAN:
+                                return ibas.emConditionOperation.GRATER_THAN;
+                            case emConditionOperation.LESS_THAN:
+                                return ibas.emConditionOperation.LESS_THAN;
+                            case emConditionOperation.GRATER_EQUAL:
+                                return ibas.emConditionOperation.GRATER_EQUAL;
+                            case emConditionOperation.LESS_EQUAL:
+                                return ibas.emConditionOperation.LESS_EQUAL;
+                            case emConditionOperation.NOT_EQUAL:
+                                return ibas.emConditionOperation.NOT_EQUAL;
+                            case emConditionOperation.CONTAIN:
+                                return ibas.emConditionOperation.CONTAIN;
+                            case emConditionOperation.NOT_CONTAIN:
+                                return ibas.emConditionOperation.NOT_CONTAIN;
+                            case emConditionOperation.BEGIN_WITH:
+                                return ibas.emConditionOperation.START;
+                            case emConditionOperation.END_WITH:
+                                return ibas.emConditionOperation.END;
+                            case emConditionOperation.EQUAL:
+                                return ibas.emConditionOperation.IS_NULL;
+                            case emConditionOperation.NOT_EQUAL:
+                                return ibas.emConditionOperation.NOT_NULL;
+                            default:
+                                return ibas.emConditionOperation.EQUAL;
+                        }
+                    }
                 }
                 export namespace relationship {
                     export function valueOf(value: ibas.emConditionRelationship): emConditionRelationship {
