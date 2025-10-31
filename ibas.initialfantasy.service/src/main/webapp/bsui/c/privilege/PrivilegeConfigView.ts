@@ -317,7 +317,16 @@ namespace initialfantasy {
                                             type: sap.m.ButtonType.Transparent,
                                             icon: "sap-icon://copy",
                                             press: function (): void {
-                                                that.fireViewEvents(that.copyPrivilegesEvent);
+                                                that.fireViewEvents(that.copyPrivilegesEvent, "FROM");
+                                            },
+                                        }),
+                                        new sap.m.ToolbarSeparator(""),
+                                        new sap.m.Button("", {
+                                            text: ibas.i18n.prop("initialfantasy_copy_to"),
+                                            type: sap.m.ButtonType.Transparent,
+                                            icon: "sap-icon://documents",
+                                            press: function (): void {
+                                                that.fireViewEvents(that.copyPrivilegesEvent, "TO");
                                             },
                                         }),
                                         new sap.m.ToolbarSeparator(""),

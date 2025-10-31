@@ -31,12 +31,27 @@ namespace initialfantasy {
                         floatingFooter: true,
                         footer: new sap.m.Toolbar("", {
                             content: [
-                                new sap.m.ToolbarSpacer(""),
+                                this.ignoreSystem = new sap.m.CheckBox("", {
+                                    selected: true,
+                                    text: ibas.i18n.prop("initialfantasy_ignore_system_content"),
+                                    select: function (): void {
+                                        that.markDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", that.template.getId(), 0)), that.splitter.getContentAreas().length);
+                                    }
+                                }),
                                 this.onlyCheck = new sap.m.CheckBox("", {
                                     selected: true,
                                     text: ibas.i18n.prop("initialfantasy_only_modified_content"),
                                     select: function (): void {
                                         that.markDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", that.template.getId(), 0)), that.splitter.getContentAreas().length);
+                                    }
+                                }),
+                                new sap.m.ToolbarSpacer(""),
+                                new sap.m.Button("", {
+                                    text: ibas.i18n.prop("initialfantasy_display_summary"),
+                                    type: sap.m.ButtonType.Transparent,
+                                    icon: "sap-icon://comment",
+                                    press(): void {
+                                        that.showSummaryDifferent();
                                     }
                                 }),
                             ]
@@ -121,7 +136,7 @@ namespace initialfantasy {
                     let panel: sap.m.Panel = new sap.m.Panel("", {
                         height: "100%",
                         expandable: true,
-                        expanded: root ? true : false,
+                        expanded: true,
                         backgroundDesign: sap.m.BackgroundDesign.Transparent,
                         accessibleRole: sap.m.PanelAccessibleRole.Region,
                         headerToolbar: new sap.m.Toolbar("", {
@@ -162,13 +177,31 @@ namespace initialfantasy {
                                 }).addStyleClass("sapUiSmallMarginEnd")
                             ]
                         }),
+                        expand(event: sap.ui.base.Event): void {
+                            let source: any = event.getSource();
+                            if (source instanceof sap.m.Panel) {
+                                for (let sItem of source.getContent()) {
+                                    if (sItem instanceof sap.m.List) {
+                                        for (let iItem of sItem.getItems()) {
+                                            if (iItem instanceof sap.m.CustomListItem) {
+                                                for (let cItem of iItem.getContent()) {
+                                                    if (cItem instanceof sap.m.Panel) {
+                                                        cItem.setExpanded(source.getExpanded());
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
                         content: [
                             list
                         ]
                     });
                     return panel;
                 }
-                showData(datas: object[]): void {
+                showData(datas: object[], summary?: boolean): void {
                     this.splitter.destroyContentAreas();
                     for (let data of datas) {
                         let view: sap.ui.layout.Splitter = new sap.ui.layout.Splitter("", {
@@ -178,30 +211,37 @@ namespace initialfantasy {
                                     showHeader: false,
                                     subHeader: new sap.m.Toolbar("", {
                                         content: [
-                                            new sap.m.Title("", {
+                                            new sap.m.Label("", {
+                                                text: ibas.i18n.prop("bo_bologst_loginst"),
+                                                showColon: true,
+                                            }).addStyleClass("sapUiTinyMarginStart"),
+                                            new sap.m.Text("", {
                                                 text: {
                                                     path: "/LogInst",
-                                                    formatter(logInst: number): string {
-                                                        if (logInst > 0) {
-                                                            return ibas.strings.format("{0}: {1}", ibas.i18n.prop("bo_bologst_loginst"), logInst);
-                                                        }
-                                                        return "";
-                                                    }
-                                                }
-                                            }).addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd"),
-                                            new sap.m.Label("", {
-                                                text: {
-                                                    path: "/UpdateDate",
-                                                    type: new sap.extension.data.Date(),
-                                                }
-                                            }),
-                                            new sap.m.Label("", {
-                                                text: {
-                                                    path: "/UpdateTime",
-                                                    type: new sap.extension.data.Time(),
-                                                }
-                                            }),
+                                                },
+                                            }).addStyleClass("sapUiTinyMarginEnd"),
                                             new sap.m.ToolbarSpacer(),
+                                            new sap.m.Label("", {
+                                                text: ibas.i18n.prop("bo_bologst_modifytime"),
+                                                showColon: true,
+                                            }).addStyleClass("sapUiTinyMarginStart"),
+                                            new sap.m.Text("", {
+                                                text: {
+                                                    parts: [
+                                                        {
+                                                            path: "/UpdateDate",
+                                                            type: new sap.extension.data.Date(),
+                                                        }, {
+                                                            path: "/UpdateTime",
+                                                            type: new sap.extension.data.Time(),
+                                                        }
+                                                    ]
+                                                },
+                                            }).addStyleClass("sapUiTinyMarginEnd"),
+                                            new sap.m.Label("", {
+                                                text: ibas.i18n.prop("bo_bologst_modifyuser"),
+                                                showColon: true,
+                                            }).addStyleClass("sapUiTinyMarginStart"),
                                             new sap.extension.m.UserText("", {
                                                 bindingValue: {
                                                     path: "/UpdateUserSign",
@@ -219,15 +259,229 @@ namespace initialfantasy {
                         });
                         view.setModel(new sap.extension.model.JSONModel(data));
                         this.splitter.addContentArea(view);
-                        setTimeout(() => {
-                            this.markDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", this.template.getId(), 0)), datas.length);
-                        }, 600);
                     }
+                    setTimeout(() => {
+                        if (summary === true) {
+                            this.showSummaryDifferent();
+                        } else {
+                            this.markDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", this.template.getId(), 0)), datas.length);
+                        }
+                    }, 600);
                 }
 
                 private onlyCheck: sap.m.CheckBox;
+                private ignoreSystem: sap.m.CheckBox;
+                private systemProperties: string = "LogInst,ObjectCode,Series,DataSource,CreateActionId,UpdateActionId,Referenced,VisOrder,UpdateDate,UpdateTime,UpdateUserSign,CreateDate,CreateTime,CreateUserSign,";
 
                 private markDifferent(panel: any, count: number): void {
+                    let ignoreSystem: boolean = this.ignoreSystem.getSelected();
+                    let onlyCheck: boolean = this.onlyCheck.getSelected();
+                    if (panel instanceof sap.m.Panel) {
+                        for (let pItem of panel.getContent()) {
+                            if (pItem instanceof sap.m.List) {
+                                let group: string;
+                                for (let lItem of pItem.getItems()) {
+                                    if (lItem instanceof sap.m.StandardListItem) {
+                                        let same: boolean = true;
+                                        let value: any = lItem.getInfo();
+                                        group = lItem.getId();
+                                        if (group.lastIndexOf("__item") > 0) {
+                                            // __item245-0-__item297-0-1; __item192-0
+                                            // __item245-1-__item297-1-1; __item192-1
+                                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                            builder.map(null, "");
+                                            builder.map(undefined, "");
+                                            for (let sItem of group.split("__")) {
+                                                if (ibas.strings.isEmpty(sItem)) {
+                                                    continue;
+                                                }
+                                                builder.append("__");
+                                                let index: number = sItem.indexOf("-");
+                                                if (index > 0) {
+                                                    let temp: string = sItem.substring(0, index) + "-{0}";
+                                                    if (sItem.indexOf("-", index + 1) > 0) {
+                                                        temp += sItem.substring(sItem.indexOf("-", index + 1));
+                                                    }
+                                                    builder.append(temp);
+                                                } else {
+                                                    builder.append(sItem);
+                                                }
+                                            }
+                                            group = builder.toString();
+                                        } else {
+                                            group = group.substring(0, group.lastIndexOf("-")) + "-{0}";
+                                        }
+                                        for (let index: number = 1; index < count; index++) {
+                                            let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                            if (tmpItem instanceof sap.m.StandardListItem) {
+                                                if (tmpItem.getInfo() !== value) {
+                                                    same = false;
+                                                }
+                                            } else if (ibas.objects.isNull(tmpItem)) {
+                                                same = false;
+                                            }
+                                        }
+                                        if (same === false) {
+                                            for (let index: number = 0; index < count; index++) {
+                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                                if (tmpItem instanceof sap.m.StandardListItem) {
+                                                    tmpItem.setHighlight(sap.ui.core.MessageType.Error);
+                                                }
+                                            }
+                                        }
+                                        if (onlyCheck === true) {
+                                            for (let index: number = 0; index < count; index++) {
+                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                                if (tmpItem instanceof sap.m.StandardListItem) {
+                                                    if (ignoreSystem === true
+                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0] + ",") >= 0) {
+                                                        tmpItem.setVisible(false);
+                                                    } else if (same === false) {
+                                                        tmpItem.setVisible(true);
+                                                    } else {
+                                                        tmpItem.setVisible(false);
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            for (let index: number = 0; index < count; index++) {
+                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                                if (tmpItem instanceof sap.m.StandardListItem) {
+                                                    if (ignoreSystem === true
+                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0] + ",") >= 0) {
+                                                        tmpItem.setVisible(false);
+                                                    } else {
+                                                        tmpItem.setVisible(true);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else if (lItem instanceof sap.m.CustomListItem) {
+                                        for (let cItem of lItem.getContent()) {
+                                            this.markDifferent(cItem, count);
+                                        }
+                                    }
+                                }
+                                if (!ibas.strings.isEmpty(group)) {
+                                    for (let index: number = 0; index < count; index++) {
+                                        let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                        // 没有显示的项目，则隐藏
+                                        if (tmpItem instanceof sap.m.StandardListItem) {
+                                            let parent: any = tmpItem.getParent();
+                                            if (parent instanceof sap.m.List) {
+                                                if (parent.getItems().find(
+                                                    c => c.getVisible()
+                                                        && (c instanceof sap.m.StandardListItem || (c instanceof sap.m.CustomListItem && c.getContent()?.length > 0))
+                                                ) === undefined) {
+                                                    (<sap.m.Panel>parent.getParent()).setVisible(false);
+                                                } else {
+                                                    (<sap.m.Panel>parent.getParent()).setVisible(true);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                private showSummaryDifferent(): void {
+                    let content: ibas.ArrayList<any>
+                        = this.summaryDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", this.template.getId(), 0)), this.splitter.getContentAreas().length);
+                    let table: sap.m.Table = new sap.extension.m.Table("", {
+                        autoPopinMode: true,
+                        columns: [
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_bologst_loginst"),
+                                width: "5rem",
+                                hAlign: sap.ui.core.TextAlign.Center,
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_bologst_modify_content"),
+                                width: "30%",
+                                hAlign: sap.ui.core.TextAlign.Left,
+                            }),
+                            new sap.extension.m.Column("", {
+                                width: "30%",
+                                header: ibas.i18n.prop("bo_bologst_before_modified"),
+                                hAlign: sap.ui.core.TextAlign.Center,
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_bologst_after_modified"),
+                                width: "40%",
+                                hAlign: sap.ui.core.TextAlign.Center,
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_bologst_modifyuser"),
+                                width: "8rem",
+                                hAlign: sap.ui.core.TextAlign.Left,
+                            }),
+                            new sap.extension.m.Column("", {
+                                header: ibas.i18n.prop("bo_bologst_modifytime"),
+                                width: "8rem",
+                                hAlign: sap.ui.core.TextAlign.Left,
+                            }),
+                        ],
+                        items: {
+                            path: "/",
+                            template: new sap.extension.m.ColumnListItem("", {
+                                cells: [
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "logInst",
+                                            type: new sap.extension.data.Numeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "modifyContent",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "beforeModified",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "afterModified",
+                                            type: new sap.extension.data.Alphanumeric(),
+                                        }
+                                    }),
+                                    new sap.extension.m.UserObjectAttribute("", {
+                                        bindingValue: {
+                                            path: "modifyUser",
+                                            type: new sap.extension.data.Numeric(),
+                                        },
+                                    }),
+                                    new sap.extension.m.ObjectAttribute("", {
+                                        bindingValue: {
+                                            parts: [
+                                                {
+                                                    path: "modifyDate",
+                                                    type: new sap.extension.data.Date(),
+                                                }, {
+                                                    path: "modifyTime",
+                                                    type: new sap.extension.data.Time(),
+                                                }
+                                            ]
+                                        }
+                                    }),
+                                ]
+                            }),
+                        }
+
+                    });
+                    table.setModel(new sap.extension.model.JSONModel(content));
+                    this.splitter.destroyContentAreas();
+                    this.splitter.addContentArea(table);
+                    (<sap.m.Page>this.splitter.getParent()).setShowFooter(false);
+                }
+                private summaryDifferent(panel: any, count: number): ibas.ArrayList<LogInstSummary> {
+                    let ignoreSystem: boolean = this.ignoreSystem.getSelected();
+                    let summaries: ibas.ArrayList<LogInstSummary> = new ibas.ArrayList<LogInstSummary>();
                     if (panel instanceof sap.m.Panel) {
                         for (let pItem of panel.getContent()) {
                             if (pItem instanceof sap.m.List) {
@@ -268,46 +522,91 @@ namespace initialfantasy {
                                                 if (tmpItem.getInfo() !== value) {
                                                     same = false;
                                                 }
+                                            } else if (ibas.objects.isNull(tmpItem)) {
+                                                same = false;
                                             }
                                         }
                                         if (same === false) {
-                                            for (let index: number = 0; index < count; index++) {
-                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                                if (tmpItem instanceof sap.m.StandardListItem) {
-                                                    tmpItem.setHighlight(sap.ui.core.MessageType.Error);
-                                                }
-                                            }
-                                        }
-                                        if (this.onlyCheck.getSelected() === true) {
-                                            for (let index: number = 0; index < count; index++) {
-                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                                if (tmpItem instanceof sap.m.StandardListItem) {
-                                                    if (same === false) {
-                                                        tmpItem.setVisible(true);
-                                                    } else {
-                                                        tmpItem.setVisible(false);
+                                            let modifyContent: (tmpItem: sap.m.StandardListItem) => string = (tmpItem) => {
+                                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                let parent: any = tmpItem.getParent()?.getParent();
+                                                if (parent instanceof sap.m.Panel) {
+                                                    for (let item of panel.getHeaderToolbar().getContent()) {
+                                                        if (item instanceof sap.m.Label) {
+                                                            if (builder.length > 0) {
+                                                                builder.append(" - ");
+                                                            }
+                                                            builder.append(item.getText());
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        } else {
+                                                if (builder.length > 0) {
+                                                    builder.append(" - ");
+                                                }
+                                                builder.append(tmpItem.getTitle());
+                                                return builder.toString();
+                                            };
+                                            let summary: LogInstSummary = null;
                                             for (let index: number = 0; index < count; index++) {
+                                                let data: any = (<any>this.splitter.getContentAreas()[index].getModel()).getData();
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
                                                 if (tmpItem instanceof sap.m.StandardListItem) {
-                                                    tmpItem.setVisible(true);
+                                                    if (ignoreSystem === true
+                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0] + ",") >= 0) {
+                                                        continue;
+                                                    }
+                                                    if (summary === null) {
+                                                        summary = new LogInstSummary();
+                                                        summary.logInst = data.LogInst;
+                                                        summary.modifyDate = data.UpdateDate;
+                                                        summary.modifyTime = data.UpdateTime;
+                                                        summary.modifyUser = data.UpdateUserSign;
+                                                        summary.modifyContent = modifyContent(tmpItem);
+                                                        summary.afterModified = tmpItem.getInfo();
+
+                                                        summaries.add(summary);
+                                                    } else {
+                                                        summary.beforeModified = tmpItem.getInfo();
+                                                        if (summary.beforeModified === summary.afterModified) {
+                                                            summaries.remove(summary);
+                                                        }
+                                                        if (index < count - 1) {
+                                                            let nSummary: LogInstSummary = new LogInstSummary();
+                                                            nSummary.logInst = data.LogInst;
+                                                            nSummary.modifyDate = data.UpdateDate;
+                                                            nSummary.modifyTime = data.UpdateTime;
+                                                            nSummary.modifyUser = data.UpdateUserSign;
+                                                            nSummary.modifyContent = modifyContent(tmpItem);
+                                                            nSummary.afterModified = tmpItem.getInfo();
+
+                                                            summaries.add(nSummary);
+                                                            summary = nSummary;
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     } else if (lItem instanceof sap.m.CustomListItem) {
                                         for (let cItem of lItem.getContent()) {
-                                            this.markDifferent(cItem, count);
+                                            summaries.add(this.summaryDifferent(cItem, count));
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                    return summaries;
                 }
-
+            }
+            class LogInstSummary {
+                key: string;
+                logInst: number;
+                modifyContent: string;
+                beforeModified: string;
+                afterModified: string;
+                modifyUser: string;
+                modifyTime: string;
+                modifyDate: string;
             }
         }
     }

@@ -32,7 +32,7 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 		return MyConfiguration.getConfigValue(key);
 	}
 
-	private volatile long taskId = 0;
+	private volatile long taskId = -1;
 
 	@Override
 	public synchronized void update() {
@@ -92,7 +92,7 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 					}
 				}
 			}
-			if (this.taskId == 0) {
+			if (this.taskId < 0) {
 				this.taskId = Daemon.register(new IDaemonTask() {
 
 					@Override
@@ -127,7 +127,7 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 
 	@Override
 	protected void finalize() throws Throwable {
-		if (this.taskId != 0) {
+		if (this.taskId > 0) {
 			Daemon.unRegister(this.taskId);
 		}
 		super.finalize();

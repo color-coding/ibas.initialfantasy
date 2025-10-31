@@ -20,6 +20,7 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.IIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.IUserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IOrganization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
+import org.colorcoding.ibas.initialfantasy.bo.organization.IUserActionLog;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IIdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.refunction.IRefunction;
@@ -344,6 +345,21 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 * @return 操作结果
 	 */
 	IOperationResult<IRefunction> saveRefunction(IRefunction bo);
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户动作日志
+	 * @param criteria 查询
+	 * @return 操作结果
+	 */
+	IOperationResult<IUserActionLog> fetchUserActionLog(ICriteria criteria);
+
+	/**
+	 * 保存-用户动作日志
+	 * @param bo 对象实例
+	 * @return 操作结果
+	 */
+	IOperationResult<IUserActionLog> saveUserActionLog(IUserActionLog bo);
 
 	// --------------------------------------------------------------------------------------------//
 }

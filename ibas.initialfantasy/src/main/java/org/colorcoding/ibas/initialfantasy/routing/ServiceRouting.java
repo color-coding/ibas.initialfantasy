@@ -76,6 +76,11 @@ public class ServiceRouting {
 	 */
 	public void setRuntime(String runtime) {
 		this.runtime = runtime;
+		if (this.services != null) {
+			for (ServiceInformation service : this.services) {
+				service.setRuntime(this.getRuntime());
+			}
+		}
 	}
 
 	@XmlElement(name = "ServiceInformation", type = ServiceInformation.class)
@@ -166,8 +171,7 @@ public class ServiceRouting {
 				routing.getServices().add(information);
 				this.save(routing);
 			}
-			this.setRuntime(String
-					.valueOf((DateTimes.now().getTime() - (file.exists() ? file.lastModified() : 0)) / 1000 / 60));
+			this.setRuntime(String.valueOf(DateTimes.now().getTime() / 1000));
 			this.load();
 		} catch (Exception e) {
 			Logger.log(e);

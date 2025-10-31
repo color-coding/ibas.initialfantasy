@@ -43,6 +43,9 @@ namespace initialfantasy {
             /** 密码修改日期 */
             lastPwdSetDate: Date;
 
+            /** 锁定 */
+            locked: ibas.emYesNo;
+
             /** 对象编号 */
             docEntry: number;
 

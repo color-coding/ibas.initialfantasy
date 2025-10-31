@@ -996,6 +996,37 @@ public class User extends BusinessObject<User>
 		super.initialize();// 基类初始化，不可去除
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
 		this.setActivated(emYesNo.YES);
+		this.setLocked(emYesNo.NO);
+	}
+
+	/**
+	 * 属性名称-已锁定
+	 */
+	private static final String PROPERTY_LOCKED_NAME = "Locked";
+
+	/**
+	 * 已锁定 属性
+	 */
+	public static final IPropertyInfo<emYesNo> PROPERTY_LOCKED = registerProperty(PROPERTY_LOCKED_NAME, emYesNo.class,
+			MY_CLASS);
+
+	/**
+	 * 获取-已锁定
+	 * 
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_LOCKED_NAME)
+	public final emYesNo getLocked() {
+		return this.getProperty(PROPERTY_LOCKED);
+	}
+
+	/**
+	 * 设置-已锁定
+	 * 
+	 * @param value 值
+	 */
+	public final void setLocked(emYesNo value) {
+		this.setProperty(PROPERTY_LOCKED, value);
 	}
 
 	@Override

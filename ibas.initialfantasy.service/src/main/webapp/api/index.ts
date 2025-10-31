@@ -23,4 +23,5 @@
 /// <reference path="./bo/BOPropertySetting.ts" />
 /// <reference path="./bo/BOLogst.ts" />
 /// <reference path="./bo/Refunction.ts" />
+/// <reference path="./bo/UserActionLog.ts" />
 /// <reference path="./BORepository.ts" />

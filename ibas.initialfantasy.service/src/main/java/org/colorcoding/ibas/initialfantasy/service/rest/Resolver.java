@@ -23,6 +23,7 @@ import org.colorcoding.ibas.initialfantasy.bo.bologst.BOLogst;
 import org.colorcoding.ibas.initialfantasy.bo.bonumbering.BONumbering;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.organization.UserActionLog;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.refunction.Refunction;
 
@@ -42,7 +43,7 @@ public class Resolver implements ContextResolver<JAXBContext> {
 						ApplicationModule.class, ApplicationPlatform.class, ApplicationElement.class, BOCriteria.class,
 						BOFiltering.class, BOInformation.class, BONumbering.class, Organization.class, Privilege.class,
 						User.class, BOPropertySetting.class, ApplicationConfig.class, ApplicationConfigIdentity.class,
-						BOLogst.class, BORelationship.class, Refunction.class);
+						BOLogst.class, BORelationship.class, Refunction.class, UserActionLog.class);
 			}
 		} catch (JAXBException e) {
 			e.printStackTrace();

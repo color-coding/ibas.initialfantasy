@@ -29,6 +29,7 @@ import org.colorcoding.ibas.initialfantasy.bo.identity.Identity;
 import org.colorcoding.ibas.initialfantasy.bo.identity.UserIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.organization.Organization;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
+import org.colorcoding.ibas.initialfantasy.bo.organization.UserActionLog;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.IdentityPrivilege;
 import org.colorcoding.ibas.initialfantasy.bo.privilege.Privilege;
 import org.colorcoding.ibas.initialfantasy.bo.refunction.Refunction;
@@ -780,6 +781,38 @@ public class DataService extends BORepositoryInitialFantasyShell {
 			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
 		return super.fetchUserFunctions(user, MyConfiguration.optToken(authorization, token));
 	}
+
+	// --------------------------------------------------------------------------------------------//
+	/**
+	 * 查询-用户动作日志
+	 * @param criteria 查询
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchUserActionLog")
+	public OperationResult<UserActionLog> fetchUserActionLog(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchUserActionLog(criteria, MyConfiguration.optToken(authorization, token));
+	}
+
+	/**
+	 * 保存-用户动作日志
+	 * @param bo 对象实例
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("saveUserActionLog")
+	public OperationResult<UserActionLog> saveUserActionLog(UserActionLog bo,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.saveUserActionLog(bo, MyConfiguration.optToken(authorization, token));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 
 }

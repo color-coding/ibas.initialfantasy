@@ -2,6 +2,7 @@ package org.colorcoding.ibas.bobas.organization.initial;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -12,7 +13,9 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.SortType;
+import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
@@ -26,6 +29,7 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 
 public class OrganizationManager extends org.colorcoding.ibas.bobas.organization.OrganizationManager {
 	private static int TOKEN_TIMEOUT = 0;
+	private static int TOKEN_INSTANCES = 0;
 
 	@Override
 	public IUser getUser(String token) {
@@ -69,6 +73,7 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 	public void initialize() {
 		try {
 			TOKEN_TIMEOUT = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0);
+			TOKEN_INSTANCES = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0);
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
@@ -105,7 +110,7 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 		if (this.idUsers == null) {
 			synchronized (this) {
 				if (this.idUsers == null) {
-					this.idUsers = new HashMap<>();
+					this.idUsers = new ConcurrentHashMap<>();
 				}
 			}
 		}
@@ -118,7 +123,7 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 		if (this.tokenUsers == null) {
 			synchronized (this) {
 				if (this.tokenUsers == null) {
-					this.tokenUsers = new HashMap<>();
+					this.tokenUsers = new ConcurrentHashMap<>();
 				}
 			}
 		}
@@ -129,6 +134,24 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 	public IUser register(IUser user) {
 		if (user != null) {
 			this.getIdUsers().put(user.getId(), user);
+			if (Integer.compare(TOKEN_INSTANCES, 0) > 0) {
+				synchronized (this.getTokenUsers()) {
+					List<IUser> users = new ArrayList<>();
+					for (IUser item : this.getTokenUsers().values()) {
+						if (Integer.compare(item.getId(), user.getId()) == 0) {
+							users.add(item);
+						}
+					}
+					if (Integer.compare(users.size(), TOKEN_INSTANCES) >= 0) {
+						users.sort((a, b) -> {
+							return -Long.compare(((User) a).getTokenTimeStamp(), ((User) b).getTokenTimeStamp());
+						});
+						for (int i = 0; i < TOKEN_INSTANCES; i++) {
+							this.getTokenUsers().remove(users.get(i).getToken());
+						}
+					}
+				}
+			}
 			this.getTokenUsers().put(user.getToken(), user);
 		}
 		return checkIdentities(user);

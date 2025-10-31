@@ -2,6 +2,8 @@ package org.colorcoding.ibas.initialfantasy.repository;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
@@ -26,6 +28,8 @@ import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.bobas.repository.RepositoryException;
+import org.colorcoding.ibas.bobas.task.Daemon;
+import org.colorcoding.ibas.bobas.task.IDaemonTask;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
@@ -59,6 +63,102 @@ import org.colorcoding.ibas.initialfantasy.routing.ServiceRouting;
  * @author Niuren.Zhu
  */
 public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy implements IBORepositoryShell {
+
+	private static Map<String, long[]> USER_LOGIN_LOG;
+
+	private static class ConcurrentHashMap<K, V> extends java.util.concurrent.ConcurrentHashMap<K, V> {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public boolean containsKey(Object key) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.containsKey(key);
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public V get(Object key) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.get(key);
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public V put(K key, V value) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.put(key, value);
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public V remove(Object key) {
+			if (key instanceof String) {
+				key = (K) String.valueOf(key).toLowerCase();
+			}
+			return super.remove(key);
+		}
+	}
+
+	static {
+		USER_LOGIN_LOG = new ConcurrentHashMap<>();
+		try {
+			Daemon.register(new IDaemonTask() {
+
+				long spanTime = 1000 * 60 * 60;
+
+				@Override
+				public void run() {
+					long[] logs;
+					boolean done = false;
+					long now = DateTimes.now().getTime();
+					for (Entry<String, long[]> item : USER_LOGIN_LOG.entrySet()) {
+						logs = item.getValue();
+						if (logs == null) {
+							USER_LOGIN_LOG.remove(item.getKey());
+						} else {
+							done = true;
+							for (int i = 0; i < logs.length; i++) {
+								if ((now - logs[i]) > spanTime) {
+									logs[i] = 0;
+								}
+								if (logs[i] != 0) {
+									done = false;
+								}
+							}
+							if (done) {
+								USER_LOGIN_LOG.remove(item.getKey());
+							}
+						}
+					}
+				}
+
+				@Override
+				public boolean isActivated() {
+					return true;
+				}
+
+				@Override
+				public String getName() {
+					return "user login log cleaner";
+				}
+
+				@Override
+				public long getInterval() {
+					return 60;
+				}
+			});
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@Override
 	public OperationResult<User> tokenConnect(String token) {
@@ -131,6 +231,22 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			// 无效用户密码，直接报错
 			if (Strings.isNullOrEmpty(user) || Strings.isNullOrEmpty(password)) {
 				throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+			}
+			// 判断单位时间内，登录失败次数
+			if (USER_LOGIN_LOG.containsKey(user)) {
+				long[] userLogs = USER_LOGIN_LOG.get(user);
+				if (userLogs != null) {
+					boolean done = true;
+					for (int i = 0; i < userLogs.length; i++) {
+						if (userLogs[i] == 0) {
+							done = false;
+							break;
+						}
+					}
+					if (done == true) {
+						throw new Exception(I18N.prop("msg_if_user_was_locked", user));
+					}
+				}
 			}
 			ICondition condition = null;
 			ICriteria criteria = new Criteria();
@@ -216,7 +332,24 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
 				}
 				if (!boUser.checkPassword(password)) {
+					// 登录失败，记录
+					if (!USER_LOGIN_LOG.containsKey(boUser.getCode())) {
+						USER_LOGIN_LOG.put(boUser.getCode(), new long[5]);
+					}
+					long[] userLogs = USER_LOGIN_LOG.get(boUser.getCode());
+					if (userLogs != null) {
+						for (int i = 0; i < userLogs.length; i++) {
+							if (userLogs[i] == 0) {
+								userLogs[i] = DateTimes.now().getTime();
+								break;
+							}
+						}
+					}
 					throw new Exception(I18N.prop("msg_if_user_name_and_password_not_match"));
+				}
+				// 登录成功，移除记录
+				if (USER_LOGIN_LOG.containsKey(boUser.getCode())) {
+					USER_LOGIN_LOG.remove(boUser.getCode());
 				}
 				// 检查密码是否过期
 				int expireDays = Integer.valueOf(
@@ -736,8 +869,57 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	}
 
 	@Override
+	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> fetchUser(ICriteria criteria,
+			String token) {
+		OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> operationResult = super.fetchUser(
+				criteria, token);
+		boolean done;
+		long[] timeTags;
+		for (org.colorcoding.ibas.initialfantasy.bo.organization.User item : operationResult.getResultObjects()) {
+			if (!USER_LOGIN_LOG.containsKey(item.getCode())) {
+				continue;
+			}
+			timeTags = USER_LOGIN_LOG.get(item.getCode());
+			if (timeTags == null) {
+				continue;
+			}
+			done = true;
+			for (long l : timeTags) {
+				if (l == 0) {
+					done = false;
+					break;
+				}
+			}
+			item.setLocked(done ? emYesNo.YES : emYesNo.NO);
+		}
+		return operationResult;
+	}
+
+	@Override
 	public OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> saveUser(
 			org.colorcoding.ibas.initialfantasy.bo.organization.User bo, String token) {
+		// 当前用户是否为超级用户
+		Object opUser = OrganizationFactory.createManager().getUser(token);
+		if (opUser instanceof User) {
+			User user = (User) opUser;
+			if (user.isSuper() == false) {
+				opUser = null;
+			}
+		} else if (opUser != OrganizationFactory.SYSTEM_USER) {
+			opUser = null;
+		}
+		// 仅超级用户才可以修改超级用户
+		if (bo.getSuper() == emYesNo.YES) {
+			if (opUser == null) {
+				return new OperationResult<>(new Exception(I18N.prop("msg_if_not_allowed_modify_this_user")));
+			}
+		}
+		// 仅超级用户可以解除锁定
+		if (bo.getLocked() != emYesNo.YES && USER_LOGIN_LOG.containsKey(bo.getCode())) {
+			if (opUser != null) {
+				USER_LOGIN_LOG.remove(bo.getCode());
+			}
+		}
 		// 更新时，恢复密码
 		if (!bo.isDeleted()) {
 			if (!bo.isNew() && org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK

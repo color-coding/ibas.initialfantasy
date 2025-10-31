@@ -53,6 +53,9 @@ namespace initialfantasy {
                     sort = criteria.sorts.create();
                     sort.alias = bo.BOLogst.PROPERTY_MODIFYTIME_NAME;
                     sort.sortType = ibas.emSortType.DESCENDING;
+                    sort = criteria.sorts.create();
+                    sort.alias = bo.BOLogst.PROPERTY_LOGINST_NAME;
+                    sort.sortType = ibas.emSortType.DESCENDING;
                     let that: this = this;
                     let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                     boRepository.fetchBOLogst({
@@ -95,7 +98,7 @@ namespace initialfantasy {
             /** 关联的数据 */
             private bo: ibas.IBusinessObject;
 
-            private viewData(data: bo.BOLogst | bo.BOLogst[]): void {
+            private viewData(data: bo.BOLogst | bo.BOLogst[], mode?: "SUMMARY" | "COMPARISON"): void {
                 if (ibas.objects.isNull(data)) {
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_please_chooose_data",
                         ibas.i18n.prop("shell_data_view")
@@ -110,6 +113,7 @@ namespace initialfantasy {
                     app.onViewShowed = () => {
                         this.close();
                     };
+                    app.showSummary = mode === "SUMMARY" ? true : false;
                     app.run(data);
                 } catch (error) {
                     this.messages(error);
