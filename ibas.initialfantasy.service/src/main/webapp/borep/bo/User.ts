@@ -336,6 +336,17 @@ namespace initialfantasy {
                 this.setProperty(User.PROPERTY_REMARKS_NAME, value);
             }
 
+            /** 映射的属性名称-特征 */
+            static PROPERTY_SPECIFICS_NAME: string = "Specifics";
+            /** 获取-特征 */
+            get specifics(): string {
+                return this.getProperty<string>(User.PROPERTY_SPECIFICS_NAME);
+            }
+            /** 设置-特征 */
+            set specifics(value: string) {
+                this.setProperty(User.PROPERTY_SPECIFICS_NAME, value);
+            }
+
             /** 初始化数据 */
             protected init(): void {
                 this.objectCode = ibas.config.applyVariables(User.BUSINESS_OBJECT_CODE);

@@ -3,10 +3,14 @@ package org.colorcoding.ibas.initialfantasy.bo.shell;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.KeyText;
+import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
 import org.colorcoding.ibas.bobas.serialization.Serializable;
@@ -20,6 +24,17 @@ import org.colorcoding.ibas.initialfantasy.data.DataConvert;
 @XmlRootElement(name = "User")
 public class User extends Serializable implements org.colorcoding.ibas.bobas.organization.IUser {
 
+	/** 变量-用户ID */
+	public static final String VARIABLE_NAME_USER_ID = "${USER_ID}";
+	/** 变量-用户编码 */
+	public static final String VARIABLE_NAME_USER_CODE = "${USER_CODE}";
+	/** 变量-用户名称 */
+	public static final String VARIABLE_NAME_USER_NAME = "${USER_NAME}";
+	/** 变量-用户归属 */
+	public static final String VARIABLE_NAME_USER_BELONG = "${USER_BELONG}";
+	/** 变量-用户身份 */
+	public static final String VARIABLE_NAME_USER_IDENTITIES = "${USER_IDENTITIES}";
+
 	private static final long serialVersionUID = 1850586878174104320L;
 
 	private static String TOKEN_NOT_EXPIRED_USERS = null;
@@ -31,6 +46,22 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		sUser.setName(user.getName());
 		sUser.setBelong(user.getOrganization());
 		sUser.setSuper(user.getSuper() == emYesNo.YES ? true : false);
+		if (!DataConvert.isNullOrEmpty(user.getSpecifics())) {
+			String[] values;
+			for (String item : user.getSpecifics().split(";")) {
+				if (DataConvert.isNullOrEmpty(item)) {
+					continue;
+				}
+				values = item.split("=");
+				if (values.length > 1) {
+					sUser.getSpecifics().add(new KeyText(values[0], values[1]));
+				} else {
+					sUser.getSpecifics().add(new KeyText(values[0], "YES"));
+				}
+			}
+			values = null;
+		}
+
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(user.getCreateActionId());
 		stringBuilder.append(user.getPassword());
@@ -135,6 +166,44 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	@XmlElementWrapper(name = "Specifics")
+	@XmlElement(name = "Item", type = KeyText.class)
+	private ArrayList<KeyText> specifics;
+
+	public final List<KeyText> getSpecifics() {
+		if (this.specifics == null) {
+			this.specifics = new ArrayList<>();
+		}
+		return specifics;
+	}
+
+	public final void setSpecifics(List<KeyText> specifics) {
+		this.getSpecifics().addAll(specifics);
+	}
+
+	public String valueOfSpecific(String name) {
+		if (!(name.startsWith("${") && name.endsWith("}"))) {
+			name = String.format("${%s}", name);
+		}
+		if (VARIABLE_NAME_USER_ID.equals(name)) {
+			return String.valueOf(this.getId());
+		} else if (VARIABLE_NAME_USER_CODE.equals(name)) {
+			return this.getCode();
+		} else if (VARIABLE_NAME_USER_NAME.equals(name)) {
+			return this.getName();
+		} else if (VARIABLE_NAME_USER_BELONG.equals(name)) {
+			return this.getBelong();
+		} else if (VARIABLE_NAME_USER_IDENTITIES.equals(name)) {
+			return this.getIdentities();
+		}
+		String spName = name.startsWith("${") && name.endsWith("}") ? name.substring(2, name.length() - 1) : name;
+		KeyText value = this.getSpecifics().firstOrDefault(c -> c.getKey().equalsIgnoreCase(spName));
+		if (value != null) {
+			return String.valueOf(value.getText());
+		}
+		return DataConvert.STRING_VALUE_EMPTY;
 	}
 
 	private long tokenTimeStamp = 0;

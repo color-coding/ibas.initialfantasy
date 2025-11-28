@@ -200,41 +200,15 @@ public class OwnershipJudger implements IOwnershipJudger {
 								condition.setBracketClose(item.getBracketClose());
 								condition.setRelationship(DataConvert.toRelationship(item.getRelationship()));
 								// 替换属性变量
-								if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_ID.equals(condition.getAlias())) {
-									condition.setAlias(String.valueOf(sUser.getId()));
-									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
-										.equals(condition.getAlias())) {
-									condition.setAlias(sUser.getCode());
-									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_NAME
-										.equals(condition.getAlias())) {
-									condition.setAlias(sUser.getName());
-									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
-										.equals(condition.getAlias())) {
-									condition.setAlias(sUser.getBelong());
-									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_IDENTITIES
-										.equals(condition.getAlias())) {
-									condition.setAlias(sUser.getIdentities());
+								if (condition.getAlias() != null && condition.getAlias().startsWith("${USER_")
+										&& condition.getAlias().endsWith("}")) {
+									condition.setAlias(sUser.valueOfSpecific(condition.getAlias()));
 									condition.setAliasDataType(ConditionAliasDataType.FREE_TEXT);
 								}
 								// 替换值变量
-								if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_ID.equals(condition.getValue())) {
-									condition.setValue(sUser.getId());
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_CODE
-										.equals(condition.getValue())) {
-									condition.setValue(sUser.getCode());
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_NAME
-										.equals(condition.getValue())) {
-									condition.setValue(sUser.getName());
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_BELONG
-										.equals(condition.getValue())) {
-									condition.setValue(sUser.getBelong());
-								} else if (BOFilteringJudgmentLink.VARIABLE_NAME_USER_IDENTITIES
-										.equals(condition.getValue())) {
-									condition.setValue(sUser.getIdentities());
+								if (condition.getAlias() != null && condition.getValue().startsWith("${USER_")
+										&& condition.getValue().endsWith("}")) {
+									condition.setValue(sUser.valueOfSpecific(condition.getAlias()));
 								}
 							}
 							if (!criteria.getConditions().isEmpty()) {
