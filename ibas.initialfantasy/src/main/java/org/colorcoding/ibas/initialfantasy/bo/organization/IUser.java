@@ -397,6 +397,20 @@ public interface IUser extends IBOMasterData {
 	void setOrganization(String value);
 
 	/**
+	* 获取-特征（;）
+	* 
+	* @return 值
+	*/
+	String getSpecifics();
+
+	/**
+	* 设置-特征（;）
+	* 
+	* @param value 值
+	*/
+	void setSpecifics(String value);
+
+	/**
 	 * 获取-备注
 	 * 
 	 * @return 值
