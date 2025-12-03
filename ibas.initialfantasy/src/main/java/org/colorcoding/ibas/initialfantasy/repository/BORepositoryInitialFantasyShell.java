@@ -23,6 +23,7 @@ import org.colorcoding.ibas.bobas.core.IDaemonTask;
 import org.colorcoding.ibas.bobas.core.RepositoryException;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DateTime;
+import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.i18n.I18N;
@@ -173,6 +174,18 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
+			// 批准的用户
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(
+					org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_APPROVALSTATUS.getName());
+			condition.setValue(emApprovalStatus.UNAFFECTED);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(1);
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setAlias(
+					org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_APPROVALSTATUS.getName());
+			condition.setValue(emApprovalStatus.APPROVED);
 			// 当前日期
 			String date = DateTime.getToday().toString();
 			// 有效日期
@@ -285,6 +298,18 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
+			// 批准的用户
+			condition = criteria.getConditions().create();
+			condition.setBracketOpen(1);
+			condition.setAlias(
+					org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_APPROVALSTATUS.getName());
+			condition.setValue(emApprovalStatus.UNAFFECTED);
+			condition = criteria.getConditions().create();
+			condition.setBracketClose(1);
+			condition.setRelationship(ConditionRelationship.OR);
+			condition.setAlias(
+					org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_APPROVALSTATUS.getName());
+			condition.setValue(emApprovalStatus.APPROVED);
 			// 当前日期
 			String date = DateTime.getToday().toString();
 			// 有效日期

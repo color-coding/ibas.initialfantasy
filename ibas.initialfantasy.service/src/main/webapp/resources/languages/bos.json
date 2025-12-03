@@ -179,6 +179,7 @@
         "bo_bofilteringcondition_bracketopen": "Open Brackets",
         "bo_bofilteringcondition_bracketclose": "Close Brackets",
         "bo_bofilteringcondition_remarks": "Remarks",
+        "bo_bofilteringcondition_propertyname_template": "Variable: {0}",
         "bo_bofilteringcondition_propertyname_user_id": "Variable: User ID",
         "bo_bofilteringcondition_propertyname_user_code": "Variable: User Code",
         "bo_bofilteringcondition_propertyname_user_name": "Variable: User Name",
@@ -337,6 +338,9 @@
         "bo_user_organization": "Data Owner Organization",
         "bo_user_belongs": "Belongs",
         "bo_user_remarks": "Remarks",
+        "bo_user_specifics": "Specifics",
+        "bo_user_specific_key": "Name",
+        "bo_user_specific_text": "Content",
         "bo_user_closing_delimiter": "----End----"
     },
     {
