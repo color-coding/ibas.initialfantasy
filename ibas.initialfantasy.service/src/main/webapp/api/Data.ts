@@ -165,6 +165,10 @@ namespace initialfantasy {
             CONTAIN,
             /** 不包含 */
             NOT_CONTAIN,
+            /** 在 */
+            IN,
+            /** 不在 */
+            NOT_IN,
         }
         /** 比较关系 */
         export enum emConditionRelationship {
@@ -204,6 +208,10 @@ namespace initialfantasy {
                                 return emConditionOperation.EQUAL;
                             case ibas.emConditionOperation.NOT_NULL:
                                 return emConditionOperation.NOT_EQUAL;
+                            case ibas.emConditionOperation.IN:
+                                return emConditionOperation.IN;
+                            case ibas.emConditionOperation.NOT_IN:
+                                return emConditionOperation.NOT_IN;
                             default:
                                 return emConditionOperation.EQUAL;
                         }
@@ -234,6 +242,10 @@ namespace initialfantasy {
                                 return ibas.emConditionOperation.IS_NULL;
                             case emConditionOperation.NOT_EQUAL:
                                 return ibas.emConditionOperation.NOT_NULL;
+                            case emConditionOperation.IN:
+                                return ibas.emConditionOperation.IN;
+                            case emConditionOperation.NOT_IN:
+                                return ibas.emConditionOperation.NOT_IN;
                             default:
                                 return ibas.emConditionOperation.EQUAL;
                         }

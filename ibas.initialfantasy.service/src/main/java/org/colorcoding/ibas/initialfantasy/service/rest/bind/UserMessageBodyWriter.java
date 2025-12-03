@@ -56,7 +56,7 @@ public class UserMessageBodyWriter implements MessageBodyWriter<OperationResult<
 			JsonObjectBuilder resultBuilder = Json.createObjectBuilder();
 			resultBuilder.add("type", t.getClass().getSimpleName());
 			resultBuilder.add("SignID", t.getSignID());
-			resultBuilder.add("Time", t.getTime().toString(DateTime.FORMAT_DATETIME));
+			resultBuilder.add("Time", t.getTime().toString());
 			resultBuilder.add("ResultCode", t.getResultCode());
 			resultBuilder.add("Message", t.getMessage());
 
@@ -118,8 +118,7 @@ public class UserMessageBodyWriter implements MessageBodyWriter<OperationResult<
 			} else if (propertyInfo.getValueType() == Short.class) {
 				objectBuilder.add(propertyInfo.getName(), (Short) value);
 			} else if (propertyInfo.getValueType() == DateTime.class) {
-				objectBuilder.add(propertyInfo.getName(),
-						DateTimes.toString((DateTime) value, DateTime.FORMAT_DATETIME));
+				objectBuilder.add(propertyInfo.getName(), ((DateTime) value).toString());
 			} else if (propertyInfo.getValueType().isEnum()) {
 				objectBuilder.add(propertyInfo.getName(), value.toString());
 			} else {
