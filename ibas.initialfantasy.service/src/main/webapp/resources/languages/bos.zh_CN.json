@@ -179,6 +179,7 @@
         "bo_bofilteringcondition_bracketopen": "开括号数",
         "bo_bofilteringcondition_bracketclose": "闭括号数",
         "bo_bofilteringcondition_remarks": "备注",
+        "bo_bofilteringcondition_propertyname_template": "变量：{0}",
         "bo_bofilteringcondition_propertyname_user_id": "变量：用户标识",
         "bo_bofilteringcondition_propertyname_user_code": "变量：用户编码",
         "bo_bofilteringcondition_propertyname_user_name": "变量：用户名称",
@@ -338,6 +339,9 @@
         "bo_user_organization": "数据所属组织",
         "bo_user_belongs": "所属组织",
         "bo_user_remarks": "备注",
+        "bo_user_specifics": "特征",
+        "bo_user_specific_key": "名称",
+        "bo_user_specific_text": "内容",
         "bo_user_closing_delimiter": "----结束----"
     },
     {

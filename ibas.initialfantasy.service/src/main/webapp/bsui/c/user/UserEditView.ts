@@ -20,6 +20,10 @@ namespace initialfantasy {
                 chooseOrganizationEvent: Function;
                 /** 编辑用户身份 */
                 editUserIdentityEvent: Function;
+                /** 添加用户特征 */
+                addUserSpecificEvent: Function;
+                /** 移除用户特征 */
+                removeUserSpecificEvent: Function;
 
                 /** 绘制视图 */
                 draw(): any {
@@ -269,6 +273,68 @@ namespace initialfantasy {
                                             })
                                         ]
                                     }),
+                                    new sap.m.IconTabFilter("", {
+                                        text: ibas.i18n.prop("bo_user_specifics"),
+                                        content: [
+                                            this.tableSpecifics = new sap.extension.table.DataTable("", {
+                                                enableSelectAll: false,
+                                                visibleRowCount: sap.extension.table.visibleRowCount(8),
+                                                rows: "{/rows}",
+                                                toolbar: new sap.m.Toolbar("", {
+                                                    content: [
+                                                        /*
+                                                        new sap.m.Button("", {
+                                                            text: ibas.i18n.prop("shell_data_add"),
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            icon: "sap-icon://add",
+                                                            press(): void {
+                                                                that.fireViewEvents(that.addUserSpecificEvent);
+                                                            }
+                                                        }),
+                                                        */
+                                                        new sap.m.MenuButton("", {
+                                                            text: ibas.i18n.prop("shell_data_add"),
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            icon: "sap-icon://add",
+                                                            menu: this.menuSpecifics = new sap.m.Menu("", {
+                                                                items: [
+                                                                ],
+                                                            })
+                                                        }),
+                                                        new sap.m.Button("", {
+                                                            text: ibas.i18n.prop("shell_data_remove"),
+                                                            type: sap.m.ButtonType.Transparent,
+                                                            icon: "sap-icon://less",
+                                                            press(): void {
+                                                                that.fireViewEvents(that.removeUserSpecificEvent, that.tableSpecifics.getSelecteds());
+                                                            }
+                                                        })
+                                                    ]
+                                                }),
+                                                columns: [
+                                                    this.columnSpecifics = new sap.extension.table.Column("", {
+                                                        label: ibas.i18n.prop("bo_user_specific_key"),
+                                                        template: new sap.extension.m.Select("", {
+                                                            editable: false,
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "key",
+                                                            type: new sap.extension.data.Alphanumeric()
+                                                        }),
+                                                        width: "40%",
+                                                    }),
+                                                    new sap.extension.table.Column("", {
+                                                        label: ibas.i18n.prop("bo_user_specific_text"),
+                                                        template: new sap.extension.m.Input("", {
+                                                        }).bindProperty("bindingValue", {
+                                                            path: "text",
+                                                            type: new sap.extension.data.Alphanumeric()
+                                                        }),
+                                                        width: "60%",
+                                                    }),
+                                                ],
+                                            }),
+                                        ]
+                                    }),
                                 ]
                             }),
                         ]
@@ -434,11 +500,63 @@ namespace initialfantasy {
                     });
                 }
                 private page: sap.extension.m.Page;
+                private tableSpecifics: sap.extension.table.Table;
+                private menuSpecifics: sap.m.Menu;
+                private columnSpecifics: sap.ui.table.Column;
                 /** 显示数据 */
                 showUser(data: bo.User): void {
                     this.page.setModel(new sap.extension.model.JSONModel(data));
                     // 改变页面状态
                     sap.extension.pages.changeStatus(this.page);
+                }
+                /** 显示特征数据 */
+                showUserSpecifics(datas: ibas.KeyText[]): void {
+                    if (this.menuSpecifics.getItems().length === 0) {
+                        let criteria: ibas.Criteria = new ibas.Criteria();
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = bo.BOPropertyInformation.PROPERTY_CODE_NAME;
+                        condition.value = ibas.config.applyVariables(bo.User.BUSINESS_OBJECT_CODE);
+                        condition = criteria.conditions.create();
+                        condition.alias = bo.BOPropertyInformation.PROPERTY_PROPERTY_NAME;
+                        condition.value = bo.User.PROPERTY_SPECIFICS_NAME;
+                        let that: this = this;
+                        let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                        boRepository.fetchBOPropertyInformation({
+                            criteria: criteria,
+                            onCompleted: (opRslt) => {
+                                this.menuSpecifics.destroyItems();
+                                let select: sap.m.Select = <sap.m.Select>this.columnSpecifics.getTemplate();
+                                for (let ptyItem of opRslt.resultObjects) {
+                                    for (let item of ptyItem.boPropertyValues) {
+                                        select.addItem(new sap.ui.core.ListItem("", {
+                                            key: item.value,
+                                            text: item.description ? item.description : item.value,
+                                            tooltip: ibas.strings.format("{0} - {1}", item.value, item.description)
+                                        }));
+                                        if (ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_ID, "${" + item.value + "}")
+                                            || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_CODE, "${" + item.value + "}")
+                                            || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_NAME, "${" + item.value + "}")
+                                            || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_BELONG, "${" + item.value + "}")
+                                            || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_IDENTITIES, "${" + item.value + "}")
+                                        ) {
+                                            continue;
+                                        }
+                                        this.menuSpecifics.addItem(new sap.m.MenuItem("", {
+                                            text: item.description ? item.description : item.value,
+                                            press: function (): void {
+                                                // 创建新的对象
+                                                that.fireViewEvents(that.addUserSpecificEvent, item.value);
+                                            }
+                                        }));
+                                    }
+                                }
+                                this.columnSpecifics.setTemplate(select);
+                                this.tableSpecifics.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                            }
+                        });
+                    } else {
+                        this.tableSpecifics.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    }
                 }
             }
         }

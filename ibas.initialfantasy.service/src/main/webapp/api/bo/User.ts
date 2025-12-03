@@ -94,6 +94,9 @@ namespace initialfantasy {
             /** 数据所属组织 */
             organization: string;
 
+            /** 特征（;） */
+            specifics: string;
+
             /** 备注 */
             remarks: string;
         }

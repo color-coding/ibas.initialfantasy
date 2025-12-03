@@ -3,6 +3,7 @@ package org.colorcoding.ibas.bobas.ownership.initial;
 import java.util.List;
 
 import org.colorcoding.ibas.bobas.bo.IBusinessObject;
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.core.fields.IFieldData;
 import org.colorcoding.ibas.bobas.core.fields.IFieldDataDb;
 import org.colorcoding.ibas.bobas.core.fields.IManagedFields;
@@ -21,15 +22,15 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 
 class BOFilteringJudgmentLink extends BOJudgmentLink {
 	/** 变量-用户ID */
-	public static final String VARIABLE_NAME_USER_ID = "${USER_ID}";
-	/** 变量-用户归属 */
-	public static final String VARIABLE_NAME_USER_BELONG = "${USER_BELONG}";
+	public static final String VARIABLE_NAME_USER_ID = User.VARIABLE_NAME_USER_ID;
 	/** 变量-用户编码 */
-	public static final String VARIABLE_NAME_USER_CODE = "${USER_CODE}";
+	public static final String VARIABLE_NAME_USER_CODE = User.VARIABLE_NAME_USER_CODE;
 	/** 变量-用户名称 */
-	public static final String VARIABLE_NAME_USER_NAME = "${USER_NAME}";
+	public static final String VARIABLE_NAME_USER_NAME = User.VARIABLE_NAME_USER_NAME;
+	/** 变量-用户归属 */
+	public static final String VARIABLE_NAME_USER_BELONG = User.VARIABLE_NAME_USER_BELONG;
 	/** 变量-用户身份 */
-	public static final String VARIABLE_NAME_USER_IDENTITIES = "${USER_IDENTITIES}";
+	public static final String VARIABLE_NAME_USER_IDENTITIES = User.VARIABLE_NAME_USER_IDENTITIES;
 	/** 属性-用户 */
 	public static final String PROPERTY_NAME_DATAOWNER = "DataOwner";
 	/** 属性-用户归属 */
@@ -62,25 +63,9 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			}
 			jItem.setOperation(JudmentOperation.valueOf(item.getOperation()));
 			// 左边取值
-			if (VARIABLE_NAME_USER_ID.equals(item.getPropertyName())) {
+			if (Strings.isWith(item.getPropertyName(), "${USER_", "}")) {
 				IValueOperator valueOperator = this.createValueOperator();
-				valueOperator.setValue(this.getCurrentUser().getId());
-				jItem.setLeftOperter(valueOperator);
-			} else if (VARIABLE_NAME_USER_BELONG.equals(item.getPropertyName())) {
-				IValueOperator valueOperator = this.createValueOperator();
-				valueOperator.setValue(this.getCurrentUser().getBelong());
-				jItem.setLeftOperter(valueOperator);
-			} else if (VARIABLE_NAME_USER_CODE.equals(item.getPropertyName())) {
-				IValueOperator valueOperator = this.createValueOperator();
-				valueOperator.setValue(this.getCurrentUser().getCode());
-				jItem.setLeftOperter(valueOperator);
-			} else if (VARIABLE_NAME_USER_NAME.equals(item.getPropertyName())) {
-				IValueOperator valueOperator = this.createValueOperator();
-				valueOperator.setValue(this.getCurrentUser().getName());
-				jItem.setLeftOperter(valueOperator);
-			} else if (VARIABLE_NAME_USER_IDENTITIES.equals(item.getPropertyName())) {
-				IValueOperator valueOperator = this.createValueOperator();
-				valueOperator.setValue(this.getCurrentUser().getIdentities());
+				valueOperator.setValue(this.getCurrentUser().valueOfSpecific(item.getPropertyName()));
 				jItem.setLeftOperter(valueOperator);
 			} else {
 				IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
@@ -90,16 +75,8 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			// 右边取值
 			// 与值比较
 			IValueOperator valueOperator = this.createValueOperator();
-			if (VARIABLE_NAME_USER_ID.equals(item.getConditionValue())) {
-				valueOperator.setValue(this.getCurrentUser().getId());
-			} else if (VARIABLE_NAME_USER_BELONG.equals(item.getConditionValue())) {
-				valueOperator.setValue(this.getCurrentUser().getBelong());
-			} else if (VARIABLE_NAME_USER_CODE.equals(item.getConditionValue())) {
-				valueOperator.setValue(this.getCurrentUser().getCode());
-			} else if (VARIABLE_NAME_USER_NAME.equals(item.getConditionValue())) {
-				valueOperator.setValue(this.getCurrentUser().getName());
-			} else if (VARIABLE_NAME_USER_IDENTITIES.equals(item.getConditionValue())) {
-				valueOperator.setValue(this.getCurrentUser().getIdentities());
+			if (Strings.isWith(item.getConditionValue(), "${USER_", "}")) {
+				valueOperator.setValue(this.getCurrentUser().valueOfSpecific(item.getConditionValue()));
 			} else {
 				valueOperator.setValue(item.getConditionValue());
 			}

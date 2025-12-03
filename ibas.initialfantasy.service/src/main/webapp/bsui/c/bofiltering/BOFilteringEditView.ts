@@ -339,6 +339,11 @@ namespace initialfantasy {
                     let condition: ibas.ICondition = criteria.conditions.create();
                     condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                     condition.value = data.boCode;
+                    condition = criteria.conditions.create();
+                    condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
+                    condition.value = ibas.config.applyVariables(bo.User.BUSINESS_OBJECT_CODE);
+                    condition.relationship = ibas.emConditionRelationship.OR;
+
                     let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                     boRepository.fetchBOInformation({
                         criteria: criteria,
@@ -354,7 +359,7 @@ namespace initialfantasy {
                                 path: "propertyName",
                                 type: new sap.extension.data.Alphanumeric()
                             });
-                            let boInfo: bo.IBOInformation = opRslt.resultObjects.firstOrDefault();
+                            let boInfo: bo.IBOInformation = opRslt.resultObjects.firstOrDefault(c => c.code === data.boCode);
                             if (boInfo) {
                                 that.tableName = boInfo.mapped;
                                 if (boInfo.boPropertyInformations instanceof Array) {
@@ -370,27 +375,24 @@ namespace initialfantasy {
                                     }
                                 }
                             }
-                            // 系统变量
-                            template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(ibas.VARIABLE_NAME_USER_ID)
-                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_id"))
-                            );
-                            template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(ibas.VARIABLE_NAME_USER_CODE)
-                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_code"))
-                            );
-                            template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(ibas.VARIABLE_NAME_USER_NAME)
-                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_name"))
-                            );
-                            template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(ibas.VARIABLE_NAME_USER_BELONG)
-                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_belong"))
-                            );
-                            template.addItem(new sap.ui.core.ListItem("", {})
-                                .setKey(ibas.VARIABLE_NAME_USER_IDENTITIES)
-                                .setText(ibas.i18n.prop("bo_bofilteringcondition_propertyname_user_identities"))
-                            );
+                            boInfo = opRslt.resultObjects.firstOrDefault(c => c.code === ibas.config.applyVariables(bo.User.BUSINESS_OBJECT_CODE));
+                            if (boInfo) {
+                                if (boInfo.boPropertyInformations instanceof Array) {
+                                    for (let property of boInfo.boPropertyInformations) {
+                                        if (!ibas.strings.equalsIgnoreCase(property.property, bo.User.PROPERTY_SPECIFICS_NAME)) {
+                                            continue;
+                                        }
+                                        if (property.boPropertyValues instanceof Array) {
+                                            for (let value of property.boPropertyValues) {
+                                                template.addItem(new sap.ui.core.ListItem("", {
+                                                    key: value.value,
+                                                    text: ibas.i18n.prop("bo_bofilteringcondition_propertyname_template", value.description),
+                                                }).setKey("${" + value.value + "}"));
+                                            } break;
+                                        }
+                                    }
+                                }
+                            }
                             this.columnProperty.setTemplate(template);
                         }
                     });

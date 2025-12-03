@@ -33,6 +33,8 @@ namespace initialfantasy {
                 this.view.createDataEvent = this.createData;
                 this.view.chooseOrganizationEvent = this.chooseOrganization;
                 this.view.editUserIdentityEvent = this.editUserIdentity;
+                this.view.addUserSpecificEvent = this.addUserSpecific;
+                this.view.removeUserSpecificEvent = this.removeUserSpecific;
             }
             /** 视图显示后 */
             protected viewShowed(): void {
@@ -43,7 +45,22 @@ namespace initialfantasy {
                     this.editData = new bo.User();
                     this.proceeding(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_created_new"));
                 }
+                this.editSpecifics = new ibas.ArrayList<ibas.KeyText>();
+                if (!ibas.strings.isEmpty(this.editData.specifics)) {
+                    for (let item of this.editData.specifics.split(";")) {
+                        if (ibas.strings.isEmpty(item)) {
+                            continue;
+                        }
+                        let values: string[] = item.split("=");
+                        if (values.length > 1) {
+                            this.editSpecifics.add(new ibas.KeyText(values[0], values[1]));
+                        } else {
+                            this.editSpecifics.add(new ibas.KeyText(values[0], values[0]));
+                        }
+                    }
+                }
                 this.view.showUser(this.editData);
+                this.view.showUserSpecifics(this.editSpecifics);
             }
             /** 运行,覆盖原方法 */
             run(): void;
@@ -92,9 +109,31 @@ namespace initialfantasy {
                 }
                 super.run.apply(this, arguments);
             }
+
+            protected editSpecifics: ibas.IList<ibas.KeyText>;
             /** 保存数据 */
             protected saveData(): void {
                 this.busy(true);
+                let specifics: ibas.StringBuilder = new ibas.StringBuilder();
+                specifics.map(null, "");
+                specifics.map(undefined, "");
+                for (let item of this.editSpecifics) {
+                    if (ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_ID, item.key)
+                        || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_CODE, item.key)
+                        || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_NAME, item.key)
+                        || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_BELONG, item.key)
+                        || ibas.strings.equalsIgnoreCase(ibas.VARIABLE_NAME_USER_IDENTITIES, item.key)
+                    ) {
+                        continue;
+                    }
+                    if (specifics.length > 0) {
+                        specifics.append(";");
+                    }
+                    specifics.append(item.key);
+                    specifics.append("=");
+                    specifics.append(item.text);
+                }
+                this.editData.specifics = specifics.toString();
                 let that: this = this;
                 let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                 boRepository.saveUser({
@@ -192,6 +231,27 @@ namespace initialfantasy {
                 app.viewShower = this.viewShower;
                 app.run(this.editData);
             }
+            /** 添加业务对象属性信息事件 */
+            protected addUserSpecific(type: string): void {
+                let specific: ibas.KeyText = new ibas.KeyText();
+                specific.key = type;
+                this.editSpecifics.add(specific);
+                this.view.showUserSpecifics(this.editSpecifics);
+            }
+            /** 删除业务对象属性信息事件 */
+            protected removeUserSpecific(items: ibas.KeyText[]): void {
+                items = ibas.arrays.create(items);
+                if (items.length === 0) {
+                    return;
+                }
+                // 移除项目
+                for (let item of items) {
+                    if (this.editSpecifics.indexOf(item) >= 0) {
+                        this.editSpecifics.remove(item);
+                    }
+                }
+                this.view.showUserSpecifics(this.editSpecifics);
+            }
         }
         /** 视图-用户 */
         export interface IUserEditView extends ibas.IBOEditView {
@@ -205,6 +265,12 @@ namespace initialfantasy {
             chooseOrganizationEvent: Function;
             /** 编辑用户身份 */
             editUserIdentityEvent: Function;
+            /** 显示特征数据 */
+            showUserSpecifics(datas: ibas.KeyText[]): void;
+            /** 添加用户特征 */
+            addUserSpecificEvent: Function;
+            /** 移除用户特征 */
+            removeUserSpecificEvent: Function;
         }
     }
 }

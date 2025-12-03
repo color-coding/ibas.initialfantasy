@@ -953,6 +953,37 @@ public class User extends BusinessObject<User>
 	}
 
 	/**
+	* 属性名称-特征（;）
+	*/
+	private static final String PROPERTY_SPECIFICS_NAME = "Specifics";
+
+	/**
+	* 特征（;） 属性
+	*/
+	@DbField(name = "Specifics", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_SPECIFICS = registerProperty(PROPERTY_SPECIFICS_NAME,
+			String.class, MY_CLASS);
+
+	/**
+	* 获取-特征（;）
+	* 
+	* @return 值
+	*/
+	@XmlElement(name = PROPERTY_SPECIFICS_NAME)
+	public final String getSpecifics() {
+		return this.getProperty(PROPERTY_SPECIFICS);
+	}
+
+	/**
+	* 设置-特征（;）
+	* 
+	* @param value 值
+	*/
+	public final void setSpecifics(String value) {
+		this.setProperty(PROPERTY_SPECIFICS, value);
+	}
+
+	/**
 	 * 属性名称-备注
 	 */
 	private static final String PROPERTY_REMARKS_NAME = "Remarks";
