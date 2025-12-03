@@ -23,6 +23,10 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 
 public class ConfigurationManager extends org.colorcoding.ibas.bobas.configuration.ConfigurationManager {
 
+	public ConfigurationManager() {
+		super(32);
+	}
+
 	@Override
 	public String getConfigValue(String key) {
 		String value = super.getConfigValue(key);
