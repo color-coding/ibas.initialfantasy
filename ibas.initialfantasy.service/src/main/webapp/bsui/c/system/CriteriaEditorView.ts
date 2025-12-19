@@ -34,7 +34,8 @@ namespace initialfantasy {
                                 new sap.m.Label("", {
                                     showColon: true,
                                     text: ibas.i18n.prop("initialfantasy_edit_target"),
-                                }).addStyleClass("sapUiSmallMarginBegin"),
+                                    width: "3rem",
+                                }),
                                 this.txtTarget = new sap.extension.m.RepositoryInput("", {
                                     editable: false,
                                     textFormatMode: sap.m.InputTextFormatMode.ValueKey,
@@ -77,6 +78,18 @@ namespace initialfantasy {
                 /** 显示查询条件 */
                 showConditions(datas: ibas.ICondition[]): void {
                     this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
+                    setTimeout(() => {
+                        if (datas?.findIndex(c => !ibas.strings.isEmpty(c.comparedAlias)) >= 0) {
+                            let toolbar: any = this.table.getToolbar();
+                            if (toolbar instanceof sap.m.Toolbar) {
+                                let check: any = toolbar.getContent()[toolbar.getContent().length - 1];
+                                if (check instanceof sap.m.CheckBox) {
+                                    check.setSelected(true);
+                                    (<any>check).fireSelect();
+                                }
+                            }
+                        }
+                    }, 150);
                 }
                 private createTable(aliases: ibas.KeyText[]): sap.extension.table.Table {
                     let that: this = this;
@@ -100,7 +113,24 @@ namespace initialfantasy {
                                     press: function (): void {
                                         that.fireViewEvents(that.removeConditionEvent, that.table.getSelecteds());
                                     }
-                                })
+                                }),
+                                new sap.m.ToolbarSpacer(),
+                                new sap.m.CheckBox("", {
+                                    text: ibas.i18n.prop(["shell_show", "shell_query_condition_comparedalias"]),
+                                    select(this: sap.m.CheckBox): void {
+                                        if (this.getSelected()) {
+                                            let column: any = table.getColumns()[5];
+                                            if (column instanceof sap.ui.table.Column) {
+                                                column.setVisible(true);
+                                            }
+                                        } else {
+                                            let column: any = table.getColumns()[5];
+                                            if (column instanceof sap.ui.table.Column) {
+                                                column.setVisible(false);
+                                            }
+                                        }
+                                    }
+                                }),
                             ]
                         }),
                         rows: "{/rows}",
@@ -153,6 +183,17 @@ namespace initialfantasy {
                                     path: "value",
                                     type: new sap.extension.data.Alphanumeric()
                                 }),
+                                width: "12rem",
+                            }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("shell_query_condition_comparedalias"),
+                                template: new sap.extension.m.Select("", {
+                                    items: this.getPropertyListItem(aliases)
+                                }).bindProperty("bindingValue", {
+                                    path: "comparedAlias",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                                visible: false,
                                 width: "12rem",
                             }),
                             new sap.extension.table.DataColumn("", {

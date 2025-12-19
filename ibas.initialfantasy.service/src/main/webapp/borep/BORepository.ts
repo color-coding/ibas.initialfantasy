@@ -198,7 +198,14 @@ namespace initialfantasy {
                 cCriteria.propertyPath = bo.BOInformation.PROPERTY_BOPROPERTYINFORMATIONS_NAME;
                 cCriteria.onlyHasChilds = true;
                 cCriteria.conditions.add(fetcher.criteria instanceof Array ? fetcher.criteria : fetcher.criteria.conditions);
-
+                // 补充父项查询条件
+                if (cCriteria.conditions.length > 0) {
+                    for (let item of cCriteria.conditions) {
+                        if (ibas.strings.equalsIgnoreCase(item.alias, bo.BOPropertyInformation.PROPERTY_CODE_NAME)) {
+                            criteria.conditions.add(ibas.objects.clone(item));
+                        }
+                    }
+                }
                 super.fetch<bo.BOInformation>(bo.BOInformation.name, {
                     criteria: criteria,
                     onCompleted: (opRslt) => {
