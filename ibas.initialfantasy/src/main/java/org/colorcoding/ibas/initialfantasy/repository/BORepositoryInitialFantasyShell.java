@@ -5,10 +5,14 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
+import org.colorcoding.ibas.bobas.bo.UserFieldsFactory;
+import org.colorcoding.ibas.bobas.bo.initial.UserFieldsManager;
 import org.colorcoding.ibas.bobas.common.ConditionOperation;
 import org.colorcoding.ibas.bobas.common.ConditionRelationship;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.IChildCriteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
@@ -39,6 +43,7 @@ import org.colorcoding.ibas.initialfantasy.bo.application.IApplicationConfigIden
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.BOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.bocriteria.IBOCriteria;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
+import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertyInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertySetting;
 import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 import org.colorcoding.ibas.initialfantasy.bo.refunction.Refunction;
@@ -165,11 +170,20 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 	public OperationResult<User> tokenConnect(String token) {
 		try {
 			this.setUserToken(token);
+			// 恢复正常用户信息
+			int userId = this.getCurrentUser().getId();
+			if (userId < User.TEMPORARY_USER_ID_FEATURE_VALUE) {
+				OrganizationFactory.createManager().unregister(this.getCurrentUser());
+				userId = Math.abs(userId - User.TEMPORARY_USER_ID_FEATURE_VALUE);
+			}
+			if (userId <= 0) {
+				throw new Exception(I18N.prop("msg_if_user_token_has_expired"));
+			}
 			// 当前口令被失败，判断用户状态
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
-			condition.setValue(this.getCurrentUser().getId());
+			condition.setValue(userId);
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
 			condition.setValue(emYesNo.YES);
@@ -229,7 +243,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				}
 				IUser boUser = opRsltUser.getResultObjects().firstOrDefault();
 				if (boUser == null) {
-					throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", this.getCurrentUser().getId()));
+					throw new Exception(I18N.prop("msg_if_user_not_exist_or_invalid", userId));
 				}
 				return this.connectResult(boUser);
 			}
@@ -409,22 +423,22 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		String tag = "CONFIG_ITEM", value = null;
 		// 返回公司代码
 		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_COMPANY);
-		if (value != null && !value.isEmpty()) {
+		if (!Strings.isNullOrEmpty(value)) {
 			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_COMPANY, value, tag));
 		}
 		// 返回审批方法
 		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY);
-		if (value != null && !value.isEmpty()) {
+		if (!Strings.isNullOrEmpty(value)) {
 			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_APPROVAL_WAY, value, tag));
 		}
 		// 返回组织方式
 		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY);
-		if (value != null && !value.isEmpty()) {
+		if (!Strings.isNullOrEmpty(value)) {
 			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_ORGANIZATION_WAY, value, tag));
 		}
 		// 返回权限判断方式
 		value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY);
-		if (value != null && !value.isEmpty()) {
+		if (!Strings.isNullOrEmpty(value)) {
 			opRslt.addInformations(new OperationInformation(MyConfiguration.CONFIG_ITEM_OWNERSHIP_WAY, value, tag));
 		}
 		return opRslt;
@@ -548,7 +562,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition.setAlias(BOCriteria.PROPERTY_ASSIGNEDTYPE.getName());
 			condition.setValue(emAssignedType.ALL);
 			// 所属角色的查询
-			if (this.getCurrentUser().getBelong() != null && !this.getCurrentUser().getBelong().isEmpty()) {
+			if (!Strings.isNullOrEmpty(this.getCurrentUser().getBelong())) {
 				condition = criteria.getConditions().create();
 				condition.setRelationship(ConditionRelationship.OR);
 				condition.setBracketOpen(1);
@@ -587,7 +601,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		try {
 			this.setUserToken(token);
 			// 补全信息
-			if (query.getUser() == null || query.getUser().isEmpty()) {
+			if (Strings.isNullOrEmpty(query.getUser())) {
 				try (BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell()) {
 					boRepository.setUserToken(OrganizationFactory.SYSTEM_USER);
 					ICriteria criteria = new Criteria();
@@ -671,10 +685,12 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 						throw new Exception(opRsltSave.getMessage());
 					}
 				}
-				if (myTrans)
+				if (myTrans) {
 					this.commitTransaction();
+				}
 				return new OperationMessage();
 			} catch (Exception e) {
+				Logger.log(e);
 				if (myTrans) {
 					try {
 						this.rollbackTransaction();
@@ -728,7 +744,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				condition = criteria.getConditions().create();
 				condition.setAlias(BOPropertySetting.PROPERTY_IDENTITYCODE.getName());
 				condition.setValue("");
-				if (identities != null && !identities.isEmpty()) {
+				if (!Strings.isNullOrEmpty(identities)) {
 					condition.setBracketOpen(1);
 					for (String identity : identities.split(",")) {
 						condition = criteria.getConditions().create();
@@ -839,7 +855,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			// 获取身份配置
 			if (this.getCurrentUser() instanceof User) {
 				User cUser = (User) this.getCurrentUser();
-				if (cUser.getBelong() != null && !cUser.getBelong().isEmpty()) {
+				if (!Strings.isNullOrEmpty(cUser.getBelong())) {
 					// 用户有组织则
 					criteria = new Criteria();
 					condition = criteria.getConditions().create();
@@ -848,7 +864,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 					condition = criteria.getConditions().create();
 					condition.setAlias(ApplicationConfigIdentity.PROPERTY_IDENTITYCODE.getName());
 					condition.setValue("");
-					if (cUser.getIdentities() != null && !cUser.getIdentities().isEmpty()) {
+					if (!Strings.isNullOrEmpty(cUser.getIdentities())) {
 						// 用户有身份
 						condition.setBracketOpen(1);
 						for (String item : cUser.getIdentities().split(",")) {
@@ -1038,6 +1054,45 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			OperationResult<UserFunction> opRslt = new OperationResult<>();
 			for (Refunction item : opRsltFetch.getResultObjects()) {
 				opRslt.addResultObjects(UserFunction.create(item));
+			}
+			return opRslt;
+		} catch (Exception e) {
+			return new OperationResult<>(e);
+		}
+	}
+
+	@Override
+	public OperationResult<BizObjectInfo> fetchUserObjects(String user, String token) {
+		try {
+			this.setUserToken(token);
+			org.colorcoding.ibas.bobas.bo.UserFieldsManager userFieldsManager = UserFieldsFactory.createManager();
+			if (userFieldsManager instanceof UserFieldsManager) {
+				// 从缓存中获取
+				UserFieldsManager manager = (UserFieldsManager) userFieldsManager;
+				OperationResult<BizObjectInfo> opRslt = new OperationResult<>();
+				opRslt.getResultObjects().addAll(manager.getUserObjects());
+				return opRslt;
+			}
+			// 从数据库查询
+			ICriteria criteria = new Criteria();
+			IChildCriteria childCriteria = criteria.getChildCriterias().create();
+			childCriteria.setEntry(true);
+			childCriteria.setOnlyHasChilds(true);
+			childCriteria.setPropertyPath(BOInformation.PROPERTY_BOPROPERTYINFORMATIONS);
+			ICondition condition = childCriteria.getConditions().create();
+			condition.setAlias(BOPropertyInformation.PROPERTY_PROPERTY.getName());
+			condition.setOperation(ConditionOperation.START);
+			condition.setValue(IBOUserFields.USER_FIELD_PREFIX_SIGN);
+			IOperationResult<BOInformation> opRsltFetch = this.fetchBOInformation(criteria, token);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			if (opRsltFetch.getResultCode() != 0) {
+				throw new Exception(opRsltFetch.getMessage());
+			}
+			OperationResult<BizObjectInfo> opRslt = new OperationResult<>(opRsltFetch.getResultObjects().size());
+			for (BOInformation boItem : opRsltFetch.getResultObjects()) {
+				opRslt.addResultObjects(BizObjectInfo.create(boItem));
 			}
 			return opRslt;
 		} catch (Exception e) {

@@ -7,9 +7,10 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.common.Strings;
+import org.colorcoding.ibas.bobas.core.Serializable;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.core.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
 
 /**
@@ -35,9 +36,12 @@ public class BizPropertyInfo extends Serializable {
 		propertyInfo.setEditSize(propertyItem.getEditSize());
 		propertyInfo.setSearched(propertyItem.getSearched() == emYesNo.YES ? true : false);
 		propertyInfo.setSystemed(propertyItem.getSystemed() == emYesNo.YES ? true : false);
-		propertyInfo.setLinkedObject(propertyItem.getLinkedObject());
-		propertyInfo.setValueChooseType(propertyItem.getValueChooseType());
-		propertyInfo.setTriggerByProperty(propertyItem.getTriggerByProperty());
+		propertyInfo.setLinkedObject(
+				Strings.isNullOrEmpty(propertyItem.getLinkedObject()) ? null : propertyItem.getLinkedObject());
+		propertyInfo.setValueChooseType(
+				Strings.isNullOrEmpty(propertyItem.getValueChooseType()) ? null : propertyItem.getValueChooseType());
+		propertyInfo.setTriggerByProperty(Strings.isNullOrEmpty(propertyItem.getTriggerByProperty()) ? null
+				: propertyItem.getTriggerByProperty());
 		BizPropertyValue[] propertyValues = new BizPropertyValue[propertyItem.getBOPropertyValues().size()];
 		for (int i = 0; i < propertyValues.length; i++) {
 			propertyValues[i] = BizPropertyValue.create(propertyItem.getBOPropertyValues().get(i));

@@ -76,25 +76,25 @@ public class ConnectService extends BORepositoryInitialFantasyShell {
 	protected OperationResult<User> loggingConnectedUser(OperationResult<User> operationResult, String... contents) {
 		if (MyConfiguration.getConfigValue(CONFIG_ITEM_ENABLE_USER_LOGIN_LOG, true)) {
 			for (User user : operationResult.getResultObjects()) {
-				try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
-					// 记录登录日志
-					StringBuilder builder = new StringBuilder();
-					if (contents != null) {
-						for (String item : contents) {
-							if (Strings.isNullOrEmpty(item)) {
-								continue;
-							}
-							if (builder.length() > 0) {
-								builder.append("; ");
-							}
-							builder.append(item);
+				// 记录登录日志
+				StringBuilder builder = new StringBuilder();
+				if (contents != null) {
+					for (String item : contents) {
+						if (Strings.isNullOrEmpty(item)) {
+							continue;
 						}
+						if (builder.length() > 0) {
+							builder.append("; ");
+						}
+						builder.append(item);
 					}
-					UserActionLog actionLog = new UserActionLog();
-					actionLog.setAction("SYS_USER_LOGIN");
-					actionLog.setUserId(user.getId());
-					actionLog.setUserName(user.getName());
-					actionLog.setContent(builder.toString());
+				}
+				UserActionLog actionLog = new UserActionLog();
+				actionLog.setAction("SYS_USER_LOGIN");
+				actionLog.setUserId(user.getId());
+				actionLog.setUserName(user.getName());
+				actionLog.setContent(builder.toString());
+				try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
 					boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
 					boRepository.saveUserActionLog(actionLog);
 				} catch (Exception e) {

@@ -154,7 +154,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 描述 属性
 	 */
-	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DESCRIPTION = registerProperty(PROPERTY_DESCRIPTION_NAME,
 			String.class, MY_CLASS);
 
@@ -185,7 +185,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 默认值 属性
 	 */
-	@DbField(name = "Default", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Default", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_DEFAULT = registerProperty(PROPERTY_DEFAULT_NAME, emYesNo.class,
 			MY_CLASS);
 
@@ -216,7 +216,7 @@ public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements 
 	/**
 	 * 显示顺序 属性
 	 */
-	@DbField(name = "VisOrder", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "VisOrder", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_VISORDER = registerProperty(PROPERTY_VISORDER_NAME,
 			Integer.class, MY_CLASS);
 

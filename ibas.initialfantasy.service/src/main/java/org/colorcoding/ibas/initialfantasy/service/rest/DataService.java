@@ -269,6 +269,22 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.fetchBizObjectInfo(user, boCode, MyConfiguration.optToken(authorization, token));
 	}
 
+	/**
+	 * 查询用户对象信息
+	 * 
+	 * @param user  用户
+	 * @param token 用户口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("fetchUserObjects")
+	public OperationResult<BizObjectInfo> fetchUserObjects(@QueryParam("user") String user,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.fetchUserObjects(user, MyConfiguration.optToken(authorization, token));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-应用程序元素
@@ -785,8 +801,9 @@ public class DataService extends BORepositoryInitialFantasyShell {
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-用户动作日志
+	 * 
 	 * @param criteria 查询
-	 * @param token 口令
+	 * @param token    口令
 	 * @return 操作结果
 	 */
 	@POST
@@ -800,7 +817,8 @@ public class DataService extends BORepositoryInitialFantasyShell {
 
 	/**
 	 * 保存-用户动作日志
-	 * @param bo 对象实例
+	 * 
+	 * @param bo    对象实例
 	 * @param token 口令
 	 * @return 操作结果
 	 */

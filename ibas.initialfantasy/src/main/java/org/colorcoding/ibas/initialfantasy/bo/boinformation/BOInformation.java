@@ -83,7 +83,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 名称 属性
 	 */
-	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
 			MY_CLASS);
 
@@ -114,7 +114,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 描述 属性
 	 */
-	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DESCRIPTION = registerProperty(PROPERTY_DESCRIPTION_NAME,
 			String.class, MY_CLASS);
 
@@ -145,7 +145,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 映射（表） 属性
 	 */
-	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_MAPPED = registerProperty(PROPERTY_MAPPED_NAME, String.class,
 			MY_CLASS);
 
@@ -176,7 +176,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 对象类型 属性
 	 */
-	@DbField(name = "ObjectType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "ObjectType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_OBJECTTYPE = registerProperty(PROPERTY_OBJECTTYPE_NAME,
 			String.class, MY_CLASS);
 
@@ -207,7 +207,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 开启修改日志 属性
 	 */
-	@DbField(name = "Modified", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Modified", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_MODIFIED = registerProperty(PROPERTY_MODIFIED_NAME,
 			emYesNo.class, MY_CLASS);
 

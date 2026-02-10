@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.colorcoding.ibas.bobas.bo.UserFieldsFactory;
+import org.colorcoding.ibas.bobas.bo.UserFieldsManager;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.common.ICondition;
@@ -18,6 +20,7 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
+import org.colorcoding.ibas.bobas.organization.OrganizationManager;
 import org.colorcoding.ibas.bobas.ownership.UnauthorizedException;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.organization.User;
@@ -64,8 +67,19 @@ public class MonitoringService {
 					throw new UnauthorizedException();
 				}
 			}
+			// 重置服务路由
 			ServiceRouting serviceRouting = ServiceRouting.create();
 			serviceRouting.setRuntime(String.valueOf(DateTimes.now().getTime() / 1000));
+			serviceRouting = null;
+			// 重置组织
+			OrganizationManager organizationManager = OrganizationFactory.createManager();
+			organizationManager.initialize();
+			organizationManager = null;
+			// 重置用户对象
+			UserFieldsManager userFieldsManager = UserFieldsFactory.createManager();
+			userFieldsManager.initialize();
+			userFieldsManager = null;
+
 			OperationResult<String> operationResult = new OperationResult<>();
 			Function<Long, String> computingMemory = new Function<Long, String>() {
 				@Override

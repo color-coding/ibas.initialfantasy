@@ -24,6 +24,8 @@ import org.colorcoding.ibas.initialfantasy.bo.organization.IUser;
 @XmlRootElement(name = "User")
 public class User extends Serializable implements org.colorcoding.ibas.bobas.organization.IUser {
 
+	/** 临时用户ID特征值（乘法） */
+	public static final int TEMPORARY_USER_ID_FEATURE_VALUE = -90000000;
 	/** 变量-用户ID */
 	public static final String VARIABLE_NAME_USER_ID = "${USER_ID}";
 	/** 变量-用户编码 */

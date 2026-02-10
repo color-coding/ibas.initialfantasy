@@ -44,7 +44,6 @@ namespace initialfantasy {
                 if (!ibas.objects.isNull(criteria)) {
                     if (criteria.conditions.firstOrDefault(
                         c => c.alias === bo.User.PROPERTY_DOCENTRY_NAME
-                            && c.operation === ibas.emConditionOperation.GRATER_THAN
                             && c.value === "0"
                     ) === null) {
                         if (criteria.conditions.length > 2) {

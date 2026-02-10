@@ -349,6 +349,7 @@ namespace initialfantasy {
                                 criteria = new ibas.Criteria();
                                 criteria.businessObject = ship.code;
                                 let cCriteria: ibas.IChildCriteria = criteria.childCriterias.create();
+                                cCriteria.entry = true;
                                 cCriteria.onlyHasChilds = true;
                                 cCriteria.propertyPath = ship.associatedProperty;
                                 condition = cCriteria.conditions.create();

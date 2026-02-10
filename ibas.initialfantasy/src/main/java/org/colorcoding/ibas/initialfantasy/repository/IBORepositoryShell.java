@@ -101,4 +101,14 @@ public interface IBORepositoryShell {
 	 * @return 操作结果
 	 */
 	OperationResult<UserFunction> fetchUserFunctions(String user, String token);
+
+	/**
+	 * 查询用户对象
+	 * 
+	 * @param user   用户
+	 * @param boCode 对象编码
+	 * @param token  用户口令
+	 * @return 操作结果
+	 */
+	OperationResult<BizObjectInfo> fetchUserObjects(String user, String token);
 }

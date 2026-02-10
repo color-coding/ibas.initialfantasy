@@ -115,7 +115,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 序列名称 属性
 	 */
-	@DbField(name = "SeriesName", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false, uniqueKey = true)
+	@DbField(name = "SeriesName", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_SERIESNAME = registerProperty(PROPERTY_SERIESNAME_NAME,
 			String.class, MY_CLASS);
 
@@ -146,7 +146,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 下一个序号 属性
 	 */
-	@DbField(name = "NextNum", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "NextNum", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_NEXTNUMBER = registerProperty(PROPERTY_NEXTNUMBER_NAME,
 			Integer.class, MY_CLASS);
 
@@ -177,7 +177,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 已锁定 属性
 	 */
-	@DbField(name = "Locked", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Locked", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_LOCKED = registerProperty(PROPERTY_LOCKED_NAME, emYesNo.class,
 			MY_CLASS);
 
@@ -208,7 +208,7 @@ public class BOSeriesNumbering extends BusinessObject<BOSeriesNumbering> impleme
 	/**
 	 * 模板 属性
 	 */
-	@DbField(name = "Template", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Template", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_TEMPLATE = registerProperty(PROPERTY_TEMPLATE_NAME, String.class,
 			MY_CLASS);
 

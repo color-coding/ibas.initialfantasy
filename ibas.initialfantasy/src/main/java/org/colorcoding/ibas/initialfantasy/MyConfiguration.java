@@ -57,10 +57,6 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public static final String NAMESPACE_SERVICE = NAMESPACE_ROOT + "service";
 	/**
-	 * 配置项目-文档文件夹
-	 */
-	public final static String CONFIG_ITEM_DOCUMENT_FOLDER = "DocumentFolder";
-	/**
 	 * 配置项目-用户口令码
 	 */
 	public final static String CONFIG_ITEM_USER_TOKEN_KEY = "UserTokenKey";
@@ -116,7 +112,11 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public static boolean isDisabledUrlToken() {
 		if (DISABLED_URL_TOKEN == null) {
-			return false;
+			synchronized (MyConfiguration.class) {
+				if (DISABLED_URL_TOKEN == null) {
+					DISABLED_URL_TOKEN = MyConfiguration.getConfigValue(CONFIG_ITEM_DISABLED_URL_TOKEN, false);
+				}
+			}
 		}
 		return DISABLED_URL_TOKEN;
 	}
@@ -129,13 +129,6 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 * @return
 	 */
 	public static String optToken(String headerToken, String urlToken) {
-		if (DISABLED_URL_TOKEN == null) {
-			synchronized (MyConfiguration.class) {
-				if (DISABLED_URL_TOKEN == null) {
-					DISABLED_URL_TOKEN = MyConfiguration.getConfigValue(CONFIG_ITEM_DISABLED_URL_TOKEN, false);
-				}
-			}
-		}
 		if (!Strings.isNullOrEmpty(headerToken)) {
 			String values[] = headerToken.split(" ");
 			if (values.length > 1) {
@@ -144,7 +137,7 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 				}
 			}
 		}
-		if (DISABLED_URL_TOKEN) {
+		if (isDisabledUrlToken()) {
 			return Strings.VALUE_EMPTY;
 		}
 		return urlToken;

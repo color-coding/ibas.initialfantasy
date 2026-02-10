@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.core.Serializable;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 
@@ -28,6 +29,7 @@ public class BizObjectInfo extends Serializable {
 		boInfo.setCode(boItem.getCode());
 		boInfo.setName(boItem.getName());
 		boInfo.setType(boItem.getObjectType());
+		boInfo.setTable(boItem.getMapped());
 		BizPropertyInfo[] propertyInfos = new BizPropertyInfo[boItem.getBOPropertyInformations().size()];
 		for (int i = 0; i < propertyInfos.length; i++) {
 			propertyInfos[i] = BizPropertyInfo.create(boItem.getBOPropertyInformations().get(i));
@@ -72,6 +74,16 @@ public class BizObjectInfo extends Serializable {
 		this.type = type;
 	}
 
+	private String table;
+
+	public String getTable() {
+		return table;
+	}
+
+	public void setTable(String table) {
+		this.table = table;
+	}
+
 	/** 属性集合 */
 	private BizPropertyInfo[] properties;
 
@@ -87,6 +99,7 @@ public class BizObjectInfo extends Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("{objectInfo: %s %s}", this.getName(), this.getType());
+		return String.format("{objectInfo: %s}",
+				Strings.isNullOrEmpty(this.getName()) ? this.getCode() : this.getName());
 	}
 }

@@ -88,7 +88,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 类型 属性
 	 */
-	@DbField(name = "Object", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Object", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_OBJECTCODE = registerProperty(PROPERTY_OBJECTCODE_NAME,
 			String.class, MY_CLASS);
 
@@ -150,7 +150,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 显示顺序 属性
 	 */
-	@DbField(name = "VisOrder", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "VisOrder", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_VISORDER = registerProperty(PROPERTY_VISORDER_NAME,
 			Integer.class, MY_CLASS);
 
@@ -181,7 +181,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 实例号（版本） 属性
 	 */
-	@DbField(name = "LogInst", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "LogInst", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_LOGINST = registerProperty(PROPERTY_LOGINST_NAME, Integer.class,
 			MY_CLASS);
 
@@ -212,7 +212,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 数据源 属性
 	 */
-	@DbField(name = "DataSource", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "DataSource", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DATASOURCE = registerProperty(PROPERTY_DATASOURCE_NAME,
 			String.class, MY_CLASS);
 
@@ -243,7 +243,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 创建日期 属性
 	 */
-	@DbField(name = "CreateDate", type = DbFieldType.DATE, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "CreateDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_CREATEDATE = registerProperty(PROPERTY_CREATEDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -274,7 +274,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 创建时间 属性
 	 */
-	@DbField(name = "CreateTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "CreateTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Short> PROPERTY_CREATETIME = registerProperty(PROPERTY_CREATETIME_NAME,
 			Short.class, MY_CLASS);
 
@@ -305,7 +305,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 修改日期 属性
 	 */
-	@DbField(name = "UpdateDate", type = DbFieldType.DATE, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "UpdateDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_UPDATEDATE = registerProperty(PROPERTY_UPDATEDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -336,7 +336,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 修改时间 属性
 	 */
-	@DbField(name = "UpdateTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "UpdateTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Short> PROPERTY_UPDATETIME = registerProperty(PROPERTY_UPDATETIME_NAME,
 			Short.class, MY_CLASS);
 
@@ -367,7 +367,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 创建用户 属性
 	 */
-	@DbField(name = "Creator", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Creator", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_CREATEUSERSIGN = registerProperty(PROPERTY_CREATEUSERSIGN_NAME,
 			Integer.class, MY_CLASS);
 
@@ -398,7 +398,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 修改用户 属性
 	 */
-	@DbField(name = "Updator", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Updator", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_UPDATEUSERSIGN = registerProperty(PROPERTY_UPDATEUSERSIGN_NAME,
 			Integer.class, MY_CLASS);
 
@@ -429,7 +429,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 创建动作标识 属性
 	 */
-	@DbField(name = "CreateActId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "CreateActId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_CREATEACTIONID = registerProperty(PROPERTY_CREATEACTIONID_NAME,
 			String.class, MY_CLASS);
 
@@ -460,7 +460,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 更新动作标识 属性
 	 */
-	@DbField(name = "UpdateActId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "UpdateActId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_UPDATEACTIONID = registerProperty(PROPERTY_UPDATEACTIONID_NAME,
 			String.class, MY_CLASS);
 
@@ -491,7 +491,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 取值属性 属性
 	 */
-	@DbField(name = "Alias", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Alias", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_PROPERTYNAME = registerProperty(PROPERTY_PROPERTYNAME_NAME,
 			String.class, MY_CLASS);
 
@@ -522,7 +522,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 比较的值 属性
 	 */
-	@DbField(name = "CondVal", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "CondVal", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_CONDITIONVALUE = registerProperty(PROPERTY_CONDITIONVALUE_NAME,
 			String.class, MY_CLASS);
 
@@ -553,7 +553,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 比较的方法 属性
 	 */
-	@DbField(name = "Operation", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Operation", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emConditionOperation> PROPERTY_OPERATION = registerProperty(
 			PROPERTY_OPERATION_NAME, emConditionOperation.class, MY_CLASS);
 
@@ -584,7 +584,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 与上一个条件的关系 属性
 	 */
-	@DbField(name = "Relationship", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Relationship", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emConditionRelationship> PROPERTY_RELATIONSHIP = registerProperty(
 			PROPERTY_RELATIONSHIP_NAME, emConditionRelationship.class, MY_CLASS);
 
@@ -615,7 +615,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 开括号数 属性
 	 */
-	@DbField(name = "BracketOpen", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "BracketOpen", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_BRACKETOPEN = registerProperty(PROPERTY_BRACKETOPEN_NAME,
 			Integer.class, MY_CLASS);
 
@@ -646,7 +646,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 闭括号数 属性
 	 */
-	@DbField(name = "BracketClose", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "BracketClose", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_BRACKETCLOSE = registerProperty(PROPERTY_BRACKETCLOSE_NAME,
 			Integer.class, MY_CLASS);
 
@@ -677,7 +677,7 @@ public class BOFilteringCondition extends BusinessObject<BOFilteringCondition> i
 	/**
 	 * 备注 属性
 	 */
-	@DbField(name = "Remarks", type = DbFieldType.MEMO, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Remarks", type = DbFieldType.MEMO, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_REMARKS = registerProperty(PROPERTY_REMARKS_NAME, String.class,
 			MY_CLASS);
 

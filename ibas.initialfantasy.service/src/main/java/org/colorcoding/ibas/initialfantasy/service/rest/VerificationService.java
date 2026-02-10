@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 import java.util.Random;
@@ -25,6 +25,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.Files;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.task.Daemon;
 import org.colorcoding.ibas.bobas.task.IDaemonTask;
@@ -126,16 +127,8 @@ public class VerificationService {
 						// 设置内容类型
 						response.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 						// 写入响应输出流
-						OutputStream os = response.getOutputStream();
-						try (FileInputStream inputStream = new FileInputStream(file)) {
-							int bytesRead;
-							byte[] buffer = new byte[1024];
-							while ((bytesRead = inputStream.read(buffer)) != -1) {
-								os.write(buffer, 0, bytesRead);
-							}
-							os.flush();
-						}
-					} catch (Exception e) {
+						Files.writeTo(file, response.getOutputStream());
+					} catch (IOException e) {
 						throw new WebApplicationException(e);
 					}
 				} else {

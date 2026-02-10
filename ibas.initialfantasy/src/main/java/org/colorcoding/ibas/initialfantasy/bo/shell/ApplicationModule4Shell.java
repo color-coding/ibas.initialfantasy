@@ -32,7 +32,7 @@ public class ApplicationModule4Shell extends ApplicationModule {
 	/**
 	 * 权限类型 属性
 	 */
-	@DbField(name = "AuthValue", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "AuthValue", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emAuthoriseType> PROPERTY_AUTHORISEVALUE = registerProperty(
 			PROPERTY_AUTHORISEVALUE_NAME, emAuthoriseType.class, MY_CLASS);
 

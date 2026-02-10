@@ -78,7 +78,7 @@ public class BONumbering extends BusinessObject<BONumbering> implements IBONumbe
 	/**
 	 * 自动序号 属性
 	 */
-	@DbField(name = "AutoKey", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "AutoKey", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_AUTOKEY = registerProperty(PROPERTY_AUTOKEY_NAME, Integer.class,
 			MY_CLASS);
 

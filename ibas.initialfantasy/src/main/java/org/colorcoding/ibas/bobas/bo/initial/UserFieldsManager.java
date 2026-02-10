@@ -8,11 +8,12 @@ import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.Enums;
 import org.colorcoding.ibas.bobas.common.IChildCriteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
+import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.List;
-import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.db.DbField;
 import org.colorcoding.ibas.bobas.db.DbFieldType;
 import org.colorcoding.ibas.bobas.db.DbTable;
@@ -20,7 +21,8 @@ import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOPropertyInformation;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
-import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOPropertyInformation;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BizObjectInfo;
+import org.colorcoding.ibas.initialfantasy.bo.shell.BizPropertyInfo;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
 public class UserFieldsManager extends org.colorcoding.ibas.bobas.bo.UserFieldsManager {
@@ -45,53 +47,24 @@ public class UserFieldsManager extends org.colorcoding.ibas.bobas.bo.UserFieldsM
 				}
 			}
 			if (!Strings.isNullOrEmpty(table)) {
-				ICondition condition;
-				Criteria criteria = new Criteria();
-				condition = criteria.getConditions().create();
-				condition.setAlias(BOPropertyInformation.PROPERTY_MAPPED);
-				condition.setOperation(ConditionOperation.EQUAL);
-				condition.setValue(table);
-				IChildCriteria childCriteria = criteria.getChildCriterias().create();
-				childCriteria.setPropertyPath(BOInformation.PROPERTY_BOPROPERTYINFORMATIONS);
-				childCriteria.setOnlyHasChilds(true);
-				childCriteria.setNoChilds(true);
-				condition = childCriteria.getConditions().create();
-				condition.setAlias(BOPropertyInformation.PROPERTY_PROPERTY);
-				condition.setOperation(ConditionOperation.START);
-				condition.setValue(IBOUserFields.USER_FIELD_PREFIX_SIGN);
-				condition = childCriteria.getConditions().create();
-				condition.setAlias(BOPropertyInformation.PROPERTY_EDITSIZE);
-				condition.setOperation(ConditionOperation.GRATER_THAN);
-				condition.setValue(0);
-				condition = childCriteria.getConditions().create();
-				condition.setAlias(BOPropertyInformation.PROPERTY_SYSTEMED);
-				condition.setOperation(ConditionOperation.NOT_EQUAL);
-				condition.setValue(emYesNo.YES);
-
-				try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
-					boRepository.setUserToken(OrganizationFactory.SYSTEM_USER);
-
-					IOperationResult<IBOInformation> operationResult = boRepository.fetchBOInformation(criteria);
-					if (operationResult.getError() != null) {
-						throw operationResult.getError();
+				BizObjectInfo objectInfo = null;
+				for (BizObjectInfo item : this.getUserObjects()) {
+					if (Strings.equalsIgnoreCase(table, item.getTable())) {
+						objectInfo = item;
+						break;
 					}
-					if (operationResult.getResultObjects().isEmpty()) {
-						userFields = this.setNoUserFields(objectType);
-					} else {
-						for (IBOInformation boItem : operationResult.getResultObjects()) {
-							for (IBOPropertyInformation ptyItem : boItem.getBOPropertyInformations()) {
-								if (!Strings.isWith(ptyItem.getPropertyName(), IBOUserFields.USER_FIELD_PREFIX_SIGN,
-										null)) {
-									continue;
-								}
-								this.registerUserField(objectType, ptyItem.getPropertyName(),
-										this.classOf(ptyItem.getDataType(), ptyItem.getEditType()));
-							}
+				}
+				if (objectInfo == null) {
+					userFields = this.setNoUserFields(objectType);
+				} else {
+					for (BizPropertyInfo ptyItem : objectInfo.getProperties()) {
+						if (!Strings.isWith(ptyItem.getName(), IBOUserFields.USER_FIELD_PREFIX_SIGN, null)) {
+							continue;
 						}
-						userFields = super.getUserFieldInfoList(objectType);
+						this.registerUserField(objectType, ptyItem.getName(),
+								this.classOf(ptyItem.getDataType(), ptyItem.getEditType()));
 					}
-				} catch (Exception e) {
-					throw new RuntimeException(e);
+					userFields = super.getUserFieldInfoList(objectType);
 				}
 			} else {
 				userFields = this.setNoUserFields(objectType);
@@ -100,8 +73,63 @@ public class UserFieldsManager extends org.colorcoding.ibas.bobas.bo.UserFieldsM
 		return userFields;
 	}
 
+	private List<BizObjectInfo> userObjects;
+
+	public List<BizObjectInfo> getUserObjects() {
+		if (this.userObjects == null) {
+			this.userObjects = new ArrayList<>();
+		}
+		return userObjects;
+	}
+
 	@Override
 	public void initialize() {
+		ICriteria criteria = new Criteria();
+		IChildCriteria childCriteria = criteria.getChildCriterias().create();
+		childCriteria.setEntry(true);
+		childCriteria.setOnlyHasChilds(true);
+		childCriteria.setNoChilds(true);
+		childCriteria.setPropertyPath(BOInformation.PROPERTY_BOPROPERTYINFORMATIONS);
+		ICondition condition = childCriteria.getConditions().create();
+		condition.setAlias(BOPropertyInformation.PROPERTY_PROPERTY.getName());
+		condition.setOperation(ConditionOperation.START);
+		condition.setValue(IBOUserFields.USER_FIELD_PREFIX_SIGN);
+		try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
+			boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
+			IOperationResult<IBOInformation> opRsltFetch = boRepository.fetchBOInformation(criteria);
+			if (opRsltFetch.getError() != null) {
+				throw opRsltFetch.getError();
+			}
+			if (opRsltFetch.getResultCode() != 0) {
+				throw new Exception(opRsltFetch.getMessage());
+			}
+			ArrayList<BizObjectInfo> userObjects = new ArrayList<>(opRsltFetch.getResultObjects().size());
+			for (IBOInformation boItem : opRsltFetch.getResultObjects()) {
+				userObjects.add(BizObjectInfo.create(boItem));
+			}
+			// 清理非必要数据内容
+			for (BizObjectInfo objectInfo : userObjects) {
+				objectInfo.setName(null);
+				for (BizPropertyInfo propertyInfo : objectInfo.getProperties()) {
+					propertyInfo.setAlias(null);
+					propertyInfo.setAuthorised(null);
+					propertyInfo.setDescription(null);
+					propertyInfo.setLinkedObject(null);
+					propertyInfo.setTriggerByProperty(null);
+					propertyInfo.setValueChooseType(null);
+					propertyInfo.setValues(null);
+					propertyInfo.setWidth(null);
+					propertyInfo.setSearched(null);
+					propertyInfo.setSystemed(null);
+					if (Strings.equalsIgnoreCase(propertyInfo.getEditType(), "default")) {
+						propertyInfo.setEditType(null);
+					}
+				}
+			}
+			this.userObjects = userObjects;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Class<?> classOf(String type, String editType) {

@@ -45,6 +45,7 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 						// 未操作超时
 						this.getIdUsers().remove(user.getId());
 						this.getTokenUsers().remove(token);
+						user = null;
 						throw new RuntimeException(I18N.prop("msg_if_user_token_has_expired"));
 					} else {
 						// 续期
@@ -52,7 +53,10 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 					}
 				}
 			}
-			return checkIdentities(user);
+			if (user != null && user.getId() > 0) {
+				return checkIdentities(user);
+			}
+			return user;
 		}
 		return null;
 	}
@@ -128,6 +132,21 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 			}
 		}
 		return tokenUsers;
+	}
+
+	@Override
+	public IUser unregister(IUser user) {
+		if (user == null) {
+			return UNKNOWN_USER;
+		}
+		if (user.getToken() != null) {
+			this.getTokenUsers().remove(user.getToken());
+		}
+		user = this.getIdUsers().remove(user.getId());
+		if (user.getToken() != null) {
+			this.getTokenUsers().remove(user.getToken());
+		}
+		return user;
 	}
 
 	@Override
@@ -222,4 +241,5 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 		}
 		return user;
 	}
+
 }

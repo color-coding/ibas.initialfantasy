@@ -115,7 +115,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 映射（字段） 属性
 	 */
-	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_MAPPED = registerProperty(PROPERTY_MAPPED_NAME, String.class,
 			MY_CLASS);
 
@@ -146,7 +146,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 描述 属性
 	 */
-	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DESCRIPTION = registerProperty(PROPERTY_DESCRIPTION_NAME,
 			String.class, MY_CLASS);
 
@@ -177,7 +177,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 数据类型 属性
 	 */
-	@DbField(name = "DataType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "DataType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DATATYPE = registerProperty(PROPERTY_DATATYPE_NAME, String.class,
 			MY_CLASS);
 
@@ -208,7 +208,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 编辑类型 属性
 	 */
-	@DbField(name = "EditType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "EditType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_EDITTYPE = registerProperty(PROPERTY_EDITTYPE_NAME, String.class,
 			MY_CLASS);
 
@@ -239,7 +239,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 编辑大小 属性
 	 */
-	@DbField(name = "EditSize", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "EditSize", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_EDITSIZE = registerProperty(PROPERTY_EDITSIZE_NAME,
 			Integer.class, MY_CLASS);
 
@@ -270,7 +270,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 检索的 属性
 	 */
-	@DbField(name = "Searched", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Searched", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_SEARCHED = registerProperty(PROPERTY_SEARCHED_NAME,
 			emYesNo.class, MY_CLASS);
 
@@ -301,7 +301,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 系统的 属性
 	 */
-	@DbField(name = "Systemed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	@DbField(name = "Systemed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_SYSTEMED = registerProperty(PROPERTY_SYSTEMED_NAME,
 			emYesNo.class, MY_CLASS);
 
