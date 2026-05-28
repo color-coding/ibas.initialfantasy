@@ -60,7 +60,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 应用标识 属性
 	 */
-	@DbField(name = "AppId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "AppId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_APPLICATIONID = registerProperty(PROPERTY_APPLICATIONID_NAME,
 			String.class, MY_CLASS);
 
@@ -91,7 +91,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 检索名称 属性
 	 */
-	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
 			MY_CLASS);
 
@@ -122,7 +122,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 指派类型 属性
 	 */
-	@DbField(name = "AssignedType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "AssignedType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<emAssignedType> PROPERTY_ASSIGNEDTYPE = registerProperty(
 			PROPERTY_ASSIGNEDTYPE_NAME, emAssignedType.class, MY_CLASS);
 
@@ -153,7 +153,7 @@ public class BOCriteria extends BusinessObject<BOCriteria> implements IBOCriteri
 	/**
 	 * 指派目标 属性
 	 */
-	@DbField(name = "Assigned", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Assigned", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_ASSIGNED = registerProperty(PROPERTY_ASSIGNED_NAME, String.class,
 			MY_CLASS);
 

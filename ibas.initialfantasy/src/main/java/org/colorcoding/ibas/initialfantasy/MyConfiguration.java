@@ -93,6 +93,14 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 */
 	public final static String CONFIG_ITEM_PASSWORD_REGEX = "PasswordRegex";
 	/**
+	 * 配置项目-用户登录最大失败次数
+	 */
+	public final static String CONFIG_ITEM_LOGIN_MAX_FAIL_COUNT = "LoginMaxFailCount";
+	/**
+	 * 配置项目-用户登录失败记录时间窗口（秒）
+	 */
+	public final static String CONFIG_ITEM_LOGIN_FAIL_SPAN_TIME = "LoginFailSpanTime";
+	/**
 	 * 配置项目-检查用户密码复杂性
 	 */
 	public final static String CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY = "checkPasswordComplexity";
