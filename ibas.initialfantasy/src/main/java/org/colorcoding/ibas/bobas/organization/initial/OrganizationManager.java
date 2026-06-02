@@ -1,6 +1,5 @@
 package org.colorcoding.ibas.bobas.organization.initial;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +16,6 @@ import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
@@ -28,8 +26,27 @@ import org.colorcoding.ibas.initialfantasy.bo.shell.User;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
 public class OrganizationManager extends org.colorcoding.ibas.bobas.organization.OrganizationManager {
-	private static int TOKEN_TIMEOUT = 0;
-	private static int TOKEN_INSTANCES = 0;
+
+	/**
+	 * 获取 Token 空闲超时时间（秒）
+	 */
+	private static int getTokenTimeout() {
+		return MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0);
+	}
+
+	/**
+	 * 获取每个用户允许的有效 Token 实例数
+	 */
+	private static int getTokenInstances() {
+		return MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0);
+	}
+
+	/**
+	 * 获取 Token 最大绝对有效期（秒）
+	 */
+	private static int getTokenMaxAge() {
+		return MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_MAX_AGE, 0);
+	}
 
 	@Override
 	public IUser getUser(String token) {
@@ -38,17 +55,30 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 				return OrganizationFactory.SYSTEM_USER;
 			}
 			IUser user = this.getTokenUsers().get(token);
-			if (TOKEN_TIMEOUT > 0 && user instanceof User) {
+			if (user instanceof User) {
 				User oUser = (User) user;
 				if (oUser.getTokenTimeStamp() > 0) {
-					if ((DateTimes.now().getTime() - oUser.getTokenTimeStamp()) / 1000 > TOKEN_TIMEOUT) {
-						// 未操作超时
-						this.getIdUsers().remove(user.getId());
+					long elapsedSeconds = (DateTimes.now().getTime() - oUser.getTokenTimeStamp()) / 1000;
+					int timeout = getTokenTimeout();
+					boolean expired = false;
+					// 检查空闲超时
+					if (timeout > 0 && elapsedSeconds > timeout) {
+						expired = true;
+					}
+					// 检查绝对有效期
+					if (getTokenMaxAge() > 0 && oUser.getTokenCreateTime() > 0) {
+						long totalSeconds = (DateTimes.now().getTime() - oUser.getTokenCreateTime()) / 1000;
+						if (totalSeconds > getTokenMaxAge()) {
+							expired = true;
+						}
+					}
+					if (expired) {
+						// Token 已过期，移除该 Token
 						this.getTokenUsers().remove(token);
-						user = null;
-						throw new RuntimeException(I18N.prop("msg_if_user_token_has_expired"));
+						// 注意：不删除 idUsers，因为同一用户可能有其他有效 Token
+						return null;
 					} else {
-						// 续期
+						// 续期：更新最后访问时间
 						oUser.setTokenTimeStamp();
 					}
 				}
@@ -76,8 +106,6 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 	@Override
 	public void initialize() {
 		try {
-			TOKEN_TIMEOUT = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0);
-			TOKEN_INSTANCES = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0);
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
@@ -94,8 +122,8 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 					throw operationResult.getError();
 				}
 				User user;
-				this.idUsers = new HashMap<>(operationResult.getResultObjects().size());
-				this.tokenUsers = new HashMap<>(operationResult.getResultObjects().size());
+				this.idUsers = new ConcurrentHashMap<>(operationResult.getResultObjects().size());
+				this.tokenUsers = new ConcurrentHashMap<>(operationResult.getResultObjects().size());
 				for (org.colorcoding.ibas.initialfantasy.bo.organization.IUser item : operationResult
 						.getResultObjects()) {
 					user = User.create(item);
@@ -139,12 +167,24 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 		if (user == null) {
 			return UNKNOWN_USER;
 		}
+		// 移除 idUsers 中的记录
+		user = this.getIdUsers().remove(user.getId());
+		if (user == null) {
+			return UNKNOWN_USER;
+		}
+		// 移除该用户的所有 Token
 		if (user.getToken() != null) {
 			this.getTokenUsers().remove(user.getToken());
 		}
-		user = this.getIdUsers().remove(user.getId());
-		if (user.getToken() != null) {
-			this.getTokenUsers().remove(user.getToken());
+		// 清理可能残留的其他 Token（同一用户多实例场景）
+		ArrayList<String> tokensToRemove = new ArrayList<>();
+		for (Map.Entry<String, IUser> entry : this.getTokenUsers().entrySet()) {
+			if (entry.getValue() != null && entry.getValue().getId() == user.getId()) {
+				tokensToRemove.add(entry.getKey());
+			}
+		}
+		for (String token : tokensToRemove) {
+			this.getTokenUsers().remove(token);
 		}
 		return user;
 	}
@@ -152,26 +192,33 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 	@Override
 	public IUser register(IUser user) {
 		if (user != null) {
-			this.getIdUsers().put(user.getId(), user);
-			if (Integer.compare(TOKEN_INSTANCES, 0) > 0) {
+			int instances = getTokenInstances();
+			if (instances > 0) {
 				synchronized (this.getTokenUsers()) {
+					// 先添加新的 Token
+					this.getTokenUsers().put(user.getToken(), user);
+					// 收集同一用户的所有 Token
 					List<IUser> users = new ArrayList<>();
 					for (IUser item : this.getTokenUsers().values()) {
 						if (Integer.compare(item.getId(), user.getId()) == 0) {
 							users.add(item);
 						}
 					}
-					if (Integer.compare(users.size(), TOKEN_INSTANCES) >= 0) {
+					// 超出限制时，按时间戳升序排序，移除最旧的
+					if (users.size() > instances) {
 						users.sort((a, b) -> {
-							return -Long.compare(((User) a).getTokenTimeStamp(), ((User) b).getTokenTimeStamp());
+							return Long.compare(((User) a).getTokenTimeStamp(), ((User) b).getTokenTimeStamp());
 						});
-						for (int i = 0; i < TOKEN_INSTANCES; i++) {
+						// 移除最旧的，保留最新的 instances 个
+						for (int i = 0; i < users.size() - instances; i++) {
 							this.getTokenUsers().remove(users.get(i).getToken());
 						}
 					}
 				}
+			} else {
+				this.getTokenUsers().put(user.getToken(), user);
 			}
-			this.getTokenUsers().put(user.getToken(), user);
+			this.getIdUsers().put(user.getId(), user);
 		}
 		return checkIdentities(user);
 	}

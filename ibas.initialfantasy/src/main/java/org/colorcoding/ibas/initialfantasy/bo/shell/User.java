@@ -39,7 +39,18 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 
 	private static final long serialVersionUID = 1850586878174104320L;
 
-	private static String TOKEN_NOT_EXPIRED_USERS = null;
+	private static volatile String TOKEN_NOT_EXPIRED_USERS = null;
+
+	/**
+	 * 获取不超时用户列表（每次从配置读取，确保配置变更能生效）
+	 */
+	private static String getTokenNotExpiredUsers() {
+		String value = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_TOKEN_NOT_EXPIRED_USERS, "");
+		if (!value.endsWith(";")) {
+			value = value + ";";
+		}
+		return value;
+	}
 
 	public static User create(IUser user) {
 		User sUser = new User();
@@ -69,20 +80,15 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		stringBuilder.append(user.getPassword());
 		stringBuilder.append(user.getCode());
 		stringBuilder.append(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_KEY, "CC"));
-		if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0
-				|| MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0) > 0) {
-			if (TOKEN_NOT_EXPIRED_USERS == null) {
-				synchronized (User.class) {
-					TOKEN_NOT_EXPIRED_USERS = MyConfiguration
-							.getConfigValue(MyConfiguration.CONFIG_ITEM_TOKEN_NOT_EXPIRED_USERS, "");
-					if (!TOKEN_NOT_EXPIRED_USERS.endsWith(";")) {
-						TOKEN_NOT_EXPIRED_USERS = TOKEN_NOT_EXPIRED_USERS + ";";
-					}
-				}
-			}
-			if (!Strings.isNullOrEmpty(TOKEN_NOT_EXPIRED_USERS)) {
-				if (!TOKEN_NOT_EXPIRED_USERS.contains(sUser.getCode() + ";")) {
-					sUser.setTokenTimeStamp();
+		boolean needTimeout = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0
+				|| MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0) > 0;
+		if (needTimeout) {
+			String notExpiredUsers = getTokenNotExpiredUsers();
+			if (!Strings.isNullOrEmpty(notExpiredUsers)) {
+				if (!notExpiredUsers.contains(sUser.getCode() + ";")) {
+					long now = DateTimes.now().getTime();
+					sUser.setTokenTimeStamp(now);
+					sUser.setTokenCreateTime(now);
 					stringBuilder.append(sUser.getTokenTimeStamp());
 				}
 			}
@@ -220,6 +226,20 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 
 	public final void setTokenTimeStamp() {
 		this.setTokenTimeStamp(DateTimes.now().getTime());
+	}
+
+	/**
+	 * Token 创建时间（绝对有效期起点），仅在 Token 首次生成时设置
+	 */
+	private long tokenCreateTime = 0;
+
+	@XmlElement(name = "TokenCreateTime")
+	public final long getTokenCreateTime() {
+		return tokenCreateTime;
+	}
+
+	public final void setTokenCreateTime(long value) {
+		this.tokenCreateTime = value;
 	}
 
 	@Override

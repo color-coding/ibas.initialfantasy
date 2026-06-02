@@ -100,6 +100,12 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	 * 配置项目-用户登录失败记录时间窗口（秒）
 	 */
 	public final static String CONFIG_ITEM_LOGIN_FAIL_SPAN_TIME = "LoginFailSpanTime";
+
+	/**
+	 * 配置项目-用户口令最大绝对有效期（秒），从登录时刻计算，无论是否有操作都失效
+	 * 值为0表示不限制绝对有效期，仅受空闲超时控制
+	 */
+	public final static String CONFIG_ITEM_USER_TOKEN_MAX_AGE = "UserTokenMaxAge";
 	/**
 	 * 配置项目-检查用户密码复杂性
 	 */
