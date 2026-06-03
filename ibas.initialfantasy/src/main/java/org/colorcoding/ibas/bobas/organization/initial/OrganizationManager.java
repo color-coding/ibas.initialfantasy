@@ -131,8 +131,85 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 					this.tokenUsers.put(user.getToken(), user);
 				}
 			}
+			// 从旧管理器中迁移仍然有效的Token，避免定时刷新导致活跃会话被强制下线
+			this.migrateActiveTokens();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 从当前运行的组织管理器中迁移仍然有效的Token。
+	 * <p>
+	 * 定时刷新时，initialize() 会为每个用户生成新Token（含新的TokenTimeStamp），
+	 * 导致客户端持有的旧Token失效。此方法在initialize()之后调用，
+	 * 将旧管理器中尚未过期的Token迁移到新管理器，保持活跃会话不断线。
+	 * </p>
+	 */
+	private void migrateActiveTokens() {
+		// 获取当前正在使用的管理器（旧实例）
+		org.colorcoding.ibas.bobas.organization.OrganizationManager currentManager;
+		try {
+			currentManager = OrganizationFactory.createManager();
+		} catch (Exception e) {
+			return;
+		}
+		// 首次初始化时，旧实例就是自己，无需迁移
+		if (currentManager == this) {
+			return;
+		}
+		// 旧管理器类型不匹配，无法迁移
+		if (!(currentManager instanceof OrganizationManager)) {
+			return;
+		}
+		Map<String, IUser> oldTokenUsers = ((OrganizationManager) currentManager).getTokenUsers();
+		if (oldTokenUsers == null || oldTokenUsers.isEmpty()) {
+			return;
+		}
+		int timeout = getTokenTimeout();
+		int maxAge = getTokenMaxAge();
+		long now = DateTimes.now().getTime();
+		for (Map.Entry<String, IUser> entry : oldTokenUsers.entrySet()) {
+			String oldToken = entry.getKey();
+			IUser oldUser = entry.getValue();
+			if (oldUser == null) {
+				continue;
+			}
+			// 跳过新管理器中已存在的Token（如静态Token用户，新旧Token相同）
+			if (this.tokenUsers.containsKey(oldToken)) {
+				continue;
+			}
+			// 用户在新数据中不存在（已停用/删除/日期失效），不迁移
+			IUser newUserInDb = this.idUsers.get(oldUser.getId());
+			if (newUserInDb == null) {
+				continue;
+			}
+			// 检查旧Token是否已过期
+			if (oldUser instanceof User) {
+				User oldOrgUser = (User) oldUser;
+				if (oldOrgUser.getTokenTimeStamp() > 0) {
+					long elapsedSeconds = (now - oldOrgUser.getTokenTimeStamp()) / 1000;
+					// 空闲超时
+					if (timeout > 0 && elapsedSeconds > timeout) {
+						continue;
+					}
+					// 绝对有效期过期
+					if (maxAge > 0 && oldOrgUser.getTokenCreateTime() > 0) {
+						long totalSeconds = (now - oldOrgUser.getTokenCreateTime()) / 1000;
+						if (totalSeconds > maxAge) {
+							continue;
+						}
+					}
+				}
+			}
+			// 移除 initialize() 中新生成的无用Token（无客户端持有此Token）
+			if (newUserInDb.getToken() != null && !newUserInDb.getToken().equals(oldToken)) {
+				this.tokenUsers.remove(newUserInDb.getToken());
+			}
+			// 迁移旧Token到新管理器
+			this.tokenUsers.put(oldToken, oldUser);
+			// 更新idUsers，使 getUser(id) 返回持有活跃Token的用户对象
+			this.idUsers.put(oldUser.getId(), oldUser);
 		}
 	}
 

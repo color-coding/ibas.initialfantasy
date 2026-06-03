@@ -39,8 +39,6 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 
 	private static final long serialVersionUID = 1850586878174104320L;
 
-	private static volatile String TOKEN_NOT_EXPIRED_USERS = null;
-
 	/**
 	 * 获取不超时用户列表（每次从配置读取，确保配置变更能生效）
 	 */
