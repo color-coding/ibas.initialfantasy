@@ -180,7 +180,8 @@ public class OwnershipJudger extends org.colorcoding.ibas.bobas.ownership.Owners
 								condition.setRelationship(DataConvert.toRelationship(item.getRelationship()));
 								// 替换属性变量
 								if (Strings.isWith(condition.getAlias(), "${USER_", "}")) {
-									condition.setAlias(sUser.valueOfSpecific(condition.getAlias()));
+									condition.setComparedAlias(sUser.valueOfSpecific(condition.getAlias()));
+									condition.setAlias(Strings.VALUE_EMPTY);
 									condition.setAliasDataType(DbFieldType.ALPHANUMERIC);
 								}
 								// 替换值变量
