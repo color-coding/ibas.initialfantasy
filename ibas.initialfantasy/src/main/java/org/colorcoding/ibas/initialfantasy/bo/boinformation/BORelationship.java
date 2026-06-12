@@ -15,7 +15,7 @@ import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -61,7 +61,7 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 	/**
 	 * 编码 属性
 	 */
-	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "Code", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
@@ -92,7 +92,7 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 	/**
 	 * 目标对象 属性
 	 */
-	@DbField(name = "Target", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "Target", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_TARGET = registerProperty(PROPERTY_TARGET_NAME, String.class,
 			MY_CLASS);
 
@@ -123,7 +123,7 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 	/**
 	 * 关系 属性
 	 */
-	@DbField(name = "Relation", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "Relation", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_RELATION = registerProperty(PROPERTY_RELATION_NAME, String.class,
 			MY_CLASS);
 
@@ -154,7 +154,7 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 	/**
 	 * 关联的属性 属性
 	 */
-	@DbField(name = "Associated", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Associated", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_ASSOCIATEDPROPERTY = registerProperty(
 			PROPERTY_ASSOCIATEDPROPERTY_NAME, String.class, MY_CLASS);
 
@@ -185,7 +185,7 @@ public class BORelationship extends BusinessObject<BORelationship> implements IB
 	/**
 	 * 描述 属性
 	 */
-	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Descrp", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DESCRIPTION = registerProperty(PROPERTY_DESCRIPTION_NAME,
 			String.class, MY_CLASS);
 

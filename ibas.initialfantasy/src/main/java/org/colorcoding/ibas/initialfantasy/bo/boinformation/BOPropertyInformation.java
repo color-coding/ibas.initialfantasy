@@ -12,7 +12,7 @@ import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -53,7 +53,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 名称 属性
 	 */
-	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
+	@DbField(name = "Code", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
@@ -84,7 +84,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 属性名称 属性
 	 */
-	@DbField(name = "Property", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
+	@DbField(name = "Property", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_PROPERTY = registerProperty(PROPERTY_PROPERTY_NAME, String.class,
 			MY_CLASS);
 
@@ -115,7 +115,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 映射（字段） 属性
 	 */
-	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Mapped", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_MAPPED = registerProperty(PROPERTY_MAPPED_NAME, String.class,
 			MY_CLASS);
 
@@ -146,7 +146,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 描述 属性
 	 */
-	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Descrp", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DESCRIPTION = registerProperty(PROPERTY_DESCRIPTION_NAME,
 			String.class, MY_CLASS);
 
@@ -177,7 +177,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 数据类型 属性
 	 */
-	@DbField(name = "DataType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "DataType", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DATATYPE = registerProperty(PROPERTY_DATATYPE_NAME, String.class,
 			MY_CLASS);
 
@@ -208,7 +208,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 编辑类型 属性
 	 */
-	@DbField(name = "EditType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "EditType", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_EDITTYPE = registerProperty(PROPERTY_EDITTYPE_NAME, String.class,
 			MY_CLASS);
 
@@ -239,7 +239,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 编辑大小 属性
 	 */
-	@DbField(name = "EditSize", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "EditSize", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_EDITSIZE = registerProperty(PROPERTY_EDITSIZE_NAME,
 			Integer.class, MY_CLASS);
 
@@ -270,7 +270,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 检索的 属性
 	 */
-	@DbField(name = "Searched", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Searched", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_SEARCHED = registerProperty(PROPERTY_SEARCHED_NAME,
 			emYesNo.class, MY_CLASS);
 
@@ -301,7 +301,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 系统的 属性
 	 */
-	@DbField(name = "Systemed", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Systemed", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_SYSTEMED = registerProperty(PROPERTY_SYSTEMED_NAME,
 			emYesNo.class, MY_CLASS);
 
@@ -332,7 +332,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 链接的对象 属性
 	 */
-	@DbField(name = "LinkedObject", type = DbFieldType.MEMO, table = DB_TABLE_NAME)
+	@DbField(name = "LinkedObject", type = DataType.MEMO, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_LINKEDOBJECT = registerProperty(PROPERTY_LINKEDOBJECT_NAME,
 			String.class, MY_CLASS);
 
@@ -363,7 +363,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	 * 值选择方式 属性
 	 */
-	@DbField(name = "VChosType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "VChosType", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_VALUECHOOSETYPE = registerProperty(PROPERTY_VALUECHOOSETYPE_NAME,
 			String.class, MY_CLASS);
 
@@ -394,7 +394,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	/**
 	* 触发属性 属性
 	*/
-	@DbField(name = "TrigByPty", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "TrigByPty", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_TRIGGERBYPROPERTY = registerProperty(
 			PROPERTY_TRIGGERBYPROPERTY_NAME, String.class, MY_CLASS);
 

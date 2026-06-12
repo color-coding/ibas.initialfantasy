@@ -14,7 +14,7 @@ import org.colorcoding.ibas.bobas.expression.ExpressionException;
 import org.colorcoding.ibas.bobas.expression.IPropertyValueOperator;
 import org.colorcoding.ibas.bobas.expression.IValueOperator;
 import org.colorcoding.ibas.bobas.expression.JudgmentLinkItem;
-import org.colorcoding.ibas.bobas.expression.JudmentOperation;
+import org.colorcoding.ibas.bobas.expression.JudgmentOperation;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.initialfantasy.bo.bofiltering.IBOFilteringCondition;
@@ -57,20 +57,20 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			jItem.setOpenBracket(0);
 			jItem.setCloseBracket(0);
 			if (item.getRelationship() == emConditionRelationship.NONE || item.getRelationship() == null) {
-				jItem.setRelationship(JudmentOperation.AND);
+				jItem.setRelationship(JudgmentOperation.AND);
 			} else {
-				jItem.setRelationship(JudmentOperation.valueOf(item.getRelationship()));
+				jItem.setRelationship(JudgmentOperation.valueOf(item.getRelationship()));
 			}
-			jItem.setOperation(JudmentOperation.valueOf(item.getOperation()));
+			jItem.setOperation(JudgmentOperation.valueOf(item.getOperation()));
 			// 左边取值
 			if (Strings.isWith(item.getPropertyName(), "${USER_", "}")) {
 				IValueOperator valueOperator = this.createValueOperator();
 				valueOperator.setValue(this.getCurrentUser().valueOfSpecific(item.getPropertyName()));
-				jItem.setLeftOperter(valueOperator);
+				jItem.setLeftOperator(valueOperator);
 			} else {
 				IPropertyValueOperator propertyValueOperator = this.createPropertyValueOperator();
 				propertyValueOperator.setPropertyName(item.getPropertyName());
-				jItem.setLeftOperter(propertyValueOperator);
+				jItem.setLeftOperator(propertyValueOperator);
 			}
 			// 右边取值
 			// 与值比较
@@ -80,7 +80,7 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			} else {
 				valueOperator.setValue(item.getConditionValue());
 			}
-			jItem.setRightOperter(valueOperator);
+			jItem.setRightOperator(valueOperator);
 			// 设置括号
 			jItem.setOpenBracket(item.getBracketOpen());
 			jItem.setCloseBracket(item.getBracketClose());
@@ -117,7 +117,7 @@ class BOFilteringJudgmentLink extends BOJudgmentLink {
 			@Override
 			public void setValue(Object value) {
 				if (value != null && !(value instanceof IManagedFields)) {
-					throw new ExpressionException(I18N.prop("msg_bobas_invaild_bo_type"));
+					throw new ExpressionException(I18N.prop("msg_bobas_invalid_bo_type"));
 				}
 				this.value = (IManagedFields) value;
 				this.field = null;

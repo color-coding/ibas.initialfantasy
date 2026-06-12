@@ -12,7 +12,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.expression.JudmentOperationException;
+import org.colorcoding.ibas.bobas.expression.JudgmentOperationException;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
 import org.colorcoding.ibas.bobas.organization.InvalidAuthorizationException;
@@ -27,21 +27,21 @@ import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy
 
 abstract class BOFilter {
 	public BOFilter() {
-		this.setFiltertingDefault(true);
+		this.setFilteringDefault(true);
 	}
 
 	public final static String MSG_OWNERSHIP_JUDGER_DATA_FILTERED = "judger: role [%s] filtered data [%s], by [%s].";
 
 	private static String FILTERING_KEY_TEMPLATE = "%s|%s";
 
-	private boolean filtertingDefault;
+	private boolean filteringDefault;
 
-	public final boolean getFiltertingDefault() {
-		return filtertingDefault;
+	public final boolean getFilteringDefault() {
+		return filteringDefault;
 	}
 
-	public final void setFiltertingDefault(boolean value) {
-		this.filtertingDefault = value;
+	public final void setFilteringDefault(boolean value) {
+		this.filteringDefault = value;
 	}
 
 	private HashMap<String, IBOFiltering> filterings = new HashMap<>();
@@ -133,8 +133,8 @@ abstract class BOFilter {
 	}
 
 	public boolean filtering(IDataOwnership bo, IUser user)
-			throws InvalidAuthorizationException, JudmentOperationException {
-		boolean status = this.getFiltertingDefault();
+			throws InvalidAuthorizationException, JudgmentOperationException {
+		boolean status = this.getFilteringDefault();
 		if (bo == null) {
 			return status;
 		}
@@ -205,7 +205,7 @@ class BOFilterRead extends BOFilter {
 
 	public BOFilterRead() {
 		super();
-		this.setFiltertingDefault(MyConfiguration.getConfigValue(CONFIG_ITEM_DATA_READABLE_DEFAULT_VALUE, true));
+		this.setFilteringDefault(MyConfiguration.getConfigValue(CONFIG_ITEM_DATA_READABLE_DEFAULT_VALUE, true));
 	}
 
 	@Override
@@ -217,13 +217,13 @@ class BOFilterRead extends BOFilter {
 
 class BOFilterSave extends BOFilter {
 	/**
-	 * 配置项目-数据读取默认值
+	 * 配置项目-数据保存默认值
 	 */
 	public final static String CONFIG_ITEM_DATA_SAVABLE_DEFAULT_VALUE = "DataSavableDefault";
 
 	public BOFilterSave() {
 		super();
-		this.setFiltertingDefault(MyConfiguration.getConfigValue(CONFIG_ITEM_DATA_SAVABLE_DEFAULT_VALUE, true));
+		this.setFilteringDefault(MyConfiguration.getConfigValue(CONFIG_ITEM_DATA_SAVABLE_DEFAULT_VALUE, true));
 	}
 
 	@Override

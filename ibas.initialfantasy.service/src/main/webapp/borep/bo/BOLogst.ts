@@ -80,14 +80,14 @@ namespace initialfantasy {
             }
 
             /** 映射的属性名称-事务标识 */
-            static PROPERTY_TRANSATIONID_NAME: string = "TransationId";
+            static PROPERTY_TRANSACTIONID_NAME: string = "TransactionId";
             /** 获取-事务标识 */
-            get transationId(): string {
-                return this.getProperty<string>(BOLogst.PROPERTY_TRANSATIONID_NAME);
+            get transactionId(): string {
+                return this.getProperty<string>(BOLogst.PROPERTY_TRANSACTIONID_NAME);
             }
             /** 设置-事务标识 */
-            set transationId(value: string) {
-                this.setProperty(BOLogst.PROPERTY_TRANSATIONID_NAME, value);
+            set transactionId(value: string) {
+                this.setProperty(BOLogst.PROPERTY_TRANSACTIONID_NAME, value);
             }
 
             /** 映射的属性名称-动机 */

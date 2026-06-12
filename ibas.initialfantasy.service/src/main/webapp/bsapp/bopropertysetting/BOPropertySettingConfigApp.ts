@@ -207,7 +207,7 @@ namespace initialfantasy {
                         if (error instanceof Error) {
                             this.messages(error);
                         } else {
-                            this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                            this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                         }
                     }
                 );

@@ -10,7 +10,8 @@ import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
+import org.colorcoding.ibas.bobas.db.EditType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -49,7 +50,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 类型 属性
 	 */
-	@DbField(name = "BOCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "BOCode", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_BOCODE = registerProperty(PROPERTY_BOCODE_NAME, String.class,
 			MY_CLASS);
 
@@ -80,7 +81,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 主键值 属性
 	 */
-	@DbField(name = "BOKeys", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "BOKeys", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<String> PROPERTY_BOKEYS = registerProperty(PROPERTY_BOKEYS_NAME, String.class,
 			MY_CLASS);
 
@@ -111,7 +112,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 实例号 属性
 	 */
-	@DbField(name = "LogInst", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
+	@DbField(name = "LogInst", type = DataType.NUMERIC, table = DB_TABLE_NAME, primaryKey = true)
 	public static final IPropertyInfo<Integer> PROPERTY_LOGINST = registerProperty(PROPERTY_LOGINST_NAME, Integer.class,
 			MY_CLASS);
 
@@ -142,7 +143,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 修改用户 属性
 	 */
-	@DbField(name = "Modifier", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Modifier", type = DataType.NUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Integer> PROPERTY_MODIFYUSER = registerProperty(PROPERTY_MODIFYUSER_NAME,
 			Integer.class, MY_CLASS);
 
@@ -173,7 +174,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 修改日期 属性
 	 */
-	@DbField(name = "ModifyDate", type = DbFieldType.DATE, table = DB_TABLE_NAME)
+	@DbField(name = "ModifyDate", type = DataType.DATE, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<DateTime> PROPERTY_MODIFYDATE = registerProperty(PROPERTY_MODIFYDATE_NAME,
 			DateTime.class, MY_CLASS);
 
@@ -204,7 +205,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 修改时间 属性
 	 */
-	@DbField(name = "ModifyTime", type = DbFieldType.NUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "ModifyTime", type = DataType.NUMERIC, editType = EditType.TIME, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<Short> PROPERTY_MODIFYTIME = registerProperty(PROPERTY_MODIFYTIME_NAME,
 			Short.class, MY_CLASS);
 
@@ -230,13 +231,13 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 属性名称-事务标识
 	 */
-	private static final String PROPERTY_TRANSATIONID_NAME = "TransationId";
+	private static final String PROPERTY_TRANSACTIONID_NAME = "TransactionId";
 
 	/**
 	 * 事务标识 属性
 	 */
-	@DbField(name = "TransationId", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
-	public static final IPropertyInfo<String> PROPERTY_TRANSATIONID = registerProperty(PROPERTY_TRANSATIONID_NAME,
+	@DbField(name = "TransactionId", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	public static final IPropertyInfo<String> PROPERTY_TRANSACTIONID = registerProperty(PROPERTY_TRANSACTIONID_NAME,
 			String.class, MY_CLASS);
 
 	/**
@@ -244,9 +245,9 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	 * 
 	 * @return 值
 	 */
-	@XmlElement(name = PROPERTY_TRANSATIONID_NAME)
-	public final String getTransationId() {
-		return this.getProperty(PROPERTY_TRANSATIONID);
+	@XmlElement(name = PROPERTY_TRANSACTIONID_NAME)
+	public final String getTransactionId() {
+		return this.getProperty(PROPERTY_TRANSACTIONID);
 	}
 
 	/**
@@ -254,8 +255,8 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	 * 
 	 * @param value 值
 	 */
-	public final void setTransationId(String value) {
-		this.setProperty(PROPERTY_TRANSATIONID, value);
+	public final void setTransactionId(String value) {
+		this.setProperty(PROPERTY_TRANSACTIONID, value);
 	}
 
 	/**
@@ -266,7 +267,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 动机 属性
 	 */
-	@DbField(name = "Cause", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Cause", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_CAUSE = registerProperty(PROPERTY_CAUSE_NAME, String.class,
 			MY_CLASS);
 
@@ -297,7 +298,7 @@ public class BOLogst extends BusinessObject<BOLogst> implements IBOLogst, IBOCus
 	/**
 	 * 内容 属性
 	 */
-	@DbField(name = "Content", type = DbFieldType.MEMO, table = DB_TABLE_NAME)
+	@DbField(name = "Content", type = DataType.MEMO, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_CONTENT = registerProperty(PROPERTY_CONTENT_NAME, String.class,
 			MY_CLASS);
 

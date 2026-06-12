@@ -516,11 +516,11 @@ namespace initialfantasy {
                     switch (data) {
                         case bo.emConditionOperation.EQUAL:
                             return "=";
-                        case bo.emConditionOperation.GRATER_THAN:
+                        case bo.emConditionOperation.GREATER_THAN:
                             return ">";
                         case bo.emConditionOperation.LESS_THAN:
                             return "<";
-                        case bo.emConditionOperation.GRATER_EQUAL:
+                        case bo.emConditionOperation.GREATER_EQUAL:
                             return ">=";
                         case bo.emConditionOperation.LESS_EQUAL:
                             return "<=";

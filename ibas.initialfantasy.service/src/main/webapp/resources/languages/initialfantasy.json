@@ -90,7 +90,7 @@
     "initialfantasy_bocriteria_bocode": "Business Object Code",
     "initialfantasy_please_choose_target": "Please Choose Target Query",
     "initialfantasy_app_criteria_editor": "Query Editor",
-    "initialfantasy_invaild_edit_target": "Invalid Edit Target",
+    "initialfantasy_invalid_edit_target": "Invalid Edit Target",
     "initialfantasy_unknown_user": "Unknown User",
     "initialfantasy_edit_target": "Target",
     "initialfantasy_register_elements": "Register Elements",
@@ -103,7 +103,7 @@
     "initialfantasy_register_module_elements": "Registering [{0}] Application Elements, Please Wait",
     "initialfantasy_all_identities": "All Identities",
     "initialfantasy_all_roles": "All Roles",
-    "initialfantasy_user_vaildvalues": "User Defined Values",
+    "initialfantasy_user_validvalues": "User Defined Values",
     "initialfantasy_bo_choose_list": "Object Selection List",
     "initialfantasy_unknown_object": "Unknown Object",
     "initialfantasy_bologst_icon": "sap-icon://past",
@@ -129,5 +129,5 @@
     "initialfantasy_ignore_system_content": "Ignore System Content",
     "initialfantasy_trigger_property": "Trigger Property",
     "initialfantasy_inconsistent_user_password": "Inconsistent user password",
-    "initialfantasy_closing_delimiter": "----End----"
+    "initialfantasy_password_about_to_expire": "Your password is about to expire, would you like to change it?"
 }

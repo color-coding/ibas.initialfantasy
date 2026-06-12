@@ -98,14 +98,14 @@ public interface IBOLogst extends IBusinessObject {
 	 * 
 	 * @return 值
 	 */
-	String getTransationId();
+	String getTransactionId();
 
 	/**
 	 * 设置-事务标识
 	 * 
 	 * @param value 值
 	 */
-	void setTransationId(String value);
+	void setTransactionId(String value);
 
 	/**
 	 * 获取-动机

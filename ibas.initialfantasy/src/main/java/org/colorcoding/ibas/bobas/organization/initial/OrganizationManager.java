@@ -112,7 +112,7 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 			condition.setValue(emYesNo.YES);
 			condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
-			condition.setOperation(ConditionOperation.GRATER_THAN);
+			condition.setOperation(ConditionOperation.GREATER_THAN);
 			condition.setValue(0);
 			try (BORepositoryInitialFantasy boRepository = new BORepositoryInitialFantasy()) {
 				boRepository.setUserToken(OrganizationFactory.SYSTEM_USER.getToken());
@@ -343,7 +343,7 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 		condition = criteria.getConditions().create();
 		condition.setBracketClose(2);
 		condition.setAlias(UserIdentity.PROPERTY_INVALIDDATE.getName());
-		condition.setOperation(ConditionOperation.GRATER_EQUAL);
+		condition.setOperation(ConditionOperation.GREATER_EQUAL);
 		condition.setValue(today);
 		// 排序
 		ISort sort = criteria.getSorts().create();

@@ -84,7 +84,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			if (userId <= 0) {
 				throw new Exception(I18N.prop("msg_if_user_token_has_expired"));
 			}
-			// 当前口令被失败，判断用户状态
+			// 当前口令有效，判断用户状态
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
@@ -134,7 +134,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setBracketClose(2);
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
-			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setOperation(ConditionOperation.GREATER_EQUAL);
 			condition.setValue(date);
 			// 新仓库查询用户，避免权限问题
 			try (BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell()) {
@@ -243,7 +243,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setBracketClose(2);
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_INVALIDDATE.getName());
-			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setOperation(ConditionOperation.GREATER_EQUAL);
 			condition.setValue(date);
 			// 新仓库查询用户，避免权限问题
 			try (BORepositoryInitialFantasyShell boRepository = new BORepositoryInitialFantasyShell()) {
@@ -369,7 +369,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				});
 				return new OperationResult<UserModule>().addResultObjects(userModules);
 			} else {
-				throw new Exception(I18N.prop("msg_bobas_invaild_bo_repository"));
+				throw new Exception(I18N.prop("msg_bobas_invalid_bo_repository"));
 			}
 		} catch (Exception e) {
 			return new OperationResult<>(e);
@@ -410,7 +410,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 				}
 				return opRslt;
 			} else {
-				throw new Exception(I18N.prop("msg_bobas_invaild_bo_repository"));
+				throw new Exception(I18N.prop("msg_bobas_invalid_bo_repository"));
 			}
 		} catch (Exception e) {
 			return new OperationResult<>(e);
@@ -912,7 +912,7 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			condition = criteria.getConditions().create();
 			condition.setBracketClose(2);
 			condition.setAlias(Refunction.PROPERTY_INVALIDDATE.getName());
-			condition.setOperation(ConditionOperation.GRATER_EQUAL);
+			condition.setOperation(ConditionOperation.GREATER_EQUAL);
 			condition.setValue(date);
 			IOperationResult<Refunction> opRsltFetch = this.fetchRefunction(criteria, token);
 			if (opRsltFetch.getError() != null) {

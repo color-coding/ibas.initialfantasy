@@ -11,7 +11,7 @@ import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.core.ITrackable;
 import org.colorcoding.ibas.bobas.data.ArrayList;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.organization.IUser;
@@ -182,7 +182,7 @@ public class OwnershipJudger extends org.colorcoding.ibas.bobas.ownership.Owners
 								if (Strings.isWith(condition.getAlias(), "${USER_", "}")) {
 									condition.setComparedAlias(sUser.valueOfSpecific(condition.getAlias()));
 									condition.setAlias(Strings.VALUE_EMPTY);
-									condition.setAliasDataType(DbFieldType.ALPHANUMERIC);
+									condition.setAliasDataType(DataType.ALPHANUMERIC);
 								}
 								// 替换值变量
 								if (Strings.isWith(condition.getValue(), "${USER_", "}")) {

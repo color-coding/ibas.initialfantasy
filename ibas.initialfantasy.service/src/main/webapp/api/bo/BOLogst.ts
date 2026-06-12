@@ -22,7 +22,7 @@ namespace initialfantasy {
             /** 修改时间 */
             modifyTime: number;
             /** 事务标识 */
-            transationId: string;
+            transactionId: string;
             /** 动机 */
             cause: string;
             /** 内容 */

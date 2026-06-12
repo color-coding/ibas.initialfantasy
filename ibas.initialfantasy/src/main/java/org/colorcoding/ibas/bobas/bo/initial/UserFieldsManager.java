@@ -15,7 +15,7 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.bobas.db.DbTable;
 import org.colorcoding.ibas.bobas.organization.OrganizationFactory;
 import org.colorcoding.ibas.initialfantasy.bo.boinformation.BOInformation;
@@ -134,8 +134,8 @@ public class UserFieldsManager extends org.colorcoding.ibas.bobas.bo.UserFieldsM
 
 	public Class<?> classOf(String type, String editType) {
 		if (Strings.equalsIgnoreCase("Date", type) && Strings.equalsIgnoreCase("Time", editType)) {
-			type = DbFieldType.NUMERIC.toString();
+			type = DataType.NUMERIC.toString();
 		}
-		return super.classOf(Enums.valueOf(DbFieldType.class, type));
+		return super.classOf(Enums.valueOf(DataType.class, type));
 	}
 }

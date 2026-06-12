@@ -144,11 +144,11 @@ namespace initialfantasy {
             /** 等于(=) */
             EQUAL,
             /** 大于(>) */
-            GRATER_THAN,
+            GREATER_THAN,
             /** 小于(<) */
             LESS_THAN,
             /** 大于等于(>=) */
-            GRATER_EQUAL,
+            GREATER_EQUAL,
             /** 小于等于(<=) */
             LESS_EQUAL,
             /** 不等于(<>) */
@@ -186,12 +186,12 @@ namespace initialfantasy {
                         switch (value) {
                             case ibas.emConditionOperation.EQUAL:
                                 return emConditionOperation.EQUAL;
-                            case ibas.emConditionOperation.GRATER_THAN:
-                                return emConditionOperation.GRATER_THAN;
+                            case ibas.emConditionOperation.GREATER_THAN:
+                                return emConditionOperation.GREATER_THAN;
                             case ibas.emConditionOperation.LESS_THAN:
                                 return emConditionOperation.LESS_THAN;
-                            case ibas.emConditionOperation.GRATER_EQUAL:
-                                return emConditionOperation.GRATER_EQUAL;
+                            case ibas.emConditionOperation.GREATER_EQUAL:
+                                return emConditionOperation.GREATER_EQUAL;
                             case ibas.emConditionOperation.LESS_EQUAL:
                                 return emConditionOperation.LESS_EQUAL;
                             case ibas.emConditionOperation.NOT_EQUAL:
@@ -220,12 +220,12 @@ namespace initialfantasy {
                         switch (value) {
                             case emConditionOperation.EQUAL:
                                 return ibas.emConditionOperation.EQUAL;
-                            case emConditionOperation.GRATER_THAN:
-                                return ibas.emConditionOperation.GRATER_THAN;
+                            case emConditionOperation.GREATER_THAN:
+                                return ibas.emConditionOperation.GREATER_THAN;
                             case emConditionOperation.LESS_THAN:
                                 return ibas.emConditionOperation.LESS_THAN;
-                            case emConditionOperation.GRATER_EQUAL:
-                                return ibas.emConditionOperation.GRATER_EQUAL;
+                            case emConditionOperation.GREATER_EQUAL:
+                                return ibas.emConditionOperation.GREATER_EQUAL;
                             case emConditionOperation.LESS_EQUAL:
                                 return ibas.emConditionOperation.LESS_EQUAL;
                             case emConditionOperation.NOT_EQUAL:

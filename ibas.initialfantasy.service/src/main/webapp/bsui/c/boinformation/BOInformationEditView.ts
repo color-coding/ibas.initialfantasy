@@ -246,7 +246,7 @@ namespace initialfantasy {
                                                         items: [
                                                             new sap.m.SegmentedButtonItem("", {
                                                                 key: "VD",
-                                                                text: ibas.i18n.prop("initialfantasy_user_vaildvalues"),
+                                                                text: ibas.i18n.prop("initialfantasy_user_validvalues"),
                                                             }),
                                                             new sap.m.SegmentedButtonItem("", {
                                                                 key: "CL",

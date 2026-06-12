@@ -12,7 +12,7 @@ import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
@@ -52,7 +52,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 编码 属性
 	 */
-	@DbField(name = "Code", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
+	@DbField(name = "Code", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = true, uniqueKey = true)
 	public static final IPropertyInfo<String> PROPERTY_CODE = registerProperty(PROPERTY_CODE_NAME, String.class,
 			MY_CLASS);
 
@@ -83,7 +83,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 名称 属性
 	 */
-	@DbField(name = "Name", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Name", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_NAME = registerProperty(PROPERTY_NAME_NAME, String.class,
 			MY_CLASS);
 
@@ -114,7 +114,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 描述 属性
 	 */
-	@DbField(name = "Descrp", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Descrp", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_DESCRIPTION = registerProperty(PROPERTY_DESCRIPTION_NAME,
 			String.class, MY_CLASS);
 
@@ -145,7 +145,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 映射（表） 属性
 	 */
-	@DbField(name = "Mapped", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Mapped", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_MAPPED = registerProperty(PROPERTY_MAPPED_NAME, String.class,
 			MY_CLASS);
 
@@ -176,7 +176,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 对象类型 属性
 	 */
-	@DbField(name = "ObjectType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "ObjectType", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_OBJECTTYPE = registerProperty(PROPERTY_OBJECTTYPE_NAME,
 			String.class, MY_CLASS);
 
@@ -207,7 +207,7 @@ public class BOInformation extends BusinessObject<BOInformation> implements IBOI
 	/**
 	 * 开启修改日志 属性
 	 */
-	@DbField(name = "Modified", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "Modified", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emYesNo> PROPERTY_MODIFIED = registerProperty(PROPERTY_MODIFIED_NAME,
 			emYesNo.class, MY_CLASS);
 

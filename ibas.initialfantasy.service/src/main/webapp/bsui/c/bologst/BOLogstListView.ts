@@ -75,10 +75,10 @@ namespace initialfantasy {
                                 }),
                             }),
                             new sap.extension.table.DataColumn("", {
-                                label: ibas.i18n.prop("bo_bologst_transationid"),
+                                label: ibas.i18n.prop("bo_bologst_transactionid"),
                                 template: new sap.extension.m.Text("", {
                                 }).bindProperty("bindingValue", {
-                                    path: "transationId",
+                                    path: "transactionId",
                                     type: new sap.extension.data.Alphanumeric(),
                                 }),
                             }),

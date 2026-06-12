@@ -169,7 +169,7 @@ namespace initialfantasy {
                     if (error instanceof Error) {
                         this.messages(ibas.emMessageType.ERROR, error.message);
                     } else {
-                        this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                        this.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_successful"));
                     }
                     this.view.showIdentities(this.identities.filter(c => c.isDeleted === false));
                 });

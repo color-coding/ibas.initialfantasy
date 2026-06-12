@@ -299,7 +299,7 @@ namespace initialfantasy {
                             this.messages(error);
                         } else {
                             this.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                         }
                         this.view.showIdentityPrivileges(this.oIdentityPrivileges.filter((item) => { return !item.data.isDeleted; }));
                     }
@@ -398,7 +398,7 @@ namespace initialfantasy {
                                                         item.data.markDirty();
                                                     }
                                                 }
-                                                that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                                                that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_successful"));
                                                 that.view.showIdentityPrivileges(that.oIdentityPrivileges.filter((item) => { return !item.data.isDeleted; }));
                                             } else {
                                                 // 复制到权限
@@ -456,7 +456,7 @@ namespace initialfantasy {
                                                         that.messages(ibas.emMessageType.ERROR, error.message);
                                                     } else {
                                                         that.messages(ibas.emMessageType.SUCCESS,
-                                                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                                                     }
                                                     that.busy(false);
                                                 });
@@ -529,7 +529,7 @@ namespace initialfantasy {
                                             that.messages(ibas.emMessageType.ERROR, error.message);
                                         } else {
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                                         }
                                         that.oIdentityPrivileges = new ibas.ArrayList<IdentityPrivilege>();
                                         that.view.showIdentityPrivileges(that.oIdentityPrivileges.filter((item) => { return !item.data.isDeleted; }));

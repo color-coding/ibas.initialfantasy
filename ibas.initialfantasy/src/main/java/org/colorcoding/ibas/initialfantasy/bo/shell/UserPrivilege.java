@@ -13,7 +13,7 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.data.emPrivilegeSource;
 
@@ -48,7 +48,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 来源 属性
 	 */
-	@DbField(name = "Source", type = DbFieldType.ALPHANUMERIC)
+	@DbField(name = "Source", type = DataType.ALPHANUMERIC)
 	public static final IPropertyInfo<emPrivilegeSource> PROPERTY_SOURCE = registerProperty(PROPERTY_SOURCE_NAME,
 			emPrivilegeSource.class, MY_CLASS);
 
@@ -79,7 +79,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 目标 属性
 	 */
-	@DbField(name = "Target", type = DbFieldType.ALPHANUMERIC)
+	@DbField(name = "Target", type = DataType.ALPHANUMERIC)
 	public static final IPropertyInfo<String> PROPERTY_TARGET = registerProperty(PROPERTY_TARGET_NAME, String.class,
 			MY_CLASS);
 
@@ -110,7 +110,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 权限值 属性
 	 */
-	@DbField(name = "Value", type = DbFieldType.ALPHANUMERIC)
+	@DbField(name = "Value", type = DataType.ALPHANUMERIC)
 	public static final IPropertyInfo<emAuthoriseType> PROPERTY_VALUE = registerProperty(PROPERTY_VALUE_NAME,
 			emAuthoriseType.class, MY_CLASS);
 
@@ -141,7 +141,7 @@ public class UserPrivilege extends BusinessObject<UserPrivilege> implements IBus
 	/**
 	 * 自动运行 属性
 	 */
-	@DbField(name = "Automatic", type = DbFieldType.ALPHANUMERIC)
+	@DbField(name = "Automatic", type = DataType.ALPHANUMERIC)
 	public static final IPropertyInfo<emYesNo> PROPERTY_AUTOMATIC = registerProperty(PROPERTY_AUTOMATIC_NAME,
 			emYesNo.class, MY_CLASS);
 

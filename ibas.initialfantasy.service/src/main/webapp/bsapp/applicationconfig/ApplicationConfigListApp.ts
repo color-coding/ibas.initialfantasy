@@ -260,7 +260,7 @@ namespace initialfantasy {
                                     builder.append(identity.name ? identity.name : identity.code);
                                 }
                                 builder.append("]");
-                                builder.append(ibas.i18n.prop("shell_sucessful"));
+                                builder.append(ibas.i18n.prop("shell_successful"));
                                 this.messages(ibas.emMessageType.SUCCESS, builder.toString());
                                 this.view.showConfigValues(tResults);
                             }
@@ -335,7 +335,7 @@ namespace initialfantasy {
                         this.messages(error);
                     } else {
                         this.messages(ibas.emMessageType.SUCCESS,
-                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                     }
                 });
             }

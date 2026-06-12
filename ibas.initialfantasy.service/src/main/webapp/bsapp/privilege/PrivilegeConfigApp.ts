@@ -195,7 +195,7 @@ namespace initialfantasy {
                             this.messages(error);
                         } else {
                             this.messages(ibas.emMessageType.SUCCESS,
-                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                         }
                         this.view.showPrivileges(this.privileges);
                     }
@@ -291,7 +291,7 @@ namespace initialfantasy {
                                                         item.data.markDirty();
                                                     }
                                                 }
-                                                that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                                                that.proceeding(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_successful"));
                                                 that.view.showPrivileges(that.privileges);
                                             } else {
                                                 // 复制到权限
@@ -347,7 +347,7 @@ namespace initialfantasy {
                                                         that.messages(ibas.emMessageType.ERROR, error.message);
                                                     } else {
                                                         that.messages(ibas.emMessageType.SUCCESS,
-                                                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_sucessful"));
+                                                            ibas.i18n.prop("shell_data_save") + ibas.i18n.prop("shell_successful"));
                                                     }
                                                     that.busy(false);
                                                 });
@@ -409,7 +409,7 @@ namespace initialfantasy {
                                             that.messages(ibas.emMessageType.ERROR, error.message);
                                         } else {
                                             that.messages(ibas.emMessageType.SUCCESS,
-                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                                ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                                         }
                                         that.privileges = new ibas.ArrayList<Privilege>();
                                         that.view.showPrivileges(that.privileges);

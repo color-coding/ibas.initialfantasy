@@ -31,7 +31,7 @@ namespace initialfantasy {
                 this.proceeding(ibas.i18n.prop("initialfantasy_display_bo_datas"));
                 this.chainData(this.originData, () => {
                     this.view.showDocumentChain(this.originData);
-                    this.proceeding(ibas.i18n.prop("shell_sucessful"));
+                    this.proceeding(ibas.i18n.prop("shell_successful"));
                 });
             }
             protected runService(contract: ibas.IBOServiceContract): void {

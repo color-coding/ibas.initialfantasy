@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emAuthoriseType;
 import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DbFieldType;
+import org.colorcoding.ibas.bobas.db.DataType;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationModule;
 
 /**
@@ -32,7 +32,7 @@ public class ApplicationModule4Shell extends ApplicationModule {
 	/**
 	 * 权限类型 属性
 	 */
-	@DbField(name = "AuthValue", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME)
+	@DbField(name = "AuthValue", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<emAuthoriseType> PROPERTY_AUTHORISEVALUE = registerProperty(
 			PROPERTY_AUTHORISEVALUE_NAME, emAuthoriseType.class, MY_CLASS);
 

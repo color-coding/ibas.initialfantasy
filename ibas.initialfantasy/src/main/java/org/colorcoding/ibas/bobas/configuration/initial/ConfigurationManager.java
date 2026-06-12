@@ -132,7 +132,7 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 	@Override
 	protected void finalize() throws Throwable {
 		if (this.taskId > 0) {
-			Daemon.unRegister(this.taskId);
+			Daemon.unregister(this.taskId);
 		}
 		super.finalize();
 	}
