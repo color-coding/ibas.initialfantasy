@@ -1,8 +1,10 @@
 package org.colorcoding.ibas.initialfantasy;
 
 import org.colorcoding.ibas.bobas.common.Strings;
+import org.colorcoding.ibas.bobas.configuration.Configuration;
 import org.colorcoding.ibas.bobas.configuration.ConfigurationFactory;
 import org.colorcoding.ibas.bobas.configuration.ConfigurationManager;
+import org.colorcoding.ibas.bobas.data.IKeyText;
 
 /**
  * 我的配置项
@@ -19,6 +21,14 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 					// 加载系统设置
 					instance.setConfigSign("00000000-ibas-cc01-00000000000000000");
 					instance.update();
+					// 保存时截取小数，则同步小数位设置
+					if (MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_TRUNCATE_DECIMALS_ON_SAVE, false)) {
+						for (IKeyText keyText : instance.getElements()) {
+							if (Strings.startsWith(keyText.getKey(), CONFIG_ITEM_DECIMAL_PLACES)) {
+								Configuration.create().addConfigValue(keyText.getKey(), keyText.getText());
+							}
+						}
+					}
 					// 加载模块设置
 					instance.setConfigSign(MODULE_ID);
 					instance.update();
@@ -102,8 +112,7 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	public final static String CONFIG_ITEM_LOGIN_FAIL_SPAN_TIME = "LoginFailSpanTime";
 
 	/**
-	 * 配置项目-用户口令最大绝对有效期（秒），从登录时刻计算，无论是否有操作都失效
-	 * 值为0表示不限制绝对有效期，仅受空闲超时控制
+	 * 配置项目-用户口令最大绝对有效期（秒），从登录时刻计算，无论是否有操作都失效 值为0表示不限制绝对有效期，仅受空闲超时控制
 	 */
 	public final static String CONFIG_ITEM_USER_TOKEN_MAX_AGE = "UserTokenMaxAge";
 	/**
