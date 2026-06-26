@@ -20,13 +20,13 @@ import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.DateTime;
 import org.colorcoding.ibas.bobas.data.emApprovalStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.db.DbField;
 import org.colorcoding.ibas.bobas.db.DataType;
+import org.colorcoding.ibas.bobas.db.DbField;
 import org.colorcoding.ibas.bobas.db.EditType;
 import org.colorcoding.ibas.bobas.i18n.I18N;
-import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicContract;
 import org.colorcoding.ibas.bobas.logic.IBusinessLogicsHost;
+import org.colorcoding.ibas.bobas.message.Logger;
 import org.colorcoding.ibas.bobas.ownership.IDataOwnership;
 import org.colorcoding.ibas.bobas.rule.BusinessRuleException;
 import org.colorcoding.ibas.bobas.rule.IBusinessRule;
@@ -34,6 +34,7 @@ import org.colorcoding.ibas.bobas.rule.ICheckRules;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleRequired;
 import org.colorcoding.ibas.bobas.rule.common.BusinessRuleTrim;
 import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+import org.colorcoding.ibas.initialfantasy.data.Sensitive;
 import org.colorcoding.ibas.initialfantasy.logic.IUserMailCheckContract;
 import org.colorcoding.ibas.initialfantasy.logic.IUserPhoneCheckContract;
 
@@ -56,7 +57,7 @@ public class User extends BusinessObject<User>
 	/**
 	 * 密码验证： 至少包含一个数字、一个小写字母、一个大写字母，并且密码长度至少为8个字符
 	 */
-	public static final String DEFAULT_PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$";
+	public static final String DEFAULT_PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
 
 	/**
 	 * 加密字符标记
@@ -158,6 +159,7 @@ public class User extends BusinessObject<User>
 	/**
 	 * 用户密码 属性
 	 */
+	@Sensitive(mask = PASSWORD_MASK)
 	@DbField(name = "Password", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_PASSWORD = registerProperty(PROPERTY_PASSWORD_NAME, String.class,
 			MY_CLASS);
@@ -174,39 +176,71 @@ public class User extends BusinessObject<User>
 
 	/**
 	 * 设置-用户密码
-	 * 
+	 *
+	 * 行为说明：
+	 * <ol>
+	 * <li>{@code null}/空：原样写入（清空密码）。</li>
+	 * <li>等于 {@link #PASSWORD_MASK}：作为占位保留，由
+	 * {@code BORepositoryInitialFantasyShell.saveUser} 还原原始哈希。</li>
+	 * <li>已是哈希格式（PBKDF2 五段 或 旧式 MD5+"="）：原样存入，不再二次加密，也不更新
+	 * {@code LastPwdSetDate}。这条路径用于：JAXB 反序列化加载、内部还原原密码、批量导入等。</li>
+	 * <li>其它（明文）：先做复杂度检查（默认开启），通过后生成 PBKDF2 哈希并刷新 {@code LastPwdSetDate}。</li>
+	 * </ol>
+	 *
+	 * 该判定完全基于"内容是否为合法哈希"，不依赖 {@code isLoading()} / {@code isValid()} 等运行时状态，
+	 * 从而避免"哈希再哈希"与"明文落库"两类问题。
+	 *
 	 * @param value 值
 	 */
 	public void setPassword(String value) {
-		if (this.isLoading() || Strings.equals(PASSWORD_MASK, value)) {
+		// 1) null/空：原样写入（视为清空密码）
+		if (value == null || value.isEmpty()) {
 			this.setProperty(PROPERTY_PASSWORD, value);
-			this.setValid(false);
-		} else {
-			try {
-				if (!(this.getDocEntry() < 0) && MyConfiguration
-						.getConfigValue(MyConfiguration.CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY, false)) {
-					String passwordRegex = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_REGEX);
-					if (Strings.isNullOrEmpty(passwordRegex)) {
-						passwordRegex = DEFAULT_PASSWORD_REGEX;
-					}
-					Pattern pattern = Pattern.compile(passwordRegex);
-					if (Strings.isNullOrEmpty(value) || !pattern.matcher(value).matches()) {
-						throw new BusinessRuleException(
-								I18N.prop("msg_if_user_password_complexity_check_failed", this.getCode()));
-					}
+			return;
+		}
+		// 2) 客户端回传的占位掩码：保留，由仓库层还原
+		if (Strings.equals(PASSWORD_MASK, value)) {
+			this.setProperty(PROPERTY_PASSWORD, value);
+			return;
+		}
+		// 3) 已是哈希格式：原样写入，不更新最后修改时间
+		if (PasswordStorage.isHashed(value)) {
+			this.setProperty(PROPERTY_PASSWORD, value);
+			return;
+		}
+		// 4) 明文：复杂度检查 + PBKDF2 加密
+		try {
+			if (!(this.getDocEntry() != null && this.getDocEntry() < 0)
+					&& MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_CHECK_PASSWORD_COMPLEXITY, true)) {
+				String passwordRegex = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_PASSWORD_REGEX);
+				if (Strings.isNullOrEmpty(passwordRegex)) {
+					passwordRegex = DEFAULT_PASSWORD_REGEX;
 				}
-				this.setProperty(PROPERTY_PASSWORD, PasswordStorage.createHash(value));
-				this.setProperty(PROPERTY_LASTPWDSETDATE, DateTimes.today());
-			} catch (Exception e) {
-				Logger.log(e);
-				throw new RuntimeException(e);
+				if (!Pattern.compile(passwordRegex).matcher(value).matches()) {
+					throw new BusinessRuleException(
+							I18N.prop("msg_if_user_password_complexity_check_failed", this.getCode()));
+				}
 			}
+			this.setProperty(PROPERTY_PASSWORD, PasswordStorage.createHash(value));
+			this.setProperty(PROPERTY_LASTPWDSETDATE, DateTimes.today());
+		} catch (BusinessRuleException e) {
+			// 保留业务规则异常语义，便于上层精确处理
+			throw e;
+		} catch (Exception e) {
+			Logger.log(e);
+			throw new RuntimeException(e);
 		}
 	}
 
+	/**
+	 * 直接设置原始密码值（应当是已加密的哈希）。
+	 *
+	 * 与 {@link #setPassword(String)} 不同的是：本方法不做任何校验、不更新修改日期， 适用于内部"恢复原密码"等场景。
+	 *
+	 * @param value 原始（已加密）值
+	 */
 	public final void setOriginalPassword(String value) {
 		this.setProperty(PROPERTY_PASSWORD, value);
-		this.setValid(true);
 	}
 
 	/**
@@ -954,32 +988,32 @@ public class User extends BusinessObject<User>
 	}
 
 	/**
-	* 属性名称-特征（;）
-	*/
+	 * 属性名称-特征（;）
+	 */
 	private static final String PROPERTY_SPECIFICS_NAME = "Specifics";
 
 	/**
-	* 特征（;） 属性
-	*/
+	 * 特征（;） 属性
+	 */
 	@DbField(name = "Specifics", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_SPECIFICS = registerProperty(PROPERTY_SPECIFICS_NAME,
 			String.class, MY_CLASS);
 
 	/**
-	* 获取-特征（;）
-	* 
-	* @return 值
-	*/
+	 * 获取-特征（;）
+	 * 
+	 * @return 值
+	 */
 	@XmlElement(name = PROPERTY_SPECIFICS_NAME)
 	public final String getSpecifics() {
 		return this.getProperty(PROPERTY_SPECIFICS);
 	}
 
 	/**
-	* 设置-特征（;）
-	* 
-	* @param value 值
-	*/
+	 * 设置-特征（;）
+	 * 
+	 * @param value 值
+	 */
 	public final void setSpecifics(String value) {
 		this.setProperty(PROPERTY_SPECIFICS, value);
 	}
@@ -1115,49 +1149,37 @@ public class User extends BusinessObject<User>
 
 	@Override
 	public void check() throws BusinessRuleException {
-		if (!this.isValid()) {
-			this.setPassword(this.getPassword());
-			this.setBusy(true);
-		}
+		// 密码字段在 setPassword 中已基于"是否为哈希"自动处理，
+		// 不再需要在 check 时根据 isValid 标记触发二次加密。
 	}
 
 	/**
 	 * 检查密码
-	 * 
-	 * @param password
-	 * @return
+	 *
+	 * 仅支持"明文 → 哈希算法 → 与存储哈希比对"一条路径，严禁直接以哈希值作为口令传入 （防止 Pass-the-Hash
+	 * 攻击）。比较过程使用常数时间算法，避免 timing 攻击。
+	 *
+	 * @param password 用户输入的明文密码
+	 * @return 是否匹配
 	 */
 	public boolean checkPassword(String password) {
-		if (this.getPassword() == null) {
+		String stored = this.getPassword();
+		if (stored == null || stored.isEmpty() || password == null) {
 			return false;
 		}
-		if (this.getPassword().endsWith(ENCRYPTED_CHARACTER_MARK)) {
-			if (password == null) {
-				password = "";
-			}
-			if (password.endsWith("=")) {
-				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
-					return true;
-				}
-			}
-			if (password.length() == 32) {
-				if (this.getPassword().equals(password + ENCRYPTED_CHARACTER_MARK)) {
-					return true;
-				}
-			}
-			password = EncryptMD5.md5(password) + ENCRYPTED_CHARACTER_MARK;
-			if (this.getPassword().equals(password)) {
-				return true;
-			}
-		} else {
-			try {
-				if (PasswordStorage.verifyPassword(password, this.getPassword())) {
-					return true;
-				}
-			} catch (Exception e) {
-			}
+		// 旧式：MD5(明文) + "="
+		if (stored.endsWith(ENCRYPTED_CHARACTER_MARK)) {
+			String candidate = EncryptMD5.md5(password) + ENCRYPTED_CHARACTER_MARK;
+			return java.security.MessageDigest.isEqual(stored.getBytes(java.nio.charset.StandardCharsets.UTF_8),
+					candidate.getBytes(java.nio.charset.StandardCharsets.UTF_8));
 		}
-		return false;
+		// 新式：PBKDF2
+		try {
+			return PasswordStorage.verifyPassword(password, stored);
+		} catch (Exception e) {
+			Logger.log(e);
+			return false;
+		}
 	}
 
 }

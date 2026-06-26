@@ -78,6 +78,11 @@ public class User extends Serializable implements org.colorcoding.ibas.bobas.org
 		stringBuilder.append(user.getPassword());
 		stringBuilder.append(user.getCode());
 		stringBuilder.append(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_KEY, "CC"));
+		// 当 UserTokenTimeout 或 UserTokenInstances 大于 0 时，启用超时机制：
+		// 1. 设置 tokenTimeStamp / tokenCreateTime，使 OrganizationManager.getUser() 的过期检查生效；
+		// 2. 将时间戳加入哈希输入，使每次生成的 token 不同（非确定性），防止 token 被复用。
+		// 若两者均为 0（默认），则不设置时间戳，token 为确定性生成且永久有效。
+		// TokenNotExpiredUsers 名单中的用户始终豁免，即使启用了超时也永久有效。
 		boolean needTimeout = MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME, 0) > 0
 				|| MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_USER_TOKEN_INSTANCES, 0) > 0;
 		if (needTimeout) {

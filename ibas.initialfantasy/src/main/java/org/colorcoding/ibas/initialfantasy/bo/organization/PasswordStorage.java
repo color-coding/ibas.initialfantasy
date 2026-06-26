@@ -48,6 +48,61 @@ class PasswordStorage {
 	public static final int SALT_INDEX = 3;
 	public static final int PBKDF2_INDEX = 4;
 
+	/**
+	 * 旧式（MD5 + "="）哈希长度
+	 */
+	private static final int LEGACY_MD5_LENGTH = 33;
+
+	/**
+	 * 判断给定字符串是否已经是密码哈希值。
+	 *
+	 * 同时识别两种格式：
+	 * <ul>
+	 * <li>新格式：{@code algorithm:iterations:hashSize:saltBase64:pbkdf2Base64}</li>
+	 * <li>旧格式：{@code 32位MD5(hex) + "="}</li>
+	 * </ul>
+	 * 仅基于内容判断，不再依赖 {@code isLoading()} / {@code isValid()} 等运行时状态，
+	 * 用于避免对已加密值再次加密，或将明文意外落库。
+	 *
+	 * @param value 待检查值
+	 * @return true 表示已是哈希值
+	 */
+	public static boolean isHashed(String value) {
+		if (value == null || value.isEmpty()) {
+			return false;
+		}
+		// 旧格式：32位 MD5 hex + "="
+		if (value.length() == LEGACY_MD5_LENGTH && value.charAt(LEGACY_MD5_LENGTH - 1) == '=') {
+			boolean allHex = true;
+			for (int i = 0; i < LEGACY_MD5_LENGTH - 1; i++) {
+				char c = value.charAt(i);
+				if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
+					allHex = false;
+					break;
+				}
+			}
+			if (allHex) {
+				return true;
+			}
+		}
+		// 新格式：PBKDF2 五段
+		if (value.indexOf(':') > 0) {
+			String[] parts = value.split(":");
+			if (parts.length == HASH_SECTIONS && HASH_ALGORITHM.equals(parts[HASH_ALGORITHM_INDEX])) {
+				try {
+					int iter = Integer.parseInt(parts[ITERATION_INDEX]);
+					int size = Integer.parseInt(parts[HASH_SIZE_INDEX]);
+					if (iter > 0 && size > 0 && !parts[SALT_INDEX].isEmpty() && !parts[PBKDF2_INDEX].isEmpty()) {
+						return true;
+					}
+				} catch (NumberFormatException e) {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+
 	public static String createHash(String password) throws CannotPerformOperationException {
 		return createHash(password.toCharArray());
 	}

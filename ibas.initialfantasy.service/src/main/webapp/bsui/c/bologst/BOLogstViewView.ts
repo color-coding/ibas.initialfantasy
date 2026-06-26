@@ -271,7 +271,7 @@ namespace initialfantasy {
 
                 private onlyCheck: sap.m.CheckBox;
                 private ignoreSystem: sap.m.CheckBox;
-                private systemProperties: string = "LogInst,ObjectCode,Series,DataSource,CreateActionId,UpdateActionId,Referenced,VisOrder,UpdateDate,UpdateTime,UpdateUserSign,CreateDate,CreateTime,CreateUserSign,";
+                private systemProperties: string[] = ["LogInst", "ObjectCode", "Series", "DataSource", "CreateActionId", "UpdateActionId", "Referenced", "VisOrder", "UpdateDate", "UpdateTime", "UpdateUserSign", "CreateDate", "CreateTime", "CreateUserSign"];
 
                 private markDifferent(panel: any, count: number): void {
                     let ignoreSystem: boolean = this.ignoreSystem.getSelected();
@@ -334,7 +334,7 @@ namespace initialfantasy {
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
                                                 if (tmpItem instanceof sap.m.StandardListItem) {
                                                     if (ignoreSystem === true
-                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0] + ",") >= 0) {
+                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0]) >= 0) {
                                                         tmpItem.setVisible(false);
                                                     } else if (same === false) {
                                                         tmpItem.setVisible(true);
@@ -348,7 +348,7 @@ namespace initialfantasy {
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
                                                 if (tmpItem instanceof sap.m.StandardListItem) {
                                                     if (ignoreSystem === true
-                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0] + ",") >= 0) {
+                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0]) >= 0) {
                                                         tmpItem.setVisible(false);
                                                     } else {
                                                         tmpItem.setVisible(true);
@@ -552,7 +552,7 @@ namespace initialfantasy {
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
                                                 if (tmpItem instanceof sap.m.StandardListItem) {
                                                     if (ignoreSystem === true
-                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0] + ",") >= 0) {
+                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0]) >= 0) {
                                                         continue;
                                                     }
                                                     if (summary === null) {
