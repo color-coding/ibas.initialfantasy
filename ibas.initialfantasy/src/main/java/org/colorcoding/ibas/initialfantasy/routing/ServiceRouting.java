@@ -21,6 +21,7 @@ import org.colorcoding.ibas.bobas.common.Strings;
 import org.colorcoding.ibas.bobas.data.ArrayList;
 import org.colorcoding.ibas.bobas.data.List;
 import org.colorcoding.ibas.bobas.message.Logger;
+import org.colorcoding.ibas.bobas.message.MessageLevel;
 import org.colorcoding.ibas.bobas.serialization.ISerializer;
 import org.colorcoding.ibas.bobas.serialization.SerializationException;
 import org.colorcoding.ibas.bobas.serialization.SerializationFactory;
@@ -221,15 +222,11 @@ public class ServiceRouting {
 		// 判断模块是否可用
 		if (!Strings.isNullOrEmpty(module.getRepository()) && !Strings.isNullOrEmpty(module.getAddress())) {
 			done = true;
-			if (MyConfiguration.isDebugMode()) {
-				Logger.log(MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(), module.getRepository(),
-						module.getAddress());
-			}
+			Logger.log(MessageLevel.DEBUG, MSG_SERVICE_ROUTING_ADDRESS, module.getId(), module.getName(),
+					module.getRepository(), module.getAddress());
 		} else {
 			done = false;
-			if (MyConfiguration.isDebugMode()) {
-				Logger.log(MSG_SERVICE_FAILD_ROUTING_ADDRESS, module.getId(), module.getName());
-			}
+			Logger.log(MessageLevel.DEBUG, MSG_SERVICE_FAILD_ROUTING_ADDRESS, module.getId(), module.getName());
 		}
 		return done;
 	}

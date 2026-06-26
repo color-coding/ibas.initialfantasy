@@ -832,11 +832,28 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 		if (!bo.isDeleted()) {
 			if (!bo.isNew() && org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK
 					.equals(bo.getPassword())) {
-				for (org.colorcoding.ibas.initialfantasy.bo.organization.User item : this
-						.fetchUser(bo.getCriteria(), token).getResultObjects()) {
-					bo.setOriginalPassword(item.getPassword());
-					bo.setLastPwdSetDate(item.getLastPwdSetDate());
+				// [安全] 不信任 bo.getCriteria()（可能被客户端伪造跨用户取密码），
+				// 强制根据 bo.getDocEntry() 自建查询条件，且仅接受唯一匹配结果。
+				if (bo.getDocEntry() == null) {
+					return new OperationResult<>(new Exception(I18N.prop("msg_if_not_meet_password_rules")));
 				}
+				ICriteria criteria = new Criteria();
+				ICondition condition = criteria.getConditions().create();
+				condition
+						.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_DOCENTRY.getName());
+				condition.setValue(bo.getDocEntry());
+				OperationResult<org.colorcoding.ibas.initialfantasy.bo.organization.User> opRsltOriginal = this
+						.fetchUser(criteria, token);
+				if (opRsltOriginal.getError() != null) {
+					return new OperationResult<>(opRsltOriginal.getError());
+				}
+				if (opRsltOriginal.getResultObjects().size() != 1) {
+					return new OperationResult<>(new Exception(I18N.prop("msg_if_not_meet_password_rules")));
+				}
+				org.colorcoding.ibas.initialfantasy.bo.organization.User original = opRsltOriginal.getResultObjects()
+						.firstOrDefault();
+				bo.setOriginalPassword(original.getPassword());
+				bo.setLastPwdSetDate(original.getLastPwdSetDate());
 			}
 			if (org.colorcoding.ibas.initialfantasy.bo.organization.User.PASSWORD_MASK.equals(bo.getPassword())) {
 				return new OperationResult<>(new Exception(I18N.prop("msg_if_not_meet_password_rules")));
