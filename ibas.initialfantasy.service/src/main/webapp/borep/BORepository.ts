@@ -327,14 +327,25 @@ namespace initialfantasy {
              * @param fetcher 查询者
              */
             fetchBOLogst(fetcher: ibas.IFetchCaller<bo.BOLogst>): void {
-                // 日志保存不完美，此处修正更新信息
-                let onCompleted: Function = fetcher.onCompleted;
-                fetcher.onCompleted = (opRslt) => {
-                    if (onCompleted instanceof Function) {
-                        onCompleted(opRslt);
-                    }
-                };
                 super.fetch(bo.BOLogst.name, fetcher);
+            }
+            /**
+             * 删除 业务对象日志
+             * @param fetcher 调用者
+             */
+            deleteBOLogst(fetcher: ibas.IFetchCaller<bo.BOLogst>): void {
+                let boRepository: ibas.BORepositoryAjax = new ibas.BORepositoryAjax();
+                boRepository.address = this.address;
+                boRepository.token = this.token;
+                boRepository.converter = this.createConverter();
+                let method: string =
+                    ibas.strings.format("deleteBOLogst?token={0}", ibas.tokens.content(this.token));
+                let data: string = JSON.stringify(boRepository.converter.convert(fetcher.criteria, method));
+                boRepository.callRemoteMethod(method, data, (opRslt: ibas.IOperationResult<bo.BOLogst>): void => {
+                    if (fetcher.onCompleted instanceof Function) {
+                        fetcher.onCompleted(opRslt);
+                    }
+                });
             }
             /**
              * 查询 业务对象关系

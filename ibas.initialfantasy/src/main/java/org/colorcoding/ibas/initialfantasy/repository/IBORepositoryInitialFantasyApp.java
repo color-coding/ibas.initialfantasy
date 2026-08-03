@@ -320,6 +320,14 @@ public interface IBORepositoryInitialFantasyApp extends IBORepositoryApplication
 	 */
 	IOperationResult<IBOLogst> fetchBOLogst(ICriteria criteria);
 
+	/**
+	 * 删除-业务对象日志
+	 *
+	 * @param criteria 查询条件
+	 * @return 操作结果
+	 */
+	IOperationResult<IBOLogst> deleteBOLogst(ICriteria criteria);
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象关系

@@ -115,19 +115,26 @@ namespace initialfantasy {
             /** 初始化数据 */
             protected init(): void {
             }
+
             criteria(): ibas.ICriteria {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
+                condition.alias = BOLogst.PROPERTY_TRANSACTIONID_NAME;
+                condition.value = this.transactionId;
+                condition = criteria.conditions.create();
                 condition.alias = BOLogst.PROPERTY_BOCODE_NAME;
                 condition.value = this.boCode;
                 condition = criteria.conditions.create();
+                condition.alias = BOLogst.PROPERTY_BOKEYS_NAME;
+                condition.value = this.boKeys;
+                condition = criteria.conditions.create();
                 condition.alias = BOLogst.PROPERTY_LOGINST_NAME;
-                condition.value = this.boCode;
-
+                condition.value = this.logInst.toString();
                 return criteria;
             }
+
             toString(): string {
-                return ibas.strings.format("{bo: {0}, inst {1}}", this.boCode, this.logInst);
+                return ibas.strings.format("{bo: {0}, keys:{1} {2}}", this.boCode, this.boKeys, this.logInst);
             }
         }
 

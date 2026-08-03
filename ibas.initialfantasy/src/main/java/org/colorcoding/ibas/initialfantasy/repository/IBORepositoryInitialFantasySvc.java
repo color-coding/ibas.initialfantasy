@@ -357,6 +357,15 @@ public interface IBORepositoryInitialFantasySvc extends IBORepositorySmartServic
 	 */
 	OperationResult<BOLogst> fetchBOLogst(ICriteria criteria, String token);
 
+	/**
+	 * 删除-业务对象日志
+	 *
+	 * @param criteria 查询条件
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	OperationResult<BOLogst> deleteBOLogst(ICriteria criteria, String token);
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象关系

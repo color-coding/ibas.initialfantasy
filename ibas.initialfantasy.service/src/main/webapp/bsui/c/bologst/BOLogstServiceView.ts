@@ -143,10 +143,10 @@ namespace initialfantasy {
                     this.list.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                 }
                 /** 显示关联对象 */
-                showBusinessObject(bo: ibas.IBusinessObject): void {
+                showBusinessObject(description: string): void {
                     let title: any = this.headerBar.getContentLeft()[0];
                     if (title instanceof sap.m.Title) {
-                        title.setText(ibas.businessobjects.describe(bo.toString()));
+                        title.setText(description);
                     }
                 }
 

@@ -74,6 +74,7 @@
     "initialfantasy_app_config_choose": "Choose System Configuration",
     "initialfantasy_func_bopropertysetting": "Object Property Setting",
     "initialfantasy_app_bopropertysetting_list": "Object Property Setting List",
+    "initialfantasy_func_bologst": "Data Log",
     "initialfantasy_app_bologst_list": "Data Log List",
     "initialfantasy_app_bologst_view": "View Data Log",
     "initialfantasy_app_bologst_viewex": "{0} Log View",
@@ -126,8 +127,19 @@
     "initialfantasy_to_be_assigned": "To be Assigned",
     "initialfantasy_node_not_support_operation": "Node does not support this operation",
     "initialfantasy_only_modified_content": "Show Only Modified Content",
+    "initialfantasy_only_deleted": "Deleted Only",
     "initialfantasy_ignore_system_content": "Ignore System Content",
     "initialfantasy_trigger_property": "Trigger Property",
     "initialfantasy_inconsistent_user_password": "Inconsistent user password",
-    "initialfantasy_password_about_to_expire": "Your password is about to expire, would you like to change it?"
+    "initialfantasy_password_about_to_expire": "Your password is about to expire, would you like to change it?",
+    "initialfantasy_from": "From",
+    "initialfantasy_to": "To",
+    "initialfantasy_clean_logs": "Clean Logs",
+    "initialfantasy_clean_logs_90": "Clean Logs Older Than 90 Days",
+    "initialfantasy_clean_logs_30": "Clean Logs Older Than 30 Days",
+    "initialfantasy_clean_logs_all": "Clean All Logs",
+    "initialfantasy_confirm_delete_logs": "Are you sure you want to delete logs older than {0} days?",
+    "initialfantasy_confirm_delete_all_logs": "Are you sure you want to delete all logs?",
+    "initialfantasy_new_row": "New Row",
+    "initialfantasy_deleted_row": "Deleted Row"
 }

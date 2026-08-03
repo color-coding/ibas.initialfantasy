@@ -28,22 +28,15 @@ namespace initialfantasy {
             /** 视图显示后 */
             protected viewShowed(): void {
                 // 视图加载完成
-                this.view.showBusinessObject(this.bo);
-                let boKeys: string = this.bo.toString();
-                let condition: ibas.ICondition = null;
+                this.view.showBusinessObject(ibas.businessobjects.describe(this.currentLogst.transactionId));
                 let criteria: ibas.ICriteria = new ibas.Criteria();
-                if (boKeys.startsWith("{[") && boKeys.endsWith("]}")) {
-                    boKeys = boKeys.substring(1, boKeys.length - 1);
-                    boKeys = ibas.strings.remove(boKeys, "[", "]");
-                    let values: string[] = boKeys.split(".");
-                    if (values.length === 2) {
-                        condition = criteria.conditions.create();
-                        condition.alias = bo.BOLogst.PROPERTY_BOCODE_NAME;
-                        condition.value = values[0];
-                        condition = criteria.conditions.create();
-                        condition.alias = bo.BOLogst.PROPERTY_BOKEYS_NAME;
-                        condition.value = values[1];
-                    }
+                if (!ibas.strings.isEmpty(this.currentLogst.boCode) && !ibas.strings.isEmpty(this.currentLogst.boKeys)) {
+                    let condition: ibas.ICondition = criteria.conditions.create();
+                    condition.alias = bo.BOLogst.PROPERTY_BOCODE_NAME;
+                    condition.value = this.currentLogst.boCode;
+                    condition = criteria.conditions.create();
+                    condition.alias = bo.BOLogst.PROPERTY_BOKEYS_NAME;
+                    condition.value = this.currentLogst.boKeys;
                 }
                 if (criteria.conditions.length === 2) {
                     // 解析到主键相关
@@ -56,12 +49,14 @@ namespace initialfantasy {
                     sort = criteria.sorts.create();
                     sort.alias = bo.BOLogst.PROPERTY_LOGINST_NAME;
                     sort.sortType = ibas.emSortType.DESCENDING;
+                    this.busy(true);
                     let that: this = this;
                     let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
                     boRepository.fetchBOLogst({
                         criteria: criteria,
                         onCompleted(opRslt: ibas.IOperationResult<bo.BOLogst>): void {
                             try {
+                                that.busy(false);
                                 if (opRslt.resultCode !== 0) {
                                     throw new Error(opRslt.message);
                                 }
@@ -75,28 +70,57 @@ namespace initialfantasy {
             }
             /** 运行服务 */
             runService(contract: ibas.IBOServiceContract): void {
+                let boData: ibas.IBusinessObject;
                 if (!ibas.objects.isNull(contract)) {
                     // 传入的数据可能是数组
                     if (contract.data instanceof Array) {
                         // 数组只处理第一个
-                        this.bo = contract.data[0];
+                        boData = contract.data[0];
                     } else {
-                        this.bo = contract.data;
+                        boData = contract.data;
                     }
                 }
-                if (ibas.objects.isNull(this.bo)) {
+                if (ibas.objects.isNull(boData)) {
                     // 输入数据无效，服务不运行
                     this.proceeding(ibas.emMessageType.WARNING,
                         ibas.i18n.prop("documents_bo_document_service") + ibas.i18n.prop("sys_invalid_parameter", "data"));
-                } else if (this.bo instanceof ibas.BusinessObject && this.bo.isNew) {
+                } else if (boData instanceof ibas.BusinessObject && boData.isNew) {
                     // 单据未保存，服务不运行
                     this.messages(ibas.emMessageType.WARNING, ibas.i18n.prop("shell_data_saved_first"));
                 } else {
+                    // 使用调用方模块的DataConverter转换当前对象，创建当前版本的日志条目
+                    this.currentLogst = new bo.BOLogst();
+                    this.currentLogst.cause = "CURRENT";
+                    this.currentLogst.modifyDate = ibas.objects.propertyValue(boData, "updateDate");
+                    this.currentLogst.modifyTime = ibas.objects.propertyValue(boData, "updateTime");
+                    this.currentLogst.modifyUser = ibas.objects.propertyValue(boData, "updateUserSign");
+                    this.currentLogst.logInst = ibas.objects.propertyValue(boData, "logInst");
+
+                    this.currentLogst.transactionId = boData.toString();
+                    // 解析boCode和boKeys
+                    if (ibas.strings.isWith(this.currentLogst.transactionId, "{[", "]}")) {
+                        let boKeys: string = this.currentLogst.transactionId.substring(2, this.currentLogst.transactionId.length - 2);
+                        boKeys = ibas.strings.remove(boKeys, "[", "]");
+                        let values: string[] = boKeys.split(".");
+                        if (values.length === 2) {
+                            this.currentLogst.boCode = values[0];
+                            this.currentLogst.boKeys = values[1];
+                        }
+                    }
+                    // 使用模块的DataConverter转换，确保格式与日志content一致
+                    if (!ibas.objects.isNull(contract.converter)) {
+                        try {
+                            let jsonData: any = contract.converter.convert(boData, "");
+                            this.currentLogst.content = JSON.stringify(jsonData);
+                        } catch (error) {
+                            // 转换失败，当前版本不参与对比
+                        }
+                    }
                     super.show();
                 }
             }
-            /** 关联的数据 */
-            private bo: ibas.IBusinessObject;
+            /** 当前版本日志（虚拟，不入库） */
+            private currentLogst: bo.BOLogst;
 
             private viewData(data: bo.BOLogst | bo.BOLogst[], mode?: "SUMMARY" | "COMPARISON"): void {
                 if (ibas.objects.isNull(data)) {
@@ -106,15 +130,20 @@ namespace initialfantasy {
                     return;
                 }
                 try {
+                    let logsts: bo.BOLogst[] = ibas.arrays.create(data);
+                    // 日志记录的是更新前的状态，当前版本不在日志中，需补充当前版本参与对比
+                    if ((mode === "SUMMARY" || mode === "COMPARISON") && !ibas.objects.isNull(this.currentLogst)) {
+                        logsts.push(this.currentLogst);
+                    }
                     let app: BOLogstViewApp = new BOLogstViewApp();
                     app.viewShower = this.viewShower;
                     app.navigation = this.navigation;
-                    app.description = ibas.strings.format("{0} —— {1}", app.description, ibas.businessobjects.describe(this.bo.toString()));
+                    app.description = ibas.strings.format("{0} - {1}", app.description, ibas.businessobjects.describe(this.currentLogst.transactionId));
                     app.onViewShowed = () => {
                         this.close();
                     };
                     app.showSummary = mode === "SUMMARY" ? true : false;
-                    app.run(data);
+                    app.run(logsts);
                 } catch (error) {
                     this.messages(error);
                 }
@@ -123,7 +152,7 @@ namespace initialfantasy {
         /** 业务对象日志服务-视图 */
         export interface IBOLogstServiceView extends ibas.IView {
             /** 显示关联对象 */
-            showBusinessObject(bo: ibas.IBusinessObject): void;
+            showBusinessObject(description: string): void;
             /** 显示已存在日志 */
             showLogsts(datas: bo.BOLogst[]): void;
             /** 查看数据 */

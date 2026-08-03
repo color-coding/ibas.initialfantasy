@@ -31,6 +31,9 @@ namespace initialfantasy {
                 if (this.onViewShowed instanceof Function) {
                     this.onViewShowed();
                 }
+                if (ibas.objects.isNull(this.template)) {
+                    return;
+                }
                 this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_display_bo_datas"));
                 this.view.drawView(this.template);
                 this.view.showData(this.datas, this.showSummary);
@@ -38,17 +41,31 @@ namespace initialfantasy {
             private datas: ibas.IList<object>;
             run(data?: bo.BOLogst | bo.BOLogst[]): void {
                 this.datas = new ibas.ArrayList<object>();
-                for (let item of ibas.arrays.create(data)) {
-                    this.datas.add(typeof item.content === "string" ? JSON.parse(item.content.replace(/[\u0000-\u001F\u007F]/g, "")) : item.content);
+                // 按实例号降序排序，确保最新版本在前，保证摘要对比顺序正确
+                let logsts: bo.BOLogst[] = ibas.arrays.create(data);
+                logsts.sort((a, b) => b.logInst - a.logInst);
+                for (let item of logsts) {
+                    try {
+                        if (typeof item.content === "string") {
+                            this.datas.add(JSON.parse(item.content.replace(/[\u0000-\u001F\u007F]/g, "")));
+                        } else {
+                            this.datas.add(item.content);
+                        }
+                    } catch (error) {
+                        throw new Error(ibas.i18n.prop("sys_invalid_parameter", "content"));
+                    }
                 }
                 if (this.datas.length > 0) {
                     let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let addedCodes: { [key: string]: boolean } = {};
                     let conditions: (value: any) => void = (value: any) => {
                         if (value instanceof Array) {
-                            conditions(value[0]);
+                            for (let item of value) {
+                                conditions(item);
+                            }
                             return;
                         }
-                        if (typeof value !== "object") {
+                        if (typeof value !== "object" || value === null) {
                             return;
                         }
                         if (value instanceof Date) {
@@ -56,14 +73,19 @@ namespace initialfantasy {
                         }
                         for (let item in value) {
                             if (ibas.strings.equalsIgnoreCase("ObjectCode", item)) {
+                                let code: string = value[item];
+                                if (ibas.strings.isEmpty(code) || addedCodes[code.toUpperCase()]) {
+                                    continue;
+                                }
+                                addedCodes[code.toUpperCase()] = true;
                                 let condition: ibas.ICondition = criteria.conditions.create();
                                 condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
-                                condition.value = value[item];
+                                condition.value = code;
                                 condition.relationship = ibas.emConditionRelationship.OR;
                                 condition = criteria.conditions.create();
                                 condition.alias = bo.BOInformation.PROPERTY_CODE_NAME;
                                 condition.operation = ibas.emConditionOperation.START;
-                                condition.value = value[item] + ".";
+                                condition.value = code + ".";
                                 condition.relationship = ibas.emConditionRelationship.OR;
                             } else {
                                 conditions(value[item]);
@@ -135,7 +157,16 @@ namespace initialfantasy {
                                 }
                                 if (subInfo instanceof bo.BOInformation) {
                                     let subDatas: object[] = [];
-                                    if (ptyInfo.property.endsWith("s")) {
+                                    // 通过数据判断属性是否为数组，而非依据属性名结尾字符
+                                    let isArray: boolean = false;
+                                    for (let item of datas) {
+                                        let tmpItem: any = ibas.objects.propertyValue(item, ptyInfo.property, true);
+                                        if (tmpItem instanceof Array) {
+                                            isArray = true;
+                                            break;
+                                        }
+                                    }
+                                    if (isArray) {
                                         property = new BOTypePropertyArray();
                                         for (let item of datas) {
                                             let tmpItem: any = ibas.objects.propertyValue(item, ptyInfo.property, true);
@@ -158,7 +189,7 @@ namespace initialfantasy {
                                                 subDatas.push(tmpItem);
                                             }
                                         }
-                                        (<BOTypePropertyArray>property).type = outs.template(subDatas, boInfos);
+                                        (<BOTypePropertyObject>property).type = outs.template(subDatas, boInfos);
                                     }
                                 }
                             } else if (ibas.strings.equalsIgnoreCase(ptyInfo.dataType, "DATE")
@@ -177,16 +208,14 @@ namespace initialfantasy {
                             property.description = ptyInfo.description;
                             template.properties.add(property);
                         }
-                        if (template.properties instanceof Array) {
-                            template.properties = template.properties.sort((a, b) => {
-                                if (a.type instanceof BOType && !(b.type instanceof BOType)) {
-                                    return 1;
-                                } else if (b.type instanceof BOType && !(a.type instanceof BOType)) {
-                                    return -1;
-                                }
-                                return a.name.localeCompare(b.name);
-                            });
-                        }
+                        template.properties.sort((a, b) => {
+                            let aIsObject: boolean = a.type instanceof BOType;
+                            let bIsObject: boolean = b.type instanceof BOType;
+                            if (aIsObject !== bIsObject) {
+                                return aIsObject ? 1 : -1;
+                            }
+                            return a.name.localeCompare(b.name);
+                        });
                     }
                 }
                 return template;

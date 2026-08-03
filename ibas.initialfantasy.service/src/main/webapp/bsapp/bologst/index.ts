@@ -6,5 +6,6 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 /// <reference path="./BOLogstListApp.ts" />
+/// <reference path="./BOLogstFunc.ts" />
 /// <reference path="./BOLogstViewApp.ts" />
 /// <reference path="./BOLogstService.ts" />
