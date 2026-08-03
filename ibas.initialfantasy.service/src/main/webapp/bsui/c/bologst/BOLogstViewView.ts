@@ -46,12 +46,16 @@ namespace initialfantasy {
                                     }
                                 }),
                                 new sap.m.ToolbarSpacer(""),
-                                new sap.m.Button("", {
+                                this.btnToggle = new sap.m.Button("", {
                                     text: ibas.i18n.prop("initialfantasy_display_summary"),
                                     type: sap.m.ButtonType.Transparent,
                                     icon: "sap-icon://comment",
                                     press(): void {
-                                        that.showSummaryDifferent();
+                                        if (that.isSummary) {
+                                            that.showComparison();
+                                        } else {
+                                            that.showSummaryDifferent();
+                                        }
                                     }
                                 }),
                             ]
@@ -60,58 +64,29 @@ namespace initialfantasy {
                 }
 
                 private splitter: sap.ui.layout.Splitter;
-
                 private template: sap.ui.core.Control;
+                private boTemplate: app.outs.BOType;
+                private btnToggle: sap.m.Button;
+                private viewDatas: object[];
+                private isSummary: boolean = false;
 
                 drawView(template: app.outs.BOType): void {
+                    this.boTemplate = template;
                     this.template = this.createView(template);
                 }
                 createView(template: app.outs.BOType, root: boolean = true): sap.m.Panel {
-                    let list: sap.m.List = new sap.m.List();
+                    let list: sap.m.List = new sap.m.List("", {
+                        showNoData: false,
+                    });
                     for (let pty of template.properties) {
-                        if (pty instanceof app.outs.BOTypePropertyDate) {
+                        let dataType: any = this.getPropertyDataType(pty);
+                        if (dataType !== null) {
                             list.addItem(new sap.m.StandardListItem("", {
                                 tooltip: ibas.strings.format("{0}: {1}", pty.name, pty.type.name),
                                 title: pty.description,
                                 info: {
                                     path: root ? ibas.strings.format("/{0}", pty.name) : pty.name,
-                                    type: new sap.extension.data.Date()
-                                }
-                            }));
-                        } else if (pty instanceof app.outs.BOTypePropertyTime) {
-                            list.addItem(new sap.m.StandardListItem("", {
-                                tooltip: ibas.strings.format("{0}: {1}", pty.name, pty.type.name),
-                                title: pty.description,
-                                info: {
-                                    path: root ? ibas.strings.format("/{0}", pty.name) : pty.name,
-                                    type: new sap.extension.data.Time()
-                                }
-                            }));
-                        } else if (pty instanceof app.outs.BOTypePropertyDecimal) {
-                            list.addItem(new sap.m.StandardListItem("", {
-                                tooltip: ibas.strings.format("{0}: {1}", pty.name, pty.type.name),
-                                title: pty.description,
-                                info: {
-                                    path: root ? ibas.strings.format("/{0}", pty.name) : pty.name,
-                                    type: new sap.extension.data.Decimal()
-                                }
-                            }));
-                        } else if (pty instanceof app.outs.BOTypePropertyNumeric) {
-                            list.addItem(new sap.m.StandardListItem("", {
-                                tooltip: ibas.strings.format("{0}: {1}", pty.name, pty.type.name),
-                                title: pty.description,
-                                info: {
-                                    path: root ? ibas.strings.format("/{0}", pty.name) : pty.name,
-                                    type: new sap.extension.data.Numeric()
-                                }
-                            }));
-                        } else if (pty instanceof app.outs.BOTypePropertyString) {
-                            list.addItem(new sap.m.StandardListItem("", {
-                                tooltip: ibas.strings.format("{0}: {1}", pty.name, pty.type.name),
-                                title: pty.description,
-                                info: {
-                                    path: root ? ibas.strings.format("/{0}", pty.name) : pty.name,
-                                    type: new sap.extension.data.Alphanumeric()
+                                    type: dataType
                                 }
                             }));
                         } else if (pty instanceof app.outs.BOTypePropertyArray) {
@@ -202,6 +177,8 @@ namespace initialfantasy {
                     return panel;
                 }
                 showData(datas: object[], summary?: boolean): void {
+                    this.viewDatas = datas;
+                    this.isSummary = summary === true;
                     this.splitter.destroyContentAreas();
                     for (let data of datas) {
                         let view: sap.ui.layout.Splitter = new sap.ui.layout.Splitter("", {
@@ -230,7 +207,9 @@ namespace initialfantasy {
                                                     parts: [
                                                         {
                                                             path: "/UpdateDate",
-                                                            type: new sap.extension.data.Date(),
+                                                            type: new sap.extension.data.Date({
+                                                                format: "yyyy-MM-dd"
+                                                            }),
                                                         }, {
                                                             path: "/UpdateTime",
                                                             type: new sap.extension.data.Time(),
@@ -273,6 +252,71 @@ namespace initialfantasy {
                 private ignoreSystem: sap.m.CheckBox;
                 private systemProperties: string[] = ["LogInst", "ObjectCode", "Series", "DataSource", "CreateActionId", "UpdateActionId", "Referenced", "VisOrder", "UpdateDate", "UpdateTime", "UpdateUserSign", "CreateDate", "CreateTime", "CreateUserSign"];
 
+                /** 构建属性项的分组ID模板，用于匹配不同版本间的对应属性 */
+                private buildGroupId(itemId: string): string {
+                    if (itemId.lastIndexOf("__item") > 0) {
+                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                        builder.map(null, "");
+                        builder.map(undefined, "");
+                        for (let sItem of itemId.split("__")) {
+                            if (ibas.strings.isEmpty(sItem)) {
+                                continue;
+                            }
+                            builder.append("__");
+                            let index: number = sItem.indexOf("-");
+                            if (index > 0) {
+                                let temp: string = sItem.substring(0, index) + "-{0}";
+                                if (sItem.indexOf("-", index + 1) > 0) {
+                                    temp += sItem.substring(sItem.indexOf("-", index + 1));
+                                }
+                                builder.append(temp);
+                            } else {
+                                builder.append(sItem);
+                            }
+                        }
+                        return builder.toString();
+                    } else {
+                        return itemId.substring(0, itemId.lastIndexOf("-")) + "-{0}";
+                    }
+                }
+                /** 检查属性项在不同版本间是否存在差异 */
+                private isItemSame(groupId: string, value: any, count: number): boolean {
+                    let same: boolean = true;
+                    for (let index: number = 1; index < count; index++) {
+                        let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(groupId, index));
+                        if (tmpItem instanceof sap.m.StandardListItem) {
+                            if (!this.isValueEqual(tmpItem.getInfo(), value)) {
+                                same = false;
+                            }
+                        } else if (ibas.objects.isNull(tmpItem)) {
+                            same = false;
+                        }
+                    }
+                    return same;
+                }
+                /** 判断属性项是否为系统属性 */
+                private isSystemProperty(item: sap.m.StandardListItem): boolean {
+                    return this.systemProperties.indexOf(String(item.getTooltip()).split(": ")[0]) >= 0;
+                }
+                /** 获取属性对应的数据类型 */
+                private getPropertyDataType(pty: any): any {
+                    if (pty instanceof app.outs.BOTypePropertyDate) { return new sap.extension.data.Date(); }
+                    if (pty instanceof app.outs.BOTypePropertyTime) { return new sap.extension.data.Time(); }
+                    if (pty instanceof app.outs.BOTypePropertyDecimal) { return new sap.extension.data.Decimal(); }
+                    if (pty instanceof app.outs.BOTypePropertyNumeric) { return new sap.extension.data.Numeric(); }
+                    if (pty instanceof app.outs.BOTypePropertyString) { return new sap.extension.data.Alphanumeric(); }
+                    return null;
+                }
+                /** 更新面板可见性：有可见项则显示，否则隐藏 */
+                private updatePanelVisibility(list: sap.m.List): void {
+                    let hasVisible: boolean = list.getItems().some(
+                        (c: any) => c.getVisible()
+                            && (c instanceof sap.m.StandardListItem
+                                || (c instanceof sap.m.CustomListItem && c.getContent()?.length > 0))
+                    );
+                    (<sap.m.Panel>list.getParent()).setVisible(hasVisible);
+                }
+
                 private markDifferent(panel: any, count: number): void {
                     let ignoreSystem: boolean = this.ignoreSystem.getSelected();
                     let onlyCheck: boolean = this.onlyCheck.getSelected();
@@ -282,45 +326,9 @@ namespace initialfantasy {
                                 let group: string;
                                 for (let lItem of pItem.getItems()) {
                                     if (lItem instanceof sap.m.StandardListItem) {
-                                        let same: boolean = true;
                                         let value: any = lItem.getInfo();
-                                        group = lItem.getId();
-                                        if (group.lastIndexOf("__item") > 0) {
-                                            // __item245-0-__item297-0-1; __item192-0
-                                            // __item245-1-__item297-1-1; __item192-1
-                                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                            builder.map(null, "");
-                                            builder.map(undefined, "");
-                                            for (let sItem of group.split("__")) {
-                                                if (ibas.strings.isEmpty(sItem)) {
-                                                    continue;
-                                                }
-                                                builder.append("__");
-                                                let index: number = sItem.indexOf("-");
-                                                if (index > 0) {
-                                                    let temp: string = sItem.substring(0, index) + "-{0}";
-                                                    if (sItem.indexOf("-", index + 1) > 0) {
-                                                        temp += sItem.substring(sItem.indexOf("-", index + 1));
-                                                    }
-                                                    builder.append(temp);
-                                                } else {
-                                                    builder.append(sItem);
-                                                }
-                                            }
-                                            group = builder.toString();
-                                        } else {
-                                            group = group.substring(0, group.lastIndexOf("-")) + "-{0}";
-                                        }
-                                        for (let index: number = 1; index < count; index++) {
-                                            let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                            if (tmpItem instanceof sap.m.StandardListItem) {
-                                                if (tmpItem.getInfo() !== value) {
-                                                    same = false;
-                                                }
-                                            } else if (ibas.objects.isNull(tmpItem)) {
-                                                same = false;
-                                            }
-                                        }
+                                        group = this.buildGroupId(lItem.getId());
+                                        let same: boolean = this.isItemSame(group, value, count);
                                         if (same === false) {
                                             for (let index: number = 0; index < count; index++) {
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
@@ -329,30 +337,15 @@ namespace initialfantasy {
                                                 }
                                             }
                                         }
-                                        if (onlyCheck === true) {
-                                            for (let index: number = 0; index < count; index++) {
-                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                                if (tmpItem instanceof sap.m.StandardListItem) {
-                                                    if (ignoreSystem === true
-                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0]) >= 0) {
-                                                        tmpItem.setVisible(false);
-                                                    } else if (same === false) {
-                                                        tmpItem.setVisible(true);
-                                                    } else {
-                                                        tmpItem.setVisible(false);
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            for (let index: number = 0; index < count; index++) {
-                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                                if (tmpItem instanceof sap.m.StandardListItem) {
-                                                    if (ignoreSystem === true
-                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0]) >= 0) {
-                                                        tmpItem.setVisible(false);
-                                                    } else {
-                                                        tmpItem.setVisible(true);
-                                                    }
+                                        for (let index: number = 0; index < count; index++) {
+                                            let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                            if (tmpItem instanceof sap.m.StandardListItem) {
+                                                if (ignoreSystem === true && this.isSystemProperty(tmpItem)) {
+                                                    tmpItem.setVisible(false);
+                                                } else if (onlyCheck === true && same === true) {
+                                                    tmpItem.setVisible(false);
+                                                } else {
+                                                    tmpItem.setVisible(true);
                                                 }
                                             }
                                         }
@@ -365,18 +358,10 @@ namespace initialfantasy {
                                 if (!ibas.strings.isEmpty(group)) {
                                     for (let index: number = 0; index < count; index++) {
                                         let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                        // 没有显示的项目，则隐藏
                                         if (tmpItem instanceof sap.m.StandardListItem) {
                                             let parent: any = tmpItem.getParent();
                                             if (parent instanceof sap.m.List) {
-                                                if (parent.getItems().find(
-                                                    c => c.getVisible()
-                                                        && (c instanceof sap.m.StandardListItem || (c instanceof sap.m.CustomListItem && c.getContent()?.length > 0))
-                                                ) === undefined) {
-                                                    (<sap.m.Panel>parent.getParent()).setVisible(false);
-                                                } else {
-                                                    (<sap.m.Panel>parent.getParent()).setVisible(true);
-                                                }
+                                                this.updatePanelVisibility(parent);
                                             }
                                         }
                                     }
@@ -384,12 +369,60 @@ namespace initialfantasy {
                             }
                         }
                     }
+                    // 处理其他版本中多出的子行（版本0中不存在的行）
+                    if (panel === sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", this.template.getId(), 0))) {
+                        this.markExtraRows(count);
+                    }
+                }
+                /** 标记其他版本中多出的子行（在版本0中不存在的行） */
+                private markExtraRows(count: number): void {
+                    let ignoreSystem: boolean = this.ignoreSystem.getSelected();
+                    for (let version: number = 1; version < count; version++) {
+                        let versionPanel: any = sap.ui.getCore().byId(
+                            ibas.strings.format("{0}-{1}", this.template.getId(), version));
+                        this.markExtraRowsInPanel(versionPanel, count, ignoreSystem);
+                    }
+                }
+                /** 在面板中查找并标记版本0中不存在的行 */
+                private markExtraRowsInPanel(panel: any, count: number, ignoreSystem: boolean): void {
+                    if (panel instanceof sap.m.Panel) {
+                        for (let pItem of panel.getContent()) {
+                            if (pItem instanceof sap.m.List) {
+                                for (let lItem of pItem.getItems()) {
+                                    if (lItem instanceof sap.m.StandardListItem) {
+                                        let group: string = this.buildGroupId(lItem.getId());
+                                        // 检查版本0中是否存在对应项
+                                        let baseItem: any = sap.ui.getCore().byId(ibas.strings.format(group, 0));
+                                        if (ibas.objects.isNull(baseItem)) {
+                                            // 版本0中不存在，标记所有版本中对应的项为差异
+                                            for (let index: number = 0; index < count; index++) {
+                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
+                                                if (tmpItem instanceof sap.m.StandardListItem) {
+                                                    if (ignoreSystem === true && this.isSystemProperty(tmpItem)) {
+                                                        tmpItem.setVisible(false);
+                                                    } else {
+                                                        tmpItem.setHighlight(sap.ui.core.MessageType.Error);
+                                                        tmpItem.setVisible(true);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else if (lItem instanceof sap.m.CustomListItem) {
+                                        for (let cItem of lItem.getContent()) {
+                                            this.markExtraRowsInPanel(cItem, count, ignoreSystem);
+                                        }
+                                    }
+                                }
+                                this.updatePanelVisibility(pItem);
+                            }
+                        }
+                    }
                 }
                 private showSummaryDifferent(): void {
-                    let content: ibas.ArrayList<any>
-                        = this.summaryDifferent(sap.ui.getCore().byId(ibas.strings.format("{0}-{1}", this.template.getId(), 0)), this.splitter.getContentAreas().length);
+                    let content: ibas.ArrayList<LogInstSummary> = this.summaryDifferentByData();
                     let table: sap.m.Table = new sap.extension.m.Table("", {
                         autoPopinMode: true,
+                        showNoData: false,
                         columns: [
                             new sap.extension.m.Column("", {
                                 header: ibas.i18n.prop("bo_bologst_loginst"),
@@ -477,125 +510,220 @@ namespace initialfantasy {
                     table.setModel(new sap.extension.model.JSONModel(content));
                     this.splitter.destroyContentAreas();
                     this.splitter.addContentArea(table);
-                    (<sap.m.Page>this.splitter.getParent()).setShowFooter(false);
+                    // 切换为摘要模式：更新按钮文本，隐藏对比模式专属的复选框
+                    this.isSummary = true;
+                    this.btnToggle.setText(ibas.i18n.prop("initialfantasy_display_comparison"));
+                    this.ignoreSystem.setVisible(false);
+                    this.onlyCheck.setVisible(false);
                 }
-                private summaryDifferent(panel: any, count: number): ibas.ArrayList<LogInstSummary> {
-                    let ignoreSystem: boolean = this.ignoreSystem.getSelected();
+                /** 切换回对比视图 */
+                private showComparison(): void {
+                    this.isSummary = false;
+                    this.btnToggle.setText(ibas.i18n.prop("initialfantasy_display_summary"));
+                    this.ignoreSystem.setVisible(true);
+                    this.onlyCheck.setVisible(true);
+                    this.showData(this.viewDatas, false);
+                }
+                /** 基于数据驱动的差异对比，生成差异摘要 */
+                private summaryDifferentByData(): ibas.ArrayList<LogInstSummary> {
                     let summaries: ibas.ArrayList<LogInstSummary> = new ibas.ArrayList<LogInstSummary>();
-                    if (panel instanceof sap.m.Panel) {
-                        for (let pItem of panel.getContent()) {
-                            if (pItem instanceof sap.m.List) {
-                                for (let lItem of pItem.getItems()) {
-                                    if (lItem instanceof sap.m.StandardListItem) {
-                                        let same: boolean = true;
-                                        let value: any = lItem.getInfo();
-                                        let group: string = lItem.getId();
-                                        if (group.lastIndexOf("__item") > 0) {
-                                            // __item245-0-__item297-0-1; __item192-0
-                                            // __item245-1-__item297-1-1; __item192-1
-                                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                            builder.map(null, "");
-                                            builder.map(undefined, "");
-                                            for (let sItem of group.split("__")) {
-                                                if (ibas.strings.isEmpty(sItem)) {
-                                                    continue;
-                                                }
-                                                builder.append("__");
-                                                let index: number = sItem.indexOf("-");
-                                                if (index > 0) {
-                                                    let temp: string = sItem.substring(0, index) + "-{0}";
-                                                    if (sItem.indexOf("-", index + 1) > 0) {
-                                                        temp += sItem.substring(sItem.indexOf("-", index + 1));
-                                                    }
-                                                    builder.append(temp);
-                                                } else {
-                                                    builder.append(sItem);
-                                                }
-                                            }
-                                            group = builder.toString();
-                                        } else {
-                                            group = group.substring(0, group.lastIndexOf("-")) + "-{0}";
-                                        }
-                                        for (let index: number = 1; index < count; index++) {
-                                            let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                            if (tmpItem instanceof sap.m.StandardListItem) {
-                                                if (tmpItem.getInfo() !== value) {
-                                                    same = false;
-                                                }
-                                            } else if (ibas.objects.isNull(tmpItem)) {
-                                                same = false;
-                                            }
-                                        }
-                                        if (same === false) {
-                                            let modifyContent: (tmpItem: sap.m.StandardListItem) => string = (tmpItem) => {
-                                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                                let parent: any = tmpItem.getParent()?.getParent();
-                                                if (parent instanceof sap.m.Panel) {
-                                                    for (let item of panel.getHeaderToolbar().getContent()) {
-                                                        if (item instanceof sap.m.Label) {
-                                                            if (builder.length > 0) {
-                                                                builder.append(" - ");
-                                                            }
-                                                            builder.append(item.getText());
-                                                        }
-                                                    }
-                                                }
-                                                if (builder.length > 0) {
-                                                    builder.append(" - ");
-                                                }
-                                                builder.append(tmpItem.getTitle());
-                                                return builder.toString();
-                                            };
-                                            let summary: LogInstSummary = null;
-                                            for (let index: number = 0; index < count; index++) {
-                                                let data: any = (<any>this.splitter.getContentAreas()[index].getModel()).getData();
-                                                let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
-                                                if (tmpItem instanceof sap.m.StandardListItem) {
-                                                    if (ignoreSystem === true
-                                                        && this.systemProperties.indexOf(String(tmpItem.getTooltip()).split(": ")[0]) >= 0) {
-                                                        continue;
-                                                    }
-                                                    if (summary === null) {
-                                                        summary = new LogInstSummary();
-                                                        summary.logInst = data.LogInst;
-                                                        summary.modifyDate = data.UpdateDate;
-                                                        summary.modifyTime = data.UpdateTime;
-                                                        summary.modifyUser = data.UpdateUserSign;
-                                                        summary.modifyContent = modifyContent(tmpItem);
-                                                        summary.afterModified = tmpItem.getInfo();
-
-                                                        summaries.add(summary);
-                                                    } else {
-                                                        summary.beforeModified = tmpItem.getInfo();
-                                                        if (summary.beforeModified === summary.afterModified) {
-                                                            summaries.remove(summary);
-                                                        }
-                                                        if (index < count - 1) {
-                                                            let nSummary: LogInstSummary = new LogInstSummary();
-                                                            nSummary.logInst = data.LogInst;
-                                                            nSummary.modifyDate = data.UpdateDate;
-                                                            nSummary.modifyTime = data.UpdateTime;
-                                                            nSummary.modifyUser = data.UpdateUserSign;
-                                                            nSummary.modifyContent = modifyContent(tmpItem);
-                                                            nSummary.afterModified = tmpItem.getInfo();
-
-                                                            summaries.add(nSummary);
-                                                            summary = nSummary;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } else if (lItem instanceof sap.m.CustomListItem) {
-                                        for (let cItem of lItem.getContent()) {
-                                            summaries.add(this.summaryDifferent(cItem, count));
-                                        }
-                                    }
-                                }
+                    if (ibas.objects.isNull(this.viewDatas) || this.viewDatas.length < 2) {
+                        return summaries;
+                    }
+                    let ignoreSystem: boolean = this.ignoreSystem.getSelected();
+                    // viewDatas 按实例号降序排列（最新在前），逐对比较相邻版本
+                    for (let i: number = 0; i < this.viewDatas.length - 1; i++) {
+                        let currentData: any = this.viewDatas[i];
+                        let previousData: any = this.viewDatas[i + 1];
+                        this.compareData(currentData, previousData, this.boTemplate, "", summaries, ignoreSystem);
+                    }
+                    return summaries;
+                }
+                /** 获取子行的行标识与描述，优先级：LineId > ObjectKey > Code > DocEntry */
+                private getRowInfo(row: any): { key: string; description: string } {
+                    if (ibas.objects.isNull(row)) {
+                        return { key: "", description: "" };
+                    }
+                    let keyFields: { field: string; label: string }[] = [
+                        { field: "LineId", label: ibas.i18n.prop("bo_bologst_lineid") },
+                        { field: "ObjectKey", label: ibas.i18n.prop("bo_bologst_objectkey") },
+                        { field: "Code", label: ibas.i18n.prop("bo_bologst_code") },
+                        { field: "DocEntry", label: ibas.i18n.prop("bo_bologst_docentry") },
+                    ];
+                    for (let { field, label } of keyFields) {
+                        let value: any = ibas.objects.propertyValue(row, field, true);
+                        if (value !== undefined && value !== null && value !== "" && value !== 0) {
+                            return { key: field + ":" + value, description: ibas.strings.format("{0}: {1}", label, value) };
+                        }
+                    }
+                    // 无标识字段，使用序列化的行数据作为键
+                    return { key: "DATA:" + JSON.stringify(row), description: "" };
+                }
+                /** 格式化属性值用于摘要显示 */
+                private formatValue(value: any): string {
+                    if (value === undefined || value === null) {
+                        return "";
+                    }
+                    if (value instanceof Date) {
+                        return ibas.dates.toString(value);
+                    }
+                    return String(value);
+                }
+                /** 判断两个属性值是否相同（0、""与undefined、null等效） */
+                private isValueEqual(a: any, b: any): boolean {
+                    if (a === b) {
+                        return true;
+                    }
+                    // 0、""、undefined、null 互相视为相等
+                    if (this.isEmptyValue(a)) {
+                        return this.isEmptyValue(b);
+                    }
+                    if (this.isEmptyValue(b)) {
+                        return false;
+                    }
+                    return this.formatValue(a) === this.formatValue(b);
+                }
+                /** 判断值是否为空值（0、"0.000000"、""、undefined、null 等效） */
+                private isEmptyValue(value: any): boolean {
+                    if (value === undefined || value === null || value === "" || value === 0) {
+                        return true;
+                    }
+                    // 字符串形式的0，如 "0"、"0.00"、"0.000000"
+                    if (typeof value === "string") {
+                        let num: number = parseFloat(value);
+                        if (!isNaN(num) && num === 0) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                /** 创建差异摘要 */
+                private createSummary(currentData: any, modifyContent: string, beforeModified: string, afterModified: string): LogInstSummary {
+                    let summary: LogInstSummary = new LogInstSummary();
+                    summary.logInst = currentData.LogInst;
+                    summary.modifyDate = currentData.UpdateDate;
+                    summary.modifyTime = currentData.UpdateTime;
+                    summary.modifyUser = currentData.UpdateUserSign;
+                    summary.modifyContent = modifyContent;
+                    summary.beforeModified = beforeModified;
+                    summary.afterModified = afterModified;
+                    return summary;
+                }
+                /** 比较两个数据对象的属性差异 */
+                private compareData(
+                    currentData: any, previousData: any,
+                    template: app.outs.BOType, parentDesc: string,
+                    summaries: ibas.ArrayList<LogInstSummary>, ignoreSystem: boolean
+                ): void {
+                    if (ibas.objects.isNull(template)) {
+                        return;
+                    }
+                    for (let pty of template.properties) {
+                        if (ignoreSystem === true && this.systemProperties.indexOf(pty.name) >= 0) {
+                            continue;
+                        }
+                        let ptyDesc: string = ibas.strings.isEmpty(parentDesc)
+                            ? pty.description : parentDesc + " - " + pty.description;
+                        if (pty instanceof app.outs.BOTypePropertyArray) {
+                            // 子对象数组，按键匹配行
+                            let currentRows: any[] = this.getArrayData(currentData, pty.name);
+                            let previousRows: any[] = this.getArrayData(previousData, pty.name);
+                            this.compareArray(currentRows, previousRows, pty.type, ptyDesc,
+                                currentData, summaries, ignoreSystem);
+                        } else if (pty instanceof app.outs.BOTypePropertyObject) {
+                            // 子对象（非数组），递归比较
+                            let currentChild: any = ibas.objects.propertyValue(currentData, pty.name, true);
+                            let previousChild: any = ibas.objects.propertyValue(previousData, pty.name, true);
+                            if (!ibas.objects.isNull(currentChild) && !ibas.objects.isNull(previousChild)) {
+                                this.compareData(currentChild, previousChild, pty.type, ptyDesc, summaries, ignoreSystem);
+                            } else if (!ibas.objects.isNull(currentChild) || !ibas.objects.isNull(previousChild)) {
+                                // 子对象在一个版本存在，在另一个版本不存在
+                                summaries.add(this.createSummary(currentData, ptyDesc,
+                                    ibas.objects.isNull(previousChild) ? "" : this.formatRowContent(previousChild, pty.type, ignoreSystem),
+                                    ibas.objects.isNull(currentChild) ? "" : this.formatRowContent(currentChild, pty.type, ignoreSystem)
+                                ));
+                            }
+                        } else {
+                            // 简单属性，直接比较值
+                            let currentValue: any = ibas.objects.propertyValue(currentData, pty.name, true);
+                            let previousValue: any = ibas.objects.propertyValue(previousData, pty.name, true);
+                            if (!this.isValueEqual(currentValue, previousValue)) {
+                                summaries.add(this.createSummary(currentData, ptyDesc,
+                                    this.formatValue(previousValue), this.formatValue(currentValue)));
                             }
                         }
                     }
-                    return summaries;
+                }
+                /** 获取对象中的数组属性 */
+                private getArrayData(data: any, propertyName: string): any[] {
+                    if (ibas.objects.isNull(data)) {
+                        return [];
+                    }
+                    let value: any = ibas.objects.propertyValue(data, propertyName, true);
+                    if (value instanceof Array) {
+                        return value;
+                    }
+                    return [];
+                }
+                /** 比较子对象数组的差异，按键匹配行 */
+                private compareArray(
+                    currentRows: any[], previousRows: any[],
+                    childType: app.outs.BOType, parentDesc: string,
+                    currentData: any,
+                    summaries: ibas.ArrayList<LogInstSummary>, ignoreSystem: boolean
+                ): void {
+                    // 构建行映射：键 -> 行数据
+                    let currentMap: { [key: string]: any } = {};
+                    let previousMap: { [key: string]: any } = {};
+                    for (let row of currentRows) { currentMap[this.getRowInfo(row).key] = row; }
+                    for (let row of previousRows) { previousMap[this.getRowInfo(row).key] = row; }
+                    // 检查新增和修改的行
+                    for (let row of currentRows) {
+                        let info: { key: string; description: string } = this.getRowInfo(row);
+                        let fullDesc: string = ibas.strings.isEmpty(info.description)
+                            ? parentDesc : parentDesc + " (" + info.description + ")";
+                        if (previousMap[info.key]) {
+                            // 行在两个版本中都存在，递归比较属性
+                            this.compareData(row, previousMap[info.key], childType, fullDesc, summaries, ignoreSystem);
+                        } else {
+                            // 新增行
+                            summaries.add(this.createSummary(currentData,
+                                fullDesc + " - " + ibas.i18n.prop("initialfantasy_new_row"),
+                                "", this.formatRowContent(row, childType, ignoreSystem)));
+                        }
+                    }
+                    // 检查删除的行
+                    for (let row of previousRows) {
+                        let info: { key: string; description: string } = this.getRowInfo(row);
+                        if (!currentMap[info.key]) {
+                            let fullDesc: string = ibas.strings.isEmpty(info.description)
+                                ? parentDesc : parentDesc + " (" + info.description + ")";
+                            summaries.add(this.createSummary(currentData,
+                                fullDesc + " - " + ibas.i18n.prop("initialfantasy_deleted_row"),
+                                this.formatRowContent(row, childType, ignoreSystem), ""));
+                        }
+                    }
+                }
+                /** 格式化行内容用于摘要显示 */
+                private formatRowContent(row: any, childType: app.outs.BOType, ignoreSystem: boolean): string {
+                    if (ibas.objects.isNull(row) || ibas.objects.isNull(childType)) {
+                        return "";
+                    }
+                    let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                    for (let pty of childType.properties) {
+                        if (ignoreSystem === true && this.systemProperties.indexOf(pty.name) >= 0) {
+                            continue;
+                        }
+                        let value: any = ibas.objects.propertyValue(row, pty.name, true);
+                        if (value === undefined || value === null || value === "") {
+                            continue;
+                        }
+                        if (builder.length > 0) {
+                            builder.append("; ");
+                        }
+                        builder.append(pty.description + ": " + this.formatValue(value));
+                    }
+                    return builder.toString();
                 }
             }
             class LogInstSummary {

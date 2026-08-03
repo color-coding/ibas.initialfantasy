@@ -1,9 +1,16 @@
 package org.colorcoding.ibas.initialfantasy.repository;
 
+import org.colorcoding.ibas.bobas.bo.BOUtilities;
+import org.colorcoding.ibas.bobas.common.ConditionOperation;
+import org.colorcoding.ibas.bobas.common.DateTimes;
+import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
 import org.colorcoding.ibas.bobas.common.IOperationResult;
+import org.colorcoding.ibas.bobas.common.ISort;
 import org.colorcoding.ibas.bobas.common.OperationResult;
+import org.colorcoding.ibas.bobas.i18n.I18N;
 import org.colorcoding.ibas.bobas.repository.BORepositoryServiceApplication;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfig;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationConfigIdentity;
 import org.colorcoding.ibas.initialfantasy.bo.application.ApplicationElement;
@@ -814,6 +821,121 @@ public class BORepositoryInitialFantasy extends BORepositoryServiceApplication
 	 */
 	public IOperationResult<IBOLogst> saveBOLogst(IBOLogst bo) {
 		return new OperationResult<IBOLogst>(this.saveBOLogst((BOLogst) bo, this.getUserToken()));
+	}
+
+	/**
+	 * 删除-业务对象日志
+	 *
+	 * @param criteria 查询条件
+	 * @param token    口令
+	 * @return 操作结果
+	 */
+	public OperationResult<BOLogst> deleteBOLogst(ICriteria criteria, String token) {
+		OperationResult<BOLogst> operationResult = new OperationResult<>();
+		try {
+			this.setUserToken(token);
+			// 检查是否为管理员用户
+			String fileName = null;
+			Object currentUser = this.getCurrentUser();
+			if (currentUser instanceof org.colorcoding.ibas.initialfantasy.bo.shell.User) {
+				org.colorcoding.ibas.initialfantasy.bo.shell.User user = (org.colorcoding.ibas.initialfantasy.bo.shell.User) currentUser;
+				if (!user.isSuper()) {
+					throw new Exception(I18N.prop("msg_if_only_super_user_can_execute"));
+				}
+				fileName = String.format("deleted_bologst_%s_%s.csv", user.getCode(),
+						DateTimes.now().toString("yyyyMMdd_HHmmss"));
+			} else {
+				throw new Exception(I18N.prop("msg_if_only_super_user_can_execute"));
+			}
+			if (criteria == null || criteria.getConditions().isEmpty()) {
+				throw new Exception(I18N.prop("msg_bobas_invalid_criteria"));
+			}
+			// 批量循环查询并删除日志
+			criteria.setResultCount(MyConfiguration.getConfigValue(MyConfiguration.CONFIG_ITEM_DB_BATCH_FETCH, 512));
+			// 排序条件：TransactionId DESC + LogInst DESC，与前端分页游标保持一致
+			if (!criteria.getSorts().isEmpty()) {
+				criteria.getSorts().clear();
+			}
+			ISort sort = criteria.getSorts().create();
+			sort.setAlias(BOLogst.PROPERTY_TRANSACTIONID);
+			sort.setSortType(org.colorcoding.ibas.bobas.common.SortType.DESCENDING);
+			sort = criteria.getSorts().create();
+			sort.setAlias(BOLogst.PROPERTY_LOGINST);
+			sort.setSortType(org.colorcoding.ibas.bobas.common.SortType.DESCENDING);
+			// 保存原始条件，用于后续克隆分页
+			int totalCount = 0;
+			ICondition condition;
+			ICriteria oCriteria = criteria.clone();
+			IOperationResult<IBOLogst> opRsltFetch;
+			java.io.File logFile = new java.io.File(MyConfiguration.getLogFolder(), fileName);
+			try (java.io.OutputStreamWriter writer = new java.io.OutputStreamWriter(
+					new java.io.FileOutputStream(logFile), "UTF-8")) {
+				do {
+					opRsltFetch = this.fetchBOLogst(criteria);
+					if (opRsltFetch.getError() != null) {
+						throw opRsltFetch.getError();
+					}
+					if (opRsltFetch.getResultObjects().isEmpty()) {
+						break;
+					}
+					// 标记删除
+					opRsltFetch.getResultObjects().forEach(c -> c.delete());
+					// 批量删除，跳过业务逻辑
+					this.getTransaction().save(opRsltFetch.getResultObjects().toArray(new IBOLogst[0]));
+					// 写入审计文件
+					for (IBOLogst logst : opRsltFetch.getResultObjects()) {
+						writer.write(BOUtilities.toCsvString(logst));
+					}
+					totalCount += opRsltFetch.getResultObjects().size();
+					// 不足一批，说明没有更多数据
+					if (opRsltFetch.getResultObjects().size() < criteria.getResultCount()) {
+						break;
+					}
+					criteria = oCriteria.clone();
+					// 原始条件用括号括起
+					if (criteria.getConditions().size() > 0) {
+						criteria.getConditions().firstOrDefault().addBracketOpen();
+						criteria.getConditions().lastOrDefault().addBracketClose();
+					}
+					// 设置分页条件,TransactionId + LogInst与前端逻辑保持一致
+					IBOLogst lastBO = opRsltFetch.getResultObjects().lastOrDefault();
+					condition = criteria.getConditions().create();
+					condition.setBracketOpen(2);
+					condition.setBracketClose(1);
+					condition.setAlias(BOLogst.PROPERTY_TRANSACTIONID);
+					condition.setOperation(ConditionOperation.LESS_THAN);
+					condition.setValue(lastBO.getTransactionId());
+					condition.setRelationship(org.colorcoding.ibas.bobas.common.ConditionRelationship.AND);
+					condition = criteria.getConditions().create();
+					condition.setBracketOpen(1);
+					condition.setAlias(BOLogst.PROPERTY_TRANSACTIONID);
+					condition.setOperation(ConditionOperation.EQUAL);
+					condition.setValue(lastBO.getTransactionId());
+					condition.setRelationship(org.colorcoding.ibas.bobas.common.ConditionRelationship.OR);
+					condition = criteria.getConditions().create();
+					condition.setBracketClose(2);
+					condition.setAlias(BOLogst.PROPERTY_LOGINST);
+					condition.setOperation(ConditionOperation.LESS_THAN);
+					condition.setValue(String.valueOf(lastBO.getLogInst()));
+					condition.setRelationship(org.colorcoding.ibas.bobas.common.ConditionRelationship.AND);
+				} while (criteria != null && !criteria.getConditions().isEmpty());
+				writer.flush();
+			}
+			operationResult.setMessage(I18N.prop("msg_if_deleted_bologst_count", totalCount));
+		} catch (Exception e) {
+			operationResult.setError(e);
+		}
+		return operationResult;
+	}
+
+	/**
+	 * 删除-业务对象日志（提前设置用户口令）
+	 *
+	 * @param criteria 查询条件
+	 * @return 操作结果
+	 */
+	public IOperationResult<IBOLogst> deleteBOLogst(ICriteria criteria) {
+		return new OperationResult<IBOLogst>(this.deleteBOLogst(criteria, this.getUserToken()));
 	}
 
 	// --------------------------------------------------------------------------------------------//
