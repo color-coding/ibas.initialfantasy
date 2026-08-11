@@ -40,9 +40,10 @@ namespace initialfantasy {
                                 renderType: sap.m.FlexRendertype.Bare,
                                 items: [
                                     // 封装控件，密码方式有异常
-                                    new sap.m.Input("", {
+                                    new sap.extension.m.Input("", {
                                         editable: false,
                                         autocomplete: false,
+                                        disableAutofill: true,
                                         type: sap.m.InputType.Password,
                                     }).bindProperty("value", {
                                         path: "/password",
@@ -62,19 +63,17 @@ namespace initialfantasy {
                                                     titleAlignment: sap.m.TitleAlignment.Start,
                                                     placement: sap.m.PlacementType.HorizontalPreferredLeft,
                                                     content: [
-                                                        new sap.m.Input("", {
-                                                            visible: false,
-                                                            type: sap.m.InputType.Password,
-                                                        }),
                                                         new sap.ui.layout.form.SimpleForm("", {
                                                             content: [
-                                                                new sap.m.Input("", {
+                                                                new sap.extension.m.Input("", {
                                                                     autocomplete: false,
+                                                                    disableAutofill: true,
                                                                     type: sap.m.InputType.Password,
                                                                     placeholder: ibas.i18n.prop("bo_user_password")
                                                                 }),
-                                                                new sap.m.Input("", {
+                                                                new sap.extension.m.Input("", {
                                                                     autocomplete: false,
+                                                                    disableAutofill: true,
                                                                     type: sap.m.InputType.Password,
                                                                     placeholder: ibas.i18n.prop("bo_user_password")
                                                                 })
