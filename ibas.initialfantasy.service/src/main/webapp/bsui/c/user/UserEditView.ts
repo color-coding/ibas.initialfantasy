@@ -135,9 +135,10 @@ namespace initialfantasy {
                                                         renderType: sap.m.FlexRendertype.Bare,
                                                         items: [
                                                             // 封装控件，密码方式有异常
-                                                            new sap.m.Input("", {
+                                                            new sap.extension.m.Input("", {
                                                                 editable: false,
                                                                 autocomplete: false,
+                                                                disableAutofill: true,
                                                                 type: sap.m.InputType.Password,
                                                             }).bindProperty("value", {
                                                                 path: "password",
@@ -157,19 +158,17 @@ namespace initialfantasy {
                                                                             titleAlignment: sap.m.TitleAlignment.Start,
                                                                             placement: sap.m.PlacementType.HorizontalPreferredLeft,
                                                                             content: [
-                                                                                new sap.m.Input("", {
-                                                                                    visible: false,
-                                                                                    type: sap.m.InputType.Password,
-                                                                                }),
                                                                                 new sap.ui.layout.form.SimpleForm("", {
                                                                                     content: [
-                                                                                        new sap.m.Input("", {
+                                                                                        new sap.extension.m.Input("", {
                                                                                             autocomplete: false,
+                                                                                            disableAutofill: true,
                                                                                             type: sap.m.InputType.Password,
                                                                                             placeholder: ibas.i18n.prop("bo_user_password")
                                                                                         }),
-                                                                                        new sap.m.Input("", {
+                                                                                        new sap.extension.m.Input("", {
                                                                                             autocomplete: false,
+                                                                                            disableAutofill: true,
                                                                                             type: sap.m.InputType.Password,
                                                                                             placeholder: ibas.i18n.prop("bo_user_password")
                                                                                         })
@@ -249,14 +248,14 @@ namespace initialfantasy {
                                                     new sap.m.Toolbar("", { visible: false }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_lastpwdsetdate") }),
                                                     new sap.extension.m.DatePicker("", {
-                                                        enabled: false,
+                                                        editable: false,
                                                     }).bindProperty("bindingValue", {
                                                         path: "lastPwdSetDate",
                                                         type: new sap.extension.data.Date(),
                                                     }),
                                                     new sap.m.Label("", { text: ibas.i18n.prop("bo_user_docentry") }),
                                                     new sap.extension.m.Input("", {
-                                                        enabled: false,
+                                                        editable: false,
                                                         type: sap.m.InputType.Number
                                                     }).bindProperty("bindingValue", {
                                                         path: "docEntry",

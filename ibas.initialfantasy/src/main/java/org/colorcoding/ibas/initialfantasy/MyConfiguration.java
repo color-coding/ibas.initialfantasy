@@ -88,14 +88,30 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	public final static String CONFIG_ITEM_DISABLED_URL_TOKEN = "DisabledUrlToken";
 	/**
 	 * 配置项目-用户口令超时时间（秒）
+	 * <p>
+	 * 空闲超时：超过此秒数无活动则口令失效，每次 API 调用会续期。
+	 * <p>
+	 * 设为大于 0 时，会同时触发以下效果：
+	 * 1. 口令变为非确定性（哈希输入包含时间戳，每次登录不同）；
+	 * 2. {@link #CONFIG_ITEM_USER_TOKEN_MAX_AGE} 才会生效（依赖 tokenCreateTime 被设置）。
+	 * <p>
+	 * 默认值 0，表示口令永久有效且为确定性生成。
 	 */
 	public final static String CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME = "UserTokenTimeout";
 	/**
 	 * 配置项目-用户口令可用实例
+	 * <p>
+	 * 每个用户允许同时有效的口令数量（多设备登录），超出时按时间戳淘汰最旧的。
+	 * 设为大于 0 时，效果同 {@link #CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME}：触发非确定性口令并激活绝对有效期。
+	 * <p>
+	 * 默认值 0，表示不限制。
 	 */
 	public final static String CONFIG_ITEM_USER_TOKEN_INSTANCES = "UserTokenInstances";
 	/**
 	 * 配置项目-口令不超时用户（数组，";"分割并结尾）
+	 * <p>
+	 * 名单中的用户不受空闲超时和绝对有效期限制，口令永久有效且为确定性生成。
+	 * 默认为空（所有用户均受限）。
 	 */
 	public final static String CONFIG_ITEM_TOKEN_NOT_EXPIRED_USERS = "TokenNotExpiredUsers";
 	/**
@@ -112,7 +128,14 @@ public class MyConfiguration extends org.colorcoding.ibas.bobas.MyConfiguration 
 	public final static String CONFIG_ITEM_LOGIN_FAIL_SPAN_TIME = "LoginFailSpanTime";
 
 	/**
-	 * 配置项目-用户口令最大绝对有效期（秒），从登录时刻计算，无论是否有操作都失效 值为0表示不限制绝对有效期，仅受空闲超时控制
+	 * 配置项目-用户口令最大绝对有效期（秒），从登录时刻计算，无论是否有操作都失效。
+	 * <p>
+	 * 值为 0 表示不限制绝对有效期，仅受空闲超时控制。
+	 * <p>
+	 * 注意：此项依赖 {@link #CONFIG_ITEM_USER_TOKEN_TIMEOUT_TIME} 或
+	 * {@link #CONFIG_ITEM_USER_TOKEN_INSTANCES} 至少其一大于 0 才能生效，
+	 * 因为 tokenCreateTime 仅在 needTimeout 为 true 时才被设置。
+	 * 单独配置此项（其他两项为 0）不会生效。
 	 */
 	public final static String CONFIG_ITEM_USER_TOKEN_MAX_AGE = "UserTokenMaxAge";
 	/**

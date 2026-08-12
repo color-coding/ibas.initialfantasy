@@ -57,6 +57,8 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 			IUser user = this.getTokenUsers().get(token);
 			if (user instanceof User) {
 				User oUser = (User) user;
+				// tokenTimeStamp > 0 表示启用了超时机制（UserTokenTimeout 或 UserTokenInstances > 0）。
+				// 为 0 则跳过所有过期检查，token 永久有效（默认行为，或用户在 TokenNotExpiredUsers 名单中）。
 				if (oUser.getTokenTimeStamp() > 0) {
 					long elapsedSeconds = (DateTimes.now().getTime() - oUser.getTokenTimeStamp()) / 1000;
 					int timeout = getTokenTimeout();
@@ -75,7 +77,13 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 					if (expired) {
 						// Token 已过期，移除该 Token
 						this.getTokenUsers().remove(token);
-						// 注意：不删除 idUsers，因为同一用户可能有其他有效 Token
+						// 临时用户过期时，清理 idUsers 中的残留条目
+						// 使用条件移除（remove(key, value)），仅当 idUsers 中存储的仍是当前过期对象时才移除，
+						// 避免误删同一 ID 新注册的临时用户
+						if (oUser.getId() < User.TEMPORARY_USER_ID_FEATURE_VALUE) {
+							this.getIdUsers().remove(oUser.getId(), oUser);
+						}
+						// 注意：不删除普通用户的 idUsers，因为同一用户可能有其他有效 Token
 						return null;
 					} else {
 						// 续期：更新最后访问时间

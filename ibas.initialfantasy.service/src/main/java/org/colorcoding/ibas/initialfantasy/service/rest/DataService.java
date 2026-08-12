@@ -732,6 +732,23 @@ public class DataService extends BORepositoryInitialFantasyShell {
 		return super.fetchBOLogst(criteria, MyConfiguration.optToken(authorization, token));
 	}
 
+	/**
+	 * 删除-业务对象日志
+	 *
+	 * @param criteria 查询条件
+	 * @param authorization 认证口令
+	 * @param token 口令
+	 * @return 操作结果
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("deleteBOLogst")
+	public OperationResult<BOLogst> deleteBOLogst(Criteria criteria,
+			@HeaderParam("authorization") String authorization, @QueryParam("token") String token) {
+		return super.deleteBOLogst(criteria, MyConfiguration.optToken(authorization, token));
+	}
+
 	// --------------------------------------------------------------------------------------------//
 	/**
 	 * 查询-业务对象关系

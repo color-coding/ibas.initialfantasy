@@ -78,7 +78,12 @@ public class BORepositoryInitialFantasyShell extends BORepositoryInitialFantasy 
 			// 恢复正常用户信息
 			int userId = this.getCurrentUser().getId();
 			if (userId < User.TEMPORARY_USER_ID_FEATURE_VALUE) {
-				OrganizationFactory.createManager().unregister(this.getCurrentUser());
+				// 临时口令：检查unregister返回值，确保一次性消费
+				org.colorcoding.ibas.bobas.organization.IUser removed = OrganizationFactory.createManager()
+						.unregister(this.getCurrentUser());
+				if (removed == null || removed == OrganizationFactory.UNKNOWN_USER) {
+					throw new Exception(I18N.prop("msg_if_user_token_has_expired"));
+				}
 				userId = Math.abs(userId - User.TEMPORARY_USER_ID_FEATURE_VALUE);
 			}
 			if (userId <= 0) {
