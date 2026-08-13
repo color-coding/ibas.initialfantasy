@@ -21,6 +21,9 @@ import org.colorcoding.ibas.initialfantasy.bo.boinformation.IBOInformation;
 import org.colorcoding.ibas.initialfantasy.data.emConfigCategory;
 import org.colorcoding.ibas.initialfantasy.repository.BORepositoryInitialFantasy;
 
+import jakarta.xml.bind.annotation.XmlTransient;
+
+@XmlTransient
 public class ConfigurationManager extends org.colorcoding.ibas.bobas.configuration.ConfigurationManager {
 
 	public ConfigurationManager() {
@@ -134,7 +137,6 @@ public class ConfigurationManager extends org.colorcoding.ibas.bobas.configurati
 		if (this.taskId > 0) {
 			Daemon.unregister(this.taskId);
 		}
-		super.finalize();
 	}
 
 }

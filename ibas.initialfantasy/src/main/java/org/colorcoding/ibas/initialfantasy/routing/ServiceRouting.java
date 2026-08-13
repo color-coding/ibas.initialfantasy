@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlSeeAlso;
+import jakarta.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.common.DateTimes;
 import org.colorcoding.ibas.bobas.common.Strings;
@@ -43,7 +43,7 @@ public class ServiceRouting {
 	public static final String MSG_SERVICE_ROUTING_ADDRESS = "routing: module [%s - %s].\n  data: [%s].\n  view: [%s].";
 	public static final String MSG_SERVICE_FAILD_ROUTING_ADDRESS = "routing: not found module [%s - %s] service.";
 
-	private ServiceRouting() {
+	protected ServiceRouting() {
 		this.services = new ArrayList<>();
 	}
 
