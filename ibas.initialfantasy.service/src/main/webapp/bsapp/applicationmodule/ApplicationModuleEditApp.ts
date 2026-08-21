@@ -9,7 +9,7 @@ namespace initialfantasy {
     export namespace app {
 
         /** 应用-应用程序模块 */
-        export class ApplicationModuleEditApp extends ibas.BOEditApplication<IApplicationModuleEditView, bo.ApplicationModule> {
+        export class ApplicationModuleEditApp extends ibas.BOEditService<IApplicationModuleEditView, bo.ApplicationModule> {
 
             /** 应用标识 */
             static APPLICATION_ID: string = "2f1c815c-3794-49ef-a6ef-5d30103c521b";
@@ -180,6 +180,21 @@ namespace initialfantasy {
             deleteDataEvent: Function;
             /** 新建数据事件，参数1：是否克隆 */
             createDataEvent: Function;
+        }
+        /** ApplicationModule编辑服务映射 */
+        export class ApplicationModuleEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = ApplicationModuleEditApp.APPLICATION_ID;
+                this.name = ApplicationModuleEditApp.APPLICATION_NAME;
+                this.boCode = ApplicationModuleEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.ApplicationModule>> {
+                return new ApplicationModuleEditApp();
+            }
         }
     }
 }

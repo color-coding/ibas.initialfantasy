@@ -9,7 +9,7 @@ namespace initialfantasy {
     export namespace app {
 
         /** 应用-业务对象检索条件 */
-        export class BOCriteriaEditApp extends ibas.BOEditApplication<IBOCriteriaEditView, bo.BOCriteria> {
+        export class BOCriteriaEditApp extends ibas.BOEditService<IBOCriteriaEditView, bo.BOCriteria> {
 
             /** 应用标识 */
             static APPLICATION_ID: string = "9e281d73-e517-48bc-886e-a0071ae278bb";
@@ -267,6 +267,21 @@ namespace initialfantasy {
             editCriteriaEvent: Function;
             /** 编辑目标名称 */
             target: string;
+        }
+        /** BOCriteria编辑服务映射 */
+        export class BOCriteriaEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = BOCriteriaEditApp.APPLICATION_ID;
+                this.name = BOCriteriaEditApp.APPLICATION_NAME;
+                this.boCode = BOCriteriaEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.BOCriteria>> {
+                return new BOCriteriaEditApp();
+            }
         }
     }
 }

@@ -182,7 +182,7 @@ namespace initialfantasy {
                                                                                             width: "100%",
                                                                                             text: ibas.i18n.prop("shell_confirm"),
                                                                                             press(): void {
-                                                                                                let form: any = popover.getContent()[1];
+                                                                                                let form: any = popover.getContent()[0];
                                                                                                 if (form instanceof sap.ui.layout.form.SimpleForm) {
                                                                                                     let password: string = null;
                                                                                                     for (let item of form.getContent()) {

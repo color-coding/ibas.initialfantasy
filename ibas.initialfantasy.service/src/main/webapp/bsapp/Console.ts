@@ -50,6 +50,17 @@ namespace initialfantasy {
                     // this.register(new BOInformationFunc());
                 }
                 // 注册服务应用
+                this.register(new OrganizationEditServiceMapping());
+                this.register(new IdentityEditServiceMapping());
+                this.register(new PrivilegeEditServiceMapping());
+                this.register(new BOFilteringEditServiceMapping());
+                this.register(new UserEditServiceMapping());
+                this.register(new BOCriteriaEditServiceMapping());
+                this.register(new BOInformationEditServiceMapping());
+                this.register(new UserIdentityEditServiceMapping());
+                this.register(new ApplicationPlatformEditServiceMapping());
+                this.register(new ApplicationElementEditServiceMapping());
+                this.register(new ApplicationModuleEditServiceMapping());
                 this.register(new ApplicationElementChooseServiceMapping());
                 this.register(new ApplicationModuleChooseServiceMapping());
                 this.register(new ApplicationPlatformChooseServiceMapping());

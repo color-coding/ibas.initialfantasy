@@ -41,6 +41,23 @@ namespace initialfantasy {
             run(): void {
                 if (arguments[0] instanceof bo.BONumbering) {
                     this.editData = arguments[0];
+                    if (this.editData.isNew === false) {
+                        let criteria: ibas.ICriteria = this.editData.criteria();
+                        if (!ibas.objects.isNull(criteria) && criteria.conditions.length > 0) {
+                            let that: this = this;
+                            let boRepository: bo.BORepositoryInitialFantasy = new bo.BORepositoryInitialFantasy();
+                            boRepository.fetchBONumbering({
+                                criteria: criteria,
+                                onCompleted(opRslt: ibas.IOperationResult<bo.BONumbering>): void {
+                                    if (opRslt.resultCode === 0) {
+                                        that.editData = opRslt.resultObjects.firstOrDefault();
+                                    }
+                                    that.show();
+                                }
+                            });
+                            return;
+                        }
+                    }
                     super.run.apply(this, arguments);
                 } else if (typeof arguments[0] === "string") {
                     let criteria: ibas.ICriteria = new ibas.Criteria();

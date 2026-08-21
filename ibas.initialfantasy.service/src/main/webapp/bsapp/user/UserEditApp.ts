@@ -9,7 +9,7 @@ namespace initialfantasy {
     export namespace app {
 
         /** 应用-用户 */
-        export class UserEditApp extends ibas.BOEditApplication<IUserEditView, bo.User> {
+        export class UserEditApp extends ibas.BOEditService<IUserEditView, bo.User> {
 
             /** 应用标识 */
             static APPLICATION_ID: string = "c71ee76b-6bba-4184-afcd-c64a3a2e75a9";
@@ -271,6 +271,21 @@ namespace initialfantasy {
             addUserSpecificEvent: Function;
             /** 移除用户特征 */
             removeUserSpecificEvent: Function;
+        }
+        /** User编辑服务映射 */
+        export class UserEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = UserEditApp.APPLICATION_ID;
+                this.name = UserEditApp.APPLICATION_NAME;
+                this.boCode = UserEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.User>> {
+                return new UserEditApp();
+            }
         }
     }
 }
