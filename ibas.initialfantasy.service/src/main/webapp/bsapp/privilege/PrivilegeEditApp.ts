@@ -9,7 +9,7 @@ namespace initialfantasy {
     export namespace app {
 
         /** 应用-系统权限 */
-        export class PrivilegeEditApp extends ibas.BOEditApplication<IPrivilegeEditView, bo.Privilege> {
+        export class PrivilegeEditApp extends ibas.BOEditService<IPrivilegeEditView, bo.Privilege> {
 
             /** 应用标识 */
             static APPLICATION_ID: string = "2241eab0-ca9f-4427-9457-500b6f35af35";
@@ -267,6 +267,21 @@ namespace initialfantasy {
             chooseModuleEvent: Function;
             /** 选择目标标识 */
             chooseTargetEvent: Function;
+        }
+        /** Privilege编辑服务映射 */
+        export class PrivilegeEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = PrivilegeEditApp.APPLICATION_ID;
+                this.name = PrivilegeEditApp.APPLICATION_NAME;
+                this.boCode = PrivilegeEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.Privilege>> {
+                return new PrivilegeEditApp();
+            }
         }
     }
 }

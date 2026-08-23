@@ -9,7 +9,7 @@ namespace initialfantasy {
     export namespace app {
 
         /** 应用-业务对象筛选 */
-        export class BOFilteringEditApp extends ibas.BOEditApplication<IBOFilteringEditView, bo.BOFiltering> {
+        export class BOFilteringEditApp extends ibas.BOEditService<IBOFilteringEditView, bo.BOFiltering> {
 
             /** 应用标识 */
             static APPLICATION_ID: string = "e33d8098-49fe-4acd-b943-b4e5a6270c73";
@@ -274,6 +274,21 @@ namespace initialfantasy {
             removeBOFilteringConditionEvent: Function;
             /** 显示数据 */
             showBOFilteringConditions(datas: bo.BOFilteringCondition[]): void;
+        }
+        /** BOFiltering编辑服务映射 */
+        export class BOFilteringEditServiceMapping extends ibas.BOEditServiceMapping {
+            /** 构造函数 */
+            constructor() {
+                super();
+                this.id = BOFilteringEditApp.APPLICATION_ID;
+                this.name = BOFilteringEditApp.APPLICATION_NAME;
+                this.boCode = BOFilteringEditApp.BUSINESS_OBJECT_CODE;
+                this.description = ibas.i18n.prop(this.name);
+            }
+            /** 创建服务实例 */
+            create(): ibas.IService<ibas.IBOEditServiceCaller<bo.BOFiltering>> {
+                return new BOFilteringEditApp();
+            }
         }
     }
 }
