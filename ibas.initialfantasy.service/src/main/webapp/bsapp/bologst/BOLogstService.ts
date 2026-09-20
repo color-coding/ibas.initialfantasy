@@ -132,7 +132,9 @@ namespace initialfantasy {
                 try {
                     let logsts: bo.BOLogst[] = ibas.arrays.create(data);
                     // 日志记录的是更新前的状态，当前版本不在日志中，需补充当前版本参与对比
-                    if ((mode === "SUMMARY" || mode === "COMPARISON") && !ibas.objects.isNull(this.currentLogst)) {
+                    if ((mode === "SUMMARY" || mode === "COMPARISON")
+                        && !ibas.objects.isNull(this.currentLogst)
+                        && !ibas.strings.isEmpty(this.currentLogst.content)) {
                         logsts.push(this.currentLogst);
                     }
                     let app: BOLogstViewApp = new BOLogstViewApp();

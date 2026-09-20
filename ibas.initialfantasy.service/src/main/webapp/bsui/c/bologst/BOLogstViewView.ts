@@ -280,12 +280,22 @@ namespace initialfantasy {
                     }
                 }
                 /** 检查属性项在不同版本间是否存在差异 */
-                private isItemSame(groupId: string, value: any, count: number): boolean {
+                private getItemValue(item: sap.m.StandardListItem): any {
+                    let context: any = item.getBindingContext();
+                    if (context instanceof sap.ui.model.Context && context.getObject instanceof Function) {
+                        let propertyName: string = String(item.getTooltip()).split(": ")[0];
+                        return ibas.objects.propertyValue(context.getObject(), propertyName, true);
+                    }
+                    return item.getInfo();
+                }
+                /** 使用原始数据值判断属性项在不同版本间是否相同 */
+                private isItemSame(groupId: string, item: sap.m.StandardListItem, count: number): boolean {
                     let same: boolean = true;
+                    let value: any = this.getItemValue(item);
                     for (let index: number = 1; index < count; index++) {
                         let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(groupId, index));
                         if (tmpItem instanceof sap.m.StandardListItem) {
-                            if (!this.isValueEqual(tmpItem.getInfo(), value)) {
+                            if (!this.isValueEqual(this.getItemValue(tmpItem), value)) {
                                 same = false;
                             }
                         } else if (ibas.objects.isNull(tmpItem)) {
@@ -326,9 +336,8 @@ namespace initialfantasy {
                                 let group: string;
                                 for (let lItem of pItem.getItems()) {
                                     if (lItem instanceof sap.m.StandardListItem) {
-                                        let value: any = lItem.getInfo();
                                         group = this.buildGroupId(lItem.getId());
-                                        let same: boolean = this.isItemSame(group, value, count);
+                                        let same: boolean = this.isItemSame(group, lItem, count);
                                         if (same === false) {
                                             for (let index: number = 0; index < count; index++) {
                                                 let tmpItem: any = sap.ui.getCore().byId(ibas.strings.format(group, index));
@@ -567,7 +576,33 @@ namespace initialfantasy {
                     if (value instanceof Date) {
                         return ibas.dates.toString(value);
                     }
+                    if (typeof value === "string") {
+                        let match: RegExpMatchArray = value.match(/^(\d{4}-\d{2}-\d{2})(?:T|\s)/);
+                        if (match instanceof Array) {
+                            return match[1];
+                        }
+                    }
+                    if (typeof value === "object") {
+                        try {
+                            return JSON.stringify(value);
+                        } catch (error) {
+                            return String(value);
+                        }
+                    }
                     return String(value);
+                }
+                /** 获取日期值的日期部分，兼容日期和ISO日期时间格式 */
+                private datePart(value: any): string {
+                    if (value instanceof Date) {
+                        return ibas.dates.toString(value);
+                    }
+                    if (typeof value === "string") {
+                        let match: RegExpMatchArray = value.match(/^(\d{4}-\d{2}-\d{2})(?:$|T|\s)/);
+                        if (match instanceof Array) {
+                            return match[1];
+                        }
+                    }
+                    return "";
                 }
                 /** 判断两个属性值是否相同（0、""与undefined、null等效） */
                 private isValueEqual(a: any, b: any): boolean {
@@ -580,6 +615,11 @@ namespace initialfantasy {
                     }
                     if (this.isEmptyValue(b)) {
                         return false;
+                    }
+                    let aDate: string = this.datePart(a);
+                    let bDate: string = this.datePart(b);
+                    if (!ibas.strings.isEmpty(aDate) && !ibas.strings.isEmpty(bDate)) {
+                        return aDate === bDate;
                     }
                     return this.formatValue(a) === this.formatValue(b);
                 }
