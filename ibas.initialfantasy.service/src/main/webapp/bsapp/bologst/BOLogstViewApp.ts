@@ -46,11 +46,17 @@ namespace initialfantasy {
                 logsts.sort((a, b) => b.logInst - a.logInst);
                 for (let item of logsts) {
                     try {
+                        let content: any;
                         if (typeof item.content === "string") {
-                            this.datas.add(JSON.parse(item.content.replace(/[\u0000-\u001F\u007F]/g, "")));
+                            content = this.parseContent(item.content);
                         } else {
-                            this.datas.add(item.content);
+                            content = item.content;
                         }
+                        if (ibas.objects.isNull(content)) {
+                            continue;
+                        }
+                        this.expandUserFields(content);
+                        this.datas.add(content);
                     } catch (error) {
                         throw new Error(ibas.i18n.prop("sys_invalid_parameter", "content"));
                     }
@@ -119,6 +125,43 @@ namespace initialfantasy {
                     this.proceeding(ibas.emMessageType.INFORMATION, ibas.i18n.prop("initialfantasy_fetch_bo_information"));
                 } else {
                     throw new Error(ibas.i18n.prop("sys_invalid_parameter", "data"));
+                }
+            }
+            /** 解析日志内容；仅在标准JSON解析失败时兼容旧日志中的控制字符 */
+            private parseContent(content: string): any {
+                try {
+                    return JSON.parse(content);
+                } catch (error) {
+                    return JSON.parse(content.replace(/[\u0000-\u001F\u007F]/g, ""));
+                }
+            }
+            /** 展开日志中的用户字段，使其可以按普通业务对象属性参与显示和比较 */
+            private expandUserFields(data: any): void {
+                if (ibas.objects.isNull(data) || typeof data !== "object" || data instanceof Date) {
+                    return;
+                }
+                if (data instanceof Array) {
+                    for (let item of data) {
+                        this.expandUserFields(item);
+                    }
+                    return;
+                }
+                for (let property in data) {
+                    let value: any = data[property];
+                    if (ibas.strings.equalsIgnoreCase(property, "UserFields") && value instanceof Array) {
+                        for (let userField of value) {
+                            if (ibas.objects.isNull(userField) || typeof userField !== "object") {
+                                continue;
+                            }
+                            let name: any = ibas.objects.propertyValue(userField, "Name", true);
+                            if (ibas.strings.isEmpty(name)) {
+                                continue;
+                            }
+                            data[name] = ibas.objects.propertyValue(userField, "Value", true);
+                        }
+                    } else {
+                        this.expandUserFields(value);
+                    }
                 }
             }
             onViewShowed: () => void;
