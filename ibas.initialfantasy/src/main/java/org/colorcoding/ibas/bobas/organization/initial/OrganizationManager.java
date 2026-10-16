@@ -1,5 +1,6 @@
 package org.colorcoding.ibas.bobas.organization.initial;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -114,6 +115,8 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 	@Override
 	public void initialize() {
 		try {
+			Map<Integer, IUser> newIdUsers;
+			Map<String, IUser> newTokenUsers;
 			ICriteria criteria = new Criteria();
 			ICondition condition = criteria.getConditions().create();
 			condition.setAlias(org.colorcoding.ibas.initialfantasy.bo.organization.User.PROPERTY_ACTIVATED.getName());
@@ -130,17 +133,19 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 					throw operationResult.getError();
 				}
 				User user;
-				this.idUsers = new ConcurrentHashMap<>(operationResult.getResultObjects().size());
-				this.tokenUsers = new ConcurrentHashMap<>(operationResult.getResultObjects().size());
+				newIdUsers = new ConcurrentHashMap<>(operationResult.getResultObjects().size());
+				newTokenUsers = new ConcurrentHashMap<>(operationResult.getResultObjects().size());
 				for (org.colorcoding.ibas.initialfantasy.bo.organization.IUser item : operationResult
 						.getResultObjects()) {
 					user = User.create(item);
-					this.idUsers.put(user.getId(), user);
-					this.tokenUsers.put(user.getToken(), user);
+					newIdUsers.put(user.getId(), user);
+					newTokenUsers.put(user.getToken(), user);
 				}
 			}
-			// 从旧管理器中迁移仍然有效的Token，避免定时刷新导致活跃会话被强制下线
-			this.migrateActiveTokens();
+			// 先完成迁移再替换缓存，原实例重新初始化时也保留旧Token。
+			this.migrateActiveTokens(newIdUsers, newTokenUsers);
+			this.idUsers = newIdUsers;
+			this.tokenUsers = newTokenUsers;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -154,29 +159,29 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 	 * 将旧管理器中尚未过期的Token迁移到新管理器，保持活跃会话不断线。
 	 * </p>
 	 */
-	private void migrateActiveTokens() {
-		// 获取当前正在使用的管理器（旧实例）
-		org.colorcoding.ibas.bobas.organization.OrganizationManager currentManager;
-		try {
-			currentManager = OrganizationFactory.createManager();
-		} catch (Exception e) {
-			return;
+	private void migrateActiveTokens(Map<Integer, IUser> newIdUsers, Map<String, IUser> newTokenUsers) {
+		// 原实例重新初始化时使用自己的旧缓存，新实例则从当前管理器迁移。
+		Map<String, IUser> oldTokenUsers = this.tokenUsers;
+		if (oldTokenUsers == null) {
+			org.colorcoding.ibas.bobas.organization.OrganizationManager currentManager;
+			try {
+				currentManager = OrganizationFactory.createManager();
+			} catch (Exception e) {
+				return;
+			}
+			if (!(currentManager instanceof OrganizationManager) || currentManager == this) {
+				return;
+			}
+			oldTokenUsers = ((OrganizationManager) currentManager).getTokenUsers();
 		}
-		// 首次初始化时，旧实例就是自己，无需迁移
-		if (currentManager == this) {
-			return;
-		}
-		// 旧管理器类型不匹配，无法迁移
-		if (!(currentManager instanceof OrganizationManager)) {
-			return;
-		}
-		Map<String, IUser> oldTokenUsers = ((OrganizationManager) currentManager).getTokenUsers();
 		if (oldTokenUsers == null || oldTokenUsers.isEmpty()) {
 			return;
 		}
 		int timeout = getTokenTimeout();
 		int maxAge = getTokenMaxAge();
 		long now = DateTimes.now().getTime();
+		// 保留初始化用户的快照，不能把已迁移的Token误认为初始化生成的Token删除。
+		Map<Integer, IUser> initializedUsers = new HashMap<>(newIdUsers);
 		for (Map.Entry<String, IUser> entry : oldTokenUsers.entrySet()) {
 			String oldToken = entry.getKey();
 			IUser oldUser = entry.getValue();
@@ -184,11 +189,11 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 				continue;
 			}
 			// 跳过新管理器中已存在的Token（如静态Token用户，新旧Token相同）
-			if (this.tokenUsers.containsKey(oldToken)) {
+			if (newTokenUsers.containsKey(oldToken)) {
 				continue;
 			}
 			// 用户在新数据中不存在（已停用/删除/日期失效），不迁移
-			IUser newUserInDb = this.idUsers.get(oldUser.getId());
+			IUser newUserInDb = initializedUsers.get(oldUser.getId());
 			if (newUserInDb == null) {
 				continue;
 			}
@@ -212,12 +217,12 @@ public class OrganizationManager extends org.colorcoding.ibas.bobas.organization
 			}
 			// 移除 initialize() 中新生成的无用Token（无客户端持有此Token）
 			if (newUserInDb.getToken() != null && !newUserInDb.getToken().equals(oldToken)) {
-				this.tokenUsers.remove(newUserInDb.getToken());
+				newTokenUsers.remove(newUserInDb.getToken());
 			}
 			// 迁移旧Token到新管理器
-			this.tokenUsers.put(oldToken, oldUser);
+			newTokenUsers.put(oldToken, oldUser);
 			// 更新idUsers，使 getUser(id) 返回持有活跃Token的用户对象
-			this.idUsers.put(oldUser.getId(), oldUser);
+			newIdUsers.put(oldUser.getId(), oldUser);
 		}
 	}
 
