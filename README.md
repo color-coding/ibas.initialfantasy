@@ -9,7 +9,7 @@ IBAS 系统的核心基础模块，提供用户认证、组织管理、权限控
 Core infrastructure module for the IBAS system — user authentication, organization management, privilege control, application configuration, and business object numbering.
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Java](https://img.shields.io/badge/Java-1.8+-orange.svg)](https://www.oracle.com/java/)
+[![Java](https://img.shields.io/badge/Java-21+-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.x-red.svg)](https://maven.apache.org/)
 [![Version](https://img.shields.io/badge/version-0.2.0-green.svg)](pom.xml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#-贡献--contributing)
@@ -56,7 +56,7 @@ Core infrastructure module for the IBAS system — user authentication, organiza
 
 ### 环境要求 | Prerequisites
 
-- **JDK** 1.8+
+- **JDK** 21+
 - **Maven** 3.x
 - [ibas-framework](https://github.com/color-coding/ibas-framework)（BOBAS 框架）
 

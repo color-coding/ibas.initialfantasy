@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE DataStructureOrchestration>
+<ns2:DataStructureOrchestration xmlns:ns2="http://colorcoding.org/btulz/transformers">
+    <Name>sql_h2_sys_initialization</Name>
+    <Description>基于H2的结构映射说明</Description>
+    <Integrated>true</Integrated>
+    <DriverName>org.h2.Driver</DriverName>
+    <DbUrl>jdbc:h2:${DbName}</DbUrl>
+    <DbUser>${DbUser}</DbUser>
+    <DbPassword>${DbPassword}</DbPassword>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_MODULES">
+        <Step Name="check stored procedures exists">
+            <Script><![CDATA[
+                SELECT COUNT(0) FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = CURRENT_SCHEMA() AND TABLE_NAME = '${Company}_SYS_SP_GET_USER_MODULES';
+            ]]></Script>
+        </Step>
+        <Step Name="drop stored procedures" RunOnValue="1">
+            <Script><![CDATA[
+                DROP VIEW "${Company}_SYS_SP_GET_USER_MODULES";
+            ]]></Script>
+        </Step>
+        <Step Name="create stored procedures">
+            <Script><![CDATA[
+                CREATE VIEW "${Company}_SYS_SP_GET_USER_MODULES" AS
+                SELECT A.*, A."PlatformId" AS "Platform", B."Code" AS "UserCode"
+                FROM (
+	                SELECT "ModuleId", "PlatformId", "ModuleName", "ModuleCategory", "ModuleEntry", "Activated", 'A' AS "AuthValue"
+	                    FROM "${Company}_SYS_MODULE"
+	                    WHERE "PlatformId" <> 'COMBINATION' AND "Activated" = 'Y'
+	                UNION
+	                SELECT "ModuleId", 'DESKTOP' AS "PlatformId", "ModuleName", "ModuleCategory", "ModuleEntry", "Activated", 'A' AS "AuthValue"
+	                    FROM "${Company}_SYS_MODULE"
+	                    WHERE "PlatformId" = 'COMBINATION' AND "Activated" = 'Y'
+	                UNION
+	                SELECT "ModuleId", 'TABLET' AS "PlatformId", "ModuleName", "ModuleCategory", "ModuleEntry", "Activated", 'A' AS "AuthValue"
+	                    FROM "${Company}_SYS_MODULE"
+	                    WHERE "PlatformId" = 'COMBINATION' AND "Activated" = 'Y'
+	            ) A, (
+	            	SELECT * 
+	            	FROM "${Company}_SYS_USER" WHERE "Activated" = 'Y'
+	            ) B;
+            ]]></Script>
+        </Step>
+    </Action>
+    <Action Name="create stored procedures ${Company}_SYS_SP_GET_USER_PRIVILEGES">
+        <Step Name="check stored procedures exists">
+            <Script><![CDATA[
+                SELECT COUNT(0) FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = CURRENT_SCHEMA() AND TABLE_NAME = '${Company}_SYS_SP_GET_USER_PRIVILEGES';
+            ]]></Script>
+        </Step>
+        <Step Name="drop stored procedures" RunOnValue="1">
+            <Script><![CDATA[
+                DROP VIEW "${Company}_SYS_SP_GET_USER_PRIVILEGES";
+            ]]></Script>
+        </Step>
+        <Step Name="create stored procedures">
+            <Script><![CDATA[
+                CREATE VIEW "${Company}_SYS_SP_GET_USER_PRIVILEGES" AS
+                 	SELECT A.*, CAST(NULL AS VARCHAR) AS "Platform", B."Code" AS "UserCode"
+                	FROM (
+             	        SELECT CAST(NULL AS VARCHAR) AS "Source", CAST(NULL AS VARCHAR) AS "Target", CAST(NULL AS VARCHAR) AS "Value", CAST(NULL AS VARCHAR) AS "Automatic"                      
+                ) A, (
+	            	SELECT * 
+	            	FROM "${Company}_SYS_USER" WHERE "Activated" = 'Y'
+	            ) B;
+            ]]></Script>
+        </Step>
+    </Action>
+</ns2:DataStructureOrchestration>
