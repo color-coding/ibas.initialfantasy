@@ -10,6 +10,7 @@ import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.BusinessObjectUnit;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
 import org.colorcoding.ibas.bobas.bo.IBOStorageTag;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.common.Criteria;
 import org.colorcoding.ibas.bobas.common.ICondition;
 import org.colorcoding.ibas.bobas.common.ICriteria;
@@ -27,7 +28,8 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlType(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = BOPropertyValue.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BusinessObjectUnit(code = BOPropertyValue.BUSINESS_OBJECT_CODE)
-public class BOPropertyValue extends BusinessObject<BOPropertyValue> implements IBOPropertyValue, IBOCustomKey {
+public class BOPropertyValue extends BusinessObject<BOPropertyValue>
+		implements IBOPropertyValue, IBOUserFields, IBOCustomKey {
 
 	/**
 	 * 序列化版本标记

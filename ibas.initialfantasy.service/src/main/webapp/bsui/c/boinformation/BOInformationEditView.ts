@@ -88,7 +88,10 @@ namespace initialfantasy {
                             }),
                         ]
                     });
-                    this.tableBOPropertyInformation = new sap.extension.table.Table("", {
+                    this.tableBOPropertyInformation = new sap.extension.table.DataTable("", {
+                        dataInfo: {
+                            code: bo.BO_CODE_BOPROPERTY,
+                        },
                         enableSelectAll: true,
                         visibleRowCount: sap.extension.table.visibleRowCount(8),
                         rows: "{/rows}",
@@ -378,6 +381,9 @@ namespace initialfantasy {
                                                 ]
                                             }).addStyleClass("sapUiTinyMarginBottom"),
                                             this.tableBOPropertyValue = new sap.extension.table.DataTable("", {
+                                                dataInfo: {
+                                                    code: bo.BO_CODE_BOPROPERTY_VALUE,
+                                                },
                                                 enableSelectAll: false,
                                                 visibleRowCount: sap.extension.table.visibleRowCount(8),
                                                 rows: "{/rows}",
@@ -431,8 +437,11 @@ namespace initialfantasy {
                             }),
                         ]
                     });
-                    return this.page = new sap.extension.m.Page("", {
+                    return this.page = new sap.extension.m.DataPage("", {
                         showHeader: false,
+                        dataInfo: {
+                            code: bo.BO_CODE_BOINFORMATION,
+                        },
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Button("", {

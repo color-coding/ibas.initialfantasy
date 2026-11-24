@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.colorcoding.ibas.bobas.bo.BusinessObject;
 import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
 import org.colorcoding.ibas.bobas.core.IPropertyInfo;
 import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.db.DbField;
@@ -22,7 +23,8 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BOInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = BOInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class BOInformation extends BusinessObject<BOInformation> implements IBOInformation, IBOCustomKey {
+public class BOInformation extends BusinessObject<BOInformation>
+		implements IBOInformation, IBOUserFields, IBOCustomKey {
 
 	/**
 	 * 序列化版本标记
