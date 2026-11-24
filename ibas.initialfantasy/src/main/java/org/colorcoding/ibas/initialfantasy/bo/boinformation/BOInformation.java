@@ -1,19 +1,20 @@
 package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
+import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
+import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.db.DataType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
-
-import org.colorcoding.ibas.bobas.bo.BusinessObject;
-import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
-import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DataType;
-import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 获取-业务对象信息
@@ -22,7 +23,8 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = BOInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlRootElement(name = BOInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class BOInformation extends BusinessObject<BOInformation> implements IBOInformation, IBOCustomKey {
+public class BOInformation extends BusinessObject<BOInformation>
+		implements IBOInformation, IBOUserFields, IBOCustomKey {
 
 	/**
 	 * 序列化版本标记

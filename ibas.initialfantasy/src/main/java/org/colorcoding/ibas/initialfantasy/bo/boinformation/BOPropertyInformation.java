@@ -1,19 +1,20 @@
 package org.colorcoding.ibas.initialfantasy.bo.boinformation;
 
+import org.colorcoding.ibas.bobas.bo.BusinessObject;
+import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
+import org.colorcoding.ibas.bobas.bo.IBOUserFields;
+import org.colorcoding.ibas.bobas.core.IPropertyInfo;
+import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.db.DataType;
+import org.colorcoding.ibas.bobas.db.DbField;
+import org.colorcoding.ibas.initialfantasy.MyConfiguration;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
-
-import org.colorcoding.ibas.bobas.bo.BusinessObject;
-import org.colorcoding.ibas.bobas.bo.IBOCustomKey;
-import org.colorcoding.ibas.bobas.core.IPropertyInfo;
-import org.colorcoding.ibas.bobas.data.emYesNo;
-import org.colorcoding.ibas.bobas.db.DbField;
-import org.colorcoding.ibas.bobas.db.DataType;
-import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 
 /**
  * 获取-业务对象属性信息
@@ -23,7 +24,7 @@ import org.colorcoding.ibas.initialfantasy.MyConfiguration;
 @XmlRootElement(name = BOPropertyInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlType(name = BOPropertyInformation.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
-		implements IBOPropertyInformation, IBOCustomKey {
+		implements IBOPropertyInformation, IBOUserFields, IBOCustomKey {
 
 	/**
 	 * 序列化版本标记
@@ -59,7 +60,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 
 	/**
 	 * 获取-编码
-	 * 
+	 *
 	 * @return 值
 	 */
 	@XmlElement(name = PROPERTY_CODE_NAME)
@@ -69,7 +70,7 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 
 	/**
 	 * 设置-编码
-	 * 
+	 *
 	 * @param value 值
 	 */
 	public final void setCode(String value) {
@@ -387,32 +388,32 @@ public class BOPropertyInformation extends BusinessObject<BOPropertyInformation>
 	}
 
 	/**
-	* 属性名称-触发属性
-	*/
+	 * 属性名称-触发属性
+	 */
 	private static final String PROPERTY_TRIGGERBYPROPERTY_NAME = "TriggerByProperty";
 
 	/**
-	* 触发属性 属性
-	*/
+	 * 触发属性 属性
+	 */
 	@DbField(name = "TrigByPty", type = DataType.ALPHANUMERIC, table = DB_TABLE_NAME)
 	public static final IPropertyInfo<String> PROPERTY_TRIGGERBYPROPERTY = registerProperty(
 			PROPERTY_TRIGGERBYPROPERTY_NAME, String.class, MY_CLASS);
 
 	/**
-	* 获取-触发属性
-	* 
-	* @return 值
-	*/
+	 * 获取-触发属性
+	 *
+	 * @return 值
+	 */
 	@XmlElement(name = PROPERTY_TRIGGERBYPROPERTY_NAME)
 	public final String getTriggerByProperty() {
 		return this.getProperty(PROPERTY_TRIGGERBYPROPERTY);
 	}
 
 	/**
-	* 设置-触发属性
-	* 
-	* @param value 值
-	*/
+	 * 设置-触发属性
+	 *
+	 * @param value 值
+	 */
 	public final void setTriggerByProperty(String value) {
 		this.setProperty(PROPERTY_TRIGGERBYPROPERTY, value);
 	}
