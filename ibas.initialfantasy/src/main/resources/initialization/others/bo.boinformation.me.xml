@@ -57,5 +57,45 @@
 			<Searched>NO</Searched>
 			<Systemed>YES</Systemed>
 		</BOPropertyInformation>
+		<BOPropertyInformation>
+			<Property>Modified</Property>
+			<Description>开启修改日志</Description>
+			<Mapped>Modified</Mapped>
+			<DataType>Alphanumeric</DataType>
+			<EditType>Default</EditType>
+			<EditSize>1</EditSize>
+			<Searched>NO</Searched>
+			<Systemed>YES</Systemed>
+		</BOPropertyInformation>
+		<BOPropertyInformation>
+			<Property>LinkedObject</Property>
+			<Description>链接的对象</Description>
+			<Mapped>LinkedObject</Mapped>
+			<DataType>Memo</DataType>
+			<EditType>Default</EditType>
+			<EditSize>8</EditSize>
+			<Searched>NO</Searched>
+			<Systemed>YES</Systemed>
+		</BOPropertyInformation>
+		<BOPropertyInformation>
+			<Property>ValueChooseType</Property>
+			<Description>值选择方式</Description>
+			<Mapped>VChosType</Mapped>
+			<DataType>Alphanumeric</DataType>
+			<EditType>Default</EditType>
+			<EditSize>20</EditSize>
+			<Searched>NO</Searched>
+			<Systemed>YES</Systemed>
+		</BOPropertyInformation>
+		<BOPropertyInformation>
+			<Property>TriggerByProperty</Property>
+			<Description>触发属性</Description>
+			<Mapped>TrigByPty</Mapped>
+			<DataType>Alphanumeric</DataType>
+			<EditType>Default</EditType>
+			<EditSize>60</EditSize>
+			<Searched>NO</Searched>
+			<Systemed>YES</Systemed>
+		</BOPropertyInformation>
 	</BOPropertyInformations>
 </ns2:BOInformation>
