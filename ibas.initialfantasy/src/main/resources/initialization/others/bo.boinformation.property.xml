@@ -2,11 +2,10 @@
 <!DOCTYPE BOInformation>
 <ns2:BOInformation
 	xmlns:ns2="http://colorcoding.org/ibas/initialfantasy/bo">
-	<Code>${Company}_SYS_BOI1</Code>
+	<Code>${Company}_SYS_BOPRTY</Code>
 	<Description>业务对象属性信息</Description>
 	<Mapped>${Company}_SYS_BOI1</Mapped>
 	<Name>BOPropertyInformation</Name>
-	<ObjectType>Unspecified</ObjectType>
 	<BOPropertyInformations>
 		<BOPropertyInformation>
 			<Property>Code</Property>

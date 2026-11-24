@@ -6,7 +6,6 @@
 	<Description>业务对象属性值</Description>
 	<Mapped>${Company}_SYS_BOI2</Mapped>
 	<Name>BOPropertyValue</Name>
-	<ObjectType>Unspecified</ObjectType>
 	<BOPropertyInformations>
 		<BOPropertyInformation>
 			<Property>Code</Property>

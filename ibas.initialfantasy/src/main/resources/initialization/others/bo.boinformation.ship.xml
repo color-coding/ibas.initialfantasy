@@ -6,7 +6,6 @@
 	<Description>业务对象关系</Description>
 	<Mapped>${Company}_SYS_BOI3</Mapped>
 	<Name>BORelationship</Name>
-	<ObjectType>Unspecified</ObjectType>
 	<BOPropertyInformations>
 		<BOPropertyInformation>
 			<Property>Code</Property>
